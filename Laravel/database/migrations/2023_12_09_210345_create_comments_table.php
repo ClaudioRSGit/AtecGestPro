@@ -15,7 +15,13 @@ class CreateCommentsTable extends Migration
     {
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
+            $table->string('description');
+            $table->foreignId('ticket_id')->constrained('tickets')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->boolean('isPublic')->default(false);
+            $table->boolean('isDeleted')->default(false);
             $table->timestamps();
+            $table->softDeletes('DeletedAt', 0);
         });
     }
 

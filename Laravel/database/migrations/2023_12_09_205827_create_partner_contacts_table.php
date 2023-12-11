@@ -15,7 +15,11 @@ class CreatePartnerContactsTable extends Migration
     {
         Schema::create('partner_contacts', function (Blueprint $table) {
             $table->id();
+            $table->string('contact');
+            $table->foreignId('partner_id')->constrained('partners')->onDelete('cascade');
+            $table->boolean('isDeleted')->default(false);
             $table->timestamps();
+            $table->softDeletes('DeletedAt', 0);
         });
     }
 

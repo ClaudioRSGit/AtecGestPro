@@ -15,6 +15,11 @@ class CreateEmailsTable extends Migration
     {
         Schema::create('emails', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('recipient_email');
+            $table->string('subject');
+            $table->string('message');
+            $table->foreignId('ticket_history_id')->constrained('ticket_histories')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

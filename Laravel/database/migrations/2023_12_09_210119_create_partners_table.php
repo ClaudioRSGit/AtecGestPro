@@ -15,7 +15,12 @@ class CreatePartnersTable extends Migration
     {
         Schema::create('partners', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('description');
+            $table->string('address');
+            $table->boolean('isDeleted')->default(false);
             $table->timestamps();
+            $table->softDeletes('DeletedAt', 0);
         });
     }
 

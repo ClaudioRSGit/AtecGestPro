@@ -15,7 +15,10 @@ class CreateTicketCategoriesTable extends Migration
     {
         Schema::create('ticket_categories', function (Blueprint $table) {
             $table->id();
+            $table->string('description');
+            $table->boolean('isDeleted')->default(false);
             $table->timestamps();
+            $table->softDeletes('DeletedAt', 0);
         });
     }
 

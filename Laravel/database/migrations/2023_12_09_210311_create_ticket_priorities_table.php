@@ -15,7 +15,11 @@ class CreateTicketPrioritiesTable extends Migration
     {
         Schema::create('ticket_priorities', function (Blueprint $table) {
             $table->id();
+            $table->string('description');
+            $table->dateTime('default_dueByDate');
+            $table->boolean('isDeleted')->default(false);
             $table->timestamps();
+            $table->softDeletes('DeletedAt', 0);
         });
     }
 

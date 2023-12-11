@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateClothingDeliveriesTable extends Migration
+class CreatePartnerTrainingsUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,13 @@ class CreateClothingDeliveriesTable extends Migration
      */
     public function up()
     {
-        Schema::create('clothing_deliveries', function (Blueprint $table) {
+        Schema::create('partner__trainings__users', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('partner_id')->constrained('partners')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('training_id')->constrained('trainings')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->boolean('delivered')->default(false);
-            $table->string('additionalNotes')->nullable();
+            $table->dateTime('start_date');
+            $table->dateTime('end_date');
             $table->boolean('isDeleted')->default(false);
             $table->timestamps();
             $table->softDeletes('DeletedAt', 0);
@@ -31,6 +33,6 @@ class CreateClothingDeliveriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('clothing_deliveries');
+        Schema::dropIfExists('partner__trainings__users');
     }
 }

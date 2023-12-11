@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMaterialsTable extends Migration
+class CreateUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,17 @@ class CreateMaterialsTable extends Migration
      */
     public function up()
     {
-        Schema::create('materials', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('description');
-            $table->boolean('isInternal');
-            $table->integer('quantity');
-            $table->dateTime('aquisition_date');
-            $table->string('supplier');
-            $table->boolean('isClothing')->default(false);
-            $table->boolean('gender');
-            $table->string('size');
+            $table->string('username')->unique();
+            $table->string('email')->unique();
+            $table->string('contact')->unique();
+            $table->string('password');
             $table->string('role');
+            $table->boolean('isActive')->default(false);
+            $table->boolean('isStudent')->default(false);
+            $table->foreignId('course_class_id')->constrained('course_classes')->onDelete('cascade')->onUpdate('cascade');
             $table->boolean('isDeleted')->default(false);
             $table->timestamps();
             $table->softDeletes('DeletedAt', 0);
@@ -38,6 +37,6 @@ class CreateMaterialsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('materials');
+        Schema::dropIfExists('users');
     }
 }
