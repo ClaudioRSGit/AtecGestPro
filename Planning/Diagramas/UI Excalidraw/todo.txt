@@ -1,0 +1,5 @@
+Priority:
+- formações externas -> add new training
+
+- view for stock
+- view for tickets
