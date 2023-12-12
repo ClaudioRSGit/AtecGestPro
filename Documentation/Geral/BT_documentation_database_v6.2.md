@@ -3,7 +3,7 @@
 
 - [INDEX](#index)
   - [**Tabela `Actions`:**](#tabela-actions)
-  - [**Tabela `Class`:**](#tabela-class)
+  - [**Tabela `CourseClass`:**](#tabela-courseclass)
   - [**Tabela `Clothing_Delivery`:**](#tabela-clothing_delivery)
   - [**Tabela `Comments`:**](#tabela-comments)
   - [**Tabela `Course`:**](#tabela-course)
@@ -52,7 +52,7 @@ Colunas:
 
 <br>
 
-## **Tabela `Class`:**
+## **Tabela `CourseClass`:**
 
 <strong> Descrição </strong> : Tabela de Turmas.
 
@@ -60,7 +60,7 @@ Colunas:
 
   - **Id (Primary Key):** Id da turma.
   - **Description:** Descrição da turma.
-  - **Course_Id:** Id do curso associado à turma.
+  - **CourseClass_Id:** Id do curso associado à turma.
   - **IsDeleted:** Indica se a turma foi apagada.
   - **Created_at:** Data e hora da criação da turma.
   - **Updated_at:** Data e hora da última atualização.
@@ -553,7 +553,7 @@ Colunas
   - **Role:** Função do user no sistema.
   - **IsActive:** Boolean para se o user está ativo.
   - **IsStudent:** Boolean para se o user é aluno.
-  - **Class_Id (Foreign Key):** Id da turma do user (nullable, apenas preenchido caso seja IsStudent seja true)
+  - **CourseClass_Id (Foreign Key):** Id da turma do user (nullable, apenas preenchido caso seja IsStudent seja true)
   - **IsDeleted:** Boolean para indicar se o usuário foi excluído.
   - **Created_at:** Data e hora de criação do user.
   - **Updated_at:** Data e hora da última atualização do user.
