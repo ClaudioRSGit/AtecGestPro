@@ -3,7 +3,7 @@
 
 - [INDEX](#index)
   - [**Tabela `Actions`:**](#tabela-actions)
-  - [**Tabela `Class`:**](#tabela-class)
+  - [**Tabela `CourseClass`:**](#tabela-courseclass)
   - [**Tabela `Clothing_Delivery`:**](#tabela-clothing_delivery)
   - [**Tabela `Comments`:**](#tabela-comments)
   - [**Tabela `Course`:**](#tabela-course)
@@ -52,7 +52,7 @@ Colunas:
 
 <br>
 
-## **Tabela `Class`:**
+## **Tabela `CourseClass`:**
 
 <strong> Descrição </strong> : Tabela de Turmas.
 
