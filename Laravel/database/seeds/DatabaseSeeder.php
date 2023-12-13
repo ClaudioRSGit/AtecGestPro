@@ -32,6 +32,11 @@ class DatabaseSeeder extends Seeder
         $this->call(TicketHistorySeeder::class);
         $this->call(EmailSeeder::class);
         $this->call(ClothingDeliverySeeder::class);
+        $this->call(MaterialSeeder::class);
+        $this->call(MaterialClothingDeliverySeeder::class);
+        $this->call(TrainingSeeder::class);
+        $this->call(MaterialTrainingSeeder::class);
+        $this->call(PartnerTrainingsUsersSeeder::class);
 
 
     }
