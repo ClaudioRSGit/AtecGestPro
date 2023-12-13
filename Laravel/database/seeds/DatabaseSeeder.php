@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(PartnerSeeder::class);
+        $this->call(PartnerContactSeeder::class);
 
     }
 }
