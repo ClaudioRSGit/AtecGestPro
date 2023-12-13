@@ -29,6 +29,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TicketSeeder::class);
         $this->call(TechnicianTicketSeeder::class);
         $this->call(CommentSeeder::class);
+        $this->call(TicketHistorySeeder::class);
 
 
     }
