@@ -10,6 +10,7 @@ use App\User;
 use App\Ticket_Status;
 use App\Ticket_Category;
 use App\Ticket_Prio;
+use App\Ticket_History;
 
 class Ticket extends Model
 {
@@ -43,5 +44,10 @@ class Ticket extends Model
     public function Ticket_Prio()
     {
         return $this->belongsTo(Ticket_Prio::class);
+    }
+
+    public function Ticket_History()
+    {
+        return $this->hasMany(\App\Ticket_History::class);
     }
 }

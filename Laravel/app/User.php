@@ -12,6 +12,8 @@ use App\Comment;
 use App\CourseClass;
 use App\Role_User;
 use App\Partner_Trainings_Users;
+use App\Clothing_Delivery;
+use App\Ticket_History;
 
 
 class User extends Model
@@ -56,6 +58,16 @@ class User extends Model
     public function Partner_Trainings_Users()
     {
         return $this->hasMany(\App\Partner_Trainings_Users::class);
+    }
+
+    public function Clothing_Delivery()
+    {
+        return $this->belongsTo(Clothing_Delivery::class);
+    }
+
+    public function Ticket_History()
+    {
+        return $this->hasMany(\App\Ticket_History::class);
     }
 
 }
