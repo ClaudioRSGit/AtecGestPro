@@ -7,79 +7,61 @@ use Illuminate\Http\Request;
 
 class MaterialController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
-        //
+        $materials = Material::all();
+        return view('materials.index', compact('materials'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        return view('materials.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
-    {
-        //
-    }
+{
+    try {
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Material  $material
-     * @return \Illuminate\Http\Response
-     */
+        $material = Material::create($request->all());
+
+        return redirect()->route('materials.show', $material->id)->with('success', 'Material inserido com sucesso!');
+        }
+        catch (\Exception $e) {
+
+            return redirect()->back()->with('error', 'Erro ao inserir o material. Por favor, tente novamente.');
+        }
+}
+
+
+
     public function show(Material $material)
     {
-        //
+        return view('materials.show', compact('material'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Material  $material
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Material $material)
     {
-        //
+        return view('materials.edit', compact('material'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Material  $material
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Material $material)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+        ]);
+
+        $material->update($request->all());
+
+        return redirect()->route('materials.index')->with('success', 'Success!');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Material  $material
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Material $material)
     {
-        //
+        $material->delete();
+
+        return redirect()->route('materials.index')->with('success', 'Success!');
     }
 }

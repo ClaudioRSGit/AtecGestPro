@@ -11,13 +11,13 @@ class Material extends Model
 {
     use SoftDeletes;
 
-    public function Material_Training()
+    public function materialTraining()
     {
-        return $this->hasMany(\App\Material_Training::class);
+        return $this->hasMany(Material_Training::class);
     }
 
-    public function Material_Clothing_Delivery()
+    public function materialClothingDelivery()
     {
-        return $this->hasMany(\App\Material_Clothing_Delivery::class);
+        return $this->hasMany(Material_Clothing_Delivery::class);
     }
 }
