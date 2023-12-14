@@ -5,7 +5,7 @@ use App\Http\Controllers\CourseClassController;
 use App\Http\Controllers\MaterialController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('master.main');
 });
 
 Auth::routes();
