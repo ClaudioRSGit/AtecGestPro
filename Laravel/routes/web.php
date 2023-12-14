@@ -23,7 +23,10 @@ Route::get('/materials/{material}', 'MaterialController@show')->name('materials.
 Route::get('/materials/create', 'MaterialController@create')->name('materials.create');
 Route::get('/materials/{material}/edit', 'MaterialController@edit')->name('materials.edit');
 
+Route::resource('trainings', 'TrainingController');
+Route::get('/trainings/{training}', 'TrainingController@show')->name('trainings.show');
+Route::get('/trainings/create', 'TrainingController@create')->name('trainings.create');
+Route::get('/trainings/{training}/edit', 'TrainingController@edit')->name('trainings.edit');
 
-Route::resource('trainings', 'TrainingsController');
 
 Route::resource('classes', CourseClassController::class);
