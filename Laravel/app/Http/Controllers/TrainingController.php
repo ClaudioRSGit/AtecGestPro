@@ -14,7 +14,8 @@ class TrainingController extends Controller
      */
     public function index()
     {
-        //
+        $trainings=Training::all();
+        return view('trainings.index', compact('trainings'));
     }
 
     /**
@@ -24,7 +25,7 @@ class TrainingController extends Controller
      */
     public function create()
     {
-        //
+        return view('trainings.create');
     }
 
     /**
@@ -35,18 +36,25 @@ class TrainingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $request->validate([
+
+            ]);
+
+            $training = Training::create($request->all());
+
+            return redirect()->route('trainings.show', $training->id)->with('success', 'Training inserido com sucesso!');
+        }
+        catch (\Exception $e) {
+
+            return redirect()->back()->with('error', 'Erro ao criar o training. Por favor, tente novamente.');
+        }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Training  $training
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(Training $training)
     {
-        //
+        return view('trainings.show', compact('training'));
     }
 
     /**
@@ -57,7 +65,7 @@ class TrainingController extends Controller
      */
     public function edit(Training $training)
     {
-        //
+        return view('trainings.edit', compact('training'));
     }
 
     /**
@@ -69,7 +77,14 @@ class TrainingController extends Controller
      */
     public function update(Request $request, Training $training)
     {
-        //
+        $request->validate([
+
+        ]);
+
+        $training->update($request->all());
+
+        return redirect()->route('trainings.index')->with('success', 'Success!');
+
     }
 
     /**
@@ -80,6 +95,8 @@ class TrainingController extends Controller
      */
     public function destroy(Training $training)
     {
-        //
+        $training->delete();
+
+        return redirect()->route('trainings.index')->with('success', 'Training deleted successfully');
     }
 }

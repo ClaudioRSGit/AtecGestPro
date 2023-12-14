@@ -17,7 +17,9 @@ Route::resource('users', 'UserController');
 Route::resource('tickets', 'TicketController');
 
 Route::resource('materials', 'MaterialController');
-Route::delete('/materials/{material}', 'MaterialController@destroy')->name('materials.destroy');
-Route::put('/materials/{material}', 'MaterialController@update')->name('materials.update');
 
 Route::resource('trainings', 'TrainingsController');
+
+Route::resource('trainings', 'TrainingController');
+
+Route::resource('classes', 'CourseClassController');
