@@ -20,4 +20,10 @@ class Training extends Model
     {
         return $this->hasMany(\App\Partner_Trainings_Users::class);
     }
+
+    protected $fillable = [
+        'name', 'description','category'
+    ];
+
+
 }
