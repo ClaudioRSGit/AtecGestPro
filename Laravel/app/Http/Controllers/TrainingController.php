@@ -7,11 +7,7 @@ use Illuminate\Http\Request;
 
 class TrainingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $trainings=Training::all();
@@ -36,25 +32,25 @@ class TrainingController extends Controller
      */
     public function store(Request $request)
     {
-        try {
-            $request->validate([
+        $this->validate(request(),
+            [
+                'name' => 'required',
+                'description' => 'required',
+                'category' => 'required',
 
             ]);
+        Training::create($request->all());
+        return redirect()->route('trainings.index')->with('success','Formação criada com sucesso');
 
-            $training = Training::create($request->all());
-
-            return redirect()->route('trainings.show', $training->id)->with('success', 'Training inserido com sucesso!');
-        }
-        catch (\Exception $e) {
-
-            return redirect()->back()->with('error', 'Erro ao criar o training. Por favor, tente novamente.');
-        }
     }
 
 
     public function show(Training $training)
     {
+
         return view('trainings.show', compact('training'));
+
+
     }
 
     /**
@@ -65,7 +61,8 @@ class TrainingController extends Controller
      */
     public function edit(Training $training)
     {
-        return view('trainings.edit', compact('training'));
+
+            return view('trainings.edit', compact('training'));
     }
 
     /**
@@ -77,13 +74,16 @@ class TrainingController extends Controller
      */
     public function update(Request $request, Training $training)
     {
-        $request->validate([
 
-        ]);
+            $this->validate(request(),
+                [
+                    'name' => 'required',
+                    'description' => 'required',
+                    'category' => 'required',
 
-        $training->update($request->all());
-
-        return redirect()->route('trainings.index')->with('success', 'Success!');
+                ]);
+            $training->update($request->all());
+            return redirect()->route('trainings.index')->with('success','Formação atualizada com sucesso');
 
     }
 
@@ -95,8 +95,8 @@ class TrainingController extends Controller
      */
     public function destroy(Training $training)
     {
-        $training->delete();
 
-        return redirect()->route('trainings.index')->with('success', 'Training deleted successfully');
+                $training->delete();
+                return redirect()->route('trainings.index')->with('success','Formação eliminada com sucesso');
     }
 }
