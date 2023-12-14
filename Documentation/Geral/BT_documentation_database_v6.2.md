@@ -61,17 +61,16 @@ Colunas:
   - **Id (Primary Key):** Id da turma.
   - **Description:** Descrição da turma.
   - **CourseClass_Id:** Id do curso associado à turma.
-  - **IsDeleted:** Indica se a turma foi apagada.
   - **Created_at:** Data e hora da criação da turma.
   - **Updated_at:** Data e hora da última atualização.
   - **Deleted_at:** Data e hora da exclusão.
 
   Exemplo de dados:
 
-  | Id | Description  | Course_Id | IsDeleted | Created_at          | Updated_at           | Deleted_at           |
-  |----|--------------|-----------|-----------|---------------------|---------------------|----------------------|
-  | 1  | TPSIP        | 001       | 0         | 2023-11-23 10:15:00 | 2023-11-24 10:15:00 | NULL                 |
-  | 2  | GRSIP        | 002       | 1         | 2023-11-23 11:30:00 | 2023-11-24 10:15:00 | 2023-11-24 11:45:00 |
+  | Id | Description  | Course_Id | Created_at          | Updated_at           | Deleted_at           |
+  |----|--------------|-----------|---------------------|---------------------|----------------------|
+  | 1  | TPSIP        | 001       | 2023-11-23 10:15:00 | 2023-11-24 10:15:00 | NULL                 |
+  | 2  | GRSIP        | 002       | 2023-11-23 11:30:00 | 2023-11-24 10:15:00 | 2023-11-24 11:45:00 |
 
 
 <br>
@@ -86,17 +85,18 @@ Colunas:
   - **User_Id:** Id do user que recebe o fardamento;
   - **Delivered:** Indica se a entrega foi realizada (1 para sim, 0 para não);
   - **Additional_Notes:** Notas adicionais (exemplo: se for necessário mais fardamento).
-  - **IsDeleted:** Indica se o registo foi excluído (1 para sim, 0 para não).
+
   - **Delivered_at:** Data e hora da entrega;
   - **Updated_at:** Data e hora da última atualização;
   - **Deleted_at:** Data e hora da exclusão;
 
   Exemplo de dados:
 
-  | Id | User_Id | Delivered | Additional_Notes       | IsDeleted | Delivered_at         | Updated_at           | Deleted_at           |
-  |----|---------|-----------|-------------|---------|----------------------|----------------------|-------------------------|
-  | 1  | 001     | 1         | Este aluno precisou de mais uma bata | 0 | 2023-11-24 09:30:00  | 2023-11-24 10:15:00 | NULL                 |
-  | 2  | 002     | 0         | NULL | 0 | NULL                 | 2023-11-24 11:45:00 | NULL                 |
+  | Id | User_Id | Delivered | Additional_Notes       | Delivered_at         | Updated_at           | Deleted_at           |
+  |----|---------|-----------|-------------|----------------------|----------------------|-------------------------|
+  | 1  | 001     | 1         | Este aluno precisou de mais uma bata | 2023-11-24 09:30:00  | 2023-11-24 10:15:00 | NULL                 |
+  | 2  | 002     | 0         | NULL | NULL                 | 2023-11-24 11:45:00 | NULL                 |
+
 
 
 <br>
@@ -113,17 +113,16 @@ Colunas:
   - **User_Id:** Id do User que fez o comentário.
   - **Ticket_Id:** Id do ticket associado ao comentário.
   - **IsPublic:** Indica se o comentário é público (1 para sim, 0 para não).
-  - **IsDeleted:** Indica se o comentário foi apagado.
   - **Created_at:** Data e hora de criação do comentário.
   - **Updated_at:** Data e hora da última atualização.
   - **Deleted_at:** Data e hora da exclusão.
 
   Exemplo de dados:
 
-  | Id | Description             | User_Id | Ticket_Id | IsPublic | IsDeleted | Created_at           | Updated_at           | Deleted_at           |
-  |----|-------------------------|---------|-----------|----------|-----------|-----------|----------------------|----------------------|
-  | 1  | Tenho uma cadeira partida na sala 1.20   | 001     | 201       | 1  | 0      | 2023-11-24 08:45:00 | 2023-11-24 09:30:00 | NULL                 |
-  | 2  | Issue resolved.         | 002     | 202       | 0 | 0       | 2023-11-24 10:00:00 | 2023-11-24 10:45:00 | NULL                 |
+  | Id | Description             | User_Id | Ticket_Id | IsPublic | Created_at           | Updated_at           | Deleted_at           |
+  |----|-------------------------|---------|-----------|----------|----------------------|----------------------|----------------------|
+  | 1  | Tenho uma cadeira partida na sala 1.20   | 001     | 201       | 1  | 2023-11-24 08:45:00 | 2023-11-24 09:30:00 | NULL                 |
+  | 2  | Issue resolved.         | 002     | 202       | 0 | 2023-11-24 10:00:00 | 2023-11-24 10:45:00 | NULL                 |
 
 
 <br>
@@ -137,17 +136,16 @@ Descrição: Contém os detalhes dos cursos.
   - **Id (Primary Key):** Id do curso.
   - **Description:** Nome ou descrição do curso.
   - **Code:** Código do curso.
-  - **IsDeleted:** Indica se o curso foi excluído (1 para sim, 0 para não).
   - **Created_at:** Data e hora de criação do curso.
   - **Updated_at:** Data e hora da última atualização.
   - **Deleted_at:** Data e hora da exclusão.
 
   Exemplo de dados:
 
-  | Id | Description               | Code   | IsDeleted | Created_at           | Updated_at           | Deleted_at           |
-  |----|---------------------------|--------|-----------|----------------------|----------------------|----------------------|
-  | 1  | Técnico Especialista de Tecnologias e Programação de Sistemas de Informática| TPSIP| 0         | 2023-11-24 09:00:00 | 2023-11-24 09:30:00 | NULL                 |
-  | 2  | Cyber Security     | CS | 0         | 2023-11-24 10:15:00 | 2023-11-24 10:45:00 | NULL                 |
+  | Id | Description               | Code   | Created_at           | Updated_at           | Deleted_at           |
+  |----|---------------------------|--------|----------------------|----------------------|----------------------|
+  | 1  | Técnico Especialista de Tecnologias e Programação de Sistemas de Informática| TPSIP| 2023-11-24 09:00:00 | 2023-11-24 09:30:00 | NULL                 |
+  | 2  | Cyber Security     | CS | 2023-11-24 10:15:00 | 2023-11-24 10:45:00 | NULL                 |
 
 
 <br>
@@ -169,17 +167,16 @@ Descrição: Contém as informações sobre os materiais disponíveis.
   - **Gender:** Género do material (apenas para materiais do tipo roupa; ex: bata de homem).
   - **Size:** Tamanho do material (apenas para materiais do tipo roupa).
   - **Role:** Indica se é para formador, formando ou não-docente (apenas para materiais do tipo roupa).
-  - **IsDeleted:** Indica se o material foi excluído (1 para sim, 0 para não).
   - **Created_at:** Data e hora de criação do material.
   - **Updated_at:** Data e hora da última atualização.
   - **Deleted_at:** Data e hora da exclusão.
 
   Exemplo de dados:
 
-  | Id | Name          | Description               | IsInternal | Quantity | Aquisition_Date | Supplier       | IsClothing | Gender | Size | Role      | IsDeleted | Created_at           | Updated_at           | Deleted_at           |
-  |----|---------------|---------------------------|------------|----------|-----------------|----------------|------------------|--------|------|-----------|-----------|----------------------|----------------------|----------------------|
-  | 1  | Bata        | Bata de Formador   | 1          | 10       | 2023-11-24      | Adidas   | 1                | Male   | M | Formador      | 0         | 2023-11-24 09:45:00 | 2023-11-24 10:15:00 | NULL                 |
-  | 2  | Bota de Biqueira de aço| EPI para formandos        | 1          | 50       | 2023-11-24      | SafetyEquip    | 1                | Male   | 40 | Formando      | 0         | 2023-11-24 11:00:00 | 2023-11-24 11:30:00 | NULL                 |
+  | Id | Name          | Description               | IsInternal | Quantity | Aquisition_Date | Supplier       | IsClothing | Gender | Size | Role      | Created_at           | Updated_at           | Deleted_at           |
+  |----|---------------|---------------------------|------------|----------|-----------------|----------------|------------------|--------|------|-----------|----------------------|----------------------|----------------------|
+  | 1  | Bata        | Bata de Formador   | 1          | 10       | 2023-11-24      | Adidas   | 1                | Male   | M | Formador      | 2023-11-24 09:45:00 | 2023-11-24 10:15:00 | NULL                 |
+  | 2  | Bota de Biqueira de aço| EPI para formandos        | 1          | 50       | 2023-11-24      | SafetyEquip    | 1                | Male   | 40 | Formando      | 2023-11-24 11:00:00 | 2023-11-24 11:30:00 | NULL                 |
 
 
 <br>
@@ -235,16 +232,15 @@ Colunas:
   - **Description:** Conteudo da notificação.
   - **Notification_Type_Id (Foreign Key):** Referência à tabela que contém os tipos de notificações.
   - **Object_Id:** Id do objeto (Ticket / Material / Training / Comment).
-  - **IsDeleted:** Indica se a notificação foi excluída.
   - **Created_at:** Data e hora de criação da notificação.
   - **Deleted_at:** Data e hora de exclusão da notificação.
 
   Exemplo de dados:
 
-  | Id | Description   | Notification_Type_Id | Object_Id | IsDeleted | Created_at | Deleted_at |
-  |----|---------------|----------------------|-----------|-----------|------------|------------|
-  | 1  | Nova mensagem | 101                  | 201       | 0         | 2023-11-24 13:09:29  | NULL                 |
-  | 2  | Atualização         | 102      | 202        | 1          | 2023-11-23 15:30:45  | 2023-11-23 16:00:12  |
+  | Id | Description   | Notification_Type_Id | Object_Id | Created_at | Deleted_at |
+  |----|---------------|----------------------|-----------|------------|------------|
+  | 1  | Nova mensagem | 101                  | 201       | 2023-11-24 13:09:29  | NULL                 |
+  | 2  | Atualização         | 102      | 202        | 2023-11-23 15:30:45  | 2023-11-23 16:00:12  |
 
 
 <br>
@@ -291,7 +287,7 @@ Colunas:
 
 ## **Tabela `Partner_Trainings_Users`:**
 
-Descrição: Tabela que guarda as formações externas, parceiros e tecnico responsavel.
+Descrição: Tabela que guarda as formações externas, parceiros e técnico responsável.
      
 Colunas:
 
@@ -301,17 +297,16 @@ Colunas:
   - **Partner_Id (Foreign Key):** Id do parceiro que vai receber a formação.
   - **Start_Date:** Data de início da formação.
   - **End_Date:** Data de término da formação.
-  - **IsDeleted:** Indica se a formação foi excluída.
   - **Created_at:** Data e hora de criação da formação.
   - **Updated_at:** Data e hora da última atualização da formação.
   - **Deleted_at:** Data e hora de exclusão da formação.
 
   Exemplo de dados:
 
-  | Id | Partner_Id | Training_Id | User_Id | Start_Date          | End_Date            | IsDeleted | Created_at           | Updated_at           | Deleted_at           |
-  |----|------------|--------------|---------|---------------------|---------|------------|---------------------|---------------------|---------------------|
-  | 1  | 401        | 501          | 601     | 2023-11-01 08:00:00 | 2023-11-30 17:00:00 | 0                | 2023-11-01 10:30:15 | 2023-11-28 14:20:45 | NULL                |
-  | 2  | 402        | 502          | 602     | 2023-11-15 09:30:00 | 2023-11-30 15:45:00 | 1                | 2023-11-15 11:40:22 | 2023-11-29 12:15:30 | 2023-11-30 09:10:05 |
+  | Id | Partner_Id | Training_Id | User_Id | Start_Date          | End_Date            | Created_at           | Updated_at           | Deleted_at           |
+  |----|------------|--------------|---------|---------------------|---------|---------------------|---------------------|---------------------|
+  | 1  | 401        | 501          | 601     | 2023-11-01 08:00:00 | 2023-11-30 17:00:00 | 2023-11-01 10:30:15 | 2023-11-28 14:20:45 | NULL                |
+  | 2  | 402        | 502          | 602     | 2023-11-15 09:30:00 | 2023-11-30 15:45:00 | 2023-11-15 11:40:22 | 2023-11-29 12:15:30 | 2023-11-30 09:10:05 |
 
 <br>
 
@@ -325,17 +320,17 @@ Colunas Principais: Id, Name, Description, Address, Contact.
   - **Name:** Nome do parceiro.
   - **Description:** Descrição do parceiro.
   - **Address:** Endereço do parceiro.
-  - **IsDeleted:** Indica se o parceiro foi excluído.
   - **Created_at:** Data e hora de criação do parceiro.
   - **Updated_at:** Data e hora da última atualização do parceiro.
   - **Deleted_at:** Data e hora de exclusão do parceiro.
 
   Exemplo de dados:
 
-  | Id | Name             | Description            | Address                  | IsDeleted | Created_at           | Updated_at           | Deleted_at           |
-  |----|------------------|------------------------|-----------------------------------------------|-----------|---------------------|---------------------|---------------------|
-  | 401 | Partner A        | Training partner       | Rua Partner, 123         |  0         | 2023-11-01 10:00:00 | 2023-11-25 15:30:00 | NULL                |
-  | 402 | Partner B        | Fitness equipment      | Av. Commercial, 567      | 1         | 2023-11-15 11:20:00 | 2023-11-29 14:45:00 | 2023-11-30 10:05:00 |
+  | Id | Name             | Description            | Address                  | Created_at           | Updated_at           | Deleted_at           |
+  |----|------------------|------------------------|-----------------------------------------------|---------------------|---------------------|---------------------|
+  | 401 | Partner A        | Training partner       | Rua Partner, 123         | 2023-11-01 10:00:00 | 2023-11-25 15:30:00 | NULL                |
+  | 402 | Partner B        | Fitness equipment      | Av. Commercial, 567      | 2023-11-15 11:20:00 | 2023-11-29 14:45:00 | 2023-11-30 10:05:00 |
+
 
 <br>
 
@@ -386,17 +381,17 @@ Colunas:
 
   - **Id (Primary Key):** Id da categoria do ticket.
   - **Description:** Descrição da categoria de ticket.
-  - **IsDeleted:** Indica se a categoria foi excluída.
   - **Created_at:** Data e hora de criação da categoria.
   - **Updated_at:** Data e hora da última atualização da categoria.
   - **Deleted_at:** Data e hora de exclusão da categoria.
 
   Exemplo de dados:
 
-  | Id | Description           | IsDeleted | Created_at           | Updated_at           | Deleted_at           |
-  |----|-----------------------|-----------|---------------------|---------------------|---------------------|
-  | 1  | Software        | 0         | 2023-11-05 09:15:00 | 2023-11-25 14:40:00 | NULL                |
-  | 2  | Equipment | 1         | 2023-11-18 10:30:00 | 2023-11-28 12:20:00 | 2023-11-29 08:45:00 |
+  | Id | Description           | Created_at           | Updated_at           | Deleted_at           |
+  |----|-----------------------|---------------------|---------------------|---------------------|
+  | 1  | Software        | 2023-11-05 09:15:00 | 2023-11-25 14:40:00 | NULL                |
+  | 2  | Equipment | 2023-11-18 10:30:00 | 2023-11-28 12:20:00 | 2023-11-29 08:45:00 |
+
 
 <br>
 
@@ -429,17 +424,17 @@ Colunas:
   - **Id (Primary Key):** Id da prioridade do ticket.
   - **Description:** Descrição da prioridade do ticket.
   - **Default_DueByDate:** Data limite padrão para resolução do ticket com esta prioridade selecionada.
-  - **IsDeleted:** Indica se a prioridade foi excluída.
   - **Created_at:** Data e hora de criação da prioridade.
   - **Updated_at:** Data e hora da última atualização da prioridade.
   - **Deleted_at:** Data e hora de exclusão da prioridade.
 
   Exemplo de dados:
 
-  | Id | Description | Default_DueByDate | IsDeleted | Created_at           | Updated_at           | Deleted_at           |
-  |----|-------------|-------------------|-----------|---------------------|---------------------|---------------------|
-  | 1  | High        | 2023-11-05 09:30:00            | 0         | 2023-11-05 09:30:00 | 2023-11-25 15:10:00 | NULL                |
-  | 2  | Medium      | 2023-11-05 09:30:00            | 1         | 2023-11-18 11:45:00 | 2023-11-28 13:30:00 | 2023-11-29 09:20:00 |
+  | Id | Description | Default_DueByDate | Created_at           | Updated_at           | Deleted_at           |
+  |----|-------------|-------------------|---------------------|---------------------|---------------------|
+  | 1  | High        | 2023-11-05 09:30:00            | 2023-11-05 09:30:00 | 2023-11-25 15:10:00 | NULL                |
+  | 2  | Medium      | 2023-11-05 09:30:00            | 2023-11-18 11:45:00 | 2023-11-28 13:30:00 | 2023-11-29 09:20:00 |
+
 
 <br>
 
@@ -451,18 +446,17 @@ Colunas:
 
   - **Id (Primary Key):** Id do status do ticket.
   - **Description:** Descrição do status do ticket.
-  - **IsDeleted:** Indica se o status foi excluído.
   - **Created_at:** Data e hora de criação do status.
   - **Updated_at:** Data e hora da última atualização do status.
   - **Deleted_at:** Data e hora de exclusão do status.
 
   Exemplo de dados:
 
-  | Id | Description | IsDeleted | Created_at          | Updated_at          | Deleted_at          |
-  |----|-------------|-----------|---------------------|---------------------|---------------------|
-  | 1  | Open        | 0         | 2023-11-05 10:00:00 | 2023-11-25 15:30:00 | NULL                |
-  | 2  | On Hold     | 1         | 2023-11-18 12:15:00 | 2023-11-28 14:00:00 | 2023-11-29 09:45:00 |
-  | 3  | Resolved    | 1         | 2023-11-18 12:15:00 | 2023-11-28 14:00:00 | 2023-11-29 09:45:00 |
+  | Id | Description | Created_at          | Updated_at          | Deleted_at          |
+  |----|-------------|---------------------|---------------------|---------------------|
+  | 1  | Open        | 2023-11-05 10:00:00 | 2023-11-25 15:30:00 | NULL                |
+  | 2  | On Hold     | 2023-11-18 12:15:00 | 2023-11-28 14:00:00 | 2023-11-29 09:45:00 |
+  | 3  | Resolved    | 2023-11-18 12:15:00 | 2023-11-28 14:00:00 | 2023-11-29 09:45:00 |
 
 <br>
 
@@ -481,17 +475,15 @@ Colunas:
   - **Ticket_Status_Id (Foreign Key):** Referência ao status do ticket.
   - **Ticket_Category_Id (Foreign Key):** Referência à categoria do ticket.
   - **Ticket_Prio_Id (Foreign Key):** Referência à prioridade do ticket.
-  - **IsDeleted:** Indica se o ticket foi excluído.
   - **Created_at:** Data e hora de criação do ticket.
   - **Updated_at:** Data e hora da última atualização do ticket.
   - **Deleted_at:** Data e hora de exclusão do ticket.
 
   Exemplo de dados:
 
-  | Id | Requester_Id | Title            | Description                 | DueByDate           | Attachments | Ticket_Status_Id | Ticket_Category_Id | Ticket_Prio_Id | IsDeleted | Created_at           | Updated_at           | Deleted_at           |
+  | Id | Requester_Id | Title            | Description                 | DueByDate           | Attachments | Ticket_Status_Id | Ticket_Category_Id | Ticket_Prio_Id | Created_at           | Updated_at           | Deleted_at           |
   |----|---------|------------------|-----------------------------|-----------|---------------------|-----------|-------------|--------------------|----------------|---------------------|---------------------|---------------------|
-  | 101| 1       | Lampada Fundida | Preciso de uma lampada para a sala 1.20 | 2023-12-01 14:00:00 | file1.pdf   | 1     | 1                  | 1              | 0         | 2023-11-05 10:30:00 | 2023-11-25 15:50:00 | NULL                |
-  | 102| 2       | Cadeira Partida   | Cadeira partida na sala 1.17  | 2023-12-05 10:00:00 | file2.pdf   | 1     | 2                  | 2              | 1         | 2023-11-18 12:45:00 | 2023-11-28 14:30:00 | 2023-11-29 10:10:00 |
+  | 101| 1       | Lampada Fundida | Preciso de uma lâmpada para a sala 1.20 | 2023-12-01 14:00:00 | file1.pdf   | 1     | 1                  | 1              | 2023-11-05 10:30:00 | 2023-11-25 15
 
 <br>
 
@@ -524,17 +516,17 @@ Colunas:
   - **Name:** Nome da formação.
   - **Description:** Descrição da formação.
   - **Category:** Categoria da formação.
-  - **IsDeleted:** Boolean para indicar se a formação foi excluída.
   - **Created_at:** Data e hora de criação da formação.
   - **Updated_at:** Data e hora da última atualização da formação.
   - **Deleted_at:** Data e hora de exclusão da formação.
 
   Exemplo de dados:
 
-  | Id  | Name                  | Description             | Category | isDeleted | Created_at           | Updated_at           | Deleted_at           |
-  |-----|------------|----------------------------|---------|-----------|----|-----------|---------------------|
-  | 301 | Cybersecurity    | Overview on security when browsing online       | Security        | 0 | 2023-11-05 10:30:00 | 2023-11-25 15:50:00 | NULL                |
-  | 302 | Networking   | Network Configuration   | Networking        | 0 | 2023-11-18 12:45:00 | 2023-11-28 14:30:00 | NULL |
+  | Id  | Name                  | Description             | Category | Created_at           | Updated_at           | Deleted_at           |
+  |-----|------------|----------------------------|---------|---------------------|---------------------|---------------------|
+  | 301 | Cybersecurity    | Overview on security when browsing online       | Security        | 2023-11-05 10:30:00 | 2023-11-25 15:50:00 | NULL                |
+  | 302 | Networking   | Network Configuration   | Networking        | 2023-11-18 12:45:00 | 2023-11-28 14:30:00 | NULL |
+
 
 <br>
 
@@ -554,17 +546,16 @@ Colunas
   - **IsActive:** Boolean para se o user está ativo.
   - **IsStudent:** Boolean para se o user é aluno.
   - **CourseClass_Id (Foreign Key):** Id da turma do user (nullable, apenas preenchido caso seja IsStudent seja true)
-  - **IsDeleted:** Boolean para indicar se o usuário foi excluído.
   - **Created_at:** Data e hora de criação do user.
   - **Updated_at:** Data e hora da última atualização do user.
   - **Deleted_at:** Data e hora de exclusão do user.
 
   Exemplo de dados:
 
-  | Id | Name           | Username       | Email                 | Contact       | Password      | Role          | IsActive | IsStudent | Class_Id | IsDeleted | Created_at           | Updated_at           | Deleted_at           |
-  |----|----------------|----------------|-----------------------|---------------|---------------|---------------|---------------|----------|-----------|---------------|---------------------|---------------------|---------------------|
-  | 1  | João Silva     | T0000001   | joao@email.com        | +123456789    | hashedpass123 | Admin |  1        | 0         | NULL          | 0         | 2023-11-05 09:45:00 | 2023-11-25 16:00:00 | NULL                |
-  | 2  | Maria Oliveira | T0123452      | maria@email.com       | +987654321    | hashedpass456 | Student    | 1        | 1         | TPSI 06.22          | 0         | 2023-11-18 13:00:00 | 2023-11-28 15:00:00 | NULL |
+  | Id | Name           | Username       | Email                 | Contact       | Password      | Role          | IsActive | IsStudent | Class_Id | Created_at           | Updated_at           | Deleted_at           |
+  |----|----------------|----------------|-----------------------|---------------|---------------|---------------|---------------|----------|-----------|---------------------|---------------------|---------------------|
+  | 1  | João Silva     | T0000001   | joao@email.com        | +123456789    | hashedpass123 | Admin |  1        | 0         | NULL          | 2023-11-05 09:45:00 | 2023-11-25 16:00:00 | NULL                |
+  | 2  | Maria Oliveira | T0123452      | maria@email.com       | +987654321    | hashedpass456 | Student    | 1    
 
 <br>
 
@@ -577,21 +568,19 @@ Descrição: Contém as informações sobre os contactos de cada Partner.
   - **Id (Primary Key):** Id do Contact.
   - **Contact:** Contacto do Partner.
   - **Partner_Id:** Id do Partner.
-  - **IsDeleted:** Boolean para indicar se o contacto foi excluído.
   - **Created_at:** Data e hora de criação do user.
   - **Updated_at:** Data e hora da última atualização do user.
   - **Deleted_at:** Data e hora de exclusão do user.
 
   Exemplo de dados:
 
-  | Id | Contact   | Partner_Id | IsDeleted | Created_at          | Updated_at          | Deleted_at          |
-  |----|-----------|------------|-----------|---------------------|---------------------|------|
-  | 1  | 918283432 |      1     | 0         | 2023-11-05 09:45:00 | 2023-11-25 16:00:00 | NULL |
-  | 2  | 252839344 |      1     | 0         | 2023-11-05 09:47:00 | 2023-11-25 16:00:00 | NULL |
-  | 3  | 918233432 |      2     | 0         | 2023-11-05 09:50:00 | 2023-11-25 17:00:00 | NULL |
-  | 4  | 252812344 |      2     | 0         | 2023-11-05 09:42:00 | 2023-11-25 17:00:00 | NULL |
-  
-  
+  | Id | Contact   | Partner_Id | Created_at          | Updated_at          | Deleted_at          |
+  |----|-----------|------------|---------------------|---------------------|---------------------|
+  | 1  | 918283432 |      1     | 2023-11-05 09:45:00 | 2023-11-25 16:00:00 | NULL                |
+  | 2  | 252839344 |      1     | 2023-11-05 09:47:00 | 2023-11-25 16:00:00 | NULL                |
+  | 3  | 918233432 |      2     | 2023-11-05 09:50:00 | 2023-11-25 17:00:00 | NULL                |
+  | 4  | 252812344 |      2     | 2023-11-05 09:42:00 | 2023-11-25 17:00:00 | NULL                |
+
 <br>
 
 ## **Tabela `Email`:**
