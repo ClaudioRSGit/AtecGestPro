@@ -22,6 +22,8 @@
     @component('master.sidebar')
 
     @endcomponent
+
+    
     @yield('content')
 
 </main>
