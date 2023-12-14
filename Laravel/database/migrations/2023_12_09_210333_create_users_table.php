@@ -26,7 +26,7 @@ class CreateUsersTable extends Migration
             $table->foreignId('course_class_id')->constrained('course_classes')->onDelete('cascade')->onUpdate('cascade');
             $table->boolean('isDeleted')->default(false);
             $table->timestamps();
-            $table->softDeletes('DeletedAt', 0);
+            $table->softDeletes('deleted_at', 0);
         });
     }
 

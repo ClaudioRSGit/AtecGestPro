@@ -15,9 +15,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 // Route::resource('dashboard', 'DashboardController');
 
 Route::resource('users', 'UserController');
-Route::get('/users/{user}', 'UserController@show')->name('users.show');
-Route::get('/users/create', 'UserController@create')->name('users.create');
-Route::get('/users/{user}/edit', 'UserController@edit')->name('users.edit');
 
 Route::resource('tickets', 'TicketController');
 
