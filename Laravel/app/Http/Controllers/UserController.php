@@ -25,7 +25,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('users.create');
     }
 
     /**
@@ -36,7 +36,26 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $request->validate([
+                'name' => 'required|string|max:255',
+            ]);
+
+            $user = new User();
+            $user->name = $request->name;
+            $user->username = $request->username;
+            $user->email = $request->email;
+            $user->role = $request->role;
+            $user->isActive = $request->isActive;
+            $user->save();
+
+
+            return redirect()->route('users.index');
+            }
+            catch (\Exception $e) {
+
+                return redirect()->back()->with('error', 'Erro ao inserir o utilizador. Por favor, tente novamente.');
+            }
     }
 
     /**

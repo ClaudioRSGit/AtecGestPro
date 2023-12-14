@@ -18,6 +18,18 @@ use App\Ticket_History;
 
 class User extends Model
 {
+    protected $fillable = [
+        'name',
+        'username',
+        'email',
+        'contact',
+        'password',
+        'role',
+        'isActive',
+        'isStudent',
+        'course_class_id',
+    ];
+
     use SoftDeletes;
 
     public function emails()

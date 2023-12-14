@@ -24,7 +24,6 @@ class CreateUsersTable extends Migration
             $table->boolean('isActive')->default(false);
             $table->boolean('isStudent')->default(false);
             $table->foreignId('course_class_id')->constrained('course_classes')->onDelete('cascade')->onUpdate('cascade');
-            $table->boolean('isDeleted')->default(false);
             $table->timestamps();
             $table->softDeletes('deleted_at', 0);
         });
