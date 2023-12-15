@@ -12,27 +12,30 @@
     {{-- .STYLE SECTION --}}
 </head>
 <body>
-{{-- Header --}}
-@component('master.header')
-@endcomponent
-{{-- .Header --}}
 
-{{-- Main --}}
+    {{-- Main --}}
 <main>
-    @component('master.sidebar')
-
+    @component('master.header')
     @endcomponent
 
-    
-    @yield('content')
 
+    @component('master.sidebar')
+    @endcomponent
+
+
+    <div class="content">
+        @yield('content')
+    </div>
+
+    <div class="push">
+
+    </div>
+    @component('master.footer')
+    @endcomponent
 </main>
 {{-- .Main --}}
 
-{{-- Footer --}}
-@component('master.footer')
-@endcomponent
-{{-- .Footer --}}
+
 
 {{-- SCRIPTS SECTION --}}
 <script src="{!! asset('js/app.js') !!}" type="text/javascript"></script>

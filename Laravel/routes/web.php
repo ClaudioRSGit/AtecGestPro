@@ -18,8 +18,6 @@ Route::resource('tickets', 'TicketController');
 
 Route::resource('materials', 'MaterialController');
 
-Route::resource('trainings', 'TrainingsController');
-
 Route::resource('trainings', 'TrainingController');
 
 Route::resource('classes', 'CourseClassController');
