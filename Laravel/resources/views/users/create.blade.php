@@ -2,6 +2,13 @@
 
 @section('content')
     <div class="container">
+
+        @if(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+
         <h1>Criar Novo Utilizador</h1>
 
         <form method="post" action="{{ route('users.store') }}" enctype="multipart/form-data" id="userForm">
@@ -18,21 +25,37 @@
                     <div class="mb-3">
                         <label for="username" class="form-label">Username:</label>
                         <input type="text" class="form-control" id="username" name="username" value="{{ old('username') }}">
+
+                        @error('username')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                         @enderror
                     </div>
 
                     <div class="mb-3">
                         <label for="email" class="form-label">Email:</label>
                         <input type="text" class="form-control" id="email" name="email" value="{{ old('email') }}">
+
+                        @error('email')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
                         <label for="contact" class="form-label">Contacto:</label>
                         <input type="text" class="form-control" id="contact" name="contact" value="{{ old('contact') }}">
+
+                        @error('contact')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
                         <label for="password" class="form-label">Password:</label>
                         <input type="text" class="form-control" id="password" name="password" value="{{ old('password') }}">
+
+                        @error('password')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
 

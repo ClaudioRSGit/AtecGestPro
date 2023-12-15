@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h1>Editar Material</h1>
+        <h1>Editar Utilizador</h1>
 
         <form method="post" action="{{ route('users.update', $user->id) }}" id="userForm">
             @csrf
@@ -39,6 +39,10 @@
                         <label for="contact" class="form-label">Contacto:</label>
                         <input type="text" class="form-control" id="contact" name="contact"
                             value="{{ $user->contact }}">
+
+                            @error('contact')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                     </div>
 
                     <div class="mb-3">
