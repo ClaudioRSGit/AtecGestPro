@@ -4,7 +4,7 @@
     <div class="container">
         <h1>Editar Material</h1>
 
-        <form method="post" action="{{ route('users.update', $user->id) }}">
+        <form method="post" action="{{ route('users.update', $user->id) }}" id="userForm">
             @csrf
             @method('put')
 
@@ -19,11 +19,20 @@
                         <label for="username" class="form-label">Username:</label>
                         <input type="text" class="form-control" id="username" name="username"
                             value="{{ $user->username }}">
+
+                            @error('username')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                     </div>
 
                     <div class="mb-3">
                         <label for="email" class="form-label">Email:</label>
-                        <input type="text" class="form-control" id="email" name="email" value="{{ $user->email }}">
+                        <input type="text" class="form-control" id="email" name="email"
+                            value="{{ $user->email }}">
+
+                            @error('email')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                     </div>
 
                     <div class="mb-3">
@@ -31,6 +40,16 @@
                         <input type="text" class="form-control" id="contact" name="contact"
                             value="{{ $user->contact }}">
                     </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Password:</label>
+                        <input type="password" class="form-control" id="password" name="password" placeholder="{{ $user->password ? 'Não altere para manter a password existente' : '' }}">
+
+                        @error('password')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
                 </div>
 
                 <div class="col-md-6">
@@ -45,7 +64,7 @@
                     </div>
 
                     @if ($user->isStudent == 1)
-                        <div class="mb-3">
+                        <div class="mb-3" id="labelCourseClass">
                             <label for="course_class_id" class="form-label">Turma:</label>
                             <select class="form-select" id="course_class_id" name="course_class_id">
                                 @foreach ($courseClasses as $class)
@@ -57,7 +76,7 @@
                             </select>
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-3" id="labelCourseDescription">
                             <label for="courseDescription" class="form-label">Curso:</label>
                             <select class="form-select" id="courseDescription" name="courseDescription">
                                 @foreach ($courses as $course)
@@ -81,14 +100,38 @@
                     <div class="form-group">
                         <label for="actions">Ações:</label>
                         <button type="submit" class="btn btn-primary">Salvar Alterações</button>
-                        <a href="{{ route('users.destroy', $user->id) }}" class="btn btn-secondary mt-3">Excluir</a>
+                        <button type="submit" form="deleteForm" class="btn btn-danger mt-3">Excluir</button>
                         <a href="{{ route('users.show', $user->id) }}" class="btn btn-secondary mt-3">Cancelar</a>
                     </div>
                 </div>
 
             </div>
-
     </div>
     </form>
+    <form id="deleteForm" action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline">
+        @csrf
+        @method('DELETE')
+    </form>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function() {
+        $('#course_class_id, #courseDescription, #labelCourseClass, #labelCourseDescription').hide();
+
+        function toggleFieldsBasedOnRole() {
+            var selectedRole = $('#role').val();
+
+            if (selectedRole === 'formando') {
+                $('#course_class_id, #courseDescription, #labelCourseClass, #labelCourseDescription').show();
+            } else {
+                $('#course_class_id, #courseDescription, #labelCourseClass, #labelCourseDescription').hide();
+            }
+        }
+        toggleFieldsBasedOnRole();
+
+        $('#role').change(toggleFieldsBasedOnRole);
+    });
+
+    </script>
 @endsection

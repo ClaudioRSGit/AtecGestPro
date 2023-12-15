@@ -64,7 +64,7 @@ class UserController extends Controller
         try {
             $request->validate([
                 'name' => 'required|string|max:255',
-                'username' => 'required|string|max:20',
+                'username' => 'required|string|min:5|max:20',
                 'email' => [
                     'required',
                     'email',
@@ -132,7 +132,7 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'username' => 'required|string|max:20',
+            'username' => 'required|string|min:5|max:20',
             'email' => [
                 'required',
                 'email',
