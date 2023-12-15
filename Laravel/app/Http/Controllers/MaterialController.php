@@ -23,6 +23,15 @@ class MaterialController extends Controller
         try {
             $request->validate([
                 'name' => 'required|string|max:255',
+                'description' => 'nullable|string|max:500',
+                'supplier' => 'nullable|string|max:255',
+                'aquisition_date' => 'nullable|date',
+                'isInternal' => 'required|boolean',
+                'isClothing' => 'required|boolean',
+                'gender' => 'nullable|boolean',
+                'quantity' => 'nullable|integer|min:0',
+                'size' => 'nullable|string|max:10',
+                'role' => 'nullable|string|max:255',
             ]);
 
             $material = Material::create($request->all());
