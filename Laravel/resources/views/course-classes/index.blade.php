@@ -20,14 +20,16 @@
                     </select>
                 </div>
                 <a href="{{ route('course-classes.create') }}" class="btn btn-primary ms-2">Adicionar Turma</a>
-                <div class="ms-auto">
-                    <input type="checkbox" id="select-all">
-                    <label for="select-all">Selecionar Todas</label>
-                </div>
             </div>
         </div>
 
         <div id="accordion">
+            <div class="ms-auto">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="select-all">
+                <label for="select-all"></label>
+                <span>&nbsp; &nbsp;Turma</span>
+
+            </div>
             @foreach($courseClasses as $courseClass)
                 <div class="card">
                     <div class="card-header" id="heading{{ $courseClass->id }}">
