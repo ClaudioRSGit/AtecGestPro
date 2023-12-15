@@ -48,8 +48,8 @@
             </div>
 
             <div class="mb-3">
-                <label for="isStudent" class="form-label">Ativo:</label>
-                <select class="form-select" id="isStudent" name="isActive">
+                <label for="isStudent" class="form-label">Estudante:</label>
+                <select class="form-select" id="isStudent" name="isStudent">
                     <option value="1" {{ old('isStudent') == 1 ? 'selected' : '' }}>Sim</option>
                     <option value="0" {{ old('isStudent') == 0 ? 'selected' : '' }}>Não</option>
                 </select>
