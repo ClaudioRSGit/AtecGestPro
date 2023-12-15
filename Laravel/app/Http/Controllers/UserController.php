@@ -12,9 +12,19 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
+
+        $roleFilter = $request->input('roleFilter');
+
+        $query = User::query();
+
+        if ($roleFilter) {
+            $query->where('role', $roleFilter);
+        }
+
+        $users = $query->get();
+
         return view('users.index', compact('users'));
     }
 

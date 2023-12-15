@@ -4,7 +4,20 @@
     <div class="container">
         <h1>Lista de Utilizadores</h1>
 
-    <a href="{{ route('users.create') }}" class="btn btn-primary mb-3">Novo User</a>
+        <div class="d-flex justify-content-end mb-3">
+
+            <form action="{{ route('users.index') }}" method="get" class="form-inline" id="filterForm">
+                <select class="form-control" id="roleFilter" name="roleFilter">
+                    <option value="" {{ request('roleFilter') === '' ? 'selected' : '' }}>Todas as Funções</option>
+                    <option value="admin" {{ request('roleFilter') === 'admin' ? 'selected' : '' }}>Admin</option>
+                    <option value="user" {{ request('roleFilter') === 'user' ? 'selected' : '' }}>User</option>
+                    <option value="tecnico" {{ request('roleFilter') === 'tecnico' ? 'selected' : '' }}>Técnico</option>
+                    <option value="formando" {{ request('roleFilter') === 'formando' ? 'selected' : '' }}>Formando</option>
+                </select>
+            </form>
+
+            <a href="{{ route('users.create') }}" class="btn btn-primary">Novo Utilizador</a>
+        </div>
 
     <table class="table">
         <thead>
@@ -39,4 +52,12 @@
         </tbody>
     </table>
     </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script>
+         $('#roleFilter').change(function () {
+            $('#filterForm').submit();
+        });
+    </script>
+
 @endsection
