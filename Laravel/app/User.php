@@ -59,7 +59,7 @@ class User extends Model
 
     public function CourseClass()
     {
-        return $this->hasMany(\App\CourseClass::class);
+        return $this->belongsTo(\App\CourseClass::class, 'course_class_id');
     }
 
     public function Role_User()

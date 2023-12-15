@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\CourseClass;
+use App\Course;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -16,25 +18,25 @@ class UserController extends Controller
     {
         $roleFilter = $request->input('roleFilter');
         $nameFilter = $request->input('nameFilter');
-        
+
         $query = User::query();
-        
+
         if ($roleFilter) {
             $query->where('role', $roleFilter);
         }
-    
+
         if ($nameFilter) {
             $query->where(function ($query) use ($nameFilter) {
                 $query->where('name', 'like', $nameFilter . '%');
             });
         }
-    
+
         $users = $query->get();
-    
+
         if ($request->ajax()) {
             return view('users.partials.user_table', compact('users'));
         }
-    
+
         return view('users.index', compact('users'));
         }
 
@@ -86,7 +88,10 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return view('users.show', compact('user'));
+        $courseClasses = CourseClass::all();
+        $courses = Course::all();
+
+        return view('users.show', compact('user', 'courseClasses', 'courses'));
     }
 
     /**
