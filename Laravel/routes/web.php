@@ -23,3 +23,5 @@ Route::resource('trainings', 'TrainingsController');
 Route::resource('trainings', 'TrainingController');
 
 Route::resource('classes', 'CourseClassController');
+
+Route::resource('students', 'StudentController');
