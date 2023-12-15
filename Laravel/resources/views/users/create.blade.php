@@ -4,7 +4,7 @@
     <div class="container">
         <h1>Criar Novo Utilizador</h1>
 
-        <form method="post" action="{{ route('users.store') }}" enctype="multipart/form-data">
+        <form method="post" action="{{ route('users.store') }}" enctype="multipart/form-data" id="userForm">
             @csrf
             @method('POST')
 
@@ -47,7 +47,7 @@
                         </select>
                     </div>
 
-                    <div class="mb-3">
+                    <div class="mb-3" id="labelCourseClass">
                         <label for="course_class_id" class="form-label">Turma:</label>
                         <select class="form-select" id="course_class_id" name="course_class_id">
                             @foreach($courseClasses as $class)
@@ -56,7 +56,7 @@
                         </select>
                     </div>
 
-                    <div class="mb-3">
+                    <div class="mb-3" id="labelCourseDescription">
                         <label for="courseDescription" class="form-label">Curso:</label>
                         <select class="form-select" id="courseDescription" name="courseDescription">
                             @foreach($courses as $course)
@@ -79,4 +79,22 @@
             <a href="{{ route('users.index') }}" class="btn btn-secondary">Cancelar</a>
         </form>
     </div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#course_class_id, #courseDescription, #labelCourseClass, #labelCourseDescription').hide();
+        $('#role').change(function () {
+            var selectedRole = $(this).val();
+
+            if (selectedRole === 'formando') {
+                $('#course_class_id, #courseDescription, #labelCourseClass, #labelCourseDescription').show();
+            } else {
+                $('#course_class_id, #courseDescription, #labelCourseClass, #labelCourseDescription').hide();
+            }
+        });
+    });
+</script>
+
+
 @endsection
