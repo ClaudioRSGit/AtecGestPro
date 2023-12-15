@@ -34,18 +34,18 @@
                     <div class="mb-3">
                         <label for="role" class="form-label">Função:</label>
                         <select class="form-select" id="role" name="role">
-                            <option value="admin">Admin</option>
-                            <option value="user">User</option>
-                            <option value="tecnico">Técnico</option>
-                            <option value="formando">Formando</option>
+                            <option value="admin" {{ $user->role === 'admin' ? 'selected' : '' }}>Admin</option>
+                            <option value="user" {{ $user->role === 'user' ? 'selected' : '' }}>User</option>
+                            <option value="tecnico" {{ $user->role === 'tecnico' ? 'selected' : '' }}>Técnico</option>
+                            <option value="formando" {{ $user->role === 'formando' ? 'selected' : '' }}>Formando</option>
                         </select>
                     </div>
 
                     <div class="mb-3">
                         <label for="isActive" class="form-label">Ativo:</label>
                         <select class="form-select" id="isActive" name="isActive">
-                            <option value="1" {{ old('isActive') == 1 ? 'selected' : '' }}>Sim</option>
-                            <option value="0" {{ old('isActive') == 0 ? 'selected' : '' }}>Não</option>
+                            <option value="1" {{ $user->isActive === '1' ? 'selected' : '' }}>Sim</option>
+                        <option value="0" {{ $user->isActive === '0' ? 'selected' : '' }}>Não</option>
                         </select>
                     </div>
 
