@@ -47,7 +47,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        $courseClasses = CourseClass::all();
+        $courses = Course::all();
+
+        return view('users.create', compact('courseClasses', 'courses'));
     }
 
     /**
@@ -61,18 +64,13 @@ class UserController extends Controller
         try {
             $request->validate([
                 'name' => 'required|string|max:255',
+                'password' => 'required|string|min:6',
             ]);
 
-            $user = new User();
-            $user->name = $request->name;
-            $user->username = $request->username;
-            $user->email = $request->email;
-            $user->role = $request->role;
-            $user->isActive = $request->isActive;
-            $user->save();
+            $request['password'] = bcrypt($request['password']);
+            $user = User::create($request->all());
 
-
-            return redirect()->route('users.index');
+            return redirect()->route('users.show', $user->id)->with('success', 'Utilizador inserido com sucesso!');
             }
             catch (\Exception $e) {
 
