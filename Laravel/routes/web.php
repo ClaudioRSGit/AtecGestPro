@@ -19,11 +19,7 @@ Route::resource('users', 'UserController');
 Route::resource('tickets', 'TicketController');
 
 Route::resource('materials', 'MaterialController');
-Route::get('/materials/{material}', 'MaterialController@show')->name('materials.show');
-Route::get('/materials/create', 'MaterialController@create')->name('materials.create');
-Route::get('/materials/{material}/edit', 'MaterialController@edit')->name('materials.edit');
 
+Route::resource('trainings', 'TrainingController');
 
-Route::resource('trainings', 'TrainingsController');
-
-Route::resource('classes', CourseClassController::class);
+Route::resource('classes', 'CourseClassController');
