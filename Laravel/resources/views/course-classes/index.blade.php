@@ -37,8 +37,8 @@
                     <a href="{{ route('course-classes.show', $courseClass->id) }}" class="btn btn-info">Ver Turma</a>
             @endforeach
         </div>
+        {{ $courseClasses->links() }}
 
     </div>
-    {{ $courseClasses->links() }}
 
 @endsection
