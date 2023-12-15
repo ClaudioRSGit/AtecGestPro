@@ -81,8 +81,8 @@ class UserController extends Controller
                 'isStudent' => 'nullable',
             ]);
 
-            $isStudent = $request->input('role') === 'formando' ? 1 : 0;
-            $request['password'] = bcrypt($request['password']);
+            $request['isStudent'] = $this->setIsStudent($request);
+            $request['password'] = $this->encryptPassword($request['password']);
             $user = User::create($request->all());
 
             return redirect()->route('users.show', $user->id)->with('success', 'Utilizador inserido com sucesso!');
@@ -132,9 +132,30 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'username' => 'required|string|max:20',
+            'email' => [
+                'required',
+                'email',
+            ],
+            'contact' => 'required|min:9|max:20',
+            'password' => [
+                'nullable',
+                'string',
+                'min:7',
+                'regex:/^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).*$/',
+            ],
+            'role' => 'required',
+            'isActive' => 'required',
+            'isStudent' => 'nullable',
         ]);
 
-        $user->update($request->all());
+        $request['isStudent'] = $this->setIsStudent($request);
+        $user->update($request->except('password'));
+
+        if ($request->has('password')) {
+            $user->password = $this->encryptPassword($request['password']);
+            $user->save();
+        }
 
         return redirect()->route('users.index')->with('success', 'Utilizador atualizado com sucesso!');
     }
@@ -153,5 +174,15 @@ class UserController extends Controller
         } catch (\Exception $e) {
             return redirect()->route('users.index')->with('error', 'Erro ao excluir o utilizador. Por favor, tente novamente.');
         }
+    }
+
+    private function encryptPassword($password)
+    {
+        return bcrypt($password);
+    }
+
+    private function setIsStudent(Request $request)
+    {
+        return $request->input('role') === 'formando' ? 1 : 0;
     }
 }
