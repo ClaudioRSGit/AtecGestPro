@@ -9,6 +9,19 @@ use App\Material_Clothing_Delivery;
 
 class Material extends Model
 {
+    protected $fillable = [
+        'name',
+        'description',
+        'supplier',
+        'aquisition_date',
+        'isInternal',
+        'isClothing',
+        'gender',
+        'quantity',
+        'size',
+        'role',
+    ];
+
     use SoftDeletes;
 
     public function materialTraining()

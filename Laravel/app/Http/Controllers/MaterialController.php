@@ -9,7 +9,7 @@ class MaterialController extends Controller
 {
     public function index()
     {
-        $materials = Material::all();
+        $materials = Material::paginate(5);
         return view('materials.index', compact('materials'));
     }
 
@@ -19,21 +19,21 @@ class MaterialController extends Controller
     }
 
     public function store(Request $request)
-{
-    try {
-        $request->validate([
-            'name' => 'required|string|max:255',
-        ]);
+    {
+        try {
+            $request->validate([
+                'name' => 'required|string|max:255',
+            ]);
 
-        $material = Material::create($request->all());
+            $material = Material::create($request->all());
 
-        return redirect()->route('materials.show', $material->id)->with('success', 'Material inserido com sucesso!');
-        }
-        catch (\Exception $e) {
+            return redirect()->route('materials.show', $material->id)->with('success', 'Material inserido com sucesso!');
+            }
+            catch (\Exception $e) {
 
-            return redirect()->back()->with('error', 'Erro ao inserir o material. Por favor, tente novamente.');
-        }
-}
+                return redirect()->back()->with('error', 'Erro ao inserir o material. Por favor, tente novamente.');
+            }
+    }
 
 
 
@@ -50,18 +50,21 @@ class MaterialController extends Controller
     public function update(Request $request, Material $material)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|string|max:255',
         ]);
 
         $material->update($request->all());
 
-        return redirect()->route('materials.index')->with('success', 'Success!');
+        return redirect()->route('materials.index')->with('success', 'Material atualizado com sucesso!');
     }
 
     public function destroy(Material $material)
     {
-        $material->delete();
-
-        return redirect()->route('materials.index')->with('success', 'Success!');
+        try {
+            $material->delete();
+            return redirect()->route('materials.index')->with('success', 'Material excluído com sucesso!');
+        } catch (\Exception $e) {
+            return redirect()->route('materials.index')->with('error', 'Erro ao excluir o material. Por favor, tente novamente.');
+        }
     }
 }
