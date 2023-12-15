@@ -102,7 +102,10 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('users.edit', compact('user'));
+        $courseClasses = CourseClass::all();
+        $courses = Course::all();
+
+        return view('users.edit', compact('user', 'courseClasses', 'courses'));
     }
 
     /**
@@ -118,7 +121,7 @@ class UserController extends Controller
             'name' => 'required|string|max:255',
         ]);
 
-        $material->update($request->all());
+        $user->update($request->all());
 
         return redirect()->route('users.index')->with('success', 'Utilizador atualizado com sucesso!');
     }

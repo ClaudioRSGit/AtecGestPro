@@ -73,8 +73,8 @@
                     <div class="mb-3">
                         <label for="isActive" class="form-label">Estado:</label>
                         <select class="form-select" id="isActive" name="isActive">
-                            <option value="1" {{ $user->isActive === '1' ? 'selected' : '' }}>Ativo</option>
-                            <option value="0" {{ $user->isActive === '0' ? 'selected' : '' }}>Desativado</option>
+                            <option value="1" {{ $user->isActive == 1 ? 'selected' : '' }}>Ativo</option>
+                            <option value="0" {{ $user->isActive == 0 ? 'selected' : '' }}>Desativado</option>
                         </select>
                     </div>
 

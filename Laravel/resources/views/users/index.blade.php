@@ -44,7 +44,7 @@
                         <td>{{ $user->username }}</td>
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->role }}</td>
-                        <td>{{ 'isActive' == true ? 'Sim' : 'Não' }}</td>
+                        <td>{{ $user->isActive == 1 ? 'Sim' : 'Não' }}</td>
                         <td>
                             <a href="{{ route('users.show', $user->id) }}" class="btn btn-info">Detalhes</a>
                             <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning">Editar</a>
