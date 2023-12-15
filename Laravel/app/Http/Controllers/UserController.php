@@ -14,19 +14,29 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-
         $roleFilter = $request->input('roleFilter');
-
+        $nameFilter = $request->input('nameFilter');
+        
         $query = User::query();
-
+        
         if ($roleFilter) {
             $query->where('role', $roleFilter);
         }
-
+    
+        if ($nameFilter) {
+            $query->where(function ($query) use ($nameFilter) {
+                $query->where('name', 'like', $nameFilter . '%');
+            });
+        }
+    
         $users = $query->get();
-
+    
+        if ($request->ajax()) {
+            return view('users.partials.user_table', compact('users'));
+        }
+    
         return view('users.index', compact('users'));
-    }
+        }
 
     /**
      * Show the form for creating a new resource.
