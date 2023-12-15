@@ -64,9 +64,24 @@ class UserController extends Controller
         try {
             $request->validate([
                 'name' => 'required|string|max:255',
-                'password' => 'required|string|min:6',
+                'username' => 'required|string|max:20',
+                'email' => [
+                    'required',
+                    'email',
+                ],
+                'contact' => 'required|min:9|max:20',
+                'password' => [
+                    'nullable',
+                    'string',
+                    'min:7',
+                    'regex:/^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).*$/',
+                ],
+                'role' => 'required',
+                'isActive' => 'required',
+                'isStudent' => 'nullable',
             ]);
 
+            $isStudent = $request->input('role') === 'formando' ? 1 : 0;
             $request['password'] = bcrypt($request['password']);
             $user = User::create($request->all());
 
