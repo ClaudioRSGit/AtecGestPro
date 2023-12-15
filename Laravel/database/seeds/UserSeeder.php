@@ -23,7 +23,18 @@ class UserSeeder extends Seeder
             'isStudent' => false,
             'course_class_id' => 1,
         ]);
-
+        // Seed 1
+        DB::table('users')->insert([
+            'name' => 'Antonio Carro',
+            'username' => 'T0123186',
+            'email' => 'antonio.carro.t3698521@edu.atec.pt',
+            'contact' => '912345699',
+            'password' => bcrypt('password123'),
+            'role' => 'admin',
+            'isActive' => true,
+            'isStudent' => false,
+            'course_class_id' => 1,
+        ]);
         // Seed 2
         DB::table('users')->insert([
             'name' => 'Francisco Silva',

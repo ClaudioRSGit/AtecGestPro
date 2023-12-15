@@ -20,7 +20,7 @@ class CreateCoursesTable extends Migration
             $table->string('code');
             $table->boolean('isDeleted')->default(false);
             $table->timestamps();
-            $table->softDeletes('DeletedAt', 0);
+            $table->softDeletes('deleted_at', 0);
         });
     }
 

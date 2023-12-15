@@ -10,7 +10,13 @@ use App\User;
 class CourseClass extends Model
 {
     use SoftDeletes;
-
+    protected $fillable = [
+        'description',
+    ];
+    public function students()
+    {
+        return $this->hasMany(User::class, 'course_class_id');
+    }
     public function course()
     {
         return $this->belongsTo(Course::class);
