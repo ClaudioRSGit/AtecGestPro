@@ -25,13 +25,11 @@
                 </div>
                 <div class="form-group mr-3">
                     <select class="form-control" id="roleFilter" name="roleFilter">
-                        <option value="" {{ request('roleFilter') === '' ? 'selected' : '' }}>Todas as Funções
-                        </option>
-                        <option value="admin" {{ request('roleFilter') === 'admin' ? 'selected' : '' }}>Admin</option>
-                        <option value="user" {{ request('roleFilter') === 'user' ? 'selected' : '' }}>User</option>
-                        <option value="tecnico" {{ request('roleFilter') === 'tecnico' ? 'selected' : '' }}>Técnico</option>
-                        <option value="formando" {{ request('roleFilter') === 'formando' ? 'selected' : '' }}>Formando
-                        </option>
+                        <option value="">Todas as Funções</option>
+                        <option value="admin">Admin</option>
+                        <option value="user">User</option>
+                        <option value="tecnico">Técnico</option>
+                        <option value="formando">Formando</option>
                     </select>
                 </div>
             </form>
@@ -52,7 +50,7 @@
             </thead>
             <tbody>
                 @foreach ($users as $user)
-                    <tr>
+                    <tr class="user-row" data-role="{{ strtolower($user->role) }}">
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->username }}</td>
                         <td>{{ $user->email }}</td>
@@ -107,9 +105,10 @@
                 const nameFilter = nameFilterInput.value.toLowerCase();
                 const roleFilter = roleFilterSelect.value;
 
+
                 userRows.forEach(userRow => {
                     const userName = userRow.querySelector('td:nth-child(1)').textContent.toLowerCase();
-                    const userRole = userRow.querySelector('td:nth-child(4)').textContent.toLowerCase();
+                    const userRole = userRow.getAttribute('data-role');
 
                     const matchesName = userName.includes(nameFilter);
                     const matchesRole = roleFilter === '' || userRole === roleFilter;
