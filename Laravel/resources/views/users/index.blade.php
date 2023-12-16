@@ -39,7 +39,7 @@
             <a href="{{ route('users.create') }}" class="btn btn-primary">Novo Utilizador</a>
         </div>
 
-        <table class="table">
+        <table class="table" id="userTable">
             <thead>
                 <tr>
                     <th scope="col">Name</th>
@@ -56,7 +56,20 @@
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->username }}</td>
                         <td>{{ $user->email }}</td>
-                        <td>{{ $user->role }}</td>
+                        <td>
+                            @if($user->role == 'user')
+                                User
+                            @elseif($user->role == 'admin')
+                                Administrador
+                            @elseif($user->role == 'formando')
+                                Formando
+                            @elseif($user->role == 'tecnico')
+                                Técnico
+                            @else
+                                {{ $user->role }}
+                            @endif
+                        </td>
+
                         <td>{{ $user->isActive == 1 ? 'Sim' : 'Não' }}</td>
                         <td>
                             <a href="{{ route('users.show', $user->id) }}" class="btn btn-info">Detalhes</a>
@@ -72,28 +85,38 @@
                 @endforeach
             </tbody>
         </table>
+        {{ $users->links() }}
     </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script>
-        $('#nameFilter, #roleFilter').on('input', function(event) {
-            if (event.key === 'Enter') {
-                updateUsersList();
+        document.addEventListener('DOMContentLoaded', function () {
+            const nameFilterInput = document.getElementById('nameFilter');
+            const roleFilterSelect = document.getElementById('roleFilter');
+            const userTable = document.getElementById('userTable');
+            const userRows = userTable.querySelectorAll('tbody tr');
+
+            nameFilterInput.addEventListener('input', function () {
+                filterUsers();
+            });
+
+            roleFilterSelect.addEventListener('change', function () {
+                filterUsers();
+            });
+
+            function filterUsers() {
+                const nameFilter = nameFilterInput.value.toLowerCase();
+                const roleFilter = roleFilterSelect.value;
+
+                userRows.forEach(userRow => {
+                    const userName = userRow.querySelector('td:nth-child(1)').textContent.toLowerCase();
+                    const userRole = userRow.querySelector('td:nth-child(4)').textContent.toLowerCase();
+
+                    const matchesName = userName.includes(nameFilter);
+                    const matchesRole = roleFilter === '' || userRole === roleFilter;
+
+                    userRow.style.display = matchesName && matchesRole ? '' : 'none';
+                });
             }
         });
-
-        function updateUsersList() {
-            $.ajax({
-                url: $('#filterForm').attr('action'),
-                method: 'get',
-                data: $('#filterForm').serialize(),
-                success: function(response) {
-                    $('#userTable tbody').html($(response).find('#userTable tbody').html());
-                },
-                error: function(error) {
-                    console.error('Update Error', error);
-                }
-            });
-        }
     </script>
 @endsection

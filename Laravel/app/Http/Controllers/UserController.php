@@ -31,7 +31,7 @@ class UserController extends Controller
             });
         }
 
-        $users = $query->get();
+        $users = $query->paginate(5);
 
         if ($request->ajax()) {
             return view('users.partials.user_table', compact('users'));
