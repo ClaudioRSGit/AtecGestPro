@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CourseClassController;
 use App\Http\Controllers\MaterialController;
+use App\Http\Controllers\ClothingController;
 
 Route::get('/', function () {
     return view('master.main');
@@ -23,3 +24,7 @@ Route::resource('trainings', 'TrainingsController');
 Route::resource('trainings', 'TrainingController');
 
 Route::resource('classes', 'CourseClassController');
+
+Route::resource('clothing', 'ClothingController');
+
+
