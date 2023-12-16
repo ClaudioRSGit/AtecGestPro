@@ -38,7 +38,7 @@ class UserController extends Controller
         }
 
         return view('users.index', compact('users'));
-        }
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -63,7 +63,7 @@ class UserController extends Controller
     {
         try {
             $request->validate([
-                'name' => 'required|string|max:255',
+                'name' => 'required|string|min:5|max:255',
                 'username' => 'required|string|min:5|max:20',
                 'email' => [
                     'required',
@@ -85,12 +85,13 @@ class UserController extends Controller
             $request['password'] = $this->encryptPassword($request['password']);
             $user = User::create($request->all());
 
-            return redirect()->route('users.show', $user->id)->with('success', 'Utilizador inserido com sucesso!');
-            }
-            catch (\Exception $e) {
+            return redirect()->route('users.show', $user->id);
 
-                return redirect()->back()->with('error', 'Erro ao inserir o utilizador. Por favor, tente novamente.');
-            }
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()->withErrors($e->validator)->withInput();
+        } catch (\Exception $e) {
+            return redirect()->back();
+        }
     }
 
     /**
@@ -131,7 +132,7 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|min:5|max:255',
             'username' => 'required|string|min:5|max:20',
             'email' => [
                 'required',
