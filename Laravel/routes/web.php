@@ -20,8 +20,8 @@ Route::resource('materials', 'MaterialController');
 
 Route::resource('trainings', 'TrainingController');
 
-Route::resource('classes', 'CourseClassController');
-
 Route::resource('students', 'StudentController');
 
 Route::resource('course-classes', 'CourseClassController');
+
+Route::resource('clothing', 'ClothingController');
