@@ -11,7 +11,6 @@
                 <label for="description">Descrição:</label>
                 <input type="text" class="form-control" id="description" name="description" value="{{ $courseClass->description }}" required>
             </div>
-
             <div class="form-group">
                 <label for="course_id">Curso:</label>
                 <select class="form-control" id="course_id" name="course_id" required>
@@ -38,6 +37,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Atualizar Turma</button>
+            <a href="{{ route('course-classes.index') }}" class="btn btn-secondary mt-3">Voltar</a>
         </form>
     </div>
 @endsection

@@ -37,5 +37,6 @@
         </form>
 
         <a href="{{ route('course-classes.edit', $courseClass->id) }}" class="btn btn-warning">Editar Turma</a>
+        <a href="{{ route('course-classes.index') }}" class="btn btn-secondary mt-3">Voltar</a>
     </div>
 @endsection
