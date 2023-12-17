@@ -1,4 +1,5 @@
 @extends('master.main')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 @section('content')
     <div class="container">
@@ -41,11 +42,37 @@
                     <div id="collapse{{ $courseClass->id }}" class="collapse" aria-labelledby="heading{{ $courseClass->id }}" data-parent="#accordion">
                         <div class="card-body">
                             @if ($courseClass->students->count() > 0)
-                                <ul>
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Username</th>
+                                        <th>Email</th>
+                                        <th>Entregue</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
                                     @foreach($courseClass->students as $student)
-                                        <li>{{ $student->name }}</li>
+                                        <tr>
+
+                                            <td>{{ $student->name }}</td>
+                                            <td>{{ $student->username }}</td>
+                                            <td>{{ $student->email }}</td>
+                                            <td><input type="checkbox"></td>
+                                            <td>
+                                                <a href="{{ route('users.show', $student->id) }}" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
+                                                <a href="{{ route('users.edit', $student->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                                                <form method="POST" action="{{ route('users.destroy', $student->id) }}" style="display: inline;">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+                                                </form>
+                                            </td>
+                                        </tr>
                                     @endforeach
-                                </ul>
+                                </tbody>
+                            </table>
                             @else
                                 <p>Não existem estudantes nesta turma</p>
                             @endif
@@ -54,6 +81,7 @@
                 </div>
             @endforeach
         </div>
+
         {{ $courseClasses->links() }}
     </div>
 
