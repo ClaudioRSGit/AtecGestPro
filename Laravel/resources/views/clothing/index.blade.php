@@ -18,7 +18,6 @@
                         @endforeach
                     </select>
                 </div>
-                <a href="{{ route('course-classes.create') }}" class="btn btn-primary ms-2">Adicionar Turma</a>
             </div>
         </div>
 

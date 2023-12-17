@@ -39,6 +39,11 @@
                             </button>
                             <a href="{{ route('course-classes.edit', $courseClass->id) }}" class="btn btn-warning"><i class="fas fa-pencil-alt"></i></a>
                             <a href="{{ route('course-classes.show', $courseClass->id) }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                            <form method="POST" action="{{ route('course-classes.destroy', $courseClass->id) }}" style="display: inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+                            </form>
                         </h2>
                     </div>
 

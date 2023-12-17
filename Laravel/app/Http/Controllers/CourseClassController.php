@@ -38,7 +38,9 @@ class CourseClassController extends Controller
 
     public function edit(CourseClass $courseClass)
     {
+        $courseClass->load('course', 'students');
         $courses = Course::all();
+
         return view('course-classes.edit', compact('courseClass', 'courses'));
     }
 
@@ -52,7 +54,6 @@ class CourseClassController extends Controller
     public function destroy(CourseClass $courseClass)
     {
         $courseClass->delete();
-
         return redirect()->route('course-classes.index')->with('success', 'Course class deleted successfully!');
     }
 }

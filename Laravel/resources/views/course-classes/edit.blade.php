@@ -23,7 +23,21 @@
                 </select>
             </div>
 
-            <button type="submit" class="btn btn-primary">Update Course Class</button>
+            <div class="form-group">
+                <label for="course_code">Código do Curso:</label>
+                <input type="text" class="form-control" id="course_code" name="course_code" value="{{ $courseClass->course->code }}" readonly>
+            </div>
+
+            <div class="form-group">
+                <label for="students">Alunos na Turma:</label>
+                <ul>
+                    @foreach($courseClass->students as $student)
+                        <li>{{ $student->name }}</li>
+                    @endforeach
+                </ul>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Atualizar Turma</button>
         </form>
     </div>
 @endsection
