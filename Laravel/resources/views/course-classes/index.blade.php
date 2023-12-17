@@ -28,7 +28,6 @@
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="select-all">
                 <label for="select-all"></label>
                 <span>&nbsp; &nbsp;Turma</span>
-
             </div>
             @foreach($courseClasses as $courseClass)
                 <div class="card">
@@ -91,10 +90,10 @@
             });
 
             function filterMaterials(searchTerm = null) {
-                checkboxes.forEach(checkbox => {
-                    const materialRow = checkbox.closest('.material-row');
-                    const courseId = checkbox.getAttribute('data-course');
+                const courseClassCards = document.querySelectorAll('.card');
 
+                courseClassCards.forEach(card => {
+                    const courseId = card.querySelector('.accordion-checkbox').getAttribute('data-course');
                     const filterValue = filterDropdown.value;
 
                     const matchesFilter = (
@@ -103,11 +102,11 @@
                     );
 
                     const matchesSearch = !searchTerm || (
-                        materialRow.textContent.toLowerCase().includes(searchTerm) ||
-                        materialRow.querySelector('a').textContent.toLowerCase().includes(searchTerm)
+                        card.textContent.toLowerCase().includes(searchTerm) ||
+                        card.querySelector('button').textContent.toLowerCase().includes(searchTerm)
                     );
 
-                    checkbox.closest('tr').style.display = matchesFilter && matchesSearch ? '' : 'none';
+                    card.style.display = matchesFilter && matchesSearch ? '' : 'none';
                 });
             }
         });
