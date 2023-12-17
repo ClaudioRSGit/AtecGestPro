@@ -57,11 +57,16 @@ class ClothingController extends Controller
         // Add your code here
     }
 
-    public function destroy(Material $clothing)
+    public function destroy($id)
     {
         try {
-            $clothing->delete();
-            return redirect()->route('clothing.index')->with('success', 'Material excluído com sucesso!');
+            $clothing = Material::find($id);
+            if($clothing) {
+                $clothing->delete();
+                return redirect()->route('clothing.index')->with('success', 'Material excluído com sucesso!');
+            } else {
+                return redirect()->route('clothing.index')->with('error', 'Material not found.');
+            }
         } catch (\Exception $e) {
             return redirect()->route('clothing.index')->with('error', 'Erro ao excluir o material. Por favor, tente novamente.');
         }

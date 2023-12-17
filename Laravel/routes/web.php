@@ -28,3 +28,4 @@ Route::resource('classes', 'CourseClassController');
 Route::resource('clothing', 'ClothingController');
 
 
+
