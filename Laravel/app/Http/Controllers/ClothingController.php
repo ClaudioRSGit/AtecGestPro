@@ -54,7 +54,13 @@ class ClothingController extends Controller
 
     public function update(Request $request, Material $clothing)
     {
-        // Add your code here
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        $clothing->update($request->all());
+
+        return redirect()->route('clothing.index')->with('success', 'Material atualizado com sucesso!');
     }
 
     public function destroy($id)

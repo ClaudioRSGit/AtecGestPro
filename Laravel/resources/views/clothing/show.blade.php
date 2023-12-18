@@ -77,7 +77,7 @@
                             <option value="Técnico" {{ $clothing->role === 'Técnico' ? 'selected' : '' }}>Técnico</option>
                         </select>
                     </div>
-                @endif
+
 
                 <div class="form-group">
                     <label for="actions">Ações:</label>

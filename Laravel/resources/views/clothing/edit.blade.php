@@ -80,7 +80,7 @@
                     <div class="form-group">
                         <label for="actions">Ações:</label>
                         <button type="submit" class="btn btn-primary">Salvar Alterações</button>
-                        <a href="{{ route('clothing.index', $clothing->id) }}" class="btn btn-secondary mt-3">Cancelar</a>
+                        <a href="{{ route('clothing.show', $clothing->id) }}" class="btn btn-secondary mt-3">Cancelar</a>
                     </div>
                 </div>
 
