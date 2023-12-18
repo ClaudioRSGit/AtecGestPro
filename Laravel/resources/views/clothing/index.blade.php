@@ -15,7 +15,7 @@
                     <select class="form-select" id="filter">
                         <option value="all">Todos</option>
                         @foreach($courses as $course)
-                            <option value="{{ $course->id }}">{{ $course->name }}</option>
+                            <option value="{{ $course->id }}">{{ $course->description }}</option>
                         @endforeach
                     </select>
                 </div>
