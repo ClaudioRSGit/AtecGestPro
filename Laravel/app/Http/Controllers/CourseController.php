@@ -37,7 +37,7 @@ class CourseController extends Controller
     {
         try {
             $request->validate([
-                'code' => 'required|string|min:5|max:15',
+                'code' => 'required|string|max:15',
                 'description' => 'required|string|min:10|max:100',
             ]);
 
@@ -59,12 +59,20 @@ class CourseController extends Controller
 
     public function edit(Course $course)
     {
-        //
+        return view('courses.edit', compact('course'));
     }
 
     public function update(Request $request, Course $course)
     {
-        //
+        $request->validate([
+            'code' => 'required|string|max:15',
+            'description' => 'required|string|min:10|max:100',
+        ]);
+
+
+        $course->update($request->all());
+
+        return redirect()->route('courses.index')->with('success', 'Curso atualizado com sucesso!');
     }
 
     public function destroy(Course $course)
