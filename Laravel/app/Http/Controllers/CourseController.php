@@ -7,12 +7,25 @@ use Illuminate\Http\Request;
 
 class CourseController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $courses = Courses::all();
-        return view('courses',[
-            'courses' => $courses
-        ]);
+        $nameFilter = $request->input('nameFilter');
+
+        $query = Course::query();
+
+        if ($nameFilter) {
+            $query->where(function ($query) use ($nameFilter) {
+                $query->where('code', 'like', $nameFilter . '%');
+            });
+        }
+
+        $courses = $query->paginate(5);
+
+        if ($request->ajax()) {
+            return view('courses.partials.course_table', compact('courses'));
+        }
+
+        return view('courses.index', compact('courses'));
     }
 
     public function create()
