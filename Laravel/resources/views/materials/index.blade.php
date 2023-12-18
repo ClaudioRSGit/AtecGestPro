@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container">
+    <div class="container pl-5 pt-4">
         <h1>Lista de Materiais</h1>
 
         <div class="d-flex justify-content-between mb-3">
@@ -29,7 +29,7 @@
             @csrf
             @method('delete')
 
-            <table class="table">
+            <table class="table bg-white rounded-top">
                 <thead>
                     <tr>
                         <th scope="col">

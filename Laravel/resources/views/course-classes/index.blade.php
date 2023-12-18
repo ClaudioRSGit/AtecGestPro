@@ -2,7 +2,36 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 @section('content')
-    <div class="container">
+<style>
+    body {
+        font-family: 'Manrope', sans-serif;
+        position: relative;
+    }
+
+    body::before {
+        content: '';
+        position: absolute;
+        top: 1%;
+        right: 0%;
+        bottom: 0%;
+        left: 50%;
+        position: fixed;
+        background-image: radial-gradient(circle, rgba(17, 111, 220, 0.1), rgba(120, 143, 228, 0.2), rgba(173, 177, 237, 0.1), rgba(217, 215, 246, 0), rgba(255, 255, 255, 0.1));
+        z-index: -1;
+    }
+    #accordion .card {
+        border: none;
+    }
+
+    #accordion .card-header {
+        border-bottom: none;
+    }
+
+    #accordion .card-body {
+        border-top: 12px solid #fff;
+    }
+</style>
+    <div class="container  pl-5 pt-4">
         <h1>Turmas</h1>
 
         <div class="d-flex justify-content-between mb-3">
@@ -30,8 +59,8 @@
                 <span>&nbsp; &nbsp;Turma</span>
             </div>
             @foreach($courseClasses as $courseClass)
-                <div class="card">
-                    <div class="card-header" id="heading{{ $courseClass->id }}">
+                <div class="card mb-2 mt-2">
+                    <div class="card-header bg-white" id="heading{{ $courseClass->id }}">
                         <h2 class="mb-0">
                             <input type="checkbox" class="accordion-checkbox" data-course="{{ $courseClass->course_id }}" data-id="{{ $courseClass->id }}">
                             <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{ $courseClass->id }}" aria-expanded="false" aria-controls="collapse{{ $courseClass->id }}">

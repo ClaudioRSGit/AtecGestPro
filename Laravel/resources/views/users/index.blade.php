@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container">
+    <div class="container  pl-5 pt-4">
 
         @if(session('success'))
             <div class="alert alert-success">

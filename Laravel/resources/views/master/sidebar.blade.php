@@ -65,6 +65,7 @@
         height: 100%;
         z-index: 1000;
         background-color: #fff;
+        border-right: 1px solid #e5e5e5;
     }
 
     .logo{
