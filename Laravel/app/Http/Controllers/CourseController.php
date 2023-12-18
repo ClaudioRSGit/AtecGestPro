@@ -30,12 +30,26 @@ class CourseController extends Controller
 
     public function create()
     {
-        //
+        return view('courses.create');
     }
 
     public function store(Request $request)
     {
-        //
+        try {
+            $request->validate([
+                'code' => 'required|string|min:5|max:15',
+                'description' => 'required|string|min:10|max:100',
+            ]);
+
+            $course = Course::create($request->all());
+
+            return redirect()->route('courses.show', $course->id);
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()->withErrors($e->validator)->withInput();
+        } catch (\Exception $e) {
+            return redirect()->back();
+        }
     }
 
     public function show(Course $course)
@@ -55,6 +69,11 @@ class CourseController extends Controller
 
     public function destroy(Course $course)
     {
-        //
+        try {
+            $course->delete();
+            return redirect()->route('courses.index')->with('success', 'Curso excluído com sucesso!');
+        } catch (\Exception $e) {
+            return redirect()->route('courses.index')->with('error', 'Erro ao excluir o curso. Por favor, tente novamente.');
+        }
     }
 }
