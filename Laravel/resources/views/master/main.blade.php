@@ -8,6 +8,8 @@
     <title>Project</title>
     {{-- STYLE SECTION --}}
     <link rel="stylesheet" href="{!! asset('css/app.css') !!}" media="all" type="text/css" />
+    <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/9/91/Gear-icon-blue-white-background.png" type="image/x-icon">
+
     @yield('styles')
     {{-- .STYLE SECTION --}}
 </head>
