@@ -2,6 +2,11 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 @section('content')
+<style>
+    body {
+        background-color: #F9F9FB;
+    }
+</style>
     <div class="container">
         <h1>Vestuário</h1>
 

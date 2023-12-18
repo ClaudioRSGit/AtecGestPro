@@ -63,6 +63,8 @@
         position: fixed;
         left: 0;
         height: 100%;
+        z-index: 1000;
+        background-color: #fff;
     }
 
     .logo{
