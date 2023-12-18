@@ -5,22 +5,22 @@
     <div class="container">
         <h1>Turmas</h1>
 
-        <div class="mb-3">
-            <div class="d-flex">
-                <div style="width: 30%;">
-                    <input type="text" id="search" class="form-control" placeholder="Pesquisar">
+        <div class="d-flex justify-content-between mb-3">
+            <div class="form-inline">
+                <div style="form-group">
+                    <input type="text" id="search" class="form-control" placeholder="Pesquisar Turma">
                 </div>
-                <div class="ms-2">
-                    <label for="filter">Filtrar por Curso:</label>
-                    <select class="form-select" id="filter">
+                <div class="form-group mx-2">
+                    <label for="filter"></label>
+                    <select class="form-control" id="filter">
                         <option value="all">Todos</option>
                         @foreach($courses as $course)
                             <option value="{{ $course->id }}">{{ $course->description }}</option>
                         @endforeach
                     </select>
                 </div>
-                <a href="{{ route('course-classes.create') }}" class="btn btn-primary ms-2">Adicionar Turma</a>
             </div>
+            <a href="{{ route('course-classes.create') }}" class="btn btn-primary">Criar Turma</a>
         </div>
 
         <div id="accordion">
@@ -42,7 +42,7 @@
                             <form method="POST" action="{{ route('course-classes.destroy', $courseClass->id) }}" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir?')"><i class="fas fa-trash-alt"></i></button>
                             </form>
                         </h2>
                     </div>

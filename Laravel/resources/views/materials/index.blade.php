@@ -4,24 +4,25 @@
     <div class="container">
         <h1>Lista de Materiais</h1>
 
-        <div class="mb-3">
-            <div class="d-flex">
-                <div style="width: 30%;">
-                    <input type="text" id="search" class="form-control" placeholder="Pesquisar">
+        <div class="d-flex justify-content-between mb-3">
+            <form class="form-inline" id="filterForm">
+                <div class="form-group mr-3" style="width: 30%;">
+                    <input type="text" id="search" class="form-control" placeholder="Pesquisar Material">
                 </div>
-                <div class="ms-2">
-                    <label for="filter">Filtrar por:</label>
-                    <select class="form-select" id="filter">
+
+                <div class="form-group mx-5">
+                    <label for="filter"></label>
+                    <select class="form-control" id="filter">
                         <option value="all">Todos</option>
                         <option value="internal">Interno</option>
                         <option value="clothing">Fardamento</option>
                         <option value="external">Externo</option>
                     </select>
                 </div>
-                <a href="{{ route('materials.create') }}" class="btn btn-primary mb-3">Novo Material</a>
-
-            </div>
+            </form>
+            <a href="{{ route('materials.create') }}" class="btn btn-primary">Novo Material</a>
         </div>
+
 
 
         <form method="post">
