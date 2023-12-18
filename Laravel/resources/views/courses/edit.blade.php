@@ -31,13 +31,16 @@
 
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Salvar Alterações</button>
-                        <button type="button" onclick="confirmDelete()" class="btn btn-danger mt-3">Excluir</button>
-                        <a href="{{ route('courses.show', $course->id) }}" class="btn btn-secondary mt-3">Cancelar</a>
+                        <form method="post" action="{{ route('courses.destroy', $course->id) }}" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
+                        </form>
+                         <a href="{{ route('courses.show', $course->id) }}" class="btn btn-secondary mt-3">Cancelar</a>
                     </div>
                 </div>
-
             </div>
-    </div>
+        </div>
     </form>
 
     <form id="deleteForm" action="{{ route('courses.destroy', $course->id) }}" method="POST" style="display:none">
@@ -46,11 +49,4 @@
     </form>
     </div>
 
-    <script>
-        function confirmDelete() {
-            if (confirm('Tem certeza que deseja excluir?')) {
-                document.getElementById('deleteForm').submit();
-            }
-        }
-    </script>
 @endsection
