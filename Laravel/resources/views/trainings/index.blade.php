@@ -35,5 +35,6 @@
             @endforeach
         </tbody>
     </table>
+    {{ $trainings->links() }}
     </div>
 @endsection
