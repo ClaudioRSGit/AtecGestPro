@@ -27,5 +27,9 @@ Route::resource('classes', 'CourseClassController');
 
 Route::resource('clothing', 'ClothingController');
 
+Route::resource('clothing-assignment', 'ClothingAssignmentController');
+
+
+
 
 

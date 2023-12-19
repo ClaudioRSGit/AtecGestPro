@@ -4,7 +4,7 @@
     <div class="container">
         <h1>Criar Novo Vestuário</h1>
 
-        <form method="post" action="{{ route('materials.store') }}">
+        <form method="post" action="{{ route('clothing-assignment.store') }}">
             @csrf
             <div class="row">
                 <div class="col-md-6">
@@ -84,7 +84,7 @@
                     <div class="mb-3">
                         <label for="actions" class="form-label">Ações:</label>
                         <button type="submit" class="btn btn-primary">Criar Vestuário</button>
-                        <a href="{{ route('clothing.index') }}" class="btn btn-secondary mt-3">Cancelar</a>
+                        <a href="{{ route('clothing-assignment.index') }}" class="btn btn-secondary mt-3">Cancelar</a>
                     </div>
                 </div>
             </div>
