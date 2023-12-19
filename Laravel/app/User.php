@@ -18,6 +18,18 @@ use App\Ticket_History;
 
 class User extends Model
 {
+    protected $fillable = [
+        'name',
+        'username',
+        'email',
+        'contact',
+        'password',
+        'role',
+        'isActive',
+        'isStudent',
+        'course_class_id',
+    ];
+
     use SoftDeletes;
 
     public function emails()
@@ -47,7 +59,7 @@ class User extends Model
 
     public function CourseClass()
     {
-        return $this->hasMany(\App\CourseClass::class);
+        return $this->belongsTo(\App\CourseClass::class, 'course_class_id');
     }
 
     public function Role_User()

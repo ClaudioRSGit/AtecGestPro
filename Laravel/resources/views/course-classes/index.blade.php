@@ -1,6 +1,5 @@
 @extends('master.main')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap">
 
 @section('content')
 <style>
@@ -32,11 +31,12 @@
         border-top: 12px solid #fff;
     }
 </style>
-    <div class="container pl-5 pt-4">
-        <h1 class="font-weight-bold">Vestuário</h1>
+    <div class="container  pl-5 pt-4">
+        <h1>Turmas</h1>
+
         <div class="d-flex justify-content-between mb-3">
             <div class="form-inline">
-                <div class="form-group">
+                <div style="form-group">
                     <input type="text" id="search" class="form-control" placeholder="Pesquisar Turma">
                 </div>
                 <div class="form-group mx-2">
@@ -66,43 +66,24 @@
                             <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{ $courseClass->id }}" aria-expanded="false" aria-controls="collapse{{ $courseClass->id }}">
                                 {{ $courseClass->description }}
                             </button>
+                            <a href="{{ route('course-classes.edit', $courseClass->id) }}" class="btn btn-warning"><i class="fas fa-pencil-alt"></i></a>
+                            <a href="{{ route('course-classes.show', $courseClass->id) }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
+                            <form method="POST" action="{{ route('course-classes.destroy', $courseClass->id) }}" style="display: inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir?')"><i class="fas fa-trash-alt"></i></button>
+                            </form>
                         </h2>
                     </div>
 
                     <div id="collapse{{ $courseClass->id }}" class="collapse" aria-labelledby="heading{{ $courseClass->id }}" data-parent="#accordion">
                         <div class="card-body">
                             @if ($courseClass->students->count() > 0)
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th>Nome</th>
-                                        <th>Username</th>
-                                        <th>Email</th>
-                                        <th>Entregue</th>
-                                        <th>Ações</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                                <ul>
                                     @foreach($courseClass->students as $student)
-                                        <tr>
-
-                                            <td>{{ $student->name }}</td>
-                                            <td>{{ $student->username }}</td>
-                                            <td>{{ $student->email }}</td>
-                                            <td><input type="checkbox"></td>
-                                            <td>
-                                                <a href="{{ route('users.show', $student->id) }}" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
-                                                <a href="{{ route('users.edit', $student->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-pencil-alt"></i></a>
-                                                <form method="POST" action="{{ route('users.destroy', $student->id) }}" style="display: inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
-                                                </form>
-                                            </td>
-                                        </tr>
+                                        <li>{{ $student->name }}</li>
                                     @endforeach
-                                </tbody>
-                            </table>
+                                </ul>
                             @else
                                 <p>Não existem estudantes nesta turma</p>
                             @endif
@@ -111,7 +92,6 @@
                 </div>
             @endforeach
         </div>
-
         {{ $courseClasses->links() }}
     </div>
 

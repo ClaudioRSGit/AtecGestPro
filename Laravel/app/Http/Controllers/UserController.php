@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\CourseClass;
+use App\Course;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -12,9 +14,30 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $roleFilter = $request->input('roleFilter');
+        $nameFilter = $request->input('nameFilter');
+
+        $query = User::query();
+
+        if ($roleFilter) {
+            $query->where('role', $roleFilter);
+        }
+
+        if ($nameFilter) {
+            $query->where(function ($query) use ($nameFilter) {
+                $query->where('name', 'like', $nameFilter . '%');
+            });
+        }
+
+        $users = $query->paginate(5);
+
+        if ($request->ajax()) {
+            return view('users.partials.user_table', compact('users'));
+        }
+
+        return view('users.index', compact('users'));
     }
 
     /**
@@ -24,7 +47,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        $courseClasses = CourseClass::all();
+        $courses = Course::all();
+
+        return view('users.create', compact('courseClasses', 'courses'));
     }
 
     /**
@@ -35,7 +61,37 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $request->validate([
+                'name' => 'required|string|min:5|max:255',
+                'username' => 'required|string|min:5|max:20',
+                'email' => [
+                    'required',
+                    'email',
+                ],
+                'contact' => 'required|min:9|max:20',
+                'password' => [
+                    'nullable',
+                    'string',
+                    'min:7',
+                    'regex:/^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).*$/',
+                ],
+                'role' => 'required',
+                'isActive' => 'required',
+                'isStudent' => 'nullable',
+            ]);
+
+            $request['isStudent'] = $this->setIsStudent($request);
+            $request['password'] = $this->encryptPassword($request['password']);
+            $user = User::create($request->all());
+
+            return redirect()->route('users.show', $user->id);
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            return redirect()->back()->withErrors($e->validator)->withInput();
+        } catch (\Exception $e) {
+            return redirect()->back();
+        }
     }
 
     /**
@@ -46,7 +102,10 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        //
+        $courseClasses = CourseClass::all();
+        $courses = Course::all();
+
+        return view('users.show', compact('user', 'courseClasses', 'courses'));
     }
 
     /**
@@ -57,7 +116,10 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        //
+        $courseClasses = CourseClass::all();
+        $courses = Course::all();
+
+        return view('users.edit', compact('user', 'courseClasses', 'courses'));
     }
 
     /**
@@ -69,7 +131,34 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|min:5|max:255',
+            'username' => 'required|string|min:5|max:20',
+            'email' => [
+                'required',
+                'email',
+            ],
+            'contact' => 'required|min:9|max:20',
+            'password' => [
+                'nullable',
+                'string',
+                'min:7',
+                'regex:/^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).*$/',
+            ],
+            'role' => 'required',
+            'isActive' => 'required',
+            'isStudent' => 'nullable',
+        ]);
+
+        $request['isStudent'] = $this->setIsStudent($request);
+        $user->update($request->except('password'));
+
+        if ($request->has('password')) {
+            $user->password = $this->encryptPassword($request['password']);
+            $user->save();
+        }
+
+        return redirect()->route('users.index')->with('success', 'Utilizador atualizado com sucesso!');
     }
 
     /**
@@ -80,6 +169,21 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        try {
+            $user->delete();
+            return redirect()->route('users.index')->with('success', 'Utilizador excluído com sucesso!');
+        } catch (\Exception $e) {
+            return redirect()->route('users.index')->with('error', 'Erro ao excluir o utilizador. Por favor, tente novamente.');
+        }
+    }
+
+    private function encryptPassword($password)
+    {
+        return bcrypt($password);
+    }
+
+    private function setIsStudent(Request $request)
+    {
+        return $request->input('role') === 'formando' ? 1 : 0;
     }
 }

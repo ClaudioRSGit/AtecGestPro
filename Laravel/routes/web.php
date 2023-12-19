@@ -19,11 +19,9 @@ Route::resource('tickets', 'TicketController');
 
 Route::resource('materials', 'MaterialController');
 
-Route::resource('trainings', 'TrainingsController');
-
 Route::resource('trainings', 'TrainingController');
 
-Route::resource('classes', 'CourseClassController');
+Route::resource('students', 'StudentController');
 
 Route::resource('clothing', 'ClothingController');
 
@@ -33,3 +31,7 @@ Route::resource('clothing-assignment', 'ClothingAssignmentController');
 
 
 
+
+Route::resource('course-classes', 'CourseClassController');
+
+Route::resource('courses', 'CourseController');

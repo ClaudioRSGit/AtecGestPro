@@ -23,7 +23,18 @@ class UserSeeder extends Seeder
             'isStudent' => false,
             'course_class_id' => 1,
         ]);
-
+        // Seed 1
+        DB::table('users')->insert([
+            'name' => 'Antonio Carro',
+            'username' => 'T0123388',
+            'email' => 'antonio.carro.t3698521@edu.atec.pt',
+            'contact' => '912345699',
+            'password' => bcrypt('password123'),
+            'role' => 'admin',
+            'isActive' => true,
+            'isStudent' => false,
+            'course_class_id' => 1,
+        ]);
         // Seed 2
         DB::table('users')->insert([
             'name' => 'Francisco Silva',
@@ -66,9 +77,45 @@ class UserSeeder extends Seeder
         // Seed 5
         DB::table('users')->insert([
             'name' => 'José Silva',
-            'username' => 'T0123185',
-            'email' => 'jose.silva.t0123185@edu.atec.pt',
-            'contact' => '934092931',
+            'username' => 'T0123186',
+            'email' => 'jose.silva.t0123186@edu.atec.pt',
+            'contact' => '934092936',
+            'password' => bcrypt('passwordxy6'),
+            'role' => 'formando',
+            'isActive' => true,
+            'isStudent' => true,
+            'course_class_id' => 5,
+        ]);
+        // Seed 5
+        DB::table('users')->insert([
+            'name' => 'José Silva2',
+            'username' => 'T0123187',
+            'email' => 'jose.silva.t0123187@edu.atec.pt',
+            'contact' => '934092937',
+            'password' => bcrypt('passwordxy7'),
+            'role' => 'formando',
+            'isActive' => true,
+            'isStudent' => true,
+            'course_class_id' => 5,
+        ]);
+        // Seed 5
+        DB::table('users')->insert([
+            'name' => 'José Silva8',
+            'username' => 'T0123188',
+            'email' => 'jose.silva.t0123158@edu.atec.pt',
+            'contact' => '934092938',
+            'password' => bcrypt('passwordxyz'),
+            'role' => 'formando',
+            'isActive' => true,
+            'isStudent' => true,
+            'course_class_id' => 5,
+        ]);
+        // Seed 5
+        DB::table('users')->insert([
+            'name' => 'José Silva4',
+            'username' => 'T0123189',
+            'email' => 'jose.silva.t0123189@edu.atec.pt',
+            'contact' => '934092939',
             'password' => bcrypt('passwordxyz'),
             'role' => 'formando',
             'isActive' => true,

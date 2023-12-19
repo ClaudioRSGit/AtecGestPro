@@ -9,6 +9,10 @@ use App\CourseClass;
 class Course extends Model
 {
     use SoftDeletes;
+    protected $fillable = [
+        'code',
+        'description'
+    ];
 
     public function CourseClass()
     {
