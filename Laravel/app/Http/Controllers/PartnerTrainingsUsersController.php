@@ -14,7 +14,17 @@ class PartnerTrainingsUsersController extends Controller
      */
     public function index()
     {
-        //
+        $partner_Trainings_Users = Partner_Trainings_Users::with('partner', 'training', 'user')->get();
+
+        $partner_Trainings_Users = $partner_Trainings_Users->map(function ($partner_Trainings_User) {
+            return $partner_Trainings_User
+                ->setRelation('partner', $partner_Trainings_User->partner)
+                ->setRelation('training', $partner_Trainings_User->training)
+                ->setRelation('user', $partner_Trainings_User->user);
+        });
+
+
+        return view('external.index', compact('partner_Trainings_Users'));
     }
 
     /**
@@ -46,8 +56,12 @@ class PartnerTrainingsUsersController extends Controller
      */
     public function show(Partner_Trainings_Users $partner_Trainings_Users)
     {
-        //
+        // Eager load the relations for this specific instance
+        $partner_Trainings_Users->load('partner', 'training', 'user');
+
+        return view('external.show', compact('partner_Trainings_Users'));
     }
+
 
     /**
      * Show the form for editing the specified resource.

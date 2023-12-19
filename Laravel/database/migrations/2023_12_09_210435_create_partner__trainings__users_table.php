@@ -22,7 +22,7 @@ class CreatePartnerTrainingsUsersTable extends Migration
             $table->dateTime('end_date');
             $table->boolean('isDeleted')->default(false);
             $table->timestamps();
-            $table->softDeletes('DeletedAt', 0);
+            $table->softDeletes('deleted_at', 0);
         });
     }
 

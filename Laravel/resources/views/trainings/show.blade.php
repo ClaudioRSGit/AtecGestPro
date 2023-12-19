@@ -8,7 +8,7 @@
             <tbody>
                 <tr>
                     <th scope="row">ID:</th>
-                    <td>{{ $training->id }}</td>
+                    <td>{{ $partner_Trainings_User->id }}</td>
                 </tr>
                 <tr>
                     <th scope="row">Nome da formação:</th>

@@ -27,6 +27,8 @@ Route::resource('clothing', 'ClothingController');
 
 Route::resource('clothing-assignment', 'ClothingAssignmentController');
 
+Route::resource('external', 'PartnerTrainingsUsersController');
+
 
 
 
