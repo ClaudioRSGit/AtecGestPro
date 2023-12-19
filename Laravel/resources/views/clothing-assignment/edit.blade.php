@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container">
+    <div class="container pl-5 pt-4">
         <h1>Editar Vestuário</h1> clothing
 
         <form method="post" action="{{ route('clothing-assignment.update', $clothing_assignment->id) }}">

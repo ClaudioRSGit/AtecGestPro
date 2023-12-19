@@ -1,7 +1,8 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container p-5">
+    <div class="container pl-5 pt-4">
+
         <h1>Vestuário</h1>
 
 
