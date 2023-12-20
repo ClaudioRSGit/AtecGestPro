@@ -129,7 +129,7 @@ class PartnerTrainingsUsersController extends Controller
         $partner_Trainings_User = Partner_Trainings_Users::findOrFail($id);
         $partner_Trainings_User->delete();
 
-        return redirect()->route('external.index')->with('success', 'Formação eliminada com sucesso');
+        return redirect()->back()->with('success', 'Formação eliminada com sucesso');
     }
 
 }

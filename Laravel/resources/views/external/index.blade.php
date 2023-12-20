@@ -6,9 +6,7 @@
 
         <a href="{{ route('external.create') }}" class="btn btn-primary mb-3">Novo agendamento</a>
 
-        <form method="post">
-            @csrf
-            @method('delete')
+        <div>
 
             <table class="table">
                 <thead>
@@ -44,7 +42,7 @@
                 @endforeach
                 </tbody>
             </table>
-        </form>
+        </div>
         {{ $partner_Trainings_Users->links() }}
     </div>
 @endsection
