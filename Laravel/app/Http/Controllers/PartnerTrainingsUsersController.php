@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Partner;
 use App\Partner_Trainings_Users;
+use App\Training;
+use App\User;
 use Illuminate\Http\Request;
 
 class PartnerTrainingsUsersController extends Controller
@@ -14,18 +17,19 @@ class PartnerTrainingsUsersController extends Controller
      */
     public function index()
     {
-        $partner_Trainings_Users = Partner_Trainings_Users::with('partner', 'training', 'user')->get();
-
-        $partner_Trainings_Users = $partner_Trainings_Users->map(function ($partner_Trainings_User) {
-            return $partner_Trainings_User
-                ->setRelation('partner', $partner_Trainings_User->partner)
-                ->setRelation('training', $partner_Trainings_User->training)
-                ->setRelation('user', $partner_Trainings_User->user);
-        });
-
+        $partner_Trainings_Users = Partner_Trainings_Users::with('partner', 'training', 'user')->paginate(2);
 
         return view('external.index', compact('partner_Trainings_Users'));
     }
+
+
+    public function show($id)
+    {
+        $partner_Trainings_User = Partner_Trainings_Users::with('partner', 'training', 'user')->findOrFail($id);
+
+        return view('external.show', compact('partner_Trainings_User'));
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -34,7 +38,11 @@ class PartnerTrainingsUsersController extends Controller
      */
     public function create()
     {
-        //
+        $partner_Trainings_Users = Partner_Trainings_Users::all();
+        $partners=Partner::all();
+        $users=User::all();
+        $trainings=Training::all();
+        return view('external.create', compact('partner_Trainings_Users', 'partners', 'users', 'trainings'));
     }
 
     /**
@@ -45,22 +53,27 @@ class PartnerTrainingsUsersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate(request(),
+            [
+
+                    'partner_id' => 'required',
+                    'training_id' => 'required',
+                    'user_id' => 'required',
+                    'start_date' => 'required',
+                    'end_date' => 'required',
+
+
+            ]);
+        Partner_Trainings_Users::create($request->all());
+        return redirect()->route('external.index')->with('success','Formação criada com sucesso');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Partner_Trainings_Users  $partner_Trainings_Users
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Partner_Trainings_Users $partner_Trainings_Users)
-    {
-        // Eager load the relations for this specific instance
-        $partner_Trainings_Users->load('partner', 'training', 'user');
 
-        return view('external.show', compact('partner_Trainings_Users'));
-    }
+
+
+
+
+
 
 
     /**
@@ -69,9 +82,16 @@ class PartnerTrainingsUsersController extends Controller
      * @param  \App\Partner_Trainings_Users  $partner_Trainings_Users
      * @return \Illuminate\Http\Response
      */
-    public function edit(Partner_Trainings_Users $partner_Trainings_Users)
+    public function edit($id)
     {
-        //
+
+
+
+        $partner_Trainings_Users = Partner_Trainings_Users::with('partner', 'training', 'user')->findOrFail($id);
+        $partners = Partner::all();
+        $trainings = Training::all();
+        $users = User::all();
+        return view('external.edit', compact('partner_Trainings_Users', 'partners', 'trainings', 'users'));
     }
 
     /**
@@ -81,19 +101,35 @@ class PartnerTrainingsUsersController extends Controller
      * @param  \App\Partner_Trainings_Users  $partner_Trainings_Users
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Partner_Trainings_Users $partner_Trainings_Users)
+    public function update(Request $request,  $id)
     {
-        //
+        $partner_Trainings_Users = Partner_Trainings_Users::with('partner', 'training', 'user')->findOrFail($id);
+
+        $this->validate($request, [
+            'partner_id' => 'required',
+            'training_id' => 'required',
+            'user_id' => 'required',
+            'start_date' => 'required|date',
+            'end_date' => 'required|date|after_or_equal:start_date',
+        ]);
+
+        if (strtotime($request->start_date) > strtotime($request->end_date)) {
+            return redirect()->back()->withErrors(['end_date' => 'End date must be after or equal to start date']);
+        }
+
+        $partner_Trainings_Users->update($request->all());
+
+        return redirect()->route('external.index')->with('success', 'Formação atualizada com sucesso');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Partner_Trainings_Users  $partner_Trainings_Users
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Partner_Trainings_Users $partner_Trainings_Users)
+
+
+    public function destroy(Partner_Trainings_Users $partner_Trainings_User)
     {
-        //
+//            dd($partner_Trainings_User);
+
+        $partner_Trainings_User->delete();
+        return redirect()->route('external.index')->with('success', 'Formação eliminada com sucesso');
     }
+
 }
