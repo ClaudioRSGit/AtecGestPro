@@ -26,4 +26,9 @@ class Partner_Trainings_Users extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+
+    protected $fillable = [
+        'partner_id', 'training_id','user_id','start_date','end_date'
+    ];
 }
