@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container pl-5 pt-4">
-        <h1>Editar Vestuário</h1> clothing
+        <h1>Editar Vestuário</h1>
 
         <form method="post" action="{{ route('clothing-assignment.update', $clothing_assignment->id) }}">
             @csrf
@@ -80,7 +80,7 @@
                     <div class="form-group">
                         <label for="actions">Ações:</label>
                         <button type="submit" class="btn btn-primary">Salvar Alterações</button>
-                        <a href="{{ route('clothing-assignment.show', $clothing_assignment->id) }}" class="btn btn-secondary mt-3">Cancelar</a>
+                        <a href="{{ url()->previous() }}" class="btn btn-secondary mt-3">Cancelar</a>
                     </div>
                 </div>
 

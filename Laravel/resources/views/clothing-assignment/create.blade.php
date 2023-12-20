@@ -84,7 +84,7 @@
                     <div class="mb-3">
                         <label for="actions" class="form-label">Ações:</label>
                         <button type="submit" class="btn btn-primary">Criar Vestuário</button>
-                        <a href="{{ route('clothing-assignment.index') }}" class="btn btn-secondary mt-3">Cancelar</a>
+                        <a href="{{ url()->previous() }}" class="btn btn-secondary mt-3">Cancelar</a>
                     </div>
                 </div>
             </div>

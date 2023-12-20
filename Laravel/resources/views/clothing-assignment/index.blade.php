@@ -8,7 +8,7 @@
 
         <h5>Nome Completo</h5>
         <div class="input-group mb-3" style="width: 60%;">
-            <input type="text" class="form-control" id="userToAssignClothing" placeholder="" aria-label="Username"
+            <input type="text" class="form-control" id="userToAssignClothing" placeholder="{{ $name }}" aria-label="Username"
                 aria-describedby="basic-addon1" disabled="disabled">
             <div class="input-group-prepend">
                 <!-- replace the materials.index for the route to user.edit or student.edit with the user id-->
@@ -126,30 +126,6 @@
 
 
     <script>
-
-        // array only  for testing, substitute later for the value from ClassCourse or CourseClass
-        let users = [{
-                id: 1,
-                name: 'Coelho Cenoura',
-                role: 3
-            },
-            {
-                id: 2,
-                name: 'Not Your Mother',
-                role: 2
-            },
-            {
-                id: 3,
-                name: 'Pipa Pepino',
-                role: 4
-            }
-        ];
-
-        //Get the user name and show in the "Nome Completo"
-        let inputElement = document.querySelector('#userToAssignClothing');
-        inputElement.placeholder = users[2].name;
-
-
 
         document.addEventListener('DOMContentLoaded', function() {
             const selectAllCheckbox = document.getElementById('select-all');

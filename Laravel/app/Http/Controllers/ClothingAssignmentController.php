@@ -4,17 +4,19 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Material;
-use App\Http\Controller\MaterialController;
+use App\User;
 
 
 
 class ClothingAssignmentController extends Controller
 {
-    public function index()
+    public function index($id)
     {
+        $student = User::find($id);
+        $name = $student->name;
 
         $clothing_assignment = Material::where('isClothing', 1)->get();
-        return view('clothing-assignment.index', compact('clothing_assignment'));
+        return view('clothing-assignment.index', ['name' => $name], compact('clothing_assignment'));
     }
 
     public function create()

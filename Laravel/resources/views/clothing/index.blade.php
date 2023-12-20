@@ -86,7 +86,7 @@
                                     @foreach($courseClass->students as $student)
                                         <tr>
 
-                                            <td>{{ $student->name }}</td>
+                                            <td><a href="{{ route('clothing-assignment.users', $student->id) }}" class="btn btn-link">{{ $student->name }}</a></td>
                                             <td>{{ $student->username }}</td>
                                             <td>{{ $student->email }}</td>
                                             <td><input type="checkbox"></td>
