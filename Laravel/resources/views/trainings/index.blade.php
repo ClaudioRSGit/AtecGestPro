@@ -2,9 +2,9 @@
 
 @section('content')
     <div class="container pl-5 pt-4">
-        <h1>Lista de Trainings</h1>
+        <h1>Lista de Formações</h1>
 
-    <a href="{{ route('trainings.create') }}" class="btn btn-primary mb-3">Novo Training</a>
+    <a href="{{ route('trainings.create') }}" class="btn btn-primary mb-3">Nova formação</a>
 
     <table class="table">
         <thead>
@@ -35,5 +35,6 @@
             @endforeach
         </tbody>
     </table>
+    {{ $trainings->links() }}
     </div>
 @endsection

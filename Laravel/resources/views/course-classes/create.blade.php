@@ -21,6 +21,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Criar Turma</button>
+            <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
         </form>
     </div>
 @endsection

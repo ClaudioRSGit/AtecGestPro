@@ -2,15 +2,15 @@
 
 @section('content')
     <div class="container">
-        <h1>Criar Novo Material</h1>
+        <h1>Criar Novo Vestuário</h1>
 
-        <form method="post" action="{{ route('materials.store') }}">
+        <form method="post" action="{{ route('clothing-assignment.store') }}">
             @csrf
             <div class="row">
                 <div class="col-md-6">
 
                     <div class="mb-3">
-                        <label for="name" class="form-label">Nome do Material:</label>
+                        <label for="name" class="form-label">Nome do Vestuário:</label>
                         <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
                     </div>
 
@@ -40,8 +40,7 @@
                     <div class="mb-3">
                         <label for="isClothing" class="form-label">É vestuário?</label>
                         <select class="form-select" id="isClothing" name="isClothing">
-                            <option value="1" {{ old('isClothing') == 1 ? 'selected' : '' }}>Sim</option>
-                            <option value="0" {{ old('isClothing') == 0 ? 'selected' : '' }}>Não</option>
+                            <option value="1" selected>Sim</option>
                         </select>
                     </div>
 
@@ -84,7 +83,7 @@
 
                     <div class="mb-3">
                         <label for="actions" class="form-label">Ações:</label>
-                        <button type="submit" class="btn btn-primary">Criar Material</button>
+                        <button type="submit" class="btn btn-primary">Criar Vestuário</button>
                         <a href="{{ url()->previous() }}" class="btn btn-secondary mt-3">Cancelar</a>
                     </div>
                 </div>

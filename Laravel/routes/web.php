@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CourseClassController;
 use App\Http\Controllers\MaterialController;
+use App\Http\Controllers\ClothingController;
 
 Route::get('/', function () {
     return view('master.main');
@@ -22,7 +23,18 @@ Route::resource('trainings', 'TrainingController');
 
 Route::resource('students', 'StudentController');
 
+Route::resource('clothing', 'ClothingController');
+
+Route::resource('clothing-assignment', 'ClothingAssignmentController');
+Route::get('/clothing-assignment/users/{id}', 'ClothingAssignmentController@index')->name('clothing-assignment.users');
+
+Route::resource('external', 'PartnerTrainingsUsersController');
+
+
+
+
+
+
 Route::resource('course-classes', 'CourseClassController');
 
 Route::resource('courses', 'CourseController');
-Route::resource('clothing', 'ClothingController');

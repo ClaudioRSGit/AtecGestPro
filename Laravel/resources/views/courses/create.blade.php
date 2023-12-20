@@ -36,7 +36,7 @@
                     </div>
 
             <button type="submit" class="btn btn-primary">Criar Curso</button>
-            <a href="{{ route('courses.index') }}" class="btn btn-secondary">Cancelar</a>
+            <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
         </form>
     </div>
 @endsection

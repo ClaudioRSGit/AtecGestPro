@@ -26,6 +26,6 @@
             <button type="submit" class="btn btn-primary">Salvar Alterações</button>
         </form>
 
-        <a href="{{ route('trainings.show', $training->id) }}" class="btn btn-secondary mt-3">Cancelar</a>
+        <a href="{{ url()->previous() }}" class="btn btn-secondary mt-3">Cancelar</a>
     </div>
 @endsection
