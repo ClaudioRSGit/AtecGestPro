@@ -25,9 +25,7 @@
 
 
 
-        <form method="post">
-            @csrf
-            @method('delete')
+        <div>
 
             <table class="table bg-white rounded-top">
                 <thead>
@@ -80,7 +78,7 @@
                     @endforeach
                 </tbody>
             </table>
-        </form>
+        </div>
         {{ $materials->links() }}
     </div>
 

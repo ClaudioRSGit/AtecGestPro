@@ -71,9 +71,9 @@ class MaterialController extends Controller
     {
         try {
             $material->delete();
-            return redirect()->route('materials.index')->with('success', 'Material excluído com sucesso!');
+            return redirect()->back()->with('success', 'Material excluído com sucesso!');
         } catch (\Exception $e) {
-            return redirect()->route('materials.index')->with('error', 'Erro ao excluir o material. Por favor, tente novamente.');
+            return redirect()->back()->with('error', 'Erro ao excluir o material. Por favor, tente novamente.');
         }
     }
 }

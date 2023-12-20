@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CourseClassController;
 use App\Http\Controllers\MaterialController;
@@ -22,7 +21,7 @@ Route::resource('materials', 'MaterialController');
 
 Route::resource('trainings', 'TrainingController');
 
-//Route::resource('students', 'StudentController');
+Route::resource('students', 'StudentController');
 
 Route::resource('clothing', 'ClothingController');
 
@@ -30,7 +29,6 @@ Route::resource('clothing-assignment', 'ClothingAssignmentController');
 Route::get('/clothing-assignment/users/{id}', 'ClothingAssignmentController@index')->name('clothing-assignment.users');
 
 Route::resource('external', 'PartnerTrainingsUsersController');
-
 
 
 

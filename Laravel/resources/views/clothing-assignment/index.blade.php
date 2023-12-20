@@ -39,7 +39,7 @@
         </div>
 
 
-        <form method="post">
+        <div>
 
 
             <table class="table">
@@ -91,21 +91,19 @@
                             <td>
                                 <a href="{{ route('clothing-assignment.edit', $clothing_assignment->id) }}"
                                     class="btn btn-warning btn-edit">Editar</a>
-                                <form method="post" action="{{ route('clothing-assignment.destroy', $clothing_assignment->id) }}"
-                                    style="display:inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger"
-                                        onclick="return confirm('Tem certeza que deseja excluir?')"
-                                        >Excluir</button>
 
+                                <form method="post" action="{{ route('clothing-assignment.destroy', $clothing_assignment->id) }}" style="display:inline;">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit" class="btn btn-danger"
+                                        onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
                                 </form>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-        </form>
+        </div>
 
         <h5>Observações </h5>
         <div class="input-group mb-3" style="width: 80%;">

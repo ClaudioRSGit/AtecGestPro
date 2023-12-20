@@ -3,7 +3,7 @@
 
 @section('content')
 <style>
-    body {
+    .container {
         font-family: 'Manrope', sans-serif;
         position: relative;
     }

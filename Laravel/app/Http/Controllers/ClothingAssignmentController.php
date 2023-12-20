@@ -72,12 +72,12 @@ class ClothingAssignmentController extends Controller
             $clothing_assignment = Material::find($id);
             if($clothing_assignment) {
                 $clothing_assignment->delete();
-                return redirect()->route('clothing-assignment.index')->with('success', 'Material excluído com sucesso!');
+                return redirect()->back()->with('success', 'Material excluído com sucesso!');
             } else {
-                return redirect()->route('clothing-assignment.index')->with('error', 'Material not found.');
+                return redirect()->back()->with('error', 'Material not found.');
             }
         } catch (\Exception $e) {
-            return redirect()->route('clothing-assignment.index')->with('error', 'Erro ao excluir o material. Por favor, tente novamente.');
+            return redirect()->back()->with('error', 'Erro ao excluir o material. Por favor, tente novamente.');
         }
     }
 }
