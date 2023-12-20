@@ -103,7 +103,7 @@
 
 
             <button type="submit" class="btn btn-primary">Criar Utilizador</button>
-            <a href="{{ route('users.index') }}" class="btn btn-secondary">Cancelar</a>
+            <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
         </form>
     </div>
 

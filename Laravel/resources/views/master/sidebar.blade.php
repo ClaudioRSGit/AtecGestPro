@@ -1,9 +1,10 @@
-
 <div class="sidebarContent">
-    <div class="logo">
-        <img src="{{ asset('assets/logo.png') }}" alt="logo">
-        <h5><strong> ATEC GEST PRO </strong></h5>
-    </div>
+    <a href="/" style="text-decoration: none; color: black">
+        <div class="logo">
+            <img src="{{ asset('assets/logo.png') }}" alt="logo">
+            <h5><strong> ATEC GEST PRO </strong></h5>
+        </div>
+    </a>
 
     <div class="links">
         <div class="dashboard">

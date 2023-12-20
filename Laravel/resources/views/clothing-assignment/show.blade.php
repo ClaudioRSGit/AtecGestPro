@@ -82,7 +82,7 @@
                 <div class="form-group">
                     <label for="actions">Ações:</label>
                     <a href="{{ route('clothing-assignment.edit', $clothing_assignment->id) }}" class="btn btn-primary">Editar</a>
-                    <a href="{{ route('clothing-assignment.index') }}" class="btn btn-secondary">Voltar</a>
+                    <a href="{{ url()->previous() }}" class="btn btn-secondary">Voltar</a>
                 </div>
             </div>
         </div>

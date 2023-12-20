@@ -118,7 +118,7 @@
                 <button class="btn btn-primary" type="button">Guardar</button>
 
                 <!-- replace the clothing.index for the route back to turmas or wherever -->
-                <button class="btn btn-primary" type="button" onclick="window.location.href='{{ route('clothing-assignment.index') }}'">Fechar</button>
+                <button class="btn btn-primary" type="button" onclick="window.location.href='{{ url()->previous() }}'">Fechar</button>
             </div>
         </div>
 

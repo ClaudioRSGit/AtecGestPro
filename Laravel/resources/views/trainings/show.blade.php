@@ -8,7 +8,7 @@
             <tbody>
                 <tr>
                     <th scope="row">ID:</th>
-                    <td>{{ $partner_Trainings_User->id }}</td>
+                    <td>{{ $training->id }}</td>
                 </tr>
                 <tr>
                     <th scope="row">Nome da formação:</th>
@@ -27,7 +27,7 @@
                     <th scope="row">Ações:</th>
                     <td>
                         <a href="{{ route('trainings.edit', $training->id) }}" class="btn btn-warning">Editar</a>
-                        <a href="{{ route('trainings.index') }}" class="btn btn-primary">Voltar</a>
+                        <a href="{{ url()->previous() }}" class="btn btn-primary">Voltar</a>
                     </td>
             </tbody>
         </table>

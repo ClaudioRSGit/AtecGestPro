@@ -36,7 +36,7 @@
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
                         </form>
-                         <a href="{{ route('courses.show', $course->id) }}" class="btn btn-secondary mt-3">Cancelar</a>
+                         <a href="{{ url()->previous() }}" class="btn btn-secondary mt-3">Cancelar</a>
                     </div>
                 </div>
             </div>

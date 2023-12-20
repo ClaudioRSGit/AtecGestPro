@@ -84,7 +84,7 @@
                 <div class="form-group">
                     <label for="actions">Ações:</label>
                     <a href="{{ route('materials.edit', $material->id) }}" class="btn btn-primary">Editar</a>
-                    <a href="{{ route('materials.index') }}" class="btn btn-secondary">Voltar</a>
+                    <a href="{{ url()->previous() }}" class="btn btn-secondary">Voltar</a>
                 </div>
             </div>
         </div>

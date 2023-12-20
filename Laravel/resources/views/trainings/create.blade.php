@@ -25,7 +25,7 @@
 
 
             <button type="submit" class="btn btn-primary">Criar formação</button>
-            <a href="{{ route('trainings.index') }}" class="btn btn-secondary">Cancelar</a>
+            <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
         </form>
     </div>
 @endsection
