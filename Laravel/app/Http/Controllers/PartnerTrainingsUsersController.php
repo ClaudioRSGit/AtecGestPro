@@ -124,11 +124,11 @@ class PartnerTrainingsUsersController extends Controller
 
 
 
-    public function destroy(Partner_Trainings_Users $partner_Trainings_User)
+    public function destroy($id)
     {
-//            dd($partner_Trainings_User);
-
+        $partner_Trainings_User = Partner_Trainings_Users::findOrFail($id);
         $partner_Trainings_User->delete();
+
         return redirect()->route('external.index')->with('success', 'Formação eliminada com sucesso');
     }
 
