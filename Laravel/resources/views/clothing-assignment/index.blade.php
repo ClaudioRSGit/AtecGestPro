@@ -7,24 +7,23 @@
 
 
         <h5>Nome Completo</h5>
-        <div class="input-group mb-3" style="width: 60%;">
+        <div class="input-group mb-3">
             <input type="text" class="form-control" id="userToAssignClothing" placeholder="{{ $name }}" aria-label="Username"
                 aria-describedby="basic-addon1" disabled="disabled">
             <div class="input-group-prepend">
-                <!-- replace the materials.index for the route to user.edit or student.edit with the user id-->
             </div>
         </div>
 
 
-        <div class="mb-3">
-            <div class="d-flex">
-                <div style="width: 30%;">
-                    <input type="text" id="search" class="form-control" placeholder="Pesquisar" >
+        <div class="d-flex justify-content-between mb-3">
+            <div class="form-inline">
+                <div class="form-group">
+                    <input type="text" id="search" class="form-control" placeholder="Pesquisar Vestuário" >
                 </div>
 
-                <div class="ms-2">
+                <div class="form-group mx-3">
                     <label for="filter">Filtrar por:</label>
-                    <select class="form-select" id="filter">
+                    <select class="form-control mx-3" id="filter">
                         <option value="all">Todos</option>
                         <option value="trainer">Formador</option>
                         <option value="trainee">Formando</option>
@@ -32,26 +31,23 @@
                     </select>
                 </div>
 
-                <a href="{{ route('clothing-assignment.create') }}" class="btn btn-primary mb-3">Novo Vestuário</a>
 
+                <a href="{{ route('clothing-assignment.create') }}" class="btn btn-primary">Novo Vestuário</a>
             </div>
         </div>
 
 
         <div>
-
-
-            <table class="table">
+            <table class="table bg-white">
                 <thead>
                     <tr>
-                        <th scope="col">
-                            <input type="checkbox" id="select-all">
-                        </th>
+                        <th scope="col"> <input type="checkbox" id="select-all"> </th>
                         <th scope="col">Nome</th>
                         <th scope="col">Género</th>
                         <th scope="col" style="text-align: center;">Tamanho</th>
                         <th scope="col" style="text-align: center;">Função</th>
                         <th scope="col" style="text-align: center;">Quantidade</th>
+                        <th scope="col" style="text-align: center;">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -83,7 +79,6 @@
                                 @endif
                             </td>
                             <td style="text-align: center;">{{ isset($clothing_assignment->size) ? $clothing_assignment->size : 'N.A.' }}</td>
-                            <!-- usar if ou swit para substituir o numero do role pelo nome -->
                             <td style="text-align: center;">{{ isset($clothing_assignment->role) ? $clothing_assignment->role : 'N.A.' }}</td>
                             <td style="text-align: center;">{{ isset($clothing_assignment->quantity) ? $clothing_assignment->quantity : 'N.A.' }}
                             </td>
@@ -105,17 +100,14 @@
         </div>
 
         <h5>Observações </h5>
-        <div class="input-group mb-3" style="width: 80%;">
+        <div class="input-group mb-3">
             <textarea class="form-control" id="textarea" aria-label="With textarea"></textarea>
+        </div>
+        <div class="d-flex flex-row-reverse">
             <div class="input-group-prepend">
-                <button class="btn btn-danger" type="button" onclick="location.reload()">Apagar</button>
-
-                <!-- I intend to meet with Claudio to discuss how we are going to deal with this Save part -->
-
-                <button class="btn btn-primary" type="button">Guardar</button>
-
-                <!-- replace the clothing.index for the route back to turmas or wherever -->
-                <button class="btn btn-primary" type="button" onclick="window.location.href='{{ url()->previous() }}'">Fechar</button>
+                <button class="btn btn-danger mx-1" type="button" onclick="location.reload()">Apagar</button>
+                <button class="btn btn-primary mx-1" type="button">Guardar</button>
+                <button class="btn btn-primary mx-1" type="button" onclick="window.location.href='{{ url()->previous() }}'">Fechar</button>
             </div>
         </div>
 
@@ -181,4 +173,17 @@
             }
         });
     </script>
+    <style>
+        body::before {
+        content: '';
+        position: absolute;
+        top: 1%;
+        right: 0%;
+        bottom: 0%;
+        left: 50%;
+        position: fixed;
+        background-image: radial-gradient(circle, rgba(17, 111, 220, 0.1), rgba(120, 143, 228, 0.2), rgba(173, 177, 237, 0.1), rgba(217, 215, 246, 0), rgba(255, 255, 255, 0.1));
+        z-index: -1;
+    }
+    </style>
 @endsection
