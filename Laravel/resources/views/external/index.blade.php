@@ -7,7 +7,6 @@
         <a href="{{ route('external.create') }}" class="btn btn-primary mb-3">Novo agendamento</a>
 
         <div>
-
             <table class="table">
                 <thead>
                 <tr>
@@ -20,13 +19,12 @@
                 </tr>
                 </thead>
                 <tbody>
-
                 @foreach($partner_Trainings_Users as $partner_Trainings_User)
                     <tr>
-                        <td>{{ $partner_Trainings_User->partner->name }}</td>
-                        <td>{{ $partner_Trainings_User->partner->address }}</td>
-                        <td>{{ $partner_Trainings_User->user->name }}</td>
-                        <td>{{ $partner_Trainings_User->training ? $partner_Trainings_User->training->name : 'N.A.' }}</td>
+                        <td>{{ optional($partner_Trainings_User->partner)->name }}</td>
+                        <td>{{ optional($partner_Trainings_User->partner)->address }}</td>
+                        <td>{{ optional($partner_Trainings_User->user)->name }}</td>
+                        <td>{{ optional($partner_Trainings_User->training)->name ?: 'N.A.' }}</td>
                         <td>{{ $partner_Trainings_User->start_date }}</td>
                         <td>
                             <a href="{{ route('external.show', $partner_Trainings_User->id) }}" class="btn btn-info">Detalhes</a>
@@ -46,3 +44,5 @@
         {{ $partner_Trainings_Users->links() }}
     </div>
 @endsection
+
+
