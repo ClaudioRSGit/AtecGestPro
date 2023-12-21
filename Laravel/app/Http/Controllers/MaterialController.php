@@ -76,4 +76,20 @@ class MaterialController extends Controller
             return redirect()->back()->with('error', 'Erro ao excluir o material. Por favor, tente novamente.');
         }
     }
+    public function massDelete(Request $request)
+    {
+        $request->validate([
+            'material_ids' => 'required|array',
+            'material_ids.*' => 'exists:materials,id',//all items inside array must exist
+        ]);
+
+        try {
+
+            Material::whereIn('id', $request->input('material_ids'))->delete();
+            return redirect()->back()->with('success', 'Materiais selecionados excluídos com sucesso!');
+        } catch (\Exception $e) {
+
+            return redirect()->back()->with('error', 'Erro ao excluir os materiais selecionados. Por favor, tente novamente.');
+        }
+    }
 }
