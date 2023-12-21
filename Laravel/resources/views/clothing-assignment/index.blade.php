@@ -12,7 +12,6 @@
                 aria-describedby="basic-addon1" disabled="disabled">
             <div class="input-group-prepend">
                 <!-- replace the materials.index for the route to user.edit or student.edit with the user id-->
-                <button class="btn btn-warning" id="EditInput" type="button" onclick="window.location.href='{{ route('materials.index') }}'">Editar</button>
             </div>
         </div>
 

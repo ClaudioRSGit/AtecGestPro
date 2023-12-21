@@ -1,10 +1,8 @@
 @extends('master.main')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;700&display=swap">
 
 @section('content')
     <div class="container pl-5 pt-4">
-        <h1 class="font-weight-bold">Vestuário</h1>
+        <h1>Vestuário</h1>
         <div class="d-flex justify-content-between mb-3">
             <div class="form-inline">
                 <div class="form-group">
@@ -137,10 +135,6 @@
         });
     </script>
     <style>
-        body {
-            font-family: 'Manrope', sans-serif;
-            position: relative;
-        }
 
         body::before {
             content: '';

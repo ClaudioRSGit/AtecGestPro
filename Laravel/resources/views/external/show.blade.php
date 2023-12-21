@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container pl-4">
-        <h1>Detalhes do agendamento</h1>
+        <h1>Detalhes do agendamento da formação:</h1>
 
         @if($partner_Trainings_User)
             <table class="table">
