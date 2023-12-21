@@ -1,16 +1,17 @@
 @extends('master.main')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 @section('content')
-    <div class="container pl-5 pt-4">
+    <div class="container pl-5">
         <h1>Lista de Materiais</h1>
 
         <div class="d-flex justify-content-between mb-3">
             <form class="form-inline" id="filterForm">
-                <div class="form-group mr-3" style="width: 30%;">
+                <div class="form-group mr-3">
                     <input type="text" id="search" class="form-control" placeholder="Pesquisar Material">
                 </div>
 
-                <div class="form-group mx-5">
+                <div class="form-group">
                     <label for="filter"></label>
                     <select class="form-control" id="filter">
                         <option value="all">Todos</option>
@@ -29,7 +30,7 @@
 
         <div>
 
-            <table class="table bg-white rounded-top">
+            <table class="table bg-white">
                 <thead>
                     <tr>
                         <th scope="col">
@@ -69,11 +70,11 @@
                             </td>
                             <td>{{ isset($material->size) ? $material->size : 'N.A.' }}</td>
                             <td>
-                                <a href="{{ route('materials.edit', $material->id) }}" class="btn btn-warning btn-edit">Editar</a>
+                                <a href="{{ route('materials.edit', $material->id) }}" class="btn btn-warning btn-edit"><i class="fas fa-pencil-alt"></i></a>
                                 <form method="post" action="{{ route('materials.destroy', $material->id) }}" style="display:inline;">
                                     @csrf
                                     @method('delete')
-                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir?')"><i class="fas fa-trash-alt"></i></button>
                                 </form>
                             </td>
                         </tr>
@@ -168,4 +169,18 @@
             });
         });
     </script>
+    <style>
+        body::before {
+            content: '';
+            position: absolute;
+            top: 1%;
+            right: 0%;
+            bottom: 0%;
+            left: 50%;
+            position: fixed;
+            background-image: radial-gradient(circle, rgba(17, 111, 220, 0.1), rgba(120, 143, 228, 0.2), rgba(173, 177, 237, 0.1), rgba(217, 215, 246, 0), rgba(255, 255, 255, 0.1));
+            z-index: -1;
+        }
+    </style>
+
 @endsection

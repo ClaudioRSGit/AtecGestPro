@@ -59,19 +59,19 @@
             </div>
             @foreach($courseClasses as $courseClass)
                 <div class="card mb-2 mt-2">
-                    <div class="card-header bg-white" id="heading{{ $courseClass->id }}">
-                        <h2 class="mb-0">
+                    <div class="card-header bg-white d-flex justify-content-between align-items-center" id="heading{{ $courseClass->id }}">
+                        <h2 class="mb-0 w-75">
                             <input type="checkbox" class="accordion-checkbox" data-course="{{ $courseClass->course_id }}" data-id="{{ $courseClass->id }}">
                             <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{ $courseClass->id }}" aria-expanded="false" aria-controls="collapse{{ $courseClass->id }}">
                                 {{ $courseClass->description }}
                             </button>
-                            <a href="{{ route('course-classes.edit', $courseClass->id) }}" class="btn btn-warning"><i class="fas fa-pencil-alt"></i></a>
-                            <a href="{{ route('course-classes.show', $courseClass->id) }}" class="btn btn-info"><i class="fas fa-eye"></i></a>
-                            <form method="POST" action="{{ route('course-classes.destroy', $courseClass->id) }}" style="display: inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir?')"><i class="fas fa-trash-alt"></i></button>
-                            </form>
+                                    <a href="{{ route('course-classes.edit', $courseClass->id) }}" class="btn btn-info btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                                <a href="{{ route('course-classes.show', $courseClass->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-eye"></i></a>
+                                <form method="POST" action="{{ route('course-classes.destroy', $courseClass->id) }}" style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir?')"><i class="fas fa-trash-alt"></i></button>
+                                </form>
                         </h2>
                     </div>
 

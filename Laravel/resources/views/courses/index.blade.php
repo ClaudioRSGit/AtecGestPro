@@ -1,7 +1,8 @@
 @extends('master.main')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 @section('content')
-    <div class="container">
+    <div class="container pl-5">
 
         @if(session('success'))
             <div class="alert alert-success">
@@ -17,22 +18,24 @@
 
         <h1>Lista de Cursos</h1>
 
-        <div class="d-flex justify-content-between mb-3">
+        <div class="d-flex justify-content-between">
             <form action="{{ route('users.index') }}" method="get" class="form-inline" id="filterForm">
                 <div class="form-group mr-3">
                     <input type="text" class="form-control" id="nameFilter" name="nameFilter"
                         value="{{ request('nameFilter') }}" placeholder="Pesquisar Curso">
                 </div>
+                <a href="{{ route('courses.create') }}" class="btn btn-primary">Novo Curso</a>
+
             </form>
 
-            <a href="{{ route('courses.create') }}" class="btn btn-primary">Novo Curso</a>
         </div>
 
-        <table class="table" id="courseTable">
+        <table class="table bg-white" id="courseTable">
             <thead>
                 <tr>
                     <th scope="col">Código</th>
                     <th scope="col">Descrição</th>
+                    <th scope="col">Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -41,13 +44,13 @@
                         <td>{{ $course->code }}</td>
                         <td>{{ $course->description }}</td>
                         <td>
-                            <a href="{{ route('courses.show', $course->id) }}" class="btn btn-info">Detalhes</a>
-                            <a href="{{ route('courses.edit', $course->id) }}" class="btn btn-warning">Editar</a>
+                            <a href="{{ route('courses.show', $course->id) }}" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
+                            <a href="{{ route('courses.edit', $course->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-pencil-alt"></i></a>
                             <form method="post" action="{{ route('courses.destroy', $course->id) }}" style="display:inline;">
                                 @csrf
                                 @method('delete')
-                                <button type="submit" class="btn btn-danger"
-                                    onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
+                                <button type="submit" class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Tem certeza que deseja excluir?')"><i class="fas fa-trash-alt"></i></button>
                             </form>
                         </td>
                     </tr>
@@ -78,4 +81,17 @@
             }
         });
     </script>
+    <style>
+        body::before {
+            content: '';
+            position: absolute;
+            top: 1%;
+            right: 0%;
+            bottom: 0%;
+            left: 50%;
+            position: fixed;
+            background-image: radial-gradient(circle, rgba(17, 111, 220, 0.1), rgba(120, 143, 228, 0.2), rgba(173, 177, 237, 0.1), rgba(217, 215, 246, 0), rgba(255, 255, 255, 0.1));
+            z-index: -1;
+        }
+    </style>
 @endsection
