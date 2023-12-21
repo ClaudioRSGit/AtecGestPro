@@ -38,3 +38,4 @@ Route::resource('external', 'PartnerTrainingsUsersController');
 Route::resource('course-classes', 'CourseClassController');
 
 Route::resource('courses', 'CourseController');
+Route::post('materials/massDelete', 'MaterialController@massDelete')->name('materials.massDelete');
