@@ -9,7 +9,7 @@ Route::get('/', function () {
     return view('master.main');
 });
 
-Auth::routes();
+
 
 Route::get('/home', 'HomeController@index')->name('home');
 

@@ -17,9 +17,10 @@ class PartnerTrainingsUsersController extends Controller
      */
     public function index()
     {
-        $partner_Trainings_Users = Partner_Trainings_Users::with('partner', 'training', 'user')->paginate(2);
+        $partner_Trainings_Users = Partner_Trainings_Users::with('partner', 'training', 'user')->get();
+        $partners = Partner::all();
 
-        return view('external.index', compact('partner_Trainings_Users'));
+        return view('external.index', compact('partner_Trainings_Users', 'partners'));
     }
 
 
