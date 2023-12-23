@@ -54,14 +54,16 @@
                             <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{ $courseClass->id }}" aria-expanded="false" aria-controls="collapse{{ $courseClass->id }}">
                                 {{ $courseClass->description }}
                             </button>
-                                    <a href="{{ route('course-classes.edit', $courseClass->id) }}" class="btn btn-info btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                        </h2>
+                        <div class="ml-auto">
+                                <a href="{{ route('course-classes.edit', $courseClass->id) }}" class="btn btn-info btn-sm"><i class="fas fa-pencil-alt"></i></a>
                                 <a href="{{ route('course-classes.show', $courseClass->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-eye"></i></a>
                                 <form method="POST" action="{{ route('course-classes.destroy', $courseClass->id) }}" style="display: inline;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir?')"><i class="fas fa-trash-alt"></i></button>
                                 </form>
-                        </h2>
+                        </div>
                     </div>
 
                     <div id="collapse{{ $courseClass->id }}" class="collapse" aria-labelledby="heading{{ $courseClass->id }}" data-parent="#accordion">
