@@ -11,12 +11,12 @@ class Partner extends Model
 {
     use SoftDeletes;
 
-    public function Partner_Trainings_Users()
+    public function partnerTrainingsUsers()
     {
         return $this->hasMany(\App\Partner_Trainings_Users::class);
     }
 
-    public function Partner_contact()
+    public function partnerContacts()
     {
         return $this->hasMany(\App\Partner_contact::class);
     }

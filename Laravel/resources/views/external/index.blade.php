@@ -5,8 +5,10 @@
         <h1>Formações Externas</h1>
 
         <div class="mb-3" id="buttons">
-            <button id="btnTrainings" class="btn btn-primary" onclick="showTable('trainingsTable', 'partnersTable')">Gestão de Formações</button>
-            <button id="btnPartners" class="btn btn-primary ml-3" onclick="showTable('partnersTable', 'trainingsTable')">Gestão de Parceiros</button>
+            <button id="btnTrainings" class="btn btn-primary" onclick="showTable('trainingsTable', 'partnersTable')">Gestão de
+                Formações</button>
+            <button id="btnPartners" class="btn btn-primary ml-3" onclick="showTable('partnersTable', 'trainingsTable')">Gestão
+                de Parceiros</button>
         </div>
 
         <div id="trainingsTable">
@@ -76,7 +78,18 @@
                                 <td>{{ $partner->name }}</td>
                                 <td>{{ $partner->description }}</td>
                                 <td>{{ $partner->address }}</td>
-                                <td>{{ $partner->contacts }}</td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="contactDropdown{{ $partner->id }}" data-toggle="dropdown">
+                                            View
+                                        </button>
+                                        <div class="dropdown-menu" aria-labelledby="contactDropdown{{ $partner->id }}">
+                                            @foreach ($partner->partnerContacts as $contact)
+                                                <a class="dropdown-item" href="#">{{ $contact->contact }}</a>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </td>
                                 <td><button>View</button></td>
                             </tr>
                         @endforeach
@@ -96,5 +109,4 @@
             document.getElementById(hideId).style.display = 'none';
         }
     </script>
-
 @endsection
