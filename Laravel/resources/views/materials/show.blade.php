@@ -31,6 +31,7 @@
                     </select>
                 </div>
 
+                @if($material->isClothing)
                 <div class="form-group">
                     <label for="isClothing">É vestuário?</label>
                     <select class="form-control" id="isClothing" name="isClothing" disabled>
@@ -38,6 +39,7 @@
                         <option value="0" {{ !$material->isClothing ? 'selected' : '' }}>Não</option>
                     </select>
                 </div>
+                @endif
             </div>
 
             <div class="col-md-6">
