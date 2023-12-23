@@ -27,12 +27,16 @@
                 <a href="{{ route('courses.create') }}" class="btn btn-primary">Novo Curso</a>
 
             </form>
+            <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
 
         </div>
 
         <table class="table bg-white" id="courseTable">
             <thead>
                 <tr>
+                    <th scope="col">
+                        <input type="checkbox" id="select-all">
+                    </th>
                     <th scope="col">Código</th>
                     <th scope="col">Descrição</th>
                     <th scope="col">Ações</th>
@@ -41,6 +45,9 @@
             <tbody>
                 @foreach ($courses as $course)
                     <tr class="courses-row">
+                        <td>
+                            <input type="checkbox" name="selectedCourses[]" value="{{ $course->id }}">
+                        </td>
                         <td>{{ $course->code }}</td>
                         <td>{{ $course->description }}</td>
                         <td>
@@ -65,16 +72,56 @@
             const nameFilterInput = document.getElementById('nameFilter');
             const courseTable = document.getElementById('courseTable');
             const courseRows = courseTable.querySelectorAll('tbody tr');
+            const selectAllCheckbox = document.getElementById('select-all');
+            const deleteSelectedButton = document.getElementById('delete-selected');
 
             nameFilterInput.addEventListener('input', function () {
                 filterCourses();
+            });
+
+            selectAllCheckbox.addEventListener('change', function () {
+                courseRows.forEach(courseRow => {
+                    const checkbox = courseRow.querySelector('input[name="selectedCourses[]"]');
+                    checkbox.checked = selectAllCheckbox.checked;
+                });
+            });
+
+            deleteSelectedButton.addEventListener('click', function () {
+                const selectedCourses = Array.from(document.querySelectorAll('input[name="selectedCourses[]"]:checked'))
+                    .map(checkbox => checkbox.value);
+
+                if (selectedCourses.length > 0 && confirm('Tem certeza que deseja excluir os cursos selecionados?')) {
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = '{{ route('courses.massDelete') }}';
+                    form.style.display = 'none';
+
+                    const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
+
+                    selectedCourses.forEach(courseId => {
+                        const input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = 'course_ids[]';
+                        input.value = courseId;
+                        form.appendChild(input);
+                    });
+
+                    const csrfInput = document.createElement('input');
+                    csrfInput.type = 'hidden';
+                    csrfInput.name = '_token';
+                    csrfInput.value = csrfToken;
+                    form.appendChild(csrfInput);
+
+                    document.body.appendChild(form);
+                    form.submit();
+                }
             });
 
             function filterCourses() {
                 const nameFilter = nameFilterInput.value.toLowerCase();
 
                 courseRows.forEach(courseRow => {
-                    const courseName = courseRow.querySelector('td:nth-child(1)').textContent.toLowerCase();
+                    const courseName = courseRow.querySelector('td:nth-child(2)').textContent.toLowerCase();
                     const matchesName = courseName.includes(nameFilter);
                     courseRow.style.display = matchesName ? '' : 'none';
                 });

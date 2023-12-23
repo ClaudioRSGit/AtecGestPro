@@ -47,3 +47,5 @@ Route::resource('courses', 'CourseController');
 Route::post('materials/massDelete', 'MaterialController@massDelete')->name('materials.massDelete');
 
 Route::post('users/massDelete', 'UserController@massDelete')->name('users.massDelete');
+
+Route::post('courses/massDelete', 'CourseController@massDelete')->name('courses.massDelete');
