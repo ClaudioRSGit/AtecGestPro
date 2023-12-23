@@ -43,4 +43,7 @@ Route::get('/external/edit-partner', 'PartnerTrainingsUsersController@editPartne
 Route::resource('course-classes', 'CourseClassController');
 
 Route::resource('courses', 'CourseController');
+
 Route::post('materials/massDelete', 'MaterialController@massDelete')->name('materials.massDelete');
+
+Route::post('users/massDelete', 'UserController@massDelete')->name('users.massDelete');

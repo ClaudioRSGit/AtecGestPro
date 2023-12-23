@@ -177,6 +177,23 @@ class UserController extends Controller
         }
     }
 
+    public function massDelete(Request $request)
+    {
+        $request->validate([
+            'user_ids' => 'required|array',
+            'user_ids.*' => 'exists:users,id',//all items inside array must exist
+        ]);
+
+        try {
+
+            User::whereIn('id', $request->input('user_ids'))->delete();
+            return redirect()->back()->with('success', 'Utilizadores selecionados excluídos com sucesso!');
+        } catch (\Exception $e) {
+
+            return redirect()->back()->with('error', 'Erro ao excluir utilizadores selecionados. Por favor, tente novamente.');
+        }
+    }
+
     private function encryptPassword($password)
     {
         return bcrypt($password);

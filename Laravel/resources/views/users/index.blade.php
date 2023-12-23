@@ -33,13 +33,16 @@
                     </select>
                 </div>
             </form>
-
+            <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
             <a href="{{ route('users.create') }}" class="btn btn-primary">Novo Utilizador</a>
         </div>
 
         <table class="table bg-white" id="userTable">
             <thead>
                 <tr>
+                    <th scope="col">
+                        <input type="checkbox" id="select-all">
+                    </th>
                     <th scope="col">Name</th>
                     <th scope="col">Username</th>
                     <th scope="col">Email</th>
@@ -51,6 +54,9 @@
             <tbody>
                 @foreach ($users as $user)
                     <tr class="user-row" data-role="{{ strtolower($user->role) }}">
+                        <td>
+                            <input type="checkbox" name="selectedUsers[]" value="{{ $user->id }}">
+                        </td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->username }}</td>
                         <td>{{ $user->email }}</td>
@@ -92,6 +98,8 @@
             const roleFilterSelect = document.getElementById('roleFilter');
             const userTable = document.getElementById('userTable');
             const userRows = userTable.querySelectorAll('tbody tr');
+            const selectAllCheckbox = document.getElementById('select-all');
+            const deleteSelectedButton = document.getElementById('delete-selected');
 
             nameFilterInput.addEventListener('input', function () {
                 filterUsers();
@@ -101,13 +109,50 @@
                 filterUsers();
             });
 
+            selectAllCheckbox.addEventListener('change', function () {
+                userRows.forEach(userRow => {
+                    const checkbox = userRow.querySelector('input[name="selectedUsers[]"]');
+                    checkbox.checked = selectAllCheckbox.checked;
+                });
+            });
+
+            deleteSelectedButton.addEventListener('click', function () {
+                const selectedUsers = Array.from(document.querySelectorAll('input[name="selectedUsers[]"]:checked'))
+                    .map(checkbox => checkbox.value);
+
+                if (selectedUsers.length > 0 && confirm('Tem certeza que deseja excluir os utilizadores selecionados?')) {
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = '{{ route('users.massDelete') }}';
+                    form.style.display = 'none';
+
+                    const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
+
+                    selectedUsers.forEach(userId => {
+                        const input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = 'user_ids[]';
+                        input.value = userId;
+                        form.appendChild(input);
+                    });
+
+                    const csrfInput = document.createElement('input');
+                    csrfInput.type = 'hidden';
+                    csrfInput.name = '_token';
+                    csrfInput.value = csrfToken;
+                    form.appendChild(csrfInput);
+
+                    document.body.appendChild(form);
+                    form.submit();
+                }
+            });
+
             function filterUsers() {
                 const nameFilter = nameFilterInput.value.toLowerCase();
                 const roleFilter = roleFilterSelect.value;
 
-
                 userRows.forEach(userRow => {
-                    const userName = userRow.querySelector('td:nth-child(1)').textContent.toLowerCase();
+                    const userName = userRow.querySelector('td:nth-child(2)').textContent.toLowerCase();
                     const userRole = userRow.getAttribute('data-role');
 
                     const matchesName = userName.includes(nameFilter);
@@ -118,7 +163,4 @@
             }
         });
     </script>
-<style>
-
-</style>
 @endsection
