@@ -101,6 +101,21 @@
                                     <button class="btn btn-info btn-sm"
                                         onclick="filterTrainingsTable({{ $partner->id }})">View</button>
                                 </td>
+                                <td>
+                                    {{-- <a href="{{ route('external.showPartner', $partner->id) }}"
+                                        class="btn btn-info btn-sm">Detalhes</a> --}}
+                                    <a href="{{ route('external.editPartner', $partner->id) }}"
+                                        class="btn btn-warning btn-sm">Editar</a>
+
+                                    {{-- <form method="post"
+                                        action="{{ route('external.destroyPartner', $partner->id) }}"
+                                        style="display:inline;">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class="btn btn-danger btn-sm"
+                                            onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
+                                    </form> --}}
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

@@ -31,6 +31,11 @@ class PartnerTrainingsUsersController extends Controller
         return view('external.show', compact('partner_Trainings_User'));
     }
 
+    public function showPartner(Partner $partner)
+    {
+        return view('external.showPartner', compact('partner'));
+    }
+
 
     /**
      * Show the form for creating a new resource.
@@ -112,6 +117,12 @@ class PartnerTrainingsUsersController extends Controller
         $trainings = Training::all();
         $users = User::all();
         return view('external.edit', compact('partner_Trainings_Users', 'partners', 'trainings', 'users'));
+    }
+
+    public function editPartner($id)
+    {
+        $partner = Partner::findOrFail($id);
+        return view('external.editPartner', compact('partner'));
     }
 
     /**
