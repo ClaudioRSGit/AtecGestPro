@@ -46,6 +46,12 @@ class PartnerTrainingsUsersController extends Controller
         return view('external.create', compact('partner_Trainings_Users', 'partners', 'users', 'trainings'));
     }
 
+    public function createPartner()
+    {
+        $partners=Partner::all();
+        return view('external.createPartner', compact('partners'));
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -67,6 +73,19 @@ class PartnerTrainingsUsersController extends Controller
             ]);
         Partner_Trainings_Users::create($request->all());
         return redirect()->route('external.index')->with('success','Formação criada com sucesso');
+    }
+
+    public function storePartner(Request $request)
+    {
+        $this->validate(request(),
+            [
+
+                    'name' => 'required',
+                    'description' => 'required',
+                    'address' => 'required',
+            ]);
+        Partner_Trainings_Users::createPartner($request->all());
+        return redirect()->route('external.index')->with('success','Parceiro criado com sucesso');
     }
 
 
