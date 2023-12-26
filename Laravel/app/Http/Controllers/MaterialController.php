@@ -40,7 +40,7 @@ class MaterialController extends Controller
             }
             catch (\Exception $e) {
 
-                return redirect()->back()->with('error', 'Erro ao inserir o material. Por favor, tente novamente.');
+                return redirect()->back()->withInput()->with('error', 'Erro ao inserir o material. Por favor, tente novamente.');
             }
     }
 
