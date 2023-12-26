@@ -16,7 +16,7 @@ class ClothingAssignmentController extends Controller
         $name = $student->name;
 
         $clothing_assignment = Material::where('isClothing', 1)->get();
-        return view('clothing-assignment.index', ['name' => $name], compact('clothing_assignment'));
+        return view('clothing-assignment.index', ['name' => $name], compact('clothing_assignment',  'student'));
     }
 
     public function create()
@@ -26,7 +26,7 @@ class ClothingAssignmentController extends Controller
 
     public function details()
     {
-        // Add your code here
+        //
     }
 
     public function store(Request $request)

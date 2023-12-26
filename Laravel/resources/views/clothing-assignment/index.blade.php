@@ -11,8 +11,7 @@
             <input type="text" class="form-control" id="userToAssignClothing" placeholder="{{ $name }}" aria-label="Username"
                 aria-describedby="basic-addon1" disabled="disabled">
             <div class="input-group-prepend">
-                <!-- replace the materials.index for the route to user.edit or student.edit with the user id-->
-                <button class="btn btn-warning" id="EditInput" type="button" onclick="window.location.href='{{ route('materials.index') }}'">Editar</button>
+                <button class="btn btn-warning" id="EditInput" type="button" onclick="window.location.href='{{ route('users.edit', $student->id) }}'">Editar</button>
             </div>
         </div>
 
@@ -113,11 +112,11 @@
             <div class="input-group-prepend">
                 <button class="btn btn-danger" type="button" onclick="location.reload()">Apagar</button>
 
-                <!-- I intend to meet with Claudio to discuss how we are going to deal with this Save part -->
+                <!-- .............ooooooooooooooooooooooooooooooo -->
 
                 <button class="btn btn-primary" type="button">Guardar</button>
 
-                <!-- replace the clothing.index for the route back to turmas or wherever -->
+
                 <button class="btn btn-primary" type="button" onclick="window.location.href='{{ url()->previous() }}'">Fechar</button>
             </div>
         </div>
