@@ -21,12 +21,14 @@
 
                     <div class="mb-3">
                         <label for="supplier" class="form-label">Fornecedor:</label>
-                        <input type="text" class="form-control" id="supplier" name="supplier" value="{{ old('supplier') }}">
+                        <input type="text" class="form-control" id="supplier" name="supplier"
+                            value="{{ old('supplier') }}">
                     </div>
 
                     <div class="mb-3">
                         <label for="aquisition_date" class="form-label">Data de Aquisição:</label>
-                        <input type="date" class="form-control" id="aquisition_date" name="aquisition_date" value="{{ old('aquisition_date') }}">
+                        <input type="date" class="form-control" id="aquisition_date" name="aquisition_date"
+                            value="{{ old('aquisition_date') }}">
                     </div>
 
                     <div class="mb-3">
@@ -47,7 +49,7 @@
 
                 </div>
                 <div class="col-md-6">
-                    <div class="mb-3">
+                    <div class="mb-3" id="gender">
                         <label for="gender" class="form-label">Género:</label>
                         <select class="form-select" id="gender" name="gender">
                             <option value="1" {{ old('gender') == 1 ? 'selected' : '' }}>Masculino</option>
@@ -57,10 +59,11 @@
 
                     <div class="mb-3">
                         <label for="quantity" class="form-label">Quantidade:</label>
-                        <input type="number" class="form-control" id="quantity" name="quantity" value="{{ old('quantity') }}">
+                        <input type="number" class="form-control" id="quantity" name="quantity"
+                            value="{{ old('quantity') }}">
                     </div>
 
-                    <div class="mb-3">
+                    <div class="mb-3" id="size">
                         <label for="size" class="form-label">Tamanho:</label>
                         <select class="form-select" id="size" name="size">
                             <option value="XS" {{ old('size') == 'XS' ? 'selected' : '' }}>XS</option>
@@ -73,7 +76,7 @@
                         </select>
                     </div>
 
-                    <div class="mb-3">
+                    <div class="mb-3" id="role">
                         <label for="role" class="form-label">Função:</label>
                         <select class="form-select" id="role" name="role">
                             <option value="Formador" {{ old('role') == 'Formador' ? 'selected' : '' }}>Formador</option>
@@ -91,4 +94,21 @@
             </div>
         </form>
     </div>
+
+    <script>
+        function toggleFields() {
+            var isClothingValue = document.getElementById('isClothing').value;
+            var gender = document.getElementById('gender');
+            var size = document.getElementById('size');
+            var role = document.getElementById('role');
+
+            gender.style.display = isClothingValue == 0 ? 'none' : 'block';
+            size.style.display = isClothingValue == 0 ? 'none' : 'block';
+            role.style.display = isClothingValue == 0 ? 'none' : 'block';
+        }
+
+        document.addEventListener('DOMContentLoaded', toggleFields);
+
+        document.getElementById('isClothing').addEventListener('change', toggleFields);
+    </script>
 @endsection
