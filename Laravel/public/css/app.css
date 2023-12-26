@@ -112,6 +112,14 @@ body {
   background-color: #f8fafc;
 }
 
+tr{
+    transition: background-color 0.2s;
+    cursor: pointer;
+}
+tr:hover {
+    background-color: rgba(17, 111, 220, 0.3);
+}
+
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important;
 }
