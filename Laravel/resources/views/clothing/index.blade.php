@@ -43,7 +43,7 @@
                     <div id="collapse{{ $courseClass->id }}" class="collapse" aria-labelledby="heading{{ $courseClass->id }}" data-parent="#accordion">
                         <div class="card-body">
                             @if ($courseClass->students->count() > 0)
-                            <table class="table table-bordered">
+                            <table class="table">
                                 <thead>
                                     <tr>
                                         <th>Nome</th>
@@ -54,8 +54,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr class="filler"></tr>
                                     @foreach($courseClass->students as $student)
-                                        <tr>
+                                        <tr class="customTableStyling">
 
                                             <td><a href="{{ route('clothing-assignment.users', $student->id) }}" class="btn btn-link">{{ $student->name }}</a></td>
                                             <td>{{ $student->username }}</td>
@@ -71,6 +72,7 @@
                                                 </form>
                                             </td>
                                         </tr>
+                                        <tr class="filler"></tr>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -162,7 +164,7 @@
         }
 
         #accordion .card-body {
-            border-top: 12px solid #fff;
+            background-color: #f8fafc;
         }
     </style>
 @endsection

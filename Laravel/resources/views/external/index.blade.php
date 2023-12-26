@@ -27,8 +27,9 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <tr class="filler"></tr>
                         @foreach ($partner_Trainings_Users as $partner_Trainings_User)
-                            <tr class="partner_{{ $partner_Trainings_User->partner_id }}" style="display: none;">
+                            <tr class="partner_{{ $partner_Trainings_User->partner_id }} customTableStyling" style="display: none;">
                                 <td>{{ optional($partner_Trainings_User->partner)->name }}</td>
                                 <td>{{ optional($partner_Trainings_User->partner)->address }}</td>
                                 <td>{{ optional($partner_Trainings_User->user)->name }}</td>
@@ -50,6 +51,7 @@
                                     </form>
                                 </td>
                             </tr>
+                            <tr class="filler"></tr>
                         @endforeach
                     </tbody>
                 </table>
@@ -73,8 +75,9 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <tr class="filler"></tr>
                         @foreach ($partners as $partner)
-                            <tr>
+                            <tr class="customTableStyling">
                                 <td>{{ $partner->name }}</td>
                                 <td>{{ $partner->description }}</td>
                                 <td>{{ $partner->address }}</td>
@@ -117,6 +120,7 @@
                                     </form> --}}
                                 </td>
                             </tr>
+                            <tr class="filler"></tr>
                         @endforeach
                     </tbody>
                 </table>
