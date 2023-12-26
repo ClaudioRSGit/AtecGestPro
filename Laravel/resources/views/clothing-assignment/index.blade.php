@@ -84,7 +84,7 @@
                             </td>
                             <td style="text-align: center;">
                                 {{ isset($clothing_assignment->size) ? $clothing_assignment->size : 'N.A.' }}</td>
-                            <!-- usar if ou swit para substituir o numero do role pelo nome -->
+
                             <td style="text-align: center;">
                                 {{ isset($clothing_assignment->role) ? $clothing_assignment->role : 'N.A.' }}</td>
                             <td style="text-align: center;">
@@ -117,7 +117,9 @@
 
                 <!-- .............ooooooooooooooooooooooooooooooo -->
 
-                <button class="btn btn-primary" type="button">Guardar</button>
+
+                    <button class="btn btn-primary" type="submit">Guardar</button>
+
 
 
                 <button class="btn btn-primary" type="button"
@@ -134,6 +136,8 @@
             const checkboxes = document.querySelectorAll('.form-check-input');
             const searchInput = document.getElementById('search');
             const filterDropdown = document.getElementById('filter');
+
+           //     //testettttttttttt
 
 
             document.getElementById('apagarOnClick').addEventListener('click', function() {

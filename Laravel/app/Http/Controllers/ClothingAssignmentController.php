@@ -80,4 +80,7 @@ class ClothingAssignmentController extends Controller
             return redirect()->route('clothing-assignment.index')->with('error', 'Erro ao excluir o material. Por favor, tente novamente.');
         }
     }
+
+   // public function assign(Request $request)
+
 }

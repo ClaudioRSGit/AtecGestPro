@@ -29,6 +29,8 @@ Route::resource('clothing', 'ClothingController');
 
 Route::resource('clothing-assignment', 'ClothingAssignmentController');
 Route::get('/clothing-assignment/users/{id}', 'ClothingAssignmentController@index')->name('clothing-assignment.users');
+//Route::post('/clothing-assignment/assign', 'ClothingAssignmentController@assign')->name('clothing-assignment.assign');
+
 
 Route::resource('external', 'PartnerTrainingsUsersController');
 Route::get('/external/create-partner', 'PartnerTrainingsUsersController@createPartner')->name('external.createPartner');
