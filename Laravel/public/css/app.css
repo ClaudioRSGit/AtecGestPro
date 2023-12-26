@@ -112,13 +112,65 @@ body {
   background-color: #f8fafc;
 }
 
-tr{
+td a{
+    color: black !important;
+    text-decoration: none !important;
+}
+
+
+tr:not(th){
     transition: background-color 0.2s;
     cursor: pointer;
+    text-align: center;
+    vertical-align: center;
 }
-tr:hover {
+tr:not(:first-child):hover {
     background-color: rgba(17, 111, 220, 0.3);
 }
+
+
+
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+thead th{
+    color: #ACACAC;
+    font-weight: 400 !important;
+}
+.customTableStyling{
+    background-color: #fff;
+}
+.customTableStyling td{
+    border-top: 1px solid #dee2e6;
+    border-bottom: 1px solid #dee2e6;
+}
+.customTableStyling td:first-child{
+    border-left: 1px solid #dee2e6;
+    border-top-left-radius: 6px !important;
+    border-bottom-left-radius: 6px !important;
+}
+.customTableStyling td:last-child{
+    border-right: 1px solid #dee2e6;
+    border-top-right-radius: 6px !important;
+    border-bottom-right-radius: 6px !important;
+}
+.filler{
+    height: 2rem !important;
+    background-color: #f8fafc !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 [tabindex="-1"]:focus:not(:focus-visible) {
   outline: 0 !important;
@@ -1823,6 +1875,12 @@ pre code {
   padding: 0.75rem;
   vertical-align: top;
   border-top: 1px solid #dee2e6;
+  text-align: center !important;
+  vertical-align: middle !important;
+}
+
+thead tr{
+    cursor: default;
 }
 
 .table thead th {
@@ -7125,9 +7183,6 @@ button.bg-dark:focus {
   background-color: #1d2124 !important;
 }
 
-.bg-white {
-  background-color: #fff !important;
-}
 
 .bg-transparent {
   background-color: transparent !important;
@@ -10952,7 +11007,7 @@ a.text-dark:focus {
 
   .table td,
   .table th {
-    background-color: #fff !important;
+    background-color: #fff;
   }
 
   .table-bordered th,

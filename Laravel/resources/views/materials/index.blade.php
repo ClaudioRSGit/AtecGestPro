@@ -46,8 +46,9 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <tr class="filler"></tr>
                     @foreach($materials as $material)
-                        <tr class="material-row" data-internal="{{ $material->isInternal }}" data-clothing="{{ $material->isClothing }}">
+                        <tr class="material-row customTableStyling" data-internal="{{ $material->isInternal }}" data-clothing="{{ $material->isClothing }}">
                             <td>
                                 <input type="checkbox" name="selectedMaterials[]" value="{{ $material->id }}">
                             </td>
@@ -78,6 +79,7 @@
                                 </form>
                             </td>
                         </tr>
+                        <tr class="filler"></tr>
                     @endforeach
                 </tbody>
             </table>
