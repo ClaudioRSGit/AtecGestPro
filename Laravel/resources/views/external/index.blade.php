@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container pl-5 pt-4">
-        <h1>Formações Externas</h1>
+        <h1>Formações de mercado</h1>
 
         <div class="mb-3" id="buttons">
             <button id="btnTrainings" class="btn btn-primary" onclick="showTable('trainingsTable', 'partnersTable')">Gestão de

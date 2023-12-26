@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h1>Edit Partner Training User</h1>
+        <h1>Editar formação</h1>
         <form method="post" action="{{ route('external.update', $partner_Trainings_Users->id) }}">
 
 {{--           @dd($partner_Trainings_Users)--}}

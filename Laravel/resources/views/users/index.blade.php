@@ -92,6 +92,16 @@
         {{ $users->links() }}
     </div>
 
+    <style>
+        .user-row {
+            transition: background-color 0.2s;
+        }
+
+        .user-row:hover {
+            background-color: rgba(17, 111, 220, 0.3);
+        }
+    </style>
+
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const nameFilterInput = document.getElementById('nameFilter');
