@@ -62,7 +62,7 @@
                             data-technical="{{ $clothing_assignment->role == 4 ? 1 : 0 }}">
                             <td>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="{{ $clothing_assignment->id }}"
+                                    <input class="form-check-input" name="selectedClothing[]" type="checkbox" value="{{ $clothing_assignment->id }}"
                                         id="flexCheckDefault">
 
                                 </div>
@@ -110,8 +110,9 @@
         </form>
 
         <h5>Observações </h5>
+        <textarea class="form-control" id="textarea" aria-label="With textarea"></textarea>
         <div class="input-group mb-3" style="width: 80%;">
-            <textarea class="form-control" id="textarea" aria-label="With textarea"></textarea>
+
             <div class="input-group-prepend">
                 <button class="btn btn-danger" type="button" id="apagarOnClick">Apagar</button>
 
@@ -119,6 +120,7 @@
 
 
                     <button class="btn btn-primary" type="submit">Guardar</button>
+
 
 
 

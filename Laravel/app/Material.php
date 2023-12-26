@@ -33,4 +33,9 @@ class Material extends Model
     {
         return $this->hasMany(Material_Clothing_Delivery::class);
     }
+
+    public function clothingDelivery()
+    {
+        return $this->belongsToMany(Clothing_Delivery::class, 'material_clothing_delivery');
+    }
 }

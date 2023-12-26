@@ -21,4 +21,9 @@ class Clothing_Delivery extends Model
     {
         return $this->hasMany(\App\Material_Clothing_Delivery::class);
     }
+
+    public function material()
+    {
+        return $this->belongsToMany(Material::class, 'material_clothing_delivery');
+    }
 }
