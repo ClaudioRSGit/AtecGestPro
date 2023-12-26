@@ -1,17 +1,16 @@
 @extends('master.main')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 @section('content')
-    <div class="container pl-5">
+    <div class="container pl-5 pt-4">
         <h1>Lista de Materiais</h1>
 
         <div class="d-flex justify-content-between mb-3">
             <form class="form-inline" id="filterForm">
-                <div class="form-group mr-3">
+                <div class="form-group mr-3" style="width: 30%;">
                     <input type="text" id="search" class="form-control" placeholder="Pesquisar Material">
                 </div>
 
-                <div class="form-group">
+                <div class="form-group mx-5">
                     <label for="filter"></label>
                     <select class="form-control" id="filter">
                         <option value="all">Todos</option>
@@ -21,16 +20,16 @@
                     </select>
                 </div>
             </form>
-            <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
-
             <a href="{{ route('materials.create') }}" class="btn btn-primary">Novo Material</a>
         </div>
 
 
 
-        <div>
+        <form method="post">
+            @csrf
+            @method('delete')
 
-            <table class="table bg-white">
+            <table class="table bg-white rounded-top">
                 <thead>
                     <tr>
                         <th scope="col">
@@ -70,18 +69,18 @@
                             </td>
                             <td>{{ isset($material->size) ? $material->size : 'N.A.' }}</td>
                             <td>
-                                <a href="{{ route('materials.edit', $material->id) }}" class="btn btn-warning btn-edit"><i class="fas fa-pencil-alt"></i></a>
+                                <a href="{{ route('materials.edit', $material->id) }}" class="btn btn-warning btn-edit">Editar</a>
                                 <form method="post" action="{{ route('materials.destroy', $material->id) }}" style="display:inline;">
                                     @csrf
                                     @method('delete')
-                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir?')"><i class="fas fa-trash-alt"></i></button>
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
                                 </form>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-        </div>
+        </form>
         {{ $materials->links() }}
     </div>
 
@@ -91,7 +90,6 @@
             const checkboxes = document.querySelectorAll('input[name="selectedMaterials[]"]');
             const searchInput = document.getElementById('search');
             const filterDropdown = document.getElementById('filter');
-            const deleteSelectedButton = document.getElementById('delete-selected');
 
             selectAllCheckbox.addEventListener('change', function () {
                 checkboxes.forEach(checkbox => {
@@ -137,36 +135,6 @@
                     checkbox.closest('tr').style.display = matchesFilter && matchesSearch ? '' : 'none';
                 });
             }
-            deleteSelectedButton.addEventListener('click', function () {
-            const selectedMaterials = Array.from(document.querySelectorAll('input[name="selectedMaterials[]"]:checked'))
-                .map(checkbox => checkbox.value);
-
-            if (selectedMaterials.length > 0 && confirm('Tem certeza que deseja excluir os materiais selecionados?')) {
-                const form = document.createElement('form');
-                form.method = 'POST';
-                form.action = '{{ route('materials.massDelete') }}';
-                form.style.display = 'none';
-
-                const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
-
-                selectedMaterials.forEach(materialId => {
-                    const input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = 'material_ids[]';
-                    input.value = materialId;
-                    form.appendChild(input);
-                });
-
-                const csrfInput = document.createElement('input');
-                csrfInput.type = 'hidden';
-                csrfInput.name = '_token';
-                csrfInput.value = csrfToken;
-                form.appendChild(csrfInput);
-
-                document.body.appendChild(form);
-                form.submit();
-            }
-            });
         });
     </script>
 @endsection

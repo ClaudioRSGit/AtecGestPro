@@ -7,23 +7,25 @@
 
 
         <h5>Nome Completo</h5>
-        <div class="input-group mb-3">
+        <div class="input-group mb-3" style="width: 60%;">
             <input type="text" class="form-control" id="userToAssignClothing" placeholder="{{ $name }}" aria-label="Username"
                 aria-describedby="basic-addon1" disabled="disabled">
             <div class="input-group-prepend">
+                <!-- replace the materials.index for the route to user.edit or student.edit with the user id-->
+                <button class="btn btn-warning" id="EditInput" type="button" onclick="window.location.href='{{ route('materials.index') }}'">Editar</button>
             </div>
         </div>
 
 
-        <div class="d-flex justify-content-between mb-3">
-            <div class="form-inline">
-                <div class="form-group">
-                    <input type="text" id="search" class="form-control" placeholder="Pesquisar Vestuário" >
+        <div class="mb-3">
+            <div class="d-flex">
+                <div style="width: 30%;">
+                    <input type="text" id="search" class="form-control" placeholder="Pesquisar" >
                 </div>
 
-                <div class="form-group mx-3">
+                <div class="ms-2">
                     <label for="filter">Filtrar por:</label>
-                    <select class="form-control mx-3" id="filter">
+                    <select class="form-select" id="filter">
                         <option value="all">Todos</option>
                         <option value="trainer">Formador</option>
                         <option value="trainee">Formando</option>
@@ -31,23 +33,26 @@
                     </select>
                 </div>
 
+                <a href="{{ route('clothing-assignment.create') }}" class="btn btn-primary mb-3">Novo Vestuário</a>
 
-                <a href="{{ route('clothing-assignment.create') }}" class="btn btn-primary">Novo Vestuário</a>
             </div>
         </div>
 
 
-        <div>
-            <table class="table bg-white">
+        <form method="post">
+
+
+            <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col"> <input type="checkbox" id="select-all"> </th>
+                        <th scope="col">
+                            <input type="checkbox" id="select-all">
+                        </th>
                         <th scope="col">Nome</th>
                         <th scope="col">Género</th>
                         <th scope="col" style="text-align: center;">Tamanho</th>
                         <th scope="col" style="text-align: center;">Função</th>
                         <th scope="col" style="text-align: center;">Quantidade</th>
-                        <th scope="col" style="text-align: center;">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -79,35 +84,41 @@
                                 @endif
                             </td>
                             <td style="text-align: center;">{{ isset($clothing_assignment->size) ? $clothing_assignment->size : 'N.A.' }}</td>
+                            <!-- usar if ou swit para substituir o numero do role pelo nome -->
                             <td style="text-align: center;">{{ isset($clothing_assignment->role) ? $clothing_assignment->role : 'N.A.' }}</td>
                             <td style="text-align: center;">{{ isset($clothing_assignment->quantity) ? $clothing_assignment->quantity : 'N.A.' }}
                             </td>
                             <td>
                                 <a href="{{ route('clothing-assignment.edit', $clothing_assignment->id) }}"
                                     class="btn btn-warning btn-edit">Editar</a>
-
-                                <form method="post" action="{{ route('clothing-assignment.destroy', $clothing_assignment->id) }}" style="display:inline;">
+                                <form method="post" action="{{ route('clothing-assignment.destroy', $clothing_assignment->id) }}"
+                                    style="display:inline;">
                                     @csrf
-                                    @method('delete')
+                                    @method('DELETE')
                                     <button type="submit" class="btn btn-danger"
-                                        onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
+                                        onclick="return confirm('Tem certeza que deseja excluir?')"
+                                        >Excluir</button>
+
                                 </form>
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
-        </div>
+        </form>
 
         <h5>Observações </h5>
-        <div class="input-group mb-3">
+        <div class="input-group mb-3" style="width: 80%;">
             <textarea class="form-control" id="textarea" aria-label="With textarea"></textarea>
-        </div>
-        <div class="d-flex flex-row-reverse">
             <div class="input-group-prepend">
-                <button class="btn btn-danger mx-1" type="button" onclick="location.reload()">Apagar</button>
-                <button class="btn btn-primary mx-1" type="button">Guardar</button>
-                <button class="btn btn-primary mx-1" type="button" onclick="window.location.href='{{ url()->previous() }}'">Fechar</button>
+                <button class="btn btn-danger" type="button" onclick="location.reload()">Apagar</button>
+
+                <!-- I intend to meet with Claudio to discuss how we are going to deal with this Save part -->
+
+                <button class="btn btn-primary" type="button">Guardar</button>
+
+                <!-- replace the clothing.index for the route back to turmas or wherever -->
+                <button class="btn btn-primary" type="button" onclick="window.location.href='{{ url()->previous() }}'">Fechar</button>
             </div>
         </div>
 

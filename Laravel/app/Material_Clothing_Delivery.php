@@ -8,9 +8,6 @@ use App\Clothing_Delivery;
 
 class Material_Clothing_Delivery extends Model
 {
-    protected $fillable = [
-        'material_id', 'clothing_delivery_id'
-    ];
     public function material()
     {
         return $this->belongsTo(Material::class);

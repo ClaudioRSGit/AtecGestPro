@@ -37,7 +37,7 @@
             <a href="{{ route('users.create') }}" class="btn btn-primary">Novo Utilizador</a>
         </div>
 
-        <table class="table bg-white" id="userTable">
+        <table class="table" id="userTable">
             <thead>
                 <tr>
                     <th scope="col">

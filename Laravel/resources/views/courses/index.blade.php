@@ -1,8 +1,7 @@
 @extends('master.main')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 @section('content')
-    <div class="container pl-5">
+    <div class="container">
 
         @if(session('success'))
             <div class="alert alert-success">
@@ -18,20 +17,19 @@
 
         <h1>Lista de Cursos</h1>
 
-        <div class="d-flex justify-content-between">
+        <div class="d-flex justify-content-between mb-3">
             <form action="{{ route('users.index') }}" method="get" class="form-inline" id="filterForm">
                 <div class="form-group mr-3">
                     <input type="text" class="form-control" id="nameFilter" name="nameFilter"
                         value="{{ request('nameFilter') }}" placeholder="Pesquisar Curso">
                 </div>
-                <a href="{{ route('courses.create') }}" class="btn btn-primary">Novo Curso</a>
-
             </form>
             <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
 
+            <a href="{{ route('courses.create') }}" class="btn btn-primary">Novo Curso</a>
         </div>
 
-        <table class="table bg-white" id="courseTable">
+        <table class="table" id="courseTable">
             <thead>
                 <tr>
                     <th scope="col">
@@ -39,7 +37,6 @@
                     </th>
                     <th scope="col">Código</th>
                     <th scope="col">Descrição</th>
-                    <th scope="col">Ações</th>
                 </tr>
             </thead>
             <tbody>
@@ -51,13 +48,13 @@
                         <td>{{ $course->code }}</td>
                         <td>{{ $course->description }}</td>
                         <td>
-                            <a href="{{ route('courses.show', $course->id) }}" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
-                            <a href="{{ route('courses.edit', $course->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                            <a href="{{ route('courses.show', $course->id) }}" class="btn btn-info">Detalhes</a>
+                            <a href="{{ route('courses.edit', $course->id) }}" class="btn btn-warning">Editar</a>
                             <form method="post" action="{{ route('courses.destroy', $course->id) }}" style="display:inline;">
                                 @csrf
                                 @method('delete')
-                                <button type="submit" class="btn btn-danger btn-sm"
-                                    onclick="return confirm('Tem certeza que deseja excluir?')"><i class="fas fa-trash-alt"></i></button>
+                                <button type="submit" class="btn btn-danger"
+                                    onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
                             </form>
                         </td>
                     </tr>

@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h1>Agendar formação de mercado</h1>
+        <h1>Agendar formação externa</h1>
         <form method="POST" action="{{ url('external') }}">
             @csrf
 

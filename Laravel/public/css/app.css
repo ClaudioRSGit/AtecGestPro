@@ -73,6 +73,33 @@ nav,
 section {
   display: block;
 }
+main{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: flex-start;
+    width: 100%;
+    min-height: 100dvh;
+    flex: 1 0 auto;
+}
+main > .content{
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex: 1 0 auto;
+}
+
+
+.container{
+    height: 100%;
+}
+
+footer {
+    flex-shrink: 0;
+}
 
 body {
   margin: 0;
