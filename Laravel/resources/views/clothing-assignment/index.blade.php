@@ -8,10 +8,11 @@
 
         <h5>Nome Completo</h5>
         <div class="input-group mb-3" style="width: 60%;">
-            <input type="text" class="form-control" id="userToAssignClothing" placeholder="{{ $name }}" aria-label="Username"
-                aria-describedby="basic-addon1" disabled="disabled">
+            <input type="text" class="form-control" id="userToAssignClothing" placeholder="{{ $name }}"
+                aria-label="Username" aria-describedby="basic-addon1" disabled="disabled">
             <div class="input-group-prepend">
-                <button class="btn btn-warning" id="EditInput" type="button" onclick="window.location.href='{{ route('users.edit', $student->id) }}'">Editar</button>
+                <button class="btn btn-warning" id="EditInput" type="button"
+                    onclick="window.location.href='{{ route('users.edit', $student->id) }}'">Editar</button>
             </div>
         </div>
 
@@ -19,7 +20,7 @@
         <div class="mb-3">
             <div class="d-flex">
                 <div style="width: 30%;">
-                    <input type="text" id="search" class="form-control" placeholder="Pesquisar" >
+                    <input type="text" id="search" class="form-control" placeholder="Pesquisar">
                 </div>
 
                 <div class="ms-2">
@@ -56,7 +57,6 @@
                 </thead>
                 <tbody>
                     @foreach ($clothing_assignment as $clothing_assignment)
-
                         <tr class="material-row" data-trainer="{{ $clothing_assignment->role == 2 ? 1 : 0 }}"
                             data-trainee="{{ $clothing_assignment->role == 3 ? 1 : 0 }}"
                             data-technical="{{ $clothing_assignment->role == 4 ? 1 : 0 }}">
@@ -82,21 +82,24 @@
                                     N.A.
                                 @endif
                             </td>
-                            <td style="text-align: center;">{{ isset($clothing_assignment->size) ? $clothing_assignment->size : 'N.A.' }}</td>
+                            <td style="text-align: center;">
+                                {{ isset($clothing_assignment->size) ? $clothing_assignment->size : 'N.A.' }}</td>
                             <!-- usar if ou swit para substituir o numero do role pelo nome -->
-                            <td style="text-align: center;">{{ isset($clothing_assignment->role) ? $clothing_assignment->role : 'N.A.' }}</td>
-                            <td style="text-align: center;">{{ isset($clothing_assignment->quantity) ? $clothing_assignment->quantity : 'N.A.' }}
+                            <td style="text-align: center;">
+                                {{ isset($clothing_assignment->role) ? $clothing_assignment->role : 'N.A.' }}</td>
+                            <td style="text-align: center;">
+                                {{ isset($clothing_assignment->quantity) ? $clothing_assignment->quantity : 'N.A.' }}
                             </td>
                             <td>
                                 <a href="{{ route('clothing-assignment.edit', $clothing_assignment->id) }}"
                                     class="btn btn-warning btn-edit">Editar</a>
-                                <form method="post" action="{{ route('clothing-assignment.destroy', $clothing_assignment->id) }}"
+                                <form method="post"
+                                    action="{{ route('clothing-assignment.destroy', $clothing_assignment->id) }}"
                                     style="display:inline;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-danger"
-                                        onclick="return confirm('Tem certeza que deseja excluir?')"
-                                        >Excluir</button>
+                                        onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
 
                                 </form>
                             </td>
@@ -110,14 +113,15 @@
         <div class="input-group mb-3" style="width: 80%;">
             <textarea class="form-control" id="textarea" aria-label="With textarea"></textarea>
             <div class="input-group-prepend">
-                <button class="btn btn-danger" type="button" onclick="location.reload()">Apagar</button>
+                <button class="btn btn-danger" type="button" id="apagarOnClick">Apagar</button>
 
                 <!-- .............ooooooooooooooooooooooooooooooo -->
 
                 <button class="btn btn-primary" type="button">Guardar</button>
 
 
-                <button class="btn btn-primary" type="button" onclick="window.location.href='{{ url()->previous() }}'">Fechar</button>
+                <button class="btn btn-primary" type="button"
+                    onclick="window.location.href='{{ url()->previous() }}'">Fechar</button>
             </div>
         </div>
 
@@ -125,12 +129,26 @@
 
 
     <script>
-
         document.addEventListener('DOMContentLoaded', function() {
             const selectAllCheckbox = document.getElementById('select-all');
             const checkboxes = document.querySelectorAll('.form-check-input');
             const searchInput = document.getElementById('search');
             const filterDropdown = document.getElementById('filter');
+
+
+            document.getElementById('apagarOnClick').addEventListener('click', function() {
+
+                document.getElementById('textarea').value = '';
+
+
+                const checkboxes = document.querySelectorAll('.form-check-input');
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+
+
+                document.getElementById('select-all').checked = false;
+            });
 
 
             selectAllCheckbox.addEventListener('change', function() {
