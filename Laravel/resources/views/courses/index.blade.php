@@ -30,18 +30,20 @@
         </div>
 
         <table class="table" id="courseTable">
-            <thead>
-                <tr>
+            <thead style="width: 100%">
+                <tr class="no-hover">
                     <th scope="col">
                         <input type="checkbox" id="select-all">
                     </th>
                     <th scope="col">Código</th>
                     <th scope="col">Descrição</th>
+                    <th class="fill"></th>
                 </tr>
             </thead>
             <tbody>
+                <tr class="filler"></tr>
                 @foreach ($courses as $course)
-                    <tr class="courses-row">
+                    <tr class="courses-row customTableStyling">
                         <td>
                             <input type="checkbox" name="selectedCourses[]" value="{{ $course->id }}">
                         </td>
@@ -58,6 +60,7 @@
                             </form>
                         </td>
                     </tr>
+                    <tr class="filler"></tr>
                 @endforeach
             </tbody>
         </table>

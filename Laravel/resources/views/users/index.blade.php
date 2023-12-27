@@ -43,7 +43,7 @@
                     <th scope="col">
                         <input type="checkbox" id="select-all">
                     </th>
-                    <th scope="col">Name</th>
+                    <th scope="col">Nome</th>
                     <th scope="col">Username</th>
                     <th scope="col">Email</th>
                     <th scope="col">Função</th>
@@ -52,8 +52,9 @@
                 </tr>
             </thead>
             <tbody>
+                <tr class="filler"></tr>
                 @foreach ($users as $user)
-                    <tr class="user-row" data-role="{{ strtolower($user->role) }}">
+                    <tr class="user-row customTableStyling" data-role="{{ strtolower($user->role) }}">
                         <td>
                             <input type="checkbox" name="selectedUsers[]" value="{{ $user->id }}">
                         </td>
@@ -86,21 +87,13 @@
                             </form>
                         </td>
                     </tr>
+                    <tr class="filler" style="background-color: #f8fafc"></tr>
                 @endforeach
             </tbody>
         </table>
         {{ $users->links() }}
     </div>
 
-    <style>
-        .user-row {
-            transition: background-color 0.2s;
-        }
-
-        .user-row:hover {
-            background-color: rgba(17, 111, 220, 0.3);
-        }
-    </style>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
