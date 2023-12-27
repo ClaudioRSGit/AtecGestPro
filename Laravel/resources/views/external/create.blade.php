@@ -1,19 +1,10 @@
 @extends('master.main')
 
-@section('head')
-    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <link rel="stylesheet" href="{{asset('jquery-ui-1.13.2.custom/jquery-ui.css')}}">
-    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-
-    <script>
-        $( function() {
-            $( "#datepicker" ).datepicker();
-        } );
-    </script>
+@section('styles')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_blue.css">
 @endsection
+
 @section('content')
 
 
@@ -60,43 +51,46 @@
             <div class="row">
 
 
-                <div class="col-8">
+                <div class="col-8" style="border: #1b1e21 ">
 
                 </div>
+
+
                 <div class="form-group col-4">
 
 
 
-                    <label for="start_date">Data de Início:</label>
-                    <input type="datetime-local" class="form-control" id="start_date" name="start_date" required>
+                    <input type="datetime-local" class="form-control " id="start_date" name="start_date" required placeholder="Selecione a data de início">
+                    <br>
 
 
 
-                    <label for="end_date">Data de Fim:</label>
-                    <input type="datetime-local" class="form-control" id="end_date" name="end_date" required>
+                    <input type="datetime-local" class="form-control " id="end_date" name="end_date" required placeholder="Selecione a data de fim">
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Criar Parceiro</button>
             <a href="{{ route('external.index') }}" class="btn btn-secondary ">Voltar</a>
 
-            Date: <div id="datepicker"></div>
+
 
 
         </form>
-        <div id="confirmation-message" style="display: none;">
-            <p>This is a confirmation message using jQuery!</p>
-        </div>
 
-        <button id="show-confirmation-btn" class="btn btn-primary">Show Confirmation</button>
     </div>
 
+
+
+
+@endsection
+
+@section('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
-        // jQuery ready function
-        $(function() {
-            // Click event handler for the button
-            $("#show-confirmation-btn").on("click", function() {
-                // Show the confirmation message
-                $("#confirmation-message").show();
+        jQuery(function () {
+            flatpickr("#start_date, #end_date", {
+                inline: true,
+                altInput: true,
+                altFormat: "F j, Y",
             });
         });
     </script>
