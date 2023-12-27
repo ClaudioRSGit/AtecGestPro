@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Partner;
 use App\Partner_Trainings_Users;
+use App\Role;
+use App\Role_User;
 use App\Training;
 use App\User;
 use Illuminate\Http\Request;
@@ -39,10 +41,12 @@ class PartnerTrainingsUsersController extends Controller
     public function create()
     {
         $partner_Trainings_Users = Partner_Trainings_Users::all();
+        $role_users = Role_User::all();
         $partners=Partner::all();
         $users=User::all();
         $trainings=Training::all();
-        return view('external.create', compact('partner_Trainings_Users', 'partners', 'users', 'trainings'));
+
+        return view('external.create', compact('partner_Trainings_Users', 'partners', 'users', 'trainings', "role_users"));
     }
 
     /**
@@ -77,12 +81,13 @@ class PartnerTrainingsUsersController extends Controller
     public function edit($id)
     {
         $partner_Trainings_Users = Partner_Trainings_Users::with('partner', 'training', 'user')->findOrFail($id);
+        $role_users = Role_User::with('role', 'user')->get();
         $partners = Partner::all();
         $trainings = Training::all();
         $users = User::all();
-        return view('external.edit', compact('partner_Trainings_Users', 'partners', 'trainings', 'users'));
+        return view('external.edit', compact('partner_Trainings_Users', 'partners', 'trainings', 'users', 'role_users'));
     }
-    
+
     /**
      * Update the specified resource in storage.
      *
