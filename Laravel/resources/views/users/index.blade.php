@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container  pl-5 pt-4">
+    <div class="container">
 
         @if(session('success'))
             <div class="alert alert-success">
@@ -34,7 +34,10 @@
                 </div>
             </form>
             <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
-            <a href="{{ route('users.create') }}" class="btn btn-primary">Novo Utilizador</a>
+            <a href="{{ route('users.create') }}" class="btn btn-primary">
+                <img src="{{ asset('assets/new.svg') }}">
+                Novo Utilizador
+            </a>
         </div>
 
         <table class="table" id="userTable">

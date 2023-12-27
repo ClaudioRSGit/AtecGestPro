@@ -2,25 +2,12 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 @section('content')
-    <style>
-        #accordion .card {
-            border: none;
-        }
-
-        #accordion .card-header {
-            border-bottom: none;
-        }
-
-        #accordion .card-body {
-            border-top: 12px solid #fff;
-        }
-    </style>
     <div class="container">
         <h1>Turmas</h1>
 
         <div class="d-flex justify-content-between mb-3">
             <div class="form-inline">
-                <div style="form-group">
+                <div style="form-group" class="search-container">
                     <input type="text" id="search" class="form-control" placeholder="Pesquisar Turma">
                 </div>
                 <div class="form-group">
@@ -183,4 +170,37 @@
 
         });
     </script>
+    <style>
+
+        #accordion .card {
+            border: none;
+        }
+
+        #accordion .card-header {
+            border-bottom: none;
+        }
+
+        #accordion .card-body {
+            border-top: 12px solid #fff;
+        }
+        .search-container {
+        position: relative;
+        }
+
+        .search-container input {
+            padding-left: 40px;
+        }
+
+        .search-container:before {
+            content: "";
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            background-image: url('assets/search.svg');
+            background-size: cover;
+        }
+    </style>
 @endsection
