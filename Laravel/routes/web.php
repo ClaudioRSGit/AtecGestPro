@@ -33,9 +33,8 @@ Route::get('/clothing-assignment/users/{id}', 'ClothingAssignmentController@inde
 
 
 Route::resource('external', 'PartnerTrainingsUsersController');
-Route::get('/external/create-partner', 'PartnerTrainingsUsersController@createPartner')->name('external.createPartner');
-Route::post('/external/store-partner', 'PartnerTrainingsUsersController@storePartner')->name('external.storePartner');
-Route::get('/external/edit-partner', 'PartnerTrainingsUsersController@editPartner')->name('external.editPartner');
+
+Route::resource('partners', 'PartnerController');
 
 
 
@@ -55,3 +54,4 @@ Route::post('users/massDelete', 'UserController@massDelete')->name('users.massDe
 Route::post('courses/massDelete', 'CourseController@massDelete')->name('courses.massDelete');
 
 Route::post('course-classes/massDelete', 'CourseClassController@massDelete')->name('course-classes.massDelete');
+Route::post('partners/massDelete', 'PartnerController@massDelete')->name('partners.massDelete');

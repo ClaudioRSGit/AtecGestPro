@@ -45,7 +45,7 @@
 
                 </div>
                 <div class="col-md-6">
-                    <div class="form-group">
+                    <div class="form-group" id="gender">
                         <label for="gender">Género:</label>
                         <select class="form-control" id="gender" name="gender">
                             <option value="1" {{ $material->gender === 1 ? 'selected' : '' }}>Masculino</option>
@@ -56,7 +56,7 @@
                         <label for="quantity" class="form-label">Quantidade:</label>
                         <input type="number" class="form-control" id="quantity" name="quantity" value="{{ $material->quantity }}">
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" id="size">
                         <label for="size">Tamanho:</label>
                         <select class="form-control" id="size" name="size">
                             <option value="XS" {{ $material->size === 'XS' ? 'selected' : '' }}>XS</option>
@@ -69,7 +69,7 @@
                         </select>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form-group" id="role">
                         <label for="role">Função:</label>
                         <select class="form-control" id="role" name="role">
                             <option value="Formador" {{ $material->role === 'Formador' ? 'selected' : '' }}>Formador</option>
@@ -84,13 +84,25 @@
                         <a href="{{ url()->previous() }}" class="btn btn-secondary mt-3">Cancelar</a>
                     </div>
                 </div>
-
                 </div>
-
             </div>
-
-
-
         </form>
     </div>
+
+    <script>
+        function toggleFields() {
+            var isClothingValue = document.getElementById('isClothing').value;
+            var gender = document.getElementById('gender');
+            var size = document.getElementById('size');
+            var role = document.getElementById('role');
+
+            gender.style.display = isClothingValue == 0 ? 'none' : 'block';
+            size.style.display = isClothingValue == 0 ? 'none' : 'block';
+            role.style.display = isClothingValue == 0 ? 'none' : 'block';
+        }
+
+        document.addEventListener('DOMContentLoaded', toggleFields);
+
+        document.getElementById('isClothing').addEventListener('change', toggleFields);
+    </script>
 @endsection

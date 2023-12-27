@@ -65,7 +65,8 @@
             </div>
             @foreach ($courseClasses as $courseClass)
                 <div class="card mb-2 mt-2">
-                    <div class="card-header bg-white" id="heading{{ $courseClass->id }}">
+                    <div class="card-header bg-white d-flex justify-content-between align-items-center"
+                        id="heading{{ $courseClass->id }}">
                         <h2 class="mb-0">
                             <input type="checkbox" name="selectedCourseClass[]" class="accordion-checkbox"
                                 data-course="{{ $courseClass->course_id }}" data-id="{{ $courseClass->id }}" value="{{$courseClass->id}}">
@@ -75,7 +76,7 @@
                                 {{ $courseClass->description }}
                             </button>
                         </h2>
-                        <div class="ml-auto">
+                        <div>
                             <a href="{{ route('course-classes.edit', $courseClass->id) }}" class="btn btn-info btn-sm"><i
                                     class="fas fa-pencil-alt"></i></a>
                             <a href="{{ route('course-classes.show', $courseClass->id) }}"
