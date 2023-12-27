@@ -25,7 +25,6 @@ class CreateMaterialsTable extends Migration
             $table->boolean('gender')->nullable();
             $table->string('size')->nullable();
             $table->string('role')->nullable();
-            $table->boolean('isDeleted')->default(false);
             $table->timestamps();
             $table->softDeletes('deleted_at', 0);
         });

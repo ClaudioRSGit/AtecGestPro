@@ -5,12 +5,17 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\User;
 use App\Material_Clothing_Delivery;
+use App\Material;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Clothing_Delivery extends Model
 {
     protected $fillable = [
-        'user_id', 'material_id', 'delivery_date', 'delivery_status'
+        'delivered',
+        'additionalNotes',
     ];
+
+    use SoftDeletes;
 
     public function user()
     {
@@ -19,7 +24,7 @@ class Clothing_Delivery extends Model
 
     public function Material_Clothing_Delivery()
     {
-        return $this->hasMany(\App\Material_Clothing_Delivery::class);
+        return $this->hasMany(Material_Clothing_Delivery::class);
     }
 
     public function material()

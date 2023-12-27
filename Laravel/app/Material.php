@@ -6,18 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Material_Training;
 use App\Material_Clothing_Delivery;
+use App\Clothing_Delivery;
 
 class Material extends Model
 {
     protected $fillable = [
         'name',
         'description',
-        'supplier',
-        'aquisition_date',
         'isInternal',
+        'quantity',
+        'aquisition_date',
+        'supplier',
         'isClothing',
         'gender',
-        'quantity',
         'size',
         'role',
     ];

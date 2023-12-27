@@ -9,21 +9,24 @@ use App\Partner_Trainings_Users;
 
 class Training extends Model
 {
+    protected $fillable = [
+        'name',
+        'description',
+        'category'
+    ];
+
     use SoftDeletes;
 
     public function Material_Training()
     {
-        return $this->hasMany(\App\Material_Training::class);
+        return $this->hasMany(Material_Training::class);
     }
 
     public function Partner_Trainings_Users()
     {
-        return $this->hasMany(\App\Partner_Trainings_Users::class);
+        return $this->hasMany(Partner_Trainings_Users::class);
     }
 
-    protected $fillable = [
-        'name', 'description','category'
-    ];
 
 
 }

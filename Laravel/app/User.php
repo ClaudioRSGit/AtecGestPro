@@ -24,52 +24,51 @@ class User extends Model
         'email',
         'contact',
         'password',
-        'role',
+        'position',
         'isActive',
         'isStudent',
-        'course_class_id',
     ];
 
     use SoftDeletes;
 
     public function emails()
     {
-        return $this->hasMany(\App\Email::class);
+        return $this->hasMany(Email::class);
     }
 
     public function actions()
     {
-        return $this->hasMany(\App\Action::class);
+        return $this->hasMany(Action::class);
     }
 
     public function Technician_Ticket()
     {
-        return $this->hasMany(\App\Technician_Ticket::class);
+        return $this->hasMany(Technician_Ticket::class);
     }
 
     public function Ticket()
     {
-        return $this->hasMany(\App\Ticket::class);
+        return $this->hasMany(Ticket::class);
     }
 
     public function comments()
     {
-        return $this->hasMany(\App\Comment::class);
+        return $this->hasMany(Comment::class);
     }
 
     public function CourseClass()
     {
-        return $this->belongsTo(\App\CourseClass::class, 'course_class_id');
+        return $this->belongsTo(CourseClass::class, 'course_class_id');
     }
 
     public function Role_User()
     {
-        return $this->hasMany(\App\Role_User::class);
+        return $this->hasMany(Role_User::class);
     }
 
     public function Partner_Trainings_Users()
     {
-        return $this->hasMany(\App\Partner_Trainings_Users::class);
+        return $this->hasMany(Partner_Trainings_Users::class);
     }
 
     public function Clothing_Delivery()
@@ -79,7 +78,7 @@ class User extends Model
 
     public function Ticket_History()
     {
-        return $this->hasMany(\App\Ticket_History::class);
+        return $this->hasMany(Ticket_History::class);
     }
 
 

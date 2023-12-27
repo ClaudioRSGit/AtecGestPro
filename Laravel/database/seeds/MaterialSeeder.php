@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class MaterialSeeder extends Seeder
 {
@@ -23,7 +24,6 @@ class MaterialSeeder extends Seeder
             'gender' => null,
             'size' => null,
             'role' => null,
-            'isDeleted' => 0,
         ]);
         // Seed 2
         DB::table('materials')->insert([
@@ -37,7 +37,6 @@ class MaterialSeeder extends Seeder
             'gender' => 1,
             'size' => 'M',
             'role' => 3,
-            'isDeleted' => 0,
         ]);
         // Seed 3
         DB::table('materials')->insert([
@@ -51,7 +50,6 @@ class MaterialSeeder extends Seeder
             'gender' => null,
             'size' => null,
             'role' => null,
-            'isDeleted' => 0,
         ]);
         // Seed 4
         DB::table('materials')->insert([
@@ -65,7 +63,6 @@ class MaterialSeeder extends Seeder
             'gender' => null,
             'size' => null,
             'role' => null,
-            'isDeleted' => 0,
         ]);
         // Seed 5
         DB::table('materials')->insert([
@@ -79,7 +76,6 @@ class MaterialSeeder extends Seeder
             'gender' => null,
             'size' => null,
             'role' => null,
-            'isDeleted' => 0,
         ]);
         // Seed 6
         DB::table('materials')->insert([
@@ -93,7 +89,6 @@ class MaterialSeeder extends Seeder
             'gender' => 0,
             'size' => '42',
             'role' => 3,
-            'isDeleted' => 0,
         ]);
     }
 }

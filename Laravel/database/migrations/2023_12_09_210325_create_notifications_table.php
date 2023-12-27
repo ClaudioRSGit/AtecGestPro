@@ -18,9 +18,8 @@ class CreateNotificationsTable extends Migration
             $table->string('description');
             $table->foreignId('notification_type_id')->constrained('notification_types')->onDelete('cascade')->onUpdate('cascade');
             $table->string('object_id');
-            $table->boolean('isDeleted')->default(false);
             $table->timestamps();
-            $table->softDeletes('DeletedAt', 0);
+            $table->softDeletes('deleted_at', 0);
         });
     }
 

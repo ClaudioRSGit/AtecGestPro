@@ -19,9 +19,8 @@ class CreateCommentsTable extends Migration
             $table->foreignId('ticket_id')->constrained('tickets')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->boolean('isPublic')->default(false);
-            $table->boolean('isDeleted')->default(false);
             $table->timestamps();
-            $table->softDeletes('DeletedAt', 0);
+            $table->softDeletes('deleted_at', 0);
         });
     }
 

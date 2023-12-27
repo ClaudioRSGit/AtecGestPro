@@ -23,9 +23,8 @@ class CreateTicketsTable extends Migration
             $table->foreignId('ticket_status_id')->constrained('ticket_statuses')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('ticket_priority_id')->constrained('ticket_priorities')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('ticket_category_id')->constrained('ticket_categories')->onDelete('cascade')->onUpdate('cascade');
-            $table->boolean('isDeleted')->default(false);
             $table->timestamps();
-            $table->softDeletes('DeletedAt', 0);
+            $table->softDeletes('deleted_at', 0);
         });
     }
 

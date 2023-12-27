@@ -5,13 +5,12 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Material;
 use App\Clothing_Delivery;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Material_Clothing_Delivery extends Model
 {
-    protected $fillable = [
-        'material_id', 'clothing_delivery_id'
-    ];
-    
+    use SoftDeletes;
+
     public function material()
     {
         return $this->belongsTo(Material::class);
