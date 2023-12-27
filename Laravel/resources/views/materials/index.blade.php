@@ -71,12 +71,18 @@
                             </td>
                             <td>{{ isset($material->size) ? $material->size : 'N.A.' }}</td>
                             <td>
-                                <a href="{{ route('materials.edit', $material->id) }}" class="btn btn-warning btn-edit">Editar</a>
+                                <a href="{{ route('materials.show', $material->id) }}">
+                                    <img src="{{ asset('assets/show.svg') }}" alt="show">
+                                </a>
+                                <a href="{{ route('materials.edit', $material->id) }}" class="mx-2">
+                                    <img src="{{ asset('assets/edit.svg') }}" alt="edit">
+                                </a>
                                 <form method="post" action="{{ route('materials.destroy', $material->id) }}" style="display:inline;">
                                     @csrf
                                     @method('delete')
-                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
-                                </form>
+                                    <button type="submit" onclick="return confirm('Tem certeza que deseja excluir?')" style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
+                                        <img src="{{ asset('assets/delete.svg') }}" alt="delete">
+                                    </button>                                </form>
                             </td>
                         </tr>
                         <tr class="filler"></tr>

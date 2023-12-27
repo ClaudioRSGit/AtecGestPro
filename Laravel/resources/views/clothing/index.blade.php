@@ -63,12 +63,18 @@
                                             <td>{{ $student->email }}</td>
                                             <td><input type="checkbox"></td>
                                             <td>
-                                                <a href="{{ route('users.show', $student->id) }}" class="btn btn-info btn-sm"><i class="fas fa-eye"></i></a>
-                                                <a href="{{ route('users.edit', $student->id) }}" class="btn btn-warning btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                                                <a href="{{ route('users.show', $student->id) }}">
+                                                    <img src="{{ asset('assets/show.svg') }}" alt="show">
+                                                </a>
+                                                <a href="{{ route('users.edit', $student->id) }}" class="mx-2">
+                                                    <img src="{{ asset('assets/edit.svg') }}" alt="edit">
+                                                </a>
                                                 <form method="POST" action="{{ route('users.destroy', $student->id) }}" style="display: inline;">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+                                                    <button type="submit" onclick="return confirm('Tem certeza que deseja excluir?')" style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
+                                                        <img src="{{ asset('assets/delete.svg') }}" alt="delete">
+                                                    </button>
                                                 </form>
                                             </td>
                                         </tr>

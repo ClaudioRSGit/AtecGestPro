@@ -50,13 +50,18 @@
                         <td>{{ $course->code }}</td>
                         <td>{{ $course->description }}</td>
                         <td>
-                            <a href="{{ route('courses.show', $course->id) }}" class="btn btn-info">Detalhes</a>
-                            <a href="{{ route('courses.edit', $course->id) }}" class="btn btn-warning">Editar</a>
+                            <a href="{{ route('courses.show', $course->id) }}">
+                                <img src="{{ asset('assets/show.svg') }}" alt="show">
+                            </a>
+                            <a href="{{ route('courses.edit', $course->id) }}" class="mx-2">
+                                <img src="{{ asset('assets/edit.svg') }}" alt="edit">
+                            </a>
                             <form method="post" action="{{ route('courses.destroy', $course->id) }}" style="display:inline;">
                                 @csrf
                                 @method('delete')
-                                <button type="submit" class="btn btn-danger"
-                                    onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
+                                <button type="submit" onclick="return confirm('Tem certeza que deseja excluir?')" style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
+                                    <img src="{{ asset('assets/delete.svg') }}" alt="delete">
+                                </button>
                             </form>
                         </td>
                     </tr>
