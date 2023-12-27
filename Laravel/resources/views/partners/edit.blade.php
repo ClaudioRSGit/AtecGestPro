@@ -10,17 +10,17 @@
 
             <div class="mb-3">
                 <label for="name" class="form-label">Parceiro:</label>
-                <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
+                <input type="text" class="form-control" id="name" name="name" value="{{ $partner->name }}">
             </div>
 
             <div class="mb-3">
                 <label for="description" class="form-label">Descrição:</label>
-                <textarea class="form-control" id="description" name="description">{{ old('description') }}</textarea>
+                <textarea class="form-control" id="description" name="description">{{ $partner->description }}</textarea>
             </div>
 
             <div class="mb-3">
                 <label for="address" class="form-label">Morada:</label>
-                <input type="text" class="form-control" id="address" name="address" value="{{ old('address') }}">
+                <input type="text" class="form-control" id="address" name="address" value="{{ $partner->address }}">
             </div>
 
 

@@ -81,7 +81,16 @@ class PartnerController extends Controller
      */
     public function update(Request $request, Partner $partner)
     {
-        //
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string|max:500',
+            'address' => 'required|string|max:500',
+        ]);
+
+        $partner->update($request->all());
+
+        return redirect()->route('external.index')->with('success', 'Parceiro atualizado com sucesso!');
     }
 
     /**
