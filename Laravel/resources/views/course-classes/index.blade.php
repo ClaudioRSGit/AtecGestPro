@@ -20,7 +20,7 @@
             border-top: 12px solid #fff;
         }
     </style>
-    <div class="container  pl-5 pt-4">
+    <div class="container">
         <h1>Turmas</h1>
 
         <div class="d-flex justify-content-between mb-3">
@@ -28,7 +28,7 @@
                 <div style="form-group">
                     <input type="text" id="search" class="form-control" placeholder="Pesquisar Turma">
                 </div>
-                <div class="form-group mx-2">
+                <div class="form-group">
                     <label for="filter"></label>
                     <select class="form-control" id="filter">
                         <option value="all">Todos</option>
@@ -39,8 +39,11 @@
                 </div>
             </div>
             <div class="row">
-                <button class="btn btn-danger" id="delete-selected" style="margin-right: 5px;">Excluir Selecionados</button>
-                <a href="{{ route('course-classes.create') }}" class="btn btn-primary">Criar Turma</a>
+                <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
+                <a href="{{ route('course-classes.create') }}" class="btn btn-primary">
+                    <img src="{{ asset('assets/new.svg') }}">
+                    Criar Turma
+                </a>
             </div>
 
         </div>

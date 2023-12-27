@@ -26,7 +26,9 @@
             </form>
             <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
 
-            <a href="{{ route('courses.create') }}" class="btn btn-primary">Novo Curso</a>
+            <a href="{{ route('courses.create') }}" class="btn btn-primary">
+                <img src="{{ asset('assets/new.svg') }}"> Novo Curso
+            </a>
         </div>
 
         <table class="table" id="courseTable">
