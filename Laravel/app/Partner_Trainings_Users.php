@@ -11,6 +11,9 @@ use App\User;
 class Partner_Trainings_Users extends Model
 {
     protected $fillable = [
+        'partner_id',
+        'training_id',
+        'user_id',
         'start_date',
         'end_date'
     ];
