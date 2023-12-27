@@ -108,4 +108,22 @@ class PartnerController extends Controller
             return redirect()->route('external.index')->with('error', 'Erro ao excluir o Parceiro. Por favor, tente novamente.');
         }
     }
+
+    public function massDelete(Request $request)
+    {
+        $request->validate([
+            'partner_ids' => 'required|array',
+            'partner_ids.*' => 'exists:partners,id',//all items inside array must exist
+        ]);
+
+        try {
+
+            Partner::whereIn('id', $request->input('partner_ids'))->delete();
+            return redirect()->back()->with('success', 'Parceiros selecionados excluídos com sucesso!');
+        } catch (\Exception $e) {
+
+            return redirect()->back()->with('error', 'Erro ao excluir Parceiros selecionados. Por favor, tente novamente.');
+        }
+    }
+
 }

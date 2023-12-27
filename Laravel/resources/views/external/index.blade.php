@@ -59,11 +59,14 @@
 
         <div id="partnersTable" style="display: none;">
             <a href="{{ route('partners.create') }}" class="btn btn-primary mb-3">Novo Parceiro</a>
-
+            <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
             <div>
                 <table class="table bg-white">
                     <thead>
                         <tr>
+                            <th scope="col">
+                                <input type="checkbox" id="select-all">
+                            </th>
                             <th scope="col">Parceiro</th>
                             <th scope="col">Descrição</th>
                             <th scope="col">Morada</th>
@@ -75,6 +78,9 @@
                     <tbody>
                         @foreach ($partners as $partner)
                             <tr>
+                                <td>
+                                    <input type="checkbox" name="selectedPartners[]" value="{{ $partner->id }}">
+                                </td>
                                 <td>{{ $partner->name }}</td>
                                 <td>{{ $partner->description }}</td>
                                 <td>{{ $partner->address }}</td>
@@ -104,7 +110,7 @@
                                 <td>
                                     <a href="{{ route('partners.show', $partner->id) }}"
                                         class="btn btn-info btn-sm">Detalhes</a>
-                                        
+
                                     <a href="{{ route('partners.edit', $partner->id) }}"
                                         class="btn btn-warning btn-sm">Editar</a>
 
@@ -128,6 +134,19 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             showTable('trainingsTable', 'partnersTable');
+
+            const deleteSelectedButton = document.getElementById('delete-selected');
+            const checkboxes = document.getElementsByName('selectedPartners[]');
+            deleteSelectedButton.addEventListener('click', function () {
+                massDelete();
+            });
+
+            const selectAllCheckbox = document.getElementById('select-all');
+            selectAllCheckbox.addEventListener('change', function () {
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = selectAllCheckbox.checked;
+                });
+            });
         });
 
         function showTable(showId, hideId) {
@@ -157,6 +176,45 @@
             var partnerRows = document.getElementsByClassName('partner_' + partnerId);
             for (var x = 0; x < partnerRows.length; x++) {
                 partnerRows[x].style.display = '';
+            }
+        }
+
+        function massDelete() {
+            var partnerIds = [];
+            var checkboxes = document.getElementsByName('selectedPartners[]');
+
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].checked) {
+                    partnerIds.push(checkboxes[i].value);
+                }
+            }
+
+            if (partnerIds.length > 0) {
+                if (confirm('Tem certeza que deseja excluir os parceiros selecionados?')) {
+                    var form = document.createElement('form');
+                    form.action = '{{ route('partners.massDelete') }}';
+                    form.method = 'post';
+                    form.style.display = 'none';
+
+                    var input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = '_token';
+                    input.value = '{{ csrf_token() }}';
+                    form.appendChild(input);
+
+                    for (var x = 0; x < partnerIds.length; x++) {
+                        var inputPartner = document.createElement('input');
+                        inputPartner.type = 'hidden';
+                        inputPartner.name = 'partner_ids[]';
+                        inputPartner.value = partnerIds[x];
+                        form.appendChild(inputPartner);
+                    }
+
+                    document.body.appendChild(form);
+                    form.submit();
+                }
+            } else {
+                alert('Selecione pelo menos um parceiro para excluir.');
             }
         }
     </script>

@@ -50,3 +50,5 @@ Route::post('materials/massDelete', 'MaterialController@massDelete')->name('mate
 Route::post('users/massDelete', 'UserController@massDelete')->name('users.massDelete');
 
 Route::post('courses/massDelete', 'CourseController@massDelete')->name('courses.massDelete');
+
+Route::post('partners/massDelete', 'PartnerController@massDelete')->name('partners.massDelete');
