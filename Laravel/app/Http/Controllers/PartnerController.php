@@ -24,7 +24,8 @@ class PartnerController extends Controller
      */
     public function create()
     {
-        //
+        $partners=Partner::all();
+        return view('partners.create', compact('partners'));
     }
 
     /**
@@ -35,7 +36,17 @@ class PartnerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate(
+            request(),
+            [
+
+                'name' => 'required',
+                'description' => 'required',
+                'address' => 'required',
+            ]
+        );
+        Partner::create($request->all());
+        return redirect()->route('external.index')->with('success', 'Parceiro criado com sucesso');
     }
 
     /**
@@ -46,7 +57,7 @@ class PartnerController extends Controller
      */
     public function show(Partner $partner)
     {
-        //
+        return view('partners.show', compact('partner'));
     }
 
     /**
@@ -55,9 +66,10 @@ class PartnerController extends Controller
      * @param  \App\Partner  $partner
      * @return \Illuminate\Http\Response
      */
-    public function edit(Partner $partner)
+    public function edit($id)
     {
-        //
+        $partner = Partner::findOrFail($id);
+        return view('partners.edit', compact('partner'));
     }
 
     /**

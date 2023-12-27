@@ -31,9 +31,8 @@ Route::resource('clothing-assignment', 'ClothingAssignmentController');
 Route::get('/clothing-assignment/users/{id}', 'ClothingAssignmentController@index')->name('clothing-assignment.users');
 
 Route::resource('external', 'PartnerTrainingsUsersController');
-Route::get('/external/create-partner', 'PartnerTrainingsUsersController@createPartner')->name('external.createPartner');
-Route::post('/external/store-partner', 'PartnerTrainingsUsersController@storePartner')->name('external.storePartner');
-Route::get('/external/edit-partner', 'PartnerTrainingsUsersController@editPartner')->name('external.editPartner');
+
+Route::resource('partners', 'PartnerController');
 
 
 

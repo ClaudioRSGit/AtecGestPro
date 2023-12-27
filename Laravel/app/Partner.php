@@ -9,6 +9,12 @@ use App\Partner_contact;
 
 class Partner extends Model
 {
+    protected $fillable = [
+        'name',
+        'description',
+        'address',
+    ];
+
     use SoftDeletes;
 
     public function partnerTrainingsUsers()

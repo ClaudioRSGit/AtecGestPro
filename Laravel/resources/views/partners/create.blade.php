@@ -4,7 +4,7 @@
     <div class="container">
         <h1>Criar Novo Parceiro</h1>
 
-        <form method="post" action="{{ route('external.storePartner') }}">
+        <form method="post" action="{{ route('partners.store') }}">
             @csrf
             <div class="row">
                 <div class="col-md-6">

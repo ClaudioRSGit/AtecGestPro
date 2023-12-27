@@ -58,7 +58,7 @@
 
 
         <div id="partnersTable" style="display: none;">
-            <a href="{{ route('external.createPartner') }}" class="btn btn-primary mb-3">Novo Parceiro</a>
+            <a href="{{ route('partners.create') }}" class="btn btn-primary mb-3">Novo Parceiro</a>
 
             <div>
                 <table class="table bg-white">
@@ -104,7 +104,7 @@
                                 <td>
                                     {{-- <a href="{{ route('external.showPartner', $partner->id) }}"
                                         class="btn btn-info btn-sm">Detalhes</a> --}}
-                                    <a href="{{ route('external.editPartner', $partner->id) }}"
+                                    <a href="{{ route('partners.edit', $partner->id) }}"
                                         class="btn btn-warning btn-sm">Editar</a>
 
                                     {{-- <form method="post"

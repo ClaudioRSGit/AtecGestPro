@@ -31,12 +31,6 @@ class PartnerTrainingsUsersController extends Controller
         return view('external.show', compact('partner_Trainings_User'));
     }
 
-    public function showPartner(Partner $partner)
-    {
-        return view('external.showPartner', compact('partner'));
-    }
-
-
     /**
      * Show the form for creating a new resource.
      *
@@ -49,12 +43,6 @@ class PartnerTrainingsUsersController extends Controller
         $users=User::all();
         $trainings=Training::all();
         return view('external.create', compact('partner_Trainings_Users', 'partners', 'users', 'trainings'));
-    }
-
-    public function createPartner()
-    {
-        $partners=Partner::all();
-        return view('external.createPartner', compact('partners'));
     }
 
     /**
@@ -80,27 +68,6 @@ class PartnerTrainingsUsersController extends Controller
         return redirect()->route('external.index')->with('success','Formação criada com sucesso');
     }
 
-    public function storePartner(Request $request)
-    {
-        $this->validate(request(),
-            [
-
-                    'name' => 'required',
-                    'description' => 'required',
-                    'address' => 'required',
-            ]);
-        Partner_Trainings_Users::createPartner($request->all());
-        return redirect()->route('external.index')->with('success','Parceiro criado com sucesso');
-    }
-
-
-
-
-
-
-
-
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -109,22 +76,13 @@ class PartnerTrainingsUsersController extends Controller
      */
     public function edit($id)
     {
-
-
-
         $partner_Trainings_Users = Partner_Trainings_Users::with('partner', 'training', 'user')->findOrFail($id);
         $partners = Partner::all();
         $trainings = Training::all();
         $users = User::all();
         return view('external.edit', compact('partner_Trainings_Users', 'partners', 'trainings', 'users'));
     }
-
-    public function editPartner($id)
-    {
-        $partner = Partner::findOrFail($id);
-        return view('external.editPartner', compact('partner'));
-    }
-
+    
     /**
      * Update the specified resource in storage.
      *
