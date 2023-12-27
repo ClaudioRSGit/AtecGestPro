@@ -20,7 +20,10 @@
                     </select>
                 </div>
             </div>
-            <a href="{{ route('course-classes.create') }}" class="btn btn-primary">Criar Turma</a>
+            <a href="{{ route('course-classes.create') }}" class="btn btn-primary">
+                <img src="{{ asset('assets/new.svg') }}">
+                Criar Turma
+            </a>
         </div>
 
         <div id="accordion">

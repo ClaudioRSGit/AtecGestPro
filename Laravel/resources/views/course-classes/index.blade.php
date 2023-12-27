@@ -3,11 +3,6 @@
 
 @section('content')
     <style>
-        .container {
-            font-family: 'Manrope', sans-serif;
-            position: relative;
-        }
-
         #accordion .card {
             border: none;
         }
