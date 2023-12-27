@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <h1>Editar Parceiro</h1>
-        <form method="post" action="{{ route('external.updatePartner', $partner->id) }}">
+        <form method="post" action="{{ route('partners.update', $partner->id) }}">
 
             @csrf
             @method('put')

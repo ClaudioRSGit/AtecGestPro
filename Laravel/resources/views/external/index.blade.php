@@ -102,8 +102,9 @@
                                         onclick="filterTrainingsTable({{ $partner->id }})">View</button>
                                 </td>
                                 <td>
-                                    {{-- <a href="{{ route('external.showPartner', $partner->id) }}"
-                                        class="btn btn-info btn-sm">Detalhes</a> --}}
+                                    <a href="{{ route('partners.show', $partner->id) }}"
+                                        class="btn btn-info btn-sm">Detalhes</a>
+                                        
                                     <a href="{{ route('partners.edit', $partner->id) }}"
                                         class="btn btn-warning btn-sm">Editar</a>
 
