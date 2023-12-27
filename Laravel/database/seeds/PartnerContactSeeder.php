@@ -41,5 +41,11 @@ class PartnerContactSeeder extends Seeder
             'contact' => '+440 223 744 000',
             'partner_id' => 5,
         ]);
+
+        // Seed 6
+        DB::table('partner_contacts')->insert([
+            'contact' => '+441 223 744 000',
+            'partner_id' => 1,
+        ]);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Partner;
+use App\Partner_contact;
 use Illuminate\Http\Request;
 
 class PartnerController extends Controller
@@ -24,7 +25,7 @@ class PartnerController extends Controller
      */
     public function create()
     {
-        $partners=Partner::all();
+        $partners = Partner::all();
         return view('partners.create', compact('partners'));
     }
 
@@ -36,16 +37,32 @@ class PartnerController extends Controller
      */
     public function store(Request $request)
     {
+        // Validação para os campos do Partner
         $this->validate(
             request(),
             [
-
                 'name' => 'required',
                 'description' => 'required',
                 'address' => 'required',
             ]
         );
-        Partner::create($request->all());
+
+        $partner = Partner::create($request->only(['name', 'description', 'address']));
+
+        // Adding contacts to the partner_contacts table
+        $contacts = $request->input('contact_description');
+        $values = $request->input('contact_value');
+
+        if ($contacts && $values) {
+            foreach ($contacts as $key => $contact) {
+                Partner_contact::create([
+                    'contact' => $values[$key],
+                    'description' => $contact,
+                    'partner_id' => $partner->id,
+                ]);
+            }
+        }
+
         return redirect()->route('external.index')->with('success', 'Parceiro criado com sucesso');
     }
 
@@ -113,7 +130,7 @@ class PartnerController extends Controller
     {
         $request->validate([
             'partner_ids' => 'required|array',
-            'partner_ids.*' => 'exists:partners,id',//all items inside array must exist
+            'partner_ids.*' => 'exists:partners,id', //all items inside array must exist
         ]);
 
         try {
@@ -125,5 +142,4 @@ class PartnerController extends Controller
             return redirect()->back()->with('error', 'Erro ao excluir Parceiros selecionados. Por favor, tente novamente.');
         }
     }
-
 }
