@@ -8,14 +8,15 @@ use App\CourseClass;
 
 class Course extends Model
 {
-    use SoftDeletes;
     protected $fillable = [
         'code',
         'description'
     ];
+    
+    use SoftDeletes;
 
     public function CourseClass()
     {
-        return $this->hasMany(\App\CourseClass::class);
+        return $this->hasMany(CourseClass::class);
     }
 }

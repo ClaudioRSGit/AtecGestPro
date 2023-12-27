@@ -19,11 +19,11 @@ class Partner extends Model
 
     public function partnerTrainingsUsers()
     {
-        return $this->hasMany(\App\Partner_Trainings_Users::class);
+        return $this->hasMany(Partner_Trainings_Users::class);
     }
 
     public function partnerContacts()
     {
-        return $this->hasMany(\App\Partner_contact::class);
+        return $this->hasMany(Partner_contact::class);
     }
 }

@@ -20,7 +20,6 @@ class CreatePartnerTrainingsUsersTable extends Migration
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
-            $table->boolean('isDeleted')->default(false);
             $table->timestamps();
             $table->softDeletes('deleted_at', 0);
         });

@@ -18,9 +18,8 @@ class CreatePartnerContactsTable extends Migration
             $table->string('contact');
             $table->string('description')->nullable();
             $table->foreignId('partner_id')->constrained('partners')->onDelete('cascade')->onUpdate('cascade');
-            $table->boolean('isDeleted')->default(false);
             $table->timestamps();
-            $table->softDeletes('DeletedAt', 0);
+            $table->softDeletes('deleted_at', 0);
         });
     }
 

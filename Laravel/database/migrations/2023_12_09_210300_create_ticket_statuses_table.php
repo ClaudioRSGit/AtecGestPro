@@ -16,9 +16,8 @@ class CreateTicketStatusesTable extends Migration
         Schema::create('ticket_statuses', function (Blueprint $table) {
             $table->id();
             $table->string('description');
-            $table->boolean('isDeleted')->default(false);
             $table->timestamps();
-            $table->softDeletes('DeletedAt', 0);
+            $table->softDeletes('deleted_at', 0);
         });
     }
 

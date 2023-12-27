@@ -7,9 +7,16 @@ use App\Email;
 use App\Ticket;
 use App\Action;
 use App\User;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Ticket_History extends Model
 {
+    protected $fillable = [
+        'ticket_info',
+    ];
+
+    use SoftDeletes;
+
     public function email()
     {
         return $this->belongsTo(Email::class);
@@ -22,7 +29,7 @@ class Ticket_History extends Model
 
     public function actions()
     {
-        return $this->hasMany(\App\Action::class);
+        return $this->hasMany(Action::class);
     }
 
     public function user()

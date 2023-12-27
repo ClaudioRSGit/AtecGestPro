@@ -18,7 +18,6 @@ class CreatePartnersTable extends Migration
             $table->string('name');
             $table->string('description');
             $table->string('address');
-            $table->boolean('isDeleted')->default(false);
             $table->timestamps();
             $table->softDeletes('deleted_at', 0);
         });

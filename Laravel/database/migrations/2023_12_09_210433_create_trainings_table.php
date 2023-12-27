@@ -18,7 +18,6 @@ class CreateTrainingsTable extends Migration
             $table->string('name');
             $table->string('description');
             $table->string('category');
-            $table->boolean('isDeleted')->default(false);
             $table->timestamps();
             $table->softDeletes('deleted_at', 0);
         });
