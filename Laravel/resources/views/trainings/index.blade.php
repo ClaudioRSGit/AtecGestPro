@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container pl-5 pt-4">
+    <div class="container">
         <h1>Lista de Formações</h1>
 
     <a href="{{ route('trainings.create') }}" class="btn btn-primary mb-3">Nova formação</a>

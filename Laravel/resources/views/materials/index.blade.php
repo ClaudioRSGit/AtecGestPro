@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container pl-5 pt-4">
+    <div class="container">
         <h1>Lista de Materiais</h1>
 
         <div class="d-flex justify-content-between mb-3">
@@ -21,7 +21,10 @@
                 </div>
             </form>
             <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
-            <a href="{{ route('materials.create') }}" class="btn btn-primary">Novo Material</a>
+            <a href="{{ route('materials.create') }}" class="btn btn-primary">
+                <img src="{{ asset('assets/new.svg') }}">
+                Novo Material
+            </a>
         </div>
 
 
