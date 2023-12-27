@@ -50,6 +50,9 @@ html {
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+.content{
+    overflow-x: visible;
+}
 .content::before {
     content: '';
     position: absolute;
@@ -83,13 +86,14 @@ main{
     flex: 1 0 auto;
 }
 main > .content{
-    width: 100%;
+    width: 87%;
     min-height: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
     flex: 1 0 auto;
+    padding: 0 10%;
 }
 
 
@@ -122,10 +126,10 @@ tr:not(th){
     transition: background-color 0.2s;
     cursor: pointer;
     text-align: center;
-    vertical-align: center;
+    vertical-align: middle;
 }
 tr:not(:first-child):hover {
-    background-color: rgba(17, 111, 220, 0.3);
+    background-color: rgba(17, 111, 220, 0.1);
 }
 
 
@@ -156,7 +160,7 @@ thead th{
     border-bottom-right-radius: 6px !important;
 }
 .filler{
-    height: 2rem !important;
+    height: 0.5rem !important;
     background-color: #f8fafc !important;
 }
 
@@ -669,18 +673,6 @@ pre code {
   overflow-y: scroll;
 }
 
-.container,
-.container-fluid,
-.container-xl,
-.container-lg,
-.container-md,
-.container-sm {
-  width: 100%;
-  padding-right: 15px;
-  padding-left: 15px;
-  margin-right: auto;
-  margin-left: auto;
-}
 
 @media (min-width: 576px) {
   .container-sm,

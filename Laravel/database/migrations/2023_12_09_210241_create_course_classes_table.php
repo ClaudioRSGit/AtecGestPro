@@ -17,7 +17,6 @@ class CreateCourseClassesTable extends Migration
             $table->id();
             $table->string('description');
             $table->foreignId('course_id')->constrained('courses')->onDelete('cascade')->onUpdate('cascade');
-            $table->boolean('isDeleted')->default(false);
             $table->timestamps();
             $table->softDeletes('deleted_at', 0);
         });

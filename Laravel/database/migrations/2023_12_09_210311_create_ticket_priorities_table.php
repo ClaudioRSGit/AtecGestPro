@@ -17,9 +17,8 @@ class CreateTicketPrioritiesTable extends Migration
             $table->id();
             $table->string('description');
             $table->dateTime('default_dueByDate');
-            $table->boolean('isDeleted')->default(false);
             $table->timestamps();
-            $table->softDeletes('DeletedAt', 0);
+            $table->softDeletes('deleted_at', 0);
         });
     }
 

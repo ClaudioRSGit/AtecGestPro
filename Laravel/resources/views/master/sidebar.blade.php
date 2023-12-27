@@ -66,7 +66,7 @@
 
 <style>
     .sidebarContent{
-        width: 13%;
+        min-width: 13%;
         position: fixed;
         left: 0;
         height: 100%;

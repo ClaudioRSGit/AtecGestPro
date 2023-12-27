@@ -9,6 +9,11 @@ use App\Notification_User;
 
 class Notification extends Model
 {
+    protected $fillable = [
+        'description',
+        'object_id',
+    ];
+
     use SoftDeletes;
 
     public function Notification_Type()
@@ -18,6 +23,6 @@ class Notification extends Model
 
     public function Notification_User()
     {
-        return $this->hasMany(\App\Notification_User::class);
+        return $this->hasMany(Notification_User::class);
     }
 }

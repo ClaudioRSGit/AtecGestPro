@@ -9,11 +9,12 @@ use App\User;
 
 class CourseClass extends Model
 {
-    use SoftDeletes;
     protected $fillable = [
         'description',
-        'course_id'
     ];
+
+    use SoftDeletes;
+
     public function students()
     {
         return $this->hasMany(User::class, 'course_class_id');
@@ -25,6 +26,6 @@ class CourseClass extends Model
 
     public function users()
     {
-        return $this->hasMany(\App\User::class);
+        return $this->hasMany(User::class);
     }
 }

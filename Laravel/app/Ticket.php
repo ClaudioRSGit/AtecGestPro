@@ -9,26 +9,33 @@ use App\Comment;
 use App\User;
 use App\Ticket_Status;
 use App\Ticket_Category;
-use App\Ticket_Prio;
+use App\Ticket_Priority;
 use App\Ticket_History;
 
 class Ticket extends Model
 {
+    protected $fillable = [
+        'title',
+        'description',
+        'dueByDate',
+        'attachment',
+    ];
+
     use SoftDeletes;
 
     public function Technician_Ticket()
     {
-        return $this->hasMany(\App\Technician_Ticket::class);
+        return $this->hasMany(Technician_Ticket::class);
     }
 
     public function comments()
     {
-        return $this->hasMany(\App\Comment::class);
+        return $this->hasMany(Comment::class);
     }
 
     public function users()
     {
-        return $this->hasMany(\App\Users::class);
+        return $this->hasMany(User::class);
     }
 
     public function Ticket_Status()
@@ -43,11 +50,11 @@ class Ticket extends Model
 
     public function Ticket_Prio()
     {
-        return $this->belongsTo(Ticket_Prio::class);
+        return $this->belongsTo(Ticket_Priority::class);
     }
 
     public function Ticket_History()
     {
-        return $this->hasMany(\App\Ticket_History::class);
+        return $this->hasMany(Ticket_History::class);
     }
 }

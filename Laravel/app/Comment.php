@@ -9,6 +9,11 @@ use App\Ticket;
 
 class Comment extends Model
 {
+    protected $fillable = [
+        'description',
+        'isPublic',
+    ];
+    
     use SoftDeletes;
 
     public function user()
