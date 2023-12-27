@@ -107,14 +107,14 @@
                                     <a href="{{ route('partners.edit', $partner->id) }}"
                                         class="btn btn-warning btn-sm">Editar</a>
 
-                                    {{-- <form method="post"
-                                        action="{{ route('external.destroyPartner', $partner->id) }}"
+                                    <form method="post"
+                                        action="{{ route('partners.destroy', $partner->id) }}"
                                         style="display:inline;">
                                         @csrf
                                         @method('delete')
                                         <button type="submit" class="btn btn-danger btn-sm"
                                             onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
-                                    </form> --}}
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach
