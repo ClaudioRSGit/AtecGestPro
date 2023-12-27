@@ -4,7 +4,6 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Role_User;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Role extends Model
 {
@@ -12,8 +11,6 @@ class Role extends Model
         'name',
         'description',
     ];
-
-    use SoftDeletes;
 
     public function Role_User()
     {

@@ -5,15 +5,12 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\User;
 use App\Ticket_History;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Action extends Model
 {
     protected $fillable = [
         'description',
     ];
-
-    use SoftDeletes;
 
     public function users()
     {
