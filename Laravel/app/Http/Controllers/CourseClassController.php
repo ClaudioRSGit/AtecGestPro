@@ -56,4 +56,19 @@ class CourseClassController extends Controller
         $courseClass->delete();
         return redirect()->route('course-classes.index')->with('success', 'Course class deleted successfully!');
     }
+
+    public function massDelete(Request $request)
+    {
+        $request->validate([
+            'course_class_ids' => 'required|array',
+            'course_class_ids.*' => 'exists:course_classes,id',
+        ]);
+
+        try {
+            CourseClass::whereIn('id', $request->input('course_class_ids'))->delete();
+            return redirect()->back()->with('success', 'Turmas selecionadas excluídas com sucesso!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erro ao excluir as turmas selecionadas. Por favor, tente novamente.');
+        }
+    }
 }
