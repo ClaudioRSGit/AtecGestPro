@@ -35,7 +35,7 @@
                                 <td>{{ optional($partner_Trainings_User->user)->name }}</td>
                                 <td>{{ optional($partner_Trainings_User->training)->name ?: 'N.A.' }}</td>
                                 <td>{{ $partner_Trainings_User->start_date }}</td>
-                                <td>
+                                <td class="d-flex">
                                     <a href="{{ route('external.show', $partner_Trainings_User->id) }}"
                                         class="btn btn-info btn-sm">Detalhes</a>
                                     <a href="{{ route('external.edit', $partner_Trainings_User->id) }}"

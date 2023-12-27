@@ -34,12 +34,18 @@
                 <label for="user_id">Técnico:</label>
                 <select class="form-control" id="user_id" name="user_id" required>
                     @foreach($users as $user)
-                        <option value="{{ $user->id }}" {{ $user->id == $partner_Trainings_Users->user_id ? 'selected' : '' }}>
-                            {{ $user->name }}
-                        </option>
+                        @foreach($role_users as $role_user)
+                            @if($role_user->role_id == 4 && $role_user->user_id == $user->id)
+                            <option value="{{ $user->id }}" {{ $user->id == $partner_Trainings_Users->user_id ? 'selected' : '' }}>
+                                {{ $user->name }}
+                            </option>
+                            @endif
+                        @endforeach
                     @endforeach
                 </select>
             </div>
+
+
 
             <div class="form-group">
                 <label for="start_date">Data de Início:</label>
