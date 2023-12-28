@@ -14,14 +14,11 @@
 
 
         <div class="mb-3">
-            <div class="d-flex">
-                <div style="width: 30%;">
-                    <input type="text" id="search" class="form-control" placeholder="Pesquisar">
-                </div>
+            <div class="d-flex w-100">
+                <div class="d-flex w-75" style="gap: 1rem">
+                    <input type="text" id="search" class="form-control w-50" placeholder="Pesquisar">
 
-                <div class="ms-2">
-                    <label for="filter">Filtrar por:</label>
-                    <select class="form-select" id="filter">
+                    <select class="form-control w-25" id="filter">
                         <option value="all">Todos</option>
                         <option value="trainer">Formador</option>
                         <option value="trainee">Formando</option>
@@ -29,8 +26,9 @@
                     </select>
                 </div>
 
-                <a href="{{ route('clothing-assignment.create') }}" class="btn btn-primary mb-3">Novo Vestuário</a>
-
+                <div class="buttons" style="width: 25%">
+                    <a href="{{ route('clothing-assignment.create') }}" class="btn btn-primary">Novo Vestuário</a>
+                </div>
             </div>
         </div>
 
@@ -105,13 +103,15 @@
         </form>
 
         <h5>Observações </h5>
-        <textarea class="form-control" id="textarea" aria-label="With textarea"></textarea>
-        <div class="input-group mb-3" style="width: 80%;">
+        <div class="notes d-flex">
 
-            <div class="input-group-prepend">
-                <button class="btn btn-danger" type="button" id="apagarOnClick">Apagar</button>
+            <textarea class="form-control" id="textarea" aria-label="With textarea"></textarea>
+            <div class="mb-3 buttons">
 
-                <!-- .............ooooooooooooooooooooooooooooooo -->
+                <div>
+                    <button class="btn btn-danger" type="button" id="apagarOnClick">Apagar</button>
+
+                    <!-- .............ooooooooooooooooooooooooooooooo -->
 
 
                     <button class="btn btn-primary" type="submit">Guardar</button>
@@ -119,8 +119,8 @@
 
 
 
-                <button class="btn btn-primary" type="button"
-                    onclick="window.location.href='{{ url()->previous() }}'">Fechar</button>
+                    <button class="btn btn-primary" type="button" onclick="window.location.href='{{ url()->previous() }}'">Fechar</button>
+                </div>
             </div>
         </div>
 
