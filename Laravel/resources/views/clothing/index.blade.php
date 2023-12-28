@@ -103,7 +103,7 @@
                 });
             });
         });
-        
+
         document.addEventListener('DOMContentLoaded', function () {
             const selectAllCheckbox = document.getElementById('select-all');
             const checkboxes = document.querySelectorAll('.accordion-checkbox');

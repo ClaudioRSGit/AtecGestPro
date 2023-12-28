@@ -45,7 +45,7 @@
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="actions" class="form-label">Ações:</label>
-                    <button type="submit" class="btn btn-primary">Criar Parceiro</button>
+                    <button type="button" class="btn btn-primary" onclick="validateForm()">Criar Parceiro</button>
                     <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
                 </div>
             </div>
@@ -54,7 +54,26 @@
 </div>
 
 <script>
+    function validateForm() {
+        removeEmptyContactFields();
+        document.forms[0].submit();
+    }
+
+    function removeEmptyContactFields() {
+        var contactGroups = document.querySelectorAll('.contact-group');
+
+        for (var i = contactGroups.length - 1; i >= 0; i--) {
+            var contactDescription = contactGroups[i].querySelector('input[name^="contact_description"]');
+            var contactValue = contactGroups[i].querySelector('input[name^="contact_value"]');
+
+            if (contactDescription.value.trim() === '' || contactValue.value.trim() === '') {
+                contactDescription.parentNode.remove();
+            }
+        }
+    }
+
     function addContactFields() {
+        var contactsContainer = document.getElementById('contacts-container');
         var contactGroups = document.querySelectorAll('.contact-group');
 
         var allFieldsFilled = Array.from(contactGroups).every(function (contactGroup) {
@@ -64,7 +83,6 @@
         });
 
         if (allFieldsFilled) {
-            var contactsContainer = document.getElementById('contacts-container');
             var newContactGroup = document.createElement('div');
             newContactGroup.classList.add('contact-group', 'mb-3');
 
@@ -84,6 +102,11 @@
             newContactGroup.appendChild(inputValue);
 
             contactsContainer.appendChild(newContactGroup);
+
+            newContactGroup.appendChild(removeButton);
+
+            inputDescription.value = '';
+            inputValue.value = '';
         } else {
             alert('Preencha todos os campos dos contatos anteriores!');
         }

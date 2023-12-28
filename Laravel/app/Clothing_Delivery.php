@@ -10,6 +10,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Clothing_Delivery extends Model
 {
+
+    protected $table = 'clothing_deliveries';
+
     protected $fillable = [
         'delivered',
         'additionalNotes',
@@ -27,8 +30,5 @@ class Clothing_Delivery extends Model
         return $this->hasMany(Material_Clothing_Delivery::class);
     }
 
-    public function material()
-    {
-        return $this->belongsToMany(Material::class, 'material_clothing_delivery');
-    }
+
 }

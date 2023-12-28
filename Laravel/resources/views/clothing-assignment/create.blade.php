@@ -29,19 +29,13 @@
                         <input type="date" class="form-control" id="aquisition_date" name="aquisition_date" value="{{ old('aquisition_date') }}">
                     </div>
 
+
                     <div class="mb-3">
-                        <label for="isInternal" class="form-label">Interno:</label>
-                        <select class="form-select" id="isInternal" name="isInternal">
-                            <option value="1" {{ old('isInternal') == 1 ? 'selected' : '' }}>Sim</option>
-                            <option value="0" {{ old('isInternal') == 0 ? 'selected' : '' }}>Não</option>
-                        </select>
+                        <input type="hidden" id="isInternal" name="isInternal" value="1">
                     </div>
 
                     <div class="mb-3">
-                        <label for="isClothing" class="form-label">É vestuário?</label>
-                        <select class="form-select" id="isClothing" name="isClothing">
-                            <option value="1" selected>Sim</option>
-                        </select>
+                        <input type="hidden" id="isClothing" name="isClothing" value="1">
                     </div>
 
                 </div>

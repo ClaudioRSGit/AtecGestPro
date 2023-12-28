@@ -8,11 +8,12 @@ use App\Clothing_Delivery;
 
 class Material_Clothing_Delivery extends Model
 {
+    public $timestamps = false;
     protected $fillable = [
-        'material_id',
-        'clothing_delivery_id',
+        'material_id', 'clothing_delivery_id'
     ];
 
+    //02.02
     public function material()
     {
         return $this->belongsTo(Material::class);
