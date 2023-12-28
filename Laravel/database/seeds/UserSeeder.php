@@ -87,7 +87,7 @@ class UserSeeder extends Seeder
             'isStudent' => true,
             'course_class_id' => 5,
         ]);
-        // Seed 5
+        // Seed 6
         DB::table('users')->insert([
             'name' => 'José Silva2',
             'username' => 'T0123187',
@@ -99,7 +99,7 @@ class UserSeeder extends Seeder
             'isStudent' => true,
             'course_class_id' => 5,
         ]);
-        // Seed 5
+        // Seed 7
         DB::table('users')->insert([
             'name' => 'José Silva8',
             'username' => 'T0123188',
@@ -111,7 +111,7 @@ class UserSeeder extends Seeder
             'isStudent' => true,
             'course_class_id' => 5,
         ]);
-        // Seed 5
+        // Seed 8
         DB::table('users')->insert([
             'name' => 'José Silva4',
             'username' => 'T0123189',
@@ -122,6 +122,18 @@ class UserSeeder extends Seeder
             'isActive' => true,
             'isStudent' => true,
             'course_class_id' => 5,
+        ]);
+        // Seed 9
+        DB::table('users')->insert([
+            'name' => 'José tecnico',
+            'username' => 'T0123111',
+            'email' => 'jose.silva.t01231c89@edu.atec.pt',
+            'contact' => '934592939',
+            'password' => bcrypt('passwordxyz'),
+            'position' => 'formando',
+            'isActive' => true,
+            'isStudent' => false,
+            'course_class_id' => null,
         ]);
     }
 }
