@@ -97,17 +97,42 @@ class PartnerController extends Controller
      */
     public function update(Request $request, Partner $partner)
     {
-
         $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'required|string|max:500',
             'address' => 'required|string|max:500',
         ]);
 
-        $partner->update($request->all());
+        $partner->update($request->only(['name', 'description', 'address']));
+
+        // Update contacts
+        $existingContactIds = $request->input('existing_contact_ids', []);
+        $existingContactDescriptions = $request->input('existing_contact_descriptions', []);
+        $existingContactValues = $request->input('existing_contact_values', []);
+
+        foreach ($existingContactIds as $key => $existingContactId) {
+            $existingContact = Partner_contact::find($existingContactId);
+            $existingContact->update([
+                'contact' => $existingContactValues[$key],
+                'description' => $existingContactDescriptions[$key],
+            ]);
+        }
+
+        // New contacts
+        $newContactDescriptions = $request->input('new_contact_descriptions', []);
+        $newContactValues = $request->input('new_contact_values', []);
+
+        foreach ($newContactDescriptions as $key => $newContactDescription) {
+            Partner_contact::create([
+                'contact' => $newContactValues[$key],
+                'description' => $newContactDescription,
+                'partner_id' => $partner->id,
+            ]);
+        }
 
         return redirect()->route('external.index')->with('success', 'Parceiro atualizado com sucesso!');
     }
+
 
     /**
      * Remove the specified resource from storage.

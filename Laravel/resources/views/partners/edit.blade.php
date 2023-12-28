@@ -29,18 +29,21 @@
 
                 <div class="col-md-6">
                     <div class="mb-3">
-                        <label for="contacts" class="form-label">Contatos:</label>
-                        @foreach ($partner->partnerContacts as $contact)
-                            <div class="mb-2">
-                                <div class="row">
-                                    <input type="text" class="form-control" name="contact_description[]"
+                        <div class="d-flex justify-content-between align-items-center">
+                            <label for="contacts" class="form-label">Contatos:</label>
+                            <button type="button" class="btn btn-primary" onclick="addContactFields()">Novo Contato</button>
+                        </div>
+                        <div id="contacts-container">
+                            @foreach ($partner->partnerContacts as $contact)
+                                <div class="contact-group mb-3">
+                                    <input type="hidden" name="existing_contact_ids[]" value="{{ $contact->id }}">
+                                    <input type="text" class="form-control" name="existing_contact_descriptions[]"
                                         value="{{ $contact->description }}" placeholder="Descrição">
-
-                                    <input type="text" class="form-control" name="contact_value[]"
+                                    <input type="text" class="form-control" name="existing_contact_values[]"
                                         value="{{ $contact->contact }}" placeholder="Contato">
                                 </div>
-                            </div>
-                        @endforeach
+                            @endforeach
+                        </div>
                     </div>
                 </div>
             </div>
@@ -49,4 +52,35 @@
             <a href="{{ route('external.index') }}" class="btn btn-secondary">Voltar</a>
         </form>
     </div>
+
+    <script>
+        function addContactFields() {
+            var contactsContainer = document.getElementById('contacts-container');
+            var newContactGroup = document.createElement('div');
+            newContactGroup.classList.add('contact-group', 'mb-3');
+
+            var inputId = document.createElement('input');
+            inputId.type = 'hidden';
+            inputId.name = 'new_contact_ids[]';
+            inputId.value = ''; 
+
+            var inputDescription = document.createElement('input');
+            inputDescription.type = 'text';
+            inputDescription.classList.add('form-control');
+            inputDescription.name = 'new_contact_descriptions[]';
+            inputDescription.placeholder = 'Descrição';
+
+            var inputValue = document.createElement('input');
+            inputValue.type = 'text';
+            inputValue.classList.add('form-control');
+            inputValue.name = 'new_contact_values[]';
+            inputValue.placeholder = 'Contato';
+
+            newContactGroup.appendChild(inputId);
+            newContactGroup.appendChild(inputDescription);
+            newContactGroup.appendChild(inputValue);
+
+            contactsContainer.appendChild(newContactGroup);
+        }
+    </script>
 @endsection
