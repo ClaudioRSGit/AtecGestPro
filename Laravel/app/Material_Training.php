@@ -12,10 +12,11 @@ class Material_Training extends Model
         'quantity',
     ];
 
-    public function training()
+    public function partnerTrainingUser()
     {
-        return $this->belongsTo(Training::class);
+        return $this->belongsTo(Partner_Trainings_Users::class, 'partner__trainings__user_id');
     }
+
 
     public function material()
     {
