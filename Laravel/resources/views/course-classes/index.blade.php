@@ -5,13 +5,11 @@
     <div class="container">
         <h1>Turmas</h1>
 
-        <div class="d-flex justify-content-between mb-3">
-            <div class="form-inline">
-                <div style="form-group" class="search-container">
+        <div class="d-flex justify-content-between mb-3 navTools">
+                <div class="search-container">
                     <input type="text" id="search" class="form-control" placeholder="Pesquisar Turma">
                 </div>
-                <div class="form-group">
-                    <label for="filter"></label>
+                <div class="drop">
                     <select class="form-control" id="filter">
                         <option value="all">Todos</option>
                         @foreach ($courses as $course)
@@ -19,14 +17,11 @@
                         @endforeach
                     </select>
                 </div>
-            </div>
-            <div class="row">
                 <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
                 <a href="{{ route('course-classes.create') }}" class="btn btn-primary">
                     <img src="{{ asset('assets/new.svg') }}">
                     Criar Turma
                 </a>
-            </div>
 
         </div>
             <div id="accordion">
@@ -171,6 +166,13 @@
         });
     </script>
     <style>
+        .navTools{
+            display: flex;
+            height: auto;
+            justify-content: space-between;
+            align-items: center;
+
+        }
 
         #accordion .card {
             border: none;
