@@ -5,23 +5,27 @@
     <div class="container">
         <h1>Turmas</h1>
 
-        <div class="d-flex justify-content-between mb-3 navTools">
-                <div class="search-container">
-                    <input type="text" id="search" class="form-control" placeholder="Pesquisar Turma">
-                </div>
-                <div class="drop">
-                    <select class="form-control" id="filter">
-                        <option value="all">Todos</option>
-                        @foreach ($courses as $course)
+        <div class="d-flex justify-content-between mb-3 navTools w-100">
+                <div class="searchFilter w-50 d-flex justify-content-between">
+                    <div class="search-container">
+                        <input type="text" id="search" class="form-control" placeholder="Pesquisar Turma">
+                    </div>
+                    <div class="drop">
+                        <select class="form-control w-100" id="filter">
+                            <option value="all">Todos</option>
+                            @foreach ($courses as $course)
                             <option value="{{ $course->id }}">{{ $course->description }}</option>
-                        @endforeach
-                    </select>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
-                <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
-                <a href="{{ route('course-classes.create') }}" class="btn btn-primary">
-                    <img src="{{ asset('assets/new.svg') }}">
-                    Criar Turma
-                </a>
+                <div class="buttons">
+                    <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
+                    <a href="{{ route('course-classes.create') }}" class="btn btn-primary">
+                        <img src="{{ asset('assets/new.svg') }}">
+                        Criar Turma
+                    </a>
+                </div>
 
         </div>
             <div id="accordion">
@@ -171,7 +175,9 @@
             height: auto;
             justify-content: space-between;
             align-items: center;
-
+        }
+        .drop{
+            width: 49%;
         }
 
         #accordion .card {
@@ -187,6 +193,7 @@
         }
         .search-container {
         position: relative;
+            width: 49%;
         }
 
         .search-container input {

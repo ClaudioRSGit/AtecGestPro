@@ -105,18 +105,6 @@
         {{ $users->links() }}
     </div>
 
-    <style>
-        .buttons {
-            width: 60%;
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            gap: 1rem;
-        }
-        .buttons *{
-            height: 100%;
-        }
-    </style>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

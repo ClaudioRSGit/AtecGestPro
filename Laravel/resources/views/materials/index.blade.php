@@ -6,12 +6,14 @@
 
         <div class="d-flex justify-content-between mb-3">
             <form class="form-inline w-50" id="filterForm">
-                <div class="form-group search-container mr-3" style="width: 30%;">
-                    <input type="text" id="search" class="form-control" placeholder="Pesquisar Material">
+                <div class="form-group search-container mr-3 w-100" style="width: 30%;">
+                    <input type="text" id="search" class="form-control w-100" placeholder="Pesquisar Material">
                 </div>
 
-                <div class="form-group mx-5">
-                    <label for="filter"></label>
+            </form>
+            <div class="buttons">
+                <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
+                <div>
                     <select class="form-control" id="filter">
                         <option value="all">Todos</option>
                         <option value="internal">Interno</option>
@@ -19,9 +21,6 @@
                         <option value="external">Externo</option>
                     </select>
                 </div>
-            </form>
-            <div class="buttons">
-                <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
                 <a href="{{ route('materials.create') }}" class="btn btn-primary">
                     <img src="{{ asset('assets/new.svg') }}">
                     Novo Material

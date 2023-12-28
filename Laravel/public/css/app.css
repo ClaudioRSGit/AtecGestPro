@@ -196,6 +196,16 @@ thead th{
 
 
 
+.buttons {
+    width: 60%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+}
+.buttons *{
+    height: 100%;
+}
 
 
 
