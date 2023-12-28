@@ -3,13 +3,13 @@
 @section('content')
     <div class="container">
 
-        @if(session('success'))
+        @if (session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
             </div>
         @endif
 
-        @if(session('error'))
+        @if (session('error'))
             <div class="alert alert-danger">
                 {{ session('error') }}
             </div>
@@ -24,7 +24,7 @@
                         value="{{ request('nameFilter') }}" placeholder="Pesquisar Utilizador">
                 </div>
                 <div class="form-group mr-3">
-                    <select class="form-control" id="roleFilter" name="roleFilter">
+                    <select class="form-control" id="positionFilter" name="positionFilter">
                         <option value="">Todas as Funções</option>
                         <option value="admin">Admin</option>
                         <option value="user">User</option>
@@ -59,7 +59,7 @@
             <tbody>
                 <tr class="filler"></tr>
                 @foreach ($users as $user)
-                    <tr class="user-row customTableStyling" data-role="{{ strtolower($user->role) }}">
+                    <tr class="user-row customTableStyling" data-position="{{ strtolower($user->position) }}">
                         <td>
                             <input type="checkbox" name="selectedUsers[]" value="{{ $user->id }}">
                         </td>
@@ -67,16 +67,16 @@
                         <td>{{ $user->username }}</td>
                         <td>{{ $user->email }}</td>
                         <td>
-                            @if($user->role == 'user')
+                            @if ($user->position == 'user')
                                 User
-                            @elseif($user->role == 'admin')
+                            @elseif($user->position == 'admin')
                                 Administrador
-                            @elseif($user->role == 'formando')
+                            @elseif($user->position == 'formando')
                                 Formando
-                            @elseif($user->role == 'tecnico')
+                            @elseif($user->position == 'tecnico')
                                 Técnico
                             @else
-                                {{ $user->role }}
+                                {{ $user->position }}
                             @endif
                         </td>
 
@@ -91,7 +91,8 @@
                             <form method="post" action="{{ route('users.destroy', $user->id) }}" style="display:inline;">
                                 @csrf
                                 @method('delete')
-                                <button type="submit" onclick="return confirm('Tem certeza que deseja excluir?')" style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
+                                <button type="submit" onclick="return confirm('Tem certeza que deseja excluir?')"
+                                    style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
                                     <img src="{{ asset('assets/delete.svg') }}" alt="delete">
                                 </button>
                             </form>
@@ -106,34 +107,38 @@
 
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const nameFilterInput = document.getElementById('nameFilter');
-            const roleFilterSelect = document.getElementById('roleFilter');
+            const positionFilterSelect = document.getElementById('positionFilter');
             const userTable = document.getElementById('userTable');
             const userRows = userTable.querySelectorAll('tbody tr');
             const selectAllCheckbox = document.getElementById('select-all');
             const deleteSelectedButton = document.getElementById('delete-selected');
 
-            nameFilterInput.addEventListener('input', function () {
+            nameFilterInput.addEventListener('input', function() {
+                console.log('Nome do Filtro Alterado');
                 filterUsers();
             });
 
-            roleFilterSelect.addEventListener('change', function () {
+            positionFilterSelect.addEventListener('change', function() {
+                console.log('Função do Filtro Alterada');
                 filterUsers();
             });
 
-            selectAllCheckbox.addEventListener('change', function () {
+            selectAllCheckbox.addEventListener('change', function() {
                 userRows.forEach(userRow => {
                     const checkbox = userRow.querySelector('input[name="selectedUsers[]"]');
                     checkbox.checked = selectAllCheckbox.checked;
                 });
             });
 
-            deleteSelectedButton.addEventListener('click', function () {
-                const selectedUsers = Array.from(document.querySelectorAll('input[name="selectedUsers[]"]:checked'))
+            deleteSelectedButton.addEventListener('click', function() {
+                const selectedUsers = Array.from(document.querySelectorAll(
+                        'input[name="selectedUsers[]"]:checked'))
                     .map(checkbox => checkbox.value);
 
-                if (selectedUsers.length > 0 && confirm('Tem certeza que deseja excluir os utilizadores selecionados?')) {
+                if (selectedUsers.length > 0 && confirm(
+                        'Tem certeza que deseja excluir os utilizadores selecionados?')) {
                     const form = document.createElement('form');
                     form.method = 'POST';
                     form.action = '{{ route('users.massDelete') }}';
@@ -161,17 +166,23 @@
             });
 
             function filterUsers() {
+                console.log('Filtrando Usuários...');
+
                 const nameFilter = nameFilterInput.value.toLowerCase();
-                const roleFilter = roleFilterSelect.value;
+                const positionFilter = positionFilterSelect.value;
 
                 userRows.forEach(userRow => {
-                    const userName = userRow.querySelector('td:nth-child(2)').textContent.toLowerCase();
-                    const userRole = userRow.getAttribute('data-role');
+                    const userNameElement = userRow.querySelector('td:nth-child(2)');
 
-                    const matchesName = userName.includes(nameFilter);
-                    const matchesRole = roleFilter === '' || userRole === roleFilter;
+                    if (userNameElement) {
+                        const userName = userNameElement.textContent.toLowerCase();
+                        const userPosition = userRow.getAttribute('data-position');
 
-                    userRow.style.display = matchesName && matchesRole ? '' : 'none';
+                        const matchesName = userName.includes(nameFilter);
+                        const matchesPosition = positionFilter === '' || userPosition === positionFilter;
+
+                        userRow.style.display = matchesName && matchesPosition ? '' : 'none';
+                    }
                 });
             }
         });
