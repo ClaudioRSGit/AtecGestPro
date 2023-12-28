@@ -29,7 +29,7 @@
                     <tbody>
                         <tr class="filler"></tr>
                         @foreach ($partner_Trainings_Users as $partner_Trainings_User)
-                            <tr class="partner_{{ $partner_Trainings_User->partner_id }} customTableStyling" style="display: none;">
+                            <tr class="partner_{{ $partner_Trainings_User->partner_id }} customTableStyling" style="display: none;" onclick="location.href='{{ route('external.show', $partner_Trainings_User->id) }}'">
                                 <td>{{ optional($partner_Trainings_User->partner)->name }}</td>
                                 <td>{{ optional($partner_Trainings_User->partner)->address }}</td>
                                 <td>{{ optional($partner_Trainings_User->user)->name }}</td>
@@ -37,9 +37,6 @@
                                 <td>{{ $partner_Trainings_User->start_date }}</td>
                                 <td>
                                 <div class="d-flex justify-content-between mb-3">
-                                    <a href="{{ route('external.show', $partner_Trainings_User->id) }}">
-                                        <img src="{{ asset('assets/show.svg') }}" alt="show">
-                                    </a>
                                     <a href="{{ route('external.edit', $partner_Trainings_User->id) }}" class="mx-2">
                                         <img src="{{ asset('assets/edit.svg') }}" alt="edit">
                                     </a>
@@ -88,7 +85,7 @@
                         <tr class="filler"></tr>
                         @foreach ($partners as $partner)
 
-                            <tr class="customTableStyling">
+                            <tr class="customTableStyling" onclick="location.href='{{ route('partners.show', $partner->id) }}'">
                                 <td>
                                     <input type="checkbox" name="selectedPartners[]" value="{{ $partner->id }}">
                                 </td>
@@ -119,10 +116,6 @@
                                         onclick="filterTrainingsTable({{ $partner->id }})">View</button>
                                 </td>
                                 <td>
-                                    <a href="{{ route('partners.show', $partner->id) }}">
-                                        <img src="{{ asset('assets/show.svg') }}" alt="show">
-                                    </a>
-
                                     <a href="{{ route('partners.edit', $partner->id) }}">
                                         <img src="{{ asset('assets/edit.svg') }}" alt="edit">
                                     </a>

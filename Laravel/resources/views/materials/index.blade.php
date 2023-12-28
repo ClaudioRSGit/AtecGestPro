@@ -52,7 +52,7 @@
                 <tbody>
                     <tr class="filler"></tr>
                     @foreach($materials as $material)
-                        <tr class="material-row customTableStyling" data-internal="{{ $material->isInternal }}" data-clothing="{{ $material->isClothing }}">
+                        <tr class="material-row customTableStyling" data-internal="{{ $material->isInternal }}" data-clothing="{{ $material->isClothing }}" onclick="location.href='{{ route('materials.show', $material->id) }}'">
                             <td>
                                 <input type="checkbox" name="selectedMaterials[]" value="{{ $material->id }}">
                             </td>
@@ -75,9 +75,6 @@
                             </td>
                             <td>{{ isset($material->size) ? $material->size : 'N.A.' }}</td>
                             <td>
-                                <a href="{{ route('materials.show', $material->id) }}">
-                                    <img src="{{ asset('assets/show.svg') }}" alt="show">
-                                </a>
                                 <a href="{{ route('materials.edit', $material->id) }}" class="mx-2">
                                     <img src="{{ asset('assets/edit.svg') }}" alt="edit">
                                 </a>

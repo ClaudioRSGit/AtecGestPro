@@ -4,12 +4,11 @@
     <div class="container">
         <h1>Vestuário</h1>
         <div class="d-flex justify-content-between mb-3">
-            <div class="form-inline">
-                <div class="form-group search-container">
+            <div class="w-100 d-flex align-items-center" style="gap: 1rem">
+                <div class="form-group search-container w-50" >
                     <input type="text" id="search" class="form-control" placeholder="Pesquisar Turma">
                 </div>
-                <div class="form-group mx-2">
-                    <label for="filter"></label>
+                <div class="form-group mx-2" style="width: 30%">
                     <select class="form-control" id="filter">
                         <option value="all">Todos</option>
                         @foreach($courses as $course)
@@ -57,16 +56,13 @@
                                 <tbody>
                                     <tr class="filler"></tr>
                                     @foreach($courseClass->students as $student)
-                                        <tr class="customTableStyling">
+                                        <tr class="customTableStyling" onclick="location.href='{{ route('users.show', $student->id) }}'">
 
-                                            <td><a href="{{ route('clothing-assignment.users', $student->id) }}" class="btn btn-link">{{ $student->name }}</a></td>
+                                            <td>{{ $student->name }}</a></td>
                                             <td>{{ $student->username }}</td>
                                             <td>{{ $student->email }}</td>
                                             <td><input type="checkbox"></td>
                                             <td>
-                                                <a href="{{ route('users.show', $student->id) }}">
-                                                    <img src="{{ asset('assets/show.svg') }}" alt="show">
-                                                </a>
                                                 <a href="{{ route('users.edit', $student->id) }}" class="mx-2">
                                                     <img src="{{ asset('assets/edit.svg') }}" alt="edit">
                                                 </a>

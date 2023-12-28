@@ -47,16 +47,13 @@
             <tbody>
                 <tr class="filler"></tr>
                 @foreach ($courses as $course)
-                    <tr class="courses-row customTableStyling">
+                    <tr class="courses-row customTableStyling" onclick="location.href='{{ route('courses.show', $course->id) }}'">
                         <td>
                             <input type="checkbox" name="selectedCourses[]" value="{{ $course->id }}">
                         </td>
                         <td>{{ $course->code }}</td>
                         <td>{{ $course->description }}</td>
                         <td>
-                            <a href="{{ route('courses.show', $course->id) }}">
-                                <img src="{{ asset('assets/show.svg') }}" alt="show">
-                            </a>
                             <a href="{{ route('courses.edit', $course->id) }}" class="mx-2">
                                 <img src="{{ asset('assets/edit.svg') }}" alt="edit">
                             </a>
@@ -138,6 +135,6 @@
         });
     </script>
     <style>
-        
+
         </style>
 @endsection

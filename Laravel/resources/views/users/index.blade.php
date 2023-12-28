@@ -59,7 +59,7 @@
             <tbody>
                 <tr class="filler"></tr>
                 @foreach ($users as $user)
-                    <tr class="user-row customTableStyling" data-position="{{ strtolower($user->position) }}">
+                    <tr class="user-row customTableStyling" data-position="{{ strtolower($user->position) }}" onclick="location.href='{{ route('users.show', $user->id) }}'">
                         <td>
                             <input type="checkbox" name="selectedUsers[]" value="{{ $user->id }}">
                         </td>
@@ -82,9 +82,6 @@
 
                         <td>{{ $user->isActive == 1 ? 'Sim' : 'Não' }}</td>
                         <td>
-                            <a href="{{ route('users.show', $user->id) }}">
-                                <img src="{{ asset('assets/show.svg') }}" alt="show">
-                            </a>
                             <a href="{{ route('users.edit', $user->id) }}" class="mx-2">
                                 <img src="{{ asset('assets/edit.svg') }}" alt="edit">
                             </a>
