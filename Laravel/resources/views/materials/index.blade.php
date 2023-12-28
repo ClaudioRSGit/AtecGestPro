@@ -54,7 +54,7 @@
                     @foreach($materials as $material)
                         <tr class="material-row customTableStyling" data-internal="{{ $material->isInternal }}" data-clothing="{{ $material->isClothing }}" onclick="location.href='{{ route('materials.show', $material->id) }}'">
                             <td>
-                                <input type="checkbox" name="selectedMaterials[]" value="{{ $material->id }}">
+                                <input type="checkbox" class="no-propagate" name="selectedMaterials[]" value="{{ $material->id }}">
                             </td>
                             <td>
                                 <a href="{{ route('materials.show', $material->id) }}">{{ isset($material->name) ? $material->name : 'N.A.' }}</a>
@@ -95,6 +95,16 @@
     </div>
 
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var checkboxes = document.querySelectorAll('.no-propagate');
+
+            checkboxes.forEach(function(checkbox) {
+                checkbox.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                });
+            });
+        });
+
         document.addEventListener('DOMContentLoaded', function () {
             const selectAllCheckbox = document.getElementById('select-all');
             const checkboxes = document.querySelectorAll('input[name="selectedMaterials[]"]');

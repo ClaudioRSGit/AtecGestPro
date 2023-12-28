@@ -52,20 +52,18 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <tr class="filler"></tr>
                     @foreach ($clothing_assignment as $clothing_assignment)
-                        <tr class="material-row" data-trainer="{{ $clothing_assignment->role == 2 ? 1 : 0 }}"
+                        <tr class="material-row customTableStyling" data-trainer="{{ $clothing_assignment->role == 2 ? 1 : 0 }}"
                             data-trainee="{{ $clothing_assignment->role == 3 ? 1 : 0 }}"
-                            data-technical="{{ $clothing_assignment->role == 4 ? 1 : 0 }}">
+                            data-technical="{{ $clothing_assignment->role == 4 ? 1 : 0 }}"
+                            onclick="location.href='{{ route('materials.show', $clothing_assignment->id) }}'">
                             <td>
-                                <div class="form-check">
-                                    <input class="form-check-input" name="selectedClothing[]" type="checkbox" value="{{ $clothing_assignment->id }}"
+                                    <input name="selectedClothing[]" type="checkbox" class="no-propagate" value="{{ $clothing_assignment->id }}"
                                         id="flexCheckDefault">
-
-                                </div>
                             </td>
                             <td>
-                                <a
-                                    href="{{ route('materials.show', $clothing_assignment->id) }}">{{ isset($clothing_assignment->name) ? $clothing_assignment->name : 'N.A.' }}</a>
+                                {{ isset($clothing_assignment->name) ? $clothing_assignment->name : 'N.A.' }}
                             </td>
                             <td>
                                 @if (isset($clothing_assignment->gender))
@@ -100,6 +98,7 @@
                                 </form>
                             </td>
                         </tr>
+                        <tr class="filler"></tr>
                     @endforeach
                 </tbody>
             </table>
@@ -129,6 +128,16 @@
 
 
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var checkboxes = document.querySelectorAll('.no-propagate');
+
+            checkboxes.forEach(function(checkbox) {
+                checkbox.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                });
+            });
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
             const selectAllCheckbox = document.getElementById('select-all');
             const checkboxes = document.querySelectorAll('.form-check-input');

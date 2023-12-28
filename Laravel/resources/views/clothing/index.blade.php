@@ -63,7 +63,7 @@
                                             <td>{{ $student->name }}</a></td>
                                             <td>{{ $student->username }}</td>
                                             <td>{{ $student->email }}</td>
-                                            <td><input type="checkbox"></td>
+                                            <td><input type="checkbox" class="no-propagate"></td>
                                             <td>
                                                 <a href="{{ route('users.edit', $student->id) }}" class="mx-2">
                                                     <img src="{{ asset('assets/edit.svg') }}" alt="edit">
@@ -94,6 +94,16 @@
     </div>
 
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var checkboxes = document.querySelectorAll('.no-propagate');
+
+            checkboxes.forEach(function(checkbox) {
+                checkbox.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                });
+            });
+        });
+        
         document.addEventListener('DOMContentLoaded', function () {
             const selectAllCheckbox = document.getElementById('select-all');
             const checkboxes = document.querySelectorAll('.accordion-checkbox');

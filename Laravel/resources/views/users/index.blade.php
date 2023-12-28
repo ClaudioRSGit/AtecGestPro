@@ -61,7 +61,7 @@
                 @foreach ($users as $user)
                     <tr class="user-row customTableStyling" data-position="{{ strtolower($user->position) }}" onclick="location.href='{{ route('users.show', $user->id) }}'">
                         <td>
-                            <input type="checkbox" name="selectedUsers[]" value="{{ $user->id }}">
+                            <input type="checkbox" class="no-propagate" name="selectedUsers[]" value="{{ $user->id }}">
                         </td>
                         <td>{{ $user->name }}</td>
                         <td>{{ $user->username }}</td>
@@ -104,6 +104,16 @@
 
 
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var checkboxes = document.querySelectorAll('.no-propagate');
+
+            checkboxes.forEach(function(checkbox) {
+                checkbox.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                });
+            });
+        });
+
         document.addEventListener('DOMContentLoaded', function() {
             const nameFilterInput = document.getElementById('nameFilter');
             const positionFilterSelect = document.getElementById('positionFilter');

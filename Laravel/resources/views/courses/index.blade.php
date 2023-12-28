@@ -49,7 +49,7 @@
                 @foreach ($courses as $course)
                     <tr class="courses-row customTableStyling" onclick="location.href='{{ route('courses.show', $course->id) }}'">
                         <td>
-                            <input type="checkbox" name="selectedCourses[]" value="{{ $course->id }}">
+                            <input type="checkbox" class="no-propagate" name="selectedCourses[]" value="{{ $course->id }}">
                         </td>
                         <td>{{ $course->code }}</td>
                         <td>{{ $course->description }}</td>
@@ -74,6 +74,16 @@
     </div>
 
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var checkboxes = document.querySelectorAll('.no-propagate');
+
+            checkboxes.forEach(function(checkbox) {
+                checkbox.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                });
+            });
+        });
+
         document.addEventListener('DOMContentLoaded', function () {
             const nameFilterInput = document.getElementById('nameFilter');
             const courseTable = document.getElementById('courseTable');

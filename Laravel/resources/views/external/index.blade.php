@@ -87,7 +87,7 @@
 
                             <tr class="customTableStyling" onclick="location.href='{{ route('partners.show', $partner->id) }}'">
                                 <td>
-                                    <input type="checkbox" name="selectedPartners[]" value="{{ $partner->id }}">
+                                    <input type="checkbox" class="no-propagate" name="selectedPartners[]" value="{{ $partner->id }}">
                                 </td>
                                 <td>{{ $partner->name }}</td>
                                 <td>{{ $partner->description }}</td>
@@ -141,6 +141,15 @@
     </div>
 
     <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var checkboxes = document.querySelectorAll('.no-propagate');
+
+        checkboxes.forEach(function(checkbox) {
+            checkbox.addEventListener('click', function(event) {
+                event.stopPropagation();
+            });
+        });
+    });
         document.addEventListener("DOMContentLoaded", function() {
             showTable('trainingsTable', 'partnersTable');
 
