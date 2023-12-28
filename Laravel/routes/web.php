@@ -29,7 +29,14 @@ Route::resource('clothing', 'ClothingController');
 
 Route::resource('clothing-assignment', 'ClothingAssignmentController');
 Route::get('/clothing-assignment/users/{id}', 'ClothingAssignmentController@index')->name('clothing-assignment.users');
-//Route::post('/clothing-assignment/assign', 'ClothingAssignmentController@assign')->name('clothing-assignment.assign');
+
+
+Route::get('/material-clothing-delivery/create/{id}', 'MaterialClothingDeliveryController@create')->name('material-clothing-delivery.create');
+Route::post('/material-clothing-delivery', 'MaterialClothingDeliveryController@store')->name('material-clothing-delivery.store');
+
+
+
+
 
 
 Route::resource('external', 'PartnerTrainingsUsersController');

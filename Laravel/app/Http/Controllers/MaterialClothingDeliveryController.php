@@ -4,6 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Material_Clothing_Delivery;
 use Illuminate\Http\Request;
+use App\Material;
+use App\User;
+use App\Clothing_Delivery;
+use App\MaterialClothingDelivery; //ficar de olho
+use App\Material_Clothing_Assignment;
+use Illuminate\Support\Facades\DB;
 
 class MaterialClothingDeliveryController extends Controller
 {
@@ -22,9 +28,18 @@ class MaterialClothingDeliveryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+
+
+       $clothing_assignment = Material::where('isClothing', 1)->get();
+        $materials = Material::all();
+        $clothing_deliveries = Clothing_Delivery::all();
+
+        $student = User::find($id);
+
+
+        return view('material-clothing-delivery.create', compact( 'clothing_assignment', 'materials', 'clothing_deliveries', 'student'));
     }
 
     /**
@@ -35,7 +50,33 @@ class MaterialClothingDeliveryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+
+
+
+        $validatedData = $request->validate([
+            'user_id' => 'required|integer|exists:users,id',
+            'additionalNotes' => 'nullable|string',
+            'selectedClothing' => 'required|array',
+            'selectedClothing.*' => 'integer|exists:materials,id',
+        ]);
+
+        $clothingDelivery = new Clothing_Delivery;
+        $clothingDelivery->user_id = $validatedData['user_id'];
+        $clothingDelivery->additionalNotes = $validatedData['additionalNotes'];
+        $clothingDelivery->save();
+
+        foreach ($validatedData['selectedClothing'] as $materialId) {
+            $materialClothingDelivery = new Material_Clothing_Delivery;
+            $materialClothingDelivery->clothing_delivery_id = $clothingDelivery->id;
+            $materialClothingDelivery->material_id = $materialId;
+            $materialClothingDelivery->save();
+        }
+
+
+    return redirect()->route('clothing.index')->with('success', 'Material inserido com sucesso!');
+
+
     }
 
     /**
