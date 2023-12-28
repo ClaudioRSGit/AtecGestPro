@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Material;
 use App\Partner;
 use App\Partner_Trainings_Users;
 use App\Role;
@@ -9,6 +10,7 @@ use App\Role_User;
 use App\Training;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PartnerTrainingsUsersController extends Controller
 {
@@ -45,8 +47,13 @@ class PartnerTrainingsUsersController extends Controller
         $partners=Partner::all();
         $users=User::all();
         $trainings=Training::all();
+        //all materials where isInternal = false
 
-        return view('external.create', compact('partner_Trainings_Users', 'partners', 'users', 'trainings', "role_users"));
+        $materials = DB::table('materials')->where('isInternal', '=', false)->get();
+
+
+
+        return view('external.create', compact('partner_Trainings_Users', 'partners', 'users', 'trainings', "role_users", 'materials'));
     }
 
     /**
@@ -69,6 +76,7 @@ class PartnerTrainingsUsersController extends Controller
 
             ]);
         Partner_Trainings_Users::create($request->all());
+
         return redirect()->route('external.index')->with('success','Formação criada com sucesso');
     }
 
