@@ -5,7 +5,7 @@
         <h1 class="font-weight-bold">Vestuário</h1>
         <div class="d-flex justify-content-between mb-3">
             <div class="form-inline">
-                <div class="form-group">
+                <div class="form-group search-container">
                     <input type="text" id="search" class="form-control" placeholder="Pesquisar Turma">
                 </div>
                 <div class="form-group mx-2">

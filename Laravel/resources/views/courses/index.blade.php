@@ -18,17 +18,19 @@
         <h1>Lista de Cursos</h1>
 
         <div class="d-flex justify-content-between mb-3">
-            <form action="{{ route('courses.index') }}" method="get" class="form-inline" id="filterForm">
-                <div class="form-group mr-3 search-container">
-                    <input type="text" class="form-control " id="nameFilter" name="nameFilter"
+            <form action="{{ route('courses.index') }}" method="get" class="form-inline w-50" id="filterForm">
+                <div class="form-group mr-3 search-container w-100">
+                    <input type="text" class="form-control w-100" id="nameFilter" name="nameFilter"
                         value="{{ request('nameFilter') }}" placeholder="Pesquisar Curso">
                 </div>
             </form>
-            <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
+            <div class="buttons">
+                <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
 
-            <a href="{{ route('courses.create') }}" class="btn btn-primary pr-1">
-                <img src="{{ asset('assets/new.svg') }}"> Novo Curso
-            </a>
+                <a href="{{ route('courses.create') }}" class="btn btn-primary pr-1">
+                    <img src="{{ asset('assets/new.svg') }}"> Novo Curso
+                </a>
+            </div>
         </div>
 
         <table class="table" id="courseTable">
@@ -136,24 +138,6 @@
         });
     </script>
     <style>
-        .search-container {
-        position: relative;
-        }
-
-        .search-container input {
-            padding-left: 40px;
-        }
-
-        .search-container:before {
-            content: "";
-            position: absolute;
-            left: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 20px;
-            height: 20px;
-            background-image: url('assets/search.svg');
-            background-size: cover;
-        }
+        
         </style>
 @endsection

@@ -172,6 +172,32 @@ thead th{
 
 
 
+.search-container {
+    position: relative;
+}
+
+.search-container input {
+    padding-left: 40px;
+}
+
+.search-container:before {
+    content: "";
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 20px;
+    height: 20px;
+    background-image: url('../assets/search.svg');
+    background-size: cover;
+}
+
+
+
+
+
+
+
 
 
 

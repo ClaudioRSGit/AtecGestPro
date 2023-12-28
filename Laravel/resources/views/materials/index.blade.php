@@ -5,8 +5,8 @@
         <h1>Lista de Materiais</h1>
 
         <div class="d-flex justify-content-between mb-3">
-            <form class="form-inline" id="filterForm">
-                <div class="form-group mr-3" style="width: 30%;">
+            <form class="form-inline w-50" id="filterForm">
+                <div class="form-group search-container mr-3" style="width: 30%;">
                     <input type="text" id="search" class="form-control" placeholder="Pesquisar Material">
                 </div>
 
@@ -20,11 +20,13 @@
                     </select>
                 </div>
             </form>
-            <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
-            <a href="{{ route('materials.create') }}" class="btn btn-primary">
-                <img src="{{ asset('assets/new.svg') }}">
-                Novo Material
-            </a>
+            <div class="buttons">
+                <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
+                <a href="{{ route('materials.create') }}" class="btn btn-primary">
+                    <img src="{{ asset('assets/new.svg') }}">
+                    Novo Material
+                </a>
+            </div>
         </div>
 
 

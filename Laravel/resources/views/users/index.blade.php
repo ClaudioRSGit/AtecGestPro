@@ -19,7 +19,7 @@
 
         <div class="d-flex justify-content-between mb-3">
             <form action="{{ route('users.index') }}" method="get" class="form-inline" id="filterForm">
-                <div class="form-group mr-3">
+                <div class="form-group search-container mr-3">
                     <input type="text" class="form-control" id="nameFilter" name="nameFilter"
                         value="{{ request('nameFilter') }}" placeholder="Pesquisar Utilizador">
                 </div>
@@ -33,11 +33,13 @@
                     </select>
                 </div>
             </form>
-            <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
-            <a href="{{ route('users.create') }}" class="btn btn-primary">
-                <img src="{{ asset('assets/new.svg') }}">
-                Novo Utilizador
-            </a>
+            <div class="buttons">
+                <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
+                <a href="{{ route('users.create') }}" class="btn btn-primary">
+                    <img src="{{ asset('assets/new.svg') }}">
+                    Novo Utilizador
+                </a>
+            </div>
         </div>
 
         <table class="table" id="userTable">
