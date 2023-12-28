@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h1 class="font-weight-bold">Vestuário</h1>
+        <h1>Vestuário</h1>
         <div class="d-flex justify-content-between mb-3">
             <div class="form-inline">
                 <div class="form-group search-container">
