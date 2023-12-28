@@ -46,7 +46,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Atualizar Parceiro</button>
-            <a href="{{ route('external.index') }}" class="btn btn-secondary mt-3">Voltar</a>
+            <a href="{{ route('external.index') }}" class="btn btn-secondary">Voltar</a>
         </form>
     </div>
 @endsection
