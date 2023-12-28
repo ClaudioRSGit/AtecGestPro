@@ -3,6 +3,12 @@
 @section('content')
     <div class="container">
         <h1>Vestuário</h1>
+        @if (session('success'))
+            <div class="alert alert-success" id="success-alert">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <div class="d-flex justify-content-between mb-3">
             <div class="w-75 d-flex align-items-center" style="gap: 1rem">
                 <div class="form-group search-container w-50" >
@@ -152,6 +158,12 @@
                 });
             }
         });
+
+        window.setTimeout(function() {
+                $("#success-alert").fadeTo(500, 0).slideUp(500, function() {
+                    $(this).remove();
+                });
+            }, 2000);
     </script>
     <style>
         #accordion .card {
