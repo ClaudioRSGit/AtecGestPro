@@ -30,18 +30,16 @@
                         <input type="date" class="form-control" id="aquisition_date" name="aquisition_date"
                             value="{{ old('aquisition_date') }}">
                     </div>
-
                     <div class="mb-3">
                         <label for="isInternal" class="form-label">Interno:</label>
-                        <select class="form-select" id="isInternal" name="isInternal">
+                        <select class="form-select" id="isInternal" name="isInternal" onchange="toggleFields()">
                             <option value="1" {{ old('isInternal') == 1 ? 'selected' : '' }}>Sim</option>
                             <option value="0" {{ old('isInternal') == 0 ? 'selected' : '' }}>Não</option>
                         </select>
                     </div>
-
                     <div class="mb-3">
                         <label for="isClothing" class="form-label">É vestuário?</label>
-                        <select class="form-select" id="isClothing" name="isClothing">
+                        <select class="form-select" id="isClothing" name="isClothing" onchange="toggleFields()">
                             <option value="1" {{ old('isClothing') == 1 ? 'selected' : '' }}>Sim</option>
                             <option value="0" {{ old('isClothing') == 0 ? 'selected' : '' }}>Não</option>
                         </select>
@@ -97,18 +95,36 @@
 
     <script>
         function toggleFields() {
-            var isClothingValue = document.getElementById('isClothing').value;
+            var isInternalElement = document.getElementById('isInternal');
+            var isClothingElement = document.getElementById('isClothing');
             var gender = document.getElementById('gender');
             var size = document.getElementById('size');
             var role = document.getElementById('role');
 
-            gender.style.display = isClothingValue == 0 ? 'none' : 'block';
-            size.style.display = isClothingValue == 0 ? 'none' : 'block';
-            role.style.display = isClothingValue == 0 ? 'none' : 'block';
+            if (isInternalElement.value == 0) {
+                isClothingElement.value = 0;
+                warningMessage.style.display = 'block';
+            }else{
+                warningMessage.style.display = 'none';
+            }
+
+            if (isClothingElement.value == 1) {
+                isInternalElement.value = 1;
+            }
+
+            gender.style.display = (isInternalElement.value == 1 && isClothingElement.value == 1) ? 'block' : 'none';
+            size.style.display = (isInternalElement.value == 1 && isClothingElement.value == 1) ? 'block' : 'none';
+            role.style.display = (isInternalElement.value == 1 && isClothingElement.value == 1) ? 'block' : 'none';
         }
 
         document.addEventListener('DOMContentLoaded', toggleFields);
 
+        document.getElementById('isInternal').addEventListener('change', toggleFields);
         document.getElementById('isClothing').addEventListener('change', toggleFields);
     </script>
+
+    <div id="warningMessage" style="display: none; text-align: center; margin-top: 10px; color: red;">
+        Nota: Não é possível adicionar vestuário externo.
+    </div>
+
 @endsection
