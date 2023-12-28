@@ -32,6 +32,7 @@
     <div class="push">
 
     </div>
+    
     @component('master.footer')
     @endcomponent
 </main>

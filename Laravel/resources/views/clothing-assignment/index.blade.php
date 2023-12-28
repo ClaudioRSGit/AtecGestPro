@@ -10,10 +10,6 @@
         <div class="input-group mb-3" style="width: 60%;">
             <input type="text" class="form-control" id="userToAssignClothing" placeholder="{{ $name }}"
                 aria-label="Username" aria-describedby="basic-addon1" disabled="disabled">
-            <div class="input-group-prepend">
-                <button class="btn btn-warning" id="EditInput" type="button"
-                    onclick="window.location.href='{{ route('users.edit', $student->id) }}'">Editar</button>
-            </div>
         </div>
 
 
