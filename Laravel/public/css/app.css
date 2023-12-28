@@ -98,7 +98,7 @@ main > .content{
 
 .container{
     height: 100%;
-    width: 100%;
+    width: 80%;
     flex: 1 0 auto;
 }
 
@@ -702,16 +702,15 @@ pre code {
 
 
 @media (min-width: 576px) {
-  .container-sm,
-  .container {
+  .container-sm{
     max-width: 540px;
   }
 }
 
 @media (min-width: 768px) {
   .container-md,
-  .container-sm,
-  .container {
+  .container-sm
+  {
     max-width: 720px;
   }
 }
@@ -719,8 +718,7 @@ pre code {
 @media (min-width: 992px) {
   .container-lg,
   .container-md,
-  .container-sm,
-  .container {
+  .container-sm{
     max-width: 960px;
   }
 }
@@ -729,8 +727,7 @@ pre code {
   .container-xl,
   .container-lg,
   .container-md,
-  .container-sm,
-  .container {
+  .container-sm{
     max-width: 1140px;
   }
 }
@@ -2294,6 +2291,11 @@ input[type=month].form-control {
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
+}
+::-webkit-datetime-edit-year-field:not([aria-valuenow]),
+::-webkit-datetime-edit-month-field:not([aria-valuenow]),
+::-webkit-datetime-edit-day-field:not([aria-valuenow]) {
+    color: transparent;
 }
 
 select.form-control:-moz-focusring {

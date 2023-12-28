@@ -11,12 +11,10 @@
 
         <h1>Criar Novo Curso</h1>
 
-        <form method="post" action="{{ route('courses.store') }}" enctype="multipart/form-data" id="courseForm">
+        <form class="w-50" method="post" action="{{ route('courses.store') }}" enctype="multipart/form-data" id="courseForm">
             @csrf
             @method('POST')
 
-            <div class="row">
-                <div class="col-md-6">
                     <div class="mb-3">
                         <label for="code" class="form-label">Código do Curso:</label>
                         <input type="text" class="form-control" id="code" name="code" value="{{ old('code') }}">

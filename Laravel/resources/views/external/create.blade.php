@@ -86,9 +86,29 @@
                 <br>
 
 
+            <div class="row mb-3">
 
                 <input type="datetime-local" class="form-control flatpickr" id="end_date" name="end_date" required placeholder="Selecione a data de fim">
 
+                <div class="col-8 mb-3" style="border: #1b1e21 ">
+
+                </div>
+
+
+                <div class="form-group col-4 d-flex flex-column justify-content-between align-items-end">
+
+                    <div class="test1 d-flex flex-column">
+                        <label>Data Início</label>
+                        <input type="datetime-local" class="form-control" id="start_date" name="start_date" required>
+                    </div>
+
+                    <div class="test2 d-flex flex-column">
+                        <label class="mt-3">Data Fim</label>
+                        <input type="datetime-local" class="form-control " id="end_date" name="end_date" required>
+                    </div>
+
+
+                </div>
             </div>
             <button type="submit" class="btn btn-primary">Agendar formação</button>
             <a href="{{ route('external.index') }}" class="btn btn-secondary ">Voltar</a>
@@ -96,6 +116,13 @@
         </form>
     </div>
 
+    <style>
+        .form-control[readonly] {
+            opacity: 0;
+            height: 0;
+            padding: 0;
+        }
+    </style>
 
 
 

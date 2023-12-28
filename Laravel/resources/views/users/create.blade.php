@@ -63,7 +63,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-6 d-flex flex-column">
                     <div class="mb-3">
                         <label for="role" class="form-label">Função:</label>
                         <select class="form-select" id="role" name="role">
@@ -102,8 +102,10 @@
                 </div>
 
 
-            <button type="submit" class="btn btn-primary">Criar Utilizador</button>
-            <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
+                <div class="buttons">
+                    <button type="submit" class="btn btn-primary">Criar Utilizador</button>
+                    <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
+                </div>
         </form>
     </div>
 
