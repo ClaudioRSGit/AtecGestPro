@@ -37,7 +37,6 @@ class PartnerController extends Controller
      */
     public function store(Request $request)
     {
-        // Validação para os campos do Partner
         $this->validate(
             request(),
             [

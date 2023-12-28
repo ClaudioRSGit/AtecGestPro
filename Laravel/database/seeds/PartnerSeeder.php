@@ -40,5 +40,12 @@ class PartnerSeeder extends Seeder
             'name' => 'GRANCRUZ',
             'description' => '',
             'address' => 'Rua José Mariani 390, 4400-195 VNGaia',
-        ]);    }
+        ]);
+
+        DB::table('partners')->insert([
+            'name' => 'Without Contact',
+            'description' => 'No Contact',
+            'address' => 'R. António Luís da Costa 100, 3700-310 São João da Madeira',
+        ]);
+        }
 }
