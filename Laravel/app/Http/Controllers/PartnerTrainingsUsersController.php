@@ -47,7 +47,6 @@ class PartnerTrainingsUsersController extends Controller
         $partners=Partner::all();
         $users=User::all();
         $trainings=Training::all();
-        //all materials where isInternal = false
 
         $materials = DB::table('materials')->where('isInternal', '=', false)->get();
 
@@ -98,8 +97,14 @@ class PartnerTrainingsUsersController extends Controller
         $partners = Partner::all();
         $trainings = Training::all();
         $users = User::all();
-        return view('external.edit', compact('partner_Trainings_Users', 'partners', 'trainings', 'users', 'role_users'));
+
+        $selectedMaterials = $partner_Trainings_Users->Material_Training->pluck('material_id')->toArray();
+
+        $materials = DB::table('materials')->where('isInternal', '=', false)->get();
+
+        return view('external.edit', compact('partner_Trainings_Users', 'partners', 'trainings', 'users', 'role_users', 'materials', 'selectedMaterials'));
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -108,7 +113,7 @@ class PartnerTrainingsUsersController extends Controller
      * @param  \App\Partner_Trainings_Users  $partner_Trainings_Users
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,  $id)
+    public function update(Request $request, $id)
     {
         $partner_Trainings_Users = Partner_Trainings_Users::with('partner', 'training', 'user')->findOrFail($id);
 
@@ -126,8 +131,25 @@ class PartnerTrainingsUsersController extends Controller
 
         $partner_Trainings_Users->update($request->all());
 
+        $materials = $request->input('materials', []);
+        $materialQuantities = $request->input('material_quantities', []);
+
+        $partner_Trainings_Users->Material_Training()->delete();
+
+        foreach ($materials as $materialId) {
+            $quantity = $materialQuantities[$materialId] ?? 1;
+
+            $partner_Trainings_Users->Material_Training()->create([
+                'material_id' => $materialId,
+                'quantity' => $quantity,
+            ]);
+        }
+
         return redirect()->route('external.index')->with('success', 'Formação atualizada com sucesso');
     }
+
+
+
 
 
 
