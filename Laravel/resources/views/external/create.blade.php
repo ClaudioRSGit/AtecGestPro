@@ -48,24 +48,27 @@
             </div>
 
 
-            <div class="row">
+            <div class="row mb-3">
 
 
-                <div class="col-8" style="border: #1b1e21 ">
+                <div class="col-8 mb-3" style="border: #1b1e21 ">
 
                 </div>
 
 
-                <div class="form-group col-4">
+                <div class="form-group col-4 d-flex flex-column justify-content-between align-items-end">
+
+                    <div class="test1 d-flex flex-column">
+                        <label>Data Início</label>
+                        <input type="datetime-local" class="form-control" id="start_date" name="start_date" required>
+                    </div>
+
+                    <div class="test2 d-flex flex-column">
+                        <label class="mt-3">Data Fim</label>
+                        <input type="datetime-local" class="form-control " id="end_date" name="end_date" required>
+                    </div>
 
 
-
-                    <input type="datetime-local" class="form-control " id="start_date" name="start_date" required placeholder="Selecione a data de início">
-                    <br>
-
-
-
-                    <input type="datetime-local" class="form-control " id="end_date" name="end_date" required placeholder="Selecione a data de fim">
                 </div>
             </div>
             <button type="submit" class="btn btn-primary">Criar Parceiro</button>
@@ -78,6 +81,13 @@
 
     </div>
 
+    <style>
+        .form-control[readonly] {
+            opacity: 0;
+            height: 0;
+            padding: 0;
+        }
+    </style>
 
 
 

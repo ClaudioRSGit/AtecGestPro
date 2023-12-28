@@ -2292,6 +2292,11 @@ input[type=month].form-control {
      -moz-appearance: none;
           appearance: none;
 }
+::-webkit-datetime-edit-year-field:not([aria-valuenow]),
+::-webkit-datetime-edit-month-field:not([aria-valuenow]),
+::-webkit-datetime-edit-day-field:not([aria-valuenow]) {
+    color: transparent;
+}
 
 select.form-control:-moz-focusring {
   color: transparent;
