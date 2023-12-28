@@ -4,7 +4,7 @@
     <div class="container">
         <h1>Vestuário</h1>
         <div class="d-flex justify-content-between mb-3">
-            <div class="w-100 d-flex align-items-center" style="gap: 1rem">
+            <div class="w-75 d-flex align-items-center" style="gap: 1rem">
                 <div class="form-group search-container w-50" >
                     <input type="text" id="search" class="form-control" placeholder="Pesquisar Turma">
                 </div>
@@ -17,10 +17,12 @@
                     </select>
                 </div>
             </div>
-            <a href="{{ route('course-classes.create') }}" class="btn btn-primary">
-                <img src="{{ asset('assets/new.svg') }}">
-                Criar Turma
-            </a>
+            <div class="buttons">
+                <a href="{{ route('course-classes.create') }}" class="btn btn-primary">
+                    <img src="{{ asset('assets/new.svg') }}">
+                    Criar Turma
+                </a>
+            </div>
         </div>
 
         <div id="accordion">
