@@ -73,10 +73,10 @@
                                         <td>{{ $material->name }}</td>
                                         <td>{{ $material->description }}</td>
                                         <td>
-                                            <input type="number" name="material_quantities[{{ $material->id }}]" value="1" min="1">
+                                            <input type="number" name="material_quantities[{{ $material->id }}]" value="1" min="1" max="{{ $material->quantity }}" @if($material->quantity == 0) disabled @endif>
                                         </td>
                                         <td>
-                                            <input type="checkbox" name="materials[]" value="{{ $material->id }}">
+                                            <input type="checkbox" name="materials[]" value="{{ $material->id }}" @if($material->quantity == 0) disabled @endif>
                                         </td>
                                     </tr>
                                 @endforeach

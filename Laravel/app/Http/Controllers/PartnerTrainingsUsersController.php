@@ -80,6 +80,11 @@ class PartnerTrainingsUsersController extends Controller
             ]);
         }
 
+        $material = Material::find($materialId);
+        if ($material) {
+            $material->decrement('quantity', $quantity);
+        }
+
         return redirect()->route('external.index')->with('success', 'Formação criada com sucesso');
     }
 
@@ -143,6 +148,11 @@ class PartnerTrainingsUsersController extends Controller
                 'material_id' => $materialId,
                 'quantity' => $quantity,
             ]);
+        }
+
+        $material = Material::find($materialId);
+        if ($material) {
+            $material->decrement('quantity', $quantity);
         }
 
         return redirect()->route('external.index')->with('success', 'Formação atualizada com sucesso');
