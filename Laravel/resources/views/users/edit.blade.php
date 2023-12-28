@@ -105,7 +105,7 @@
                         </select>
                     </div>
 
-                    <div class="buttons d-flex justify-content-between align-items-center">
+                    <div class="buttons d-flex justify-content-start align-items-center">
                         <label for="actions">Ações:</label>
                         <button type="submit" class="btn btn-primary">Salvar Alterações</button>
                         <button type="submit" form="deleteForm" class="btn btn-danger">Excluir</button>
@@ -124,7 +124,8 @@
 
     <style>
         .buttons{
-            width: 60%;
+            width: 100%;
+            gap: 1rem;
         }
     </style>
 

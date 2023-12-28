@@ -93,7 +93,7 @@
                 </table>
             </div>
 
-            <button type="submit" class="btn btn-primary">Atualizar Parceiro</button>
+            <button type="submit" class="btn btn-primary">Atualizar formação</button>
             <a href="{{ route('external.index') }}" class="btn btn-secondary">Voltar</a>
         </form>
     </div>
