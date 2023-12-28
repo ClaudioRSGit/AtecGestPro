@@ -56,29 +56,34 @@ class PartnerTrainingsUsersController extends Controller
         return view('external.create', compact('partner_Trainings_Users', 'partners', 'users', 'trainings', "role_users", 'materials'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
-        $this->validate(request(),
-            [
+        $this->validate(request(), [
+            'partner_id' => 'required',
+            'training_id' => 'required',
+            'user_id' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required',
+        ]);
 
-                    'partner_id' => 'required',
-                    'training_id' => 'required',
-                    'user_id' => 'required',
-                    'start_date' => 'required',
-                    'end_date' => 'required',
+        $partnerTrainingsUser = Partner_Trainings_Users::create($request->all());
 
+        $materials = $request->input('materials', []);
+        $materialQuantities = $request->input('material_quantities', []);
 
+        foreach ($materials as $materialId) {
+            $quantity = $materialQuantities[$materialId] ?? 1;
+
+            $partnerTrainingsUser->Material_Training()->create([
+                'material_id' => $materialId,
+                'quantity' => $quantity,
             ]);
-        Partner_Trainings_Users::create($request->all());
+        }
 
-        return redirect()->route('external.index')->with('success','Formação criada com sucesso');
+        return redirect()->route('external.index')->with('success', 'Formação criada com sucesso');
     }
+
 
     /**
      * Show the form for editing the specified resource.

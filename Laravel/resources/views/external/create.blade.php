@@ -58,12 +58,13 @@
                     </div>
                     <div class="row">
                         <div class="col-md-12" style="border: 2px solid #fff8b3">
-                            <table class="table table-striped">
+                            <table>
                                 <thead>
                                 <tr>
-                                    <th scope="col">Nome</th>
-                                    <th scope="col">Descrição</th>
-                                    <th scope="col">Stock</th>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Quantity</th>
+                                    <th>Select</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -71,8 +72,12 @@
                                     <tr>
                                         <td>{{ $material->name }}</td>
                                         <td>{{ $material->description }}</td>
-                                        <td>{{ $material->quantity }}</td>
-                                        <td><input type="checkbox" name="materials[]" value="{{ $material->id }}"></td>
+                                        <td>
+                                            <input type="number" name="material_quantities[{{ $material->id }}]" value="1" min="1">
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" name="materials[]" value="{{ $material->id }}">
+                                        </td>
                                     </tr>
                                 @endforeach
                                 </tbody>

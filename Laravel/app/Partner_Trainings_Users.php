@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Partner;
 use App\Training;
 use App\User;
+use App\Material_Training;
 
 class Partner_Trainings_Users extends Model
 {
@@ -25,14 +26,19 @@ class Partner_Trainings_Users extends Model
         return $this->belongsTo(Partner::class);
     }
 
-    public function training()
+    public function Material_Training()
     {
-        return $this->belongsTo(Training::class);
+        return $this->hasMany(Material_Training::class, 'partner__trainings__user_id');
     }
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function training()
+    {
+        return $this->belongsTo(Training::class);
     }
 
 
