@@ -83,7 +83,7 @@
                     <div class="form-group">
                         <label for="actions">Ações:</label>
                         <button type="submit" class="btn btn-primary">Salvar Alterações</button>
-                        <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
+                        <a href="{{ route('materials.index') }}" class="btn btn-secondary">Cancelar</a>
                     </div>
                 </div>
                 </div>

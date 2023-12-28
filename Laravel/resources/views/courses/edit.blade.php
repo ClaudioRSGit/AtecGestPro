@@ -31,7 +31,7 @@
 
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">Salvar Alterações</button>
-                         <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
+                         <a href="{{ route('courses.index') }}" class="btn btn-secondary">Cancelar</a>
                     </div>
                 </div>
             </div>

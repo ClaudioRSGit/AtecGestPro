@@ -109,7 +109,7 @@
                         <label for="actions">Ações:</label>
                         <button type="submit" class="btn btn-primary">Salvar Alterações</button>
                         <button type="submit" form="deleteForm" class="btn btn-danger">Excluir</button>
-                        <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
+                        <a href="{{ route('users.index') }}" class="btn btn-secondary">Cancelar</a>
                     </div>
                 </div>
 
