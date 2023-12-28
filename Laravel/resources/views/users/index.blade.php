@@ -128,7 +128,9 @@
             selectAllCheckbox.addEventListener('change', function() {
                 userRows.forEach(userRow => {
                     const checkbox = userRow.querySelector('input[name="selectedUsers[]"]');
-                    checkbox.checked = selectAllCheckbox.checked;
+                    if (checkbox) {
+                        checkbox.checked = selectAllCheckbox.checked;
+                    }
                 });
             });
 
