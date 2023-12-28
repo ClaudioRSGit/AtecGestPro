@@ -24,7 +24,7 @@
                         value="{{ request('nameFilter') }}" placeholder="Pesquisar Utilizador">
                 </div>
             </form>
-            <div class="buttons d-flex justify-content-between">
+            <div class="buttons">
                 <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
                 <div>
                     <select class="form-control" id="positionFilter" name="positionFilter">
@@ -107,10 +107,11 @@
 
     <style>
         .buttons {
-            width: 40%;
+            width: 60%;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end;
             align-items: center;
+            gap: 1rem;
         }
         .buttons *{
             height: 100%;
