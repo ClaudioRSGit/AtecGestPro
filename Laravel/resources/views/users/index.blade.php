@@ -20,7 +20,7 @@
         <div class="d-flex justify-content-between mb-3">
             <form action="{{ route('users.index') }}" method="get" class="form-inline w-50" id="filterForm">
                 <div class="form-group search-container mr-3 w-100">
-                    <input type="text" class="form-control w-75" id="nameFilter" name="nameFilter"
+                    <input type="text" class="form-control w-100" id="nameFilter" name="nameFilter"
                         value="{{ request('nameFilter') }}" placeholder="Pesquisar Utilizador">
                 </div>
             </form>
