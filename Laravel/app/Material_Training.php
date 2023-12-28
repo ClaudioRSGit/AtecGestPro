@@ -9,6 +9,8 @@ use App\Material;
 class Material_Training extends Model
 {
     protected $fillable = [
+        'partner__trainings__user_id',
+        'material_id',
         'quantity',
     ];
 
