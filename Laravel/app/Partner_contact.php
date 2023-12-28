@@ -11,6 +11,7 @@ class Partner_contact extends Model
     protected $fillable = [
         'contact',
         'description',
+        'partner_id',
     ];
 
     use SoftDeletes;
