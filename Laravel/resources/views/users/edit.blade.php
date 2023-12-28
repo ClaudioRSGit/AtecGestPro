@@ -105,11 +105,11 @@
                         </select>
                     </div>
 
-                    <div class="form-group">
+                    <div class="buttons d-flex justify-content-between align-items-center">
                         <label for="actions">Ações:</label>
                         <button type="submit" class="btn btn-primary">Salvar Alterações</button>
-                        <button type="submit" form="deleteForm" class="btn btn-danger mt-3">Excluir</button>
-                        <a href="{{ url()->previous() }}" class="btn btn-secondary mt-3">Cancelar</a>
+                        <button type="submit" form="deleteForm" class="btn btn-danger">Excluir</button>
+                        <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
                     </div>
                 </div>
 
@@ -121,6 +121,12 @@
         @method('DELETE')
     </form>
     </div>
+
+    <style>
+        .buttons{
+            width: 90%;
+        }
+    </style>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>

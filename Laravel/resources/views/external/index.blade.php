@@ -65,8 +65,10 @@
 
 
         <div id="partnersTable" style="display: none;">
-            <a href="{{ route('partners.create') }}" class="btn btn-primary mb-3">Novo Parceiro</a>
-            <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
+            <div class="buttons mb-3">
+                <a href="{{ route('partners.create') }}" class="btn btn-primary">Novo Parceiro</a>
+                <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
+            </div>
             <div>
                 <table class="table bg-white">
                     <thead>
@@ -117,19 +119,23 @@
                                         onclick="filterTrainingsTable({{ $partner->id }})">View</button>
                                 </td>
                                 <td>
-                                    <a href="{{ route('partners.show', $partner->id) }}"
-                                        class="btn btn-info btn-sm">Detalhes</a>
+                                    <a href="{{ route('partners.show', $partner->id) }}">
+                                        <img src="{{ asset('assets/show.svg') }}" alt="show">
+                                    </a>
 
-                                    <a href="{{ route('partners.edit', $partner->id) }}"
-                                        class="btn btn-warning btn-sm">Editar</a>
+                                    <a href="{{ route('partners.edit', $partner->id) }}">
+                                        <img src="{{ asset('assets/edit.svg') }}" alt="edit">
+                                    </a>
 
                                     <form method="post"
                                         action="{{ route('partners.destroy', $partner->id) }}"
                                         style="display:inline;">
                                         @csrf
                                         @method('delete')
-                                        <button type="submit" class="btn btn-danger btn-sm"
-                                            onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
+                                        <button type="submit"
+                                            onclick="return confirm('Tem certeza que deseja excluir?')" style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
+                                            <img src="{{ asset('assets/delete.svg') }}" alt="delete">
+                                        </button>
                                     </form>
                                 </td>
                             </tr>
