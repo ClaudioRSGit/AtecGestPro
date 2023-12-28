@@ -83,7 +83,6 @@ main{
     justify-content: flex-start;
     width: 100%;
     min-height: 100dvh;
-    flex: 1 0 auto;
 }
 main > .content{
     width: 87%;
@@ -100,6 +99,7 @@ main > .content{
 .container{
     height: 100%;
     width: 100%;
+    flex: 1 0 auto;
 }
 
 footer {
