@@ -10,6 +10,9 @@
         .flatpickr {
             width: 308px;
         }
+
+
+
     </style>
 
     <div class="container">
@@ -82,10 +85,10 @@
                             <td>{{ $material->name }}</td>
                             <td>{{ $material->description }}</td>
                             <td>
-                                <input type="number" name="material_quantities[{{ $material->id }}]" value="{{ $material->quantity }}" min="1">
+                                <input type="number" name="material_quantities[{{ $material->id }}]" value="{{ $material->quantity }}" min="1" max="{{ $material->quantity }}" @if($material->quantity == 0) disabled @endif>
                             </td>
                             <td>
-                                <input type="checkbox" name="materials[]" value="{{ $material->id }}" {{ in_array($material->id, $selectedMaterials) ? 'checked' : '' }}>
+                                <input type="checkbox" name="materials[]" value="{{ $material->id }}" {{ $material->quantity > 0 && in_array($material->id, $selectedMaterials) ? 'checked' : '' }} @if($material->quantity == 0) disabled @endif>
                             </td>
                         </tr>
                     @endforeach
