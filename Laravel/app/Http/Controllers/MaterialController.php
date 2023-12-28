@@ -34,6 +34,14 @@ class MaterialController extends Controller
                 'role' => 'nullable|string|max:255',
             ]);
 
+            if ($request->input('isClothing') == 0) {
+                $request->merge([
+                    'gender' => null,
+                    'size' => null,
+                    'role' => null,
+                ]);
+            }
+
             $material = Material::create($request->all());
 
             return redirect()->route('materials.show', $material->id)->with('success', 'Material inserido com sucesso!');
@@ -60,7 +68,24 @@ class MaterialController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:500',
+            'supplier' => 'nullable|string|max:255',
+            'aquisition_date' => 'nullable|date',
+            'isInternal' => 'required|boolean',
+            'isClothing' => 'required|boolean',
+            'gender' => 'nullable|boolean',
+            'quantity' => 'nullable|integer|min:0',
+            'size' => 'nullable|string|max:10',
+            'role' => 'nullable|string|max:255',
         ]);
+
+        if ($request->input('isClothing') == 0) {
+            $request->merge([
+                'gender' => null,
+                'size' => null,
+                'role' => null,
+            ]);
+        }
 
         $material->update($request->all());
 

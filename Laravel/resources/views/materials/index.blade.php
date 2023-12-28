@@ -30,7 +30,7 @@
 
 
 
-        <form method="post">
+        <div>
             @csrf
             @method('delete')
 
@@ -90,7 +90,7 @@
                     @endforeach
                 </tbody>
             </table>
-        </form>
+        </div>
         {{ $materials->links() }}
     </div>
 
