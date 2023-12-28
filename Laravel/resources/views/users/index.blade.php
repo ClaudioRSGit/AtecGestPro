@@ -15,15 +15,18 @@
             </div>
         @endif
 
-        <h1>Lista de Utilizadores</h1>
+        <h1 class="mb-4">Utilizadores</h1>
 
         <div class="d-flex justify-content-between mb-3">
-            <form action="{{ route('users.index') }}" method="get" class="form-inline" id="filterForm">
-                <div class="form-group search-container mr-3">
-                    <input type="text" class="form-control" id="nameFilter" name="nameFilter"
+            <form action="{{ route('users.index') }}" method="get" class="form-inline w-50" id="filterForm">
+                <div class="form-group search-container mr-3 w-100">
+                    <input type="text" class="form-control w-75" id="nameFilter" name="nameFilter"
                         value="{{ request('nameFilter') }}" placeholder="Pesquisar Utilizador">
                 </div>
-                <div class="form-group mr-3">
+            </form>
+            <div class="buttons d-flex justify-content-between">
+                <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
+                <div>
                     <select class="form-control" id="positionFilter" name="positionFilter">
                         <option value="">Todas as Funções</option>
                         <option value="admin">Admin</option>
@@ -32,9 +35,6 @@
                         <option value="formando">Formando</option>
                     </select>
                 </div>
-            </form>
-            <div class="buttons">
-                <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
                 <a href="{{ route('users.create') }}" class="btn btn-primary">
                     <img src="{{ asset('assets/new.svg') }}">
                     Novo Utilizador
@@ -105,6 +105,17 @@
         {{ $users->links() }}
     </div>
 
+    <style>
+        .buttons {
+            width: 40%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .buttons *{
+            height: 100%;
+        }
+    </style>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

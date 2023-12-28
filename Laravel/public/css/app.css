@@ -136,17 +136,19 @@ tr:not(:first-child):hover {
 
 
 table {
-    border-collapse: separate;
+    border-collapse: separate !important;
     border-spacing: 0;
 }
 thead th{
     color: #ACACAC;
     font-weight: 400 !important;
+    border-bottom: none !important;
 }
 .customTableStyling{
     background-color: #fff;
 }
 .customTableStyling td{
+    height: 5rem;
     border-top: 1px solid #dee2e6;
     border-bottom: 1px solid #dee2e6;
 }
