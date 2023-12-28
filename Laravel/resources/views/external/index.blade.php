@@ -62,7 +62,7 @@
 
 
         <div id="partnersTable" style="display: none;">
-            <div class="buttons mb-3">
+            <div class="mb-3">
                 <a href="{{ route('partners.create') }}" class="btn btn-primary">Novo Parceiro</a>
                 <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
             </div>
@@ -112,8 +112,8 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <button class="btn btn-info btn-sm"
-                                        onclick="filterTrainingsTable({{ $partner->id }})">View</button>
+                                    <button class="btn btn-info btn-sm filteredTrainings"
+                                        onclick="filterTrainingsTable({{ $partner->id }})">Ver</button>
                                 </td>
                                 <td>
                                     <a href="{{ route('partners.edit', $partner->id) }}">
@@ -186,6 +186,7 @@
             for (var x = 0; x < partnerRows.length; x++) {
                 partnerRows[x].style.display = '';
             }
+            event.stopPropagation();
         }
 
         function massDelete() {

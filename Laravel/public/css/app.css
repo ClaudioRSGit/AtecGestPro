@@ -123,7 +123,7 @@ td a{
 }
 
 
-tr:not(th){
+tr:not(th), tr:not(.filteredTrainings){
     transition: background-color 0.2s;
     cursor: pointer;
     text-align: center;
