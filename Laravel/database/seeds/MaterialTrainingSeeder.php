@@ -14,7 +14,7 @@ class MaterialTrainingSeeder extends Seeder
     {
         // Seed 1
         DB::table('material__trainings')->insert([
-            'partner__trainings__user_id' => 1,
+            'partner__trainings__user_id' => 5,
             'material_id' => 4,
             'quantity' => 1,
         ]);
