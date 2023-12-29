@@ -30,7 +30,9 @@ class PartnerTrainingsUsersController extends Controller
 
     public function show($id)
     {
-        $partner_Trainings_User = Partner_Trainings_Users::with('partner', 'training', 'user')->findOrFail($id);
+        $partner_Trainings_User = Partner_Trainings_Users::with('partner', 'training', 'user', 'Material_Training.material')->findOrFail($id);
+
+
 
         return view('external.show', compact('partner_Trainings_User'));
     }
@@ -78,23 +80,18 @@ class PartnerTrainingsUsersController extends Controller
                 'material_id' => $materialId,
                 'quantity' => $quantity,
             ]);
-        }
 
-        $material = Material::find($materialId);
-        if ($material) {
-            $material->decrement('quantity', $quantity);
+            $material = Material::find($materialId);
+
+            if ($material) {
+                $material->decrement('quantity', $quantity);
+            }
         }
 
         return redirect()->route('external.index')->with('success', 'Formação criada com sucesso');
     }
 
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Partner_Trainings_Users  $partner_Trainings_Users
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $partner_Trainings_Users = Partner_Trainings_Users::with('partner', 'training', 'user')->findOrFail($id);
@@ -165,10 +162,24 @@ class PartnerTrainingsUsersController extends Controller
 
     public function destroy($id)
     {
-        $partner_Trainings_User = Partner_Trainings_Users::findOrFail($id);
-        $partner_Trainings_User->delete();
+        $partnerTrainingUser = Partner_Trainings_Users::findOrFail($id);
+
+
+        $materialTrainings = $partnerTrainingUser->Material_Training;
+
+
+        foreach ($materialTrainings as $materialTraining) {
+            $material = $materialTraining->material;
+            $material->quantity += $materialTraining->quantity;
+            $material->save();
+        }
+
+        $partnerTrainingUser->Material_Training()->delete();
+
+        $partnerTrainingUser->delete();
 
         return redirect()->route('external.index')->with('success', 'Formação eliminada com sucesso');
     }
+
 
 }
