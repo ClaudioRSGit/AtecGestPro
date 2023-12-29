@@ -182,4 +182,23 @@ class PartnerTrainingsUsersController extends Controller
     }
 
 
+
+    public function massDelete(Request $request)
+    {
+        $request->validate([
+            'training_ids' => 'required|array',
+            'training_ids.*' => 'exists:trainings,id',
+        ]);
+
+        try {
+            Partner_Trainings_Users::whereIn('id', $request->input('training_ids'))->delete();
+
+            return redirect()->back()->with('success', 'Formações selecionadas excluídas com sucesso!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erro ao excluir Formações selecionadas. Por favor, tente novamente.');
+        }
+    }
+
+
+
 }

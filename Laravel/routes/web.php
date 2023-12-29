@@ -62,3 +62,5 @@ Route::post('courses/massDelete', 'CourseController@massDelete')->name('courses.
 
 Route::post('course-classes/massDelete', 'CourseClassController@massDelete')->name('course-classes.massDelete');
 Route::post('partners/massDelete', 'PartnerController@massDelete')->name('partners.massDelete');
+
+Route::post('external/massDelete', 'PartnerTrainingsUsersController@massDelete')->name('external.massDelete');
