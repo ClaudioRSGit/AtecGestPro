@@ -48,23 +48,44 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary">Atualizar Parceiro</button>
+            <button type="submit" class="btn btn-primary" onclick="submitForm()">Atualizar Parceiro</button>
             <a href="{{ route('external.index') }}" class="btn btn-secondary">Voltar</a>
         </form>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-        function checkAndAddContactFields() {
-            var contactsContainer = document.getElementById('contacts-container');
-            var existingContacts = document.querySelectorAll('.contact-group');
-
-            if (existingContacts.length === 0) {
-                addContactFields();
-            }
+        function submitForm() {
+            validateContacts();
+            document.querySelector('form').submit();
         }
-        checkAndAddContactFields();
-    });
+
+        function validateContacts() {
+            var contactGroups = document.querySelectorAll('.contact-group');
+
+            for (var i = 0; i < contactGroups.length; i++) {
+                var descriptionInput = contactGroups[i].querySelector(
+                    '[name^="existing_contact_descriptions"], [name^="new_contact_descriptions"]');
+                var valueInput = contactGroups[i].querySelector(
+                    '[name^="existing_contact_values"], [name^="new_contact_values"]');
+
+                if (descriptionInput.value.trim() === '' || valueInput.value.trim() === '') {
+                    contactGroups[i].remove();
+                }
+            }
+            return true;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            function checkAndAddContactFields() {
+                var contactsContainer = document.getElementById('contacts-container');
+                var existingContacts = document.querySelectorAll('.contact-group');
+
+                if (existingContacts.length === 0) {
+                    addContactFields();
+                }
+            }
+            checkAndAddContactFields();
+        });
 
         function addContactFields() {
             var contactsContainer = document.getElementById('contacts-container');
