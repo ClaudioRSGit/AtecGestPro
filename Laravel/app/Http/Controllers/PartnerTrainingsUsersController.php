@@ -23,8 +23,9 @@ class PartnerTrainingsUsersController extends Controller
     {
         $partner_Trainings_Users = Partner_Trainings_Users::with('partner', 'training', 'user')->get();
         $partners = Partner::with('partnerTrainingsUsers', 'partnerContacts')->get();
+        $trainings = Training::all();
 
-        return view('external.index', compact('partner_Trainings_Users', 'partners'));
+        return view('external.index', compact('partner_Trainings_Users', 'partners', 'trainings'));
     }
 
 

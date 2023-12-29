@@ -6,15 +6,18 @@
 
         <ul class="nav nav-tabs mb-3" id="myTabs">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#trainingsTable">Gestão de Formações</a>
+                <a class="nav-link active" data-toggle="tab" href="#externalTable">Gestão de Formações</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#partnersTable">Gestão de Parceiros</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#trainingsTable">Gestão de Ações de formação</a>
+            </li>
         </ul>
 
         <div class="tab-content">
-            <div class="tab-pane fade show active" id="trainingsTable">
+            <div class="tab-pane fade show active" id="externalTable">
                 <a href="{{ route('external.create') }}" class="btn btn-primary mb-3">Nova Formação</a>
                 <button class="btn btn-danger mb-3" id="delete-selected-trainings" >Excluir Selecionados</button>
 
@@ -125,7 +128,7 @@
                             </td>
                             <td>
                                 <button class="btn btn-info btn-sm filteredTrainings"
-                                        onclick="filterTrainingsTable({{ $partner->id }})">Ver</button>
+                                        onclick="filterexternalTable({{ $partner->id }})">Ver</button>
                             </td>
                             <td class="editDelete">
                                 <div style="width: 40%">
@@ -153,7 +156,49 @@
                     </tbody>
                 </table>
             </div>
+
+            <div class="tab-pane fade" id="trainingsTable">
+                <a href="{{ route('trainings.create') }}" class="btn btn-primary mb-3">Nova Formação</a>
+{{--                <button class="btn btn-danger mb-3" id="delete-selected-trainings" >Excluir Selecionados</button>--}}
+
+                <table class="table bg-white">
+                    <thead>
+                    <tr>
+                        <th scope="col">
+                            <input type="checkbox" id="select-all-trainings">
+                        </th>
+                        <th scope="col">Nome da formação</th>
+                        <th scope="col">Descrição</th>
+                        <th scope="col">Categoria</th>
+                        <th scope="col">Ações</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($trainings as $training)
+                        <tr>
+                            <td>
+                                <input type="checkbox" class="no-propagate" name="selectedTrainings[]" value="{{ $training->id }}">
+                            </td>
+                            <td>{{ $training->name }}</td>
+                            <td>{{ $training->description }}</td>
+                            <td>{{ $training->category }}</td>
+                            <td>
+                                <a href="{{ route('trainings.show', $training->id) }}" class="btn btn-info">Detalhes</a>
+                                <a href="{{ route('trainings.edit', $training->id) }}" class="btn btn-warning">Editar</a>
+                                <form method="post" action="{{ route('trainings.destroy', $training->id) }}" style="display:inline;">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+{{--                {{ $trainings->links() }}--}}
+            </div>
         </div>
+
     </div>
 
     <script>
