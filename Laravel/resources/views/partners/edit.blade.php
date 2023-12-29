@@ -54,6 +54,18 @@
     </div>
 
     <script>
+        document.addEventListener('DOMContentLoaded', function () {
+        function checkAndAddContactFields() {
+            var contactsContainer = document.getElementById('contacts-container');
+            var existingContacts = document.querySelectorAll('.contact-group');
+
+            if (existingContacts.length === 0) {
+                addContactFields();
+            }
+        }
+        checkAndAddContactFields();
+    });
+
         function addContactFields() {
             var contactsContainer = document.getElementById('contacts-container');
             var newContactGroup = document.createElement('div');
@@ -62,7 +74,7 @@
             var inputId = document.createElement('input');
             inputId.type = 'hidden';
             inputId.name = 'new_contact_ids[]';
-            inputId.value = ''; 
+            inputId.value = '';
 
             var inputDescription = document.createElement('input');
             inputDescription.type = 'text';

@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container pl-5 pt-4">
+    <div class="container">
 
         @if (session('success'))
             <div class="alert alert-success">
@@ -23,17 +23,6 @@
             <div class="d-flex w-100">
                 <div class="d-flex w-75" style="gap: 1rem">
                     <input type="text" id="search" class="form-control w-50" placeholder="Pesquisar">
-
-                    <select class="form-control w-25" id="filter">
-                        <option value="all">Todos</option>
-                        <option value="trainer">Formador</option>
-                        <option value="trainee">Formando</option>
-                        <option value="technical">Técnico </option>
-                    </select>
-                </div>
-
-                <div class="buttons" style="width: 25%">
-                    <a href="{{ route('clothing-assignment.create') }}" class="btn btn-primary">Novo Vestuário</a>
                 </div>
             </div>
         </div>
@@ -89,17 +78,7 @@
                                 {{ isset($clothing_assignment->quantity) ? $clothing_assignment->quantity : 'N.A.' }}
                             </td>
                             <td>
-                                <a href="{{ route('clothing-assignment.edit', $clothing_assignment->id) }}"
-                                    class="btn btn-warning btn-edit">Editar</a>
-                                <form method="post"
-                                    action="{{ route('clothing-assignment.destroy', $clothing_assignment->id) }}"
-                                    style="display:inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger"
-                                        onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
 
-                                </form>
                             </td>
                         </tr>
                         <tr class="filler"></tr>
@@ -113,28 +92,12 @@
 
             <textarea class="form-control" id="textarea" aria-label="With textarea"></textarea>
             <div class="mb-3 buttons">
-
-                <div>
                     <button class="btn btn-danger" type="button" id="apagarOnClick">Apagar</button>
-
-                    <!-- .............ooooooooooooooooooooooooooooooo -->
-
-                <div>
                     <button class="btn btn-primary" id="Assigment" type="button"
                         onclick="window.location.href='{{ route('material-clothing-delivery.create', $student->id) }}'">Atribuir</button>
-
                     <button class="btn btn-primary" type="submit">Guardar</button>
-
-
-
-
                     <button class="btn btn-primary" type="button" onclick="window.location.href='{{ url()->previous() }}'">Fechar</button>
                 </div>
-            </div>
-
-
-            <div style="margin-left: 10px;">
-                <a href="{{ route('clothing-assignment.create') }}" class="btn btn-primary mb-3">Novo Vestuário</a>
             </div>
 
         </div>
@@ -160,9 +123,6 @@
             const checkboxes = document.querySelectorAll('.form-check-input');
             const searchInput = document.getElementById('search');
             const filterDropdown = document.getElementById('filter');
-
-
-
 
             document.getElementById('apagarOnClick').addEventListener('click', function() {
 
