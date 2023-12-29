@@ -74,6 +74,11 @@ class PartnerTrainingsUsersController extends Controller
         $materials = $request->input('materials', []);
         $materialQuantities = $request->input('material_quantities', []);
 
+
+        if (strtotime($request->start_date) > strtotime($request->end_date)) {
+            return redirect()->back()->withErrors(['end_date' => 'End date must be after or equal to start date']);
+        }
+
         foreach ($materials as $materialId) {
             $quantity = $materialQuantities[$materialId] ?? 1;
 
