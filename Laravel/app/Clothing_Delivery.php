@@ -16,6 +16,7 @@ class Clothing_Delivery extends Model
     protected $fillable = [
         'delivered',
         'additionalNotes',
+        'quantities',
     ];
 
     use SoftDeletes;

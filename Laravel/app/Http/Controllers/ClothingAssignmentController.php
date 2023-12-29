@@ -8,8 +8,6 @@ use App\User;
 use App\Clothing_Delivery;
 use Illuminate\Support\Facades\DB;
 
-
-
 class ClothingAssignmentController extends Controller
 {
     public function index($id)
@@ -20,37 +18,6 @@ class ClothingAssignmentController extends Controller
 
         $clothing_assignment = Material::where('isClothing', 1)->get();
         return view('clothing-assignment.index', ['name' => $name], compact('clothing_assignment',  'student', 'material', 'id'));
-    }
-
-    public function create()
-    {
-        return view('clothing-assignment.create');
-    }
-
-    public function details()
-    {
-        //
-    }
-
-
-    public function store(Request $request)
-    {
-       $request->validate([
-           'name' => 'required|string|max:255',
-       ]);
-
-       try {
-           $clothing_assignment = Material::create($request->all());
-
-           return redirect()->route('materials.show', $clothing_assignment->id)->with('success', 'Material inserido com sucesso!');
-       } catch (\Exception $e) {
-           return redirect()->back()->with('error', 'Erro ao inserir o material. Por favor, tente novamente.');
-       }
-    }
-
-    public function show(Material $clothing_assignment)
-    {
-        return view('clothing-assignment.show', compact('clothing_assignment'));
     }
 
     public function edit(Material $clothing_assignment)
@@ -89,7 +56,5 @@ class ClothingAssignmentController extends Controller
 
         }
     }
-
-
 
 }
