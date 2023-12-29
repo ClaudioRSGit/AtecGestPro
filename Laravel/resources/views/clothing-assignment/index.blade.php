@@ -94,9 +94,9 @@
             <div class="mb-3 buttons">
                     <button class="btn btn-danger" type="button" id="apagarOnClick">Apagar</button>
                     <button class="btn btn-primary" id="Assigment" type="button"
-                        onclick="window.location.href='{{ route('material-clothing-delivery.create', $student->id) }}'">Atribuir</button>
+                        onclick="location.href='{{ route('material-clothing-delivery.create', $student->id) }}'">Atribuir</button>
                     <button class="btn btn-primary" type="submit">Guardar</button>
-                    <button class="btn btn-primary" type="button" onclick="window.location.href='{{ url()->previous() }}'">Fechar</button>
+                    <button class="btn btn-primary" type="button" onclick="location.href='{{ url()->previous() }}'">Fechar</button>
                 </div>
             </div>
 
