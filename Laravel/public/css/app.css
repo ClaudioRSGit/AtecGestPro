@@ -167,8 +167,16 @@ thead th{
     background-color: #f8fafc !important;
 }
 
-
-
+.editDelete{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.editDelete div:hover{
+    border: 1px solid #0096FF;
+    border-radius: 8px;
+    box-shadow: 0 0 10px 5px #0096FF;
+}
 
 
 

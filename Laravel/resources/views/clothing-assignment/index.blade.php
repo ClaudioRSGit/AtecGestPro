@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container pl-5 pt-4">
+    <div class="container">
 
         @if (session('success'))
             <div class="alert alert-success">
@@ -16,23 +16,88 @@
         <div class="input-group mb-3" style="width: 60%;">
             <input type="text" class="form-control" id="userToAssignClothing" placeholder="{{ $name }}"
                 aria-label="Username" aria-describedby="basic-addon1" disabled="disabled">
-            <div class="input-group-prepend">
-                <div>
-                    <button class="btn btn-warning" id="EditInput" type="button"
-                        onclick="window.location.href='{{ route('users.edit', $student->id) }}'">Editar</button>
+        </div>
 
-                </div>
 
-                <div>
-                    <button class="btn btn-primary" id="Assigment" type="button"
-                        onclick="window.location.href='{{ route('material-clothing-delivery.create', $student->id) }}'">Atribuir</button>
-
+        <div class="mb-3">
+            <div class="d-flex w-100">
+                <div class="d-flex w-75" style="gap: 1rem">
+                    <input type="text" id="search" class="form-control w-50" placeholder="Pesquisar">
                 </div>
             </div>
+        </div>
 
 
-            <div style="margin-left: 10px;">
-                <a href="{{ route('clothing-assignment.create') }}" class="btn btn-primary mb-3">Novo Vestuário</a>
+        <form method="post">
+
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">
+                            <input type="checkbox" id="select-all">
+                        </th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Género</th>
+                        <th scope="col" style="text-align: center;">Tamanho</th>
+                        <th scope="col" style="text-align: center;">Função</th>
+                        <th scope="col" style="text-align: center;">Quantidade</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="filler"></tr>
+                    @foreach ($clothing_assignment as $clothing_assignment)
+                        <tr class="material-row customTableStyling" data-trainer="{{ $clothing_assignment->role == 2 ? 1 : 0 }}"
+                            data-trainee="{{ $clothing_assignment->role == 3 ? 1 : 0 }}"
+                            data-technical="{{ $clothing_assignment->role == 4 ? 1 : 0 }}"
+                            onclick="location.href='{{ route('materials.show', $clothing_assignment->id) }}'">
+                            <td>
+                                    <input name="selectedClothing[]" type="checkbox" class="no-propagate" value="{{ $clothing_assignment->id }}"
+                                        id="flexCheckDefault">
+                            </td>
+                            <td>
+                                {{ isset($clothing_assignment->name) ? $clothing_assignment->name : 'N.A.' }}
+                            </td>
+                            <td>
+                                @if (isset($clothing_assignment->gender))
+                                    @if ($clothing_assignment->gender == 1)
+                                        Masculino
+                                    @elseif($clothing_assignment->gender == 0)
+                                        Feminino
+                                    @endif
+                                @else
+                                    N.A.
+                                @endif
+                            </td>
+                            <td style="text-align: center;">
+                                {{ isset($clothing_assignment->size) ? $clothing_assignment->size : 'N.A.' }}</td>
+
+                            <td style="text-align: center;">
+                                {{ isset($clothing_assignment->role) ? $clothing_assignment->role : 'N.A.' }}</td>
+                            <td style="text-align: center;">
+                                {{ isset($clothing_assignment->quantity) ? $clothing_assignment->quantity : 'N.A.' }}
+                            </td>
+                            <td>
+
+                            </td>
+                        </tr>
+                        <tr class="filler"></tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </form>
+
+        <h5>Observações </h5>
+        <div class="notes d-flex">
+
+            <textarea class="form-control" id="textarea" aria-label="With textarea"></textarea>
+            <div class="mb-3 buttons">
+                    <button class="btn btn-danger" type="button" id="apagarOnClick">Apagar</button>
+                    <button class="btn btn-primary" id="Assigment" type="button"
+                        onclick="location.href='{{ route('material-clothing-delivery.create', $student->id) }}'">Atribuir</button>
+                    <button class="btn btn-primary" type="submit">Guardar</button>
+                    <button class="btn btn-primary" type="button" onclick="location.href='{{ url()->previous() }}'">Fechar</button>
+                </div>
             </div>
 
         </div>
@@ -58,9 +123,6 @@
             const checkboxes = document.querySelectorAll('.form-check-input');
             const searchInput = document.getElementById('search');
             const filterDropdown = document.getElementById('filter');
-
-
-
 
             document.getElementById('apagarOnClick').addEventListener('click', function() {
 

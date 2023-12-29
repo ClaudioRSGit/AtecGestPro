@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container pl-5 pt-4">
+    <div class="container">
 
         <h1>Atribuir</h1>
 
@@ -10,10 +10,6 @@
         <div class="input-group mb-3" style="width: 60%;">
             <input type="text" class="form-control" id="userToAssignClothing" placeholder="{{  $student->name }}" value="{{  $student->name }}"
                 aria-label="Username" aria-describedby="basic-addon1" disabled="disabled">
-            <div class="input-group-prepend">
-                <button class="btn btn-warning" id="EditInput" type="button"
-                    onclick="window.location.href='{{ route('users.edit', $student->id) }}'">Editar</button>
-            </div>
         </div>
 
 
@@ -22,19 +18,6 @@
                 <div style="width: 30%;">
                     <input type="text" id="search" class="form-control" placeholder="Pesquisar">
                 </div>
-
-                <div class="ms-2">
-                    <label for="filter">Filtrar por:</label>
-                    <select class="form-select" id="filter">
-                        <option value="all">Todos</option>
-                        <option value="trainer">Formador</option>
-                        <option value="trainee">Formando</option>
-                        <option value="technical">Técnico </option>
-                    </select>
-                </div>
-
-                {{-- <a href="{{ route('clothing-assignment.create') }}" class="btn btn-primary mb-3">Novo Vestuário</a> --}}
-
             </div>
         </div>
 
