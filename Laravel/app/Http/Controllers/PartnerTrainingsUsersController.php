@@ -191,10 +191,11 @@ class PartnerTrainingsUsersController extends Controller
 
     public function massDelete(Request $request)
     {
+
         $request->validate([
             'training_ids' => 'required|array',
-            'training_ids.*' => 'exists:trainings,id',
-        ]);
+            'training_ids.*' => 'exists:partner__trainings__users,id',]);
+
 
         try {
             Partner_Trainings_Users::whereIn('id', $request->input('training_ids'))->delete();

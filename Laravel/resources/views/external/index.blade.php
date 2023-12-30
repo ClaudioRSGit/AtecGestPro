@@ -283,12 +283,8 @@
             }
 
             function massDeleteTrainings() {
-                var trainingIds = [];
-                trainingCheckboxes.forEach(checkbox => {
-                    if (checkbox.checked) {
-                        trainingIds.push(checkbox.value);
-                    }
-                });
+                var trainingCheckboxes = document.getElementsByName('selectedTrainings[]');
+                var trainingIds = Array.from(new Set(Array.from(trainingCheckboxes).map(checkbox => checkbox.value)));
 
                 if (trainingIds.length > 0) {
                     if (confirm('Tem certeza que deseja excluir as formações selecionadas?')) {
@@ -297,11 +293,11 @@
                         form.method = 'post';
                         form.style.display = 'none';
 
-                        var input = document.createElement('input');
-                        input.type = 'hidden';
-                        input.name = '_token';
-                        input.value = '{{ csrf_token() }}';
-                        form.appendChild(input);
+                        var inputToken = document.createElement('input');
+                        inputToken.type = 'hidden';
+                        inputToken.name = '_token';
+                        inputToken.value = '{{ csrf_token() }}';
+                        form.appendChild(inputToken);
 
                         trainingIds.forEach(trainingId => {
                             var inputTraining = document.createElement('input');
@@ -318,6 +314,7 @@
                     alert('Selecione pelo menos uma formação para excluir.');
                 }
             }
+
         });
     </script>
 
