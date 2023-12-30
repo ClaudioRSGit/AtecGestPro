@@ -48,7 +48,7 @@ Route::resource('partners', 'PartnerController');
 
 
 
-
+Route::delete('partner-contact/{partner_contact}', 'PartnerContactController@destroy')->name('partner-contact.destroy');
 
 Route::resource('course-classes', 'CourseClassController');
 
