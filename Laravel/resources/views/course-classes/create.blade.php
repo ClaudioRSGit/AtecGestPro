@@ -20,8 +20,46 @@
                 </select>
             </div>
 
+            <div class="container">
+            <h3 class="my-3">Atribuir alunos à turma</h3>
+            <div class="d-flex justify-content-between mb-3">
+                <form class="form-inline w-50" id="filterForm">
+                    <div class="form-group search-container mr-3 w-100" style="width: 30%;">
+                        <input type="text" id="search" class="form-control w-100" placeholder="Pesquisar Alunos">
+                    </div>
+                </form>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th><input type="checkbox" id="select-all">
+                        </th>
+                        <th>Nome</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($students as $student)
+                        <tr>
+                            <td><input type="checkbox" name="selected_students[]" value="{{ $student->id }}"></td>
+                            <td>{{ $student->name }}</td>
+                            <td>{{ $student->username }}</td>
+                            <td>{{ $student->email }}</td>
+                            <td>
+                                <span>Edit</span>
+                                <span>Delete</span>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            </div>
+
             <button type="submit" class="btn btn-primary">Criar Turma</button>
             <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
         </form>
+
     </div>
 @endsection

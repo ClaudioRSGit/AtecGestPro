@@ -26,7 +26,8 @@ class CourseClassController extends Controller
     public function create()
     {
         $courses = Course::all();
-        return view('course-classes.create', compact('courses'));
+        $students = User::where('position', 'formando')->get();
+        return view('course-classes.create', compact('courses','students'));
     }
 
     public function store(Request $request)
