@@ -202,6 +202,15 @@
     </div>
 
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var checkboxes = document.querySelectorAll('.no-propagate');
+
+            checkboxes.forEach(function(checkbox) {
+                checkbox.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                });
+            });
+        });
         document.addEventListener("DOMContentLoaded", function () {
             const deleteSelectedButton = document.getElementById('delete-selected');
             const checkboxes = document.getElementsByName('selectedPartners[]');
