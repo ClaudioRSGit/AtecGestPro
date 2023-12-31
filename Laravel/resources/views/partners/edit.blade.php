@@ -42,7 +42,8 @@
                                         value="{{ $contact->description }}" placeholder="Descrição">
                                     <input type="text" class="form-control" name="existing_contact_values[]"
                                         value="{{ $contact->contact }}" placeholder="Contato">
-                                    <button type="button" class="btn" onclick="removeContact(this)">
+                                    <button type="button" class="btn"
+                                        onclick="removeContact({{ $contact->id }}, this)">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14"
                                             viewBox="0 0 448 512">
                                             <path fill="#116fdc"
@@ -61,6 +62,7 @@
         </form>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
         function submitForm() {
             validateContacts();
@@ -96,6 +98,27 @@
         });
 
         function addContactFields() {
+            var contactsContainer = document.getElementById('contacts-container');
+            var contactGroups = document.querySelectorAll('.contact-group');
+
+            if (contactGroups.length === 0) {
+                addNewContactGroup();
+                return;
+            }
+
+            var lastContactGroup = contactGroups[contactGroups.length - 1];
+            var lastDescriptionInput = lastContactGroup.querySelector('[name^="new_contact_descriptions"]');
+            var lastValueInput = lastContactGroup.querySelector('[name^="new_contact_values"]');
+
+            if (lastDescriptionInput && lastValueInput && (lastDescriptionInput.value.trim() === '' || lastValueInput.value
+                    .trim() === '')) {
+                alert('Preencha todos os campos dos contatos anteriores!');
+                return;
+            }
+            addNewContactGroup();
+        }
+
+        function addNewContactGroup() {
             var contactsContainer = document.getElementById('contacts-container');
             var newContactGroup = document.createElement('div');
             newContactGroup.classList.add('contact-group', 'mb-3');
@@ -134,10 +157,24 @@
             contactsContainer.appendChild(newContactGroup);
         }
 
-        function removeContact(button) {
-            var contactGroup = button.closest('.contact-group');
+        function removeContact(contactId, contactElement) {
+            var csrfToken = $('meta[name="csrf-token"]').attr('content');
 
-            contactGroup.remove();
+            $.ajax({
+                url: '/partner-contact/' + contactId,
+                type: 'DELETE',
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                success: function(response) {
+                    if (response.success) {
+                        $(contactElement).closest('.contact-group').remove();
+                    } else {
+                        alert(response.error);
+                    }
+                }
+            });
         }
     </script>
 @endsection

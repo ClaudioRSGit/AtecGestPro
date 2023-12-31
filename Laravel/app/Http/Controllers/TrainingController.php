@@ -100,4 +100,24 @@ class TrainingController extends Controller
                 $training->delete();
                 return redirect()->route('trainings.index')->with('success','Formação eliminada com sucesso');
     }
+
+    public function massDelete(Request $request)
+    {
+
+//        dd($request->all());
+
+        $request->validate([
+            'training_ids' => 'required|array',
+            'training_ids.*' => 'exists:trainings,id',]);
+
+//        dd($request->all());
+
+        try {
+            Training::whereIn('id', $request->input('training_ids'))->delete();
+
+            return redirect()->back()->with('success', 'Formações selecionadas excluídas com sucesso!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erro ao excluir Formações selecionadas. Por favor, tente novamente.');
+        }
+    }
 }

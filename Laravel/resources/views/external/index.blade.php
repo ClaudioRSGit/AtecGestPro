@@ -19,14 +19,14 @@
         <div class="tab-content">
             <div class="tab-pane fade show active" id="externalTable">
                 <a href="{{ route('external.create') }}" class="btn btn-primary mb-3">Nova Formação</a>
-                <button class="btn btn-danger mb-3" id="delete-selected-trainings" >Excluir Selecionados</button>
+                <button class="btn btn-danger mb-3" id="delete-selected-ptus" >Excluir Selecionados</button>
 
 
                 <table class="table bg-white">
                     <thead>
                     <tr>
                         <th scope="col">
-                            <input type="checkbox" id="select-all-trainings">
+                            <input type="checkbox" id="select-all-ptus">
                         </th>
                         <th scope="col">Parceiro</th>
                         <th scope="col">Morada</th>
@@ -41,10 +41,10 @@
                     @foreach ($partner_Trainings_Users as $partner_Trainings_User)
                         <tr class="partner_{{ $partner_Trainings_User->partner_id }} customTableStyling"  onclick="location.href='{{ route('external.show', $partner_Trainings_User->id) }}'">
                             <td>
-                                <input type="checkbox" class="no-propagate" name="selectedTrainings[]" value="{{ $partner_Trainings_User->id }}">
+                                <input type="checkbox" class="no-propagate" name="selectedPtus[]" value="{{ $partner_Trainings_User->id }}">
                             </td>
-                            <td style="width: 20%">{{ optional($partner_Trainings_User->partner)->name }}</td>
-                            <td style="width: 15%">{{ optional($partner_Trainings_User->partner)->address }}</td>
+                            <td>{{ optional($partner_Trainings_User->partner)->name }}</td>
+                            <td>{{ optional($partner_Trainings_User->partner)->address }}</td>
                             <td>{{ optional($partner_Trainings_User->user)->name }}</td>
                             <td>{{ optional($partner_Trainings_User->training)->name ?: 'N.A.' }}</td>
                             <td>{{ $partner_Trainings_User->start_date }}</td>
@@ -127,7 +127,7 @@
                                 </div>
                             </td>
                             <td>
-                                <button class="btn btn-info btn-sm filteredTrainings"
+                                <button class="btn btn-info btn-sm filteredPtus"
                                         onclick="filterexternalTable({{ $partner->id }})">Ver</button>
                             </td>
                             <td class="editDelete">
@@ -159,7 +159,7 @@
 
             <div class="tab-pane fade" id="trainingsTable">
                 <a href="{{ route('trainings.create') }}" class="btn btn-primary mb-3">Nova Formação</a>
-{{--                <button class="btn btn-danger mb-3" id="delete-selected-trainings" >Excluir Selecionados</button>--}}
+                <button class="btn btn-danger mb-3" id="delete-selected-trainings" >Excluir Selecionados</button>
 
                 <table class="table bg-white">
                     <thead>
@@ -233,29 +233,29 @@
                 });
             });
 
-            const deleteSelectedTrainingsButton = document.getElementById('delete-selected-trainings');
-            const trainingCheckboxes = document.getElementsByName('selectedTrainings[]');
-            const selectAllTrainingCheckbox = document.getElementById('select-all-trainings');
+            const deleteselectedPtusButton = document.getElementById('delete-selected-ptus');
+            const ptuCheckboxes = document.getElementsByName('selectedPtus[]');
+            const selectAllPtusCheckbox = document.getElementById('select-all-ptus');
 
-            deleteSelectedTrainingsButton.addEventListener('click', function (event) {
+            deleteselectedPtusButton.addEventListener('click', function (event) {
                 event.stopPropagation();
-                massDeleteTrainings();
+                massDeletePtus();
             });
 
-            selectAllTrainingCheckbox.addEventListener('change', function () {
-                trainingCheckboxes.forEach(checkbox => {
-                    checkbox.checked = selectAllTrainingCheckbox.checked;
+            selectAllPtusCheckbox.addEventListener('change', function () {
+                ptuCheckboxes.forEach(checkbox => {
+                    checkbox.checked = selectAllPtusCheckbox.checked;
                 });
             });
 
-            trainingCheckboxes.forEach(checkbox => {
+            ptuCheckboxes.forEach(checkbox => {
                 checkbox.addEventListener('click', function (event) {
                     event.stopPropagation();
                 });
             });
 
             function massDelete() {
-                var partnerIds = [];
+                let partnerIds = [];
                 checkboxes.forEach(checkbox => {
                     if (checkbox.checked) {
                         partnerIds.push(checkbox.value);
@@ -264,19 +264,19 @@
 
                 if (partnerIds.length > 0) {
                     if (confirm('Tem certeza que deseja excluir os parceiros selecionados?')) {
-                        var form = document.createElement('form');
+                        let form = document.createElement('form');
                         form.action = '{{ route('partners.massDelete') }}';
                         form.method = 'post';
                         form.style.display = 'none';
 
-                        var input = document.createElement('input');
+                        let input = document.createElement('input');
                         input.type = 'hidden';
                         input.name = '_token';
                         input.value = '{{ csrf_token() }}';
                         form.appendChild(input);
 
                         partnerIds.forEach(partnerId => {
-                            var inputPartner = document.createElement('input');
+                            let inputPartner = document.createElement('input');
                             inputPartner.type = 'hidden';
                             inputPartner.name = 'partner_ids[]';
                             inputPartner.value = partnerId;
@@ -291,8 +291,67 @@
                 }
             }
 
+            function massDeletePtus() {
+                let ptuCheckboxes = document.getElementsByName('selectedPtus[]');
+                let ptusIds = Array.from(new Set(Array.from(ptuCheckboxes).map(checkbox => checkbox.value)));
+
+                if (ptusIds.length > 0) {
+                    if (confirm('Tem certeza que deseja excluir as formações selecionadas?')) {
+                        let form = document.createElement('form');
+                        form.action = '{{ route('external.massDelete') }}';
+                        form.method = 'post';
+                        form.style.display = 'none';
+
+                        let inputToken = document.createElement('input');
+                        inputToken.type = 'hidden';
+                        inputToken.name = '_token';
+                        inputToken.value = '{{ csrf_token() }}';
+                        form.appendChild(inputToken);
+
+                        ptusIds.forEach(ptuId => {
+                            let inputPtu = document.createElement('input');
+                            inputPtu.type = 'hidden';
+                            inputPtu.name = 'ptu_ids[]';
+                            inputPtu.value = ptuId;
+                            form.appendChild(inputPtu);
+                        });
+
+                        document.body.appendChild(form);
+                        form.submit();
+                    }
+                } else {
+                    alert('Selecione pelo menos uma formação para excluir.');
+                }
+            }
+
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const deleteSelectedTrainingsButton = document.getElementById('delete-selected-trainings');
+            const trainingCheckboxes = document.getElementsByName('selectedTrainings[]');
+            const selectAllTrainingsCheckbox = document.getElementById('select-all-trainings');
+
+            deleteSelectedTrainingsButton.addEventListener('click', function (event) {
+                event.stopPropagation();
+                massDeleteTrainings();
+            });
+
+            selectAllTrainingsCheckbox.addEventListener('change', function () {
+                trainingCheckboxes.forEach(checkbox => {
+                    checkbox.checked = selectAllTrainingsCheckbox.checked;
+                });
+            });
+
+            trainingCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('click', function (event) {
+                    event.stopPropagation();
+                });
+            });
+
             function massDeleteTrainings() {
-                var trainingIds = [];
+                let trainingIds = [];
                 trainingCheckboxes.forEach(checkbox => {
                     if (checkbox.checked) {
                         trainingIds.push(checkbox.value);
@@ -301,19 +360,19 @@
 
                 if (trainingIds.length > 0) {
                     if (confirm('Tem certeza que deseja excluir as formações selecionadas?')) {
-                        var form = document.createElement('form');
-                        form.action = '{{ route('external.massDelete') }}';
+                        let form = document.createElement('form');
+                        form.action = '{{ route('trainings.massDelete') }}';
                         form.method = 'post';
                         form.style.display = 'none';
 
-                        var input = document.createElement('input');
-                        input.type = 'hidden';
-                        input.name = '_token';
-                        input.value = '{{ csrf_token() }}';
-                        form.appendChild(input);
+                        let inputToken = document.createElement('input');
+                        inputToken.type = 'hidden';
+                        inputToken.name = '_token';
+                        inputToken.value = '{{ csrf_token() }}';
+                        form.appendChild(inputToken);
 
                         trainingIds.forEach(trainingId => {
-                            var inputTraining = document.createElement('input');
+                            let inputTraining = document.createElement('input');
                             inputTraining.type = 'hidden';
                             inputTraining.name = 'training_ids[]';
                             inputTraining.value = trainingId;
