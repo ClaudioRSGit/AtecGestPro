@@ -99,6 +99,27 @@
 
         function addContactFields() {
             var contactsContainer = document.getElementById('contacts-container');
+            var contactGroups = document.querySelectorAll('.contact-group');
+
+            if (contactGroups.length === 0) {
+                addNewContactGroup();
+                return;
+            }
+
+            var lastContactGroup = contactGroups[contactGroups.length - 1];
+            var lastDescriptionInput = lastContactGroup.querySelector('[name^="new_contact_descriptions"]');
+            var lastValueInput = lastContactGroup.querySelector('[name^="new_contact_values"]');
+
+            if (lastDescriptionInput && lastValueInput && (lastDescriptionInput.value.trim() === '' || lastValueInput.value
+                    .trim() === '')) {
+                alert('Preencha todos os campos dos contatos anteriores!');
+                return;
+            }
+            addNewContactGroup();
+        }
+
+        function addNewContactGroup() {
+            var contactsContainer = document.getElementById('contacts-container');
             var newContactGroup = document.createElement('div');
             newContactGroup.classList.add('contact-group', 'mb-3');
 
