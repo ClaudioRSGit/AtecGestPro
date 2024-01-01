@@ -26,16 +26,30 @@ class CourseClassController extends Controller
     public function create()
     {
         $courses = Course::all();
-        $students = User::where('position', 'formando')->get();
+        $students = User::where('position', 'formando')->paginate(5);
         return view('course-classes.create', compact('courses','students'));
     }
 
     public function store(Request $request)
     {
-        CourseClass::create($request->all());
+        $request->validate([
+            'description' => 'required',
+            'course_id' => 'required',
+        ]);
+
+        $courseClass = CourseClass::create([
+            'description' => $request->input('description'),
+            'course_id' => $request->input('course_id'),
+        ]);
+
+        if ($request->has('selected_students')) {
+            $selectedStudents = User::whereIn('id', $request->input('selected_students'))->get();
+            $courseClass->students()->saveMany($selectedStudents);
+        }
 
         return redirect()->route('course-classes.index')->with('success', 'Course class created successfully!');
     }
+
 
     public function edit(CourseClass $courseClass)
     {
