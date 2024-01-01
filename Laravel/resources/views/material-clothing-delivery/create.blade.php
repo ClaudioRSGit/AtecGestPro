@@ -12,14 +12,27 @@
                 aria-label="Username" aria-describedby="basic-addon1" disabled="disabled">
         </div>
 
-
-        <div class="mb-3">
-            <div class="d-flex">
-                <div style="width: 30%;">
-                    <input type="text" id="search" class="form-control" placeholder="Pesquisar">
+        <div class="d-flex justify-content-between mb-3">
+            <form class="form-inline w-50" id="filterForm">
+                <div class="form-group search-container mr-3 w-100" style="width: 30%;">
+                    <input type="text" id="search" class="form-control w-100" placeholder="Pesquisar Material">
                 </div>
+
+            </form>
+            <div class="buttons">
+
+                <div>
+                    <select class="form-control" id="filter">
+                    <option value="all">Todos</option>
+                    <option value="trainer">Formador</option>
+                    <option value="trainee">Formando</option>
+                    <option value="technical">Técnico </option>
+                </select>
+                </div>
+
             </div>
         </div>
+
 
 
         <form action="{{ route('material-clothing-delivery.store') }}" method="post">
