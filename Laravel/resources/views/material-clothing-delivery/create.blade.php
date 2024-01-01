@@ -84,7 +84,7 @@
                                 {{ isset($clothing_assignment->size) ? $clothing_assignment->size : 'N.A.' }}</td>
 
                             <td style="text-align: center;">
-                                {{ isset($clothing_assignment->role) ? $clothing_assignment->role : 'N.A.' }}
+                                Formando
                             <td style="text-align: center;">
                                 {{ isset($clothing_assignment->quantity) ? $clothing_assignment->quantity : 'N.A.' }}
                             </td>
