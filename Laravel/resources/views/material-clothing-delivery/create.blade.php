@@ -86,6 +86,9 @@
                             <td style="text-align: center;">
                                 Formando
                             <td style="text-align: center;">
+                                {{-- update after the Clothing_Delivery or Material_Clothing_Delivery table has been updated with the quantity field
+                                    {{ isset($clothing_assignment->quantity) ? $global_quantity - $clothing_assignment->quantity : $global_quantity }}
+                                    --}}
                                 {{ isset($clothing_assignment->quantity) ? $clothing_assignment->quantity : 'N.A.' }}
                             </td>
                             <td>
