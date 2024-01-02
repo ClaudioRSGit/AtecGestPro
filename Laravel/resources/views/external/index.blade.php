@@ -6,13 +6,13 @@
 
         <ul class="nav nav-tabs mb-3" id="myTabs">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#externalTable">Gestão de Formações</a>
+                <a class="nav-link active" data-toggle="tab" href="#externalTable">Gestão de F. Externas</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#partnersTable">Gestão de Parceiros</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#trainingsTable">Gestão de Ações de formação</a>
+                <a class="nav-link" data-toggle="tab" href="#trainingsTable">Gestão de formação</a>
             </li>
         </ul>
 
@@ -43,10 +43,17 @@
                             <td>
                                 <input type="checkbox" class="no-propagate" name="selectedPtus[]" value="{{ $partner_Trainings_User->id }}">
                             </td>
-                            <td>{{ optional($partner_Trainings_User->partner)->name }}</td>
+                            <td class="{{ optional($partner_Trainings_User->partner)->name ? '' : 'text-danger' }}">
+                                {{ optional($partner_Trainings_User->partner)->name ?? 'O parceiro foi apagada do sistema.' }}
+                            </td>
+
+
                             <td>{{ optional($partner_Trainings_User->partner)->address }}</td>
                             <td>{{ optional($partner_Trainings_User->user)->name }}</td>
-                            <td>{{ optional($partner_Trainings_User->training)->name ?: 'N.A.' }}</td>
+                            <td class="{{ optional($partner_Trainings_User->training)->name ? '' : 'text-danger' }}">
+                                {{ optional($partner_Trainings_User->training)->name ?: 'A formação foi apagada do sistema' }}
+                            </td>
+
                             <td>{{ $partner_Trainings_User->start_date }}</td>
                             <td>
 
