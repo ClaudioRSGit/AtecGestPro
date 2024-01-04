@@ -21,8 +21,6 @@
     </div>
 </div>
 
-@endsection
-
 <script>
     window.setTimeout(function() {
                 $("#success-alert").fadeTo(500, 0).slideUp(500, function() {
@@ -30,3 +28,7 @@
                 });
             }, 2000);
 </script>
+
+@endsection
+
+

@@ -44,7 +44,6 @@
         </div>
     </div>
 </div>
-@endsection
 
 <script>
     window.setTimeout(function() {
@@ -53,3 +52,6 @@
                 });
             }, 2000);
 </script>
+@endsection
+
+
