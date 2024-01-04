@@ -53,7 +53,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($clothing_assignment as $clothing_assignment)
+                    @forelse  ($clothing_assignment as $clothing_assignment)
                         <tr class="material-row"
 
                                 data-trainee="{{ $clothing_assignment->role == 3 ? 1 : 0 }}">
@@ -95,7 +95,11 @@
 
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="7" style="text-align: center;">Não existem materiais para atribuir</td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
 
