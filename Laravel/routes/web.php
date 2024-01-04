@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CourseClassController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\ClothingController;
-use App\Http\Controllers\PartnerTrainingsUsersController;
+use App\Http\Controllers\PartnerTrainingUserController;
 
 Route::get('/', function () {
     return view('master.main');
@@ -39,7 +39,7 @@ Route::post('/material-clothing-delivery', 'MaterialClothingDeliveryController@s
 
 
 
-Route::resource('external', 'PartnerTrainingsUsersController');
+Route::resource('external', 'PartnerTrainingUserController');
 
 Route::resource('partners', 'PartnerController');
 
@@ -63,5 +63,5 @@ Route::post('courses/massDelete', 'CourseController@massDelete')->name('courses.
 Route::post('course-classes/massDelete', 'CourseClassController@massDelete')->name('course-classes.massDelete');
 Route::post('partners/massDelete', 'PartnerController@massDelete')->name('partners.massDelete');
 
-Route::post('external/massDelete', 'PartnerTrainingsUsersController@massDelete')->name('external.massDelete');
+Route::post('external/massDelete', 'PartnerTrainingUserController@massDelete')->name('external.massDelete');
 Route::post('trainings/massDelete', 'TrainingController@massDelete')->name('trainings.massDelete');

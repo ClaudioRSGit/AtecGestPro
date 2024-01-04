@@ -9,7 +9,7 @@ use App\Training;
 use App\User;
 use App\Material_Training;
 
-class Partner_Trainings_Users extends Model
+class Partner_Training_User extends Model
 {
     protected $fillable = [
         'partner_id',
@@ -28,7 +28,7 @@ class Partner_Trainings_Users extends Model
 
     public function Material_Training()
     {
-        return $this->hasMany(Material_Training::class, 'partner__trainings__user_id');
+        return $this->hasMany(Material_Training::class, 'partner__training__users_id');
     }
 
     public function user()

@@ -17,7 +17,7 @@
 
     <div class="container">
         <h1>Editar formação</h1>
-        <form method="post" action="{{ route('external.update', $partner_Trainings_Users->id) }}">
+        <form method="post" action="{{ route('external.update', $partner_Training_Users->id) }}">
             @csrf
             @method('put')
 
@@ -25,7 +25,7 @@
                 <label for="partner_id">Parceiro:</label>
                 <select class="form-control" id="partner_id" name="partner_id" required>
                     @foreach($partners as $partner)
-                        <option value="{{ $partner->id }}" {{ $partner->id == $partner_Trainings_Users->partner_id ? 'selected' : '' }}>
+                        <option value="{{ $partner->id }}" {{ $partner->id == $partner_Training_Users->partner_id ? 'selected' : '' }}>
                             {{ $partner->name }}
                         </option>
                     @endforeach
@@ -36,7 +36,7 @@
                 <label for="training_id">Formação:</label>
                 <select class="form-control" id="training_id" name="training_id" required>
                     @foreach($trainings as $training)
-                        <option value="{{ $training->id }}" {{ $training->id == $partner_Trainings_Users->training_id ? 'selected' : '' }}>
+                        <option value="{{ $training->id }}" {{ $training->id == $partner_Training_Users->training_id ? 'selected' : '' }}>
                             {{ $training->name }}
                         </option>
                     @endforeach
@@ -49,7 +49,7 @@
                     @foreach($users as $user)
                         @foreach($role_users as $role_user)
                             @if($role_user->role_id == 4 && $role_user->user_id == $user->id)
-                                <option value="{{ $user->id }}" {{ $user->id == $partner_Trainings_Users->user_id ? 'selected' : '' }}>
+                                <option value="{{ $user->id }}" {{ $user->id == $partner_Training_Users->user_id ? 'selected' : '' }}>
                                     {{ $user->name }}
                                 </option>
                             @endif
@@ -60,12 +60,12 @@
 
             <div class="form-group">
                 <label for="start_date">Data de Início:</label>
-                <input type="text" class="form-control flatpickr" id="start_date" name="start_date" value="{{ date('Y-m-d\TH:i:s', strtotime($partner_Trainings_Users->start_date)) }}" required>
+                <input type="text" class="form-control flatpickr" id="start_date" name="start_date" value="{{ date('Y-m-d\TH:i:s', strtotime($partner_Training_Users->start_date)) }}" required>
             </div>
 
             <div class="form-group">
                 <label for="end_date">Data de Fim:</label>
-                <input type="text" class="form-control flatpickr" id="end_date" name="end_date" value="{{ date('Y-m-d\TH:i:s', strtotime($partner_Trainings_Users->end_date)) }}" required>
+                <input type="text" class="form-control flatpickr" id="end_date" name="end_date" value="{{ date('Y-m-d\TH:i:s', strtotime($partner_Training_Users->end_date)) }}" required>
             </div>
 
             <div class="form-group">

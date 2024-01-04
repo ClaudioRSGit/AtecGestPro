@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Partner_Trainings_Users;
+use App\Partner_Training_User;
 use App\Partner_contact;
 
 class Partner extends Model
@@ -17,9 +17,9 @@ class Partner extends Model
 
     use SoftDeletes;
 
-    public function partnerTrainingsUsers()
+    public function partnerTrainingUser()
     {
-        return $this->hasMany(Partner_Trainings_Users::class);
+        return $this->hasMany(Partner_Training_User::class);
     }
 
     public function partnerContacts()

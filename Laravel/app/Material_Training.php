@@ -9,14 +9,14 @@ use App\Material;
 class Material_Training extends Model
 {
     protected $fillable = [
-        'partner__trainings__user_id',
+        'partner__training__users_id',
         'material_id',
         'quantity',
     ];
 
     public function partnerTrainingUser()
     {
-        return $this->belongsTo(Partner_Trainings_Users::class, 'partner__trainings__user_id');
+        return $this->belongsTo(Partner_Training_User::class, 'partner__training__users_id');
     }
 
 
