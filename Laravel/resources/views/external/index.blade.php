@@ -6,20 +6,20 @@
 
         <ul class="nav nav-tabs mb-3" id="myTabs">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#externalTable">Gestão de Formações</a>
+                <a class="nav-link active" data-toggle="tab" href="#externalTable">Gestão de F. Externas</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#partnersTable">Gestão de Parceiros</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#trainingsTable">Gestão de Ações de formação</a>
+                <a class="nav-link" data-toggle="tab" href="#trainingsTable">Gestão de Formações</a>
             </li>
         </ul>
 
         <div class="tab-content">
             <div class="tab-pane fade show active" id="externalTable">
-                <a href="{{ route('external.create') }}" class="btn btn-primary mb-3">Nova Formação</a>
-                <button class="btn btn-danger mb-3" id="delete-selected-ptus" >Excluir Selecionados</button>
+                <a href="{{ route('external.create') }}" class="btn btn-primary mb-3">Nova F. Externa</a>
+                <button class="btn btn-danger mb-3" id="delete-selected-ptus">Excluir Selecionados</button>
 
 
                 <table class="table bg-white">
@@ -39,21 +39,34 @@
                     <tbody>
                     <tr class="filler"></tr>
                     @foreach ($partner_Trainings_Users as $partner_Trainings_User)
-                        <tr class="partner_{{ $partner_Trainings_User->partner_id }} customTableStyling"  onclick="location.href='{{ route('external.show', $partner_Trainings_User->id) }}'">
+                        <tr class="partner_{{ $partner_Trainings_User->partner_id }} customTableStyling"
+                            onclick="location.href='{{ route('external.show', $partner_Trainings_User->id) }}'">
                             <td>
-                                <input type="checkbox" class="no-propagate" name="selectedPtus[]" value="{{ $partner_Trainings_User->id }}">
+                                <input type="checkbox" class="no-propagate" name="selectedPtus[]"
+                                       value="{{ $partner_Trainings_User->id }}">
                             </td>
-                            <td>{{ optional($partner_Trainings_User->partner)->name }}</td>
+                            <td class="{{ optional($partner_Trainings_User->partner)->name ? '' : 'text-danger' }}">
+                                {{ optional($partner_Trainings_User->partner)->name ?? 'O parceiro foi apagada do sistema.' }}
+                            </td>
+
+
                             <td>{{ optional($partner_Trainings_User->partner)->address }}</td>
                             <td>{{ optional($partner_Trainings_User->user)->name }}</td>
-                            <td>{{ optional($partner_Trainings_User->training)->name ?: 'N.A.' }}</td>
+                            <td class="{{ optional($partner_Trainings_User->training)->name ? '' : 'text-danger' }}">
+                                {{ optional($partner_Trainings_User->training)->name ?: 'A formação foi apagada do sistema' }}
+                            </td>
+
                             <td>{{ $partner_Trainings_User->start_date }}</td>
                             <td>
 
                                 <div class="d-flex justify-content-between mb-3 editDelete">
                                     <div style="width: 40%">
                                         <a href="{{ route('external.edit', $partner_Trainings_User->id) }}">
-                                            <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><path fill="#116fdc" d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z"/></svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16"
+                                                 viewBox="0 0 512 512">
+                                                <path fill="#116fdc"
+                                                      d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z"/>
+                                            </svg>
                                         </a>
                                     </div>
 
@@ -63,8 +76,14 @@
                                               style="display:inline;">
                                             @csrf
                                             @method('delete')
-                                            <button type="submit" onclick="return confirm('Tem certeza que deseja excluir?')" style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
-                                                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><path fill="#116fdc" d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z"/></svg>
+                                            <button type="submit"
+                                                    onclick="return confirm('Tem certeza que deseja excluir?')"
+                                                    style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14"
+                                                     viewBox="0 0 448 512">
+                                                    <path fill="#116fdc"
+                                                          d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z"/>
+                                                </svg>
                                             </button>
                                         </form>
                                     </div>
@@ -156,10 +175,10 @@
                     </tbody>
                 </table>
             </div>
-
+            
             <div class="tab-pane fade" id="trainingsTable">
                 <a href="{{ route('trainings.create') }}" class="btn btn-primary mb-3">Nova Formação</a>
-                <button class="btn btn-danger mb-3" id="delete-selected-trainings" >Excluir Selecionados</button>
+                <button class="btn btn-danger mb-3" id="delete-selected-trainings">Excluir Selecionados</button>
 
                 <table class="table bg-white">
                     <thead>
@@ -174,29 +193,120 @@
                     </tr>
                     </thead>
                     <tbody>
+                    <tr class="filler"></tr>
+
                     @foreach($trainings as $training)
-                        <tr>
+                        <tr class="partner_{{ $partner_Trainings_User->partner_id }} customTableStyling"
+                            onclick="location.href='{{ route('external.show', $partner_Trainings_User->id) }}'">
                             <td>
-                                <input type="checkbox" class="no-propagate" name="selectedTrainings[]" value="{{ $training->id }}">
+                                <input type="checkbox" class="no-propagate" name="selectedPtus[]"
+                                       value="{{ $partner_Trainings_User->id }}">
                             </td>
                             <td>{{ $training->name }}</td>
                             <td>{{ $training->description }}</td>
                             <td>{{ $training->category }}</td>
                             <td>
-                                <a href="{{ route('trainings.show', $training->id) }}" class="btn btn-info">Detalhes</a>
-                                <a href="{{ route('trainings.edit', $training->id) }}" class="btn btn-warning">Editar</a>
-                                <form method="post" action="{{ route('trainings.destroy', $training->id) }}" style="display:inline;">
-                                    @csrf
-                                    @method('delete')
-                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
-                                </form>
+                                <div class="d-flex justify-content-between mb-3 editDelete">
+                                    <div style="width: 40%">
+                                        <a href="{{ route('trainings.edit', $training->id) }}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16"
+                                                 viewBox="0 0 512 512">
+                                                <path fill="#116fdc"
+                                                      d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z"/>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    <div style="width: 40%">
+                                        <form method="post" action="{{ route('trainings.destroy', $training->id) }}"
+                                              style="display:inline;">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit"
+                                                    onclick="return confirm('Tem certeza que deseja excluir?')"
+                                                    style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14"
+                                                     viewBox="0 0 448 512">
+                                                    <path fill="#116fdc"
+                                                          d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z"/>
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="filler"></tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div class="tab-pane fade" id="trainingsTable">
+                <a href="{{ route('trainings.create') }}" class="btn btn-primary mb-3">Nova Formação</a>
+                <button class="btn btn-danger mb-3" id="delete-selected-trainings">Excluir Selecionados</button>
+
+                <table class="table bg-white">
+                    <thead>
+                    <tr>
+                        <th scope="col">
+                            <input type="checkbox" id="select-all-trainings">
+                        </th>
+                        <th scope="col">Nome da formação</th>
+                        <th scope="col">Descrição</th>
+                        <th scope="col">Categoria</th>
+                        <th scope="col">Ações</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="filler"></tr>
+                    @foreach($trainings as $training)
+                        <tr class="partner_{{ $partner_Trainings_User->partner_id }} customTableStyling"
+                            onclick="location.href='{{ route('external.show', $partner_Trainings_User->id) }}'">
+                            <td>
+                                <input type="checkbox" class="no-propagate" name="selectedPtus[]"
+                                       value="{{ $partner_Trainings_User->id }}">
+                            </td>
+                            <td>{{ $training->name }}</td>
+                            <td>{{ $training->description }}</td>
+                            <td>{{ $training->category }}</td>
+                            <td>
+                                <div class="d-flex justify-content-between mb-3 editDelete">
+                                    <div style="width: 40%">
+                                        <a href="{{ route('trainings.edit', $training->id) }}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16"
+                                                 viewBox="0 0 512 512">
+                                                <path fill="#116fdc"
+                                                      d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z"/>
+                                            </svg>
+                                        </a>
+                                    </div>
+                                    <div style="width: 40%">
+                                        <form method="post"
+                                              action="{{ route('trainings.destroy', $training->id) }}"
+                                              style="display:inline;">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit"
+                                                    onclick="return confirm('Tem certeza que deseja excluir?')"
+                                                    style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14"
+                                                     viewBox="0 0 448 512">
+                                                    <path fill="#116fdc"
+                                                          d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z"/>
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
                             </td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
-{{--                {{ $trainings->links() }}--}}
+                {{--{{ $trainings->links() }}--}}
             </div>
+
         </div>
 
     </div>
@@ -388,6 +498,5 @@
             }
         });
     </script>
-
 
 @endsection

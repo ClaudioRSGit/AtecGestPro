@@ -33,17 +33,18 @@ class TrainingController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate(request(),
-            [
-                'name' => 'required',
-                'description' => 'required',
-                'category' => 'required',
+        $this->validate(request(), [
+            'name' => 'required',
+            'description' => 'required',
+            'category' => 'required',
+        ]);
 
-            ]);
         Training::create($request->all());
-        return redirect()->route('trainings.index')->with('success','Formação criada com sucesso');
 
+        return redirect()->route('external.index')->with('success', 'Formação criada com sucesso');
     }
+
+
 
 
     public function show(Training $training)
@@ -84,7 +85,7 @@ class TrainingController extends Controller
 
                 ]);
             $training->update($request->all());
-            return redirect()->route('trainings.index')->with('success','Formação atualizada com sucesso');
+        return redirect()->route('external.index')->with('success', 'Formação atualizada com sucesso');
 
     }
 
@@ -98,7 +99,7 @@ class TrainingController extends Controller
     {
 
                 $training->delete();
-                return redirect()->route('trainings.index')->with('success','Formação eliminada com sucesso');
+        return redirect()->back()->with('success','Formação eliminada com sucesso');
     }
 
     public function massDelete(Request $request)

@@ -4,6 +4,11 @@
 @section('content')
     <div class="container">
         <h1>Turmas</h1>
+        @if(session('success'))
+            <div class="alert alert-success" id="success-alert">
+                {{ session('success') }}
+            </div>
+        @endif
 
         <div class="d-flex justify-content-between mb-3 navTools w-100">
                 <div class="searchFilter w-50 d-flex justify-content-between">
@@ -174,6 +179,12 @@
 
 
         });
+
+        window.setTimeout(function() {
+                $("#success-alert").fadeTo(500, 0).slideUp(500, function() {
+                    $(this).remove();
+                });
+            }, 2000);
     </script>
     <style>
         .navTools{
