@@ -4,7 +4,7 @@
     <div class="container">
 
         @if(session('success'))
-            <div class="alert alert-success">
+            <div class="alert alert-success" id="success-alert">
                 {{ session('success') }}
             </div>
         @endif
@@ -147,6 +147,13 @@
                 });
             }
         });
+
+        window.setTimeout(function() {
+                $("#success-alert").fadeTo(500, 0).slideUp(500, function() {
+                    $(this).remove();
+                });
+            }, 2000);
+
     </script>
     <style>
 

@@ -9,7 +9,7 @@
 
                 <div class="card-body">
                     @if (session('resent'))
-                        <div class="alert alert-success" role="alert">
+                        <div class="alert alert-success" role="alert" id="success-alert">
                             {{ __('A fresh verification link has been sent to your email address.') }}
                         </div>
                     @endif
@@ -26,3 +26,11 @@
     </div>
 </div>
 @endsection
+
+<script>
+    window.setTimeout(function() {
+                $("#success-alert").fadeTo(500, 0).slideUp(500, function() {
+                    $(this).remove();
+                });
+            }, 2000);
+</script>
