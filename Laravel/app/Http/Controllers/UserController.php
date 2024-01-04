@@ -85,7 +85,7 @@ class UserController extends Controller
             $request['password'] = $this->encryptPassword($request['password']);
             $user = User::create($request->all());
 
-            return redirect()->route('users.show', $user->id);
+            return redirect()->route('users.show', $user->id)->with('success', 'Utilizador criado com sucesso!');
 
         } catch (\Illuminate\Validation\ValidationException $e) {
             return redirect()->back()->withErrors($e->validator)->withInput();
