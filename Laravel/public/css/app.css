@@ -172,10 +172,12 @@ thead th{
     justify-content: space-between;
     align-items: center;
 }
+.editDelete div{
+    transition: all 0.3s ease-in-out;
+}
 .editDelete div:hover{
-    border: 3px solid #0096FF;
-    border-radius: 8px;
-    box-shadow: 0 0 5px 2px #0096FF;
+    transform: translateY(-3px);
+    color: #fff;
 }
 
 
