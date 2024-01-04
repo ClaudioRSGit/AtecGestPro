@@ -17,7 +17,7 @@
                 <div class="form-group mx-2" style="width: 30%">
                     <select class="form-control" id="filter">
                         <option value="all">Todos</option>
-                        @foreach ($courses as $course)
+                        @foreach($courses as $course)
                             <option value="{{ $course->id }}">{{ $course->description }}</option>
                         @endforeach
                     </select>
@@ -37,22 +37,18 @@
                 <label for="select-all"></label>
                 <span>&nbsp; &nbsp;Turma</span>
             </div>
-            @foreach ($courseClasses as $courseClass)
+            @foreach($courseClasses as $courseClass)
                 <div class="card mb-2 mt-2">
                     <div class="card-header bg-white" id="heading{{ $courseClass->id }}">
                         <h2 class="mb-0">
-                            <input type="checkbox" class="accordion-checkbox" data-course="{{ $courseClass->course_id }}"
-                                data-id="{{ $courseClass->id }}">
-                            <button class="btn btn-link" type="button" data-toggle="collapse"
-                                data-target="#collapse{{ $courseClass->id }}" aria-expanded="false"
-                                aria-controls="collapse{{ $courseClass->id }}">
+                            <input type="checkbox" class="accordion-checkbox" data-course="{{ $courseClass->course_id }}" data-id="{{ $courseClass->id }}">
+                            <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse{{ $courseClass->id }}" aria-expanded="false" aria-controls="collapse{{ $courseClass->id }}">
                                 {{ $courseClass->description }}
                             </button>
                         </h2>
                     </div>
 
-                    <div id="collapse{{ $courseClass->id }}" class="collapse"
-                        aria-labelledby="heading{{ $courseClass->id }}" data-parent="#accordion">
+                    <div id="collapse{{ $courseClass->id }}" class="collapse" aria-labelledby="heading{{ $courseClass->id }}" data-parent="#accordion">
                         <div class="card-body">
                             @if ($courseClass->students->count() > 0)
                                 <table class="table">
@@ -91,41 +87,10 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                    </thead>
-                                    <tbody>
                                         <tr class="filler"></tr>
-                                        @foreach ($courseClass->students as $student)
-                                            <tr class="customTableStyling">
-
-                                                <td><a href="{{ route('clothing-assignment.users', $student->id) }}"
-                                                        class="btn btn-link">{{ $student->name }}</a></td>
-                                                <td>{{ $student->username }}</td>
-                                                <td>{{ $student->email }}</td>
-                                                <td><input type="checkbox"></td>
-                                                <td>
-                                                    <a href="{{ route('users.show', $student->id) }}">
-                                                        <img src="{{ asset('assets/show.svg') }}" alt="show">
-                                                    </a>
-                                                    <a href="{{ route('users.edit', $student->id) }}" class="mx-2">
-                                                        <img src="{{ asset('assets/edit.svg') }}" alt="edit">
-                                                    </a>
-                                                    <form method="POST"
-                                                        action="{{ route('users.destroy', $student->id) }}"
-                                                        style="display: inline;">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit"
-                                                            onclick="return confirm('Tem certeza que deseja excluir?')"
-                                                            style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
-                                                            <img src="{{ asset('assets/delete.svg') }}" alt="delete">
-                                                        </button>
-                                                    </form>
-                                                </td>
-                                            </tr>
-                                            <tr class="filler"></tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                    @endforeach
+                                </tbody>
+                            </table>
                             @else
                                 <p>Não existem estudantes nesta turma</p>
                             @endif
@@ -155,31 +120,24 @@
             const searchInput = document.getElementById('search');
             const filterDropdown = document.getElementById('filter');
 
-            selectAllCheckbox.addEventListener('change', function() {
+            selectAllCheckbox.addEventListener('change', function () {
                 checkboxes.forEach(checkbox => {
                     checkbox.checked = selectAllCheckbox.checked;
                 });
             });
 
-            window.setTimeout(function() {
-                $("#success-alert").fadeTo(500, 0).slideUp(500, function() {
-                    $(this).remove();
-                });
-            }, 2000);
-
             checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
-                    selectAllCheckbox.checked = checkboxes.length === document.querySelectorAll(
-                        '.accordion-checkbox:checked').length;
+                checkbox.addEventListener('change', function () {
+                    selectAllCheckbox.checked = checkboxes.length === document.querySelectorAll('.accordion-checkbox:checked').length;
                 });
             });
 
-            searchInput.addEventListener('input', function() {
+            searchInput.addEventListener('input', function () {
                 const searchTerm = searchInput.value.toLowerCase();
                 filterMaterials(searchTerm);
             });
 
-            filterDropdown.addEventListener('change', function() {
+            filterDropdown.addEventListener('change', function () {
                 filterMaterials();
             });
 
