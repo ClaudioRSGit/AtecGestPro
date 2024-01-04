@@ -3,6 +3,12 @@
 @section('content')
     <div class="container pl-5 pt-4">
 
+        @if (session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <h1>Vestuário</h1>
 
 
@@ -11,123 +17,27 @@
             <input type="text" class="form-control" id="userToAssignClothing" placeholder="{{ $student->name }}"
                 aria-label="Username" aria-describedby="basic-addon1" disabled="disabled">
             <div class="input-group-prepend">
-                <button class="btn btn-warning" id="EditInput" type="button"
-                    onclick="window.location.href='{{ route('users.edit', $student->id) }}'">Editar</button>
+                <div>
+                    <button class="btn btn-warning" id="EditInput" type="button"
+                        onclick="window.location.href='{{ route('users.edit', $student->id) }}'">Editar</button>
+
+                </div>
+
+                <div>
+                    <button class="btn btn-primary" id="Assigment" type="button"
+                        onclick="window.location.href='{{ route('material-clothing-delivery.create', $student->id) }}'">Atribuir</button>
+
+                </div>
             </div>
-        </div>
 
 
-        <div class="mb-3">
-            <div class="d-flex">
-                <div style="width: 30%;">
-                    <input type="text" id="search" class="form-control" placeholder="Pesquisar">
-                </div>
-
-                <div class="ms-2">
-                    <label for="filter">Filtrar por:</label>
-                    <select class="form-select" id="filter">
-                        <option value="all">Todos</option>
-                        <option value="trainer">Formador</option>
-                        <option value="trainee">Formando</option>
-                        <option value="technical">Técnico </option>
-                    </select>
-                </div>
-
+            <div style="margin-left: 10px;">
                 <a href="{{ route('clothing-assignment.create') }}" class="btn btn-primary mb-3">Novo Vestuário</a>
-
             </div>
+
         </div>
 
 
-        <form method="post">
-
-
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">
-                            <input type="checkbox" id="select-all">
-                        </th>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Género</th>
-                        <th scope="col" style="text-align: center;">Tamanho</th>
-                        <th scope="col" style="text-align: center;">Função</th>
-                        <th scope="col" style="text-align: center;">Quantidade</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($clothing_assignment as $clothing_assignment)
-                        <tr class="material-row" data-trainer="{{ $clothing_assignment->role == 2 ? 1 : 0 }}"
-                            data-trainee="{{ $clothing_assignment->role == 3 ? 1 : 0 }}"
-                            data-technical="{{ $clothing_assignment->role == 4 ? 1 : 0 }}">
-                            <td>
-                                <div class="form-check">
-                                    <input class="form-check-input" name="selectedClothing[]" type="checkbox" value="{{ $clothing_assignment->id }}"
-                                        id="flexCheckDefault">
-
-                                </div>
-                            </td>
-                            <td>
-                                <a
-                                    href="{{ route('materials.show', $clothing_assignment->id) }}">{{ isset($clothing_assignment->name) ? $clothing_assignment->name : 'N.A.' }}</a>
-                            </td>
-                            <td>
-                                @if (isset($clothing_assignment->gender))
-                                    @if ($clothing_assignment->gender == 1)
-                                        Masculino
-                                    @elseif($clothing_assignment->gender == 0)
-                                        Feminino
-                                    @endif
-                                @else
-                                    N.A.
-                                @endif
-                            </td>
-                            <td style="text-align: center;">
-                                {{ isset($clothing_assignment->size) ? $clothing_assignment->size : 'N.A.' }}</td>
-
-                            <td style="text-align: center;">
-                                {{ isset($clothing_assignment->role) ? $clothing_assignment->role : 'N.A.' }}</td>
-                            <td style="text-align: center;">
-                                {{ isset($clothing_assignment->quantity) ? $clothing_assignment->quantity : 'N.A.' }}
-                            </td>
-                            <td>
-                                <a href="{{ route('clothing-assignment.edit', $clothing_assignment->id) }}"
-                                    class="btn btn-warning btn-edit">Editar</a>
-                                <form method="post"
-                                    action="{{ route('clothing-assignment.destroy', $clothing_assignment->id) }}"
-                                    style="display:inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger"
-                                        onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
-
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </form>
-
-        <h5>Observações </h5>
-        <textarea class="form-control" id="textarea" aria-label="With textarea"></textarea>
-        <div class="input-group mb-3" style="width: 80%;">
-
-            <div class="input-group-prepend">
-                <button class="btn btn-danger" type="button" id="apagarOnClick">Apagar</button>
-
-                <!-- .............ooooooooooooooooooooooooooooooo -->
-
-
-                    <button class="btn btn-primary" type="submit">Guardar</button>
-
-
-
-
-                <button class="btn btn-primary" type="button"
-                    onclick="window.location.href='{{ url()->previous() }}'">Fechar</button>
-            </div>
-        </div>
 
     </div>
 
@@ -139,7 +49,7 @@
             const searchInput = document.getElementById('search');
             const filterDropdown = document.getElementById('filter');
 
-           //     //testettttttttttt
+
 
 
             document.getElementById('apagarOnClick').addEventListener('click', function() {
