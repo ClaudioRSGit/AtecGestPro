@@ -54,6 +54,21 @@
                 </tr>
 
                 <tr>
+                    <th scope="row">Materiais</th>
+                    <td>
+                        @if($partner_Trainings_User->Material_Training->isNotEmpty())
+                            <ul>
+                                @foreach($partner_Trainings_User->Material_Training as $materialTraining)
+                                    <li>{{ $materialTraining->material->name }} - Quantidade: {{ $materialTraining->quantity }}</li>
+                                @endforeach
+                            </ul>
+                        @else
+                            <p>Não existem materiais associados a esta formação</p>
+                        @endif
+                    </td>
+                </tr>
+
+                <tr>
                     <th scope="row">Ações:</th>
                     <td>
                         <a href="{{ route('external.edit', $partner_Trainings_User->id) }}" class="btn btn-warning">Editar</a>

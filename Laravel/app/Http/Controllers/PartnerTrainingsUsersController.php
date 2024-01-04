@@ -23,14 +23,17 @@ class PartnerTrainingsUsersController extends Controller
     {
         $partner_Trainings_Users = Partner_Trainings_Users::with('partner', 'training', 'user')->get();
         $partners = Partner::with('partnerTrainingsUsers', 'partnerContacts')->get();
+        $trainings = Training::all();
 
-        return view('external.index', compact('partner_Trainings_Users', 'partners'));
+        return view('external.index', compact('partner_Trainings_Users', 'partners', 'trainings'));
     }
 
 
     public function show($id)
     {
-        $partner_Trainings_User = Partner_Trainings_Users::with('partner', 'training', 'user')->findOrFail($id);
+        $partner_Trainings_User = Partner_Trainings_Users::with('partner', 'training', 'user', 'Material_Training.material')->findOrFail($id);
+
+
 
         return view('external.show', compact('partner_Trainings_User'));
     }
@@ -71,6 +74,11 @@ class PartnerTrainingsUsersController extends Controller
         $materials = $request->input('materials', []);
         $materialQuantities = $request->input('material_quantities', []);
 
+
+        if (strtotime($request->start_date) > strtotime($request->end_date)) {
+            return redirect()->back()->withErrors(['end_date' => 'End date must be after or equal to start date']);
+        }
+
         foreach ($materials as $materialId) {
             $quantity = $materialQuantities[$materialId] ?? 1;
 
@@ -78,23 +86,18 @@ class PartnerTrainingsUsersController extends Controller
                 'material_id' => $materialId,
                 'quantity' => $quantity,
             ]);
-        }
 
-        $material = Material::find($materialId);
-        if ($material) {
-            $material->decrement('quantity', $quantity);
+            $material = Material::find($materialId);
+
+            if ($material) {
+                $material->decrement('quantity', $quantity);
+            }
         }
 
         return redirect()->route('external.index')->with('success', 'Formação criada com sucesso');
     }
 
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Partner_Trainings_Users  $partner_Trainings_Users
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         $partner_Trainings_Users = Partner_Trainings_Users::with('partner', 'training', 'user')->findOrFail($id);
@@ -165,10 +168,45 @@ class PartnerTrainingsUsersController extends Controller
 
     public function destroy($id)
     {
-        $partner_Trainings_User = Partner_Trainings_Users::findOrFail($id);
-        $partner_Trainings_User->delete();
+        $partnerTrainingUser = Partner_Trainings_Users::findOrFail($id);
+
+
+        $materialTrainings = $partnerTrainingUser->Material_Training;
+
+
+        foreach ($materialTrainings as $materialTraining) {
+            $material = $materialTraining->material;
+            $material->quantity += $materialTraining->quantity;
+            $material->save();
+        }
+
+        $partnerTrainingUser->Material_Training()->delete();
+
+        $partnerTrainingUser->delete();
 
         return redirect()->route('external.index')->with('success', 'Formação eliminada com sucesso');
     }
+
+
+
+    public function massDelete(Request $request)
+    {
+
+
+        $request->validate([
+            'ptu_ids' => 'required|array',
+            'ptu_ids.*' => 'exists:partner__trainings__users,id',]);
+
+
+        try {
+            Partner_Trainings_Users::whereIn('id', $request->input('ptu_ids'))->delete();
+
+            return redirect()->back()->with('success', 'Formações selecionadas excluídas com sucesso!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erro ao excluir Formações selecionadas. Por favor, tente novamente.');
+        }
+    }
+
+
 
 }

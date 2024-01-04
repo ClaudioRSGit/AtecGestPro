@@ -3,28 +3,29 @@
 @section('content')
     <div class="container pl-5 pt-4">
 
-        @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
-
         <h1>Vestuário</h1>
 
 
         <h5>Nome Completo</h5>
         <div class="input-group mb-3" style="width: 60%;">
-            <input type="text" class="form-control" id="userToAssignClothing" placeholder="{{ $name }}"
+            <input type="text" class="form-control" id="userToAssignClothing" placeholder="{{ $student->name }}"
                 aria-label="Username" aria-describedby="basic-addon1" disabled="disabled">
+            <div class="input-group-prepend">
+                <button class="btn btn-warning" id="EditInput" type="button"
+                    onclick="window.location.href='{{ route('users.edit', $student->id) }}'">Editar</button>
+            </div>
         </div>
 
 
         <div class="mb-3">
-            <div class="d-flex w-100">
-                <div class="d-flex w-75" style="gap: 1rem">
-                    <input type="text" id="search" class="form-control w-50" placeholder="Pesquisar">
+            <div class="d-flex">
+                <div style="width: 30%;">
+                    <input type="text" id="search" class="form-control" placeholder="Pesquisar">
+                </div>
 
-                    <select class="form-control w-25" id="filter">
+                <div class="ms-2">
+                    <label for="filter">Filtrar por:</label>
+                    <select class="form-select" id="filter">
                         <option value="all">Todos</option>
                         <option value="trainer">Formador</option>
                         <option value="trainee">Formando</option>
@@ -32,9 +33,8 @@
                     </select>
                 </div>
 
-                <div class="buttons" style="width: 25%">
-                    <a href="{{ route('clothing-assignment.create') }}" class="btn btn-primary">Novo Vestuário</a>
-                </div>
+                <a href="{{ route('clothing-assignment.create') }}" class="btn btn-primary mb-3">Novo Vestuário</a>
+
             </div>
         </div>
 
@@ -56,18 +56,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="filler"></tr>
                     @foreach ($clothing_assignment as $clothing_assignment)
-                        <tr class="material-row customTableStyling" data-trainer="{{ $clothing_assignment->role == 2 ? 1 : 0 }}"
+                        <tr class="material-row" data-trainer="{{ $clothing_assignment->role == 2 ? 1 : 0 }}"
                             data-trainee="{{ $clothing_assignment->role == 3 ? 1 : 0 }}"
-                            data-technical="{{ $clothing_assignment->role == 4 ? 1 : 0 }}"
-                            onclick="location.href='{{ route('materials.show', $clothing_assignment->id) }}'">
+                            data-technical="{{ $clothing_assignment->role == 4 ? 1 : 0 }}">
                             <td>
-                                    <input name="selectedClothing[]" type="checkbox" class="no-propagate" value="{{ $clothing_assignment->id }}"
+                                <div class="form-check">
+                                    <input class="form-check-input" name="selectedClothing[]" type="checkbox" value="{{ $clothing_assignment->id }}"
                                         id="flexCheckDefault">
+
+                                </div>
                             </td>
                             <td>
-                                {{ isset($clothing_assignment->name) ? $clothing_assignment->name : 'N.A.' }}
+                                <a
+                                    href="{{ route('materials.show', $clothing_assignment->id) }}">{{ isset($clothing_assignment->name) ? $clothing_assignment->name : 'N.A.' }}</a>
                             </td>
                             <td>
                                 @if (isset($clothing_assignment->gender))
@@ -102,66 +104,42 @@
                                 </form>
                             </td>
                         </tr>
-                        <tr class="filler"></tr>
                     @endforeach
                 </tbody>
             </table>
         </form>
 
         <h5>Observações </h5>
-        <div class="notes d-flex">
+        <textarea class="form-control" id="textarea" aria-label="With textarea"></textarea>
+        <div class="input-group mb-3" style="width: 80%;">
 
-            <textarea class="form-control" id="textarea" aria-label="With textarea"></textarea>
-            <div class="mb-3 buttons">
+            <div class="input-group-prepend">
+                <button class="btn btn-danger" type="button" id="apagarOnClick">Apagar</button>
 
-                <div>
-                    <button class="btn btn-danger" type="button" id="apagarOnClick">Apagar</button>
+                <!-- .............ooooooooooooooooooooooooooooooo -->
 
-                    <!-- .............ooooooooooooooooooooooooooooooo -->
-
-                <div>
-                    <button class="btn btn-primary" id="Assigment" type="button"
-                        onclick="window.location.href='{{ route('material-clothing-delivery.create', $student->id) }}'">Atribuir</button>
 
                     <button class="btn btn-primary" type="submit">Guardar</button>
 
 
 
 
-                    <button class="btn btn-primary" type="button" onclick="window.location.href='{{ url()->previous() }}'">Fechar</button>
-                </div>
+                <button class="btn btn-primary" type="button"
+                    onclick="window.location.href='{{ url()->previous() }}'">Fechar</button>
             </div>
-
-
-            <div style="margin-left: 10px;">
-                <a href="{{ route('clothing-assignment.create') }}" class="btn btn-primary mb-3">Novo Vestuário</a>
-            </div>
-
         </div>
-
-
 
     </div>
 
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            var checkboxes = document.querySelectorAll('.no-propagate');
-
-            checkboxes.forEach(function(checkbox) {
-                checkbox.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                });
-            });
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
             const selectAllCheckbox = document.getElementById('select-all');
             const checkboxes = document.querySelectorAll('.form-check-input');
             const searchInput = document.getElementById('search');
             const filterDropdown = document.getElementById('filter');
 
-
+           //     //testettttttttttt
 
 
             document.getElementById('apagarOnClick').addEventListener('click', function() {

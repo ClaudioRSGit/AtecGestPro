@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <h1>Criar Turma</h1>
-        <form method="post" action="{{ route('course-classes.store') }}">
+        <form method="post" action="{{ route('course-classes.store') }}" id="createCourseClassForm">
             @csrf
 
             <div class="form-group">
@@ -20,8 +20,70 @@
                 </select>
             </div>
 
-            <button type="submit" class="btn btn-primary">Criar Turma</button>
+            <div class="container">
+                <h3 class="my-3">Atribuir alunos à turma</h3>
+                <div class="d-flex justify-content-between w-100">
+                    <div class="form-group mr-3 w-75 search-container">
+                        <input type="text" id="search" class="form-control w-100" placeholder="Pesquisar Aluno">
+                    </div>
+                    <div class="form-group w-25">
+                        <a href="{{ route('users.create') }}" class="btn btn-primary w-100">
+                            <img src="{{ asset('assets/new.svg') }}">
+                            Novo Aluno
+                        </a>
+                    </div>
+                </div>
+                <table class="table" id="studentsTable">
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" id="select-all"></th>
+                            <th>Nome</th>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($students as $student)
+                            <tr>
+                                <td><input type="checkbox" name="selected_students[]" value="{{ $student->id }}"></td>
+                                <td>{{ $student->name }}</td>
+                                <td>{{ $student->username }}</td>
+                                <td>{{ $student->email }}</td>
+                                <td>
+                                    <span>Edit</span>
+                                    <span>Delete</span>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                {{ $students->links() }}
+            </div>
+
+            <button type="button" class="btn btn-primary" id="criarTurmaBtn">Criar Turma</button>
             <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
         </form>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#select-all").click(function () {
+                $("input[name='selected_students[]']").prop('checked', $(this).prop('checked'));
+            });
+
+            $("#criarTurmaBtn").click(function () {
+                console.log("Criar Turma button clicked");
+                document.getElementById('createCourseClassForm').submit();
+            });
+
+            $("#search").on("keyup", function () {
+                var value = $(this).val().toLowerCase();
+                $("#studentsTable tbody tr").filter(function () {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                });
+            });
+        });
+    </script>
 @endsection
