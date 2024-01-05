@@ -192,6 +192,7 @@ class PartnerTrainingsUsersController extends Controller
     public function massDelete(Request $request)
     {
 
+//      dd($request->all());
 
         $request->validate([
             'ptu_ids' => 'required|array',
