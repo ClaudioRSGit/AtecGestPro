@@ -65,10 +65,14 @@
                 <tr>
                     <th scope="row">Materiais</th>
                     <td>
-                        @if($partner_Training_Users->Material_Training->isNotEmpty())
+                        @php
+                            $materialTraining = $partner_Training_Users->Material_Training()->whereHas('material')->get();
+                        @endphp
+
+                        @if($materialTraining->isNotEmpty())
                             <ul>
-                                @foreach($partner_Training_Users->Material_Training as $materialTraining)
-                                    <li>{{ $materialTraining->material->name }} - Quantidade: {{ $materialTraining->quantity }}</li>
+                                @foreach($materialTraining as $materialTrainings)
+                                    <li>{{ $materialTrainings->material->name }} - Quantidade: {{ $materialTrainings->quantity }}</li>
                                 @endforeach
                             </ul>
                         @else
@@ -87,7 +91,7 @@
                 </tbody>
             </table>
         @else
-            <p>No data available for this agendamento.</p>
+            <p>Não existem registos para esta formação</p>
         @endif
     </div>
 @endsection
