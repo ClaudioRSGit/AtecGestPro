@@ -17,8 +17,6 @@
         </ul>
 
 
-
-
         <div class="tab-content">
             <div class="tab-pane fade show active" id="externalTable">
                 <a href="{{ route('external.create') }}" class="btn btn-primary mb-3">Nova Formação</a>
@@ -209,11 +207,11 @@
                     </thead>
                     <tbody>
                     @foreach($trainings as $training)
-                        <tr class="partner_{{ $partner_Training_User->partner_id }} customTableStyling"
-                            onclick="location.href='{{ route('external.show', $partner_Training_User->id) }}'">
+                        <tr class="partner_{{ $training->id }} customTableStyling"
+                            onclick="location.href='{{ route('external.show', $training->id) }}'">
                             <td>
-                                <input type="checkbox" class="no-propagate" name="selectedPtus[]"
-                                       value="{{ $partner_Training_User->id }}">
+                                <input type="checkbox" class="no-propagate" name="selectedTrainings[]"
+                                       value="{{ $training->id }}">
                             </td>
                             <td>{{ $training->name }}</td>
                             <td>{{ $training->description }}</td>
@@ -304,11 +302,11 @@
         });
     </script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             var checkboxes = document.querySelectorAll('.no-propagate');
 
-            checkboxes.forEach(function(checkbox) {
-                checkbox.addEventListener('click', function(event) {
+            checkboxes.forEach(function (checkbox) {
+                checkbox.addEventListener('click', function (event) {
                     event.stopPropagation();
                 });
             });
@@ -390,7 +388,7 @@
 
             selectAllTrainingsCheckbox.addEventListener('change', function () {
                 trainingCheckboxes.forEach(checkbox => {
-                    checkbox.checked = selectAllTrainingsCheckbox.checked;
+                    trainingCheckboxes.checked = selectAllTrainingsCheckbox.checked;
                 });
             });
 
