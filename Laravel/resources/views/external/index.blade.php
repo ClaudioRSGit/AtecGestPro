@@ -18,6 +18,7 @@
 
 
         <div class="tab-content">
+
             <div class="tab-pane fade show active" id="externalTable">
                 <a href="{{ route('external.create') }}" class="btn btn-primary mb-3">Nova Formação</a>
                 <button class="btn btn-danger mb-3" id="delete-selected-ptus">Excluir Selecionados</button>
@@ -191,7 +192,7 @@
 
             <div class="tab-pane fade" id="trainingsTable">
                 <a href="{{ route('trainings.create') }}" class="btn btn-primary mb-3">Nova Formação</a>
-                <button class="btn btn-danger mb-3" id="delete-selected-trainings">Excluir Selecionados</button>
+                <button class="btn btn-danger mb-3" id="delete-selected-trainings" >Excluir Selecionados</button>
 
                 <table class="table bg-white">
                     <thead>
@@ -207,32 +208,27 @@
                     </thead>
                     <tbody>
                     @foreach($trainings as $training)
-                        <tr class="partner_{{ $training->id }} customTableStyling"
-                            onclick="location.href='{{ route('external.show', $training->id) }}'">
+                        <tr>
                             <td>
-                                <input type="checkbox" class="no-propagate" name="selectedTrainings[]"
-                                       value="{{ $training->id }}">
+                                <input type="checkbox" class="no-propagate" name="selectedTrainings[]" value="{{ $training->id }}">
                             </td>
                             <td>{{ $training->name }}</td>
                             <td>{{ $training->description }}</td>
                             <td>{{ $training->category }}</td>
                             <td>
                                 <a href="{{ route('trainings.show', $training->id) }}" class="btn btn-info">Detalhes</a>
-                                <a href="{{ route('trainings.edit', $training->id) }}"
-                                   class="btn btn-warning">Editar</a>
-                                <form method="post" action="{{ route('trainings.destroy', $training->id) }}"
-                                      style="display:inline;">
+                                <a href="{{ route('trainings.edit', $training->id) }}" class="btn btn-warning">Editar</a>
+                                <form method="post" action="{{ route('trainings.destroy', $training->id) }}" style="display:inline;">
                                     @csrf
                                     @method('delete')
-                                    <button type="submit" class="btn btn-danger"
-                                            onclick="return confirm('Tem certeza que deseja excluir?')">Excluir
-                                    </button>
+                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
                                 </form>
                             </td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
+                {{--                {{ $trainings->links() }}--}}
             </div>
         </div>
 
@@ -388,7 +384,7 @@
 
             selectAllTrainingsCheckbox.addEventListener('change', function () {
                 trainingCheckboxes.forEach(checkbox => {
-                    trainingCheckboxes.checked = selectAllTrainingsCheckbox.checked;
+                    checkbox.checked = selectAllTrainingsCheckbox.checked;
                 });
             });
 
