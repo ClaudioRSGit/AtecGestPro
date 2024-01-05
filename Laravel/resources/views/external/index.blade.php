@@ -207,6 +207,7 @@
                     </tr>
                     </thead>
                     <tbody>
+                    <tr class="filler"></tr>
                     @foreach($trainings as $training)
                         <tr>
                             <td>
@@ -228,7 +229,6 @@
                     @endforeach
                     </tbody>
                 </table>
-                {{--                {{ $trainings->links() }}--}}
             </div>
         </div>
 

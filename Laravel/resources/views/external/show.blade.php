@@ -30,20 +30,29 @@
                 <tbody>
                 <tr>
                     <th scope="row">Parceiro</th>
-                    <td>{{ $partner_Training_Users->partner->name }}</td>
+                    <td class="{{ optional($partner_Training_Users->partner)->name ? '' : 'text-danger' }}">
+                        {{ optional($partner_Training_Users->partner)->name ?? 'O parceiro foi eliminado.' }}
+                    </td>
                 </tr>
                 <tr>
                     <th scope="row">Morada do Parceiro</th>
-                    <td>{{ $partner_Training_Users->partner->address }}</td>
+                    <td class="{{ optional($partner_Training_Users->partner)->address ? '' : 'text-danger' }}">
+                        {{ optional($partner_Training_Users->partner)->address ?? 'O parceiro foi eliminado.' }}
+                    </td>
                 </tr>
                 <tr>
                     <th scope="row">Técnico</th>
-                    <td>{{ $partner_Training_Users->user->name }}</td>
+                    <td class="{{ optional($partner_Training_Users->user)->name ? '' : 'text-danger' }}">
+                        {{ optional($partner_Training_Users->user)->name ?? 'O técnico foi eliminado' }}
+                    </td>
                 </tr>
                 <tr>
                     <th scope="row">Formação</th>
-                    <td>{{ $partner_Training_Users->training->name }}</td>
+                    <td class="{{ optional($partner_Training_Users->training)->name ? '' : 'text-danger' }}">
+                        {{ optional($partner_Training_Users->training)->name ?? 'This training record has been deleted.' }}
+                    </td>
                 </tr>
+
                 <tr>
                     <th scope="row">Data de Início</th>
                     <td>{{ $partner_Training_Users->start_date }}</td>
