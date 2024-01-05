@@ -110,12 +110,12 @@
             });
         });
 
+        const deleteSelectedButton = document.getElementById('delete-selected');
         document.addEventListener('DOMContentLoaded', function () {
             const selectAllCheckbox = document.getElementById('select-all');
             const checkboxes = document.querySelectorAll('input[name="selectedMaterials[]"]');
             const searchInput = document.getElementById('search');
             const filterDropdown = document.getElementById('filter');
-            const deleteSelectedButton = document.getElementById('delete-selected');
 
             selectAllCheckbox.addEventListener('change', function () {
                 checkboxes.forEach(checkbox => {
