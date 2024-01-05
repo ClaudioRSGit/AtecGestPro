@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Partner_Trainings_Users;
+use App\Partner_Training_User;
 use Faker\Generator as Faker;
 
-$factory->define(Partner_Trainings_Users::class, function (Faker $faker) {
+$factory->define(Partner_Training_User::class, function (Faker $faker) {
     return [
         //
     ];

@@ -3,7 +3,11 @@
 @section('content')
     <div class="container">
         <h1>Detalhes do Material</h1>
-
+        @if (session('success'))
+            <div class="alert alert-success" id="success-alert">
+                {{ session('success') }}
+            </div>
+        @endif
         <div class="row">
             <div class="col-md-6">
                 <!-- Left column with the form inputs and displayed information -->
@@ -91,4 +95,12 @@
             </div>
         </div>
     </div>
+
+    <script>
+          window.setTimeout(function() {
+                $("#success-alert").fadeTo(500, 0).slideUp(500, function() {
+                    $(this).remove();
+                });
+            }, 2000);
+    </script>
 @endsection

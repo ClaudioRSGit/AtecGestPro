@@ -43,7 +43,7 @@ class CourseController extends Controller
 
             $course = Course::create($request->all());
 
-            return redirect()->route('courses.show', $course->id);
+            return redirect()->route('courses.show', $course->id)->with('success', 'Curso criado com sucesso!');
 
         } catch (\Illuminate\Validation\ValidationException $e) {
             return redirect()->back()->withErrors($e->validator)->withInput();

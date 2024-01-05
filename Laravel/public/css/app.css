@@ -172,12 +172,13 @@ thead th{
     justify-content: space-between;
     align-items: center;
 }
-.editDelete div:hover{
-    border: 1px solid #0096FF;
-    border-radius: 8px;
-    box-shadow: 0 0 10px 5px #0096FF;
+.editDelete div{
+    transition: all 0.3s ease-in-out;
 }
-
+.editDelete div:hover{
+    transform: translateY(-3px);
+    color: #fff;
+}
 
 
 
@@ -5212,7 +5213,7 @@ input[type=button].btn-block {
 .card-header {
   padding: 0.75rem 1.25rem;
   margin-bottom: 0;
-  background-color: rgba(0, 0, 0, 0.03);
+  background-color: rgba(0, 0, 0, 0);
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }
 

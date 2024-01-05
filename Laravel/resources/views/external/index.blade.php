@@ -41,36 +41,30 @@
                     </thead>
                     <tbody>
                     <tr class="filler"></tr>
-
-
-
-
-
-
-                    @foreach ($partner_Trainings_Users as $partner_Trainings_User)
-                        <tr class="customTableStyling"
-                            onclick="location.href='{{ route('external.show', $partner_Trainings_User->id) }}'">
+                    @foreach ($partner_Training_Users as $partner_Training_User)
+                        <tr class="partner_{{ $partner_Training_User->partner_id }} customTableStyling"
+                            onclick="location.href='{{ route('external.show', $partner_Training_User->id) }}'">
                             <td>
                                 <input type="checkbox" class="no-propagate" name="selectedPtus[]"
-                                       value="{{ $partner_Trainings_User->id }}">
+                                       value="{{ $partner_Training_User->id }}">
                             </td>
-                            <td class="{{ optional($partner_Trainings_User->partner)->name ? '' : 'text-danger' }}">
-                                {{ optional($partner_Trainings_User->partner)->name ?? 'O parceiro foi apagada do sistema.' }}
-                            </td>
-
-
-                            <td>{{ optional($partner_Trainings_User->partner)->address }}</td>
-                            <td>{{ optional($partner_Trainings_User->user)->name }}</td>
-                            <td class="{{ optional($partner_Trainings_User->training)->name ? '' : 'text-danger' }}">
-                                {{ optional($partner_Trainings_User->training)->name ?: 'A formação foi apagada do sistema' }}
+                            <td class="{{ optional($partner_Training_User->partner)->name ? '' : 'text-danger' }}">
+                                {{ optional($partner_Training_User->partner)->name ?? 'O parceiro foi apagada do sistema.' }}
                             </td>
 
-                            <td>{{ $partner_Trainings_User->start_date }}</td>
+
+                            <td>{{ optional($partner_Training_User->partner)->address }}</td>
+                            <td>{{ optional($partner_Training_User->user)->name }}</td>
+                            <td class="{{ optional($partner_Training_User->training)->name ? '' : 'text-danger' }}">
+                                {{ optional($partner_Training_User->training)->name ?: 'A formação foi apagada do sistema' }}
+                            </td>
+
+                            <td>{{ $partner_Training_User->start_date }}</td>
                             <td>
 
                                 <div class="d-flex justify-content-between mb-3 editDelete">
                                     <div style="width: 40%">
-                                        <a href="{{ route('external.edit', $partner_Trainings_User->id) }}">
+                                        <a href="{{ route('external.edit', $partner_Training_User->id) }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16"
                                                  viewBox="0 0 512 512">
                                                 <path fill="#116fdc"
@@ -81,7 +75,7 @@
 
                                     <div style="width: 40%">
                                         <form method="post"
-                                              action="{{ route('external.destroy', $partner_Trainings_User->id) }}"
+                                              action="{{ route('external.destroy', $partner_Training_User->id) }}"
                                               style="display:inline;">
                                             @csrf
                                             @method('delete')
@@ -215,10 +209,11 @@
                     </thead>
                     <tbody>
                     @foreach($trainings as $training)
-                        <tr>
+                        <tr class="partner_{{ $partner_Training_User->partner_id }} customTableStyling"
+                            onclick="location.href='{{ route('external.show', $partner_Training_User->id) }}'">
                             <td>
-                                <input type="checkbox" class="no-propagate" name="selectedTrainings[]"
-                                       value="{{ $training->id }}">
+                                <input type="checkbox" class="no-propagate" name="selectedPtus[]"
+                                       value="{{ $partner_Training_User->id }}">
                             </td>
                             <td>{{ $training->name }}</td>
                             <td>{{ $training->description }}</td>

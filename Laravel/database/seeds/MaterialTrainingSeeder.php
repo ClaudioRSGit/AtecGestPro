@@ -14,31 +14,31 @@ class MaterialTrainingSeeder extends Seeder
     {
         // Seed 1
         DB::table('material__trainings')->insert([
-            'partner__trainings__user_id' => 5,
+            'partner__training__users_id' => 5,
             'material_id' => 4,
             'quantity' => 1,
         ]);
         // Seed 1
         DB::table('material__trainings')->insert([
-            'partner__trainings__user_id' => 1,
+            'partner__training__users_id' => 1,
             'material_id' => 4,
             'quantity' => 1,
         ]);
         // Seed 1
         DB::table('material__trainings')->insert([
-            'partner__trainings__user_id' => 2,
+            'partner__training__users_id' => 2,
             'material_id' => 5,
             'quantity' => 1,
         ]);
         // Seed 1
         DB::table('material__trainings')->insert([
-            'partner__trainings__user_id' => 3,
+            'partner__training__users_id' => 3,
             'material_id' => 5,
             'quantity' => 1,
         ]);
         // Seed 1
         DB::table('material__trainings')->insert([
-            'partner__trainings__user_id' => 4,
+            'partner__training__users_id' => 4,
             'material_id' => 5,
             'quantity' => 1,
         ]);

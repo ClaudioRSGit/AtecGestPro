@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePartnerTrainingsUsersTable extends Migration
+class CreatePartnerTrainingUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreatePartnerTrainingsUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('partner__trainings__users', function (Blueprint $table) {
+        Schema::create('partner__training__users', function (Blueprint $table) {
             $table->id();
             $table->foreignId('partner_id')->constrained('partners')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('training_id')->constrained('trainings')->onDelete('cascade')->onUpdate('cascade');
@@ -23,6 +23,7 @@ class CreatePartnerTrainingsUsersTable extends Migration
             $table->timestamps();
             $table->softDeletes('deleted_at', 0);
         });
+
     }
 
     /**
@@ -32,6 +33,6 @@ class CreatePartnerTrainingsUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('partner__trainings__users');
+        Schema::dropIfExists('partner__training__users');
     }
 }

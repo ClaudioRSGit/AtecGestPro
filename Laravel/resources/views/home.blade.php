@@ -9,7 +9,7 @@
 
                 <div class="card-body">
                     @if (session('status'))
-                        <div class="alert alert-success" role="alert">
+                        <div class="alert alert-success" role="alert" id="success-alert">
                             {{ session('status') }}
                         </div>
                     @endif
@@ -21,4 +21,14 @@
     </div>
 </div>
 
+<script>
+    window.setTimeout(function() {
+                $("#success-alert").fadeTo(500, 0).slideUp(500, function() {
+                    $(this).remove();
+                });
+            }, 2000);
+</script>
+
 @endsection
+
+
