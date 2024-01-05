@@ -42,7 +42,7 @@
                 </tr>
                 <tr>
                     <th scope="row">Formação</th>
-                    <td>{{ $partner_Trainings_User->training->name }}</td>
+{{--                    <td>{{ $partner_Trainings_User->training->name }}</td>--}}
                 </tr>
                 <tr>
                     <th scope="row">Data de Início</th>
