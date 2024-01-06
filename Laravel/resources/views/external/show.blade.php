@@ -49,7 +49,7 @@
                 <tr>
                     <th scope="row">Formação</th>
                     <td class="{{ optional($partner_Training_Users->training)->name ? '' : 'text-danger' }}">
-                        {{ optional($partner_Training_Users->training)->name ?? 'This training record has been deleted.' }}
+                        {{ optional($partner_Training_Users->training)->name ?? 'Esta formação foi eliminada.' }}
                     </td>
                 </tr>
 
