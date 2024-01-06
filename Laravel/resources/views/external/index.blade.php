@@ -1,32 +1,33 @@
 @extends('master.main')
 
 @section('content')
+
     <div class="container">
-        @if(session('success'))
-            <div class="alert alert-success" id="success-alert" style="display: none;">
-                {{ session('success') }}
-            </div>
+    @if(session('success'))
+        <div class="alert alert-success" id="success-alert">
+            {{ session('success') }}
+        </div>
 
-            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-            <script>
-                $(document).ready(function() {
-                    $('#success-alert').fadeIn('slow').delay(3000).fadeOut('slow');
-                });
-            </script>
-        @endif
+        <script>
+            setTimeout(function() {
+                $('#success-alert').fadeOut('slow');
+            }, 3000);
+        </script>
+    @endif
 
-        @if(session('error'))
-            <div class="alert alert-danger" id="error-alert" style="display: none;">
-                {{ session('error') }}
-            </div>
+    @if(session('error'))
+        <div class="alert alert-danger" id="error-alert">
+            {{ session('error') }}
+        </div>
 
-            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-            <script>
-                $(document).ready(function() {
-                    $('#error-alert').fadeIn('slow').delay(3000).fadeOut('slow');
-                });
-            </script>
-        @endif
+        <script>
+            setTimeout(function() {
+                $('#error-alert').fadeOut('slow');
+            }, 3000);
+        </script>
+    @endif
+
+
         <h1>Formações de mercado</h1>
 
         <ul class="nav nav-tabs mb-3" id="myTabs">
@@ -45,11 +46,18 @@
         <div class="tab-content">
 
             <div class="tab-pane fade show active" id="externalTable">
-                <a href="{{ route('external.create') }}" class="btn btn-primary mb-3">Nova Formação</a>
-                <button class="btn btn-danger mb-3" id="delete-selected-ptus">Excluir Selecionados</button>
+
+                <div class=" d-flex">
+                    <input type="text" id="searchInput" class="form-control mr-2" style="max-width: fit-content" placeholder="Insira para procurar...">
+
+                    <button class="btn btn-danger mb-3 mr-2" id="delete-selected-ptus">Excluir Selecionados</button>
 
 
-                <table class="table bg-white">
+                <a href="{{ route('external.create') }}" class="btn btn-primary mb-3 ">Nova Formação</a>
+
+            </div>
+
+                <table class="table bg-white" id="externalTable">
                     <thead>
                     <tr>
                         <th scope="col">
@@ -63,7 +71,7 @@
                         <th scope="col">Ações</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="customTableStyling">
                     <tr class="filler"></tr>
                     @foreach ($partner_Training_Users as $partner_Training_User)
                         <tr class="customTableStyling"
@@ -349,7 +357,7 @@
     </script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            var checkboxes = document.querySelectorAll('.no-propagate');
+            const checkboxes = document.querySelectorAll('.no-propagate');
 
             checkboxes.forEach(function (checkbox) {
                 checkbox.addEventListener('click', function (event) {
@@ -482,5 +490,20 @@
             }
         });
     </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#searchInput').on('input', function () {
+                const searchText = $(this).val().toLowerCase();
+
+                $('#externalTable tbody tr').each(function () {
+                    const rowText = $(this).text().toLowerCase();
+
+                    $(this).toggle(rowText.includes(searchText));
+                });
+            });
+        });
+    </script>
+
 
 @endsection

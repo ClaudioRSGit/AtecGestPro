@@ -9,6 +9,7 @@
     {{-- STYLE SECTION --}}
     <link rel="stylesheet" href="{!! asset('css/app.css') !!}" media="all" type="text/css" />
     <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/9/91/Gear-icon-blue-white-background.png" type="image/x-icon">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     @yield('styles')
     {{-- .STYLE SECTION --}}
@@ -32,7 +33,7 @@
     <div class="push">
 
     </div>
-    
+
     @component('master.footer')
     @endcomponent
 </main>
@@ -42,7 +43,9 @@
 
 {{-- SCRIPTS SECTION --}}
 <script src="{!! asset('js/app.js') !!}" type="text/javascript"></script>
+
 @yield('scripts')
 {{-- .SCRIPTS SECTION --}}
+
 </body>
 </html>
