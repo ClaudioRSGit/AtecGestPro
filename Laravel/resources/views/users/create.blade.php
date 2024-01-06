@@ -65,8 +65,8 @@
 
                 <div class="col-md-6 d-flex flex-column">
                     <div class="mb-3">
-                        <label for="role" class="form-label">Função:</label>
-                        <select class="form-select" id="role" name="role">
+                        <label for="position" class="form-label">Função:</label>
+                        <select class="form-select" id="position" name="position">
                             <option value="admin">Admin</option>
                             <option value="user">User</option>
                             <option value="tecnico">Técnico</option>
@@ -76,20 +76,16 @@
 
                     <div class="mb-3" id="labelCourseClass">
                         <label for="course_class_id" class="form-label">Turma:</label>
-                        <select class="form-select" id="course_class_id" name="course_class_id">
+                        <select class="form-select" id="course_class_id" name="course_class_id" onchange="updateCourseDescription(this)">
                             @foreach($courseClasses as $class)
-                                <option value="{{ $class->id }}">{{ $class->description }}</option>
+                                <option value="{{ $class->id }}" data-course-description="{{ $class->course->description }}">{{ $class->description }}</option>
                             @endforeach
                         </select>
                     </div>
 
                     <div class="mb-3" id="labelCourseDescription">
                         <label for="courseDescription" class="form-label">Curso:</label>
-                        <select class="form-select" id="courseDescription" name="courseDescription">
-                            @foreach($courses as $course)
-                                <option value="{{ $course->description }}">{{ $course->description }}</option>
-                            @endforeach
-                        </select>
+                        <input class="form-control" id="courseDescription" name="courseDescription" disabled>
                     </div>
 
                     <div class="mb-3">
@@ -113,16 +109,23 @@
 <script>
     $(document).ready(function () {
         $('#course_class_id, #courseDescription, #labelCourseClass, #labelCourseDescription').hide();
-        $('#role').change(function () {
-            var selectedRole = $(this).val();
+        $('#position').change(function () {
+            var selectedPosition = $(this).val();
 
-            if (selectedRole === 'formando') {
+            if (selectedPosition === 'formando') {
                 $('#course_class_id, #courseDescription, #labelCourseClass, #labelCourseDescription').show();
             } else {
                 $('#course_class_id, #courseDescription, #labelCourseClass, #labelCourseDescription').hide();
             }
         });
     });
+
+    function updateCourseDescription(selectElement) {
+        var selectedOption = selectElement.options[selectElement.selectedIndex];
+        var courseDescription = selectedOption.getAttribute('data-course-description');
+        document.getElementById('courseDescription').value = courseDescription;
+    }
+    document.getElementById('course_class_id').dispatchEvent(new Event('change'));
 </script>
 
 

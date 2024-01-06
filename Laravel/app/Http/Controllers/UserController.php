@@ -16,13 +16,13 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $roleFilter = $request->input('roleFilter');
+        $positionFilter = $request->input('positionFilter');
         $nameFilter = $request->input('nameFilter');
 
         $query = User::query();
 
-        if ($roleFilter) {
-            $query->where('role', $roleFilter);
+        if ($positionFilter) {
+            $query->where('position', $positionFilter);
         }
 
         if ($nameFilter) {
@@ -76,7 +76,7 @@ class UserController extends Controller
                     'min:7',
                     'regex:/^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).*$/',
                 ],
-                'role' => 'required',
+                'position' => 'required',
                 'isActive' => 'required',
                 'isStudent' => 'nullable',
             ]);
@@ -102,10 +102,12 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        $user->load('CourseClass.Course');
         $courseClasses = CourseClass::all();
-        $courses = Course::all();
 
-        return view('users.show', compact('user', 'courseClasses', 'courses'));
+        $courseDescription = $user->CourseClass->course->description;
+
+        return view('users.show', compact('user', 'courseClasses', 'courseDescription'));
     }
 
     /**
@@ -145,7 +147,7 @@ class UserController extends Controller
                 'min:7',
                 'regex:/^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).*$/',
             ],
-            'role' => 'required',
+            'position' => 'required',
             'isActive' => 'required',
             'isStudent' => 'nullable',
         ]);
@@ -201,6 +203,6 @@ class UserController extends Controller
 
     private function setIsStudent(Request $request)
     {
-        return $request->input('role') === 'formando' ? 1 : 0;
+        return $request->input('position') === 'formando' ? 1 : 0;
     }
 }

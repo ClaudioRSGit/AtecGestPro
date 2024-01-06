@@ -34,12 +34,12 @@
 
             <div class="col-md-6">
                 <div class="mb-3">
-                    <label for="role" class="form-label">Função:</label>
-                    <select class="form-select" id="role" name="role" disabled>
-                        <option value="admin" {{ $user->role === 'admin' ? 'selected' : '' }}>Admin</option>
-                        <option value="user" {{ $user->role === 'user' ? 'selected' : '' }}>User</option>
-                        <option value="tecnico" {{ $user->role === 'tecnico' ? 'selected' : '' }}>Técnico</option>
-                        <option value="formando" {{ $user->role === 'formando' ? 'selected' : '' }}>Formando</option>
+                    <label for="position" class="form-label">Função:</label>
+                    <select class="form-select" id="position" name="position" disabled>
+                        <option value="admin" {{ $user->position === 'admin' ? 'selected' : '' }}>Admin</option>
+                        <option value="user" {{ $user->position === 'user' ? 'selected' : '' }}>User</option>
+                        <option value="tecnico" {{ $user->position === 'tecnico' ? 'selected' : '' }}>Técnico</option>
+                        <option value="formando" {{ $user->position === 'formando' ? 'selected' : '' }}>Formando</option>
                     </select>
                 </div>
 
@@ -55,15 +55,9 @@
                     </select>
                 </div>
 
-                <div class="mb-3">
+                <div class="mb-3" id="labelCourseDescription">
                     <label for="courseDescription" class="form-label">Curso:</label>
-                    <select class="form-select" id="courseDescription" name="courseDescription" disabled>
-                        @foreach($courses as $course)
-                            <option value="{{ $course->description }}" {{ $user->courseClass->course->description == $course->description ? 'selected' : '' }}>
-                                {{ $course->description }}
-                            </option>
-                        @endforeach
-                    </select>
+                    <input class="form-control" id="courseDescription" name="courseDescription" disabled value="{{ $courseDescription }}">
                 </div>
                 @endif
 
@@ -90,5 +84,12 @@
                     $(this).remove();
                 });
             }, 2000);
+
+        function updateCourseDescription(selectElement) {
+            var selectedOption = selectElement.options[selectElement.selectedIndex];
+            var courseDescription = selectedOption.getAttribute('data-course-description');
+            document.getElementById('courseDescription').value = courseDescription;
+        }
+        document.getElementById('course_class_id').dispatchEvent(new Event('change'));
     </script>
 @endsection

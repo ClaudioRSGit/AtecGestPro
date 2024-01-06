@@ -74,7 +74,6 @@
             });
 
             $("#criarTurmaBtn").click(function () {
-                console.log("Criar Turma button clicked");
                 document.getElementById('createCourseClassForm').submit();
             });
 
