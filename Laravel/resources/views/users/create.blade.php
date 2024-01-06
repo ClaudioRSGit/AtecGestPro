@@ -120,12 +120,6 @@
         });
     });
 
-    function saveId(selectElement) {
-        var selectedId = selectElement.value;
-        console.log(selectedId);
-
-    }
-
     function updateCourseDescription(selectElement) {
         var selectedOption = selectElement.options[selectElement.selectedIndex];
         var courseDescription = selectedOption.getAttribute('data-course-description');

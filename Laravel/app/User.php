@@ -27,6 +27,7 @@ class User extends Model
         'position',
         'isActive',
         'isStudent',
+        'course_class_id',
     ];
 
     use SoftDeletes;

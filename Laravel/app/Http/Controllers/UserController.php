@@ -102,14 +102,12 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        $courseClasses = CourseClass::where('id', $user->course_class_id)->first();
-        if ($courseClasses) {
-            $courses = Course::where('id', $courseClasses->course_id)->get();
-        } else {
-            $courses = collect();
-        }
+        $user->load('CourseClass.Course');
+        $courseClasses = CourseClass::all();
 
-        return view('users.show', compact('user', 'courseClasses', 'courses'));
+        $courseDescription = $user->CourseClass->course->description;
+
+        return view('users.show', compact('user', 'courseClasses', 'courseDescription'));
     }
 
     /**

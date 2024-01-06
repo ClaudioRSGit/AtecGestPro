@@ -62,12 +62,12 @@
 
                 <div class="col-md-6">
                     <div class="mb-3">
-                        <label for="role" class="form-label">Função:</label>
-                        <select class="form-select" id="role" name="role">
-                            <option value="admin" {{ $user->role === 'admin' ? 'selected' : '' }}>Admin</option>
-                            <option value="user" {{ $user->role === 'user' ? 'selected' : '' }}>User</option>
-                            <option value="tecnico" {{ $user->role === 'tecnico' ? 'selected' : '' }}>Técnico</option>
-                            <option value="formando" {{ $user->role === 'formando' ? 'selected' : '' }}>Formando</option>
+                        <label for="position" class="form-label">Função:</label>
+                        <select class="form-select" id="position" name="position">
+                            <option value="admin" {{ $user->position === 'admin' ? 'selected' : '' }}>Admin</option>
+                            <option value="user" {{ $user->position === 'user' ? 'selected' : '' }}>User</option>
+                            <option value="tecnico" {{ $user->position === 'tecnico' ? 'selected' : '' }}>Técnico</option>
+                            <option value="formando" {{ $user->position === 'formando' ? 'selected' : '' }}>Formando</option>
                         </select>
                     </div>
 
@@ -134,18 +134,18 @@
         $(document).ready(function() {
         $('#course_class_id, #courseDescription, #labelCourseClass, #labelCourseDescription').hide();
 
-        function toggleFieldsBasedOnRole() {
-            var selectedRole = $('#role').val();
+        function toggleFieldsBasedOnPosition() {
+            var selectedPosition = $('#position').val();
 
-            if (selectedRole === 'formando') {
+            if (selectedPosition === 'formando') {
                 $('#course_class_id, #courseDescription, #labelCourseClass, #labelCourseDescription').show();
             } else {
                 $('#course_class_id, #courseDescription, #labelCourseClass, #labelCourseDescription').hide();
             }
         }
-        toggleFieldsBasedOnRole();
+        toggleFieldsBasedOnPosition();
 
-        $('#role').change(toggleFieldsBasedOnRole);
+        $('#position').change(toggleFieldsBasedOnPosition);
     });
 
     </script>
