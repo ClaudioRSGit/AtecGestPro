@@ -3,29 +3,29 @@
 @section('content')
 
     <div class="container">
-    @if(session('success'))
-        <div class="alert alert-success" id="success-alert">
-            {{ session('success') }}
-        </div>
+        @if(session('success'))
+            <div class="alert alert-success" id="success-alert">
+                {{ session('success') }}
+            </div>
 
-        <script>
-            setTimeout(function() {
-                $('#success-alert').fadeOut('slow');
-            }, 3000);
-        </script>
-    @endif
+            <script>
+                setTimeout(function () {
+                    $('#success-alert').fadeOut('slow');
+                }, 3000);
+            </script>
+        @endif
 
-    @if(session('error'))
-        <div class="alert alert-danger" id="error-alert">
-            {{ session('error') }}
-        </div>
+        @if(session('error'))
+            <div class="alert alert-danger" id="error-alert">
+                {{ session('error') }}
+            </div>
 
-        <script>
-            setTimeout(function() {
-                $('#error-alert').fadeOut('slow');
-            }, 3000);
-        </script>
-    @endif
+            <script>
+                setTimeout(function () {
+                    $('#error-alert').fadeOut('slow');
+                }, 3000);
+            </script>
+        @endif
 
 
         <h1>Formações de mercado</h1>
@@ -38,7 +38,7 @@
                 <a class="nav-link" data-toggle="tab" href="#partnersTable">Gestão de Parceiros</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#trainingsTable">Gestão de formação</a>
+                <a class="nav-link" data-toggle="tab" href="#trainingsTable">Gestão de Formação</a>
             </li>
         </ul>
 
@@ -48,14 +48,15 @@
             <div class="tab-pane fade show active" id="externalTable">
 
                 <div class=" d-flex">
-                    <input type="text" id="searchInput" class="form-control mr-2" style="max-width: fit-content" placeholder="Insira para procurar...">
+                    <input type="text" id="searchInput" class="form-control mr-2" style="max-width: fit-content"
+                           placeholder="Insira para procurar...">
 
                     <button class="btn btn-danger mb-3 mr-2" id="delete-selected-ptus">Excluir Selecionados</button>
 
 
-                <a href="{{ route('external.create') }}" class="btn btn-primary mb-3 ">Nova Formação</a>
+                    <a href="{{ route('external.create') }}" class="btn btn-primary mb-3 ">Nova Formação</a>
 
-            </div>
+                </div>
 
                 <table class="table bg-white" id="externalTable">
                     <thead>
@@ -224,8 +225,20 @@
             </div>
 
             <div class="tab-pane fade" id="trainingsTable">
-                <a href="{{ route('trainings.create') }}" class="btn btn-primary mb-3">Nova Formação</a>
-                <button class="btn btn-danger mb-3" id="delete-selected-trainings">Excluir Selecionados</button>
+
+
+                
+
+                <div class=" d-flex">
+                    <input type="text" id="searchInputTrainings" class="form-control mr-2" style="max-width: fit-content"
+                           placeholder="Insira para procurar...">
+
+                    <button class="btn btn-danger mb-3 mr-2" id="delete-selected-trainings">Excluir Selecionados</button>
+
+
+                    <a href="{{ route('trainings.create') }}" class="btn btn-primary mb-3">Nova Formação</a>
+
+                </div>
 
                 <table class="table bg-white">
                     <thead>
@@ -239,7 +252,7 @@
                         <th scope="col">Ações</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="trainingsTable">
                     <tr class="filler"></tr>
                     @foreach($trainings as $training)
                         <tr class="customTableStyling"
@@ -492,6 +505,7 @@
     </script>
 
     <script>
+        // search ptus
         $(document).ready(function () {
             $('#searchInput').on('input', function () {
                 const searchText = $(this).val().toLowerCase();
@@ -505,5 +519,19 @@
         });
     </script>
 
+    <script>
+        // search trainings
+        $(document).ready(function () {
+            $('#searchInputTrainings').on('input', function () {
+                const searchText = $(this).val().toLowerCase();
+
+                $('#trainingsTable tbody tr').each(function () {
+                    const rowText = $(this).text().toLowerCase();
+
+                    $(this).toggle(rowText.includes(searchText));
+                });
+            });
+        });
+    </script>
 
 @endsection
