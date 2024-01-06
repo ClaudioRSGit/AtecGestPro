@@ -2,6 +2,31 @@
 
 @section('content')
     <div class="container">
+        @if(session('success'))
+            <div class="alert alert-success" id="success-alert" style="display: none;">
+                {{ session('success') }}
+            </div>
+
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+                $(document).ready(function() {
+                    $('#success-alert').fadeIn('slow').delay(3000).fadeOut('slow');
+                });
+            </script>
+        @endif
+
+        @if(session('error'))
+            <div class="alert alert-danger" id="error-alert" style="display: none;">
+                {{ session('error') }}
+            </div>
+
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+                $(document).ready(function() {
+                    $('#error-alert').fadeIn('slow').delay(3000).fadeOut('slow');
+                });
+            </script>
+        @endif
         <h1>Formações de mercado</h1>
 
         <ul class="nav nav-tabs mb-3" id="myTabs">
