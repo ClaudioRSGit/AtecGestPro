@@ -7,9 +7,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Material_Training;
 use App\Material_Clothing_Delivery;
 use App\Clothing_Delivery;
+use ShiftOneLabs\LaravelCascadeDeletes\CascadesDeletes;
+
+
 
 class Material extends Model
 {
+    use CascadesDeletes;
+
+    protected $cascadeDeletes = ['material__trainings'];
+
     protected $fillable = [
         'name',
         'description',
