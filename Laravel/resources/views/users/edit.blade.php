@@ -64,29 +64,35 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="roleFilter" class="form-label">Função:</label>
-                        <select class="form-control" id="roleFilter" name="roleFilter" onchange="toggleCourseClassDiv()">
+                        <select class="form-control" id="roleFilter" name="roleFilter"
+                                onchange="toggleCourseClassDiv()">
                             @foreach($roles as $role)
                                 <option value="{{ $role->name }}"
-                                    {{ (old('roleFilter') ?: optional($user->Role_User->first())->role->name) == $role->name ? 'selected' : '' }}>
+                                        @foreach($user->Role_User as $roleUser)
+                                            @if ($roleUser->role->description == $role->description)
+                                                selected
+                                    @endif
+                                    @endforeach>
                                     {{ $role->description }}
+                                </option>
+                            @endforeach
+
+                        </select>
+                    </div>
+
+
+                    <div class="mb-3" id="labelCourseClass">
+                        <label for="course_class_id" class="form-label">Turma:</label>
+                        <select class="form-select" id="course_class_id" name="course_class_id">
+                            @foreach ($courseClasses as $class)
+                                <option
+                                    value="{{ $class->id }}" {{ old('course_class_id', $user->course_class_id) == $class->id ? 'selected' : '' }}>
+                                    {{ $class->description }}
                                 </option>
                             @endforeach
                         </select>
                     </div>
 
-
-
-                        <div class="mb-3" id="labelCourseClass" >
-                            <label for="course_class_id" class="form-label">Turma:</label>
-                            <select class="form-select" id="course_class_id" name="course_class_id">
-                                @foreach ($courseClasses as $class)
-                                    <option
-                                        value="{{ $class->id }}" {{ $user->course_class_id == $class->id ? 'selected' : '' }}>
-                                        {{ $class->description }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </div>
 
 
                     <div class="mb-3">
@@ -130,8 +136,10 @@
             const selectedRole = $("#roleFilter").val();
             if (selectedRole === "formando") {
                 $("#labelCourseClass").show();
+                $("#password").closest(".mb-3").hide();
             } else {
                 $("#labelCourseClass").hide();
+                $("#password").closest(".mb-3").show();
             }
         }
 
