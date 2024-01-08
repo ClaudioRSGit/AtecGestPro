@@ -29,10 +29,9 @@
                 <div>
                     <select class="form-control" id="positionFilter" name="positionFilter">
                         <option value="">Todas as Funções</option>
-                        <option value="admin">Admin</option>
-                        <option value="user">User</option>
-                        <option value="tecnico">Técnico</option>
-                        <option value="formando">Formando</option>
+                        @foreach($roles as $role)
+                            <option value="{{ $role->name }}">{{ $role->description }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <a href="{{ route('users.create') }}" class="btn btn-primary">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Role;
 use App\User;
 use App\CourseClass;
 use App\Course;
@@ -32,12 +33,13 @@ class UserController extends Controller
         }
 
         $users = $query->paginate(5);
+        $roles = Role::all();
 
         if ($request->ajax()) {
-            return view('users.partials.user_table', compact('users'));
+            return view('users.partials.user_table', compact('users', 'roles'));
         }
 
-        return view('users.index', compact('users'));
+        return view('users.index', compact('users', 'roles'));
     }
 
     /**
