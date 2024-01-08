@@ -63,11 +63,10 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="position" class="form-label">Função:</label>
-                        <select class="form-select" id="position" name="position">
-                            <option value="admin" {{ $user->position === 'admin' ? 'selected' : '' }}>Admin</option>
-                            <option value="user" {{ $user->position === 'user' ? 'selected' : '' }}>User</option>
-                            <option value="tecnico" {{ $user->position === 'tecnico' ? 'selected' : '' }}>Técnico</option>
-                            <option value="formando" {{ $user->position === 'formando' ? 'selected' : '' }}>Formando</option>
+                        <select class="form-control" id="positionFilter" name="roleFilter" onchange="toggleCourseClassDiv()">
+                            @foreach($roles as $role)
+                                <option value="{{ $role->name }}">{{ $role->description }}</option>
+                            @endforeach
                         </select>
                     </div>
 
@@ -76,8 +75,7 @@
                             <label for="course_class_id" class="form-label">Turma:</label>
                             <select class="form-select" id="course_class_id" name="course_class_id">
                                 @foreach ($courseClasses as $class)
-                                    <option value="{{ $class->id }}"
-                                        {{ $user->course_class_id == $class->id ? 'selected' : '' }}>
+                                    <option value="{{ $class->id }}" {{ $user->course_class_id == $class->id ? 'selected' : '' }}>
                                         {{ $class->description }}
                                     </option>
                                 @endforeach
@@ -89,13 +87,14 @@
                             <select class="form-select" id="courseDescription" name="courseDescription">
                                 @foreach ($courses as $course)
                                     <option value="{{ $course->description }}"
-                                        {{ $user->courseClass->course->description == $course->description ? 'selected' : '' }}>
+                                        {{ optional($user->courseClass)->course->description ?? null == $course->description ? 'selected' : '' }}>
                                         {{ $course->description }}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
                     @endif
+
 
                     <div class="mb-3">
                         <label for="isActive" class="form-label">Estado:</label>
@@ -113,7 +112,9 @@
                     </div>
                 </div>
 
+
             </div>
+
     </div>
     </form>
     <form id="deleteForm" action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline">
@@ -129,7 +130,6 @@
         }
     </style>
 
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
         $(document).ready(function() {
         $('#course_class_id, #courseDescription, #labelCourseClass, #labelCourseDescription').hide();
@@ -148,5 +148,19 @@
         $('#position').change(toggleFieldsBasedOnPosition);
     });
 
+    </script>
+
+    <script>
+        function toggleCourseClassDiv() {
+            var selectedRole = $("#positionFilter").val();
+            if (selectedRole === "formando") {
+                $("#labelCourseClass").show();
+            } else {
+                $("#labelCourseClass").hide();
+            }
+        }
+
+        function updateCourseDescription(select) {
+        }
     </script>
 @endsection

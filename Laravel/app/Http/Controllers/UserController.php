@@ -20,8 +20,11 @@ class UserController extends Controller
     {
         $positionFilter = $request->input('positionFilter');
         $nameFilter = $request->input('nameFilter');
+        $courseClasses = CourseClass::all();
+        $role_users = Role_User::all();
+        $roles = Role::all();
 
-        $query = User::query();
+        $query = User::with('CourseClass.Course', 'Role_User.Role');
 
         if ($positionFilter) {
             $query->where('position', $positionFilter);
@@ -34,13 +37,13 @@ class UserController extends Controller
         }
 
         $users = $query->paginate(5);
-        $roles = Role::all();
+
 
         if ($request->ajax()) {
-            return view('users.partials.user_table', compact('users', 'roles'));
+            return view('users.partials.user_table', compact('users', 'courseClasses', 'role_users', 'roles'));
         }
 
-        return view('users.index', compact('users', 'roles'));
+        return view('users.index', compact('users', 'courseClasses', 'role_users', 'roles'));
     }
 
     /**
@@ -89,7 +92,6 @@ class UserController extends Controller
             $role_id = 5;
         }
 
-//        dd($request);
         try {
             $request->validate([
                 'name' => 'required|string|min:5|max:255',
@@ -107,12 +109,13 @@ class UserController extends Controller
                 ],
                 'isStudent' => 'required',
                 'isActive' => 'required',
+                'course_class_id' => 'nullable',
             ]);
 
 
 
 
-            $userData = $request->only(['name', 'username', 'email', 'contact', 'password', 'isStudent', 'isActive']);
+            $userData = $request->only(['name', 'username', 'email', 'contact', 'password', 'isStudent', 'isActive', 'course_class_id']);
             $userData['password'] = $this->encryptPassword($userData['password']);
 
 
@@ -131,7 +134,7 @@ class UserController extends Controller
         } catch (\Illuminate\Validation\ValidationException $e) {
             return redirect()->back()->withErrors($e->validator)->withInput();
         } catch (\Exception $e) {
-            return redirect()->back();
+            return redirect()->back()->with('error', 'Erro ao criar o utilizador. Por favor, tente novamente.');
         }
     }
 
@@ -144,15 +147,21 @@ class UserController extends Controller
     public function show(User $user)
     {
         $courseClasses = CourseClass::all();
+        $role_users = Role_User::all();
+//        $user->load('CourseClass.Course', 'Role_user.Role');
+
 
         if ($user->isStudent && $user->CourseClass) {
-            $user->load('CourseClass.Course');
+            $user->load('CourseClass.Course', 'Role_User.Role');
             $courseDescription = $user->CourseClass->course->description;
+         //   dd($user->CourseClass->course->description  );
+//            dd($user->Role_User);
         } else {
+            $user->load('Role_User.Role');
             $courseDescription = null;
         }
 
-        return view('users.show', compact('user', 'courseClasses', 'courseDescription'));
+        return view('users.show', compact('user', 'courseClasses', 'courseDescription', 'role_users'));
     }
 
 
@@ -166,8 +175,9 @@ class UserController extends Controller
     {
         $courseClasses = CourseClass::all();
         $courses = Course::all();
+        $roles = Role::all();
 
-        return view('users.edit', compact('user', 'courseClasses', 'courses'));
+        return view('users.edit', compact('user', 'courseClasses', 'courses', 'roles'));
     }
 
     /**
@@ -179,6 +189,33 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+
+//        dd($request->all());
+        $role = $request->input('roleFilter');
+
+        if ($role == "formando") {
+            $request['isStudent'] = 1;
+            $role_id = 3;
+        } else {
+            $request['isStudent'] = 0;
+        }
+
+
+        if ($role == "admin") {
+            $role_id = 1;
+        } else if ($role == "administrador") {
+            $role_id = 1;
+        } else if ($role == "user") {
+            $role_id = 2;
+        } else if ($role == "tecnico") {
+            $role_id = 4;
+        } else if ($role == "funcionario") {
+            $role_id = 5;
+        } else if ($role == "formando") {
+            $role_id = 3;
+        }
+
+
         $request->validate([
             'name' => 'required|string|min:5|max:255',
             'username' => 'required|string|min:5|max:20',
@@ -193,13 +230,23 @@ class UserController extends Controller
                 'min:7',
                 'regex:/^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).*$/',
             ],
-            'position' => 'required',
+            'position' => 'nullable',
             'isActive' => 'required',
-            'isStudent' => 'nullable',
+            'isStudent' => 'required',
         ]);
 
-        $request['isStudent'] = $this->setIsStudent($request);
         $user->update($request->except('password'));
+
+        $existingRoleUser = Role_User::where('user_id', $user->id)->first();
+
+        if ($existingRoleUser) {
+            $existingRoleUser->update(['role_id' => $role_id]);
+        } else {
+            Role_User::create([
+                'role_id' => $role_id,
+                'user_id' => $user->id,
+            ]);
+        }
 
         if ($request->has('password')) {
             $user->password = $this->encryptPassword($request['password']);
