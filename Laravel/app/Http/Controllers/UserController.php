@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Role;
+use App\Role_User;
 use App\User;
 use App\CourseClass;
 use App\Course;
@@ -51,18 +52,44 @@ class UserController extends Controller
     {
         $courseClasses = CourseClass::all();
         $courses = Course::all();
+        $roles = Role::all();
 
-        return view('users.create', compact('courseClasses', 'courses'));
+        return view('users.create', compact('courseClasses', 'courses', 'roles'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
+
+
+        $role = $request->input('roleFilter');
+
+
+        if ($role == "formando") {
+            $request['isStudent'] = 1;
+            $role_id = 3;
+        } else {
+            $request['isStudent'] = 0;
+        }
+
+        if ($role == "admin") {
+            $role_id = 1;
+        } else if ($role == "administrador") {
+            $role_id = 1;
+        } else if ($role == "user") {
+            $role_id = 2;
+        } else if ($role == "tecnico") {
+            $role_id = 4;
+        } else if ($role == "funcionario") {
+            $role_id = 5;
+        }
+
+//        dd($request);
         try {
             $request->validate([
                 'name' => 'required|string|min:5|max:255',
@@ -78,14 +105,26 @@ class UserController extends Controller
                     'min:7',
                     'regex:/^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).*$/',
                 ],
-                'position' => 'required',
+                'isStudent' => 'required',
                 'isActive' => 'required',
-                'isStudent' => 'nullable',
             ]);
 
-            $request['isStudent'] = $this->setIsStudent($request);
-            $request['password'] = $this->encryptPassword($request['password']);
-            $user = User::create($request->all());
+
+
+
+            $userData = $request->only(['name', 'username', 'email', 'contact', 'password', 'isStudent', 'isActive']);
+            $userData['password'] = $this->encryptPassword($userData['password']);
+
+
+            $user = User::create($userData);
+
+
+            $role_user = Role_User::create([
+                'role_id' => $role_id,
+                'user_id' => $user->id,
+            ]);
+
+
 
             return redirect()->route('users.show', $user->id)->with('success', 'Utilizador criado com sucesso!');
 
@@ -99,23 +138,28 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\User  $user
+     * @param \App\User $user
      * @return \Illuminate\Http\Response
      */
     public function show(User $user)
     {
-        $user->load('CourseClass.Course');
         $courseClasses = CourseClass::all();
 
-        $courseDescription = $user->CourseClass->course->description;
+        if ($user->isStudent && $user->CourseClass) {
+            $user->load('CourseClass.Course');
+            $courseDescription = $user->CourseClass->course->description;
+        } else {
+            $courseDescription = null;
+        }
 
         return view('users.show', compact('user', 'courseClasses', 'courseDescription'));
     }
 
+
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\User  $user
+     * @param \App\User $user
      * @return \Illuminate\Http\Response
      */
     public function edit(User $user)
@@ -129,8 +173,8 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\User  $user
+     * @param \Illuminate\Http\Request $request
+     * @param \App\User $user
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, User $user)
@@ -168,7 +212,7 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\User  $user
+     * @param \App\User $user
      * @return \Illuminate\Http\Response
      */
     public function destroy(User $user)

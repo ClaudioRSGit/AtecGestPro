@@ -66,11 +66,10 @@
                 <div class="col-md-6 d-flex flex-column">
                     <div class="mb-3">
                         <label for="position" class="form-label">Função:</label>
-                        <select class="form-select" id="position" name="position">
-                            <option value="admin">Admin</option>
-                            <option value="user">User</option>
-                            <option value="tecnico">Técnico</option>
-                            <option value="formando">Formando</option>
+                        <select class="form-control" id="positionFilter" name="roleFilter">
+                            @foreach($roles as $role)
+                                <option value="{{ $role->name }}">{{ $role->description }}</option>
+                            @endforeach
                         </select>
                     </div>
 

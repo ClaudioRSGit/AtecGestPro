@@ -8,6 +8,11 @@ use App\User;
 
 class Role_User extends Model
 {
+
+    protected $fillable = [
+        'role_id',
+        'user_id',
+    ];
     public function role()
     {
         return $this->belongsTo(Role::class);
