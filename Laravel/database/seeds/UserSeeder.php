@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
             'position' => 'admin',
             'isActive' => true,
             'isStudent' => false,
-            'course_class_id' => 1,
+            'course_class_id' => null,
         ]);
         // Seed 1
         DB::table('users')->insert([
@@ -34,7 +34,7 @@ class UserSeeder extends Seeder
             'position' => 'admin',
             'isActive' => true,
             'isStudent' => false,
-            'course_class_id' => 1,
+            'course_class_id' => null,
         ]);
         // Seed 2
         DB::table('users')->insert([
@@ -46,7 +46,7 @@ class UserSeeder extends Seeder
             'position' => 'user',
             'isActive' => true,
             'isStudent' => true,
-            'course_class_id' => 2,
+            'course_class_id' => null,
         ]);
 
         // Seed 3

@@ -66,17 +66,7 @@
                         <td>{{ $user->username }}</td>
                         <td>{{ $user->email }}</td>
                         <td>
-                            @if ($user->position == 'user')
-                                User
-                            @elseif($user->position == 'admin')
-                                Administrador
-                            @elseif($user->position == 'formando')
-                                Formando
-                            @elseif($user->position == 'tecnico')
-                                Técnico
-                            @else
-                                {{ $user->position }}
-                            @endif
+                            {{$role_users->where('user_id', $user->id)->first()->role->description}}
                         </td>
 
                         <td>{{ $user->isActive == 1 ? 'Sim' : 'Não' }}</td>
