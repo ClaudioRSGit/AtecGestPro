@@ -92,6 +92,7 @@ class UserController extends Controller
             $role_id = 5;
         }
 
+        //dd($request->all());
         try {
             $request->validate([
                 'name' => 'required|string|min:5|max:255',
@@ -102,11 +103,12 @@ class UserController extends Controller
                 ],
                 'contact' => 'required|min:9|max:20',
                 'password' => [
-                    'nullable',
+                    $request->input('password') != null ? 'required' : 'nullable',
                     'string',
                     'min:7',
                     'regex:/^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).*$/',
                 ],
+
                 'isStudent' => 'required',
                 'isActive' => 'required',
                 'course_class_id' => 'nullable',
@@ -226,7 +228,7 @@ class UserController extends Controller
             ],
             'contact' => 'required|min:9|max:20',
             'password' => [
-                'nullable',
+                $request->input('password') != null ? 'required' : 'nullable',
                 'string',
                 'min:7',
                 'regex:/^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).*$/',
