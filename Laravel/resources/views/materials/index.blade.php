@@ -12,6 +12,12 @@
 
             </form>
             <div class="buttons">
+                <div>
+                    <select class="form-control" id="sort">
+                        <option value="az">A-Z</option>
+                        <option value="za">Z-A</option>
+                    </select>
+                </div>
                 <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
                 <div>
                     <select class="form-control" id="filter">
@@ -117,11 +123,36 @@
             const searchInput = document.getElementById('search');
             const filterDropdown = document.getElementById('filter');
 
+            const sortDropdown = document.getElementById('sort');
+
+            sortDropdown.addEventListener('change', function () {
+                sortMaterials();
+            });
+
             selectAllCheckbox.addEventListener('change', function () {
                 checkboxes.forEach(checkbox => {
                     checkbox.checked = selectAllCheckbox.checked;
                 });
             });
+
+            function sortMaterials() {
+                const sortValue = sortDropdown.value;
+                const materialRows = Array.from(document.querySelectorAll('.material-row'));
+
+                materialRows.sort((a, b) => {
+                    const aName = a.querySelector('a').textContent.toLowerCase();
+                    const bName = b.querySelector('a').textContent.toLowerCase();
+
+                    if (sortValue === 'az') {
+                        return aName.localeCompare(bName);
+                    } else {
+                        return bName.localeCompare(aName);
+                    }
+                });
+
+                const tbody = document.querySelector('tbody');
+                materialRows.forEach(row => tbody.appendChild(row));
+            }
 
             checkboxes.forEach(checkbox => {
                 checkbox.addEventListener('change', function () {
