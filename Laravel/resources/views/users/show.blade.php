@@ -33,15 +33,15 @@
             </div>
 
             <div class="col-md-6">
-                <div class="mb-3">
-                    <label for="position" class="form-label">Função:</label>
-                    <select class="form-select" id="position" name="position" disabled>
-                        <option value="admin" {{ $user->position === 'admin' ? 'selected' : '' }}>Admin</option>
-                        <option value="user" {{ $user->position === 'user' ? 'selected' : '' }}>User</option>
-                        <option value="tecnico" {{ $user->position === 'tecnico' ? 'selected' : '' }}>Técnico</option>
-                        <option value="formando" {{ $user->position === 'formando' ? 'selected' : '' }}>Formando</option>
-                    </select>
-                </div>
+
+
+
+                    <div class="mb-3" id="role">
+                        <label for="role" class="form-label">Função:</label>
+                        <input class="form-control" id="role" name="courseDescription" disabled value="{{$role_users->where('user_id', $user->id)->first()->role->description}}">
+                    </div>
+
+
 
                 @if ($user->isStudent == 1)
                 <div class="mb-3">

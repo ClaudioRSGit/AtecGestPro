@@ -66,14 +66,14 @@
                 <div class="col-md-6 d-flex flex-column">
                     <div class="mb-3">
                         <label for="position" class="form-label">Função:</label>
-                        <select class="form-control" id="positionFilter" name="roleFilter">
+                        <select class="form-control" id="positionFilter" name="roleFilter" onchange="toggleCourseClassDiv()">
                             @foreach($roles as $role)
                                 <option value="{{ $role->name }}">{{ $role->description }}</option>
                             @endforeach
                         </select>
                     </div>
 
-                    <div class="mb-3" id="labelCourseClass">
+                    <div class="mb-3" id="labelCourseClass" style="display: none;">
                         <label for="course_class_id" class="form-label">Turma:</label>
                         <select class="form-select" id="course_class_id" name="course_class_id" onchange="updateCourseDescription(this)">
                             @foreach($courseClasses as $class)
@@ -82,10 +82,7 @@
                         </select>
                     </div>
 
-                    <div class="mb-3" id="labelCourseDescription">
-                        <label for="courseDescription" class="form-label">Curso:</label>
-                        <input class="form-control" id="courseDescription" name="courseDescription" disabled>
-                    </div>
+
 
                     <div class="mb-3">
                         <label for="isActive" class="form-label">Estado:</label>
@@ -101,31 +98,23 @@
                     <button type="submit" class="btn btn-primary">Criar Utilizador</button>
                     <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
                 </div>
+            </div>
         </form>
     </div>
 
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('#course_class_id, #courseDescription, #labelCourseClass, #labelCourseDescription').hide();
-        $('#position').change(function () {
-            var selectedPosition = $(this).val();
-
-            if (selectedPosition === 'formando') {
-                $('#course_class_id, #courseDescription, #labelCourseClass, #labelCourseDescription').show();
+    <script>
+        function toggleCourseClassDiv() {
+            var selectedRole = $("#positionFilter").val();
+            if (selectedRole === "formando") {
+                $("#labelCourseClass").show();
             } else {
-                $('#course_class_id, #courseDescription, #labelCourseClass, #labelCourseDescription').hide();
+                $("#labelCourseClass").hide();
             }
-        });
-    });
+        }
 
-    function updateCourseDescription(selectElement) {
-        var selectedOption = selectElement.options[selectElement.selectedIndex];
-        var courseDescription = selectedOption.getAttribute('data-course-description');
-        document.getElementById('courseDescription').value = courseDescription;
-    }
-    document.getElementById('course_class_id').dispatchEvent(new Event('change'));
-</script>
+        function updateCourseDescription(select) {
+        }
+    </script>
 
 
 @endsection
