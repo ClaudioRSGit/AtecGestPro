@@ -31,9 +31,6 @@
 
 
         <div>
-            @csrf
-            @method('delete')
-
             <table class="table bg-white rounded-top">
                 <thead>
                     <tr>
