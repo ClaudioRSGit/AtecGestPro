@@ -13,6 +13,7 @@ class ClothingController extends Controller
     {
         $courseClasses = CourseClass::with('students')->paginate(5);
         $courses = Course::all();
-        return view('clothing.index', compact('courseClasses', 'courses'));
+        $nonDocents = User::all()->where('isStudent', false)->where('position', '!=', 'formando');
+        return view('clothing.index', compact('courseClasses', 'courses', 'nonDocents'));
     }
 }
