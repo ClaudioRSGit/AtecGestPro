@@ -4,6 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Email;
 use App\Action;
 use App\Technician_Ticket;
@@ -16,8 +18,10 @@ use App\Clothing_Delivery;
 use App\Ticket_History;
 
 
-class User extends Model
+class User extends Authenticatable
 {
+    use Notifiable, SoftDeletes;
+
     protected $fillable = [
         'name',
         'username',
@@ -29,8 +33,6 @@ class User extends Model
         'isStudent',
         'course_class_id',
     ];
-
-    use SoftDeletes;
 
     public function emails()
     {
