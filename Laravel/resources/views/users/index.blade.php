@@ -27,7 +27,7 @@
             <div class="buttons">
                 <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
                 <div>
-                    <select class="form-control" id="positionFilter" name="positionFilter">
+                    <select class="form-control" id="roleFilter" name="roleFilter">
                         <option value="">Todas as Funções</option>
                         @foreach($roles as $role)
                             <option value="{{ $role->name }}">{{ $role->description }}</option>
@@ -58,7 +58,7 @@
             <tbody>
                 <tr class="filler"></tr>
                 @foreach ($users as $user)
-                    <tr class="user-row customTableStyling" data-position="{{ strtolower($user->position) }}" onclick="location.href='{{ route('users.show', $user->id) }}'">
+                    <tr class="user-row customTableStyling" data-position="{{ strtolower($user->position) }}" data-role="{{ strtolower($role_users->where('user_id', $user->id)->first()->role->name) }}" onclick="location.href='{{ route('users.show', $user->id) }}'">
                         <td>
                             <input type="checkbox" class="no-propagate" name="selectedUsers[]" value="{{ $user->id }}">
                         </td>
@@ -109,7 +109,7 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             const nameFilterInput = document.getElementById('nameFilter');
-            const positionFilterSelect = document.getElementById('positionFilter');
+            const roleFilterSelect = document.getElementById('roleFilter');
             const userTable = document.getElementById('userTable');
             const userRows = userTable.querySelectorAll('tbody tr');
             const selectAllCheckbox = document.getElementById('select-all');
@@ -120,7 +120,7 @@
                 filterUsers();
             });
 
-            positionFilterSelect.addEventListener('change', function() {
+            roleFilterSelect.addEventListener('change', function() {
                 console.log('Função do Filtro Alterada');
                 filterUsers();
             });
@@ -171,22 +171,24 @@
                 console.log('Filtrando Usuários...');
 
                 const nameFilter = nameFilterInput.value.toLowerCase();
-                const positionFilter = positionFilterSelect.value;
+                const roleFilter = roleFilterSelect.value;
 
                 userRows.forEach(userRow => {
                     const userNameElement = userRow.querySelector('td:nth-child(2)');
+                    const userRoleElement = userRow.getAttribute('data-role');
 
-                    if (userNameElement) {
+                    if (userNameElement && userRoleElement) {
                         const userName = userNameElement.textContent.toLowerCase();
-                        const userPosition = userRow.getAttribute('data-position');
+                        const userRole = userRoleElement.toLowerCase();
 
                         const matchesName = userName.includes(nameFilter);
-                        const matchesPosition = positionFilter === '' || userPosition === positionFilter;
+                        const matchesRole = roleFilter === '' || userRole === roleFilter;
 
-                        userRow.style.display = matchesName && matchesPosition ? '' : 'none';
+                        userRow.style.display = matchesName && matchesRole ? '' : 'none';
                     }
                 });
             }
+
         });
 
         window.setTimeout(function() {

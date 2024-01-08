@@ -65,13 +65,16 @@
 
                 <div class="col-md-6 d-flex flex-column">
                     <div class="mb-3">
-                        <label for="position" class="form-label">Função:</label>
-                        <select class="form-control" id="positionFilter" name="roleFilter" onchange="toggleCourseClassDiv()">
+                        <label for="roleFilter" class="form-label">Função:</label>
+                        <select class="form-control" id="roleFilter" name="roleFilter" onchange="toggleCourseClassDiv()">
                             @foreach($roles as $role)
-                                <option value="{{ $role->name }}">{{ $role->description }}</option>
+                                <option value="{{ $role->name }}" {{ old('roleFilter') == $role->name ? 'selected' : '' }}>
+                                    {{ $role->description }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
+
 
                     <div class="mb-3" id="labelCourseClass" style="display: none;">
                         <label for="course_class_id" class="form-label">Turma:</label>
@@ -104,7 +107,7 @@
 
     <script>
         function toggleCourseClassDiv() {
-            var selectedRole = $("#positionFilter").val();
+            var selectedRole = $("#roleFilter").val();
             if (selectedRole === "formando") {
                 $("#labelCourseClass").show();
             } else {

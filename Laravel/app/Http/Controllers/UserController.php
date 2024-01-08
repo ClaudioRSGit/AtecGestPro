@@ -176,6 +176,7 @@ class UserController extends Controller
         $courseClasses = CourseClass::all();
         $courses = Course::all();
         $roles = Role::all();
+        $user->load('CourseClass.Course', 'Role_User.Role');
 
         return view('users.edit', compact('user', 'courseClasses', 'courses', 'roles'));
     }
