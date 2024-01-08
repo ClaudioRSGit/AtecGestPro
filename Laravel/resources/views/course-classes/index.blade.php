@@ -123,10 +123,10 @@
             const sortDropdown = document.getElementById('sort');
 
             sortDropdown.addEventListener('change', function() {
-                sortMaterials();
+                sortCourseClass();
             });
 
-            function sortMaterials() {
+            function sortCourseClass() {
                 const sortValue = sortDropdown.value;
                 const materialRows = Array.from(document.querySelectorAll('.card'));
 
