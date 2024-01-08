@@ -82,14 +82,14 @@
                                        value="{{ $partner_Training_User->id }}">
                             </td>
                             <td class="{{ optional($partner_Training_User->partner)->name ? '' : 'text-danger' }}">
-                                {{ optional($partner_Training_User->partner)->name ?? 'O parceiro foi apagada do sistema.' }}
+                                {{ optional($partner_Training_User->partner)->name ?? 'O Parceiro foi apagado do sistema.' }}
                             </td>
 
 
                             <td>{{ optional($partner_Training_User->partner)->address }}</td>
                             <td>{{ optional($partner_Training_User->user)->name }}</td>
                             <td class="{{ optional($partner_Training_User->training)->name ? '' : 'text-danger' }}">
-                                {{ optional($partner_Training_User->training)->name ?: 'A formação foi apagada do sistema' }}
+                                {{ optional($partner_Training_User->training)->name ?: 'A Formação foi apagada do sistema' }}
                             </td>
 
                             <td>{{ $partner_Training_User->start_date }}</td>
@@ -133,9 +133,11 @@
             </div>
 
             <div class="tab-pane fade" id="partnersTable">
-                <div class="mb-3">
+                <div class="d-flex">
+                    <input type="text" id="searchInputPartners" class="form-control mr-2" style="max-width: fit-content"
+                           placeholder="Insira para procurar...">
+                    <button class="btn btn-danger mr-2" id="delete-selected">Excluir Selecionados</button>
                     <a href="{{ route('partners.create') }}" class="btn btn-primary">Novo Parceiro</a>
-                    <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
                 </div>
                 <table class="table bg-white">
                     <thead>
@@ -227,7 +229,7 @@
             <div class="tab-pane fade" id="trainingsTable">
 
 
-                
+
 
                 <div class=" d-flex">
                     <input type="text" id="searchInputTrainings" class="form-control mr-2" style="max-width: fit-content"
@@ -533,5 +535,20 @@
             });
         });
     </script>
+
+<script>
+    // search Partners
+    $(document).ready(function () {
+        $('#searchInputPartners').on('input', function () {
+            const searchText = $(this).val().toLowerCase();
+
+            $('#partnersTable tbody tr').each(function () {
+                const rowText = $(this).text().toLowerCase();
+
+                $(this).toggle(rowText.includes(searchText));
+            });
+        });
+    });
+</script>
 
 @endsection
