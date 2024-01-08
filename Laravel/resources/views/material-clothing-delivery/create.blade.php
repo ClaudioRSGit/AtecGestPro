@@ -20,6 +20,12 @@
 
             </form>
             <div class="buttons">
+                <div>
+                    <select class="form-control" id="sort">
+                        <option value="az">A-Z</option>
+                        <option value="za">Z-A</option>
+                    </select>
+                </div>
 
                 <div>
                     <select class="form-control" id="filter" disabled>
@@ -54,9 +60,7 @@
                 </thead>
                 <tbody>
                     @forelse  ($clothing_assignment as $clothing_assignment)
-                        <tr class="material-row"
-
-                                data-trainee="{{ $clothing_assignment->role == 3 ? 1 : 0 }}">
+                        <tr class="material-row" data-trainee="{{ $clothing_assignment->role == 3 ? 1 : 0 }}">
 
                             <td>
                                 <div class="form-check">
@@ -161,6 +165,30 @@
             const checkboxes = document.querySelectorAll('.form-check-input');
             const searchInput = document.getElementById('search');
             const filterDropdown = document.getElementById('filter');
+            const sortDropdown = document.getElementById('sort');
+
+            sortDropdown.addEventListener('change', function() {
+                sortMaterials();
+            });
+
+            function sortMaterials() {
+                const sortValue = sortDropdown.value;
+                const materialRows = Array.from(document.querySelectorAll('.material-row'));
+
+                materialRows.sort((a, b) => {
+                    const aName = a.querySelector('a').textContent.toLowerCase();
+                    const bName = b.querySelector('a').textContent.toLowerCase();
+
+                    if (sortValue === 'az') {
+                        return aName.localeCompare(bName);
+                    } else {
+                        return bName.localeCompare(aName);
+                    }
+                });
+
+                const tbody = document.querySelector('tbody');
+                materialRows.forEach(row => tbody.appendChild(row));
+            }
 
 
 

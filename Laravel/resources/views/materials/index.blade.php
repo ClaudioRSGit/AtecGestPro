@@ -122,17 +122,10 @@
             const checkboxes = document.querySelectorAll('input[name="selectedMaterials[]"]');
             const searchInput = document.getElementById('search');
             const filterDropdown = document.getElementById('filter');
-
             const sortDropdown = document.getElementById('sort');
 
             sortDropdown.addEventListener('change', function () {
                 sortMaterials();
-            });
-
-            selectAllCheckbox.addEventListener('change', function () {
-                checkboxes.forEach(checkbox => {
-                    checkbox.checked = selectAllCheckbox.checked;
-                });
             });
 
             function sortMaterials() {
@@ -153,6 +146,13 @@
                 const tbody = document.querySelector('tbody');
                 materialRows.forEach(row => tbody.appendChild(row));
             }
+
+            selectAllCheckbox.addEventListener('change', function () {
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = selectAllCheckbox.checked;
+                });
+            });
+
 
             checkboxes.forEach(checkbox => {
                 checkbox.addEventListener('change', function () {
