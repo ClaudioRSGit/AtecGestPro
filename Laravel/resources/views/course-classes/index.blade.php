@@ -129,6 +129,7 @@
             function sortCourseClass() {
                 const sortValue = sortDropdown.value;
                 const materialRows = Array.from(document.querySelectorAll('.card'));
+                const fillerRows = Array.from(document.querySelectorAll('.filler'));
 
                 materialRows.sort((a, b) => {
                     const aName = a.querySelector('button').textContent.toLowerCase();
@@ -142,8 +143,14 @@
                 });
 
                 const accordion = document.querySelector('#accordion');
-                materialRows.forEach(row => accordion.appendChild(row));
+                materialRows.forEach((row, index) => {
+                    accordion.appendChild(row);
+                    if (fillerRows[index]) {
+                        accordion.appendChild(fillerRows[index]);
+                    }
+                });
             }
+
 
             selectAllCheckbox.addEventListener('change', function() {
                 checkboxes.forEach(checkbox => {

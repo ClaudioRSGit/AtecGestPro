@@ -121,7 +121,7 @@
             function sortCourses() {
                 const sortValue = sortDropdown.value;
                 const courseRows = Array.from(courseTable.querySelectorAll('tbody tr.courses-row'));
-                const fillerRows = Array.from(courseTable.querySelectorAll('tbody tr.filler')); // replace '.filler' with the actual class of your filler rows
+                const fillerRows = Array.from(courseTable.querySelectorAll('tbody tr.filler'));
 
                 courseRows.sort((a, b) => {
                     const aName = a.querySelector('td:nth-child(2)').textContent.toLowerCase();
