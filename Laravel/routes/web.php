@@ -6,11 +6,15 @@ use App\Http\Controllers\CourseClassController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\ClothingController;
 use App\Http\Controllers\PartnerTrainingUserController;
+use App\Http\Controllers\Auth\LoginController;
 
 Route::get('/', function () {
     return view('master.main');
 });
 
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
 Route::get('/home', 'HomeController@index')->name('home');
