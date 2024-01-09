@@ -174,6 +174,7 @@
             function sortMaterials() {
                 const sortValue = sortDropdown.value;
                 const materialRows = Array.from(document.querySelectorAll('.material-row'));
+                const fillerRows = Array.from(document.querySelectorAll('.filler'));
 
                 materialRows.sort((a, b) => {
                     const aName = a.querySelector('a').textContent.toLowerCase();
@@ -187,7 +188,12 @@
                 });
 
                 const tbody = document.querySelector('tbody');
-                materialRows.forEach(row => tbody.appendChild(row));
+                materialRows.forEach((row, index) => {
+                    tbody.appendChild(row);
+                    if (fillerRows[index]) {
+                        tbody.appendChild(fillerRows[index]);
+                    }
+                });
             }
 
 
