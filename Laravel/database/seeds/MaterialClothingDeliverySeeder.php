@@ -16,11 +16,13 @@ class MaterialClothingDeliverySeeder extends Seeder
         DB::table('material__clothing__deliveries')->insert([
             'clothing_delivery_id' => 1,
             'material_id' => 6,
+            'quantity' => 2,
         ]);
         // Seed 2
         DB::table('material__clothing__deliveries')->insert([
             'clothing_delivery_id' => 2,
             'material_id' => 2,
+            'quantity' => 1,
         ]);
 
     }
