@@ -46,9 +46,20 @@
 
             <div class="tab-pane fade show active" id="externalTable">
 
+
+
+
                 <div class=" d-flex">
-                    <input type="text" id="searchInput" class="form-control mr-2" style="max-width: fit-content"
-                        placeholder="Insira para procurar...">
+                    <form action="{{ route('external.index') }}" method="GET">
+                        <div class="input-group pr-2">
+                            <input type="text" name="q" class="form-control " placeholder="Procurar...">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-outline-secondary ">
+                                    Procurar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
 
                     <button class="btn btn-danger mb-3 mr-2" id="delete-selected-ptus">Excluir Selecionados</button>
 
@@ -300,7 +311,10 @@
                 </table>
             </div>
         </div>
+        <div class="d-flex justify-content-center">
+            {{ $partner_Training_Users->appends(['q' => $search])->links() }}
 
+        </div>
     </div>
 
 
@@ -502,20 +516,7 @@
         });
     </script>
 
-    <script>
-        // search ptus
-        $(document).ready(function() {
-            $('#searchInput').on('input', function() {
-                const searchText = $(this).val().toLowerCase();
 
-                $('#externalTable tbody tr').each(function() {
-                    const rowText = $(this).text().toLowerCase();
-
-                    $(this).toggle(rowText.includes(searchText));
-                });
-            });
-        });
-    </script>
 
     <script>
         // search trainings

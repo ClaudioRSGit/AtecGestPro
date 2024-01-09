@@ -19,14 +19,34 @@ class PartnerTrainingUserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $partner_Training_Users = Partner_Training_User::with('partner', 'training', 'user')->get();
+        $search = $request->input('q');
+
+        if ($search) {
+            // Your search logic here
+            $partner_Training_Users = Partner_Training_User::with('partner', 'training', 'user')
+                ->whereHas('partner', function ($query) use ($search) {
+                    $query->where('name', 'like', '%' . $search . '%');
+                })
+                ->orWhereHas('training', function ($query) use ($search) {
+                    $query->where('name', 'like', '%' . $search . '%');
+                })
+                ->orWhereHas('user', function ($query) use ($search) {
+                    $query->where('name', 'like', '%' . $search . '%');
+                })
+                ->paginate(5);
+        } else {
+            // If no search query, show all data
+            $partner_Training_Users = Partner_Training_User::with('partner', 'training', 'user')->paginate(5);
+        }
+
         $partners = Partner::with('partnerTrainingUser', 'partnerContacts')->get();
         $trainings = Training::all();
 
-        return view('external.index', compact('partner_Training_Users', 'partners', 'trainings'));
+        return view('external.index', compact('partner_Training_Users', 'partners', 'trainings', 'search'));
     }
+
 
 
     public function show($id)
