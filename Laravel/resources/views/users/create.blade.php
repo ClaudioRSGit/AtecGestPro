@@ -65,22 +65,32 @@
 
                 <div class="col-md-6 d-flex flex-column">
                     <div class="mb-3">
-                        <label for="position" class="form-label">Função:</label>
-                        <select class="form-control" id="positionFilter" name="roleFilter" onchange="toggleCourseClassDiv()">
+                        <label for="roleFilter" class="form-label">Função:</label>
+                        <select class="form-control" id="roleFilter" name="roleFilter" onchange="toggleCourseClassDiv()">
                             @foreach($roles as $role)
-                                <option value="{{ $role->name }}">{{ $role->description }}</option>
+                                <option value="{{ $role->name }}" {{ old('roleFilter') == $role->name ? 'selected' : '' }}>
+                                    {{ $role->description }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
+
 
                     <div class="mb-3" id="labelCourseClass" style="display: none;">
                         <label for="course_class_id" class="form-label">Turma:</label>
                         <select class="form-select" id="course_class_id" name="course_class_id" onchange="updateCourseDescription(this)">
                             @foreach($courseClasses as $class)
-                                <option value="{{ $class->id }}" data-course-description="{{ $class->course->description }}">{{ $class->description }}</option>
+                                <option
+                                    value="{{ $class->id }}"
+                                    data-course-description="{{ $class->course->description }}"
+                                    {{ old('course_class_id') == $class->id || (isset($user) && $user->course_class_id == $class->id) ? 'selected' : '' }}>
+                                    {{ $class->description }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
+
+
 
 
 
@@ -104,16 +114,22 @@
 
     <script>
         function toggleCourseClassDiv() {
-            var selectedRole = $("#positionFilter").val();
+            const selectedRole = $("#roleFilter").val();
             if (selectedRole === "formando") {
                 $("#labelCourseClass").show();
+                $("#password").closest(".mb-3").hide();
             } else {
                 $("#labelCourseClass").hide();
+                $("#password").closest(".mb-3").show();
             }
         }
 
         function updateCourseDescription(select) {
         }
+
+        $(document).ready(function() {
+            toggleCourseClassDiv();
+        });
     </script>
 
 

@@ -15,11 +15,18 @@ use App\Ticket_History;
 class Ticket extends Model
 {
     protected $fillable = [
+        'user_id',
         'title',
+        'ticket_status_id',
+        'ticket_priority_id',
+        'ticket_category_id',
+        'ticket_id',
         'description',
         'dueByDate',
         'attachment',
     ];
+
+    protected $dates = ['created_at'];
 
     use SoftDeletes;
 
