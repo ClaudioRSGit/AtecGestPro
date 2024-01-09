@@ -10,13 +10,13 @@ use App\Http\Controllers\Auth\LoginController;
 
 Route::get('/', function () {
     return view('master.main');
-});
+})->name('master.main')->middleware('auth');
 
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-
+Route::group(['middleware' => 'auth'], function () {
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::resource('users', 'UserController');
@@ -69,3 +69,4 @@ Route::post('partners/massDelete', 'PartnerController@massDelete')->name('partne
 
 Route::post('external/massDelete', 'PartnerTrainingUserController@massDelete')->name('external.massDelete');
 Route::post('trainings/massDelete', 'TrainingController@massDelete')->name('trainings.massDelete');
+});
