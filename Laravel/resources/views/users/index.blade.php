@@ -143,6 +143,8 @@
             function sortUsers() {
                 const sortValue = sortDropdown.value;
                 const userRows = Array.from(userTable.querySelectorAll('tbody tr.user-row'));
+                const fillerRows = Array.from(userTable.querySelectorAll(
+                'tbody tr.filler'));
 
                 userRows.sort((a, b) => {
                     const aName = a.querySelector('td:nth-child(2)').textContent.toLowerCase();
@@ -156,8 +158,14 @@
                 });
 
                 const tbody = userTable.querySelector('tbody');
-                userRows.forEach(row => tbody.appendChild(row));
+                userRows.forEach((row, index) => {
+                    tbody.appendChild(row);
+                    if (fillerRows[index]) {
+                        tbody.appendChild(fillerRows[index]);
+                    }
+                });
             }
+
 
             nameFilterInput.addEventListener('input', function() {
                 console.log('Nome do Filtro Alterado');
