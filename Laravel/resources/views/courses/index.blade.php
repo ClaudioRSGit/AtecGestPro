@@ -121,6 +121,7 @@
             function sortCourses() {
                 const sortValue = sortDropdown.value;
                 const courseRows = Array.from(courseTable.querySelectorAll('tbody tr.courses-row'));
+                const fillerRows = Array.from(courseTable.querySelectorAll('tbody tr.filler')); // replace '.filler' with the actual class of your filler rows
 
                 courseRows.sort((a, b) => {
                     const aName = a.querySelector('td:nth-child(2)').textContent.toLowerCase();
@@ -134,7 +135,12 @@
                 });
 
                 const tbody = courseTable.querySelector('tbody');
-                courseRows.forEach(row => tbody.appendChild(row));
+                courseRows.forEach((row, index) => {
+                    tbody.appendChild(row);
+                    if (fillerRows[index]) {
+                        tbody.appendChild(fillerRows[index]);
+                    }
+                });
             }
 
             nameFilterInput.addEventListener('input', function() {
