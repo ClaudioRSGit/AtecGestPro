@@ -37,12 +37,25 @@ class MaterialClothingDeliveryController extends Controller
 
 //        dd($student->CourseClass->course_id);
 
-        if ($student->CourseClass->course_id == 5) {
+        if ($student->CourseClass->course_id == 5 || $student->CourseClass->course_id == 1) {
             $clothes = Material::where('name', "Bata")->get();
         } elseif ($student->CourseClass->course_id ==4){
-            $clothes = Material::where('name', 'like', '%Botas%')->get();
-
-        } else {
+            $clothes = Material::where('name', 'like', '%sol%')
+                ->orWhere('name', 'like', '%shirt%')->get();
+        }elseif ($student->CourseClass->course_id == 3){
+            $clothes = Material::where('name', 'like', '%meca%')
+                ->orWhere('name', 'like', '%shirt%')
+                ->orWhere('name', 'like', '%segu%')
+                ->orWhere('name', 'like', '%swea%')
+                ->get();
+        }elseif ($student->CourseClass->course_id == 2){
+            $clothes = Material::where('name', 'like', '%meca%')
+                ->orWhere('name', 'like', '%shirt%')
+                ->orWhere('name', 'like', '%segu%')
+                ->orWhere('name', 'like', '%polar%')
+                ->get();
+        }
+        else {
             $clothes = Material::where('isClothing', 1)->get();
         }
 

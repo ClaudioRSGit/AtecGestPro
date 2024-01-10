@@ -46,7 +46,7 @@ class UserSeeder extends Seeder
             'position' => 'user',
             'isActive' => true,
             'isStudent' => true,
-            'course_class_id' => null,
+            'course_class_id' => 1,
         ]);
 
         // Seed 3
@@ -59,7 +59,7 @@ class UserSeeder extends Seeder
             'position' => 'tecnico',
             'isActive' => true,
             'isStudent' => true,
-            'course_class_id' => 3,
+            'course_class_id' => 2,
         ]);
 
         // Seed 4
@@ -72,7 +72,7 @@ class UserSeeder extends Seeder
             'position' => 'formando',
             'isActive' => true,
             'isStudent' => true,
-            'course_class_id' => 4,
+            'course_class_id' => 3,
         ]);
 
         // Seed 5
@@ -85,7 +85,7 @@ class UserSeeder extends Seeder
             'position' => 'formando',
             'isActive' => true,
             'isStudent' => true,
-            'course_class_id' => 5,
+            'course_class_id' => 4,
         ]);
         // Seed 6
         DB::table('users')->insert([

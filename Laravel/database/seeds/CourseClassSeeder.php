@@ -26,7 +26,7 @@ class CourseClassSeeder extends Seeder
 
         // Seed 3
         DB::table('course_classes')->insert([
-            'description' => 'TS0123',
+            'description' => 'TM0123',
             'course_id' => 3,
             ]);
 
