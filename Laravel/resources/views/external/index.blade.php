@@ -53,9 +53,17 @@
                     <button class="btn btn-danger mb-3 mr-2" id="delete-selected-ptus">Excluir Selecionados</button>
 
 
-                    <a href="{{ route('external.create') }}" class="btn btn-primary mb-3 ">Nova Formação</a>
+                    <a href="{{ route('external.create') }}" class="btn btn-primary mb-3 mr-2">Nova Formação</a>
+
+                    <div>
+                        <select class="form-control" id="sortExternal">
+                            <option value="az">A-Z</option>
+                            <option value="za">Z-A</option>
+                        </select>
+                    </div>
 
                 </div>
+
 
                 <table class="table bg-white" id="externalTable">
                     <thead>
@@ -136,7 +144,15 @@
                     <input type="text" id="searchInputPartners" class="form-control mr-2" style="max-width: fit-content"
                         placeholder="Insira para procurar...">
                     <button class="btn btn-danger mr-2" id="delete-selected">Excluir Selecionados</button>
-                    <a href="{{ route('partners.create') }}" class="btn btn-primary">Novo Parceiro</a>
+                    <a href="{{ route('partners.create') }}" class="btn btn-primary mr-2">Novo Parceiro</a>
+
+
+                    <div>
+                        <select class="form-control" id="sortPartners">
+                            <option value="az">A-Z</option>
+                            <option value="za">Z-A</option>
+                        </select>
+                    </div>
                 </div>
                 <table class="table bg-white">
                     <thead>
@@ -232,10 +248,18 @@
                     <input type="text" id="searchInputTrainings" class="form-control mr-2"
                         style="max-width: fit-content" placeholder="Insira para procurar...">
 
+
                     <button class="btn btn-danger mb-3 mr-2" id="delete-selected-trainings">Excluir Selecionados</button>
 
 
-                    <a href="{{ route('trainings.create') }}" class="btn btn-primary mb-3">Nova Formação</a>
+                    <a href="{{ route('trainings.create') }}" class="btn btn-primary mb-3 mr-2">Nova Formação</a>
+
+                    <div>
+                        <select class="form-control" id="sortTrainings">
+                            <option value="az">A-Z</option>
+                            <option value="za">Z-A</option>
+                        </select>
+                    </div>
 
                 </div>
 
@@ -302,6 +326,110 @@
         </div>
 
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const sortTrainingsDropdown = document.getElementById('sortTrainings');
+
+            sortTrainingsDropdown.addEventListener('change', function() {
+                sortTrainings();
+            });
+
+            function sortTrainings() {
+                const sortValue = sortTrainingsDropdown.value;
+                const trainingTable = document.getElementById('trainingsTable');
+                const trainingRows = Array.from(trainingTable.querySelectorAll('tbody tr.customTableStyling'));
+                const fillerRows = Array.from(trainingTable.querySelectorAll('tbody tr.filler'));
+
+                trainingRows.sort((a, b) => {
+                    const aName = a.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                    const bName = b.querySelector('td:nth-child(2)').textContent.toLowerCase();
+
+                    if (sortValue === 'az') {
+                        return aName.localeCompare(bName);
+                    } else {
+                        return bName.localeCompare(aName);
+                    }
+                });
+
+                const tbody = trainingTable.querySelector('tbody');
+                trainingRows.forEach((row, index) => {
+                    tbody.appendChild(row);
+                    if (fillerRows[index]) {
+                        tbody.appendChild(fillerRows[index]);
+                    }
+                });
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const sortPartnersDropdown = document.getElementById('sortPartners');
+
+            sortPartnersDropdown.addEventListener('change', function() {
+                sortPartners();
+            });
+
+            function sortPartners() {
+                const sortValue = sortPartnersDropdown.value;
+                const partnersTable = document.getElementById('partnersTable');
+                const partnerRows = Array.from(partnersTable.querySelectorAll('tbody tr.customTableStyling'));
+                const fillerRows = Array.from(partnersTable.querySelectorAll('tbody tr.filler'));
+
+                partnerRows.sort((a, b) => {
+                    const aName = a.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                    const bName = b.querySelector('td:nth-child(2)').textContent.toLowerCase();
+
+                    if (sortValue === 'az') {
+                        return aName.localeCompare(bName);
+                    } else {
+                        return bName.localeCompare(aName);
+                    }
+                });
+
+                const tbody = partnersTable.querySelector('tbody');
+                partnerRows.forEach((row, index) => {
+                    tbody.appendChild(row);
+                    if (fillerRows[index]) {
+                        tbody.appendChild(fillerRows[index]);
+                    }
+                });
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const sortExternalDropdown = document.getElementById('sortExternal');
+
+            sortExternalDropdown.addEventListener('change', function() {
+                sortExternal();
+            });
+
+            function sortExternal() {
+                const sortValue = sortExternalDropdown.value;
+                const externalTable = document.getElementById('externalTable');
+                const externalRows = Array.from(externalTable.querySelectorAll('tbody tr.customTableStyling'));
+                const fillerRows = Array.from(externalTable.querySelectorAll('tbody tr.filler'));
+
+                externalRows.sort((a, b) => {
+                    const aName = a.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                    const bName = b.querySelector('td:nth-child(2)').textContent.toLowerCase();
+
+                    if (sortValue === 'az') {
+                        return aName.localeCompare(bName);
+                    } else {
+                        return bName.localeCompare(aName);
+                    }
+                });
+
+                const tbody = externalTable.querySelector('tbody');
+                externalRows.forEach((row, index) => {
+                    tbody.appendChild(row);
+                    if (fillerRows[index]) {
+                        tbody.appendChild(fillerRows[index]);
+                    }
+                });
+            }
+        });
+    </script>
 
 
     <script>
@@ -583,6 +711,8 @@
                     }
                 });
             });
+
+
 
             function showExternalTable() {
                 const tables = document.querySelectorAll('.tab-pane');
