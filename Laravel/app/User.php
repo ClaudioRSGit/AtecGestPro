@@ -84,6 +84,8 @@ class User extends Authenticatable
         return $this->hasMany(Ticket_History::class);
     }
 
-
-
+    public function hasRole($role)
+    {
+        return $this->Role_User->contains('role.name', $role);
+    }
 }
