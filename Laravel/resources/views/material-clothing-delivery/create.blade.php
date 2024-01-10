@@ -22,75 +22,15 @@
         </div>
 
 
-            @csrf
-
-
+        @csrf
 
 
         <form action="{{ route('material-clothing-delivery.store') }}" method="post">
             @csrf
             <input type="hidden" name="user_id" value="{{ $student->id }}">
-            <label for="gender">Selecione o género</label>
-            <select class="form-select" id="gender" name="gender">
-                <option value="male" selected>Masculino</option>
-                <option value="female">Femenino</option>
-            </select>
 
-
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">
-                        <input type="checkbox" id="select-all">
-                    </th>
-                    <th scope="col">Nome</th>
-                    <th scope="col" style="text-align: center;">Tamanho</th>
-                    <th scope="col" style="text-align: center;">Quantidade</th>
-                </tr>
-                </thead>
-                <tbody>
-                @forelse ($clothes->groupBy('name') as $clothingName => $clothingItems)
-                    @php
-                        $firstClothingItem = $clothingItems->first();
-                    @endphp
-                    <tr class="material-row" data-trainee="{{ $firstClothingItem->role == 3 ? 1 : 0 }}">
-                        <td>
-                            <div class="form-check">
-                                <input class="form-check-input" name="selectedClothing[]" type="checkbox"
-                                       value="{{ $firstClothingItem->name }}" id="flexCheckDefault">
-                            </div>
-                        </td>
-                        <td>
-                            {{ $clothingName }}
-                            <input type="hidden" name="name[{{ $firstClothingItem->id }}]" value="{{ $firstClothingItem->name }}">
-                        </td>
-                        <td style="text-align: center;">
-                            <select class="form-select" name="size[{{ $firstClothingItem->name }}]">
-                                @foreach($clothingItems->unique('size') as $uniqueSize)
-                                    <option value="{{ $uniqueSize->size }}">{{ $uniqueSize->size }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <input type="number" class="form-control w-50" name="quantity[{{ $firstClothingItem->name }}]" id="quantity"
-                                   value="{{ isset($firstClothingItem->quantity) ? $firstClothingItem->quantity : '0' }}"
-                                   min="1" max="{{ $firstClothingItem->quantity }}">
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="7" style="text-align: center;">Não existem materiais para atribuir</td>
-                    </tr>
-                @endforelse
-                </tbody>
-            </table>
-
-            <h5>Observações </h5>
-            <div class="row">
-                <div class="col-4">
-                    <textarea class="form-control" name="additionalNotes" id="textarea"
-                              aria-label="With textarea"></textarea>
-                </div>
+            <livewire:gender-filter :key="$gender">
+            </livewire:gender-filter>
                 <div class="col">
                     <div class="buttons">
 
@@ -118,8 +58,9 @@
 
                     </div>
                 </div>
-            </div>
+
         </form>
+
     </div>
 
 
@@ -201,4 +142,6 @@
             }
         });
     </script>
+    @livewireScripts
+
 @endsection
