@@ -135,5 +135,17 @@ class UserSeeder extends Seeder
             'isStudent' => false,
             'course_class_id' => null,
         ]);
+         // Seed 10
+         DB::table('users')->insert([
+            'name' => 'José Coentrão',
+            'username' => 'teste123',
+            'email' => 'jose.coentrao.t01231c89@edu.atec.pt',
+            'contact' => '934592239',
+            'password' => bcrypt('Teste123!'),
+            'position' => 'formando',
+            'isActive' => true,
+            'isStudent' => false,
+            'course_class_id' => null,
+        ]);
     }
 }

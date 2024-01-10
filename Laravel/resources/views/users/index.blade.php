@@ -168,7 +168,6 @@
             });
 
             function filterUsers() {
-                console.log('Filtrando Usuários...');
 
                 const nameFilter = nameFilterInput.value.toLowerCase();
                 const roleFilter = roleFilterSelect.value;
