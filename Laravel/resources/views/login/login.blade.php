@@ -5,7 +5,10 @@
         <div class="col-md-6">
             <div class="card my-auto">
                 <div class="card-body">
-                    <img src="{{ asset('images/logo.png') }}" alt="Logo">
+                    <div class="d-flex flex-column align-items-center">
+                        <img src="{{ asset('assets/logo.png') }}" alt="Logo">
+                    <h5 class="mt-3"><strong> ATEC GEST PRO </strong></h5>
+                    </div>
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
