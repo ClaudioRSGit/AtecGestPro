@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Livewire;
 
 use App\Material;
@@ -9,6 +8,15 @@ class GenderFilter extends Component
 {
     public $gender = 'male';
     public $clothes;
+    public $stock = [];
+    public $selectedSizes = [];
+
+    public function updateStock($itemName)
+    {
+        $this->stock[$itemName] = Material::where('name', $itemName)
+            ->where('size', $this->selectedSizes[$itemName])
+            ->value('quantity');
+    }
 
     public function render()
     {

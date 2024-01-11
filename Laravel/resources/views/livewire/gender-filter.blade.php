@@ -19,7 +19,7 @@
         <tbody>
         @foreach($clothes->groupBy('name') as $clothingName => $clothingItems)
             @php
-
+                //dd($stock);
                 $firstClothingItem = $clothingItems->first();
                 $uniqueSizes = $clothingItems->unique('size');
                 $defaultValue = $uniqueSizes[0]->size;
@@ -39,20 +39,20 @@
                     <input type="hidden" name="name[{{ $firstClothingItem->id }}]" value="{{ $firstClothingItem->name }}" >
                     </div>
                 </td>
+
                 <td style="text-align: center;">
-                    <select class="form-select" name="size[{{ $firstClothingItem->name }}]">
+                    <select class="form-select" name="size[{{ $firstClothingItem->name }}]" wire:model="selectedSizes.{{ $firstClothingItem->name }}" wire:change="updateStock('{{ $firstClothingItem->name }}')">
                         @foreach($uniqueSizes as $uniqueSize)
-                            <option value="{{ $uniqueSize->size }}" @if($uniqueSize->size == $defaultValue) selected @endif>
-                                {{ $uniqueSize->size }}
-                            </option>
+                            <option value="{{ $uniqueSize->size }}">{{ $uniqueSize->size }}</option>
                         @endforeach
                     </select>
                 </td>
+
+
                 <td>
-                    <div >
-                    <input type="number" class="form-control w-50" name="quantity[{{ $firstClothingItem->name }}]" id="quantity"
-                           value="1"
-                           min="0" max="3" >
+                    <div>
+                        <input type="number" class="form-control w-50" name="quantity[{{ $firstClothingItem->name }}]" id="quantity"
+                               value="0" min="0" max="{{ $stock[$firstClothingItem->name] ?? 3 }}" >
                     </div>
                 </td>
             </tr>
@@ -70,3 +70,5 @@
         </div>
     </div>
 </div>
+
+
