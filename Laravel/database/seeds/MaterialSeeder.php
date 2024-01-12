@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class MaterialSeeder extends Seeder
 {
@@ -22,8 +21,7 @@ class MaterialSeeder extends Seeder
             'supplier' => 'Ferragens do Zé',
             'isClothing' => 0,
             'gender' => null,
-            'size' => null,
-            'role' => null,
+
         ]);
 
         // Seed 3
@@ -36,8 +34,7 @@ class MaterialSeeder extends Seeder
             'supplier' => 'lampadas.com',
             'isClothing' => 0,
             'gender' => null,
-            'size' => null,
-            'role' => null,
+
         ]);
         // Seed 4
         DB::table('materials')->insert([
@@ -49,8 +46,7 @@ class MaterialSeeder extends Seeder
             'supplier' => null,
             'isClothing' => 0,
             'gender' => null,
-            'size' => null,
-            'role' => null,
+
         ]);
         // Seed 5
         DB::table('materials')->insert([
@@ -62,8 +58,7 @@ class MaterialSeeder extends Seeder
             'supplier' => null,
             'isClothing' => 0,
             'gender' => null,
-            'size' => null,
-            'role' => null,
+
         ]);
         // Seed 6
 
@@ -76,9 +71,9 @@ class MaterialSeeder extends Seeder
 
 
 
-        $sizes = ['XS','S','M', 'L', 'XL', 'XXL', 'XXXL', 'XXXXL'];
 
-        foreach ($sizes as $size) {
+
+
             DB::table('materials')->insert([
                 'name' => 'Tshirt',
                 'description' => 'Tshirt homem',
@@ -88,12 +83,11 @@ class MaterialSeeder extends Seeder
                 'supplier' => '',
                 'isClothing' => 1,
                 'gender' => 0,
-                'size' => $size,
-                'role' => 3,
-            ]);
-        }
 
-        foreach ($sizes as $size) {
+            ]);
+
+
+
             DB::table('materials')->insert([
                 'name' => 'Tshirt',
                 'description' => 'Tshirt mulher',
@@ -103,12 +97,11 @@ class MaterialSeeder extends Seeder
                 'supplier' => '',
                 'isClothing' => 1,
                 'gender' => 1,
-                'size' => $size,
-                'role' => 3,
-            ]);
-        }
 
-        foreach ($sizes as $size) {
+            ]);
+
+
+
             DB::table('materials')->insert([
                 'name' => 'Sweat azul',
                 'description' => 'Sweat azul homem',
@@ -118,12 +111,11 @@ class MaterialSeeder extends Seeder
                 'supplier' => '',
                 'isClothing' => 1,
                 'gender' => 0,
-                'size' => $size,
-                'role' => 3,
-            ]);
-        }
 
-        foreach ($sizes as $size) {
+            ]);
+
+
+
             DB::table('materials')->insert([
                 'name' => 'Polar',
                 'description' => 'Polar homem',
@@ -133,12 +125,11 @@ class MaterialSeeder extends Seeder
                 'supplier' => '',
                 'isClothing' => 1,
                 'gender' => 0,
-                'size' => $size,
-                'role' => 3,
-            ]);
-        }
 
-        foreach ($sizes as $size) {
+            ]);
+
+
+
             DB::table('materials')->insert([
                 'name' => 'Camisa soldador',
                 'description' => 'Camisa soldador homem',
@@ -148,14 +139,11 @@ class MaterialSeeder extends Seeder
                 'supplier' => '',
                 'isClothing' => 1,
                 'gender' => 0,
-                'size' => $size,
-                'role' => 3,
+
             ]);
-        }
 
-        $sizesPantsMeca = ['34', '36', '38', '40', '42', '44', '46', '48', '50', '52', '54', '56', '58', '60', '62', '64', '66'];
 
-        foreach ($sizesPantsMeca as $size) {
+
             DB::table('materials')->insert([
                 'name' => 'Calças castanhas mécatrónica',
                 'description' => 'Calças castanhas mécatrónica homem',
@@ -165,14 +153,11 @@ class MaterialSeeder extends Seeder
                 'supplier' => '',
                 'isClothing' => 1,
                 'gender' => 0,
-                'size' => $size,
-                'role' => 3,
+
             ]);
-        }
 
-        $sizesSafetyBoots = ['35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47'];
 
-        foreach ($sizesSafetyBoots as $size) {
+
             DB::table('materials')->insert([
                 'name' => 'Sapato de segurança',
                 'description' => 'Sapato de segurança',
@@ -182,10 +167,9 @@ class MaterialSeeder extends Seeder
                 'supplier' => '',
                 'isClothing' => 1,
                 'gender' => null,
-                'size' => $size,
-                'role' => 3,
+
             ]);
-        }
+
 
         DB::table('materials')->insert([
             'name' => 'Avental soldadura',
@@ -196,8 +180,7 @@ class MaterialSeeder extends Seeder
             'supplier' => '',
             'isClothing' => 1,
             'gender' => null,
-            'size' => 0,
-            'role' => 3,
+
         ]);
 
         DB::table('materials')->insert([
@@ -209,8 +192,7 @@ class MaterialSeeder extends Seeder
             'supplier' => '',
             'isClothing' => 1,
             'gender' => null,
-            'size' => 0,
-            'role' => 3,
+
         ]);
 
 
@@ -224,30 +206,24 @@ class MaterialSeeder extends Seeder
             'supplier' => '',
             'isClothing' => 1,
             'gender' => null,
-            'size' => 0,
-            'role' => 3,
+
         ]);
 
-        $sizesPantsSol = ['34', '36', '38', '40', '42', '44', '46', '48', '50', '52', '54', '56', '58'];
 
-        foreach ($sizesPantsSol as $size) {
-        DB::table('materials')->insert([
-            'name' => 'Calças cinzas de soldador',
-            'description' => 'Calças cinzas de soldador homem',
-            'isInternal' => 1,
-            'quantity' => 10,
-            'aquisition_date' => '2020-01-09 21:04:24',
-            'supplier' => '',
-            'isClothing' => 1,
-            'gender' => 0,
-            'size' => $size,
-            'role' => 3,
-        ]);
-        }
+            DB::table('materials')->insert([
+                'name' => 'Calças cinzas de soldador',
+                'description' => 'Calças cinzas de soldador homem',
+                'isInternal' => 1,
+                'quantity' => 10,
+                'aquisition_date' => '2020-01-09 21:04:24',
+                'supplier' => '',
+                'isClothing' => 1,
+                'gender' => 0,
 
-        $sizesBotaSol = ['35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47'];
+            ]);
 
-        foreach ($sizesBotaSol as $size) {
+
+
             DB::table('materials')->insert([
                 'name' => 'Botas de soldador',
                 'description' => 'Botas de soldador',
@@ -257,11 +233,9 @@ class MaterialSeeder extends Seeder
                 'supplier' => '',
                 'isClothing' => 1,
                 'gender' => null,
-                'size' => $size,
-                'role' => 3,
+
             ]);
-        }
-        foreach ($sizes as $size) {
+
             DB::table('materials')->insert([
                 'name' => 'Casaco de croute',
                 'description' => 'Casaco de croute homem',
@@ -271,12 +245,9 @@ class MaterialSeeder extends Seeder
                 'supplier' => '',
                 'isClothing' => 1,
                 'gender' => 0,
-                'size' => $size,
-                'role' => 3,
-            ]);
-        }
 
-        foreach ($sizes as $size) {
+            ]);
+
             DB::table('materials')->insert([
                 'name' => 'Bata beje',
                 'description' => 'Bata beje homem',
@@ -286,11 +257,10 @@ class MaterialSeeder extends Seeder
                 'supplier' => 'Fardas e Companhia',
                 'isClothing' => 1,
                 'gender' => 0,
-                'size' => $size,
-                'role' => 3,
+
             ]);
-        }
-        foreach ($sizes as $size) {
+
+
             DB::table('materials')->insert([
                 'name' => 'Bata beje',
                 'description' => 'Bata beje mulher',
@@ -300,10 +270,8 @@ class MaterialSeeder extends Seeder
                 'supplier' => 'Fardas e Companhia',
                 'isClothing' => 1,
                 'gender' => 1,
-                'size' => $size,
-                'role' => 3,
+
             ]);
-        }
 
     }
 }

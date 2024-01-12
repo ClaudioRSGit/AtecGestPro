@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Comment;
+use App\Comments;
 use Faker\Generator as Faker;
 
-$factory->define(Comment::class, function (Faker $faker) {
+$factory->define(Comments::class, function (Faker $faker) {
     return [
         //
     ];

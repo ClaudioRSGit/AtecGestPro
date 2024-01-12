@@ -7,11 +7,14 @@ use Illuminate\Http\Request;
 
 class TrainingController extends Controller
 {
-
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        $trainings = Training::paginate(5);
-        return view('trainings.index', compact('trainings'));
+        //
     }
 
     /**
@@ -21,8 +24,7 @@ class TrainingController extends Controller
      */
     public function create()
     {
-
-        return view('trainings.create');
+        //
     }
 
     /**
@@ -33,26 +35,18 @@ class TrainingController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate(request(), [
-            'name' => 'required',
-            'description' => 'required',
-            'category' => 'required',
-        ]);
-
-        Training::create($request->all());
-
-        return redirect()->route('external.index')->with('success', 'Formação criada com sucesso');
+        //
     }
 
-
-
-
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Training  $training
+     * @return \Illuminate\Http\Response
+     */
     public function show(Training $training)
     {
-
-        return view('trainings.show', compact('training'));
-
-
+        //
     }
 
     /**
@@ -63,8 +57,7 @@ class TrainingController extends Controller
      */
     public function edit(Training $training)
     {
-
-            return view('trainings.edit', compact('training'));
+        //
     }
 
     /**
@@ -76,17 +69,7 @@ class TrainingController extends Controller
      */
     public function update(Request $request, Training $training)
     {
-
-            $this->validate(request(),
-                [
-                    'name' => 'required',
-                    'description' => 'required',
-                    'category' => 'required',
-
-                ]);
-            $training->update($request->all());
-        return redirect()->route('external.index')->with('success', 'Formação atualizada com sucesso');
-
+        //
     }
 
     /**
@@ -97,28 +80,6 @@ class TrainingController extends Controller
      */
     public function destroy(Training $training)
     {
-
-                $training->delete();
-        return redirect()->back()->with('success','Formação eliminada com sucesso');
-    }
-
-    public function massDelete(Request $request)
-    {
-
-//        dd($request->all());
-
-        $request->validate([
-            'training_ids' => 'required|array',
-            'training_ids.*' => 'exists:trainings,id',]);
-
-//        dd($request->all());
-
-        try {
-            Training::whereIn('id', $request->input('training_ids'))->delete();
-
-            return redirect()->back()->with('success', 'Formações selecionadas excluídas com sucesso!');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Erro ao excluir Formações selecionadas. Por favor, tente novamente.');
-        }
+        //
     }
 }
