@@ -17,22 +17,24 @@
 
         <h1 class="mb-4">Utilizadores</h1>
 
-        <div class="d-flex justify-content-between mb-3">
+        <div class="d-flex justify-content-between mb-3 w-100">
 
-            <form action="{{ route('users.index') }}" method="get" class="form-inline w-50" id="filterForm">
-                <div class="form-group search-container mr-3 w-100">
-                    <input type="text" class="form-control w-100" id="nameFilter" name="nameFilter"
+            <div class="d-flex justify-content-between w-40">
+                <form action="{{ route('users.index') }}" method="get" class="form-inline w-80" id="filterForm">
+                    <div class="form-group search-container mr-3 w-100">
+                        <input type="text" class="form-control w-100" id="nameFilter" name="nameFilter"
                         value="{{ request('nameFilter') }}" placeholder="Pesquisar Utilizador">
-                </div>
+                    </div>
+                </form>
 
-            </form>
-            <div>
-                <select class="form-control" id="sort">
-                    <option value="az">A-Z</option>
-                    <option value="za">Z-A</option>
-                </select>
+                <div class="w-15">
+                    <select class="form-control w-100" id="sort">
+                        <option value="az">A-Z</option>
+                        <option value="za">Z-A</option>
+                    </select>
+                </div>
             </div>
-            <div class="buttons">
+            <div class="buttons ">
 
                 <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
                 <div>
