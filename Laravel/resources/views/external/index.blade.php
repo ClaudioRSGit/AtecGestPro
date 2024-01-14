@@ -140,20 +140,25 @@
             </div>
 
             <div class="tab-pane fade" id="partnersTable">
-                <div class="d-flex">
-                    <input type="text" id="searchInputPartners" class="form-control mr-2" style="max-width: fit-content"
-                        placeholder="Insira para procurar...">
-                    <button class="btn btn-danger mr-2" id="delete-selected">Excluir Selecionados</button>
-                    <a href="{{ route('partners.create') }}" class="btn btn-primary mr-2">Novo Parceiro</a>
+                <div class="d-flex justify-content-between mb-3 w-100">
+                    <div class="d-flex justify-content-between w-40">
+                        <input type="text" id="searchInputPartners" class="form-control mr-2 w-80"
+                            placeholder="Insira para procurar...">
+                        <div w-15>
+                            <select class="form-control w-100" id="sortPartners">
+                                <option value="az">A-Z</option>
+                                <option value="za">Z-A</option>
+                            </select>
+                        </div>
+                    </div>
 
-
-                    <div>
-                        <select class="form-control" id="sortPartners">
-                            <option value="az">A-Z</option>
-                            <option value="za">Z-A</option>
-                        </select>
+                    <div class="buttons">
+                        <button class="btn btn-danger mr-2" id="delete-selected">Excluir Selecionados</button>
+                        <a href="{{ route('partners.create') }}" class="btn btn-primary mr-2">Novo Parceiro</a>
                     </div>
                 </div>
+
+
                 <table class="table bg-white">
                     <thead>
                         <tr>
@@ -244,23 +249,21 @@
 
 
 
-                <div class=" d-flex">
-                    <input type="text" id="searchInputTrainings" class="form-control mr-2"
-                        style="max-width: fit-content" placeholder="Insira para procurar...">
-
-
-                    <button class="btn btn-danger mb-3 mr-2" id="delete-selected-trainings">Excluir Selecionados</button>
-
-
-                    <a href="{{ route('trainings.create') }}" class="btn btn-primary mb-3 mr-2">Nova Formação</a>
-
-                    <div>
-                        <select class="form-control" id="sortTrainings">
-                            <option value="az">A-Z</option>
-                            <option value="za">Z-A</option>
-                        </select>
+                <div class="d-flex justify-content-between mb-3 w-100">
+                    <div class="d-flex justify-content-between w-40">
+                        <input type="text" id="searchInputTrainings" class="form-control mr-2 w-80" placeholder="Insira para procurar...">
+                        <div class="w-15">
+                            <select class="form-control" id="sortTrainings">
+                                <option value="az">A-Z</option>
+                                <option value="za">Z-A</option>
+                            </select>
+                        </div>
                     </div>
 
+                    <div class="buttons">
+                        <button class="btn btn-danger mr-2" id="delete-selected-trainings">Excluir Selecionados</button>
+                        <a href="{{ route('trainings.create') }}" class="btn btn-primary mr-2">Nova Formação</a>
+                    </div>
                 </div>
 
                 <table class="table bg-white">
