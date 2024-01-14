@@ -15,26 +15,24 @@
         <div class="tab-content">
             <div class="tab-pane fade show active" id="formandos">
                 <div class="d-flex justify-content-between mb-3">
-                    <div class="w-75 d-flex align-items-center" style="gap: 1rem">
-                        <div class="form-group search-container w-50">
+                    <div class="w-40 d-flex justify-content-between align-items-center h-100" style="gap: 1rem">
+                        <div class="search-container w-80">
                             <input type="text" id="search" class="form-control" placeholder="Pesquisar Turma">
                         </div>
-                        <div class="form-group mx-2" style="width: 30%">
-                            <select class="form-control" id="filter">
-                                <option value="all">Todos</option>
-                                @foreach ($courses as $course)
-                                    <option value="{{ $course->id }}">{{ $course->description }}</option>
-                                @endforeach
-                            </select>
-
-                        </div>
-
-                    </div>
-                    <div class="buttons">
-                        <div>
+                        <div class="w-15">
                             <select class="form-control" id="sort">
                                 <option value="az">A-Z</option>
                                 <option value="za">Z-A</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="buttons h-100">
+                        <div class="w-30">
+                            <select class="form-control" id="filter">
+                                <option value="all">Todos</option>
+                                @foreach ($courses as $course)
+                                <option value="{{ $course->id }}">{{ $course->description }}</option>
+                                @endforeach
                             </select>
                         </div>
 
@@ -139,21 +137,21 @@
                 {{ $courseClasses->links() }}
             </div>
             <div class="tab-pane fade" id="outros">
-                <div class="w-100 d-flex align-items-center" style="gap: 1rem">
-                    <div class="form-group search-container w-50">
-                        <input type="text" id="search" class="form-control" placeholder="Pesquisar Utilizador">
+                <div class="w-100 d-flex justify-content-between align-items-center mb-3" style="gap: 1rem">
+                    <div class="search-container w-40">
+                        <input type="text" id="search" class="form-control w-80" placeholder="Pesquisar Utilizador">
                     </div>
-                    <div class="form-group mx-2">
+                    <div class="w-15">
                         <select class="form-control" id="filter">
                             <option value="all">Todos</option>
                             @foreach ($nonDocents as $nonDocent)
-                                @if ($nonDocent->position === 'admin')
-                                    <option value="{{ $nonDocent->id }}">Administrador</option>
-                                @elseif($nonDocent->position === 'tecnico')
-                                    <option value="{{ $nonDocent->id }}">Técnico</option>
-                                @else
-                                    <option value="{{ $nonDocent->id }}">{{ $nonDocent->position }}</option>
-                                @endif
+                            @if ($nonDocent->position === 'admin')
+                            <option value="{{ $nonDocent->id }}">Administrador</option>
+                            @elseif($nonDocent->position === 'tecnico')
+                            <option value="{{ $nonDocent->id }}">Técnico</option>
+                            @else
+                            <option value="{{ $nonDocent->id }}">{{ $nonDocent->position }}</option>
+                            @endif
                             @endforeach
                         </select>
                     </div>
