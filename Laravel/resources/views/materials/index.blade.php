@@ -4,20 +4,23 @@
     <div class="container">
         <h1>Lista de Materiais</h1>
 
-        <div class="d-flex justify-content-between mb-3">
-            <form class="form-inline w-50" id="filterForm">
-                <div class="form-group search-container mr-3 w-100" style="width: 30%;">
-                    <input type="text" id="search" class="form-control w-100" placeholder="Pesquisar Material">
-                </div>
+        <div class="d-flex justify-content-between mb-3 w-100">
+            <div class="d-flex justify-content-between w-40">
 
-            </form>
-            <div class="buttons">
-                <div>
-                    <select class="form-control" id="sort">
+                <form class="form-inline w-80" id="filterForm">
+                    <div class="form-group search-container mr-3 w-100" style="width: 30%;">
+                        <input type="text" id="search" class="form-control w-100" placeholder="Pesquisar Material">
+                    </div>
+
+                </form>
+                <div class="w-15">
+                    <select class="form-control w-100" id="sort">
                         <option value="az">A-Z</option>
                         <option value="za">Z-A</option>
                     </select>
                 </div>
+            </div>
+            <div class="buttons">
                 <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
                 <div>
                     <select class="form-control" id="filter">
@@ -46,7 +49,7 @@
                         <th scope="col">Nome</th>
                         <th scope="col">Quantidade</th>
                         <th scope="col">Data de Aquisição</th>
-                        <th scope="col">Vendedor</th>
+                        <th scope="col">Fornecedor</th>
                         <th scope="col">Género</th>
                         <th scope="col">Tamanho</th>
                         <th scope="col">Ações</th>
