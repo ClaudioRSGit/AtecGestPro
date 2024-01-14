@@ -46,22 +46,22 @@
 
             <div class="tab-pane fade show active" id="externalTable">
 
-                <div class=" d-flex">
-                    <input type="text" id="searchInput" class="form-control mr-2" style="max-width: fit-content"
+                <div class="d-flex justify-content-between mb-3 w-100">
+                    <div class="d-flex justify-content-between w-40">
+                        <input type="text" id="searchInput" class="form-control mr-2 w-80"
                         placeholder="Insira para procurar...">
+                        <div class="w-15">
+                            <select class="form-control w-100" id="sortExternal">
+                                <option value="az">A-Z</option>
+                                <option value="za">Z-A</option>
+                            </select>
+                        </div>
 
-                    <button class="btn btn-danger mb-3 mr-2" id="delete-selected-ptus">Excluir Selecionados</button>
-
-
-                    <a href="{{ route('external.create') }}" class="btn btn-primary mb-3 mr-2">Nova Formação</a>
-
-                    <div>
-                        <select class="form-control" id="sortExternal">
-                            <option value="az">A-Z</option>
-                            <option value="za">Z-A</option>
-                        </select>
                     </div>
-
+                    <div class="buttons">
+                        <button class="btn btn-danger mr-2" id="delete-selected-ptus">Excluir Selecionados</button>
+                        <a href="{{ route('external.create') }}" class="btn btn-primary mr-2">Nova Formação</a>
+                    </div>
                 </div>
 
 

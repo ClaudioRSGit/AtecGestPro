@@ -34,7 +34,7 @@
                     </select>
                 </div>
             </div>
-            <div class="buttons ">
+            <div class="buttons">
 
                 <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
                 <div>
