@@ -142,7 +142,6 @@ class PartnerTrainingUserController extends Controller
                         $materialId => ['quantity' => $quantity],
                     ]);
                 } else {
-                    // If the quantity is 0, delete the pivot record
                     $partner_Training_Users->materials()->detach($materialId);
                 }
 

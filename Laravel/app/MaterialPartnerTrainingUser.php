@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MaterialPartnerTrainingUser extends Model
 {
+    use softDeletes;
     protected $fillable = [
         'material_id', 'partner_training_user_id', 'quantity'
     ];
@@ -14,8 +16,8 @@ class MaterialPartnerTrainingUser extends Model
         return $this->belongsTo(Material::class);
     }
 
-    public function partnerTrainingUser()
+    public function user()
     {
-        return $this->belongsTo(PartnerTrainingUser::class);
+        return $this->belongsTo(User::class);
     }
 }

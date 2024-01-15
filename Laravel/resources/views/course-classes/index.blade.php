@@ -96,9 +96,9 @@
                     <div id="collapse{{ $courseClass->id }}" class="collapse"
                         aria-labelledby="heading{{ $courseClass->id }}" data-parent="#accordion">
                         <div class="card-body">
-                            @if ($courseClass->students->count() > 0)
+                            @if ($courseClass->users->count() > 0)
                                 <ul>
-                                    @foreach ($courseClass->students as $student)
+                                    @foreach ($courseClass->users as $student)
                                         <li>{{ $student->name }}</li>
                                     @endforeach
                                 </ul>

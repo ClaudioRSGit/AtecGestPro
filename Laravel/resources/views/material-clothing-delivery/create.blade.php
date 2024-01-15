@@ -30,7 +30,7 @@
             <input type="hidden" name="user_id" value="{{ $student->id }}">
 
             <livewire:gender-filter :key="$gender">
-            </livewire:gender-filter>
+
                 <div class="col">
                     <div class="buttons">
 
@@ -56,95 +56,88 @@
                             Fechar
                         </button>
 
+
                     </div>
                 </div>
+            </livewire:gender-filter>
+
 
         </form>
 
-    </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const selectAllCheckbox = document.getElementById('select-all');
+                const checkboxes = document.querySelectorAll('.form-check-input');
+                const searchInput = document.getElementById('search');
+                // const filterDropdown = document.getElementById('filter');
 
 
+                // document.getElementById('apagarOnClick').addEventListener('click', function() {
+                //
+                //     document.getElementById('textarea').value = '';
+                //
+                //
+                //     const checkboxes = document.querySelectorAll('.form-check-input');
+                //     checkboxes.forEach(checkbox => {
+                //         checkbox.checked = false;
+                //     });
+                //
+                //
+                //     document.getElementById('select-all').checked = false;
+                // });
 
 
+                selectAllCheckbox.addEventListener('change', function () {
+                    checkboxes.forEach(checkbox => {
+                        checkbox.checked = selectAllCheckbox.checked;
+                    });
+                });
 
-
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const selectAllCheckbox = document.getElementById('select-all');
-            const checkboxes = document.querySelectorAll('.form-check-input');
-            const searchInput = document.getElementById('search');
-            // const filterDropdown = document.getElementById('filter');
-
-            sortDropdown.addEventListener('change', function() {
-                sortMaterials();
-            });
-
-            // document.getElementById('apagarOnClick').addEventListener('click', function() {
-            //
-            //     document.getElementById('textarea').value = '';
-            //
-            //
-            //     const checkboxes = document.querySelectorAll('.form-check-input');
-            //     checkboxes.forEach(checkbox => {
-            //         checkbox.checked = false;
-            //     });
-            //
-            //
-            //     document.getElementById('select-all').checked = false;
-            // });
-
-
-            selectAllCheckbox.addEventListener('change', function () {
                 checkboxes.forEach(checkbox => {
-                    checkbox.checked = selectAllCheckbox.checked;
+                    checkbox.addEventListener('change', function () {
+                        selectAllCheckbox.checked = checkboxes.length === document.querySelectorAll(
+                            'input[name="selectedClothing[]"]:checked').length;
+                    });
                 });
-            });
 
-            checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', function () {
-                    selectAllCheckbox.checked = checkboxes.length === document.querySelectorAll(
-                        'input[name="selectedClothing[]"]:checked').length;
+                searchInput.addEventListener('input', function () {
+                    const searchTerm = searchInput.value.toLowerCase();
+                    filterMaterials(searchTerm);
                 });
+
+                // filterDropdown.addEventListener('change', function () {
+                //     filterMaterials();
+                // });
+
+                function filterMaterials(searchTerm = null) {
+                    checkboxes.forEach(checkbox => {
+                        const materialRow = checkbox.closest('.material-row');
+                        const isTrainer = materialRow.getAttribute('data-trainer') === '1';
+                        const isTrainee = materialRow.getAttribute('data-trainee') === '1';
+                        const isTechnical = materialRow.getAttribute('data-technical') === '1';
+
+
+                        const filterValue = filterDropdown.value;
+
+                        const matchesFilter = (
+                            (filterValue === 'all') ||
+                            (filterValue === 'trainer' && isTrainer) ||
+                            (filterValue === 'trainee' && isTrainee) ||
+                            (filterValue === 'technical' && isTechnical)
+
+                        );
+
+                        const matchesSearch = !searchTerm || (
+                            materialRow.textContent.toLowerCase().includes(searchTerm) ||
+                            materialRow.querySelector('a').textContent.toLowerCase().includes(searchTerm)
+                        );
+
+                        checkbox.closest('tr').style.display = matchesFilter && matchesSearch ? '' : 'none';
+                    });
+                }
             });
-
-            searchInput.addEventListener('input', function () {
-                const searchTerm = searchInput.value.toLowerCase();
-                filterMaterials(searchTerm);
-            });
-
-            // filterDropdown.addEventListener('change', function () {
-            //     filterMaterials();
-            // });
-
-            function filterMaterials(searchTerm = null) {
-                checkboxes.forEach(checkbox => {
-                    const materialRow = checkbox.closest('.material-row');
-                    const isTrainer = materialRow.getAttribute('data-trainer') === '1';
-                    const isTrainee = materialRow.getAttribute('data-trainee') === '1';
-                    const isTechnical = materialRow.getAttribute('data-technical') === '1';
-
-
-                    const filterValue = filterDropdown.value;
-
-                    const matchesFilter = (
-                        (filterValue === 'all') ||
-                        (filterValue === 'trainer' && isTrainer) ||
-                        (filterValue === 'trainee' && isTrainee) ||
-                        (filterValue === 'technical' && isTechnical)
-
-                    );
-
-                    const matchesSearch = !searchTerm || (
-                        materialRow.textContent.toLowerCase().includes(searchTerm) ||
-                        materialRow.querySelector('a').textContent.toLowerCase().includes(searchTerm)
-                    );
-
-                    checkbox.closest('tr').style.display = matchesFilter && matchesSearch ? '' : 'none';
-                });
-            }
-        });
-    </script>
-    @livewireScripts
+        </script>
+        @livewireScripts
 
 @endsection
