@@ -30,7 +30,7 @@
                     <select class="form-control" id="roleFilter" name="roleFilter">
                         <option value="">Todas as Funções</option>
                         @foreach($roles as $role)
-                            <option value="{{ $role->name }}">{{ $role->description }}</option>
+                            <option value="{{ $role->id }}">{{ $role->description }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -95,10 +95,74 @@
         {{ $users->links() }}
     </div>
 
+<script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const deleteSelectedButton = document.getElementById('delete-selected');
+        const userCheckboxes = document.getElementsByName('selectedUsers[]');
+        const selectAllCheckbox = document.getElementById('select-all');
+
+        deleteSelectedButton.addEventListener('click', function(event) {
+            event.stopPropagation();
+            massDeleteUsers();
+        });
+
+        selectAllCheckbox.addEventListener('change', function() {
+            userCheckboxes.forEach(checkbox => {
+                checkbox.checked = selectAllCheckbox.checked;
+            });
+        });
+
+        userCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('click', function(event) {
+                event.stopPropagation();
+            });
+        });
+
+        function massDeleteUsers() {
+            let userIds = [];
+            userCheckboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    userIds.push(checkbox.value);
+                }
+            });
+
+            if (userIds.length > 0) {
+                if (confirm('Tem certeza que deseja excluir os utilizadores selecionados?')) {
+                    let form = document.createElement('form');
+                    form.action = '{{ route('users.massDelete') }}';
+                    form.method = 'post';
+                    form.style.display = 'none';
+
+                    let inputToken = document.createElement('input');
+                    inputToken.type = 'hidden';
+                    inputToken.name = '_token';
+                    inputToken.value = '{{ csrf_token() }}';
+                    form.appendChild(inputToken);
+
+                    userIds.forEach(userId => {
+                        let inputUser = document.createElement('input');
+                        inputUser.type = 'hidden';
+                        inputUser.name = 'user_ids[]';
+                        inputUser.value = userId;
+                        form.appendChild(inputUser);
+                    });
+
+                    document.body.appendChild(form);
+                    form.submit();
+                }
+            } else {
+                alert('Selecione pelo menos um utilizador para excluir.');
+            }
+        }
+    });
+
+</script>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            var checkboxes = document.querySelectorAll('.no-propagate');
+            // var checkboxes = document.querySelectorAll('.no-propagate');
 
             checkboxes.forEach(function(checkbox) {
                 checkbox.addEventListener('click', function(event) {
@@ -112,8 +176,7 @@
             const roleFilterSelect = document.getElementById('roleFilter');
             const userTable = document.getElementById('userTable');
             const userRows = userTable.querySelectorAll('tbody tr');
-            const selectAllCheckbox = document.getElementById('select-all');
-            const deleteSelectedButton = document.getElementById('delete-selected');
+
 
             nameFilterInput.addEventListener('input', function() {
                 console.log('Nome do Filtro Alterado');
@@ -125,47 +188,8 @@
                 filterUsers();
             });
 
-            selectAllCheckbox.addEventListener('change', function() {
-                userRows.forEach(userRow => {
-                    const checkbox = userRow.querySelector('input[name="selectedUsers[]"]');
-                    if (checkbox) {
-                        checkbox.checked = selectAllCheckbox.checked;
-                    }
-                });
-            });
 
-            deleteSelectedButton.addEventListener('click', function() {
-                const selectedUsers = Array.from(document.querySelectorAll(
-                        'input[name="selectedUsers[]"]:checked'))
-                    .map(checkbox => checkbox.value);
 
-                if (selectedUsers.length > 0 && confirm(
-                        'Tem certeza que deseja excluir os utilizadores selecionados?')) {
-                    const form = document.createElement('form');
-                    form.method = 'POST';
-                    form.action = '{{ route('users.massDelete') }}';
-                    form.style.display = 'none';
-
-                    const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
-
-                    selectedUsers.forEach(userId => {
-                        const input = document.createElement('input');
-                        input.type = 'hidden';
-                        input.name = 'user_ids[]';
-                        input.value = userId;
-                        form.appendChild(input);
-                    });
-
-                    const csrfInput = document.createElement('input');
-                    csrfInput.type = 'hidden';
-                    csrfInput.name = '_token';
-                    csrfInput.value = csrfToken;
-                    form.appendChild(csrfInput);
-
-                    document.body.appendChild(form);
-                    form.submit();
-                }
-            });
 
             function filterUsers() {
                 console.log('Filtrando Usuários...');
@@ -173,13 +197,14 @@
                 const nameFilter = nameFilterInput.value.toLowerCase();
                 const roleFilter = roleFilterSelect.value;
 
+
                 userRows.forEach(userRow => {
                     const userNameElement = userRow.querySelector('td:nth-child(2)');
                     const userRoleElement = userRow.getAttribute('data-role');
 
                     if (userNameElement && userRoleElement) {
                         const userName = userNameElement.textContent.toLowerCase();
-                        const userRole = userRoleElement.toLowerCase();
+                        const userRole = userRoleElement.valueOf();
 
                         const matchesName = userName.includes(nameFilter);
                         const matchesRole = roleFilter === '' || userRole === roleFilter;

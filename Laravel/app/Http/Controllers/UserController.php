@@ -17,23 +17,26 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $positionFilter = $request->input('positionFilter');
-        $nameFilter = $request->input('nameFilter');
+//        $positionFilter = $request->input('positionFilter');
+//        $nameFilter = $request->input('nameFilter');
         $courseClasses = CourseClass::all();
         $roles = Role::all();
 
         $query = User::with('CourseClass');
 
-        if ($positionFilter) {
-            $query->where('role_id', $positionFilter);
-        }
 
-        if ($nameFilter) {
-            $query->where(function ($query) use ($nameFilter) {
-                $query->where('name', 'like', $nameFilter . '%');
-            });
-        }
 
+//        if ($positionFilter) {
+//            $query->where('role_id', $positionFilter);
+//            $users = $query->paginate(5);
+//        } elseif ($nameFilter) {
+//            $query->where(function ($query) use ($nameFilter) {
+//                $query->where('name', 'like', $nameFilter . '%');
+//                $users = $query->paginate(5);
+//            });
+//        } else {
+//
+//        }
 
         $users = $query->paginate(5);
 
@@ -90,13 +93,14 @@ class UserController extends Controller
                 'isStudent' => 'required',
                 'isActive' => 'required',
                 'course_class_id' => 'nullable',
+                'role_id' => 'required',
             ]);
 
 
 
 
 
-            $userData = $request->only(['name', 'username', 'email', 'contact', 'password', 'isStudent', 'isActive', 'course_class_id']);
+            $userData = $request->only(['name', 'username', 'email', 'contact', 'password', 'isStudent', 'isActive', 'course_class_id', 'role_id']);
             $userData['password'] = $this->encryptPassword($userData['password']);
 
 
@@ -116,7 +120,6 @@ class UserController extends Controller
     {
         $courseClasses = CourseClass::with('Course')->get();
         $roles = Role::all();
-        $user->load('courseClass.course');
 
 
 
@@ -129,7 +132,7 @@ class UserController extends Controller
             $courseDescription = null;
         }
 
-        //dd($courseDescription);
+//        dd($courseDescription);
         return view('users.show', compact('user', 'courseClasses', 'courseDescription', 'roles'));
     }
 
@@ -221,8 +224,8 @@ class UserController extends Controller
         return bcrypt($password);
     }
 
-    private function setIsStudent(Request $request)
-    {
-        return $request->input('position') === 'formando' ? 1 : 0;
-    }
+//    private function setIsStudent(Request $request)
+//    {
+//        return $request->input('position') === 'formando' ? 1 : 0;
+//    }
 }
