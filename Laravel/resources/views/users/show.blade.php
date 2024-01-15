@@ -38,7 +38,7 @@
 
                     <div class="mb-3" id="role">
                         <label for="role" class="form-label">Função:</label>
-                        <input class="form-control" id="role" name="courseDescription" disabled value="{{$user->role->description}}">
+                        <input class="form-control" id="role" name="courseDescription" disabled value="{{$courseDescription}}">
                     </div>
 
 
@@ -51,14 +51,16 @@
                         <option value="{{ $class->id }}" {{ $user->course_class_id == $class->id ? 'selected' : '' }}>
                             {{ $class->description }}
                         </option>
+
+
                     @endforeach
                     </select>
                 </div>
 
-                <div class="mb-3" id="labelCourseDescription">
-                    <label for="courseDescription" class="form-label">Curso:</label>
-                    <input class="form-control" id="courseDescription" name="courseDescription" disabled value="{{ $courseDescription }}">
-                </div>
+                    <div class="mb-3" id="labelCourseDescription">
+                        <label for="courseDescription" class="form-label">Curso:</label>
+                        <input class="form-control" id="courseDescription" name="courseDescription" readonly value="{{ $courseDescription }}">
+                    </div>
                 @endif
 
                 <div class="mb-3">
