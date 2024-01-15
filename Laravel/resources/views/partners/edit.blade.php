@@ -42,6 +42,7 @@
                                         value="{{ $contact->description }}" placeholder="Descrição">
                                     <input type="text" class="form-control" name="existing_contact_values[]"
                                         value="{{ $contact->contact }}" placeholder="Contato">
+{{--                                        <input type="text" value="{{$contact}}" disabled class="w-100">--}}
                                     <button type="button" class="btn"
                                         onclick="removeContact({{ $contact->id }}, this)">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14"
@@ -87,7 +88,7 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             function checkAndAddContactFields() {
-                const contactsContainer = document.getElementById('contacts-container');
+                // const contactsContainer = document.getElementById('contacts-container');
                 const existingContacts = document.querySelectorAll('.contact-group');
 
                 if (existingContacts.length === 0) {
@@ -98,7 +99,7 @@
         });
 
         function addContactFields() {
-            const contactsContainer = document.getElementById('contacts-container');
+            // const contactsContainer = document.getElementById('contacts-container');
             const contactGroups = document.querySelectorAll('.contact-group');
 
             if (contactGroups.length === 0) {

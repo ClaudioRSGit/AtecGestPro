@@ -142,8 +142,13 @@ class PartnerController extends Controller
      */
     public function destroy(Partner $partner)
     {
+
+
         try {
+
             $partner->delete();
+            $partner->contactPartner()->delete();
+
             return redirect()->route('external.index')->with('success', 'Parceiro excluído com sucesso!');
         } catch (\Exception $e) {
             return redirect()->route('external.index')->with('error', 'Erro ao excluir o Parceiro. Por favor, tente novamente.');

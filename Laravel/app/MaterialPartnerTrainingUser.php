@@ -14,8 +14,8 @@ class MaterialPartnerTrainingUser extends Model
         return $this->belongsTo(Material::class);
     }
 
-    public function partnerTrainingUser()
+    public function user()
     {
-        return $this->belongsTo(PartnerTrainingUser::class);
+        return $this->belongsTo(User::class);
     }
 }
