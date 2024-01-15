@@ -17,6 +17,7 @@ class CreateMaterialClothingDeliveriesTable extends Migration
             $table->id();
             $table->foreignId('clothing_delivery_id')->constrained('clothing_deliveries')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('material_id')->constrained('materials')->onDelete('cascade')->onUpdate('cascade');
+            $table->integer('quantity');
         });
     }
 

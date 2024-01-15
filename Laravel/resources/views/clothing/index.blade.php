@@ -12,6 +12,7 @@
                 <a class="nav-link" data-toggle="tab" href="#outros">Outros</a>
             </li>
         </ul>
+
         <div class="tab-content">
             <div class="tab-pane fade show active" id="formandos">
                 <div class="d-flex justify-content-between mb-3">
@@ -45,6 +46,17 @@
                         </a>
                     </div>
                 </div>
+                <div class="form-group mx-2" style="width: 30%">
+                    <select class="form-control" id="filter">
+                        <option value="all">Todos</option>
+                        @foreach($courses as $course)
+                            <option value="{{ $course->id }}">{{ $course->description }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+
+        </div>
 
                 <div id="accordion">
                     <div class="ms-auto">

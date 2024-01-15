@@ -18,8 +18,8 @@ class ClothingAssignmentController extends Controller
         $name = $student ? $student->name : 'Default Name';
         $material = $id ? Material::find($id) : null;
 
-        $clothing_assignment = Material::where('isClothing', 1)->get();
-        return view('clothing-assignment.index', ['name' => $name], compact('clothing_assignment',  'student', 'material', 'id'));
+        $clothes = Material::where('isClothing', 1)->get();
+        return view('clothing-assignment.index', ['name' => $name], compact('clothes',  'student', 'material', 'id'));
     }
 
     public function create()
@@ -40,33 +40,33 @@ class ClothingAssignmentController extends Controller
        ]);
 
        try {
-           $clothing_assignment = Material::create($request->all());
+           $clothes = Material::create($request->all());
 
-           return redirect()->route('materials.show', $clothing_assignment->id)->with('success', 'Material inserido com sucesso!');
+           return redirect()->route('materials.show', $clothes->id)->with('success', 'Material inserido com sucesso!');
        } catch (\Exception $e) {
            return redirect()->back()->with('error', 'Erro ao inserir o material. Por favor, tente novamente.');
        }
     }
 
-    public function show(Material $clothing_assignment)
+    public function show(Material $clothes)
     {
-        return view('clothing-assignment.show', compact('clothing_assignment'));
+        return view('clothing-assignment.show', compact('clothes'));
     }
 
-    public function edit(Material $clothing_assignment)
+    public function edit(Material $clothes)
     {
 
-        return view('clothing-assignment.edit', compact('clothing_assignment'));
+        return view('clothing-assignment.edit', compact('clothes'));
     }
 
 
-    public function update(Request $request, Material $clothing_assignment)
+    public function update(Request $request, Material $clothes)
     {
         $request->validate([
             'name' => 'required|string|max:255',
         ]);
 
-        $clothing_assignment->update($request->all());
+        $clothes->update($request->all());
 
         return redirect()->back()->with('success', 'Material atualizado com sucesso!');
 
@@ -75,9 +75,9 @@ class ClothingAssignmentController extends Controller
     public function destroy($id)
     {
         try {
-            $clothing_assignment = Material::find($id);
-            if($clothing_assignment) {
-                $clothing_assignment->delete();
+            $clothes = Material::find($id);
+            if($clothes) {
+                $clothes->delete();
                 return redirect()->back()->with('success', 'Material excluído com sucesso!');
 
             } else {

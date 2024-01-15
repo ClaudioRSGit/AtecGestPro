@@ -10,7 +10,7 @@ class Material_Clothing_Delivery extends Model
 {
     public $timestamps = false;
     protected $fillable = [
-        'material_id', 'clothing_delivery_id'
+        'material_id', 'clothing_delivery_id', 'quantity'
     ];
 
     //02.02
