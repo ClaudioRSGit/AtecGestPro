@@ -37,6 +37,7 @@ class CourseClassController extends Controller
 
     public function store(Request $request)
     {
+
         $request->validate([
             'description' => 'required',
             'course_id' => 'required',
@@ -48,8 +49,11 @@ class CourseClassController extends Controller
         ]);
 
         if ($request->has('selected_students')) {
-            $selectedStudents = User::whereIn('id', $request->input('selected_students'))->get();
-            $courseClass->students()->saveMany($selectedStudents);
+            foreach ($request->input('selected_students') as $student) {
+                $user = User::find($student);
+                $user->course_class_id = $courseClass->id;
+                $user->save();
+            }
         }
 
         return redirect()->route('course-classes.index')->with('success', 'Course class created successfully!');
