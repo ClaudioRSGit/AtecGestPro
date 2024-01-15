@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Material;
+use App\MaterialPartnerTrainingUser;
 use App\Partner;
-use App\Partner_Training_User;
-use App\Role;
-use App\Role_User;
+use App\PartnerTrainingUser;
 use App\Training;
 use App\User;
 use Illuminate\Http\Request;
@@ -14,15 +13,13 @@ use Illuminate\Support\Facades\DB;
 
 class PartnerTrainingUserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        $partner_Training_Users = Partner_Training_User::with('partner', 'training', 'user')->get();
-        $partners = Partner::with('partnerTrainingUser', 'partnerContacts')->get();
+        $partner_Training_Users = PartnerTrainingUser::with('partner', 'training', 'user')->get();
+
+        $partners = Partner::with('partnerTrainingUsers', 'contactPartner')->get();
+
         $trainings = Training::all();
 
         return view('external.index', compact('partner_Training_Users', 'partners', 'trainings'));
@@ -31,22 +28,18 @@ class PartnerTrainingUserController extends Controller
 
     public function show($id)
     {
-        $partner_Training_Users = Partner_Training_User::with('partner', 'training', 'user', 'Material_Training.material')->findOrFail($id);
+
+        $partner_Training_Users = PartnerTrainingUser::with('partner', 'training', 'user', 'materials')->findOrFail($id);
 
 
 
         return view('external.show', compact('partner_Training_Users'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
-        $partner_Training_Users = Partner_Training_User::all();
-        $role_users = Role_User::all();
+        $partner_Training_Users = PartnerTrainingUser::all();
         $partners=Partner::all();
         $users=User::all();
         $trainings=Training::all();
@@ -55,7 +48,7 @@ class PartnerTrainingUserController extends Controller
 
 
 
-        return view('external.create', compact('partner_Training_Users', 'partners', 'users', 'trainings', "role_users", 'materials'));
+        return view('external.create', compact('partner_Training_Users', 'partners', 'users', 'trainings', 'materials'));
     }
 
 
@@ -69,7 +62,7 @@ class PartnerTrainingUserController extends Controller
             'end_date' => 'required',
         ]);
 
-        $partnerTrainingUser = Partner_Training_User::create($request->all());
+        $partnerTrainingUser = PartnerTrainingUser::create($request->all());
 
         $materials = $request->input('materials', []);
         $materialQuantities = $request->input('material_quantities', []);
@@ -100,30 +93,25 @@ class PartnerTrainingUserController extends Controller
 
     public function edit($id)
     {
-        $partner_Training_Users = Partner_Training_User::with('partner', 'training', 'user')->findOrFail($id);
-        $role_users = Role_User::with('role', 'user')->get();
+        $partner_Training_Users = PartnerTrainingUser::with('partner', 'training', 'user',  'materials')->findOrFail($id);
+
         $partners = Partner::all();
         $trainings = Training::all();
         $users = User::all();
 
-        $selectedMaterials = $partner_Training_Users->Material_Training->pluck('material_id')->toArray();
 
-        $materials = DB::table('materials')->where('isInternal', '=', false)->get();
 
-        return view('external.edit', compact('partner_Training_Users', 'partners', 'trainings', 'users', 'role_users', 'materials', 'selectedMaterials'));
+
+        $materials = Material::with('partnerTrainingUsers')->where('isInternal', false)->get();
+
+        return view('external.edit', compact('partner_Training_Users', 'partners', 'trainings', 'users',   'materials' ));
     }
 
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Partner_Training_Users  $partner_Training_Users
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(Request $request, $id)
     {
-        $partner_Training_Users = Partner_Training_User::with('partner', 'training', 'user')->findOrFail($id);
+        $partner_Training_Users = PartnerTrainingUser::with('partner', 'training', 'user')->findOrFail($id);
 
         $this->validate($request, [
             'partner_id' => 'required',
@@ -139,23 +127,32 @@ class PartnerTrainingUserController extends Controller
 
         $partner_Training_Users->update($request->all());
 
-        $materials = $request->input('materials', []);
-        $materialQuantities = $request->input('material_quantities', []);
+        $selectedMaterials = $request->input('materials');
+        $materialQuantities = $request->input('material_quantities');
 
-        $partner_Training_Users->Material_Training()->delete();
+        if ($selectedMaterials) {
+            foreach ($selectedMaterials as $materialId) {
+                $quantity = $materialQuantities[$materialId] ?? 1;
 
-        foreach ($materials as $materialId) {
-            $quantity = $materialQuantities[$materialId] ?? 1;
+                $currentQuantity = $partner_Training_Users->materials->where('id', $materialId)->first()->pivot->quantity ?? 0;
+                $quantityDecreased = $currentQuantity > $quantity;
 
-            $partner_Training_Users->Material_Training()->create([
-                'material_id' => $materialId,
-                'quantity' => $quantity,
-            ]);
-        }
+                if ($quantity > 0) {
+                    $partner_Training_Users->materials()->syncWithoutDetaching([
+                        $materialId => ['quantity' => $quantity],
+                    ]);
+                } else {
+                    // If the quantity is 0, delete the pivot record
+                    $partner_Training_Users->materials()->detach($materialId);
+                }
 
-        $material = Material::find($materialId);
-        if ($material) {
-            $material->decrement('quantity', $quantity);
+                $material = Material::find($materialId);
+
+                if ($material) {
+                    $material->increment('quantity', $quantityDecreased ? ($currentQuantity - $quantity) : 0);
+                    $material->decrement('quantity', $quantityDecreased ? 0 : $quantity);
+                }
+            }
         }
 
         return redirect()->route('external.index')->with('success', 'Formação atualizada com sucesso');
@@ -166,21 +163,24 @@ class PartnerTrainingUserController extends Controller
 
 
 
+
+
     public function destroy($id)
     {
-        $partnerTrainingUser = Partner_Training_User::findOrFail($id);
 
+        $partnerTrainingUser = PartnerTrainingUser::find($id);
 
-        $materialTrainings = $partnerTrainingUser->Material_Training;
-
-
-        foreach ($materialTrainings as $materialTraining) {
-            $material = $materialTraining->material;
-            $material->quantity += $materialTraining->quantity;
-            $material->save();
+        if (!$partnerTrainingUser) {
+            return redirect()->route('partner-training-users.index')->with('error', 'PartnerTrainingUser not found.');
         }
 
-        $partnerTrainingUser->Material_Training()->delete();
+        $materials = $partnerTrainingUser->materials;
+
+        MaterialPartnerTrainingUser::where('partner_training_user_id', $partnerTrainingUser->id)->delete();
+
+        foreach ($materials as $material) {
+            $material->increment('quantity', $material->pivot->quantity);
+        }
 
         $partnerTrainingUser->delete();
 
@@ -189,24 +189,39 @@ class PartnerTrainingUserController extends Controller
 
 
 
+
     public function massDelete(Request $request)
     {
-
-
-
         $request->validate([
             'ptu_ids' => 'required|array',
-            'ptu_ids.*' => 'exists:partner__training__users,id',]);
+            'ptu_ids.*' => 'exists:partner_training_users,id',
+        ]);
 
-        //dd($request->all());
         try {
-            Partner_Training_User::whereIn('id', $request->input('ptu_ids'))->delete();
+            $partnerTrainingUsers = PartnerTrainingUser::whereIn('id', $request->input('ptu_ids'))->get();
+
+            foreach ($partnerTrainingUsers as $partnerTrainingUser) {
+                $materials = $partnerTrainingUser->materials;
+
+                foreach ($materials as $material) {
+                    $quantity = $material->pivot->quantity ?? 0;
+
+                    $material->increment('quantity', $quantity);
+                }
+
+                MaterialPartnerTrainingUser::where('partner_training_user_id', $partnerTrainingUser->id)->delete();
+            }
+
+            // Delete PartnerTrainingUsers
+            PartnerTrainingUser::whereIn('id', $request->input('ptu_ids'))->delete();
 
             return redirect()->back()->with('success', 'Formações selecionadas excluídas com sucesso!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Erro ao excluir Formações selecionadas. Por favor, tente novamente.');
         }
     }
+
+
 
 
 

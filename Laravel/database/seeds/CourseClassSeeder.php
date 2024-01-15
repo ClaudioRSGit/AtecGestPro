@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class CourseClassSeeder extends Seeder
 {
@@ -22,13 +21,13 @@ class CourseClassSeeder extends Seeder
         DB::table('course_classes')->insert([
             'description' => 'MAPCP0223',
             'course_id' => 2,
-            ]);
+        ]);
 
         // Seed 3
         DB::table('course_classes')->insert([
             'description' => 'TS0123',
             'course_id' => 3,
-            ]);
+        ]);
 
         // Seed 4
         DB::table('course_classes')->insert([

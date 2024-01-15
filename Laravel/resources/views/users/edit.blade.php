@@ -64,19 +64,12 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="roleFilter" class="form-label">Função:</label>
-                        <select class="form-control" id="roleFilter" name="roleFilter"
-                                onchange="toggleCourseClassDiv()">
+                        <select class="form-control" id="roleFilter" name="roleFilter" onchange="toggleCourseClassDiv()">
                             @foreach($roles as $role)
-                                <option value="{{ $role->name }}"
-                                        @foreach($user->Role_User as $roleUser)
-                                            @if ($roleUser->role->description == $role->description)
-                                                selected
-                                    @endif
-                                    @endforeach>
+                                <option value="{{ $role->name }}" {{ $user->role->description == $role->description ? 'selected' : '' }}>
                                     {{ $role->description }}
                                 </option>
                             @endforeach
-
                         </select>
                     </div>
 
@@ -92,7 +85,6 @@
                             @endforeach
                         </select>
                     </div>
-
 
 
                     <div class="mb-3">
@@ -146,7 +138,7 @@
         function updateCourseDescription(select) {
         }
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             toggleCourseClassDiv();
         });
     </script>

@@ -26,10 +26,10 @@
                 <div class="mb-3">
                     <label for="contacts" class="form-label">Contatos:</label>
 
-                    @if ($partner->partnerContacts->isEmpty())
+                    @if ($partner->contactPartner->isEmpty())
                         <p>Sem Contatos Associados</p>
                     @else
-                        @foreach($partner->partnerContacts as $contact)
+                        @foreach($partner->contactPartner as $contact)
                             <div class="mb-2">
                                 <input type="text" class="form-control" name="contact_description[]" value="{{ $contact->description }}" placeholder="Descrição" disabled>
                                 <input type="text" class="form-control" name="contact_value[]" value="{{ $contact->contact }}" placeholder="Contato" disabled>
@@ -46,6 +46,6 @@
                     <a href="{{ url()->previous() }}" class="btn btn-secondary">Voltar</a>
                 </div>
             </div>
-        </div>
+
     </div>
 @endsection

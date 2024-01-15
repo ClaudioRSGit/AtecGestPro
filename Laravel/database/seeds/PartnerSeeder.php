@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class PartnerSeeder extends Seeder
 {
@@ -47,5 +46,5 @@ class PartnerSeeder extends Seeder
             'description' => 'No Contact',
             'address' => 'R. António Luís da Costa 100, 3700-310 São João da Madeira',
         ]);
-        }
+    }
 }

@@ -3,20 +3,17 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use App\CourseClass;
 
 class Course extends Model
 {
-    protected $fillable = [
-        'code',
-        'description'
-    ];
-    
-    use SoftDeletes;
+    public function materials()
+    {
+        return $this->belongsToMany(Material::class)->using(CourseMaterial::class);
+    }
 
-    public function CourseClass()
+    public function courseClasses()
     {
         return $this->hasMany(CourseClass::class);
     }
+
 }

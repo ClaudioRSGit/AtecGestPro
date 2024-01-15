@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class UserSeeder extends Seeder
 {
@@ -19,10 +18,11 @@ class UserSeeder extends Seeder
             'email' => 'vasco.trindade.t3698521@edu.atec.pt',
             'contact' => '912345678',
             'password' => bcrypt('password123'),
-            'position' => 'admin',
+            'notes' => '',
             'isActive' => true,
             'isStudent' => false,
             'course_class_id' => null,
+            'role_id' => 1,
         ]);
         // Seed 1
         DB::table('users')->insert([
@@ -31,10 +31,11 @@ class UserSeeder extends Seeder
             'email' => 'antonio.carro.t3698521@edu.atec.pt',
             'contact' => '912345699',
             'password' => bcrypt('password123'),
-            'position' => 'admin',
+            'notes' => '',
             'isActive' => true,
             'isStudent' => false,
             'course_class_id' => null,
+            'role_id' => 2,
         ]);
         // Seed 2
         DB::table('users')->insert([
@@ -43,10 +44,11 @@ class UserSeeder extends Seeder
             'email' => 'fancisco.silva.t2365478@edu.atec.pt',
             'contact' => '912345679',
             'password' => bcrypt('password456'),
-            'position' => 'user',
+            'notes' => '',
             'isActive' => true,
             'isStudent' => true,
             'course_class_id' => null,
+            'role_id' => 3,
         ]);
 
         // Seed 3
@@ -56,10 +58,11 @@ class UserSeeder extends Seeder
             'email' => 'antonio_vaz.t0254456@edu.atec.pt',
             'contact' => '934895657',
             'password' => bcrypt('password789'),
-            'position' => 'tecnico',
+            'notes' => '',
             'isActive' => true,
             'isStudent' => true,
             'course_class_id' => 3,
+            'role_id' => 3,
         ]);
 
         // Seed 4
@@ -69,10 +72,11 @@ class UserSeeder extends Seeder
             'email' => 'alice.cunha.t0254496@edu.atec.pt',
             'contact' => '934895757',
             'password' => bcrypt('passwordabc'),
-            'position' => 'formando',
+            'notes' => '',
             'isActive' => true,
             'isStudent' => true,
             'course_class_id' => 4,
+            'role_id' => 3,
         ]);
 
         // Seed 5
@@ -82,11 +86,12 @@ class UserSeeder extends Seeder
             'email' => 'jose.silva.t0123186@edu.atec.pt',
             'contact' => '934092936',
             'password' => bcrypt('passwordxy6'),
-            'position' => 'formando',
+            'notes' => '',
             'isActive' => true,
             'isStudent' => true,
             'course_class_id' => 5,
-        ]);
+            'role_id' => 3,
+                    ]);
         // Seed 6
         DB::table('users')->insert([
             'name' => 'José Silva2',
@@ -94,10 +99,11 @@ class UserSeeder extends Seeder
             'email' => 'jose.silva.t0123187@edu.atec.pt',
             'contact' => '934092937',
             'password' => bcrypt('passwordxy7'),
-            'position' => 'formando',
+            'notes' => '',
             'isActive' => true,
             'isStudent' => true,
             'course_class_id' => 5,
+            'role_id' => 3,
         ]);
         // Seed 7
         DB::table('users')->insert([
@@ -106,10 +112,11 @@ class UserSeeder extends Seeder
             'email' => 'jose.silva.t0123158@edu.atec.pt',
             'contact' => '934092938',
             'password' => bcrypt('passwordxyz'),
-            'position' => 'formando',
+            'notes' => '',
             'isActive' => true,
             'isStudent' => true,
             'course_class_id' => 5,
+            'role_id' => 3,
         ]);
         // Seed 8
         DB::table('users')->insert([
@@ -118,10 +125,11 @@ class UserSeeder extends Seeder
             'email' => 'jose.silva.t0123189@edu.atec.pt',
             'contact' => '934092939',
             'password' => bcrypt('passwordxyz'),
-            'position' => 'formando',
+            'notes' => '',
             'isActive' => true,
             'isStudent' => true,
             'course_class_id' => 5,
+            'role_id' => 3,
         ]);
         // Seed 9
         DB::table('users')->insert([
@@ -130,10 +138,11 @@ class UserSeeder extends Seeder
             'email' => 'jose.silva.t01231c89@edu.atec.pt',
             'contact' => '934592939',
             'password' => bcrypt('passwordxyz'),
-            'position' => 'formando',
+            'notes' => '',
             'isActive' => true,
             'isStudent' => false,
             'course_class_id' => null,
+            'role_id' => 4,
         ]);
     }
 }

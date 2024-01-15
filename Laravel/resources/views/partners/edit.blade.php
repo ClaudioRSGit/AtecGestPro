@@ -35,7 +35,7 @@
                                 Contato</button>
                         </div>
                         <div id="contacts-container">
-                            @foreach ($partner->partnerContacts as $contact)
+                            @foreach ($partner->contactPartner as $contact)
                                 <div class="contact-group mb-3">
                                     <input type="hidden" name="existing_contact_ids[]" value="{{ $contact->id }}">
                                     <input type="text" class="form-control" name="existing_contact_descriptions[]"
@@ -70,12 +70,12 @@
         }
 
         function validateContacts() {
-            var contactGroups = document.querySelectorAll('.contact-group');
+            const contactGroups = document.querySelectorAll('.contact-group');
 
-            for (var i = 0; i < contactGroups.length; i++) {
-                var descriptionInput = contactGroups[i].querySelector(
+            for (let i = 0; i < contactGroups.length; i++) {
+                const descriptionInput = contactGroups[i].querySelector(
                     '[name^="existing_contact_descriptions"], [name^="new_contact_descriptions"]');
-                var valueInput = contactGroups[i].querySelector(
+                const valueInput = contactGroups[i].querySelector(
                     '[name^="existing_contact_values"], [name^="new_contact_values"]');
 
                 if (descriptionInput.value.trim() === '' || valueInput.value.trim() === '') {
@@ -87,8 +87,8 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             function checkAndAddContactFields() {
-                var contactsContainer = document.getElementById('contacts-container');
-                var existingContacts = document.querySelectorAll('.contact-group');
+                const contactsContainer = document.getElementById('contacts-container');
+                const existingContacts = document.querySelectorAll('.contact-group');
 
                 if (existingContacts.length === 0) {
                     addContactFields();
@@ -98,17 +98,17 @@
         });
 
         function addContactFields() {
-            var contactsContainer = document.getElementById('contacts-container');
-            var contactGroups = document.querySelectorAll('.contact-group');
+            const contactsContainer = document.getElementById('contacts-container');
+            const contactGroups = document.querySelectorAll('.contact-group');
 
             if (contactGroups.length === 0) {
                 addNewContactGroup();
                 return;
             }
 
-            var lastContactGroup = contactGroups[contactGroups.length - 1];
-            var lastDescriptionInput = lastContactGroup.querySelector('[name^="new_contact_descriptions"]');
-            var lastValueInput = lastContactGroup.querySelector('[name^="new_contact_values"]');
+            const lastContactGroup = contactGroups[contactGroups.length - 1];
+            const lastDescriptionInput = lastContactGroup.querySelector('[name^="new_contact_descriptions"]');
+            const lastValueInput = lastContactGroup.querySelector('[name^="new_contact_values"]');
 
             if (lastDescriptionInput && lastValueInput && (lastDescriptionInput.value.trim() === '' || lastValueInput.value
                     .trim() === '')) {
@@ -119,28 +119,28 @@
         }
 
         function addNewContactGroup() {
-            var contactsContainer = document.getElementById('contacts-container');
-            var newContactGroup = document.createElement('div');
+            const contactsContainer = document.getElementById('contacts-container');
+            const newContactGroup = document.createElement('div');
             newContactGroup.classList.add('contact-group', 'mb-3');
 
-            var inputId = document.createElement('input');
+            const inputId = document.createElement('input');
             inputId.type = 'hidden';
             inputId.name = 'new_contact_ids[]';
             inputId.value = '';
 
-            var inputDescription = document.createElement('input');
+            const inputDescription = document.createElement('input');
             inputDescription.type = 'text';
             inputDescription.classList.add('form-control');
             inputDescription.name = 'new_contact_descriptions[]';
             inputDescription.placeholder = 'Descrição';
 
-            var inputValue = document.createElement('input');
+            const inputValue = document.createElement('input');
             inputValue.type = 'text';
             inputValue.classList.add('form-control');
             inputValue.name = 'new_contact_values[]';
             inputValue.placeholder = 'Contato';
 
-            var removeButton = document.createElement('button');
+            const removeButton = document.createElement('button');
             removeButton.type = 'button';
             removeButton.classList.add('btn');
             removeButton.innerHTML =
@@ -158,7 +158,7 @@
         }
 
         function removeContact(contactId, contactElement) {
-            var csrfToken = $('meta[name="csrf-token"]').attr('content');
+            const csrfToken = $('meta[name="csrf-token"]').attr('content');
 
             $.ajax({
                 url: '/partner-contact/' + contactId,

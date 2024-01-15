@@ -69,9 +69,7 @@
             <tbody>
                 <tr class="filler"></tr>
                 @foreach ($users as $user)
-                    <tr class="user-row customTableStyling" data-position="{{ strtolower($user->position) }}"
-                        data-role="{{ strtolower($role_users->where('user_id', $user->id)->first()->role->name) }}"
-                        onclick="location.href='{{ route('users.show', $user->id) }}'">
+                    <tr class="user-row customTableStyling" data-position="{{ strtolower($user) }}" data-role="{{ $user->role_id }}" onclick="location.href='{{ route('users.show', $user->id) }}'">
                         <td>
                             <input type="checkbox" class="no-propagate" name="selectedUsers[]" value="{{ $user->id }}">
                         </td>
@@ -79,7 +77,7 @@
                         <td>{{ $user->username }}</td>
                         <td>{{ $user->email }}</td>
                         <td>
-                            {{ $role_users->where('user_id', $user->id)->first()->role->description }}
+                            {{ $user->role->description }}
                         </td>
 
                         <td>{{ $user->isActive == 1 ? 'Sim' : 'Não' }}</td>
