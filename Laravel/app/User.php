@@ -4,10 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Model
 {
-    use softDeletes;
+    use Notifiable, SoftDeletes;
 
     //all fillable fields
     protected $guarded = [
@@ -31,6 +33,11 @@ class User extends Model
     public function material()
     {
         return $this->belongsToMany(Material::class, 'material_user', 'user_id', 'material_id')->withPivot('quantity', 'size_id', 'delivery_date', 'delivery_address', 'delivery_city', 'delivery_zip_code', 'delivery_country', 'delivery_contact', 'delivery_phone', 'delivery_email', 'delivery_date', 'delivery_address', 'delivery_city', 'delivery_zip_code', 'delivery_country', 'delivery_contact', 'delivery_phone', 'delivery_email', 'delivery_date', 'delivery_address', 'delivery_city', 'delivery_zip_code', 'delivery_country', 'delivery_contact', 'delivery_phone', 'delivery_email', 'delivery_date', 'delivery_address', 'delivery_city', 'delivery_zip_code', 'delivery_country', 'delivery_contact', 'delivery_phone', 'delivery_email', 'delivery_date', 'delivery_address', 'delivery_city', 'delivery_zip_code', 'delivery_country', 'delivery_contact', 'delivery_phone', 'delivery_all');
+    }
+
+    public function hasRole($role)
+    {
+        return $this->role->name === $role;
     }
 
 }
