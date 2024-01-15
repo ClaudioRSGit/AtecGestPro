@@ -22,24 +22,25 @@ class UserController extends Controller
         $courseClasses = CourseClass::all();
         $roles = Role::all();
 
-        $query = User::with('CourseClass', 'Role');
+        $query = User::with('CourseClass');
 
-//        if ($positionFilter) {
-//            $query->where('position', $positionFilter);
-//        }
+        if ($positionFilter) {
+            $query->where('role_id', $positionFilter);
+        }
 
-//        if ($nameFilter) {
-//            $query->where(function ($query) use ($nameFilter) {
-//                $query->where('name', 'like', $nameFilter . '%');
-//            });
-//        }
+        if ($nameFilter) {
+            $query->where(function ($query) use ($nameFilter) {
+                $query->where('name', 'like', $nameFilter . '%');
+            });
+        }
+
 
         $users = $query->paginate(5);
 
 
-        if ($request->ajax()) {
-            return view('users.partials.user_table', compact('users', 'courseClasses',  'roles'));
-        }
+//        if ($request->ajax()) {
+//            return view('users.partials.user_table', compact('users', 'courseClasses',  'roles'));
+//        }
 
         return view('users.index', compact('users', 'courseClasses', 'roles'));
     }
@@ -147,21 +148,21 @@ class UserController extends Controller
     public function show(User $user)
     {
         $courseClasses = CourseClass::all();
-        $role_users = Role_User::all();
+        $roles = Role::all();
 //        $user->load('CourseClass.Course', 'Role_user.Role');
 
 
         if ($user->isStudent && $user->CourseClass) {
-            $user->load('CourseClass.Course', 'Role_User.Role');
+            $user->load('CourseClass.Course', 'Role');
             $courseDescription = $user->CourseClass->course->description;
             //   dd($user->CourseClass->course->description  );
 //            dd($user->Role_User);
         } else {
-            $user->load('Role_User.Role');
+            $user->load('Role');
             $courseDescription = null;
         }
 
-        return view('users.show', compact('user', 'courseClasses', 'courseDescription', 'role_users'));
+        return view('users.show', compact('user', 'courseClasses', 'courseDescription', 'roles'));
     }
 
 
@@ -176,7 +177,7 @@ class UserController extends Controller
         $courseClasses = CourseClass::all();
         $courses = Course::all();
         $roles = Role::all();
-        $user->load('CourseClass.Course', 'Role_User.Role');
+        $user->load('CourseClass.Course', 'Role');
 
         return view('users.edit', compact('user', 'courseClasses', 'courses', 'roles'));
     }
@@ -193,6 +194,8 @@ class UserController extends Controller
 
 //        dd($request->all());
         $role = $request->input('roleFilter');
+
+        dd($role);
 
         if ($role == "formando") {
             $request['isStudent'] = 1;

@@ -3,9 +3,16 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Model
 {
+    use softDeletes;
+
+    //all fillable fields
+    protected $guarded = [
+
+    ];
     public function actions()
     {
         return $this->hasMany(Action::class);
@@ -18,7 +25,7 @@ class User extends Model
 
     public function role()
     {
-        return $this->hasOne(Role::class);
+        return $this->belongsTo(Role::class);
     }
 
 

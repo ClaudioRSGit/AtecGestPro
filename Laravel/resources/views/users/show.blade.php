@@ -38,7 +38,7 @@
 
                     <div class="mb-3" id="role">
                         <label for="role" class="form-label">Função:</label>
-                        <input class="form-control" id="role" name="courseDescription" disabled value="{{$role_users->where('user_id', $user->id)->first()->role->description}}">
+                        <input class="form-control" id="role" name="courseDescription" disabled value="{{$user->role->description}}">
                     </div>
 
 
