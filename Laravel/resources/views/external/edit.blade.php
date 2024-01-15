@@ -78,19 +78,35 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @foreach($materials as $material)
+                    @foreach($partner_Training_Users->materials as $material)
                         <tr>
                             <td>{{ $material->name }}</td>
                             <td>{{ $material->description }}</td>
                             <td>
-                                <input type="number" name="material_quantities[{{ $material->id }}]" value="{{ $partner_Training_Users->pivot->quantity ?? 1 }}" min="0" max="{{ $material->quantity }}" @if($material->quantity == 0) disabled @endif>
+                                <input type="number" name="material_quantities[{{ $material->id }}]" value="{{ $material->pivot->quantity ?? 1 }}" min="0" max="{{ $material->quantity }}"  >
                             </td>
                             <td>
-                                <input type="checkbox" name="materials[{{ $material->id }}]" value="{{ $material->id }}" {{ $partner_Training_Users->quantity > 0 ? 'checked' : '' }} @if($material->quantity == 0) disabled @endif>
+                                <input type="checkbox" name="materials[{{ $material->id }}]" value="{{ $material->id }}" {{ $material->pivot->quantity > 0 ? 'checked' : '' }} >
                             </td>
                         </tr>
                     @endforeach
+
+                    @foreach($materials as $material)
+                        @unless($partner_Training_Users->materials->contains($material))
+                            <tr>
+                                <td>{{ $material->name }}</td>
+                                <td>{{ $material->description }}</td>
+                                <td>
+                                    <input type="number" name="material_quantities[{{ $material->id }}]" value="0" min="0" max="{{ $material->quantity }}">
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="materials[{{ $material->id }}]" value="{{ $material->id }}">
+                                </td>
+                            </tr>
+                        @endunless
+                    @endforeach
                     </tbody>
+
 
 
                 </table>
@@ -100,6 +116,8 @@
             <a href="{{ route('external.index') }}" class="btn btn-secondary">Voltar</a>
         </form>
     </div>
+
+
 @endsection
 
 @section('scripts')
