@@ -2,6 +2,7 @@
 namespace App\Http\Livewire;
 
 use App\Material;
+use Illuminate\View\Component;
 use Livewire\Component;
 
 class GenderFilter extends Component
