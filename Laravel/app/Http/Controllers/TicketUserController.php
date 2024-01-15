@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\TicketsUser;
+use App\TicketUser;
 use Illuminate\Http\Request;
 
-class TicketsUserController extends Controller
+class TicketUserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class TicketsUserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\TicketsUser  $ticketsUser
+     * @param  \App\TicketUser  $ticketUser
      * @return \Illuminate\Http\Response
      */
-    public function show(TicketsUser $ticketsUser)
+    public function show(TicketUser $ticketUser)
     {
         //
     }
@@ -52,10 +52,10 @@ class TicketsUserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\TicketsUser  $ticketsUser
+     * @param  \App\TicketUser  $ticketUser
      * @return \Illuminate\Http\Response
      */
-    public function edit(TicketsUser $ticketsUser)
+    public function edit(TicketUser $ticketUser)
     {
         //
     }
@@ -64,10 +64,10 @@ class TicketsUserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\TicketsUser  $ticketsUser
+     * @param  \App\TicketUser  $ticketUser
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TicketsUser $ticketsUser)
+    public function update(Request $request, TicketUser $ticketUser)
     {
         //
     }
@@ -75,10 +75,10 @@ class TicketsUserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\TicketsUser  $ticketsUser
+     * @param  \App\TicketUser  $ticketUser
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TicketsUser $ticketsUser)
+    public function destroy(TicketUser $ticketUser)
     {
         //
     }

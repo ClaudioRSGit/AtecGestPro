@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Contacts;
+use App\TicketUser;
 use Faker\Generator as Faker;
 
-$factory->define(Contacts::class, function (Faker $faker) {
+$factory->define(TicketUser::class, function (Faker $faker) {
     return [
         //
     ];

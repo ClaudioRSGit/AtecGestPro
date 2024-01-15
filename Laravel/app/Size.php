@@ -3,16 +3,21 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Size extends Model
 {
-    // ... other attributes and methods
+    protected $fillable = ['size'];
 
-    public function materials()
+    use softDeletes;
+
+public function materials()
     {
-        return $this->belongsToMany(Material::class, 'material_sizes')->withPivot('stock');
+        return $this->belongsToMany(Material::class, 'material_sizes', 'size_id', 'material_id')->withPivot('stock');
+    }
+
+    public function material_users()
+    {
+        return $this->hasMany(MaterialUser::class);
     }
 }
-// Compare this snippet from resources/views/materials/show.blade.php:
-// @extends('layouts.app')
-//

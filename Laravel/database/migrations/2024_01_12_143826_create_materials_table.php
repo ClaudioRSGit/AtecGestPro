@@ -19,7 +19,7 @@ class CreateMaterialsTable extends Migration
             $table->string('description');
             $table->boolean('isInternal');
             $table->integer('quantity');
-            $table->dateTime('aquisition_date')->nullable();
+            $table->dateTime('acquisition_date')->nullable();
             $table->string('supplier')->nullable();
             $table->boolean('isClothing')->default(false);
             $table->boolean('gender')->nullable();

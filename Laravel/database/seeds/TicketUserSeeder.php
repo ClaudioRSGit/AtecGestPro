@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class TicketSeeder extends Seeder
+class TicketUserSeeder extends Seeder
 {
     /**
      * Run the database seeds.

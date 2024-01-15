@@ -177,7 +177,7 @@
                                             </svg>
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="contactDropdown{{ $partner->id }}">
-                                            @foreach ($partner->partnerContacts as $contact)
+                                            @foreach ($partner->contactPartner as $contact)
                                                 <a class="dropdown-item" href="#">{{ $contact->contact }}</a>
                                             @endforeach
                                         </div>

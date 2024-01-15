@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Contact;
+use App\ContactPartner;
 use Illuminate\Http\Request;
 
-class ContactController extends Controller
+class ContactPartnerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class ContactController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Contact  $contact
+     * @param  \App\ContactPartner  $contactPartner
      * @return \Illuminate\Http\Response
      */
-    public function show(Contact $contact)
+    public function show(ContactPartner $contactPartner)
     {
         //
     }
@@ -52,10 +52,10 @@ class ContactController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Contact  $contact
+     * @param  \App\ContactPartner  $contactPartner
      * @return \Illuminate\Http\Response
      */
-    public function edit(Contact $contact)
+    public function edit(ContactPartner $contactPartner)
     {
         //
     }
@@ -64,10 +64,10 @@ class ContactController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Contact  $contact
+     * @param  \App\ContactPartner  $contactPartner
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Contact $contact)
+    public function update(Request $request, ContactPartner $contactPartner)
     {
         //
     }
@@ -75,10 +75,10 @@ class ContactController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Contact  $contact
+     * @param  \App\ContactPartner  $contactPartner
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Contact $contact)
+    public function destroy(ContactPartner $contactPartner)
     {
         //
     }

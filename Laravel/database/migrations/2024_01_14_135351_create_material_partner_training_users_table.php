@@ -15,8 +15,8 @@ class CreateMaterialPartnerTrainingUsersTable extends Migration
     {
         Schema::create('material_partner_training_users', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('partner_training_user_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('material_id')->constrained()->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('material_id')->constrained('materials')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('partner_training_user_id')->constrained('partner_training_users')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('quantity');
             $table->timestamps();
         });

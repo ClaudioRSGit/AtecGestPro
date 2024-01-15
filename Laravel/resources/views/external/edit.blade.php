@@ -47,13 +47,11 @@
                 <label for="user_id">Técnico:</label>
                 <select class="form-control" id="user_id" name="user_id" required>
                     @foreach($users as $user)
-                        @foreach($role_users as $role_user)
-                            @if($role_user->role_id == 4 && $role_user->user_id == $user->id)
+                            @if($user->role_id == 4 )
                                 <option value="{{ $user->id }}" {{ $user->id == $partner_Training_Users->user_id ? 'selected' : '' }}>
                                     {{ $user->name }}
                                 </option>
                             @endif
-                        @endforeach
                     @endforeach
                 </select>
             </div>
@@ -85,14 +83,16 @@
                             <td>{{ $material->name }}</td>
                             <td>{{ $material->description }}</td>
                             <td>
-                                <input type="number" name="material_quantities[{{ $material->id }}]" value="{{ $material->quantity }}" min="1" max="{{ $material->quantity }}" @if($material->quantity == 0) disabled @endif>
+                                <input type="number" name="material_quantities[{{ $material->id }}]" value="{{ $partner_Training_Users->pivot->quantity ?? 1 }}" min="0" max="{{ $material->quantity }}" @if($material->quantity == 0) disabled @endif>
                             </td>
                             <td>
-                                <input type="checkbox" name="materials[]" value="{{ $material->id }}" {{ $material->quantity > 0 && in_array($material->id, $selectedMaterials) ? 'checked' : '' }} @if($material->quantity == 0) disabled @endif>
+                                <input type="checkbox" name="materials[{{ $material->id }}]" value="{{ $material->id }}" {{ $partner_Training_Users->quantity > 0 ? 'checked' : '' }} @if($material->quantity == 0) disabled @endif>
                             </td>
                         </tr>
                     @endforeach
                     </tbody>
+
+
                 </table>
             </div>
 

@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
 {
-    protected $fillable = [
-        'username','name', 'email', 'password', 'role_id', 'phone', 'address', 'city', 'state', 'zip', 'country', 'image'
-    ];
+    public function actions()
+    {
+        return $this->hasMany(Action::class);
+    }
 }
