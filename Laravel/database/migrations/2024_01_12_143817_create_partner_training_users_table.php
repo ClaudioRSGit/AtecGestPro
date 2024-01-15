@@ -23,6 +23,8 @@ class CreatePartnerTrainingUsersTable extends Migration
             $table->timestamps();
             $table->softDeletes('deleted_at', 0);
         });
+
+
     }
 
     /**

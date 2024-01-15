@@ -10,4 +10,16 @@ class User extends Model
     {
         return $this->hasMany(Action::class);
     }
+
+    public function courseClass()
+    {
+        return $this->belongsTo(CourseClass::class);
+    }
+
+    public function role()
+    {
+        return $this->hasOne(Role::class);
+    }
+
+
 }

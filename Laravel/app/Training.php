@@ -10,7 +10,8 @@ class Training extends Model
     use softDeletes;
 
     protected $guarded = [];
-    public function users()
+
+    public function partnerTrainingUsers()
     {
         return $this->hasMany(PartnerTrainingUser::class);
     }

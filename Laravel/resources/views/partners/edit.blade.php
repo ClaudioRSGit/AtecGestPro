@@ -72,7 +72,7 @@
         function validateContacts() {
             const contactGroups = document.querySelectorAll('.contact-group');
 
-            for (const i = 0; i < contactGroups.length; i++) {
+            for (let i = 0; i < contactGroups.length; i++) {
                 const descriptionInput = contactGroups[i].querySelector(
                     '[name^="existing_contact_descriptions"], [name^="new_contact_descriptions"]');
                 const valueInput = contactGroups[i].querySelector(

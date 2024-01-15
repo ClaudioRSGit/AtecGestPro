@@ -97,7 +97,7 @@ class TrainingController extends Controller
      */
     public function destroy(Training $training)
     {
-
+       // $training->partnerTrainingUsers()->delete();
         $training->delete();
         return redirect()->back()->with('success','Formação eliminada com sucesso');
     }
