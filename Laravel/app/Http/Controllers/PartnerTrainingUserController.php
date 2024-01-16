@@ -49,11 +49,7 @@ class PartnerTrainingUserController extends Controller
 
 
 
-<<<<<<< HEAD
-        return view('external.create', compact('partner_Training_Users', 'partners', 'users', 'trainings', 'materials'));
-=======
         return view('external.create', compact('partner_Training_Users', 'partners', 'roles', 'users', 'trainings', 'materials'));
->>>>>>> newDBLogin
     }
 
 
@@ -68,10 +64,7 @@ class PartnerTrainingUserController extends Controller
         ]);
 
         $partnerTrainingUser = PartnerTrainingUser::create($request->all());
-<<<<<<< HEAD
 
-=======
->>>>>>> newDBLogin
         $materials = $request->input('materials', []);
         $materialQuantities = $request->input('material_quantities', []);
 
