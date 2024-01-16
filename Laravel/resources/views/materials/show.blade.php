@@ -14,18 +14,22 @@
 
                 <div class="form-group">
                     <label for="description">Descrição:</label>
-                    <textarea class="form-control" id="description" name="description" rows="3" disabled>{{ $material->description }}</textarea>
+                    <input type="text" class="form-control" id="description" name="description" value="{{ $material->description }}" disabled>
                 </div>
 
                 <div class="form-group">
                     <label for="supplier">Fornecedor:</label>
-                    <input type="text" class="form-control" id="supplier" name="supplier" value="{{ $material->supplier }}" disabled>
+                    <input type="text" class="form-control" id="supplier" name="supplier"
+                           value="{{ !empty($material->supplier) ? $material->supplier : 'Não disponível' }}" disabled>
                 </div>
 
+
                 <div class="form-group">
-                    <label for="aquisition_date">Data de Aquisição:</label>
-                    <input type="date" class="form-control" id="aquisition_date" name="aquisition_date" value="{{ $material->aquisition_date }}" disabled>
+                    <label for="acquisition_date">Data de Aquisição:</label>
+                    <input type="text" class="form-control" id="acquisition_date" name="acquisition_date" value="{{ !empty($material->acquisition_date) ? $material->acquisition_date : 'Não disponível' }}" disabled>
+
                 </div>
+
 
                 <div class="form-group">
                     <label for="isInternal">Material interno?</label>
@@ -64,27 +68,33 @@
                         </select>
                     </div>
 
-                    <div class="form-group">
-                        <label for="size">Tamanho:</label>
-                        <select class="form-control" id="size" name="size" disabled>
-                            <option value="XS" {{ $material->size === 'XS' ? 'selected' : '' }}>XS</option>
-                            <option value="S" {{ $material->size === 'S' ? 'selected' : '' }}>S</option>
-                            <option value="M" {{ $material->size === 'M' ? 'selected' : '' }}>M</option>
-                            <option value="L" {{ $material->size === 'L' ? 'selected' : '' }}>L</option>
-                            <option value="XL" {{ $material->size === 'XL' ? 'selected' : '' }}>XL</option>
-                            <option value="XXL" {{ $material->size === 'XXL' ? 'selected' : '' }}>XXL</option>
-                            <option value="XXXL" {{ $material->size === 'XXXL' ? 'selected' : '' }}>XXXL</option>
-                        </select>
+                    <div class="d-flex flex-column">
+                        <label for="size">Tamanhos:</label>
+
+                        @foreach($sizes as $size)
+                            <div class="row">
+                                <div class="col-md-5 col-12 mb-2">
+                                    <p class="mb-0">Tamanho: {{ $size->size }}</p>
+                                </div>
+                                <div class="col-md-5 col-12 mb-2">
+                                    <p class="mb-0">Stock: {{ $size->pivot->stock }}</p>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
 
-                    <div class="form-group">
-                        <label for="role">Função:</label>
-                        <select class="form-control" id="role" name="role" disabled>
-                            <option value="Formador" {{ $material->role === 'Formador' ? 'selected' : '' }}>Formador</option>
-                            <option value="Formando" {{ $material->role === 'Formando' ? 'selected' : '' }}>Formando</option>
-                            <option value="Técnico" {{ $material->role === 'Técnico' ? 'selected' : '' }}>Técnico</option>
-                        </select>
-                    </div>
+
+
+<div class="row">
+
+    <div class="col-md-5 col-12 mb-2">
+        <h5 class="mt-3">Cursos:</h5>
+        @foreach($courses as $course)
+            <p class="mb-0">Curso: {{ $course->code }}</p>
+        @endforeach
+    </div>
+
+</div>
                 @endif
 
                 <div class="form-group">

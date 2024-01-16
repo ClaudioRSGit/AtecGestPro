@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Course;
 use App\Material;
+use App\Role;
+use App\Size;
 use Illuminate\Http\Request;
 
 class MaterialController extends Controller
@@ -15,7 +18,12 @@ class MaterialController extends Controller
 
     public function create()
     {
-        return view('materials.create');
+
+        $sizes = Size::all();
+        $courses = Course::all();
+
+
+        return view('materials.create', compact('sizes',  'courses'));
     }
 
     public function store(Request $request)
@@ -25,43 +33,48 @@ class MaterialController extends Controller
                 'name' => 'required|string|max:255',
                 'description' => 'nullable|string|max:500',
                 'supplier' => 'nullable|string|max:255',
-                'aquisition_date' => 'nullable|date',
+                'acquisition_date' => 'nullable|date',
                 'isInternal' => 'required|boolean',
                 'isClothing' => 'required|boolean',
                 'gender' => 'nullable|boolean',
                 'quantity' => 'nullable|integer|min:0',
-                'size' => 'nullable|string|max:10',
-                'role' => 'nullable|string|max:255',
+                'sizes' => ['nullable', 'array'],
+                'sizes.*' => ['nullable', 'string', 'max:10'],
+                'stocks' => ['nullable', 'array'],
+                'stock.*' => ['nullable', 'integer', 'min:0'],
             ]);
-
-            if ($request->input('isClothing') == 0) {
-                $request->merge([
-                    'gender' => null,
-                    'size' => null,
-                    'role' => null,
-                ]);
-            }
-
             $material = Material::create($request->all());
 
-            return redirect()->route('materials.show', $material->id)->with('success', 'Material inserido com sucesso!');
-        }
-        catch (\Exception $e) {
+            $material->courses()->attach($request->input('courses'));
 
+            $sizes = $request->input('sizes');
+
+            $material->sizes()->attach($request->input('sizes'));
+
+            dd($sizes, $request->input('stocks'), $request->input('courses'));
+
+
+
+            return redirect()->route('materials.show', $material->id)->with('success', 'Material inserido com sucesso!');
+        } catch (\Exception $e) {
             return redirect()->back()->withInput()->with('error', 'Erro ao inserir o material. Por favor, tente novamente.');
         }
     }
 
 
 
+
     public function show(Material $material)
     {
-        return view('materials.show', compact('material'));
+        $sizes = $material->sizes;
+        $courses = $material->courses;
+
+        return view('materials.show', compact('material' , 'sizes', 'courses'));
     }
 
     public function edit(Material $material)
     {
-        return view('materials.edit', compact('material'));
+        return view('materials.edit', compact('material', ));
     }
 
     public function update(Request $request, Material $material)
@@ -119,4 +132,6 @@ class MaterialController extends Controller
             return redirect()->route('materials.index')->with('error', 'Erro ao excluir o material. Por favor, tente novamente.');
         }
     }
+
+
 }
