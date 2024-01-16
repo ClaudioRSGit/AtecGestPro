@@ -17,6 +17,7 @@ class CreateSizesTable extends Migration
             $table->id();
             $table->string("size");
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

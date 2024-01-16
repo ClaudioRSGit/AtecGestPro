@@ -56,6 +56,9 @@
                         <th scope="col" style="text-align: center;">Tamanho</th>
                         <th scope="col" style="text-align: center;">Função</th>
                         <th scope="col" style="text-align: center;">Quantidade</th>
+                        <th scope="col" style="text-align: center;">Data de Entrega</th>
+                        <th scope="col" style="text-align: center;">Entregue Tudo</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -84,21 +87,34 @@
                                     N.A.
                                 @endif
                             </td>
-                            <td style="text-align: center;">
-                                {{ isset($clothing_assignment->size) ? $clothing_assignment->size : 'N.A.' }}</td>
-
-                            <td style="text-align: center;">
-                                Formando
-                            <td style="text-align: center;">
-                                {{-- update after the Clothing_Delivery or Material_Clothing_Delivery table has been updated with the quantity field
-                                    {{ isset($clothing_assignment->quantity) ? $global_quantity - $clothing_assignment->quantity : $global_quantity }}
-                                    --}}
-                                {{ isset($clothing_assignment->quantity) ? $clothing_assignment->quantity : 'N.A.' }}
+                            <td style="text-align: center;" >
+                                <select class="form-control" id="filter">
+                                    @forelse ($clothing_assignment->sizes as $size)
+                                        <option>{{ $size->size }}</option>
+                                    @empty
+                                        <option>N.A.</option>
+                                    @endforelse
+                                </select>
                             </td>
-                            <td>
 
+                            <td style="text-align: center; " class="text-muted">
+                                Formando
+                            </td>
+                            <td style="text-align: center;">
+
+                                    <input type="number" class="form-control" id="quantity" name="quantity"
+                                    value="1" min="1" max="7" style="width: 60px; text-align: center;">
+                            </td>
+                            <td style="text-align: center;">
+                                <input type="date" class="form-control" id="date" name="date"
+                                    value="{{ date('Y-m-d') }}">
+                            </td>
+                            <td style="text-align: center;">
+                                <input type="checkbox" class="form-check-input" id="flexCheckDefault" name="delivered"
+                                    value="1">
                             </td>
                         </tr>
+
                     @empty
                         <tr>
                             <td colspan="7" style="text-align: center;">Não existem materiais para atribuir</td>

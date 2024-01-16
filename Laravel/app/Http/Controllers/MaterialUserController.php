@@ -32,7 +32,10 @@ class MaterialUserController extends Controller
      */
     public function create($id)
     {
-        $clothing_assignment = Material::where('isClothing', 1)->get();
+        $clothing_assignment = Material::with('materialSizes')
+        ->where('isClothing', 1)
+        ->whereHas('courses')
+        ->get();
         $materials = Material::all();
         //$clothing_deliveries = Clothing_Delivery::all();
 
