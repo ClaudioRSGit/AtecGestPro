@@ -6,6 +6,7 @@ use App\Material;
 use App\MaterialPartnerTrainingUser;
 use App\Partner;
 use App\PartnerTrainingUser;
+use App\Role;
 use App\Training;
 use App\User;
 use Illuminate\Http\Request;
@@ -43,12 +44,13 @@ class PartnerTrainingUserController extends Controller
         $partners=Partner::all();
         $users=User::all();
         $trainings=Training::all();
+        $roles=Role::all();
 
         $materials = DB::table('materials')->where('isInternal', '=', false)->get();
 
 
 
-        return view('external.create', compact('partner_Training_Users', 'partners', 'users', 'trainings', 'materials'));
+        return view('external.create', compact('partner_Training_Users', 'partners', 'roles', 'users', 'trainings', 'materials'));
     }
 
 

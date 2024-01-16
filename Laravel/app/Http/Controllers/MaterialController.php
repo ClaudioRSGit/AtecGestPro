@@ -47,13 +47,11 @@ class MaterialController extends Controller
 
             $material->courses()->attach($request->input('courses'));
 
-            $stocks = $request->input('stocks');
             $sizes = $request->input('sizes');
-dd($stocks);
 
-            $material->sizes()->atach($sizes, ['stock' => $stocks]);
-            dd($stocks);
+            $material->sizes()->attach($request->input('sizes'));
 
+            dd($sizes, $request->input('stocks'), $request->input('courses'));
 
 
 
@@ -70,7 +68,7 @@ dd($stocks);
     {
         $sizes = $material->sizes;
         $courses = $material->courses;
-//        dd($sizes->get());
+
         return view('materials.show', compact('material' , 'sizes', 'courses'));
     }
 
