@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\MaterialUser;
 use Illuminate\Http\Request;
+use App\Course;
+use App\CourseClass;
+use App\User;
 
 class MaterialUserController extends Controller
 {
@@ -14,7 +17,10 @@ class MaterialUserController extends Controller
      */
     public function index()
     {
-        //
+        $courseClasses = CourseClass::with('students')->paginate(5);
+        $courses = Course::all();
+        $nonDocents = User::all()->where('isStudent', false)->where('position', '!=', 'formando');
+        return view('material-user.index', compact('courseClasses', 'courses', 'nonDocents'));
     }
 
     /**
