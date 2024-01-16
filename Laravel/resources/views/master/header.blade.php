@@ -30,7 +30,7 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                     @if (Auth::user()->hasRole('admin') || Auth::user()->hasRole('tecnico'))
-                        <a class="dropdown-item" href="#">Perfil</a>
+                    <a class="dropdown-item" href="{{ route('users.edit', ['user' => Auth::user()]) }}">Perfil</a>
                     @endif
                     <a class="dropdown-item" href="#"
                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Sair</a>
