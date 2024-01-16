@@ -48,7 +48,7 @@ Route::resource('partners', 'PartnerController');
 
 
 
-Route::delete('partner-contact/{partner_contact}', 'PartnerContactController@destroy')->name('partner-contact.destroy');
+Route::delete('partner-contact/{partner_contact}', 'ContactPartnerController@destroy')->name('partner-contact.destroy');
 
 Route::resource('course-classes', 'CourseClassController');
 
@@ -65,3 +65,5 @@ Route::post('partners/massDelete', 'PartnerController@massDelete')->name('partne
 
 Route::post('external/massDelete', 'PartnerTrainingUserController@massDelete')->name('external.massDelete');
 Route::post('trainings/massDelete', 'TrainingController@massDelete')->name('trainings.massDelete');
+
+Route::post('material/updateSelect', 'MaterialController@updateSelect')->name('material.updateSelect');

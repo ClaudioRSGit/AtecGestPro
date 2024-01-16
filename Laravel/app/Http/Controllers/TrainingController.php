@@ -64,7 +64,7 @@ class TrainingController extends Controller
     public function edit(Training $training)
     {
 
-            return view('trainings.edit', compact('training'));
+        return view('trainings.edit', compact('training'));
     }
 
     /**
@@ -77,14 +77,14 @@ class TrainingController extends Controller
     public function update(Request $request, Training $training)
     {
 
-            $this->validate(request(),
-                [
-                    'name' => 'required',
-                    'description' => 'required',
-                    'category' => 'required',
+        $this->validate(request(),
+            [
+                'name' => 'required',
+                'description' => 'required',
+                'category' => 'required',
 
-                ]);
-            $training->update($request->all());
+            ]);
+        $training->update($request->all());
         return redirect()->route('external.index')->with('success', 'Formação atualizada com sucesso');
 
     }
@@ -97,8 +97,8 @@ class TrainingController extends Controller
      */
     public function destroy(Training $training)
     {
-
-                $training->delete();
+       // $training->partnerTrainingUsers()->delete();
+        $training->delete();
         return redirect()->back()->with('success','Formação eliminada com sucesso');
     }
 
