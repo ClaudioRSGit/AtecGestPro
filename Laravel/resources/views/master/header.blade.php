@@ -6,7 +6,7 @@
             </a>
         </li>
     </ul>
-    <h5>Bem vindo, Fernando Almeida!</h5>
+    <h5>Bem vindo, {{ Auth::user()->name }}!</h5>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown">
