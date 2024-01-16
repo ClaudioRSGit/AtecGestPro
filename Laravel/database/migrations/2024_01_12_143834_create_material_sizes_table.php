@@ -17,8 +17,9 @@ class CreateMaterialSizesTable extends Migration
             $table->id();
             $table->foreignId('material_id')->constrained('materials')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('size_id')->constrained('sizes')->onDelete('cascade')->onUpdate('cascade');
-            $table->integer('stock');
+            $table->integer('stock')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

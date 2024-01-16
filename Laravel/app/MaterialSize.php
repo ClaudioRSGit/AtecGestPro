@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MaterialSize extends Model
 {
+    use softDeletes;
     protected $fillable = ['material_id', 'size_id', 'stock'];
-
+    protected $table = 'material_users';
     use softDeletes;
     public function material()
     {

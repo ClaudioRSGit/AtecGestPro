@@ -28,6 +28,6 @@ class PartnerTrainingUser extends Model
 
     public function materials()
     {
-        return $this->belongsToMany('App\Material', 'material_partner_training_users', 'partner_training_user_id', 'material_id')->withPivot('quantity');
+        return $this->belongsToMany('App\Material', 'material_partner_training_users', 'partner_training_user_id', 'material_id')->withPivot('stock');
     }
 }

@@ -41,25 +41,29 @@ class MaterialController extends Controller
                 'sizes' => ['nullable', 'array'],
                 'sizes.*' => ['nullable', 'string', 'max:10'],
                 'stocks' => ['nullable', 'array'],
-                'stock.*' => ['nullable', 'integer', 'min:0'],
+                'stocks.*' => ['nullable', 'integer', 'min:0'],
             ]);
+
             $material = Material::create($request->all());
 
             $material->courses()->attach($request->input('courses'));
 
             $sizes = $request->input('sizes');
+            $quantities = $request->input('stocks', []);
 
-            $material->sizes()->attach($request->input('sizes'));
+            foreach ($sizes as $sizeId) {
+                $quantity = $quantities[$sizeId] ?? 0;
 
-            dd($sizes, $request->input('stocks'), $request->input('courses'));
-
-
-
+                $material->sizes()->attach($sizeId, ['stock' => $quantity]);
+            }
+            dd($material);
             return redirect()->route('materials.show', $material->id)->with('success', 'Material inserido com sucesso!');
         } catch (\Exception $e) {
             return redirect()->back()->withInput()->with('error', 'Erro ao inserir o material. Por favor, tente novamente.');
         }
     }
+
+
 
 
 
