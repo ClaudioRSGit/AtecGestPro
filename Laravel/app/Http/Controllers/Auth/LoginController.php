@@ -51,15 +51,32 @@ class LoginController extends Controller
         return view('login.login');
     }
 
-     protected function attemptLogin(Request $request)
-     {
-         if (Auth::attempt(['username' => $request->username, 'password' => $request->password, 'isActive' => true])) {
-             return true;
-         }
+    protected function attemptLogin(Request $request)
+    {
+        $credentials = $request->only('username', 'password');
 
-         session()->flash('error', 'Utilizador inativo.');
+        if (Auth::attempt($credentials, $request->filled('remember'))) {
+            return true;
+        }
 
-         return false;
-     }
-     
+        session()->flash('error', 'Credenciais inválidas!');
+        return false;
+    }
+
+    protected function authenticated(Request $request, $user)
+    {
+        if (!$user->isActive) {
+            Auth::logout();
+            return redirect()->route('login')->with('error', 'Utilizador inativo!');
+        }
+
+        return redirect()->intended($this->redirectPath());
+    }
+
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        throw ValidationException::withMessages([
+            $this->username() => [trans('auth.failed')],
+        ]);
+    }
 }
