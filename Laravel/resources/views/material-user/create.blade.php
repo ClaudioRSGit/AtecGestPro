@@ -41,7 +41,7 @@
 
 
 
-        <form action="{{ route('material-clothing-delivery.store') }}" method="post">
+        <form action="{{ route('material-user.store') }}" method="post">
             @csrf
 
             <input type="hidden" name="user_id" value="{{ $student->id }}">

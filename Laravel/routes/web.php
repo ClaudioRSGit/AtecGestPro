@@ -27,12 +27,12 @@ Route::resource('trainings', 'TrainingController');
 
 Route::resource('material-user', 'MaterialUserController');
 
-Route::resource('clothing-assignment', 'ClothingAssignmentController');
-Route::get('/clothing-assignment/users/{id}', 'ClothingAssignmentController@index')->name('clothing-assignment.users');
+//Route::resource('clothing-assignment', 'ClothingAssignmentController');
+//Route::get('/clothing-assignment/users/{id}', 'ClothingAssignmentController@index')->name('clothing-assignment.users');
 
 
-Route::get('/material-clothing-delivery/create/{id}', 'MaterialClothingDeliveryController@create')->name('material-clothing-delivery.create');
-Route::post('/material-clothing-delivery', 'MaterialClothingDeliveryController@store')->name('material-clothing-delivery.store');
+Route::get('/material-user/create/{id}', 'MaterialUserController@create')->name('material-user.create');
+Route::post('/material-user', 'MaterialUserController@store')->name('material-user.store');
 
 
 

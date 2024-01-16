@@ -84,7 +84,7 @@
                                                 <tr class="filler"></tr>
                                                 @foreach ($courseClass->students as $student)
                                                     <tr class="customTableStyling"
-                                                        onclick="location.href='{{ route('material-clothing-delivery.create', $student->id) }}'">
+                                                        onclick="location.href='{{ route('material-user.create', $student->id) }}'">
 
                                                         <td>{{ $student->name }}</a></td>
                                                         <td>{{ $student->username }}</td>
@@ -169,7 +169,7 @@
                     <tbody class="customTableStyling mb-2">
                         @foreach ($nonDocents as $nonDocent)
                             <tr class="filler"
-                                onclick="location.href='{{ route('material-clothing-delivery.create', $nonDocent->id) }}'">
+                                onclick="location.href='{{ route('material-user.create', $nonDocent->id) }}'">
                                 <td>{{ $nonDocent->name }}</td>
                                 <td>{{ $nonDocent->username }}</td>
                                 <td>{{ $nonDocent->email }}</td>

@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Course;
 use App\CourseClass;
 use App\User;
+use App\Material;
+
 
 class MaterialUserController extends Controller
 {
@@ -28,9 +30,16 @@ class MaterialUserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+        $clothing_assignment = Material::where('isClothing', 1)->get();
+        $materials = Material::all();
+        //$clothing_deliveries = Clothing_Delivery::all();
+
+        $student = User::find($id);
+
+
+        return view('material-user.create', compact( 'clothing_assignment', 'materials', 'student'));
     }
 
     /**
