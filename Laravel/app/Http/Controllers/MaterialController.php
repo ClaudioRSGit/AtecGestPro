@@ -70,13 +70,21 @@ dd($stocks);
     {
         $sizes = $material->sizes;
         $courses = $material->courses;
+<<<<<<< HEAD
 //        dd($sizes->get());
+=======
+
+>>>>>>> newDBLogin
         return view('materials.show', compact('material' , 'sizes', 'courses'));
     }
 
     public function edit(Material $material)
     {
+<<<<<<< HEAD
         return view('materials.edit', compact('material', ));
+=======
+        return view('materials.edit', compact('material' ));
+>>>>>>> newDBLogin
     }
 
     public function update(Request $request, Material $material)

@@ -12,6 +12,7 @@
                 <a class="nav-link" data-toggle="tab" href="#outros">Outros</a>
             </li>
         </ul>
+
         <div class="tab-content">
             <div class="tab-pane fade show active" id="formandos">
                 <div class="d-flex justify-content-between mb-3">

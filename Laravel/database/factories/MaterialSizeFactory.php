@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Material_Clothing_Delivery;
+use App\MaterialSize;
 use Faker\Generator as Faker;
 
-$factory->define(Material_Clothing_Delivery::class, function (Faker $faker) {
+$factory->define(MaterialSize::class, function (Faker $faker) {
     return [
         //
     ];

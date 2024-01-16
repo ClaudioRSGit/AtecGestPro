@@ -44,11 +44,11 @@
                             <label for="user_id">Técnico:</label>
                             <select class="form-control" id="user_id" name="user_id" required>
                                 @foreach($users as $user)
-                                    @foreach($role_users as $role_user)
-                                        @if($role_user->role_id == 4 && $role_user->user_id == $user->id)
+
+                                        @if( $user->role_id == 4)
                                             <option value="{{ $user->id }}">{{ $user->name }}</option>
                                         @endif
-                                    @endforeach
+
                                 @endforeach
                             </select>
                         </div>

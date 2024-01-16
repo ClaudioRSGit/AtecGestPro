@@ -4,7 +4,7 @@
     <div class="container pl-5 pt-4">
         <h1>Editar Vestuário</h1>
 
-        <form method="post" action="{{ route('clothing-assignment.update', $clothing_assignment->id) }}">
+        <form method="post" action="{{ route('clothing-assignment.update', $clothes->id) }}">
             @csrf
             @method('put')
 
@@ -13,26 +13,26 @@
 
                     <div class="mb-3">
                         <label for="name" class="form-label">Nome do Vestuário:</label>
-                        <input type="text" class="form-control" id="name" name="name" value="{{ $clothing_assignment->name }}">
+                        <input type="text" class="form-control" id="name" name="name" value="{{ $clothes->name }}">
                     </div>
 
                     <div class="mb-3">
                         <label for="description" class="form-label">Descrição:</label>
-                        <textarea class="form-control" id="description" name="description">{{ $clothing_assignment->description }}</textarea>
+                        <textarea class="form-control" id="description" name="description">{{ $clothes->description }}</textarea>
                     </div>
                     <div class="mb-3">
                         <label for="supplier" class="form-label">Fornecedor:</label>
-                        <input type="text" class="form-control" id="supplier" name="supplier" value="{{ $clothing_assignment->supplier }}">
+                        <input type="text" class="form-control" id="supplier" name="supplier" value="{{ $clothes->supplier }}">
                     </div>
                     <div class="mb-3">
                         <label for="aquisition_date" class="form-label">Data de Aquisição:</label>
-                        <input type="date" class="form-control" id="aquisition_date" name="aquisition_date" value="{{ $clothing_assignment->aquisition_date }}">
+                        <input type="date" class="form-control" id="aquisition_date" name="aquisition_date" value="{{ $clothes->aquisition_date }}">
                     </div>
                     <div class="mb-3">
                         <label for="isInternal" class="form-label">Interno:</label>
                         <select class="form-select" id="isInternal" name="isInternal">
-                            <option value="1" {{ $clothing_assignment->isInternal ? 'selected' : '' }}>Sim</option>
-                            <option value="0" {{ !$clothing_assignment->isInternal ? 'selected' : '' }}>Não</option>
+                            <option value="1" {{ $clothes->isInternal ? 'selected' : '' }}>Sim</option>
+                            <option value="0" {{ !$clothes->isInternal ? 'selected' : '' }}>Não</option>
                         </select>
                     </div>
                     <div class="mb-3">
@@ -47,33 +47,33 @@
                     <div class="form-group">
                         <label for="gender">Género:</label>
                         <select class="form-control" id="gender" name="gender">
-                            <option value="1" {{ $clothing_assignment->gender === 1 ? 'selected' : '' }}>Masculino</option>
-                            <option value="0" {{ $clothing_assignment->gender === 0 ? 'selected' : '' }}>Feminino</option>
+                            <option value="1" {{ $clothes->gender === 1 ? 'selected' : '' }}>Masculino</option>
+                            <option value="0" {{ $clothes->gender === 0 ? 'selected' : '' }}>Feminino</option>
                         </select>
                     </div>
                     <div class="mb-3">
                         <label for="quantity" class="form-label">Quantidade:</label>
-                        <input type="number" class="form-control" id="quantity" name="quantity" value="{{ $clothing_assignment->quantity }}">
+                        <input type="number" class="form-control" id="quantity" name="quantity" value="{{ $clothes->quantity }}">
                     </div>
                     <div class="form-group">
                         <label for="size">Tamanho:</label>
                         <select class="form-control" id="size" name="size">
-                            <option value="XS" {{ $clothing_assignment->size === 'XS' ? 'selected' : '' }}>XS</option>
-                            <option value="S" {{ $clothing_assignment->size === 'S' ? 'selected' : '' }}>S</option>
-                            <option value="M" {{ $clothing_assignment->size === 'M' ? 'selected' : '' }}>M</option>
-                            <option value="L" {{ $clothing_assignment->size === 'L' ? 'selected' : '' }}>L</option>
-                            <option value="XL" {{ $clothing_assignment->size === 'XL' ? 'selected' : '' }}>XL</option>
-                            <option value="XXL" {{ $clothing_assignment->size === 'XXL' ? 'selected' : '' }}>XXL</option>
-                            <option value="XXXL" {{ $clothing_assignment->size === 'XXXL' ? 'selected' : '' }}>XXXL</option>
+                            <option value="XS" {{ $clothes->size === 'XS' ? 'selected' : '' }}>XS</option>
+                            <option value="S" {{ $clothes->size === 'S' ? 'selected' : '' }}>S</option>
+                            <option value="M" {{ $clothes->size === 'M' ? 'selected' : '' }}>M</option>
+                            <option value="L" {{ $clothes->size === 'L' ? 'selected' : '' }}>L</option>
+                            <option value="XL" {{ $clothes->size === 'XL' ? 'selected' : '' }}>XL</option>
+                            <option value="XXL" {{ $clothes->size === 'XXL' ? 'selected' : '' }}>XXL</option>
+                            <option value="XXXL" {{ $clothes->size === 'XXXL' ? 'selected' : '' }}>XXXL</option>
                         </select>
                     </div>
 
                     <div class="form-group">
                         <label for="role">Função:</label>
                         <select class="form-control" id="role" name="role">
-                            <option value="Formador" {{ $clothing_assignment->role === 'Formador' ? 'selected' : '' }}>Formador</option>
-                            <option value="Formando" {{ $clothing_assignment->role === 'Formando' ? 'selected' : '' }}>Formando</option>
-                            <option value="Técnico" {{ $clothing_assignment->role === 'Técnico' ? 'selected' : '' }}>Técnico</option>
+                            <option value="Formador" {{ $clothes->role === 'Formador' ? 'selected' : '' }}>Formador</option>
+                            <option value="Formando" {{ $clothes->role === 'Formando' ? 'selected' : '' }}>Formando</option>
+                            <option value="Técnico" {{ $clothes->role === 'Técnico' ? 'selected' : '' }}>Técnico</option>
                         </select>
                     </div>
 

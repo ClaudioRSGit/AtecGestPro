@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
             'course_class_id' => null,
             'role_id' => 1,
         ]);
-        // Seed 1
+        // Seed 2
         DB::table('users')->insert([
             'name' => 'Antonio Carro',
             'username' => 'T0123388',
@@ -37,7 +37,7 @@ class UserSeeder extends Seeder
             'course_class_id' => null,
             'role_id' => 2,
         ]);
-        // Seed 2
+        // Seed 3
         DB::table('users')->insert([
             'name' => 'Francisco Silva',
             'username' => 'T2365478',
@@ -51,7 +51,7 @@ class UserSeeder extends Seeder
             'role_id' => 3,
         ]);
 
-        // Seed 3
+        // Seed 4
         DB::table('users')->insert([
             'name' => 'Antonio Vaz',
             'username' => 'T0254456',
@@ -65,7 +65,7 @@ class UserSeeder extends Seeder
             'role_id' => 3,
         ]);
 
-        // Seed 4
+        // Seed 5
         DB::table('users')->insert([
             'name' => 'Alice Cunha',
             'username' => 'T0254496',
@@ -79,7 +79,7 @@ class UserSeeder extends Seeder
             'role_id' => 3,
         ]);
 
-        // Seed 5
+        // Seed 6
         DB::table('users')->insert([
             'name' => 'José Silva',
             'username' => 'T0123186',
@@ -92,7 +92,7 @@ class UserSeeder extends Seeder
             'course_class_id' => 5,
             'role_id' => 3,
                     ]);
-        // Seed 6
+        // Seed 7
         DB::table('users')->insert([
             'name' => 'José Silva2',
             'username' => 'T0123187',
@@ -105,7 +105,7 @@ class UserSeeder extends Seeder
             'course_class_id' => 5,
             'role_id' => 3,
         ]);
-        // Seed 7
+        // Seed 8
         DB::table('users')->insert([
             'name' => 'José Silva8',
             'username' => 'T0123188',
@@ -118,7 +118,7 @@ class UserSeeder extends Seeder
             'course_class_id' => 5,
             'role_id' => 3,
         ]);
-        // Seed 8
+        // Seed 9
         DB::table('users')->insert([
             'name' => 'José Silva4',
             'username' => 'T0123189',
@@ -131,7 +131,7 @@ class UserSeeder extends Seeder
             'course_class_id' => 5,
             'role_id' => 3,
         ]);
-        // Seed 9
+        // Seed 10
         DB::table('users')->insert([
             'name' => 'José tecnico',
             'username' => 'T0123111',
