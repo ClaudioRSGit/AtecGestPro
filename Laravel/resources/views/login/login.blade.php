@@ -7,7 +7,7 @@
                 <div class="card-body">
                     <div class="d-flex flex-column align-items-center">
                         <img src="{{ asset('assets/logo.png') }}" alt="Logo">
-                    <h5 class="mt-3"><strong> ATEC GEST PRO </strong></h5>
+                        <h5 class="mt-3"><strong> ATEC GEST PRO </strong></h5>
                     </div>
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
@@ -45,6 +45,14 @@
                                 @enderror
                             </div>
                         </div>
+
+                        @if (session('error'))
+                            <div class="form-group row mb-0">
+                                <div class="col-md-8 offset-md-4">
+                                    <span class="text-danger font-weight-bold">{{ session('error') }}</span>
+                                </div>
+                            </div>
+                        @endif
 
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
