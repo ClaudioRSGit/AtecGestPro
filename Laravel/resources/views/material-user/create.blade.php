@@ -84,15 +84,16 @@
                                         Feminino
                                     @endif
                                 @else
-                                    N.A.
+                                    Neutro
                                 @endif
                             </td>
-                            <td style="text-align: center;" >
-                                <select class="form-control" id="filter">
+                            <td style="text-align: center;">
+                                <select class="form-control size-select" id="filter{{ $loop->index }}">
                                     @forelse ($clothing_assignment->sizes as $size)
-                                        <option>{{ $size->size }}</option>
+                                        <option value="{{ $size->size }}" data-stock="{{ $size->pivot->stock }}">
+                                            {{ $size->size }}({{ $size->pivot->stock }})</option>
                                     @empty
-                                        <option>N.A.</option>
+                                        <option value="N.A." data-stock="{{ $clothing_assignment->quantity }}">N.A.({{ $clothing_assignment->quantity }})</option>
                                     @endforelse
                                 </select>
                             </td>
@@ -101,9 +102,9 @@
                                 Formando
                             </td>
                             <td style="text-align: center;">
-
-                                    <input type="number" class="form-control" id="quantity" name="quantity"
-                                    value="1" min="1" max="7" style="width: 60px; text-align: center;">
+                                <input type="number" class="form-control quantity-input" id="quantity{{ $loop->index }}"
+                                    name="quantity" value="1" min="1"
+                                    style="width: 60px; text-align: center;">
                             </td>
                             <td style="text-align: center;">
                                 <input type="date" class="form-control" id="date" name="date"
@@ -212,7 +213,27 @@
                 });
             }
 
+            $(document).ready(function() {
+                $('.material-row .size-select').each(function(index, select) {
+                    var quantityInput = $('.material-row .quantity-input').eq(index);
+                    $(select).change(function() {
+                        var selectedOption = $(this).children("option:selected");
+                        var stock = parseInt(selectedOption.data('stock'));
+                        quantityInput.attr('max', stock);
 
+                        if (parseInt(quantityInput.val()) > stock) {
+                            quantityInput.val(stock);
+                        }
+                    }).trigger('change');
+
+                    quantityInput.on('input', function() {
+                        var max = parseInt($(this).attr('max'));
+                        if (parseInt($(this).val()) > max) {
+                            $(this).val(max);
+                        }
+                    });
+                });
+            });
 
             document.getElementById('apagarOnClick').addEventListener('click', function() {
 
