@@ -90,13 +90,16 @@
                             <td style="text-align: center;">
                                 <select class="form-control size-select" id="filter{{ $loop->index }}">
                                     @forelse ($clothing_assignment->sizes as $size)
-                                        <option value="{{ $size->size }}" data-stock="{{ $size->pivot->stock }}">
-                                            {{ $size->size }}({{ $size->pivot->stock }})</option>
+                                        <option value="{{ $size->size }}" data-stock="{{ $size->pivot->stock }}" data-size-id="{{ $size->id }}">
+                                            {{ $size->size }}({{ $size->pivot->stock }})
+                                        </option>
                                     @empty
-                                        <option value="N.A." data-stock="{{ $clothing_assignment->quantity }}">
-                                            N.A.({{ $clothing_assignment->quantity }})</option>
+                                        <option value="N.A." data-stock="{{ $clothing_assignment->quantity }}" data-size-id="N.A.">
+                                            N.A.({{ $clothing_assignment->quantity }})
+                                        </option>
                                     @endforelse
                                 </select>
+                                <input type="hidden" name="size_id[]" class="size-id-input" value="">
                             </td>
 
                             <td style="text-align: center; " class="text-muted">
@@ -104,10 +107,10 @@
                             </td>
                             <td style="text-align: center;">
                                 <input type="number" class="form-control quantity-input" id="quantity{{ $loop->index }}"
-                                    name="quantity" value="1" min="1" style="width: 60px; text-align: center;">
+                                    name="quantity[]" value="1" min="1" style="width: 60px; text-align: center;">
                             </td>
                             <td style="text-align: center;">
-                                <input type="date" class="form-control" id="date" name="date"
+                                <input type="date" class="form-control" id="date" name="delivery_date"
                                     value="{{ date('Y-m-d') }}">
                             </td>
 
@@ -122,7 +125,7 @@
             </table>
             <div style="margin-bottom: 20px;">
                 <label for="delivered">Entrega Completa</label>
-                <select class="form-control" id="delivered" name="delivered" style="width: 80px;text-align: center;">
+                <select class="form-control" id="delivered" name="delivered_all" style="width: 80px;text-align: center;">
                     <option value="1">Sim</option>
                     <option value="0">Não</option>
                 </select>
@@ -241,6 +244,16 @@
                     });
 
 
+                });
+            });
+
+            //test
+            document.querySelectorAll('.size-select').forEach((select) => {
+                select.addEventListener('change', (event) => {
+                    const selectedOption = event.target.options[event.target.selectedIndex];
+                    const sizeId = selectedOption.getAttribute('data-size-id');
+                    const correspondingSizeIdInput = event.target.parentNode.querySelector('.size-id-input');
+                    correspondingSizeIdInput.value = sizeId;
                 });
             });
 

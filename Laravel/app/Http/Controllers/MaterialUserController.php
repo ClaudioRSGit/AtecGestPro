@@ -53,7 +53,29 @@ class MaterialUserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'selectedClothing' => 'required|array',
+            'user_id' => 'required',
+            'quantity' => 'required|array',
+            'size_id' => 'required|array',
+            'delivery_date' => 'required',
+            'delivered_all' => 'required',
+        ]);
+
+        foreach ($request->get('selectedClothing') as $index => $material_id) {
+            $materialUser = new MaterialUser([
+                'material_id' => $material_id,
+                'user_id' => $request->get('user_id'),
+                'quantity' => $request->get('quantity')[$index],
+                'size_id' => $request->get('size_id')[$index],
+                'delivery_date' => $request->get('delivery_date'),
+                'delivered_all' => $request->get('delivered_all'),
+            ]);
+
+            $materialUser->save();
+        }
+
+        return redirect()->route('material-user.index')->with('success', 'Data saved successfully');
     }
 
     /**
