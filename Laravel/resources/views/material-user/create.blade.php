@@ -22,7 +22,7 @@
             <div class="buttons">
                 <div>
                     <select class="form-control" id="sort">
-                        <option value="az">A-Z</option>
+                        <option value="az" selected>A-Z</option>
                         <option value="za">Z-A</option>
                     </select>
                 </div>
@@ -193,6 +193,7 @@
                 const materialRows = Array.from(document.querySelectorAll('.material-row'));
                 const fillerRows = Array.from(document.querySelectorAll('.filler'));
 
+
                 materialRows.sort((a, b) => {
                     const aName = a.querySelector('a').textContent.toLowerCase();
                     const bName = b.querySelector('a').textContent.toLowerCase();
@@ -204,6 +205,7 @@
                     }
                 });
 
+
                 const tbody = document.querySelector('tbody');
                 materialRows.forEach((row, index) => {
                     tbody.appendChild(row);
@@ -212,6 +214,8 @@
                     }
                 });
             }
+
+            sortDropdown.dispatchEvent(new Event('change'));
 
             $(document).ready(function() {
                 $('.material-row .size-select').each(function(index, select) {
