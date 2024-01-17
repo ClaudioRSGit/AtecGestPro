@@ -14,13 +14,45 @@ use Illuminate\Support\Facades\DB;
 class PartnerTrainingUserController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $partner_Training_Users = PartnerTrainingUser::with('partner', 'training', 'user')->get();
+        $searchPtu = $request->input('ptu');
+        $searchP = $request->input('p');
+        $searchT = $request->input('t');
+        $searchPtu2 = $request->input('ptu2');
 
-        $partners = Partner::with('partnerTrainingUsers', 'contactPartner')->get();
 
-        $trainings = Training::all();
+
+        if ($searchPtu) {
+            $partner_Training_Users = PartnerTrainingUser::with('partner', 'training', 'user')
+                ->whereHas('partner', function ($query) use ($searchPtu) {
+                    $query->where('name', 'like', "%$searchPtu%");
+                })
+                ->orWhereHas('training', function ($query) use ($searchPtu) {
+                    $query->where('name', 'like', "%$searchPtu%");
+                })
+                ->orWhereHas('user', function ($query) use ($searchPtu) {
+                    $query->where('name', 'like', "%$searchPtu%");
+                })->paginate(5);
+        } else {
+            $partner_Training_Users = PartnerTrainingUser::with('partner', 'training', 'user')->paginate(5);
+        }
+
+        if ($searchP){
+            $partners = Partner::with('partnerTrainingUsers', 'contactPartner')
+                ->where('name', 'like', "%$searchP%")
+                ->paginate(5);
+        } else {
+            $partners = Partner::with('partnerTrainingUsers', 'contactPartner')->paginate(5);
+        }
+
+        if ($searchT){
+            $trainings = Training::where('name', 'like', "%$searchT%")->paginate(5);
+        } else {
+            $trainings = Training::paginate(5);
+        }
+
+
 
         return view('external.index', compact('partner_Training_Users', 'partners', 'trainings'));
     }
@@ -32,7 +64,6 @@ class PartnerTrainingUserController extends Controller
         $partner_Training_Users = PartnerTrainingUser::with('partner', 'training', 'user', 'materials')->findOrFail($id);
 
 
-
         return view('external.show', compact('partner_Training_Users'));
     }
 
@@ -40,13 +71,12 @@ class PartnerTrainingUserController extends Controller
     public function create()
     {
         $partner_Training_Users = PartnerTrainingUser::all();
-        $partners=Partner::all();
-        $users=User::all();
-        $trainings=Training::all();
-        $roles=Role::all();
+        $partners = Partner::all();
+        $users = User::all();
+        $trainings = Training::all();
+        $roles = Role::all();
 
         $materials = DB::table('materials')->where('isInternal', '=', false)->get();
-
 
 
         return view('external.create', compact('partner_Training_Users', 'partners', 'roles', 'users', 'trainings', 'materials'));
@@ -69,13 +99,12 @@ class PartnerTrainingUserController extends Controller
         $materialQuantities = $request->input('material_quantities', []);
 
 
-
         foreach ($materials as $materialId) {
             $quantity = $materialQuantities[$materialId] ?? 1;
             $material = Material::find($materialId);
 
 
-            $partnerTrainingUser->materials()->attach($materialId,  ['quantity' => $quantity]);
+            $partnerTrainingUser->materials()->attach($materialId, ['quantity' => $quantity]);
 
             if ($material) {
                 $material->decrement('quantity', $quantity);
@@ -88,20 +117,17 @@ class PartnerTrainingUserController extends Controller
 
     public function edit($id)
     {
-        $partner_Training_Users = PartnerTrainingUser::with('partner', 'training', 'user',  'materials')->findOrFail($id);
+        $partner_Training_Users = PartnerTrainingUser::with('partner', 'training', 'user', 'materials')->findOrFail($id);
 
         $partners = Partner::all();
         $trainings = Training::all();
         $users = User::all();
 
 
-
-
         $materials = Material::with('partnerTrainingUsers')->where('isInternal', false)->get();
 
-        return view('external.edit', compact('partner_Training_Users', 'partners', 'trainings', 'users',   'materials' ));
+        return view('external.edit', compact('partner_Training_Users', 'partners', 'trainings', 'users', 'materials'));
     }
-
 
 
     public function update(Request $request, $id)
@@ -153,12 +179,6 @@ class PartnerTrainingUserController extends Controller
     }
 
 
-
-
-
-
-
-
     public function destroy($id)
     {
 
@@ -180,8 +200,6 @@ class PartnerTrainingUserController extends Controller
 
         return redirect()->route('external.index')->with('success', 'Formação eliminada com sucesso');
     }
-
-
 
 
     public function massDelete(Request $request)
@@ -214,9 +232,6 @@ class PartnerTrainingUserController extends Controller
             return redirect()->back()->with('error', 'Erro ao excluir Formações selecionadas. Por favor, tente novamente.');
         }
     }
-
-
-
 
 
 }
