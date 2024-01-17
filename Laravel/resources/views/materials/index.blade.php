@@ -42,7 +42,6 @@
                         <th scope="col">Data de Aquisição</th>
                         <th scope="col">Vendedor</th>
                         <th scope="col">Género</th>
-{{--                        <th scope="col">Tamanho</th>--}}
                         <th scope="col">Ações</th>
                     </tr>
                 </thead>
@@ -69,19 +68,21 @@
                             </td>
 
 
-                            <td>{{ isset($material->supplier) ? $material->supplier : 'N.A.' }}</td>
+                            <td>{{ $material->supplier !== null ? $material->supplier : 'N.A.' }}</td>
+
                             <td>
-                                @if(isset($material->gender))
+                                @if($material->isClothing == 0)
+                                    N.A.
+                                @else
                                     @if($material->gender == 1)
                                         Masculino
                                     @elseif($material->gender == 0)
                                         Feminino
                                     @endif
-                                @else
-                                    N.A.
                                 @endif
+
                             </td>
-                            <td>{{ isset($material->size) ? $material->size : 'N.A.' }}</td>
+
                             <td class="editDelete" style="padding: 0.25rem">
                                 <div style="width: 40%;">
                                     <a href="{{ route('materials.edit', $material->id) }}" class="mx-2">

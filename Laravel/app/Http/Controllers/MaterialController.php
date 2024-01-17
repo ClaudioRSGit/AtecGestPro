@@ -86,10 +86,13 @@ class MaterialController extends Controller
 
     public function show(Material $material)
     {
+        $sizesAll = Size::all();
+        $coursesAll = Course::all();
         $sizes = $material->sizes;
         $courses = $material->courses;
 
-        return view('materials.show', compact('material', 'sizes', 'courses'));
+        return view('materials.show', compact('material' , 'sizes', 'courses' , 'sizesAll' , 'coursesAll'));
+
     }
 
     public function edit(Material $material)
@@ -98,7 +101,9 @@ class MaterialController extends Controller
         $sizesAll = Size::all();
         $coursesAll = Course::all();
         $sizes = $material->sizes;
-        $courses = $material->courses;        return view('materials.edit', compact('material' , 'sizes', 'courses' , 'sizesAll' , 'coursesAll'));
+        $courses = $material->courses;
+
+        return view('materials.edit', compact('material' , 'sizes', 'courses' , 'sizesAll' , 'coursesAll'));
     }
 
     public function update(Request $request, Material $material)
@@ -107,24 +112,42 @@ class MaterialController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string|max:500',
             'supplier' => 'nullable|string|max:255',
-            'aquisition_date' => 'nullable|date',
+            'acquisition_date' => 'nullable|date',
             'isInternal' => 'required|boolean',
             'isClothing' => 'required|boolean',
             'gender' => 'nullable|boolean',
             'quantity' => 'nullable|integer|min:0',
-            'size' => 'nullable|string|max:10',
-            'role' => 'nullable|string|max:255',
+            'sizes' => ['nullable', 'array'],
+            'sizes.*' => ['nullable', 'string', 'max:10'],
+            'stocks' => ['nullable', 'array'],
+            'stocks.*' => ['nullable', 'integer', 'min:0'],
+            'courses' => ['nullable', 'array'],
+            'courses.*' => ['nullable', 'integer', 'min:1'],
         ]);
 
         if ($request->input('isClothing') == 0) {
             $request->merge([
                 'gender' => null,
-                'size' => null,
-                'role' => null,
+                'sizes' => [],
+                'stocks' => [],
+                'courses' => [],
             ]);
         }
-
         $material->update($request->all());
+
+        // Update the related courses
+        $material->courses()->sync($request->input('courses', []));
+
+        // Update the related sizes and stocks
+        $sizes = $request->input('sizes', []);
+        $stocks = $request->input('stocks', []);
+        $syncData = [];
+        foreach ($sizes as $index => $sizeId) {
+            $stock = $stocks[$index] ?? 0;
+            $syncData[$sizeId] = ['stock' => $stock];
+        }
+
+        $material->sizes()->sync($syncData);
 
         return redirect()->route('materials.index')->with('success', 'Material atualizado com sucesso!');
     }

@@ -133,7 +133,7 @@
                     </div>
                     <div class="m-3">
 
-                        <button type="submit" class="btn btn-primary">Criar Material</button>
+                        <button type="submit" class="btn btn-primary">Guardar Material</button>
                         <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
                     </div>
                 </div>
