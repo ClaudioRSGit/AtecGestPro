@@ -6,6 +6,7 @@ use App\Material;
 use App\MaterialPartnerTrainingUser;
 use App\Partner;
 use App\PartnerTrainingUser;
+use App\Role;
 use App\Training;
 use App\User;
 use Illuminate\Http\Request;
@@ -43,12 +44,13 @@ class PartnerTrainingUserController extends Controller
         $partners=Partner::all();
         $users=User::all();
         $trainings=Training::all();
+        $roles=Role::all();
 
         $materials = DB::table('materials')->where('isInternal', '=', false)->get();
 
 
 
-        return view('external.create', compact('partner_Training_Users', 'partners', 'users', 'trainings', 'materials'));
+        return view('external.create', compact('partner_Training_Users', 'partners', 'roles', 'users', 'trainings', 'materials'));
     }
 
 
@@ -59,28 +61,21 @@ class PartnerTrainingUserController extends Controller
             'training_id' => 'required',
             'user_id' => 'required',
             'start_date' => 'required',
-            'end_date' => 'required',
+            'end_date' => 'required|after_or_equal:start_date',
         ]);
 
         $partnerTrainingUser = PartnerTrainingUser::create($request->all());
-
         $materials = $request->input('materials', []);
         $materialQuantities = $request->input('material_quantities', []);
 
 
-        if (strtotime($request->start_date) > strtotime($request->end_date)) {
-            return redirect()->back()->withErrors(['end_date' => 'End date must be after or equal to start date']);
-        }
 
         foreach ($materials as $materialId) {
             $quantity = $materialQuantities[$materialId] ?? 1;
-
-            $partnerTrainingUser->Material_Training()->create([
-                'material_id' => $materialId,
-                'quantity' => $quantity,
-            ]);
-
             $material = Material::find($materialId);
+
+
+            $partnerTrainingUser->materials()->attach($materialId,  ['quantity' => $quantity]);
 
             if ($material) {
                 $material->decrement('quantity', $quantity);

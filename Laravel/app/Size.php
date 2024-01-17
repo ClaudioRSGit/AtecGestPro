@@ -11,10 +11,12 @@ class Size extends Model
 
     use softDeletes;
 
-public function materials()
+    public function materials()
     {
-        return $this->belongsToMany(Material::class, 'material_sizes', 'size_id', 'material_id')->withPivot('stock');
+        return $this->belongsToMany(Material::class, 'material_sizes')->withPivot('stock');
     }
+
+
 
     public function material_users()
     {

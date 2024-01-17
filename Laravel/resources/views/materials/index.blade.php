@@ -51,7 +51,6 @@
                         <th scope="col">Data de Aquisição</th>
                         <th scope="col">Fornecedor</th>
                         <th scope="col">Género</th>
-                        <th scope="col">Tamanho</th>
                         <th scope="col">Ações</th>
                     </tr>
                 </thead>
@@ -69,21 +68,34 @@
                                 <a
                                     href="{{ route('materials.show', $material->id) }}">{{ isset($material->name) ? $material->name : 'N.A.' }}</a>
                             </td>
-                            <td>{{ isset($material->quantity) ? $material->quantity : 'N.A.' }}</td>
-                            <td>{{ isset($material->aquisition_date) ? $material->aquisition_date : 'N.A.' }}</td>
-                            <td>{{ isset($material->supplier) ? $material->supplier : 'N.A.' }}</td>
                             <td>
-                                @if (isset($material->gender))
-                                    @if ($material->gender == 1)
+                                @if($material->isClothing == 1)
+                                    {{ $material->sizes->sum('pivot.stock') }}
+                                @else
+                                    {{ isset($material->quantity) ? $material->quantity : 'N.A.' }}
+                                @endif
+                            </td>
+
+                            <td>
+                                {{ isset($material->acquisition_date) ? \Carbon\Carbon::parse($material->acquisition_date)->format('Y-m-d') : 'N.A.' }}
+                            </td>
+
+
+                            <td>{{ $material->supplier !== null ? $material->supplier : 'N.A.' }}</td>
+
+                            <td>
+                                @if($material->isClothing == 0)
+                                    N.A.
+                                @else
+                                    @if($material->gender == 1)
                                         Masculino
                                     @elseif($material->gender == 0)
                                         Feminino
                                     @endif
-                                @else
-                                    N.A.
                                 @endif
+
                             </td>
-                            <td>{{ isset($material->size) ? $material->size : 'N.A.' }}</td>
+
                             <td class="editDelete" style="padding: 0.25rem">
                                 <div style="width: 40%;">
                                     <a href="{{ route('materials.edit', $material->id) }}" class="mx-2">

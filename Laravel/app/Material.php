@@ -13,8 +13,9 @@ class Material extends Model
 
     public function sizes()
     {
-        return $this->belongsToMany('App\Size', 'material_sizes', 'material_id', 'size_id')->withPivot('stock');
+        return $this->belongsToMany(Size::class, 'material_sizes')->withPivot('stock');
     }
+
 
     public function users()
     {
@@ -25,6 +26,8 @@ class Material extends Model
     {
         return $this->belongsToMany('App\PartnerTrainingUser', 'material_partner_training_users', 'material_id', 'partner_training_user_id')->withPivot('quantity');
     }
+
+
 
     public function courses()
     {
