@@ -45,7 +45,7 @@ Route::middleware(['auth', 'checkRole:admin, tecnico'])->group(function () {
     Route::post('external/massDelete', 'PartnerTrainingUserController@massDelete')->name('external.massDelete');
 
     Route::resource('partners', 'PartnerController');
-    Route::delete('partner-contact/{partner_contact}', 'PartnerContactController@destroy')->name('partner-contact.destroy');
+    Route::delete('partner-contact/{partner_contact}', 'ContactPartnerController@destroy')->name('partner-contact.destroy');
     Route::post('partners/massDelete', 'PartnerController@massDelete')->name('partners.massDelete');
 
     Route::resource('course-classes', 'CourseClassController');
