@@ -42,7 +42,7 @@
                         <th scope="col">Data de Aquisição</th>
                         <th scope="col">Vendedor</th>
                         <th scope="col">Género</th>
-                        <th scope="col">Tamanho</th>
+{{--                        <th scope="col">Tamanho</th>--}}
                         <th scope="col">Ações</th>
                     </tr>
                 </thead>
@@ -56,8 +56,19 @@
                             <td>
                                 <a href="{{ route('materials.show', $material->id) }}">{{ isset($material->name) ? $material->name : 'N.A.' }}</a>
                             </td>
-                            <td>{{ isset($material->quantity) ? $material->quantity : 'N.A.' }}</td>
-                            <td>{{ isset($material->aquisition_date) ? $material->aquisition_date : 'N.A.' }}</td>
+                            <td>
+                                @if($material->isClothing == 1)
+                                    {{ $material->sizes->sum('pivot.stock') }}
+                                @else
+                                    {{ isset($material->quantity) ? $material->quantity : 'N.A.' }}
+                                @endif
+                            </td>
+
+                            <td>
+                                {{ isset($material->acquisition_date) ? \Carbon\Carbon::parse($material->acquisition_date)->format('Y-m-d') : 'N.A.' }}
+                            </td>
+
+
                             <td>{{ isset($material->supplier) ? $material->supplier : 'N.A.' }}</td>
                             <td>
                                 @if(isset($material->gender))

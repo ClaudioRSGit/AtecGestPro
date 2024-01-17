@@ -15,9 +15,10 @@ class CreateMaterialSizesTable extends Migration
     {
         Schema::create('material_sizes', function (Blueprint $table) {
             $table->id();
+            $table->integer('stock')->default(0);
             $table->foreignId('material_id')->constrained('materials')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('size_id')->constrained('sizes')->onDelete('cascade')->onUpdate('cascade');
-            $table->integer('stock')->default(0);
+
             $table->timestamps();
             $table->softDeletes();
         });
