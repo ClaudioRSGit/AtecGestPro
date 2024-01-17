@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Course;
 use App\Material;
-use App\MaterialSize;
-
 use App\Size;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
