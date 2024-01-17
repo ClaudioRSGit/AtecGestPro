@@ -53,6 +53,7 @@ class MaterialUserController extends Controller
      */
     public function store(Request $request)
     {
+        //dd($request->all());
         $request->validate([
             'selectedClothing' => 'required|array',
             'user_id' => 'required',
@@ -72,7 +73,8 @@ class MaterialUserController extends Controller
                 'delivered_all' => $request->get('delivered_all'),
             ]);
 
-            dd($materialUser);
+            //dd($materialUser);
+            //dd($request->get('size_id'));
             $materialUser->save();
         }
 
