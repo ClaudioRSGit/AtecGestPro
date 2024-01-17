@@ -72,10 +72,11 @@ class MaterialUserController extends Controller
                 'delivered_all' => $request->get('delivered_all'),
             ]);
 
+            dd($materialUser);
             $materialUser->save();
         }
 
-        return redirect()->route('material-user.index')->with('success', 'Data saved successfully');
+        return redirect()->route('material-user.index')->with('success', 'Material entregue com sucesso!');
     }
 
     /**

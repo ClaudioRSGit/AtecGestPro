@@ -88,18 +88,21 @@
                                 @endif
                             </td>
                             <td style="text-align: center;">
+                                <input type="hidden" name="size_id[]" class="size-id-input" value="">
                                 <select class="form-control size-select" id="filter{{ $loop->index }}">
                                     @forelse ($clothing_assignment->sizes as $size)
+
                                         <option value="{{ $size->size }}" data-stock="{{ $size->pivot->stock }}" data-size-id="{{ $size->id }}">
                                             {{ $size->size }}({{ $size->pivot->stock }})
                                         </option>
                                     @empty
+
                                         <option value="N.A." data-stock="{{ $clothing_assignment->quantity }}" data-size-id="N.A.">
                                             N.A.({{ $clothing_assignment->quantity }})
                                         </option>
                                     @endforelse
                                 </select>
-                                <input type="hidden" name="size_id[]" class="size-id-input" value="">
+
                             </td>
 
                             <td style="text-align: center; " class="text-muted">
@@ -248,12 +251,35 @@
             });
 
             //test
-            document.querySelectorAll('.size-select').forEach((select) => {
-                select.addEventListener('change', (event) => {
-                    const selectedOption = event.target.options[event.target.selectedIndex];
-                    const sizeId = selectedOption.getAttribute('data-size-id');
-                    const correspondingSizeIdInput = event.target.parentNode.querySelector('.size-id-input');
-                    correspondingSizeIdInput.value = sizeId;
+            document.querySelectorAll('.size-select').forEach(function(selectElement) {
+                var selectedOption = selectElement.options[selectElement.selectedIndex];
+                var sizeId = selectedOption.dataset.sizeId;
+                console.log(sizeId);
+            });
+
+            function updateSizeId(selectElement) {
+                var selectedOption = selectElement.options[selectElement.selectedIndex];
+                var sizeId = selectedOption.dataset.sizeId;
+                var parentRow = selectElement.closest('.material-row');
+                var sizeIdInput = parentRow.querySelector('.size-id-input');
+                sizeIdInput.value = sizeId;
+
+            }
+
+            document.querySelectorAll('.size-select').forEach(function(selectElement) {
+                selectElement.addEventListener('change', function() {
+                    updateSizeId(selectElement);
+                });
+            });
+
+            document.querySelector('form').addEventListener('submit', function(e) {
+                document.querySelectorAll('.size-select').forEach(function(selectElement) {
+                    var selectedOption = selectElement.options[selectElement.selectedIndex];
+                    var sizeId = selectedOption.dataset.sizeId;
+                    var parentRow = selectElement.closest('.material-row');
+                    var sizeIdInput = parentRow.querySelector('.size-id-input');
+                    sizeIdInput.value = sizeId;
+
                 });
             });
 

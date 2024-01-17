@@ -4,6 +4,12 @@
     <div class="container">
         <h1>Vestuário</h1>
 
+        @if (session('success'))
+            <div class="alert alert-success" id="success-alert">
+                {{ session('success') }}
+             </div>
+         @endif
+
         <ul class="nav nav-tabs mb-2" id="myTabs">
             <li class="nav-item">
                 <a class="nav-link active" data-toggle="tab" href="#formandos">Formandos</a>
