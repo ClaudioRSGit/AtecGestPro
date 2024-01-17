@@ -53,8 +53,8 @@ Route::middleware(['auth', 'checkRole:admin, tecnico'])->group(function () {
 
     Route::resource('courses', 'CourseController');
     Route::post('courses/massDelete', 'CourseController@massDelete')->name('courses.massDelete');
+    Route::resource('tickets', 'TicketController');
 });
 
 Route::middleware(['auth', 'checkRole:user'])->group(function () {
-    Route::resource('tickets', 'TicketController');
 });
