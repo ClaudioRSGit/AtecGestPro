@@ -27,7 +27,7 @@
                     </select>
                 </div>
 
-                <div>
+                <div style="display: none;">
                     <select class="form-control" id="filter" disabled>
                         <option value="all">Todos</option>
                         <option value="trainer">Formador</option>
@@ -93,7 +93,8 @@
                                         <option value="{{ $size->size }}" data-stock="{{ $size->pivot->stock }}">
                                             {{ $size->size }}({{ $size->pivot->stock }})</option>
                                     @empty
-                                        <option value="N.A." data-stock="{{ $clothing_assignment->quantity }}">N.A.({{ $clothing_assignment->quantity }})</option>
+                                        <option value="N.A." data-stock="{{ $clothing_assignment->quantity }}">
+                                            N.A.({{ $clothing_assignment->quantity }})</option>
                                     @endforelse
                                 </select>
                             </td>
@@ -103,8 +104,7 @@
                             </td>
                             <td style="text-align: center;">
                                 <input type="number" class="form-control quantity-input" id="quantity{{ $loop->index }}"
-                                    name="quantity" value="1" min="1"
-                                    style="width: 60px; text-align: center;">
+                                    name="quantity" value="1" min="1" style="width: 60px; text-align: center;">
                             </td>
                             <td style="text-align: center;">
                                 <input type="date" class="form-control" id="date" name="date"
@@ -236,6 +236,8 @@
                             $(this).val(max);
                         }
                     });
+
+
                 });
             });
 
@@ -302,6 +304,15 @@
                     checkbox.closest('tr').style.display = matchesFilter && matchesSearch ? '' : 'none';
                 });
             }
+
+            $(document).ready(function() {
+                $('form').on('keydown', function(e) {
+                    if (e.keyCode == 13) {
+                        e.preventDefault();
+                        return false;
+                    }
+                });
+            });
         });
     </script>
 @endsection
