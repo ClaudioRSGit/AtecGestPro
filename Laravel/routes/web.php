@@ -45,7 +45,7 @@ Route::middleware(['auth', 'checkRole:admin, tecnico'])->group(function () {
     Route::post('external/massDelete', 'PartnerTrainingUserController@massDelete')->name('external.massDelete');
 
     Route::resource('partners', 'PartnerController');
-    Route::delete('partner-contact/{partner_contact}', 'PartnerContactController@destroy')->name('partner-contact.destroy');
+    Route::delete('partner-contact/{partner_contact}', 'ContactPartnerController@destroy')->name('partner-contact.destroy');
     Route::post('partners/massDelete', 'PartnerController@massDelete')->name('partners.massDelete');
 
     Route::resource('course-classes', 'CourseClassController');
@@ -53,7 +53,14 @@ Route::middleware(['auth', 'checkRole:admin, tecnico'])->group(function () {
 
     Route::resource('courses', 'CourseController');
     Route::post('courses/massDelete', 'CourseController@massDelete')->name('courses.massDelete');
+<<<<<<< HEAD
     Route::resource('tickets', 'TicketController');
+=======
+
+    Route::get('/import-excel', 'ExcelImportController@index')->name('import.excel');
+    Route::redirect('/import-excel', '/users');
+    Route::post('/import-excel', 'ExcelImportController@import');
+>>>>>>> 71dd52773de520c149853a7a1cd70d6f5f8f4f83
 });
 
 Route::middleware(['auth', 'checkRole:user'])->group(function () {

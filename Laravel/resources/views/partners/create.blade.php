@@ -55,7 +55,7 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="actions" class="form-label">Ações:</label>
-                        <button type="button" class="btn btn-primary" onclick="validateForm()">Criar Parceiro</button>
+                        <button type="submit" class="btn btn-primary" onclick="validateForm()">Criar Parceiro</button>
                         <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
                     </div>
                 </div>
@@ -66,7 +66,6 @@
     <script>
         function validateForm() {
             removeEmptyContactFields();
-            document.forms[0].submit();
         }
 
         function removeEmptyContactFields() {

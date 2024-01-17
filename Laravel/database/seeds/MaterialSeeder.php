@@ -80,7 +80,7 @@ class MaterialSeeder extends Seeder
             'isInternal' => 1,
             'quantity' => 10,
             'acquisition_date' => '2020-01-09 21:04:24',
-            'supplier' => '',
+            'supplier' => null,
             'isClothing' => 1,
             'gender' => 0,
 
@@ -94,7 +94,7 @@ class MaterialSeeder extends Seeder
             'isInternal' => 1,
             'quantity' => 10,
             'acquisition_date' => '2020-01-09 21:04:24',
-            'supplier' => '',
+            'supplier' => null,
             'isClothing' => 1,
             'gender' => 1,
 
