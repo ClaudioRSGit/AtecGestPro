@@ -27,10 +27,12 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="aquisition_date" class="form-label">Data de Aquisição:</label>
-                        <input type="date" class="form-control" id="aquisition_date" name="aquisition_date"
-                               value="{{ old('aquisition_date') }}">
+                        <label for="acquisition_date" class="form-label">Data de Aquisição:</label>
+                        <input type="date" class="form-control" id="acquisition_date" name="acquisition_date"
+                               value="{{ old('acquisition_date') }}">
                     </div>
+
+
                     <div class="mb-3" id="quantity">
                         <label for="quantity" class="form-label">Quantidade:</label>
 
@@ -39,7 +41,6 @@
                     </div>
 
                 </div>
-
                 <div class="col-md-6">
                     <div class="row d-flex">
                         <div class="mx-3 ">
@@ -91,13 +92,14 @@
                                             <div class="d-flex align-items-center mb-2">
                                                 <div class="form-check">
                                                     <input onchange="toggleFieldsQuantity()" class="form-check-input size-checkbox" type="checkbox" name="sizes[]"
-                                                           value="{{ $size->size }}" {{ in_array($size->size, old('sizes', [])) ? 'checked' : '' }}>
+                                                           value="{{ $size->id }}" {{ in_array($size->id, old('sizes', [])) ? 'checked' : '' }}>
                                                     <label  class="form-check-label" for="size{{ $size->id }}">
                                                         {{ $size->size }}
                                                     </label>
                                                 </div>
-                                                <input type="number" name="stocks[{{ $size->size }}]" value="0"
-                                                       class="form-control w-25 mx-5 quantity-input" min="0" {{ in_array($size->size, old('sizes', [])) ? '' : 'disabled' }}>
+
+                                                <input type="number" name="stocks[{{ $size->id }}]" value="{{ old('stocks.' . $size->id, 0) }}"
+                                                       class="form-control w-25 mx-5 quantity-input" min="0" {{ in_array($size->id, old('sizes', [])) ? '' : 'disabled' }}>
                                             </div>
                                         @endforeach
                                     </div>
