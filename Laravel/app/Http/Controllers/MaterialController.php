@@ -63,9 +63,8 @@ class MaterialController extends Controller
 
             $stocks = $request->input('stocks');
             $sizes = $request->input('sizes');
-dd($stocks);
 
-            $material->sizes()->atach($sizes, ['stock' => $stocks]);
+            $material->sizes()->attach($sizes, ['stock' => $stocks]);
             dd($stocks);
 
 
