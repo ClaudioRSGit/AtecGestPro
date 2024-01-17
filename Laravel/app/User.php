@@ -6,84 +6,38 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Email;
-use App\Action;
-use App\Technician_Ticket;
-use App\Ticket;
-use App\Comment;
-use App\CourseClass;
-use App\Role_User;
-use App\Partner_Training_User;
-use App\Clothing_Delivery;
-use App\Ticket_History;
-
 
 class User extends Authenticatable
 {
-    use Notifiable, SoftDeletes;
+    use softDeletes;
 
-    protected $fillable = [
-        'name',
-        'username',
-        'email',
-        'contact',
-        'password',
-        'position',
-        'isActive',
-        'isStudent',
-        'course_class_id',
+    //all fillable fields
+    protected $guarded = [
+
     ];
-
-    public function emails()
-    {
-        return $this->hasMany(Email::class);
-    }
-
     public function actions()
     {
         return $this->hasMany(Action::class);
     }
 
-    public function Technician_Ticket()
+    public function courseClass()
     {
-        return $this->hasMany(Technician_Ticket::class);
+        return $this->belongsTo(CourseClass::class);
     }
 
-    public function Ticket()
+    public function role()
     {
-        return $this->hasMany(Ticket::class);
+        return $this->belongsTo(Role::class);
     }
 
-    public function comments()
+    public function material()
     {
-        return $this->hasMany(Comment::class);
+        return $this->belongsToMany(Material::class, 'material_user', 'user_id', 'material_id')->withPivot('quantity', 'size_id', 'delivery_date', 'delivery_address', 'delivery_city', 'delivery_zip_code', 'delivery_country', 'delivery_contact', 'delivery_phone', 'delivery_email', 'delivery_date', 'delivery_address', 'delivery_city', 'delivery_zip_code', 'delivery_country', 'delivery_contact', 'delivery_phone', 'delivery_email', 'delivery_date', 'delivery_address', 'delivery_city', 'delivery_zip_code', 'delivery_country', 'delivery_contact', 'delivery_phone', 'delivery_email', 'delivery_date', 'delivery_address', 'delivery_city', 'delivery_zip_code', 'delivery_country', 'delivery_contact', 'delivery_phone', 'delivery_email', 'delivery_date', 'delivery_address', 'delivery_city', 'delivery_zip_code', 'delivery_country', 'delivery_contact', 'delivery_phone', 'delivery_all');
     }
 
-    public function CourseClass()
+    public function hasRole($role)
     {
-        return $this->belongsTo(CourseClass::class, 'course_class_id');
+        return $this->role->name === $role;
     }
-
-    public function Role_User()
-    {
-        return $this->hasMany(Role_User::class);
-    }
-
-    public function Partner_Training_User()
-    {
-        return $this->hasMany(Partner_Training_User::class);
-    }
-
-    public function Clothing_Delivery()
-    {
-        return $this->belongsTo(Clothing_Delivery::class);
-    }
-
-    public function Ticket_History()
-    {
-        return $this->hasMany(Ticket_History::class);
-    }
-
-
 
 }

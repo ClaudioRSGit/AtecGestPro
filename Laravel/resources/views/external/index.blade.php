@@ -46,24 +46,16 @@
 
             <div class="tab-pane fade show active" id="externalTable">
 
-                <div class="d-flex justify-content-between mb-3 w-100">
-                    <div class="d-flex justify-content-between w-40">
-                        <input type="text" id="searchInput" class="form-control mr-2 w-80"
+                <div class=" d-flex">
+                    <input type="text" id="searchInput" class="form-control mr-2" style="max-width: fit-content"
                         placeholder="Insira para procurar...">
-                        <div class="w-15">
-                            <select class="form-control w-100" id="sortExternal">
-                                <option value="az">A-Z</option>
-                                <option value="za">Z-A</option>
-                            </select>
-                        </div>
 
-                    </div>
-                    <div class="buttons">
-                        <button class="btn btn-danger mr-2" id="delete-selected-ptus">Excluir Selecionados</button>
-                        <a href="{{ route('external.create') }}" class="btn btn-primary mr-2">Nova Formação</a>
-                    </div>
+                    <button class="btn btn-danger mb-3 mr-2" id="delete-selected-ptus">Excluir Selecionados</button>
+
+
+                    <a href="{{ route('external.create') }}" class="btn btn-primary mb-3 ">Nova Formação</a>
+
                 </div>
-
 
                 <table class="table bg-white" id="externalTable">
                     <thead>
@@ -140,25 +132,12 @@
             </div>
 
             <div class="tab-pane fade" id="partnersTable">
-                <div class="d-flex justify-content-between mb-3 w-100">
-                    <div class="d-flex justify-content-between w-40">
-                        <input type="text" id="searchInputPartners" class="form-control mr-2 w-80"
-                            placeholder="Insira para procurar...">
-                        <div w-15>
-                            <select class="form-control w-100" id="sortPartners">
-                                <option value="az">A-Z</option>
-                                <option value="za">Z-A</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="buttons">
-                        <button class="btn btn-danger mr-2" id="delete-selected">Excluir Selecionados</button>
-                        <a href="{{ route('partners.create') }}" class="btn btn-primary mr-2">Novo Parceiro</a>
-                    </div>
+                <div class="d-flex">
+                    <input type="text" id="searchInputPartners" class="form-control mr-2" style="max-width: fit-content"
+                        placeholder="Insira para procurar...">
+                    <button class="btn btn-danger mr-2" id="delete-selected">Excluir Selecionados</button>
+                    <a href="{{ route('partners.create') }}" class="btn btn-primary">Novo Parceiro</a>
                 </div>
-
-
                 <table class="table bg-white">
                     <thead>
                         <tr>
@@ -198,7 +177,7 @@
                                             </svg>
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="contactDropdown{{ $partner->id }}">
-                                            @foreach ($partner->partnerContacts as $contact)
+                                            @foreach ($partner->contactPartner as $contact)
                                                 <a class="dropdown-item" href="#">{{ $contact->contact }}</a>
                                             @endforeach
                                         </div>
@@ -249,21 +228,15 @@
 
 
 
-                <div class="d-flex justify-content-between mb-3 w-100">
-                    <div class="d-flex justify-content-between w-40">
-                        <input type="text" id="searchInputTrainings" class="form-control mr-2 w-80" placeholder="Insira para procurar...">
-                        <div class="w-15">
-                            <select class="form-control" id="sortTrainings">
-                                <option value="az">A-Z</option>
-                                <option value="za">Z-A</option>
-                            </select>
-                        </div>
-                    </div>
+                <div class=" d-flex">
+                    <input type="text" id="searchInputTrainings" class="form-control mr-2"
+                        style="max-width: fit-content" placeholder="Insira para procurar...">
 
-                    <div class="buttons">
-                        <button class="btn btn-danger mr-2" id="delete-selected-trainings">Excluir Selecionados</button>
-                        <a href="{{ route('trainings.create') }}" class="btn btn-primary mr-2">Nova Formação</a>
-                    </div>
+                    <button class="btn btn-danger mb-3 mr-2" id="delete-selected-trainings">Excluir Selecionados</button>
+
+
+                    <a href="{{ route('trainings.create') }}" class="btn btn-primary mb-3">Nova Formação</a>
+
                 </div>
 
                 <table class="table bg-white">
@@ -329,110 +302,6 @@
         </div>
 
     </div>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const sortTrainingsDropdown = document.getElementById('sortTrainings');
-
-            sortTrainingsDropdown.addEventListener('change', function() {
-                sortTrainings();
-            });
-
-            function sortTrainings() {
-                const sortValue = sortTrainingsDropdown.value;
-                const trainingTable = document.getElementById('trainingsTable');
-                const trainingRows = Array.from(trainingTable.querySelectorAll('tbody tr.customTableStyling'));
-                const fillerRows = Array.from(trainingTable.querySelectorAll('tbody tr.filler'));
-
-                trainingRows.sort((a, b) => {
-                    const aName = a.querySelector('td:nth-child(2)').textContent.toLowerCase();
-                    const bName = b.querySelector('td:nth-child(2)').textContent.toLowerCase();
-
-                    if (sortValue === 'az') {
-                        return aName.localeCompare(bName);
-                    } else {
-                        return bName.localeCompare(aName);
-                    }
-                });
-
-                const tbody = trainingTable.querySelector('tbody');
-                trainingRows.forEach((row, index) => {
-                    tbody.appendChild(row);
-                    if (fillerRows[index]) {
-                        tbody.appendChild(fillerRows[index]);
-                    }
-                });
-            }
-        });
-
-        document.addEventListener("DOMContentLoaded", function() {
-            const sortPartnersDropdown = document.getElementById('sortPartners');
-
-            sortPartnersDropdown.addEventListener('change', function() {
-                sortPartners();
-            });
-
-            function sortPartners() {
-                const sortValue = sortPartnersDropdown.value;
-                const partnersTable = document.getElementById('partnersTable');
-                const partnerRows = Array.from(partnersTable.querySelectorAll('tbody tr.customTableStyling'));
-                const fillerRows = Array.from(partnersTable.querySelectorAll('tbody tr.filler'));
-
-                partnerRows.sort((a, b) => {
-                    const aName = a.querySelector('td:nth-child(2)').textContent.toLowerCase();
-                    const bName = b.querySelector('td:nth-child(2)').textContent.toLowerCase();
-
-                    if (sortValue === 'az') {
-                        return aName.localeCompare(bName);
-                    } else {
-                        return bName.localeCompare(aName);
-                    }
-                });
-
-                const tbody = partnersTable.querySelector('tbody');
-                partnerRows.forEach((row, index) => {
-                    tbody.appendChild(row);
-                    if (fillerRows[index]) {
-                        tbody.appendChild(fillerRows[index]);
-                    }
-                });
-            }
-        });
-
-        document.addEventListener("DOMContentLoaded", function() {
-            const sortExternalDropdown = document.getElementById('sortExternal');
-
-            sortExternalDropdown.addEventListener('change', function() {
-                sortExternal();
-            });
-
-            function sortExternal() {
-                const sortValue = sortExternalDropdown.value;
-                const externalTable = document.getElementById('externalTable');
-                const externalRows = Array.from(externalTable.querySelectorAll('tbody tr.customTableStyling'));
-                const fillerRows = Array.from(externalTable.querySelectorAll('tbody tr.filler'));
-
-                externalRows.sort((a, b) => {
-                    const aName = a.querySelector('td:nth-child(2)').textContent.toLowerCase();
-                    const bName = b.querySelector('td:nth-child(2)').textContent.toLowerCase();
-
-                    if (sortValue === 'az') {
-                        return aName.localeCompare(bName);
-                    } else {
-                        return bName.localeCompare(aName);
-                    }
-                });
-
-                const tbody = externalTable.querySelector('tbody');
-                externalRows.forEach((row, index) => {
-                    tbody.appendChild(row);
-                    if (fillerRows[index]) {
-                        tbody.appendChild(fillerRows[index]);
-                    }
-                });
-            }
-        });
-    </script>
 
 
     <script>
@@ -714,8 +583,6 @@
                     }
                 });
             });
-
-
 
             function showExternalTable() {
                 const tables = document.querySelectorAll('.tab-pane');

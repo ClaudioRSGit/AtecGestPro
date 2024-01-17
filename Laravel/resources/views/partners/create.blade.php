@@ -55,7 +55,7 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="actions" class="form-label">Ações:</label>
-                        <button type="button" class="btn btn-primary" onclick="validateForm()">Criar Parceiro</button>
+                        <button type="submit" class="btn btn-primary" onclick="validateForm()">Criar Parceiro</button>
                         <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
                     </div>
                 </div>
@@ -66,15 +66,14 @@
     <script>
         function validateForm() {
             removeEmptyContactFields();
-            document.forms[0].submit();
         }
 
         function removeEmptyContactFields() {
-            var contactGroups = document.querySelectorAll('.contact-group');
+            const contactGroups = document.querySelectorAll('.contact-group');
 
-            for (var i = contactGroups.length - 1; i >= 0; i--) {
-                var contactDescription = contactGroups[i].querySelector('input[name^="contact_description"]');
-                var contactValue = contactGroups[i].querySelector('input[name^="contact_value"]');
+            for (let i = contactGroups.length - 1; i >= 0; i--) {
+                const contactDescription = contactGroups[i].querySelector('input[name^="contact_description"]');
+                const contactValue = contactGroups[i].querySelector('input[name^="contact_value"]');
 
                 if (contactDescription.value.trim() === '' || contactValue.value.trim() === '') {
                     contactDescription.parentNode.remove();
@@ -83,32 +82,32 @@
         }
 
         function addContactFields() {
-            var contactsContainer = document.getElementById('contacts-container');
-            var contactGroups = document.querySelectorAll('.contact-group');
+            const contactsContainer = document.getElementById('contacts-container');
+            const contactGroups = document.querySelectorAll('.contact-group');
 
-            var allFieldsFilled = Array.from(contactGroups).every(function(contactGroup) {
-                var description = contactGroup.querySelector('input[name^="contact_description"]').value.trim();
-                var value = contactGroup.querySelector('input[name^="contact_value"]').value.trim();
+            const allFieldsFilled = Array.from(contactGroups).every(function(contactGroup) {
+                const description = contactGroup.querySelector('input[name^="contact_description"]').value.trim();
+                const value = contactGroup.querySelector('input[name^="contact_value"]').value.trim();
                 return description !== '' && value !== '';
             });
 
             if (allFieldsFilled) {
-                var newContactGroup = document.createElement('div');
+                const newContactGroup = document.createElement('div');
                 newContactGroup.classList.add('contact-group', 'mb-3');
 
-                var inputDescription = document.createElement('input');
+                const inputDescription = document.createElement('input');
                 inputDescription.type = 'text';
                 inputDescription.classList.add('form-control');
                 inputDescription.name = 'contact_description[]';
                 inputDescription.placeholder = 'Descrição';
 
-                var inputValue = document.createElement('input');
+                const inputValue = document.createElement('input');
                 inputValue.type = 'text';
                 inputValue.classList.add('form-control');
                 inputValue.name = 'contact_value[]';
                 inputValue.placeholder = 'Contato';
 
-                var removeButton = document.createElement('button');
+                const removeButton = document.createElement('button');
                 removeButton.type = 'button';
                 removeButton.classList.add('btn');
                 removeButton.innerHTML =
@@ -130,7 +129,7 @@
         }
 
         function removeContact(button) {
-            var contactGroup = button.closest('.contact-group');
+            const contactGroup = button.closest('.contact-group');
 
             contactGroup.remove();
         }

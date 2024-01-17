@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 
 class ActionSeeder extends Seeder
 {
@@ -29,7 +28,5 @@ class ActionSeeder extends Seeder
             'description' => 'DELETE',
             'user_id' => 3,
         ]);
-
-
     }
 }

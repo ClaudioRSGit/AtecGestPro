@@ -44,6 +44,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            let stopPropagation = document.querySelectorAll('.no-propagate');
             const selectAllCheckbox = document.getElementById('select-all');
             const checkboxes = document.querySelectorAll('.form-check-input');
             const searchInput = document.getElementById('search');
@@ -51,6 +52,11 @@
 
 
 
+            stopPropagation.forEach(function(element) {
+                element.addEventListener('click', function(event) {
+                    event.stopPropagation();
+                });
+            });
 
             document.getElementById('apagarOnClick').addEventListener('click', function() {
 

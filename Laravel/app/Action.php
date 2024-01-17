@@ -3,22 +3,23 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\User;
-use App\Ticket_History;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Action extends Model
 {
-    protected $fillable = [
-        'description',
-    ];
+    //
+    protected $fillable = ['name', 'description', 'partner_id'];
 
-    public function users()
+    use softDeletes;
+
+    public function tickeHistory ()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(TicketHistory::class);
     }
 
-    public function Ticket_History()
+    public function partner()
     {
-        return $this->belongsTo(Ticket_History::class);
+        return $this->belongsTo(User::class);
     }
+
 }

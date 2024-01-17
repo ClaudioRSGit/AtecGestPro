@@ -10,7 +10,7 @@ class CourseController extends Controller
     public function index(Request $request)
     {
         $nameFilter = $request->input('nameFilter');
-
+//dd($nameFilter);
         $query = Course::query();
 
         if ($nameFilter) {

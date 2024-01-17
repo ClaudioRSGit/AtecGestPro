@@ -4,25 +4,17 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\User;
-use App\Ticket;
 
 class Comment extends Model
 {
-    protected $fillable = [
-        'description',
-        'isPublic',
-    ];
-    
-    use SoftDeletes;
+    use softDeletes;
+    public function ticket()
+    {
+        return $this->belongsTo(Ticket::class);
+    }
 
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function ticket()
-    {
-        return $this->belongsTo(Ticket::class);
     }
 }

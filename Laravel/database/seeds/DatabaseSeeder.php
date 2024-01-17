@@ -2,7 +2,6 @@
 
 use Illuminate\Database\Seeder;
 
-
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -12,8 +11,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+
+        $this->call(MaterialSeeder::class);
+        $this->call(SizeSeeder::class);
+        $this->call(MaterialSizeSeeder::class);
         $this->call(PartnerSeeder::class);
-        $this->call(PartnerContactSeeder::class);
+        $this->call(ContactPartnerSeeder::class);
         $this->call(CourseSeeder::class);
         $this->call(CourseClassSeeder::class);
         $this->call(RoleSeeder::class);
@@ -24,20 +27,17 @@ class DatabaseSeeder extends Seeder
         $this->call(NotificationSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(NotificationUserSeeder::class);
-        $this->call(RoleUserSeeder::class);
         $this->call(ActionSeeder::class);
         $this->call(TicketSeeder::class);
-        $this->call(TechnicianTicketSeeder::class);
+        $this->call(TicketUserSeeder::class);
         $this->call(CommentSeeder::class);
         $this->call(TicketHistorySeeder::class);
         $this->call(EmailSeeder::class);
-        $this->call(ClothingDeliverySeeder::class);
-        $this->call(MaterialSeeder::class);
-        $this->call(MaterialClothingDeliverySeeder::class);
+        $this->call(MaterialUserSeeder::class);
         $this->call(TrainingSeeder::class);
         $this->call(PartnerTrainingUserSeeder::class);
-        $this->call(MaterialTrainingSeeder::class);
-
-
+        $this->call(CourseMaterialSeeder::class);
+        $this->call(TicketUserSeeder::class);
+        $this->call(MaterialPartnerTrainingUserSeeder::class);
     }
 }

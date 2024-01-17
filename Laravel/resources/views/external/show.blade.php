@@ -66,13 +66,13 @@
                     <th scope="row">Materiais</th>
                     <td>
                         @php
-                            $materialTraining = $partner_Training_Users->Material_Training()->whereHas('material')->get();
+                            $materialTraining = $partner_Training_Users->materials;
                         @endphp
 
                         @if($materialTraining->isNotEmpty())
                             <ul>
                                 @foreach($materialTraining as $materialTrainings)
-                                    <li>{{ $materialTrainings->material->name }} - Quantidade: {{ $materialTrainings->quantity }}</li>
+                                    <li>{{ $materialTrainings->name }} - Quantidade: {{ $materialTrainings->pivot->quantity }}</li>
                                 @endforeach
                             </ul>
                         @else

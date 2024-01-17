@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Partner;
-use App\Partner_contact;
+use App\ContactPartner;
 use Illuminate\Http\Request;
 
 class PartnerController extends Controller
@@ -54,7 +54,7 @@ class PartnerController extends Controller
 
         if ($contacts && $values) {
             foreach ($contacts as $key => $contact) {
-                Partner_contact::create([
+                ContactPartner::create([
                     'contact' => $values[$key],
                     'description' => $contact,
                     'partner_id' => $partner->id,
@@ -111,7 +111,7 @@ class PartnerController extends Controller
         $existingContactValues = $request->input('existing_contact_values', []);
 
         foreach ($existingContactIds as $key => $existingContactId) {
-            $existingContact = Partner_contact::find($existingContactId);
+            $existingContact = ContactPartner::find($existingContactId);
             $existingContact->update([
                 'contact' => $existingContactValues[$key],
                 'description' => $existingContactDescriptions[$key],
@@ -123,7 +123,7 @@ class PartnerController extends Controller
         $newContactValues = $request->input('new_contact_values', []);
 
         foreach ($newContactDescriptions as $key => $newContactDescription) {
-            Partner_contact::create([
+            ContactPartner::create([
                 'contact' => $newContactValues[$key],
                 'description' => $newContactDescription,
                 'partner_id' => $partner->id,
@@ -142,8 +142,13 @@ class PartnerController extends Controller
      */
     public function destroy(Partner $partner)
     {
+
+
         try {
+
             $partner->delete();
+            $partner->contactPartner()->delete();
+
             return redirect()->route('external.index')->with('success', 'Parceiro excluído com sucesso!');
         } catch (\Exception $e) {
             return redirect()->route('external.index')->with('error', 'Erro ao excluir o Parceiro. Por favor, tente novamente.');

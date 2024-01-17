@@ -3,8 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\User;
-use App\Ticket_History;
 
 class Email extends Model
 {
@@ -12,6 +10,8 @@ class Email extends Model
         'recipient_email',
         'subject',
         'message',
+        'ticket_history_id',
+        'user_id',
     ];
 
     public function user()
@@ -19,8 +19,8 @@ class Email extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function Ticket_History()
+    public function ticketHistory()
     {
-        return $this->belongsTo(Ticket_History::class);
+        return $this->belongsTo(TicketHistory::class);
     }
 }

@@ -10,7 +10,7 @@ class CourseClassController extends Controller
 {
     public function index()
     {
-        $courseClasses = CourseClass::with('students')->paginate(5);
+        $courseClasses = CourseClass::with('users')->paginate(5);
         $courses = Course::all();
         return view('course-classes.index', compact('courseClasses', 'courses'));
     }
@@ -26,12 +26,18 @@ class CourseClassController extends Controller
     public function create()
     {
         $courses = Course::all();
-        $students = User::where('position', 'formando')->paginate(5);
+        //select * from users where isStudent = 1
+
+
+        $students = User::where('isStudent', 1)->paginate(5);
+
+        //dd($students->toArray());
         return view('course-classes.create', compact('courses','students'));
     }
 
     public function store(Request $request)
     {
+
         $request->validate([
             'description' => 'required',
             'course_id' => 'required',
@@ -43,8 +49,11 @@ class CourseClassController extends Controller
         ]);
 
         if ($request->has('selected_students')) {
-            $selectedStudents = User::whereIn('id', $request->input('selected_students'))->get();
-            $courseClass->students()->saveMany($selectedStudents);
+            foreach ($request->input('selected_students') as $student) {
+                $user = User::find($student);
+                $user->course_class_id = $courseClass->id;
+                $user->save();
+            }
         }
 
         return redirect()->route('course-classes.index')->with('success', 'Course class created successfully!');
@@ -53,7 +62,7 @@ class CourseClassController extends Controller
 
     public function edit(CourseClass $courseClass)
     {
-        $courseClass->load('course', 'students');
+        $courseClass->load('course', 'users');
         $courses = Course::all();
 
         return view('course-classes.edit', compact('courseClass', 'courses'));
@@ -61,6 +70,7 @@ class CourseClassController extends Controller
 
     public function update(Request $request, CourseClass $courseClass)
     {
+        dd($request->all());
         $courseClass->update($request->all());
 
         return redirect()->route('course-classes.index')->with('success', 'Course class updated successfully!');

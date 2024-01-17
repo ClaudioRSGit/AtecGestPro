@@ -30,7 +30,7 @@
             <div class="form-group">
                 <label for="students">Alunos na Turma:</label>
                 <ul>
-                    @foreach($courseClass->students as $student)
+                    @foreach($courseClass->users as $student)
                         <li>{{ $student->name }}</li>
                     @endforeach
                 </ul>

@@ -19,78 +19,50 @@
                     <input type="text" id="search" class="form-control w-100" placeholder="Pesquisar Material">
                 </div>
             </form>
+            <div class="buttons">
+                <div>
+                    <select class="form-control" id="sort">
+                        <option value="az">A-Z</option>
+                        <option value="za">Z-A</option>
+                    </select>
+                </div>
+
+                <div>
+                    <select class="form-control" id="filter" disabled>
+                        <option value="all">Todos</option>
+                        <option value="trainer">Formador</option>
+                        <option value="trainee" selected>Formando</option>
+                        <option value="technical">Técnico </option>
+                    </select>
+                </div>
+
+            </div>
         </div>
 
 
-            @csrf
-
-
+        @csrf
 
 
         <form action="{{ route('material-clothing-delivery.store') }}" method="post">
             @csrf
             <input type="hidden" name="user_id" value="{{ $student->id }}">
-            <label for="gender">Selecione o género</label>
-            <select class="form-select" id="gender" name="gender">
-                <option value="male" selected>Masculino</option>
-                <option value="female">Femenino</option>
-            </select>
-
-
             <table class="table">
                 <thead>
-                <tr>
-                    <th scope="col">
-                        <input type="checkbox" id="select-all">
-                    </th>
-                    <th scope="col">Nome</th>
-                    <th scope="col" style="text-align: center;">Tamanho</th>
-                    <th scope="col" style="text-align: center;">Quantidade</th>
-                </tr>
+                    <tr>
+                        <th scope="col">
+                            <input type="checkbox" id="select-all">
+                        </th>
+                        <th scope="col">Nome</th>
+                        <th scope="col">Género</th>
+                        <th scope="col" style="text-align: center;">Tamanho</th>
+                        <th scope="col" style="text-align: center;">Função</th>
+                        <th scope="col" style="text-align: center;">Quantidade</th>
+                    </tr>
                 </thead>
                 <tbody>
-                @forelse ($clothes->groupBy('name') as $clothingName => $clothingItems)
-                    @php
-                        $firstClothingItem = $clothingItems->first();
-                    @endphp
-                    <tr class="material-row" data-trainee="{{ $firstClothingItem->role == 3 ? 1 : 0 }}">
-                        <td>
-                            <div class="form-check">
-                                <input class="form-check-input" name="selectedClothing[]" type="checkbox"
-                                       value="{{ $firstClothingItem->name }}" id="flexCheckDefault">
-                            </div>
-                        </td>
-                        <td>
-                            {{ $clothingName }}
-                            <input type="hidden" name="name[{{ $firstClothingItem->id }}]" value="{{ $firstClothingItem->name }}">
-                        </td>
-                        <td style="text-align: center;">
-                            <select class="form-select" name="size[{{ $firstClothingItem->name }}]">
-                                @foreach($clothingItems->unique('size') as $uniqueSize)
-                                    <option value="{{ $uniqueSize->size }}">{{ $uniqueSize->size }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td>
-                            <input type="number" class="form-control w-50" name="quantity[{{ $firstClothingItem->name }}]" id="quantity"
-                                   value="{{ isset($firstClothingItem->quantity) ? $firstClothingItem->quantity : '0' }}"
-                                   min="1" max="{{ $firstClothingItem->quantity }}">
-                        </td>
-                    </tr>
-                @empty
-                    <tr>
-                        <td colspan="7" style="text-align: center;">Não existem materiais para atribuir</td>
-                    </tr>
-                @endforelse
-                </tbody>
-            </table>
+                    @forelse  ($clothing_assignment as $clothing_assignment)
+                        <tr class="material-row" data-trainee="{{ $clothing_assignment->role == 3 ? 1 : 0 }}">
 
-            <h5>Observações </h5>
-            <div class="row">
-                <div class="col-4">
-                    <textarea class="form-control" name="additionalNotes" id="textarea"
-                              aria-label="With textarea"></textarea>
-                </div>
                 <div class="col">
                     <div class="buttons">
 
@@ -116,92 +88,130 @@
                             Fechar
                         </button>
 
+
                     </div>
                 </div>
-            </div>
+            </livewire:gender-filter>
+
+
         </form>
-    </div>
-
-
-
-
 
 
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const selectAllCheckbox = document.getElementById('select-all');
             const checkboxes = document.querySelectorAll('.form-check-input');
             const searchInput = document.getElementById('search');
-            // const filterDropdown = document.getElementById('filter');
+            const filterDropdown = document.getElementById('filter');
+            const sortDropdown = document.getElementById('sort');
 
             sortDropdown.addEventListener('change', function() {
                 sortMaterials();
             });
 
-            // document.getElementById('apagarOnClick').addEventListener('click', function() {
-            //
-            //     document.getElementById('textarea').value = '';
-            //
-            //
-            //     const checkboxes = document.querySelectorAll('.form-check-input');
-            //     checkboxes.forEach(checkbox => {
-            //         checkbox.checked = false;
-            //     });
-            //
-            //
-            //     document.getElementById('select-all').checked = false;
-            // });
+            function sortMaterials() {
+                const sortValue = sortDropdown.value;
+                const materialRows = Array.from(document.querySelectorAll('.material-row'));
+                const fillerRows = Array.from(document.querySelectorAll('.filler'));
 
+                materialRows.sort((a, b) => {
+                    const aName = a.querySelector('a').textContent.toLowerCase();
+                    const bName = b.querySelector('a').textContent.toLowerCase();
 
-            selectAllCheckbox.addEventListener('change', function () {
-                checkboxes.forEach(checkbox => {
-                    checkbox.checked = selectAllCheckbox.checked;
+                    if (sortValue === 'az') {
+                        return aName.localeCompare(bName);
+                    } else {
+                        return bName.localeCompare(aName);
+                    }
                 });
-            });
 
-            checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', function () {
-                    selectAllCheckbox.checked = checkboxes.length === document.querySelectorAll(
-                        'input[name="selectedClothing[]"]:checked').length;
-                });
-            });
-
-            searchInput.addEventListener('input', function () {
-                const searchTerm = searchInput.value.toLowerCase();
-                filterMaterials(searchTerm);
-            });
-
-            // filterDropdown.addEventListener('change', function () {
-            //     filterMaterials();
-            // });
-
-            function filterMaterials(searchTerm = null) {
-                checkboxes.forEach(checkbox => {
-                    const materialRow = checkbox.closest('.material-row');
-                    const isTrainer = materialRow.getAttribute('data-trainer') === '1';
-                    const isTrainee = materialRow.getAttribute('data-trainee') === '1';
-                    const isTechnical = materialRow.getAttribute('data-technical') === '1';
-
-
-                    const filterValue = filterDropdown.value;
-
-                    const matchesFilter = (
-                        (filterValue === 'all') ||
-                        (filterValue === 'trainer' && isTrainer) ||
-                        (filterValue === 'trainee' && isTrainee) ||
-                        (filterValue === 'technical' && isTechnical)
-
-                    );
-
-                    const matchesSearch = !searchTerm || (
-                        materialRow.textContent.toLowerCase().includes(searchTerm) ||
-                        materialRow.querySelector('a').textContent.toLowerCase().includes(searchTerm)
-                    );
-
-                    checkbox.closest('tr').style.display = matchesFilter && matchesSearch ? '' : 'none';
+                const tbody = document.querySelector('tbody');
+                materialRows.forEach((row, index) => {
+                    tbody.appendChild(row);
+                    if (fillerRows[index]) {
+                        tbody.appendChild(fillerRows[index]);
+                    }
                 });
             }
-        });
-    </script>
+
+
+
+            document.getElementById('apagarOnClick').addEventListener('click', function() {
+
+                document.getElementById('textarea').value = '';
+
+
+                const checkboxes = document.querySelectorAll('.form-check-input');
+                const searchInput = document.getElementById('search');
+                // const filterDropdown = document.getElementById('filter');
+
+
+                // document.getElementById('apagarOnClick').addEventListener('click', function() {
+                //
+                //     document.getElementById('textarea').value = '';
+                //
+                //
+                //     const checkboxes = document.querySelectorAll('.form-check-input');
+                //     checkboxes.forEach(checkbox => {
+                //         checkbox.checked = false;
+                //     });
+                //
+                //
+                //     document.getElementById('select-all').checked = false;
+                // });
+
+
+                selectAllCheckbox.addEventListener('change', function () {
+                    checkboxes.forEach(checkbox => {
+                        checkbox.checked = selectAllCheckbox.checked;
+                    });
+                });
+
+                checkboxes.forEach(checkbox => {
+                    checkbox.addEventListener('change', function () {
+                        selectAllCheckbox.checked = checkboxes.length === document.querySelectorAll(
+                            'input[name="selectedClothing[]"]:checked').length;
+                    });
+                });
+
+                searchInput.addEventListener('input', function () {
+                    const searchTerm = searchInput.value.toLowerCase();
+                    filterMaterials(searchTerm);
+                });
+
+                // filterDropdown.addEventListener('change', function () {
+                //     filterMaterials();
+                // });
+
+                function filterMaterials(searchTerm = null) {
+                    checkboxes.forEach(checkbox => {
+                        const materialRow = checkbox.closest('.material-row');
+                        const isTrainer = materialRow.getAttribute('data-trainer') === '1';
+                        const isTrainee = materialRow.getAttribute('data-trainee') === '1';
+                        const isTechnical = materialRow.getAttribute('data-technical') === '1';
+
+
+                        const filterValue = filterDropdown.value;
+
+                        const matchesFilter = (
+                            (filterValue === 'all') ||
+                            (filterValue === 'trainer' && isTrainer) ||
+                            (filterValue === 'trainee' && isTrainee) ||
+                            (filterValue === 'technical' && isTechnical)
+
+                        );
+
+                        const matchesSearch = !searchTerm || (
+                            materialRow.textContent.toLowerCase().includes(searchTerm) ||
+                            materialRow.querySelector('a').textContent.toLowerCase().includes(searchTerm)
+                        );
+
+                        checkbox.closest('tr').style.display = matchesFilter && matchesSearch ? '' : 'none';
+                    });
+                }
+            });
+        </script>
+        @livewireScripts
+
 @endsection
