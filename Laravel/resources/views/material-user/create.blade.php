@@ -98,7 +98,7 @@
                                     @empty
 
                                         <option value="N.A." data-stock="{{ $clothing_assignment->quantity }}"
-                                            data-size-id="100">
+                                            data-size-id="34">
                                             N.A.({{ $clothing_assignment->quantity }})
                                         </option>
                                     @endforelse
