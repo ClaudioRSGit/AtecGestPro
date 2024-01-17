@@ -57,7 +57,7 @@
                         <th scope="col" style="text-align: center;">Função</th>
                         <th scope="col" style="text-align: center;">Quantidade</th>
                         <th scope="col" style="text-align: center;">Data de Entrega</th>
-                        <th scope="col" style="text-align: center;">Entregue Tudo</th>
+
 
                     </tr>
                 </thead>
@@ -110,10 +110,7 @@
                                 <input type="date" class="form-control" id="date" name="date"
                                     value="{{ date('Y-m-d') }}">
                             </td>
-                            <td style="text-align: center;">
-                                <input type="checkbox" class="form-check-input" id="flexCheckDefault" name="delivered"
-                                    value="1">
-                            </td>
+
                         </tr>
 
                     @empty
@@ -123,7 +120,13 @@
                     @endforelse
                 </tbody>
             </table>
-
+            <div style="margin-bottom: 20px;">
+                <label for="delivered">Entrega Completa</label>
+                <select class="form-control" id="delivered" name="delivered" style="width: 80px;text-align: center;">
+                    <option value="1">Sim</option>
+                    <option value="0">Não</option>
+                </select>
+            </div>
             <h5>Observações </h5>
             <div class="row">
                 <div class="col-4">
