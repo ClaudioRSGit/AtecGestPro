@@ -61,12 +61,12 @@ class MaterialController extends Controller
 
             $material->courses()->attach($request->input('courses'));
 
-            $stocks = $request->input('stocks');
             $sizes = $request->input('sizes');
 
-            $material->sizes()->attach($sizes, ['stock' => $stocks]);
-            dd($stocks);
+            $stocks = $request->input('stocks', []);
 
+            foreach ($sizes as $sizeId) {
+                $stock= $stocks[$sizeId] ?? 0;
 
                 $material->sizes()->attach($sizeId, ['stock' => $stock]);
 
@@ -90,8 +90,9 @@ class MaterialController extends Controller
         $coursesAll = Course::all();
         $sizes = $material->sizes;
         $courses = $material->courses;
-//        dd($sizes->get());
-        return view('materials.show', compact('material' , 'sizes', 'courses'));
+
+        return view('materials.show', compact('material' , 'sizes', 'courses' , 'sizesAll' , 'coursesAll'));
+
     }
 
     public function edit(Material $material)
@@ -175,7 +176,7 @@ class MaterialController extends Controller
         } catch (\Exception $e) {
 
             return redirect()->back()->with('error', 'Erro ao excluir os materiais selecionados. Por favor, tente novamente.');
-            return redirect()->route('materials.index')->with('error', 'Erro ao excluir o material. Por favor, tente novamente.');
+            //return redirect()->route('materials.index')->with('error', 'Erro ao excluir o material. Por favor, tente novamente.');
         }
     }
 
