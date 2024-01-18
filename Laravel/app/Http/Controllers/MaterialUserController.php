@@ -79,7 +79,7 @@ class MaterialUserController extends Controller
             $materialUser->save();
         }
 
-        dd($indices);
+        //dd($indices);
         return redirect()->route('material-user.index')->with('success', 'Material entregue com sucesso!');
     }
 
