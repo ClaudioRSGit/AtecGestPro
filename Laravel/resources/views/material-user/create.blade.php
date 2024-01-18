@@ -63,7 +63,7 @@
                 </thead>
                 <tbody>
 
-                    @forelse  ($clothing_assignment as $clothing_assignment)
+                        @forelse  ($clothing_assignment as $clothing_assignment)
                         @if (count($clothing_assignment->sizes) > 0)
                             <tr class="material-row" data-trainee="{{ $clothing_assignment->role == 3 ? 1 : 0 }}">
 
@@ -116,12 +116,12 @@
                                 </td>
 
                             </tr>
-                        @endif
-                    @empty
-                        <tr>
-                            <td colspan="7" style="text-align: center;">Não existem materiais para atribuir</td>
-                        </tr>
-                    @endforelse
+                             @endif
+                        @empty
+                            <tr>
+                                <td colspan="7" style="text-align: center;">Não existem materiais para atribuir</td>
+                            </tr>
+                        @endforelse
 
                 </tbody>
             </table>
