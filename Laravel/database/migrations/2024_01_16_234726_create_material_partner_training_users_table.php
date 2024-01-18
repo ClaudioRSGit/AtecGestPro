@@ -17,7 +17,7 @@ class CreateMaterialPartnerTrainingUsersTable extends Migration
             $table->id();
             $table->foreignId('material_id')->constrained('materials')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('partner_training_user_id')->constrained('partner_training_users')->onDelete('cascade')->onUpdate('cascade');
-            $table->integer('quantity');
+            $table->integer('quantity')->default(0);
             $table->timestamps();
         });
     }

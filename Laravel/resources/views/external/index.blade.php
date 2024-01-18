@@ -47,8 +47,17 @@
             <div class="tab-pane fade show active" id="externalTable">
 
                 <div class=" d-flex">
-                    <input type="text" id="searchInput" class="form-control mr-2" style="max-width: fit-content"
-                        placeholder="Insira para procurar...">
+                    <form action="{{ route('external.index') }}" method="GET">
+                        <div class="input-group pr-2">
+                            <input type="text" name="ptu" class="form-control" placeholder="{{ request('ptu') ? request('ptu') : 'Procurar...' }}">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-outline-secondary">
+                                    Procurar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
 
                     <button class="btn btn-danger mb-3 mr-2" id="delete-selected-ptus">Excluir Selecionados</button>
 
@@ -80,6 +89,7 @@
                                     <input type="checkbox" class="no-propagate" name="selectedPtus[]"
                                         value="{{ $partner_Training_User->id }}">
                                 </td>
+
                                 <td class="{{ optional($partner_Training_User->partner)->name ? '' : 'text-danger' }}">
                                     {{ optional($partner_Training_User->partner)->name ?? 'O Parceiro foi apagado do sistema.' }}
                                 </td>
@@ -129,12 +139,21 @@
                         @endforeach
                     </tbody>
                 </table>
+                {{ $partner_Training_Users->links()}}
             </div>
 
             <div class="tab-pane fade" id="partnersTable">
                 <div class="d-flex">
-                    <input type="text" id="searchInputPartners" class="form-control mr-2" style="max-width: fit-content"
-                        placeholder="Insira para procurar...">
+                    <form action="{{ route('external.index') }}" method="GET">
+                        <div class="input-group pr-2">
+                            <input type="text" name="p" class="form-control" placeholder="{{ request('p') ? request('p') : 'Procurar...' }}">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-outline-secondary">
+                                    Procurar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                     <button class="btn btn-danger mr-2" id="delete-selected">Excluir Selecionados</button>
                     <a href="{{ route('partners.create') }}" class="btn btn-primary">Novo Parceiro</a>
                 </div>
@@ -184,9 +203,17 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <button class="btn btn-info btn-sm filteredPtus no-propagate">
-                                        Ver
-                                    </button>
+
+
+                                    <form action="{{ route('external.index') }}" method="GET">
+                                        <input type="text" name="ptu" class="form-control" hidden value="{{ $partner->name }}">
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-info btn-sm filteredPtus no-propagate">
+                                                Ver
+                                            </button>
+                                        </div>
+                                    </form>
+
                                 </td>
                                 <td class="editDelete">
                                     <div style="width: 40%">
@@ -221,6 +248,7 @@
                         @endforeach
                     </tbody>
                 </table>
+                {{ $partners->links()}}
             </div>
 
             <div class="tab-pane fade" id="trainingsTable">
@@ -229,8 +257,16 @@
 
 
                 <div class=" d-flex">
-                    <input type="text" id="searchInputTrainings" class="form-control mr-2"
-                        style="max-width: fit-content" placeholder="Insira para procurar...">
+                    <form action="{{ route('external.index') }}" method="GET">
+                        <div class="input-group pr-2">
+                            <input type="text" name="t" class="form-control" placeholder="{{ request('t') ? request('t') : 'Procurar...' }}">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-outline-secondary">
+                                    Procurar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
 
                     <button class="btn btn-danger mb-3 mr-2" id="delete-selected-trainings">Excluir Selecionados</button>
 
@@ -298,11 +334,107 @@
                         @endforeach
                     </tbody>
                 </table>
+                {{$trainings->links()}}
             </div>
+
         </div>
+
 
     </div>
 
+    <script>
+        $(document).ready(function () {
+            function determineContext() {
+                return 'pagination';
+            }
+
+            function getFragment() {
+                return window.location.hash.substring(1);
+            }
+
+            function setFragment(fragment) {
+                history.pushState(null, null, '#' + fragment);
+            }
+
+            function setActiveTab(tabId) {
+                $(`#myTabs a[href="#${tabId}"]`).tab('show');
+            }
+
+            const activeTabInfo = localStorage.getItem('activeTabInfo');
+
+            if (activeTabInfo) {
+                const { tabId, context } = JSON.parse(activeTabInfo);
+
+                setActiveTab(tabId);
+
+                setFragment(tabId);
+            }
+
+            $('#myTabs a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                // console.log('Tab shown:', e.target);
+                const tabId = $(e.target).attr('href').substring(1);
+                const context = determineContext();
+
+                const activeTabInfo = JSON.stringify({ tabId, context });
+                localStorage.setItem('activeTabInfo', activeTabInfo);
+
+                setFragment(tabId);
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route("external.updateTab") }}',
+                    data: {
+                        activeTab: tabId,
+                        _token: '{{ csrf_token() }}' // <-- this is important
+
+                    },beforeSend: function(xhr) {
+                        // Log the JSON data before sending the request
+                        console.log('Request data:', JSON.stringify({
+                            activeTab: tabId,
+                            _token: '{{ csrf_token() }}'
+                        }));
+
+                        console.log('Before sending the request');
+                    },
+                    success: function (response) {
+                        console.log('Active tab updated on the server.');
+                    },
+                    error: function (error) {
+                        // console.log(tabId)
+                        console.log({{ csrf_token() }})
+                        console.error('Failed to update active tab on the server.', error);
+                    }
+                });
+            });
+
+            window.addEventListener('hashchange', function () {
+                const fragment = getFragment();
+                setActiveTab(fragment);
+                console.log('Fragmento alterado:', fragment);
+            });
+        });
+    </script>
+
+
+
+{{--    <script>--}}
+{{--        $(document).ready(function () {--}}
+{{--            $('form').submit(function () {--}}
+{{--                $('#myTabs a[href="#externalTable"]').tab('show');--}}
+{{--                console.log('Tab shown:', e.target);--}}
+{{--            });--}}
+{{--        });--}}
+{{--    </script>--}}
+
+    <script>
+
+    </script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -502,97 +634,54 @@
         });
     </script>
 
-    <script>
-        // search ptus
-        $(document).ready(function() {
-            $('#searchInput').on('input', function() {
-                const searchText = $(this).val().toLowerCase();
 
-                $('#externalTable tbody tr').each(function() {
-                    const rowText = $(this).text().toLowerCase();
 
-                    $(this).toggle(rowText.includes(searchText));
-                });
-            });
-        });
-    </script>
+{{--    <script>--}}
+{{--        // show externalTable filtered by Partner--}}
+{{--        document.addEventListener("DOMContentLoaded", function() {--}}
+{{--            const partnerViewBtn = document.querySelectorAll('.filteredPtus');--}}
 
-    <script>
-        // search trainings
-        $(document).ready(function() {
-            $('#searchInputTrainings').on('input', function() {
-                const searchText = $(this).val().toLowerCase();
+{{--            partnerViewBtn.forEach(function(button) {--}}
+{{--                button.addEventListener('click', function(event) {--}}
+{{--                    event.preventDefault();--}}
 
-                $('#trainingsTable tbody tr').each(function() {
-                    const rowText = $(this).text().toLowerCase();
+{{--                    const tabs = document.querySelectorAll('.nav-link');--}}
+{{--                    tabs.forEach(tab => {--}}
+{{--                        tab.classList.remove('active');--}}
+{{--                    });--}}
 
-                    $(this).toggle(rowText.includes(searchText));
-                });
-            });
-        });
-    </script>
+{{--                    const externalTab = document.querySelector('.nav-link[href="#externalTable"]');--}}
+{{--                    externalTab.classList.add('active');--}}
 
-    <script>
-        // search Partners
-        $(document).ready(function() {
-            $('#searchInputPartners').on('input', function() {
-                const searchText = $(this).val().toLowerCase();
+{{--                    showExternalTable();--}}
 
-                $('#partnersTable tbody tr').each(function() {
-                    const rowText = $(this).text().toLowerCase();
+{{--                    const partnerTable = document.getElementById('partnersTable');--}}
+{{--                    const clickedRow = button.closest('tr');--}}
+{{--                    const partnerName = clickedRow.querySelector('td:nth-child(2)').innerText;--}}
 
-                    $(this).toggle(rowText.includes(searchText));
-                });
-            });
-        });
-    </script>
+{{--                    if (partnerTable) {--}}
+{{--                        const searchInput = document.getElementById('searchInput');--}}
 
-    <script>
-        // show externalTable filtered by Partner
-        document.addEventListener("DOMContentLoaded", function() {
-            const partnerViewBtn = document.querySelectorAll('.filteredPtus');
+{{--                        if (searchInput) {--}}
+{{--                            searchInput.value = partnerName;--}}
+{{--                            const event = new Event('input', {--}}
+{{--                                bubbles: true--}}
+{{--                            });--}}
+{{--                            searchInput.dispatchEvent(event);--}}
+{{--                        }--}}
+{{--                    }--}}
+{{--                });--}}
+{{--            });--}}
 
-            partnerViewBtn.forEach(function(button) {
-                button.addEventListener('click', function(event) {
-                    event.preventDefault();
+{{--            function showExternalTable() {--}}
+{{--                const tables = document.querySelectorAll('.tab-pane');--}}
+{{--                tables.forEach(table => {--}}
+{{--                    table.classList.remove('show', 'active');--}}
+{{--                });--}}
 
-                    const tabs = document.querySelectorAll('.nav-link');
-                    tabs.forEach(tab => {
-                        tab.classList.remove('active');
-                    });
-
-                    const externalTab = document.querySelector('.nav-link[href="#externalTable"]');
-                    externalTab.classList.add('active');
-
-                    showExternalTable();
-
-                    const partnerTable = document.getElementById('partnersTable');
-                    const clickedRow = button.closest('tr');
-                    const partnerName = clickedRow.querySelector('td:nth-child(2)').innerText;
-
-                    if (partnerTable) {
-                        const searchInput = document.getElementById('searchInput');
-
-                        if (searchInput) {
-                            searchInput.value = partnerName;
-                            const event = new Event('input', {
-                                bubbles: true
-                            });
-                            searchInput.dispatchEvent(event);
-                        }
-                    }
-                });
-            });
-
-            function showExternalTable() {
-                const tables = document.querySelectorAll('.tab-pane');
-                tables.forEach(table => {
-                    table.classList.remove('show', 'active');
-                });
-
-                const externalTable = document.getElementById('externalTable');
-                externalTable.classList.add('show', 'active');
-            }
-        });
-    </script>
+{{--                const externalTable = document.getElementById('externalTable');--}}
+{{--                externalTable.classList.add('show', 'active');--}}
+{{--            }--}}
+{{--        });--}}
+{{--    </script>--}}
 @endsection
