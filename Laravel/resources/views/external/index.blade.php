@@ -89,6 +89,7 @@
                                     <input type="checkbox" class="no-propagate" name="selectedPtus[]"
                                         value="{{ $partner_Training_User->id }}">
                                 </td>
+
                                 <td class="{{ optional($partner_Training_User->partner)->name ? '' : 'text-danger' }}">
                                     {{ optional($partner_Training_User->partner)->name ?? 'O Parceiro foi apagado do sistema.' }}
                                 </td>
@@ -138,6 +139,7 @@
                         @endforeach
                     </tbody>
                 </table>
+                {{ $partner_Training_Users->links()}}
             </div>
 
             <div class="tab-pane fade" id="partnersTable">
@@ -246,6 +248,7 @@
                         @endforeach
                     </tbody>
                 </table>
+                {{ $partners->links()}}
             </div>
 
             <div class="tab-pane fade" id="trainingsTable">
@@ -331,33 +334,103 @@
                         @endforeach
                     </tbody>
                 </table>
+                {{$trainings->links()}}
             </div>
+
         </div>
+
 
     </div>
 
     <script>
         $(document).ready(function () {
-            const activeTabId = localStorage.getItem('activeTab');
+            function determineContext() {
+                return 'pagination';
+            }
 
-            if (activeTabId) {
-                $(`#myTabs a[href="#${activeTabId}"]`).tab('show');
+            function getFragment() {
+                return window.location.hash.substring(1);
+            }
+
+            function setFragment(fragment) {
+                history.pushState(null, null, '#' + fragment);
+            }
+
+            function setActiveTab(tabId) {
+                $(`#myTabs a[href="#${tabId}"]`).tab('show');
+            }
+
+            const activeTabInfo = localStorage.getItem('activeTabInfo');
+
+            if (activeTabInfo) {
+                const { tabId, context } = JSON.parse(activeTabInfo);
+
+                setActiveTab(tabId);
+
+                setFragment(tabId);
             }
 
             $('#myTabs a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-                const activeTabId = $(e.target).attr('href').substring(1);
-                localStorage.setItem('activeTab', activeTabId);
+                // console.log('Tab shown:', e.target);
+                const tabId = $(e.target).attr('href').substring(1);
+                const context = determineContext();
+
+                const activeTabInfo = JSON.stringify({ tabId, context });
+                localStorage.setItem('activeTabInfo', activeTabInfo);
+
+                setFragment(tabId);
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $.ajax({
+                    type: 'POST',
+                    url: '{{ route("external.updateTab") }}',
+                    data: {
+                        activeTab: tabId,
+                        _token: '{{ csrf_token() }}' // <-- this is important
+
+                    },beforeSend: function(xhr) {
+                        // Log the JSON data before sending the request
+                        console.log('Request data:', JSON.stringify({
+                            activeTab: tabId,
+                            _token: '{{ csrf_token() }}'
+                        }));
+
+                        console.log('Before sending the request');
+                    },
+                    success: function (response) {
+                        console.log('Active tab updated on the server.');
+                    },
+                    error: function (error) {
+                        // console.log(tabId)
+                        console.log({{ csrf_token() }})
+                        console.error('Failed to update active tab on the server.', error);
+                    }
+                });
+            });
+
+            window.addEventListener('hashchange', function () {
+                const fragment = getFragment();
+                setActiveTab(fragment);
+                console.log('Fragmento alterado:', fragment);
             });
         });
     </script>
 
-    <script>
-        $(document).ready(function () {
-            $('form').submit(function () {
-                $('#myTabs a[href="#externalTable"]').tab('show');
-            });
-        });
-    </script>
+
+
+{{--    <script>--}}
+{{--        $(document).ready(function () {--}}
+{{--            $('form').submit(function () {--}}
+{{--                $('#myTabs a[href="#externalTable"]').tab('show');--}}
+{{--                console.log('Tab shown:', e.target);--}}
+{{--            });--}}
+{{--        });--}}
+{{--    </script>--}}
 
     <script>
 

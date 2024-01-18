@@ -41,6 +41,8 @@ Route::middleware(['auth', 'checkRole:admin, tecnico'])->group(function () {
     Route::get('/material-clothing-delivery/create/{id}', 'MaterialClothingDeliveryController@create')->name('material-clothing-delivery.create');
     Route::post('/material-clothing-delivery', 'MaterialClothingDeliveryController@store')->name('material-clothing-delivery.store');
 
+    Route::post('external/updateTab', 'PartnerTrainingUserController@updateTab')->name('external.updateTab');
+
     Route::resource('external', 'PartnerTrainingUserController');
     Route::post('external/massDelete', 'PartnerTrainingUserController@massDelete')->name('external.massDelete');
 
@@ -54,8 +56,8 @@ Route::middleware(['auth', 'checkRole:admin, tecnico'])->group(function () {
 
     Route::resource('courses', 'CourseController');
     Route::post('courses/massDelete', 'CourseController@massDelete')->name('courses.massDelete');
-    Route::resource('tickets', 'TicketController');
 
+    Route::resource('tickets', 'TicketController');
     Route::resource('import-excel', 'ExcelImportController');
     Route::redirect('/import-excel', '/users');
     Route::post('import-excel-users', 'ExcelImportController@importUsers')->name('import-excel.importUsers');

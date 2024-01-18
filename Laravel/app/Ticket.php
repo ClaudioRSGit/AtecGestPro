@@ -18,7 +18,6 @@ class Ticket extends Model
 
     public function ticketType(){
         return $this->belongsTo(TicketCategory::class);
-
     }
 
     public function ticketPriority(){
@@ -36,6 +35,4 @@ class Ticket extends Model
     public function comments(){
         return $this->hasMany(Comment::class);
     }
-
-
 }

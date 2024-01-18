@@ -10,7 +10,6 @@ class ContactPartnerController extends Controller
 {
     public function destroy(ContactPartner $partner_contact )
     {
-
         $partnerId = $partner_contact->partner_id;
 
         $partner = Partner::find($partnerId);
