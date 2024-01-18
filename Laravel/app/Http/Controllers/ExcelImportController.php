@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
-use App\Imports\YourImportClass;
+use App\Imports\UserImportClass;
+use App\Imports\StudentImportClass;
 use App\User;
 
 class ExcelImportController extends Controller
@@ -14,7 +15,7 @@ class ExcelImportController extends Controller
         return view('users.index');
     }
 
-    public function import(Request $request)
+    public function importUsers(Request $request)
     {
         // Validate the uploaded file
         $request->validate([
@@ -25,7 +26,7 @@ class ExcelImportController extends Controller
         $file = $request->file('file');
 
         // Process the Excel file
-        Excel::import(new YourImportClass, $file);
+        Excel::import(new UserImportClass, $file);
 
         $users = User::paginate(5);
 
@@ -33,6 +34,24 @@ class ExcelImportController extends Controller
             return view('users.partials.index', ['users' => $users]);
         }
 
-        return view('excel-index', ['users' => $users]);
+        return view('excel.excel-index', ['users' => $users]);
+    }
+
+
+
+    public function importStudents(Request $request)
+    {
+        // Validate the uploaded file
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls',
+        ]);
+
+        // Get the uploaded file
+        $file = $request->file('file');
+
+        // Process the Excel file
+        Excel::import(new StudentImportClass, $file);
+
+        return redirect()->back()->withInput();
     }
 }
