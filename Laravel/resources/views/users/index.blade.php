@@ -95,13 +95,13 @@
         {{ $users->links() }}
 
         <div class="container">
-            <form action="{{ route('import.excel') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('import-excel.importUsers') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
-                    <label for="file">Choose Excel File</label>
-                    <input type="file" name="file" id="file" class="form-control">
+                    <label for="file">Excel - Importar Utilizadores</label><br>
+                    <input type="file" name="file" id="file" class="btn" text="Escolher ficheiro">
                 </div>
-                <button type="submit" class="btn btn-primary">Import</button>
+                <button type="submit" class="btn btn-primary">Importar</button>
             </form>
         </div>
     </div>

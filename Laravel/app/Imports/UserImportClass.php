@@ -4,19 +4,24 @@ namespace App\Imports;
 
 use Maatwebsite\Excel\Concerns\ToModel;
 use App\User;
-use Maatwebsite\Excel\Concerns\WithUpserts;
 
-class YourImportClass implements ToModel
+class UserImportClass implements ToModel
 {
     /**
     * @param Collection $collection
     */
     public function model(array $row)
     {
+        $userNames = User::pluck('name');
         if(strtolower($row[0]) == 'name'){
             return null;
         }
         else if(strtolower($row[4]) != '' && strtolower($row[5]) == 'formando'){
+            foreach($userNames as $userName){
+                if(strtolower($row[0]) == strtolower($userName)){
+                    return null;
+                }
+            }
             $courseClassId = \App\CourseClass::where('description', $row[4])->first()->id;
             return new User([
                 'name' => $row[0],
@@ -24,7 +29,7 @@ class YourImportClass implements ToModel
                 'email' => $row[2],
                 'contact' => $row[3],
                 'password' => null,
-                'notes' => null,
+                'notes' => '',
                 'isActive' => 1,
                 'isStudent' => 1,
                 'course_class_id' => $courseClassId,
@@ -38,7 +43,7 @@ class YourImportClass implements ToModel
                 'email' => $row[2],
                 'contact' => $row[3],
                 'password' => 'temporary',
-                'notes' => null,
+                'notes' => '',
                 'isActive' => 1,
                 'isStudent' => 0,
                 'course_class_id' => null,
@@ -52,7 +57,7 @@ class YourImportClass implements ToModel
                 'email' => $row[2],
                 'contact' => $row[3],
                 'password' => 'temporary',
-                'notes' => null,
+                'notes' => '',
                 'isActive' => 1,
                 'isStudent' => 0,
                 'course_class_id' => null,
