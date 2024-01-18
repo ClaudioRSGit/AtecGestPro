@@ -14,18 +14,6 @@ use Illuminate\Support\Facades\DB;
 class PartnerTrainingUserController extends Controller
 {
 
-    public function updateTab(Request $request)
-    {
-        dd($request->all());
-        $activeTab = $request->input('activeTab');
-
-        // Add your logic here to handle the active tab update
-        // For example, you can store it in the session
-
-        session(['activeTab' => $activeTab]);
-
-        return response()->json(['message' => 'Active tab updated successfully']);
-    }
 
     public function index(Request $request)
     {
@@ -75,6 +63,20 @@ class PartnerTrainingUserController extends Controller
 //        }
 
         return view('external.index', compact('partner_Training_Users', 'partners', 'trainings'));
+    }
+
+
+    public function updateTab(Request $request)
+    {
+        dd($request->all());
+        $activeTab = $request->input('activeTab');
+
+        // Add your logic here to handle the active tab update
+        // For example, you can store it in the session
+
+        session(['activeTab' => $activeTab]);
+
+        return response()->json(['message' => 'Active tab updated successfully']);
     }
 
     private function determineActiveTabContext()

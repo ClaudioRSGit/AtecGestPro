@@ -89,6 +89,7 @@
                                     <input type="checkbox" class="no-propagate" name="selectedPtus[]"
                                         value="{{ $partner_Training_User->id }}">
                                 </td>
+
                                 <td class="{{ optional($partner_Training_User->partner)->name ? '' : 'text-danger' }}">
                                     {{ optional($partner_Training_User->partner)->name ?? 'O Parceiro foi apagado do sistema.' }}
                                 </td>
@@ -333,8 +334,9 @@
                         @endforeach
                     </tbody>
                 </table>
+                {{$trainings->links()}}
             </div>
-            {{$trainings->links()}}
+
         </div>
 
 
@@ -369,6 +371,7 @@
             }
 
             $('#myTabs a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                // console.log('Tab shown:', e.target);
                 const tabId = $(e.target).attr('href').substring(1);
                 const context = determineContext();
 
@@ -389,11 +392,22 @@
                     data: {
                         activeTab: tabId,
                         _token: '{{ csrf_token() }}' // <-- this is important
+
+                    },beforeSend: function(xhr) {
+                        // Log the JSON data before sending the request
+                        console.log('Request data:', JSON.stringify({
+                            activeTab: tabId,
+                            _token: '{{ csrf_token() }}'
+                        }));
+
+                        console.log('Before sending the request');
                     },
                     success: function (response) {
                         console.log('Active tab updated on the server.');
                     },
                     error: function (error) {
+                        // console.log(tabId)
+                        console.log({{ csrf_token() }})
                         console.error('Failed to update active tab on the server.', error);
                     }
                 });
@@ -409,13 +423,14 @@
 
 
 
-    <script>
-        $(document).ready(function () {
-            $('form').submit(function () {
-                $('#myTabs a[href="#externalTable"]').tab('show');
-            });
-        });
-    </script>
+{{--    <script>--}}
+{{--        $(document).ready(function () {--}}
+{{--            $('form').submit(function () {--}}
+{{--                $('#myTabs a[href="#externalTable"]').tab('show');--}}
+{{--                console.log('Tab shown:', e.target);--}}
+{{--            });--}}
+{{--        });--}}
+{{--    </script>--}}
 
     <script>
 
