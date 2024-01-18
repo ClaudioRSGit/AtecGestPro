@@ -64,6 +64,7 @@ class MaterialUserController extends Controller
         ]);
 
         foreach ($request->get('selectedClothing') as $index => $material_id) {
+            $indices[] = $index;
             $materialUser = new MaterialUser([
                 'material_id' => $material_id,
                 'user_id' => $request->get('user_id'),
@@ -78,6 +79,7 @@ class MaterialUserController extends Controller
             $materialUser->save();
         }
 
+        dd($indices);
         return redirect()->route('material-user.index')->with('success', 'Material entregue com sucesso!');
     }
 

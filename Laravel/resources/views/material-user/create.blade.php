@@ -281,17 +281,8 @@
                 });
             });
 
-            // document.querySelector('form').addEventListener('submit', function(e) {
-            //     document.querySelectorAll('.size-select').forEach(function(selectElement) {
-            //         var selectedOption = selectElement.options[selectElement.selectedIndex];
-            //         var sizeId = selectedOption.dataset.sizeId;
-            //         var parentRow = selectElement.closest('.material-row');
-            //         var sizeIdInput = parentRow.querySelector('.size-id-input');
-            //         sizeIdInput.value = sizeId;
 
-            //     });
-            // });
-            //testEnd
+
 
             document.getElementById('apagarOnClick').addEventListener('click', function() {
 
