@@ -91,6 +91,7 @@
                                 </td>
                                 <td style="text-align: center;">
                                     <input type="hidden" name="size_id[]" class="size-id-input" value="">
+                                    {{-- <input type="hidden" name="order[]" value="{{ $loop->index }}"> --}}
                                     <select class="form-control size-select" id="filter{{ $loop->index }}">
                                         @foreach ($clothing_assignment->sizes as $size)
                                             <option value="{{ $size->size }}" data-stock="{{ $size->pivot->stock }}"
@@ -249,6 +250,8 @@
                 });
             });
 
+
+
             //test
             document.querySelectorAll('.size-select').forEach(function(selectElement) {
                 var selectedOption = selectElement.options[selectElement.selectedIndex];
@@ -277,6 +280,15 @@
                     updateSizeId(selectElement);
                 });
             });
+
+
+            // $(document).ready(function(){
+            //     $('.size-select').change(function(){
+            //         var selectedSizeId = $(this).find('option:selected').attr('data-size-id');
+            //         $(this).prev('.size-id-input').val(selectedSizeId);
+            //     });
+            // });
+
             //test
 
 

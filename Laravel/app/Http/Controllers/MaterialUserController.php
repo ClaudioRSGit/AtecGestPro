@@ -53,7 +53,8 @@ class MaterialUserController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+
+        //dd($request->all());
         $request->validate([
             'selectedClothing' => 'required|array',
             'user_id' => 'required',
@@ -64,19 +65,24 @@ class MaterialUserController extends Controller
         ]);
 
         foreach ($request->get('selectedClothing') as $index => $material_id) {
-            $indices[] = $index;
-            $materialUser = new MaterialUser([
-                'material_id' => $material_id,
-                'user_id' => $request->get('user_id'),
-                'quantity' => $request->get('quantity')[$index],
-                'size_id' => $request->get('size_id')[$index],
-                'delivery_date' => $request->get('delivery_date'),
-                'delivered_all' => $request->get('delivered_all'),
-            ]);
+            //$indices[] = $index;
+            //if ($request->get('order')[$index] == $index){
+                $materialUser = new MaterialUser([
+
+                    'material_id' => $material_id,
+                    'user_id' => $request->get('user_id'),
+                    'quantity' => $request->get('quantity')[$index],
+                    'size_id' => $request->get('size_id')[$index],
+                    'delivery_date' => $request->get('delivery_date'),
+                    'delivered_all' => $request->get('delivered_all'),
+                ]);
+
 
             //dd($materialUser);
             //dd($request->get('size_id'));
             $materialUser->save();
+           // }
+
         }
 
         //dd($indices);
