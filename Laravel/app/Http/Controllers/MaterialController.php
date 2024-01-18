@@ -14,6 +14,8 @@ class MaterialController extends Controller
     {
         $search = $request->input('search');
 
+
+
         if($search){
             $materials = Material::with('sizes','courses')
                 ->where('name', 'like', "%$search%")->paginate(5);

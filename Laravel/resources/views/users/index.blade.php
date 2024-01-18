@@ -18,12 +18,18 @@
         <h1 class="mb-4">Utilizadores</h1>
 
         <div class="d-flex justify-content-between mb-3">
-            <form action="{{ route('users.index') }}" method="get" class="form-inline w-50" id="filterForm">
-                <div class="form-group search-container mr-3 w-100">
-                    <input type="text" class="form-control w-100" id="nameFilter" name="nameFilter"
-                        value="{{ request('nameFilter') }}" placeholder="Pesquisar Utilizador">
+
+            <form action="{{ route('users.index') }}" method="GET">
+                <div class="input-group pr-2">
+                    <input type="text" name="searchName" class="form-control" placeholder="{{ request('searchName') ? request('searchName') : 'Procurar...' }}">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-outline-secondary">
+                            Procurar
+                        </button>
+                    </div>
                 </div>
             </form>
+            
             <div class="buttons">
                 <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
                 <div>
