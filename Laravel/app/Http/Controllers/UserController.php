@@ -70,7 +70,7 @@ class UserController extends Controller
         $isStudent = $request->input('role_id') == 3 ? 1 : 0;
         $request->merge(['isStudent' => $isStudent]);
 
-
+//SOLID
 
 
 

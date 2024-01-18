@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Partner;
 use App\ContactPartner;
+use App\Http\Requests\PartnerStoreRequest;
 use Illuminate\Http\Request;
 
 class PartnerController extends Controller
@@ -35,17 +36,9 @@ class PartnerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PartnerStoreRequest $request)
     {
-        $this->validate(
-            request(),
-            [
-                'name' => 'required',
-                'description' => 'required',
-                'address' => 'required',
-            ]
-        );
-
+        dd($request->validated());
         $partner = Partner::create($request->only(['name', 'description', 'address']));
 
         // Adding contacts to the partner_contacts table
