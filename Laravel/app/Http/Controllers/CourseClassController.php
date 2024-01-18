@@ -48,15 +48,21 @@ class CourseClassController extends Controller
             'course_id' => $request->input('course_id'),
         ]);
 
-        if ($request->has('selected_students')) {
-            foreach ($request->input('selected_students') as $student) {
-                $user = User::find($student);
-                $user->course_class_id = $courseClass->id;
-                $user->save();
+
+        if($request->submit){
+            if ($request->has('selected_students')) {
+                foreach ($request->input('selected_students') as $student) {
+                    $user = User::find($student);
+                    $user->course_class_id = $courseClass->id;
+                    $user->save();
+                }
             }
+            return redirect()->route('course-classes.index')->with('success', 'Course class created successfully!');
+        }
+        else{
+            return view('excel.importStudents');
         }
 
-        return redirect()->route('course-classes.index')->with('success', 'Course class created successfully!');
     }
 
 
@@ -96,4 +102,5 @@ class CourseClassController extends Controller
             return redirect()->back()->with('error', 'Erro ao excluir as turmas selecionadas. Por favor, tente novamente.');
         }
     }
+
 }

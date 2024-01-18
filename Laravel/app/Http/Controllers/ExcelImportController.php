@@ -41,7 +41,6 @@ class ExcelImportController extends Controller
 
     public function importStudents(Request $request)
     {
-        // Validate the uploaded file
         $request->validate([
             'file' => 'required|mimes:xlsx,xls',
         ]);
@@ -49,9 +48,8 @@ class ExcelImportController extends Controller
         // Get the uploaded file
         $file = $request->file('file');
 
-        // Process the Excel file
         Excel::import(new StudentImportClass, $file);
 
-        return redirect()->back()->withInput();
+        return view('excel.importStudents');
     }
 }

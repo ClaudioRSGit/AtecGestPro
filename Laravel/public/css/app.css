@@ -124,6 +124,7 @@ td a{
 
 
 tr:not(th), tr:not(.filteredTrainings){
+    border-radius: 6px !important;
     transition: background-color 0.2s;
     cursor: pointer;
     text-align: center;
