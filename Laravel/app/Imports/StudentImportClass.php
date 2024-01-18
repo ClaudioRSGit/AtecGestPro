@@ -8,23 +8,21 @@ use App\CourseClass;
 
 class StudentImportClass implements ToModel
 {
-    /**
-    * @param Collection $collection
-    */
     public function model(array $row)
     {
         if(strtolower($row[0]) == 'name'){
             return null;
         }
-        else{
+        else if($row[0] != null){
             $courseClasses = CourseClass::all();
-            $courseClassId = $courseClasses->count() + 2;
+            $courseClassId = $courseClasses->count() - 1;
+
             return new User([
                 'name' => $row[0],
                 'username' => $row[1],
                 'email' => $row[2],
                 'contact' => $row[3],
-                'password' => 'null',
+                'password' => null,
                 'notes' => '',
                 'isActive' => 1,
                 'isStudent' => 1,

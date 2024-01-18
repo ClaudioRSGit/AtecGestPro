@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <h1>Criar Turma</h1>
-        <form method="post" action="{{ route('course-classes.store') }}" id="createCourseClassForm">
+        <form method="post" action="{{ route('course-classes.store') }}" id="createCourseClassForm" class="mb-3">
             @csrf
 
             <div class="form-group">
@@ -62,20 +62,11 @@
             </div>
 
 
-            <button type="button" class="btn btn-primary" id="criarTurmaBtn">Criar Turma</button>
+            <button type="button" class="btn btn-primary" name="submit" id="criarTurmaBtn">Criar Turma</button>
+            <button type="submit" class="btn btn-primary" name="import">Criar Turma e importar alunos a partir de Excel</button>
             <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
         </form>
-        
-        <div class="container mb-3">
-            <form action="{{ route('import-excel.importStudents') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="form-group">
-                    <label for="file">Excel - Importar Alunos</label><br>
-                    <input type="file" name="file" id="file" class="btn" text="Escolher ficheiro">
-                </div>
-                <button type="submit" class="btn btn-primary">Importar</button>
-            </form>
-        </div>
+
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
