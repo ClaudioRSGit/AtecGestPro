@@ -62,70 +62,67 @@
                     </tr>
                 </thead>
                 <tbody>
+
                     @forelse  ($clothing_assignment as $clothing_assignment)
-                        <tr class="material-row" data-trainee="{{ $clothing_assignment->role == 3 ? 1 : 0 }}">
+                        @if (count($clothing_assignment->sizes) > 0)
+                            <tr class="material-row" data-trainee="{{ $clothing_assignment->role == 3 ? 1 : 0 }}">
 
-                            <td>
-                                <div class="form-check">
-                                    <input class="form-check-input" name="selectedClothing[]" type="checkbox"
-                                        value="{{ $clothing_assignment->id }}" id="flexCheckDefault">
+                                <td>
+                                    <div class="form-check">
+                                        <input class="form-check-input" name="selectedClothing[]" type="checkbox"
+                                            value="{{ $clothing_assignment->id }}" id="flexCheckDefault">
 
-                                </div>
-                            </td>
-                            <td>
-                                <a
-                                    href="{{ route('materials.show', $clothing_assignment->id) }}">{{ isset($clothing_assignment->name) ? $clothing_assignment->name : 'N.A.' }}</a>
-                            </td>
-                            <td>
-                                @if (isset($clothing_assignment->gender))
-                                    @if ($clothing_assignment->gender == 1)
-                                        Masculino
-                                    @elseif($clothing_assignment->gender == 0)
-                                        Feminino
+                                    </div>
+                                </td>
+                                <td>
+                                    <a
+                                        href="{{ route('materials.show', $clothing_assignment->id) }}">{{ isset($clothing_assignment->name) ? $clothing_assignment->name : 'N.A.' }}</a>
+                                </td>
+                                <td>
+                                    @if (isset($clothing_assignment->gender))
+                                        @if ($clothing_assignment->gender == 1)
+                                            Masculino
+                                        @elseif($clothing_assignment->gender == 0)
+                                            Feminino
+                                        @endif
+                                    @else
+                                        Neutro
                                     @endif
-                                @else
-                                    Neutro
-                                @endif
-                            </td>
-                            <td style="text-align: center;">
-                                <input type="hidden" name="size_id[]" class="size-id-input" value="">
-                                <select class="form-control size-select" id="filter{{ $loop->index }}">
-                                    @forelse ($clothing_assignment->sizes as $size)
-                                        <option value="{{ $size->size }}" data-stock="{{ $size->pivot->stock }}"
-                                            data-size-id="{{ $size->id }}">
-                                            {{ $size->size }}({{ $size->pivot->stock }})
-                                        </option>
-                                    @empty
-                                        {{-- sem tamanho nao ha stock --}}
-                                        <option value="N.A." data-stock="{{ $clothing_assignment->quantity }}"
-                                            data-size-id="34">
-                                            N.A.({{ $clothing_assignment->quantity }})
-                                        </option>
-                                    @endforelse
-                                </select>
+                                </td>
+                                <td style="text-align: center;">
+                                    <input type="hidden" name="size_id[]" class="size-id-input" value="">
+                                    <select class="form-control size-select" id="filter{{ $loop->index }}">
+                                        @foreach ($clothing_assignment->sizes as $size)
+                                            <option value="{{ $size->size }}" data-stock="{{ $size->pivot->stock }}"
+                                                data-size-id="{{ $size->id }}">
+                                                {{ $size->size }}({{ $size->pivot->stock }})
+                                            </option>
+                                        @endforeach
+                                    </select>
 
-                            </td>
+                                </td>
 
-                            <td style="text-align: center; " class="text-muted">
-                                Formando
-                            </td>
-                            <td style="text-align: center;">
-                                <input type="number" class="form-control quantity-input" id="quantity{{ $loop->index }}"
-                                    name="quantity[]" value="1" min="1"
-                                    style="width: 60px; text-align: center;">
-                            </td>
-                            <td style="text-align: center;">
-                                <input type="date" class="form-control" id="date" name="delivery_date"
-                                    value="{{ date('Y-m-d') }}">
-                            </td>
+                                <td style="text-align: center; " class="text-muted">
+                                    Formando
+                                </td>
+                                <td style="text-align: center;">
+                                    <input type="number" class="form-control quantity-input"
+                                        id="quantity{{ $loop->index }}" name="quantity[]" value="1" min="1"
+                                        style="width: 60px; text-align: center;">
+                                </td>
+                                <td style="text-align: center;">
+                                    <input type="date" class="form-control" id="date" name="delivery_date"
+                                        value="{{ date('Y-m-d') }}">
+                                </td>
 
-                        </tr>
-
+                            </tr>
+                        @endif
                     @empty
                         <tr>
                             <td colspan="7" style="text-align: center;">Não existem materiais para atribuir</td>
                         </tr>
                     @endforelse
+
                 </tbody>
             </table>
             <div style="margin-bottom: 20px;">
