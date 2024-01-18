@@ -41,6 +41,8 @@ Route::middleware(['auth', 'checkRole:admin, tecnico'])->group(function () {
     Route::get('/material-clothing-delivery/create/{id}', 'MaterialClothingDeliveryController@create')->name('material-clothing-delivery.create');
     Route::post('/material-clothing-delivery', 'MaterialClothingDeliveryController@store')->name('material-clothing-delivery.store');
 
+    Route::post('external/updateTab', 'PartnerTrainingUserController@updateTab')->name('external.updateTab');
+
     Route::resource('external', 'PartnerTrainingUserController');
     Route::post('external/massDelete', 'PartnerTrainingUserController@massDelete')->name('external.massDelete');
 

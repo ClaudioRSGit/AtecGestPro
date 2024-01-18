@@ -83,7 +83,7 @@
                             <td>{{ $material->name }}</td>
                             <td>{{ $material->description }}</td>
                             <td>
-                                <input type="number" name="material_quantities[{{ $material->id }}]" value="{{ $material->pivot->quantity ?? 1 }}" min="0" max="{{ $material->quantity }}"  >
+                                <input type="number" name="material_quantities[{{ $material->id }}]" value="{{ $material->pivot->quantity ?? 1 }}" min="0" max="{{ $material->quantity + $material->pivot->quantity }}"  >
                             </td>
                             <td>
                                 <input type="checkbox" name="materials[{{ $material->id }}]" value="{{ $material->id }}" {{ $material->pivot->quantity > 0 ? 'checked' : '' }} >
