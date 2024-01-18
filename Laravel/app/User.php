@@ -39,5 +39,8 @@ class User extends Authenticatable
     {
         return $this->role->name === $role;
     }
-
+    public function tickets()
+    {
+        return $this->belongsToMany(Ticket::class, 'ticket_users');
+    }
 }

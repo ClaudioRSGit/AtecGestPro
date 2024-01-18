@@ -21,6 +21,8 @@ class TicketSeeder extends Seeder
             'ticket_status_id' => 1,
             'ticket_priority_id' => 2,
             'ticket_category_id' => 3,
+            'created_at' => '2021-01-12 14:37:10',
+            'updated_at' => '2021-01-12 14:37:10',
         ]);
 
         // Seed 2
