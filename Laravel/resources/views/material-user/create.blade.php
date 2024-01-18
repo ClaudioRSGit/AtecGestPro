@@ -96,7 +96,7 @@
                                             {{ $size->size }}({{ $size->pivot->stock }})
                                         </option>
                                     @empty
-
+                                        {{-- sem tamanho nao ha stock --}}
                                         <option value="N.A." data-stock="{{ $clothing_assignment->quantity }}"
                                             data-size-id="34">
                                             N.A.({{ $clothing_assignment->quantity }})
@@ -347,7 +347,7 @@
                     checkbox.closest('tr').style.display = matchesFilter && matchesSearch ? '' : 'none';
                 });
             }
-
+            //prevent enter key from submitting form
             $(document).ready(function() {
                 $('form').on('keydown', function(e) {
                     if (e.keyCode == 13) {
