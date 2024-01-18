@@ -79,3 +79,5 @@ class MaterialSizeSeeder extends Seeder
 
     }
 }
+
+

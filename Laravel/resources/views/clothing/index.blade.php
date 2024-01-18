@@ -46,6 +46,17 @@
                         </a>
                     </div>
                 </div>
+                <div class="form-group mx-2" style="width: 30%">
+                    <select class="form-control" id="filter">
+                        <option value="all">Todos</option>
+                        @foreach($courses as $course)
+                            <option value="{{ $course->id }}">{{ $course->description }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+
+        </div>
 
                 <div id="accordion">
                     <div class="ms-auto">

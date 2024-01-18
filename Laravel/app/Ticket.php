@@ -26,7 +26,7 @@ class Ticket extends Model
     }
 
     public function users(){
-        return $this->belongsToMany(User::class, 'ticket_users')->withTimestamps();
+        return $this->belongsToMany(User::class, 'ticket_users');
     }
 
     public function requester(){

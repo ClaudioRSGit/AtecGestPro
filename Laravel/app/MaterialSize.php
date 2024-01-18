@@ -7,9 +7,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MaterialSize extends Model
 {
-    protected $fillable = ['material_id', 'size_id', 'stock'];
-
     use softDeletes;
+
+    protected $fillable = ['material_id', 'size_id', 'quantity'];
+    protected $casts = [
+        'material_id' => 'integer',
+        'size_id' => 'integer',
+        'quantity' => 'integer',
+    ];
+
+
     public function material()
     {
         return $this->belongsTo(Material::class);
