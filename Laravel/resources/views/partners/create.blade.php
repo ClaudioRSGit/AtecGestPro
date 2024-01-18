@@ -2,6 +2,13 @@
 
 @section('content')
     <div class="container">
+
+        @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+
         <h1>Criar Novo Parceiro</h1>
 
         <form method="post" action="{{ route('partners.store') }}">
@@ -11,17 +18,29 @@
                     <div class="mb-3">
                         <label for="name" class="form-label">Parceiro:</label>
                         <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
+
+                        @error('name')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
                         <label for="description" class="form-label">Descrição:</label>
                         <textarea class="form-control" id="description" name="description">{{ old('description') }}</textarea>
+
+                        @error('description')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
                         <label for="address" class="form-label">Morada:</label>
                         <input type="text" class="form-control" id="address" name="address"
                             value="{{ old('address') }}">
+
+                        @error('address')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
 
