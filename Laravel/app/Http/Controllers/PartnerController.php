@@ -48,20 +48,6 @@ class PartnerController extends Controller
 
         $partner = Partner::create($request->only(['name', 'description', 'address']));
 
-        // Adding contacts to the partner_contacts table
-        $contacts = $request->input('contact_description');
-        $values = $request->input('contact_value');
-
-        if ($contacts && $values) {
-            foreach ($contacts as $key => $contact) {
-                ContactPartner::create([
-                    'contact' => $values[$key],
-                    'description' => $contact,
-                    'partner_id' => $partner->id,
-                ]);
-            }
-        }
-
         return redirect()->route('external.index')->with('success', 'Parceiro criado com sucesso');
     }
 

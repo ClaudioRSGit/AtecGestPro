@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ContactPartner extends Model
 {
-    protected $guarded = [];
     use softDeletes;
     public function partner()
     {

@@ -8,6 +8,32 @@ use Illuminate\Http\Request;
 
 class ContactPartnerController extends Controller
 {
+    public function store(Request $request)
+    {
+        $this->validate(
+            $request,
+            [
+                'contact_description' => 'required|array',
+                'contact_value' => 'required|array',
+            ]
+        );
+
+        $partnerId = $request->input('partner_id');
+
+        $contacts = $request->input('contact_description');
+        $values = $request->input('contact_value');
+
+        if ($contacts && $values) {
+            foreach ($contacts as $key => $contact) {
+                ContactPartner::create([
+                    'contact' => $values[$key],
+                    'description' => $contact,
+                    'partner_id' => $partnerId,
+                ]);
+            }
+        }
+    }
+
     public function destroy(ContactPartner $partner_contact )
     {
 
