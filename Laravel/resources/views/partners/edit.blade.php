@@ -2,6 +2,13 @@
 
 @section('content')
     <div class="container">
+
+        @if (session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+
         <h1>Editar Parceiro</h1>
         <form method="post" action="{{ route('partners.update', $partner->id) }}">
 
@@ -12,18 +19,31 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="name" class="form-label">Parceiro:</label>
-                        <input type="text" class="form-control" id="name" name="name" value="{{ $partner->name }}">
+                        <input type="text" class="form-control" id="name" name="name"
+                            value="{{ $partner->name }}">
+
+                        @error('name')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
                         <label for="description" class="form-label">Descrição:</label>
                         <textarea class="form-control" id="description" name="description">{{ $partner->description }}</textarea>
+
+                        @error('description')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
                         <label for="address" class="form-label">Morada:</label>
                         <input type="text" class="form-control" id="address" name="address"
                             value="{{ $partner->address }}">
+
+                        @error('address')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
 
@@ -75,7 +95,7 @@
             if (firstDescriptionInput.value.trim() === '' && firstValueInput.value.trim() === '') {
                 firstContactGroup.remove();
             }
-            
+
             document.querySelector('form').submit();
         }
 
