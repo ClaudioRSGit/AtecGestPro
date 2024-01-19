@@ -19,17 +19,24 @@ class UserController extends Controller
     {
 
         $searchName = $request->input('searchName');
+        $roleFilter = $request->input('roleFilter');
 
+        $query = User::with('courseClass', 'role');
 
-
+        if ($roleFilter && $roleFilter !== 'all') {
+            $query->whereHas('role', function ($roleQuery) use ($roleFilter) {
+                $roleQuery->where('id', $roleFilter);
+            });
+        }
 
         if ($searchName) {
-            $users = User::with('courseClass', 'role')
-                ->where('name', 'like', "%$searchName%")
-                ->paginate(5);
-        } else {
-            $users = User::with('courseClass', 'role')->paginate(5);
+            $query->where('name', 'like', "%$searchName%");
+
         }
+
+
+
+        $users = $query->paginate(5);
         $courseClasses = CourseClass::all();
         $roles = Role::all();
 
@@ -39,7 +46,7 @@ class UserController extends Controller
 
 
 
-        return view('users.index', compact('users', 'courseClasses', 'roles'));
+        return view('users.index', compact('users', 'courseClasses', 'roles', 'roleFilter'));
     }
 
     /**
