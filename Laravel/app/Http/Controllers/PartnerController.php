@@ -142,8 +142,6 @@ class PartnerController extends Controller
      */
     public function destroy(Partner $partner)
     {
-
-
         try {
 
             $partner->delete();
@@ -152,6 +150,23 @@ class PartnerController extends Controller
             return redirect()->route('external.index')->with('success', 'Parceiro excluído com sucesso!');
         } catch (\Exception $e) {
             return redirect()->route('external.index')->with('error', 'Erro ao excluir o Parceiro. Por favor, tente novamente.');
+        }
+    }
+
+    public function destroyContact(ContactPartner $partner_contact )
+    {
+        $partnerId = $partner_contact->partner_id;
+
+        $partner = Partner::find($partnerId);
+
+        $partner->update(['updated_at' => now()]);
+
+        try {
+            $partner_contact->delete();
+
+            return response()->json(['success' => 'Contacto excluído com sucesso!']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao excluir o Contacto. Por favor, tente novamente.'], 500);
         }
     }
 
