@@ -60,7 +60,7 @@ class CourseClassController extends Controller
             return redirect()->route('course-classes.index')->with('success', 'Course class created successfully!');
         }
         else{
-            return view('excel.importStudents');
+            return redirect()->route('import-excel.importStudents');
         }
 
     }
