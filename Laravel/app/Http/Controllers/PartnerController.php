@@ -87,13 +87,8 @@ class PartnerController extends Controller
      * @param  \App\Partner  $partner
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Partner $partner)
+    public function update(PartnerRequest $request, Partner $partner)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string|max:500',
-            'address' => 'required|string|max:500',
-        ]);
 
         $partner->update($request->only(['name', 'description', 'address']));
 
