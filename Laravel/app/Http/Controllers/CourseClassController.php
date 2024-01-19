@@ -8,13 +8,37 @@ use Illuminate\Http\Request;
 use App\User;
 class CourseClassController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $courseClasses = CourseClass::with('users')->paginate(5);
-        $courses = Course::all();
-        return view('course-classes.index', compact('courseClasses', 'courses'));
-    }
+        $courseClassSearch = $request->input('courseClassSearch');
+        $courseFilter = $request->input('courseFilter');
 
+        $query = CourseClass::with('users', 'course');
+
+        if ($courseFilter && $courseFilter !== 'all') {
+            $query->whereHas('course', function ($courseQuery) use ($courseFilter) {
+                $courseQuery->where('id', $courseFilter);
+            });
+        }
+
+        if ($courseClassSearch) {
+            $query->where(function ($courseClassQuery) use ($courseClassSearch) {
+                $courseClassQuery->where('description', 'like', "%$courseClassSearch%");
+            });
+        }
+
+        $courseClasses = $query->paginate(5);
+        $courses = Course::all();
+
+
+        if ($courseClasses->isEmpty()) {
+            $errorMessage = 'Não foram encontradas turmas.';
+            return view('course-classes.index', compact('errorMessage', 'courseClasses', 'courses', 'courseFilter', 'courseClassSearch'));
+        } else {
+            return view('course-classes.index', compact('courseClasses', 'courses', 'courseFilter', 'courseClassSearch'));
+        }
+
+    }
     public function show(CourseClass $courseClass)
     {
         $courses = Course::all();
