@@ -49,7 +49,7 @@ class CourseClassController extends Controller
         ]);
 
 
-        if($request->submit){
+        if($request->has('noImport')){
             if ($request->has('selected_students')) {
                 foreach ($request->input('selected_students') as $student) {
                     $user = User::find($student);
@@ -57,11 +57,11 @@ class CourseClassController extends Controller
                     $user->save();
                 }
             }
-            return redirect()->route('course-classes.index')->with('success', 'Course class created successfully!');
         }
-        else{
+        else if($request->has('import')){
             return redirect()->route('import-excel.importStudents');
         }
+        return redirect()->route('course-classes.index')->with('success', 'Course class created successfully!');
 
     }
 
