@@ -58,11 +58,12 @@ Route::middleware(['auth', 'checkRole:admin, tecnico'])->group(function () {
     Route::post('courses/massDelete', 'CourseController@massDelete')->name('courses.massDelete');
 
     Route::resource('tickets', 'TicketController');
+
     Route::resource('import-excel', 'ExcelImportController');
     Route::redirect('/import-excel', '/users');
     Route::post('import-excel-users', 'ExcelImportController@importUsers')->name('import-excel.importUsers');
+    Route::get('import-excel-students', 'ExcelImportController@index');
     Route::post('import-excel-students', 'ExcelImportController@importStudents')->name('import-excel.importStudents');
-    Route::redirect('/import-excel-students', '/course-classes');
 });
 
 Route::middleware(['auth', 'checkRole:user'])->group(function () {
