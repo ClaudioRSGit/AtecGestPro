@@ -100,13 +100,15 @@ class UserController extends Controller
 
 
 
+            $password = $request->input('password');
+            $userData = $request->only(['name', 'username', 'email', 'contact', 'isStudent', 'isActive', 'course_class_id', 'role_id']);
 
-            $userData = $request->only(['name', 'username', 'email', 'contact', 'password', 'isStudent', 'isActive', 'course_class_id', 'role_id']);
-            $userData['password'] = $this->encryptPassword($userData['password']);
-
-
+            if (!$isStudent && $password !== null) {
+                $userData['password'] = $this->encryptPassword($password);
+            }
             $user = User::create($userData);
 
+            
             return redirect()->route('users.show', $user->id)->with('success', 'Utilizador criado com sucesso!');
 
         } catch (\Illuminate\Validation\ValidationException $e) {
@@ -153,14 +155,13 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
 
-
         if($request->input('role_id') == 3) {
             $request['isStudent'] = 1;
         }else {
             $request['isStudent'] = 0;
         }
 
-//
+
         $request->validate([
             'name' => 'required|string|min:5|max:255',
             'username' => 'required|string|min:5|max:20',
@@ -182,12 +183,15 @@ class UserController extends Controller
 
 
 
-        if ($request->has('password')) {
-            $user->password = $this->encryptPassword($request['password']);
-            $user->update($request->only(['name', 'username', 'email', 'contact', 'isActive', 'role_id', 'isStudent', 'course_class_id', 'password']));
-        } else {
-            $user->update($request->only(['name', 'username', 'email', 'contact', 'isActive', 'role_id', 'isStudent', 'course_class_id']));
+        if ($request->input('password') != null) {
+            $encryptedPassword = $this->encryptPassword($request->input('password'));
+            $request->merge(['password' => $encryptedPassword]);
+            $user->password = $encryptedPassword;
         }
+
+        $user->update($request->only(['name', 'username', 'email', 'contact', 'isActive', 'role_id', 'isStudent', 'course_class_id', 'password']));
+
+
 
         return redirect()->route('users.index')->with('success', 'Utilizador atualizado com sucesso!');
     }
