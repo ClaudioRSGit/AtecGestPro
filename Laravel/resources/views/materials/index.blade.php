@@ -27,14 +27,22 @@
             </div>
             <div class="buttons">
                 <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
-                <div>
-                    <select class="form-control" id="filter">
-                        <option value="all">Todos</option>
-                        <option value="internal">Interno</option>
-                        <option value="clothing">Fardamento</option>
-                        <option value="external">Externo</option>
-                    </select>
-                </div>
+
+
+
+                <form id="materialFilterForm" action="{{ route('materials.index') }}" method="GET">
+                    <div>
+                        <select class="form-control" id="materialFilter" name="materialFilter" onchange="submitForm()">
+                            <option value="all" {{ $materialFilter === 'all' ? 'selected' : '' }}>Todos</option>
+                            <option value="internal" {{ $materialFilter === 'internal' ? 'selected' : '' }}>Interno</option>
+                            <option value="clothing" {{ $materialFilter === 'clothing' ? 'selected' : '' }}>Fardamento</option>
+                            <option value="external" {{ $materialFilter === 'external' ? 'selected' : '' }}>Externo</option>
+                        </select>
+                    </div>
+                </form>
+
+
+
                 <a href="{{ route('materials.create') }}" class="btn btn-primary">
                     <img src="{{ asset('assets/new.svg') }}">
                     Novo Material
@@ -135,6 +143,17 @@
         </div>
         {{ $materials->links() }}
     </div>
+
+    <script>
+        //logica filtro
+        function submitForm() {
+            let materialFilterValue = document.getElementById("materialFilter").value;
+
+            if (materialFilterValue) {
+                document.getElementById("materialFilterForm").submit();
+            }
+        }
+    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
