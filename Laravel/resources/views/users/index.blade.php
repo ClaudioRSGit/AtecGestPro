@@ -126,8 +126,9 @@
 
 
     <script>
+        //logica filtro
         function submitForm() {
-            var roleFilterValue = document.getElementById("roleFilter").value;
+            let roleFilterValue = document.getElementById("roleFilter").value;
 
             if (roleFilterValue !== "") {
                 document.getElementById("roleFilterForm").submit();

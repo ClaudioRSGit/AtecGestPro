@@ -13,17 +13,36 @@ class MaterialController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
+        $materialFilter = $request->input('materialFilter');
 
+        if ($materialFilter === "internal") {
+            $materials = Material::with('sizes', 'courses')
+                ->where('isInternal', 1)
+                ->where('isClothing', 0)
+                ->paginate(5);
+        } elseif ($materialFilter === "external") {
+            $materials = Material::with('sizes', 'courses')
+                ->where('isInternal', 0)
+                ->paginate(5);
+        } elseif ($materialFilter === "clothing") {
+            $materials = Material::with('sizes', 'courses')
+                ->where('isClothing', 1)
+                ->paginate(5);
+        } elseif ($materialFilter === "all") {
+            $materials = Material::with('sizes', 'courses')->paginate(5);
+        } else {
+            $materials = Material::with('sizes', 'courses')->paginate(5);
+        }
 
+        if ($search) {
+            $materials = Material::with('sizes', 'courses')
+                ->where('name', 'like', "%$search%")
+                ->paginate(5);
+        }
 
-        if($search){
-            $materials = Material::with('sizes','courses')
-                ->where('name', 'like', "%$search%")->paginate(5);
-
-        } else {$materials = Material::with('sizes','courses')->paginate(5);}
-
-        return view('materials.index', compact('materials'));
+        return view('materials.index', compact('materials', 'search', 'materialFilter'));
     }
+
 
     public function create()
     {
