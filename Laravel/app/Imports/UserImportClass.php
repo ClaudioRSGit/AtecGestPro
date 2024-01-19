@@ -4,12 +4,10 @@ namespace App\Imports;
 
 use Maatwebsite\Excel\Concerns\ToModel;
 use App\User;
+use App\CourseClass;
 
 class UserImportClass implements ToModel
 {
-    /**
-    * @param Collection $collection
-    */
     public function model(array $row)
     {
         $userNames = User::pluck('name');
@@ -22,7 +20,7 @@ class UserImportClass implements ToModel
                     return null;
                 }
             }
-            $courseClassId = \App\CourseClass::where('description', $row[4])->first()->id;
+            $courseClassId = CourseClass::where('description', $row[4])->first()->id;
             return new User([
                 'name' => $row[0],
                 'username' => $row[1],
