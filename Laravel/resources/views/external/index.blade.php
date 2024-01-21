@@ -143,7 +143,7 @@
             </div>
 
             <div class="tab-pane fade" id="partnersTable">
-                <div class="d-flex">
+                <div class="d-flex mb-3">
                     <form action="{{ route('external.index') }}" method="GET">
                         <div class="input-group pr-2">
                             <input type="text" name="p" class="form-control" placeholder="{{ request('p') ? request('p') : 'Procurar...' }}">
