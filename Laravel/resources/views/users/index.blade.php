@@ -33,18 +33,14 @@
 
             <div class="buttons">
                 <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
-
-                <form id="roleFilterForm" action="{{ route('users.index') }}" method="GET">
-                    <div>
-                        <select class="form-control" id="roleFilter" name="roleFilter" onchange="submitForm()">
-                            <option value="all">Todas as Funções</option>
-                            @foreach($roles as $role)
-                                <option value="{{ $role->id }}" {{ $roleFilter == $role->id ? 'selected' : '' }}>{{ $role->description }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </form>
-
+                <div>
+                    <select class="form-control" id="roleFilter" name="roleFilter">
+                        <option value="">Todas as Funções</option>
+                        @foreach($roles as $role)
+                            <option value="{{ $role->id }}">{{ $role->description }}</option>
+                        @endforeach
+                    </select>
+                </div>
                 <a href="{{ route('users.create') }}" class="btn btn-primary">
                     <img src="{{ asset('assets/new.svg') }}">
                     Novo Utilizador
@@ -67,17 +63,18 @@
             </tr>
             </thead>
             <tbody>
-            <tr class="filler"></tr>
-            @foreach ($users as $user)
-                <tr class="user-row customTableStyling" data-position="{{ strtolower($user) }}"
-                    data-role="{{ $user->role_id }}" onclick="location.href='{{ route('users.show', $user->id) }}'">
-                    <td>
-                        <input type="checkbox" class="no-propagate" name="selectedUsers[]" value="{{ $user->id }}">
-                    </td>
-                    <td>{{ $user->name }}</td>
-                    <td>{{ $user->username }}</td>
-                    <td>{{ $user->email }}</td>
-                    <td>{{ $user->role->description }}</td>
+                <tr class="filler"></tr>
+                @foreach ($users as $user)
+                    <tr class="user-row customTableStyling" data-position="{{ strtolower($user) }}" data-role="{{ $user->role_id }}" onclick="location.href='{{ route('users.show', $user->id) }}'">
+                        <td>
+                            <input type="checkbox" class="no-propagate" name="selectedUsers[]" value="{{ $user->id }}">
+                        </td>
+                        <td>{{ $user->name }}</td>
+                        <td>{{ $user->username }}</td>
+                        <td>{{ $user->email }}</td>
+                        <td>
+                            {{ $user->role->description }}
+                        </td>
 
                     <td>{{ $user->isActive == 1 ? 'Sim' : 'Não' }}</td>
                     <td class="editDelete">
@@ -221,7 +218,7 @@
             const userRows = userTable.querySelectorAll('tbody tr');
 
 
-            nameFilterInput.addEventListener('input', function () {
+            nameFilterInput.addEventListener('input', function() {
                 console.log('Nome do Filtro Alterado');
                 filterUsers();
             });

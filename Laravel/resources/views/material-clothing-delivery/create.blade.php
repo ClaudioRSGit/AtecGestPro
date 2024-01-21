@@ -19,24 +19,6 @@
                     <input type="text" id="search" class="form-control w-100" placeholder="Pesquisar Material">
                 </div>
             </form>
-            <div class="buttons">
-                <div>
-                    <select class="form-control" id="sort">
-                        <option value="az">A-Z</option>
-                        <option value="za">Z-A</option>
-                    </select>
-                </div>
-
-                <div>
-                    <select class="form-control" id="filter" disabled>
-                        <option value="all">Todos</option>
-                        <option value="trainer">Formador</option>
-                        <option value="trainee" selected>Formando</option>
-                        <option value="technical">Técnico </option>
-                    </select>
-                </div>
-
-            </div>
         </div>
 
 
@@ -46,22 +28,8 @@
         <form action="{{ route('material-clothing-delivery.store') }}" method="post">
             @csrf
             <input type="hidden" name="user_id" value="{{ $student->id }}">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">
-                            <input type="checkbox" id="select-all">
-                        </th>
-                        <th scope="col">Nome</th>
-                        <th scope="col">Género</th>
-                        <th scope="col" style="text-align: center;">Tamanho</th>
-                        <th scope="col" style="text-align: center;">Função</th>
-                        <th scope="col" style="text-align: center;">Quantidade</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse  ($clothing_assignment as $clothing_assignment)
-                        <tr class="material-row" data-trainee="{{ $clothing_assignment->role == 3 ? 1 : 0 }}">
+
+            <livewire:gender-filter :key="$gender">
 
                 <div class="col">
                     <div class="buttons">
@@ -97,51 +65,9 @@
         </form>
 
 
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const selectAllCheckbox = document.getElementById('select-all');
-            const checkboxes = document.querySelectorAll('.form-check-input');
-            const searchInput = document.getElementById('search');
-            const filterDropdown = document.getElementById('filter');
-            const sortDropdown = document.getElementById('sort');
-
-            sortDropdown.addEventListener('change', function() {
-                sortMaterials();
-            });
-
-            function sortMaterials() {
-                const sortValue = sortDropdown.value;
-                const materialRows = Array.from(document.querySelectorAll('.material-row'));
-                const fillerRows = Array.from(document.querySelectorAll('.filler'));
-
-                materialRows.sort((a, b) => {
-                    const aName = a.querySelector('a').textContent.toLowerCase();
-                    const bName = b.querySelector('a').textContent.toLowerCase();
-
-                    if (sortValue === 'az') {
-                        return aName.localeCompare(bName);
-                    } else {
-                        return bName.localeCompare(aName);
-                    }
-                });
-
-                const tbody = document.querySelector('tbody');
-                materialRows.forEach((row, index) => {
-                    tbody.appendChild(row);
-                    if (fillerRows[index]) {
-                        tbody.appendChild(fillerRows[index]);
-                    }
-                });
-            }
-
-
-
-            document.getElementById('apagarOnClick').addEventListener('click', function() {
-
-                document.getElementById('textarea').value = '';
-
-
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const selectAllCheckbox = document.getElementById('select-all');
                 const checkboxes = document.querySelectorAll('.form-check-input');
                 const searchInput = document.getElementById('search');
                 // const filterDropdown = document.getElementById('filter');
