@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\MaterialSize;
 use App\MaterialUser;
 use Illuminate\Http\Request;
 use App\Course;
@@ -19,6 +20,7 @@ class MaterialUserController extends Controller
      */
     public function index()
     {
+
         $courseClasses = CourseClass::with('students')->paginate(5);
         $courses = Course::all();
         $nonDocents = User::all()->where('isStudent', false)->where('position', '!=', 'formando');
@@ -32,17 +34,17 @@ class MaterialUserController extends Controller
      */
     public function create($id)
     {
-        $clothing_assignment = Material::with('sizes')
-        ->where('isClothing', 1)
-        ->whereHas('courses')
-        ->get();
-        $materials = Material::all();
-        //$clothing_deliveries = Clothing_Delivery::all();
-
         $student = User::find($id);
+        $studentCourseId = $student->courseClass->course_id;
 
+        $clothes = Material::with('sizes', 'courses')
+            ->where('isClothing', 1)
+            ->whereHas('courses', function ($query) use ($studentCourseId) {
+                $query->where('courses.id', $studentCourseId);
+            })
+            ->get();
 
-        return view('material-user.create', compact( 'clothing_assignment', 'materials', 'student'));
+        return view('material-user.create', compact('clothes', 'student'));
     }
 
     /**
@@ -53,33 +55,57 @@ class MaterialUserController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
         $request->validate([
             'selectedClothing' => 'required|array',
             'user_id' => 'required',
             'quantity' => 'required|array',
-            'size_id' => 'required|array',
-            'delivery_date' => 'required',
+            'material_size_id' => 'required|array',
+            'delivery_date' => 'required|array',
             'delivered_all' => 'required',
         ]);
 
-        foreach ($request->get('selectedClothing') as $index => $material_id) {
-            $indices[] = $index;
+        $selectedClothingitems = $request->get('selectedClothing');
+        $note = $request->get('additionalNotes');
+
+        foreach ($selectedClothingitems as $index => $selectedClothingitem) {
+
+            $itemSize = $request->get('material_size_id')[$index];
+            $itemQuantity = $request->get('quantity')[$index];
+            $itemDeliveryDate = $request->get('delivery_date')[$index];
             $materialUser = new MaterialUser([
-                'material_id' => $material_id,
+                'material_id' => $selectedClothingitem,
                 'user_id' => $request->get('user_id'),
-                'quantity' => $request->get('quantity')[$index],
-                'size_id' => $request->get('size_id')[$index],
-                'delivery_date' => $request->get('delivery_date'),
+                'quantity' => $itemQuantity,
+                'size_id' => $itemSize,
+                'delivery_date' => $itemDeliveryDate,
                 'delivered_all' => $request->get('delivered_all'),
             ]);
 
-            //dd($materialUser);
-            //dd($request->get('size_id'));
+
             $materialUser->save();
+
+            $materialSize = MaterialSize::where('material_id', $selectedClothingitem)
+                ->where('size_id', $itemSize)
+                ->first();
+
+            if ($materialSize) {
+                $newStock = $materialSize->stock - $itemQuantity;
+                $materialSize->stock = $newStock;
+                $materialSize->save();
+            }
+
+            if ($note) {
+                $student = User::find($request->get('user_id'));
+                $existingNotes = $student->notes;
+                $newNote = $note;
+                $timestamp = now()->toDateTimeString();
+
+                $student->notes = $existingNotes . "\n" . $timestamp . ": " . $newNote;
+                $student->save();
+            }
+
         }
 
-        dd($indices);
         return redirect()->route('material-user.index')->with('success', 'Material entregue com sucesso!');
     }
 
