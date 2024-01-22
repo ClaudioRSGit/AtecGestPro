@@ -38,7 +38,7 @@ Route::middleware(['auth', 'checkRole:admin, tecnico'])->group(function () {
     Route::resource('clothing-assignment', 'ClothingAssignmentController');
     Route::get('/clothing-assignment/users/{id}', 'ClothingAssignmentController@index')->name('clothing-assignment.users');
 
-Route::resource('material-user', 'MaterialUserController');
+    Route::resource('material-user', 'MaterialUserController');
 
     Route::resource('partners', 'PartnerController');
     Route::delete('partner-contact/{partner_contact}', 'PartnerController@destroyContact')->name('partner-contact.destroy');
@@ -48,8 +48,8 @@ Route::resource('material-user', 'MaterialUserController');
     Route::resource('external', 'PartnerTrainingUserController');
     Route::post('external/massDelete', 'PartnerTrainingUserController@massDelete')->name('external.massDelete');
 
-Route::get('/material-user/create/{id}', 'MaterialUserController@create')->name('material-user.create');
-Route::post('/material-user', 'MaterialUserController@store')->name('material-user.store');
+    Route::get('/material-user/create/{id}', 'MaterialUserController@create')->name('material-user.create');
+    Route::post('/material-user', 'MaterialUserController@store')->name('material-user.store');
 
     Route::resource('course-classes', 'CourseClassController');
     Route::post('course-classes/massDelete', 'CourseClassController@massDelete')->name('course-classes.massDelete');
@@ -59,6 +59,8 @@ Route::post('/material-user', 'MaterialUserController@store')->name('material-us
     Route::post('courses/massDelete', 'CourseController@massDelete')->name('courses.massDelete');
 
     Route::resource('tickets', 'TicketController');
+    Route::put('/tickets/{ticket}', 'TicketController@update')->name('tickets.update');
+
 
     Route::resource('import-excel', 'ExcelImportController');
     Route::redirect('/import-excel', '/users');
