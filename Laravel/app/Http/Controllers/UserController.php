@@ -69,6 +69,10 @@ class UserController extends Controller
         $isStudent = $request->input('role_id') == 3 ? 1 : 0;
         $request->merge(['isStudent' => $isStudent]);
 
+        if ($isStudent != 1) {
+            $request->merge(['course_class_id' => null]);
+        }
+
         try {
 
             $password = $request->input('password');
@@ -123,11 +127,16 @@ class UserController extends Controller
 
     public function update(UserRequest  $request, User $user)
     {
+
         if ($user->role_id == 3 && $request->input('role_id') != 3 && !$request->filled('password')) {
             return redirect()->back()->with('error', 'A Password é obrigatória ao alterar de Formando para outra função.');
         }
 
-        $data = $request->validated();
+        if ($request->input('isStudent') != 1) {
+            $request['course_class_id'] = null;
+        }
+
+         $data = $request->validated();
 
         if ($request->filled('password') && $request->input('role_id') != 3) {
             $data['password'] = $this->encryptPassword($request->input('password'));
