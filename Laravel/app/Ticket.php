@@ -6,7 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ticket extends Model
 {
-    //
+    protected $fillable = [
+        'title',
+        'description',
+        'status_id',
+        'technician_id',
+        'priority_id',
+        'category_id',
+        'dueByDate',
+        'user_id',
+    ];
     public function ticketHistories()
     {
         return $this->hasMany(TicketHistory::class);
