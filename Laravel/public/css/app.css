@@ -98,7 +98,7 @@ main > .content{
 
 .container{
     height: 100%;
-    width: 80%;
+    width: 100%;
     flex: 1 0 auto;
 }
 

@@ -124,9 +124,6 @@
             }
         }
 
-        function updateCourseDescription(select) {
-        }
-
         $(document).ready(function() {
             toggleCourseClassDiv();
         });
