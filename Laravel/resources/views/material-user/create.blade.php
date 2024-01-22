@@ -8,33 +8,12 @@
         <div class="d-flex justify-content-between mb-3">
         <div class="input-group mb-3" style="width: 60%;">
             <p class="mr-3 font-weight-bold">Formando: {{ $student->name }} </p>
-{{--            <input type="text" class="form-control" id="userToAssignClothing" placeholder="{{ $student->name }}"--}}
-{{--                value="" aria-label="Username" aria-describedby="basic-addon1" disabled="disabled">--}}
+
         </div>
 
 
-{{--            <form class="form-inline w-50" id="filterForm">--}}
-{{--                <div class="form-group search-container mr-3 w-100" style="width: 30%;">--}}
-{{--                    <input type="text" id="search" class="form-control w-100" placeholder="Pesquisar Material">--}}
-{{--                </div>--}}
-
-{{--            </form>--}}
             <div class="buttons">
-{{--                <div>--}}
-{{--                    <select class="form-control" id="sort">--}}
-{{--                        <option value="az" selected>A-Z</option>--}}
-{{--                        <option value="za">Z-A</option>--}}
-{{--                    </select>--}}
-{{--                </div>--}}
 
-{{--                <div style="display: none;">--}}
-{{--                    <select class="form-control" id="filter" disabled>--}}
-{{--                        <option value="all">Todos</option>--}}
-{{--                        <option value="trainer">Formador</option>--}}
-{{--                        <option value="trainee" selected>Formando</option>--}}
-{{--                        <option value="technical">Técnico </option>--}}
-{{--                    </select>--}}
-{{--                </div>--}}
 
             </div>
         </div>
@@ -59,16 +38,13 @@
                 </thead>
                 <tbody>
                 @foreach ($clothes as $clothingItem)
+                    @php
+                        $totalStock = $clothingItem->sizes->sum('pivot.stock');
+                        $disabled = $totalStock > 0 ? '' : 'disabled';
+                    @endphp
                     <tr class="material-row">
                         <td>
                             <div class="form-check">
-                                @php
-                                    $selectedSize = $clothingItem->sizes->first(function ($size) {
-                                        return $size->pivot->stock > 0;
-                                    });
-                                    $disabled = $selectedSize ? '' : 'disabled';
-                                @endphp
-
                                 <input class="form-check-input" name="selectedClothing[{{ $clothingItem->id }}]"
                                        type="checkbox" value="{{ $clothingItem->id }}" data-size-select="#filter{{ $loop->index }}"
                                        id="flexCheckDefault{{ $loop->index }}" {{ $disabled }}>
@@ -78,11 +54,11 @@
                             <a href="{{ route('materials.show', $clothingItem->id) }}">{{ isset($clothingItem->name) ? $clothingItem->name : 'N.A.' }}</a>
                         </td>
                         <td style="text-align: center;">
-                            <input type="hidden" name="material_size_id[]" class="material-size-id-input" value="">
+                            <input type="hidden" name="material_size_id[]" class="material-size-id-input" value="" {{ $disabled }}>
                             <select class="form-control size-select" id="filter{{ $loop->index }}"
-                                    name="material_size_id[{{ $clothingItem->id }}]" data-clothing-id="{{ $clothingItem->id }}">
+                                    name="material_size_id[{{ $clothingItem->id }}]" data-clothing-id="{{ $clothingItem->id }}" {{ $disabled }}>
 
-                                @php
+                                    @php
                                     $hasStock = false;
                                 @endphp
 
@@ -108,24 +84,21 @@
                         <td style="text-align: center;">
                             <input type="number" class="form-control quantity-input" id="quantity{{ $loop->index }}"
                                    name="quantity[{{ $clothingItem->id }}]" value="1" min="1"
-                                   style="width: 60px; text-align: center;">
+                                   style="width: 60px; text-align: center;" {{ $disabled }}>
                         </td>
                         <td style="text-align: center;">
                             <input type="date" class="form-control" name="delivery_date[{{ $clothingItem->id }}]"
-                                   value="{{ date('Y-m-d') }}">
+                                   value="{{ date('Y-m-d') }}" {{ $disabled }}>
                         </td>
                     </tr>
                 @endforeach
-
 
                 </tbody>
             </table>
             <div style="margin-bottom: 20px;">
                 <label for="delivered">Entrega Completa</label>
-                <select class="form-control" id="delivered" name="delivered_all" style="width: 80px;text-align: center;">
-                    <option value="1">Sim</option>
-                    <option value="0">Não</option>
-                </select>
+                <input type="hidden" name="delivered_all" value="0">
+                <input type="checkbox" class="form-control" id="delivered" name="delivered_all" value="1" style="width: 15px;text-align: left;">
             </div>
             <h5>Observações </h5>
             <div class="row">
@@ -216,22 +189,6 @@
                 updateFormData();
             });
 
-
-
-
-            // document.getElementById('apagarOnClick').addEventListener('click', function() {
-            //
-            //     document.getElementById('textarea').value = '';
-            //
-            //
-            //     const checkboxes = document.querySelectorAll('.form-check-input');
-            //     checkboxes.forEach(checkbox => {
-            //         checkbox.checked = false;
-            //     });
-            //
-            //
-            //     document.getElementById('select-all').checked = false;
-            // });
 
 
             selectAllCheckbox.addEventListener('change', function() {
