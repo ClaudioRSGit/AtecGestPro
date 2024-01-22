@@ -38,16 +38,13 @@
                 </thead>
                 <tbody>
                 @foreach ($clothes as $clothingItem)
+                    @php
+                        $totalStock = $clothingItem->sizes->sum('pivot.stock');
+                        $disabled = $totalStock > 0 ? '' : 'disabled';
+                    @endphp
                     <tr class="material-row">
                         <td>
                             <div class="form-check">
-                                @php
-                                    $selectedSize = $clothingItem->sizes->first(function ($size) {
-                                        return $size->pivot->stock > 0;
-                                    });
-                                    $disabled = $selectedSize ? '' : 'disabled';
-                                @endphp
-
                                 <input class="form-check-input" name="selectedClothing[{{ $clothingItem->id }}]"
                                        type="checkbox" value="{{ $clothingItem->id }}" data-size-select="#filter{{ $loop->index }}"
                                        id="flexCheckDefault{{ $loop->index }}" {{ $disabled }}>
@@ -57,11 +54,11 @@
                             <a href="{{ route('materials.show', $clothingItem->id) }}">{{ isset($clothingItem->name) ? $clothingItem->name : 'N.A.' }}</a>
                         </td>
                         <td style="text-align: center;">
-                            <input type="hidden" name="material_size_id[]" class="material-size-id-input" value="">
+                            <input type="hidden" name="material_size_id[]" class="material-size-id-input" value="" {{ $disabled }}>
                             <select class="form-control size-select" id="filter{{ $loop->index }}"
-                                    name="material_size_id[{{ $clothingItem->id }}]" data-clothing-id="{{ $clothingItem->id }}">
+                                    name="material_size_id[{{ $clothingItem->id }}]" data-clothing-id="{{ $clothingItem->id }}" {{ $disabled }}>
 
-                                @php
+                                    @php
                                     $hasStock = false;
                                 @endphp
 
@@ -87,15 +84,14 @@
                         <td style="text-align: center;">
                             <input type="number" class="form-control quantity-input" id="quantity{{ $loop->index }}"
                                    name="quantity[{{ $clothingItem->id }}]" value="1" min="1"
-                                   style="width: 60px; text-align: center;">
+                                   style="width: 60px; text-align: center;" {{ $disabled }}>
                         </td>
                         <td style="text-align: center;">
                             <input type="date" class="form-control" name="delivery_date[{{ $clothingItem->id }}]"
-                                   value="{{ date('Y-m-d') }}">
+                                   value="{{ date('Y-m-d') }}" {{ $disabled }}>
                         </td>
                     </tr>
                 @endforeach
-
 
                 </tbody>
             </table>
