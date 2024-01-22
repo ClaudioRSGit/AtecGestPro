@@ -93,7 +93,7 @@
                                                     <th>Nome</th>
                                                     <th>Username</th>
                                                     <th>Email</th>
-                                                    <th>Entregue</th>
+                                                    {{-- <th>Entregue</th> --}}
                                                     <th>Ações</th>
                                                 </tr>
                                             </thead>
@@ -106,7 +106,7 @@
                                                         <td>{{ $student->name }}</a></td>
                                                         <td>{{ $student->username }}</td>
                                                         <td>{{ $student->email }}</td>
-                                                        <td><input type="checkbox" class="no-propagate"></td>
+                                                        {{-- <td><input type="checkbox" class="no-propagate"></td> --}}
                                                         <td class="editDelete">
                                                             <div style="width: 40%">
                                                                 <a href="{{ route('users.edit', $student->id) }}"

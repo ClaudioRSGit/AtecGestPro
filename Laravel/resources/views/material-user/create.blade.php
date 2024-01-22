@@ -101,10 +101,8 @@
             </table>
             <div style="margin-bottom: 20px;">
                 <label for="delivered">Entrega Completa</label>
-                <select class="form-control" id="delivered" name="delivered_all" style="width: 80px;text-align: center;">
-                    <option value="1">Sim</option>
-                    <option value="0">Não</option>
-                </select>
+                <input type="hidden" name="delivered_all" value="0">
+                <input type="checkbox" class="form-control" id="delivered" name="delivered_all" value="1" style="width: 15px;text-align: left;">
             </div>
             <h5>Observações </h5>
             <div class="row">
