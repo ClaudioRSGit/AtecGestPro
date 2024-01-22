@@ -40,7 +40,8 @@
                 </thead>
                 <tbody>
                     @foreach($tickets as $ticket)
-                    <tr class="customTableStyling" id="heading{{ $ticket->id }}">
+                    <tr class="customTableStyling" id="heading{{ $ticket->id }}" onclick="location.href='{{ route('tickets.show', $ticket->id) }}'">
+
                         <td><input type="checkbox"></td>
                         <td>
                             <a class="btn btn-link" data-toggle="collapse" data-target="#collapse{{ $ticket->id }}" aria-expanded="true" aria-controls="collapse{{ $ticket->id }}">
