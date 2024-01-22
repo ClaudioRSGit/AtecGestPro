@@ -143,7 +143,7 @@
             </div>
 
             <div class="tab-pane fade" id="partnersTable">
-                <div class="d-flex">
+                <div class="d-flex mb-3">
                     <form action="{{ route('external.index') }}" method="GET">
                         <div class="input-group pr-2">
                             <input type="text" name="p" class="form-control" placeholder="{{ request('p') ? request('p') : 'Procurar...' }}">
@@ -364,14 +364,11 @@
 
             if (activeTabInfo) {
                 const { tabId, context } = JSON.parse(activeTabInfo);
-
                 setActiveTab(tabId);
-
                 setFragment(tabId);
             }
 
             $('#myTabs a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-                // console.log('Tab shown:', e.target);
                 const tabId = $(e.target).attr('href').substring(1);
                 const context = determineContext();
 
@@ -380,60 +377,14 @@
 
                 setFragment(tabId);
 
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
 
-                $.ajax({
-                    type: 'POST',
-                    url: '{{ route("external.updateTab") }}',
-                    data: {
-                        activeTab: tabId,
-                        _token: '{{ csrf_token() }}' // <-- this is important
-
-                    },beforeSend: function(xhr) {
-                        // Log the JSON data before sending the request
-                        console.log('Request data:', JSON.stringify({
-                            activeTab: tabId,
-                            _token: '{{ csrf_token() }}'
-                        }));
-
-                        console.log('Before sending the request');
-                    },
-                    success: function (response) {
-                        console.log('Active tab updated on the server.');
-                    },
-                    error: function (error) {
-                        // console.log(tabId)
-                        console.log({{ csrf_token() }})
-                        console.error('Failed to update active tab on the server.', error);
-                    }
-                });
             });
 
             window.addEventListener('hashchange', function () {
                 const fragment = getFragment();
                 setActiveTab(fragment);
-                console.log('Fragmento alterado:', fragment);
             });
         });
-    </script>
-
-
-
-{{--    <script>--}}
-{{--        $(document).ready(function () {--}}
-{{--            $('form').submit(function () {--}}
-{{--                $('#myTabs a[href="#externalTable"]').tab('show');--}}
-{{--                console.log('Tab shown:', e.target);--}}
-{{--            });--}}
-{{--        });--}}
-{{--    </script>--}}
-
-    <script>
-
     </script>
 
     <script>
@@ -498,6 +449,7 @@
             }
         });
     </script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const checkboxes = document.querySelectorAll('.no-propagate');
@@ -636,52 +588,5 @@
 
 
 
-{{--    <script>--}}
-{{--        // show externalTable filtered by Partner--}}
-{{--        document.addEventListener("DOMContentLoaded", function() {--}}
-{{--            const partnerViewBtn = document.querySelectorAll('.filteredPtus');--}}
 
-{{--            partnerViewBtn.forEach(function(button) {--}}
-{{--                button.addEventListener('click', function(event) {--}}
-{{--                    event.preventDefault();--}}
-
-{{--                    const tabs = document.querySelectorAll('.nav-link');--}}
-{{--                    tabs.forEach(tab => {--}}
-{{--                        tab.classList.remove('active');--}}
-{{--                    });--}}
-
-{{--                    const externalTab = document.querySelector('.nav-link[href="#externalTable"]');--}}
-{{--                    externalTab.classList.add('active');--}}
-
-{{--                    showExternalTable();--}}
-
-{{--                    const partnerTable = document.getElementById('partnersTable');--}}
-{{--                    const clickedRow = button.closest('tr');--}}
-{{--                    const partnerName = clickedRow.querySelector('td:nth-child(2)').innerText;--}}
-
-{{--                    if (partnerTable) {--}}
-{{--                        const searchInput = document.getElementById('searchInput');--}}
-
-{{--                        if (searchInput) {--}}
-{{--                            searchInput.value = partnerName;--}}
-{{--                            const event = new Event('input', {--}}
-{{--                                bubbles: true--}}
-{{--                            });--}}
-{{--                            searchInput.dispatchEvent(event);--}}
-{{--                        }--}}
-{{--                    }--}}
-{{--                });--}}
-{{--            });--}}
-
-{{--            function showExternalTable() {--}}
-{{--                const tables = document.querySelectorAll('.tab-pane');--}}
-{{--                tables.forEach(table => {--}}
-{{--                    table.classList.remove('show', 'active');--}}
-{{--                });--}}
-
-{{--                const externalTable = document.getElementById('externalTable');--}}
-{{--                externalTable.classList.add('show', 'active');--}}
-{{--            }--}}
-{{--        });--}}
-{{--    </script>--}}
 @endsection

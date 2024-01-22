@@ -102,6 +102,21 @@ main > .content{
     flex: 1 0 auto;
 }
 
+.hideElements{
+    display: none !important;
+    width: 0 !important;
+}
+.expandElements{
+    width: 95% !important;
+}
+
+.sidebarContent, .navbar, .content, .toggleableElement {
+    transition: all 0.3s ease-in-out;
+}
+.no-transition {
+    transition: none !important;
+}
+
 footer {
     flex-shrink: 0;
 }
@@ -123,7 +138,7 @@ td a{
 }
 
 
-tr:not(th), tr:not(.filteredTrainings){
+tr > td:not(.filteredTrainings){
     border-radius: 6px !important;
     transition: background-color 0.2s;
     cursor: pointer;

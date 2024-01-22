@@ -7,12 +7,17 @@
         <div class="d-flex justify-content-between mb-3 w-100">
             <div class="d-flex justify-content-between w-40">
 
-                <form class="form-inline w-80" id="filterForm">
-                    <div class="form-group search-container mr-3 w-100" style="width: 30%;">
-                        <input type="text" id="search" class="form-control w-100" placeholder="Pesquisar Material">
+                <form action="{{ route('materials.index') }}" method="GET">
+                    <div class="input-group pr-2">
+                        <input type="text" name="search" class="form-control" placeholder="{{ request('search') ? request('search') : 'Procurar...' }}">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-outline-secondary">
+                                Procurar
+                            </button>
+                        </div>
                     </div>
-
                 </form>
+
                 <div class="w-15">
                     <select class="form-control w-100" id="sort">
                         <option value="az">A-Z</option>
@@ -22,14 +27,22 @@
             </div>
             <div class="buttons">
                 <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
-                <div>
-                    <select class="form-control" id="filter">
-                        <option value="all">Todos</option>
-                        <option value="internal">Interno</option>
-                        <option value="clothing">Fardamento</option>
-                        <option value="external">Externo</option>
-                    </select>
-                </div>
+
+
+
+                <form id="materialFilterForm" action="{{ route('materials.index') }}" method="GET">
+                    <div>
+                        <select class="form-control" id="materialFilter" name="materialFilter" onchange="submitForm()">
+                            <option value="all" {{ $materialFilter === 'all' ? 'selected' : '' }}>Todos</option>
+                            <option value="internal" {{ $materialFilter === 'internal' ? 'selected' : '' }}>Interno</option>
+                            <option value="clothing" {{ $materialFilter === 'clothing' ? 'selected' : '' }}>Fardamento</option>
+                            <option value="external" {{ $materialFilter === 'external' ? 'selected' : '' }}>Externo</option>
+                        </select>
+                    </div>
+                </form>
+
+
+
                 <a href="{{ route('materials.create') }}" class="btn btn-primary">
                     <img src="{{ asset('assets/new.svg') }}">
                     Novo Material
@@ -130,6 +143,17 @@
         </div>
         {{ $materials->links() }}
     </div>
+
+    <script>
+        //logica filtro
+        function submitForm() {
+            let materialFilterValue = document.getElementById("materialFilter").value;
+
+            if (materialFilterValue) {
+                document.getElementById("materialFilterForm").submit();
+            }
+        }
+    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

@@ -46,6 +46,56 @@
 
 @yield('scripts')
 {{-- .SCRIPTS SECTION --}}
+<script>
+    function toggleSidebar() {
+        const sidebar = document.querySelector('.sidebarContent');
+        const navbar = document.querySelector('.navbar');
+        const content = document.querySelector('.content');
+
+        let collapseElements = document.querySelectorAll('.toggleableElement');
+
+        collapseElements.forEach(element => {
+            element.classList.toggle('hideElements');
+        });
+
+        if(collapseElements[0].classList.contains('hideElements')) {
+            sidebar.classList.add('collapsedSidebar');
+            navbar.classList.add('expandElements');
+            content.classList.add('expandElements');
+            localStorage.setItem('sidebarState', 'collapsed');
+        } else {
+            sidebar.classList.remove('collapsedSidebar');
+            navbar.classList.remove('expandElements');
+            content.classList.remove('expandElements');
+            localStorage.setItem('sidebarState', 'expanded');
+        };
+
+    }
+
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const sidebarState = localStorage.getItem('sidebarState');
+        const sidebar = document.querySelector('.sidebarContent');
+        const navbar = document.querySelector('.navbar');
+        const content = document.querySelector('.content');
+        let collapseElements = document.querySelectorAll('.toggleableElement');
+
+        if (sidebarState === 'collapsed') {
+            collapseElements.forEach(element => {
+                element.classList.add('hideElements');
+            });
+            sidebar.classList.add('collapsedSidebar');
+            navbar.classList.add('expandElements');
+            content.classList.add('expandElements');
+        } else {
+            collapseElements.forEach(element => {
+                element.classList.remove('hideElements');
+            });
+            sidebar.classList.remove('collapsedSidebar');
+            navbar.classList.remove('expandElements');
+            content.classList.remove('expandElements');
+        }
+    });
+</script>
     @livewireScripts
 </body>
 </html>

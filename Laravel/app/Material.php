@@ -34,5 +34,9 @@ class Material extends Model
         return $this->belongsToMany('App\Course', 'course_materials', 'material_id', 'course_id');
     }
 
+    public function materialSizes()
+    {
+    return $this->hasMany(MaterialSize::class);
+    }
 
 }

@@ -62,7 +62,7 @@
             </div>
 
 
-            <button type="button" class="btn btn-primary" name="submit" id="criarTurmaBtn">Criar Turma</button>
+            <button type="submit" class="btn btn-primary" name="noImport" id="criarTurmaBtn">Criar Turma</button>
             <button type="submit" class="btn btn-primary" name="import">Criar Turma e importar alunos a partir de Excel</button>
             <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
         </form>

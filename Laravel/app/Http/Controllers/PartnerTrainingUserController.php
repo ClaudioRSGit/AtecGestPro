@@ -23,11 +23,9 @@ class PartnerTrainingUserController extends Controller
         $searchP = $request->input('p');
         $searchT = $request->input('t');
 
-        $activeTabContext = 1;
 
 
-//        switch ($activeTabContext) {
-//            case '1':
+
                 if ($searchPtu) {
                     $partner_Training_Users = PartnerTrainingUser::with('partner', 'training', 'user')
                         ->whereHas('partner', function ($query) use ($searchPtu) {
@@ -42,8 +40,7 @@ class PartnerTrainingUserController extends Controller
                 } else {
                     $partner_Training_Users = PartnerTrainingUser::with('partner', 'training', 'user')->paginate(5);
                 }
-//                break;
-//            case 'partnersTable':
+
 
                 if ($searchP) {
                     $partners = Partner::with('partnerTrainingUsers', 'contactPartner')
@@ -52,37 +49,15 @@ class PartnerTrainingUserController extends Controller
                 } else {
                     $partners = Partner::with('partnerTrainingUsers', 'contactPartner')->paginate(5);
                 }
-//                break;
-//            case 'trainingsTable':
+
                 if ($searchT) {
                     $trainings = Training::where('name', 'like', "%$searchT%")->paginate(5);
                 } else {
                     $trainings = Training::with('partnerTrainingUsers')->paginate(5);
                 }
-//                break;
-//        }
+
 
         return view('external.index', compact('partner_Training_Users', 'partners', 'trainings'));
-    }
-
-
-    public function updateTab(Request $request)
-    {
-        dd($request->all());
-        $activeTab = $request->input('activeTab');
-
-        // Add your logic here to handle the active tab update
-        // For example, you can store it in the session
-
-        session(['activeTab' => $activeTab]);
-
-        return response()->json(['message' => 'Active tab updated successfully']);
-    }
-
-    private function determineActiveTabContext()
-    {
-
-        return 'pagination';
     }
 
     public function show($id)
