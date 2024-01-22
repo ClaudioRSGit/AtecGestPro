@@ -18,8 +18,8 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-//        $positionFilter = $request->input('positionFilter');
-//        $nameFilter = $request->input('nameFilter');
+        //        $positionFilter = $request->input('positionFilter');
+        //        $nameFilter = $request->input('nameFilter');
         $courseClasses = CourseClass::all();
         $roles = Role::all();
 
@@ -27,24 +27,24 @@ class UserController extends Controller
 
 
 
-//        if ($positionFilter) {
-//            $query->where('role_id', $positionFilter);
-//            $users = $query->paginate(5);
-//        } elseif ($nameFilter) {
-//            $query->where(function ($query) use ($nameFilter) {
-//                $query->where('name', 'like', $nameFilter . '%');
-//                $users = $query->paginate(5);
-//            });
-//        } else {
-//
-//        }
+        //        if ($positionFilter) {
+        //            $query->where('role_id', $positionFilter);
+        //            $users = $query->paginate(5);
+        //        } elseif ($nameFilter) {
+        //            $query->where(function ($query) use ($nameFilter) {
+        //                $query->where('name', 'like', $nameFilter . '%');
+        //                $users = $query->paginate(5);
+        //            });
+        //        } else {
+        //
+        //        }
 
         $users = $query->paginate(5);
 
 
-//        if ($request->ajax()) {
-//            return view('users.partials.user_table', compact('users', 'courseClasses',  'roles'));
-//        }
+        //        if ($request->ajax()) {
+        //            return view('users.partials.user_table', compact('users', 'courseClasses',  'roles'));
+        //        }
 
         return view('users.index', compact('users', 'courseClasses', 'roles'));
     }
@@ -81,7 +81,6 @@ class UserController extends Controller
 
 
             return redirect()->route('users.show', $user->id)->with('success', 'Utilizador criado com sucesso!');
-
         } catch (\Illuminate\Validation\ValidationException $e) {
             return redirect()->back()->withErrors($e->validator)->withInput();
         } catch (\Exception $e) {
@@ -100,13 +99,12 @@ class UserController extends Controller
         if ($user->isStudent == 1) {
             $user->load('courseClass', 'role');
             $courseDescription = $user->courseClass ? $user->courseClass->course->description : null;
-
         } else {
             $user->load('role');
             $courseDescription = null;
         }
 
-//        dd($courseDescription);
+        //        dd($courseDescription);
         return view('users.show', compact('user', 'courseClasses', 'courseDescription', 'roles'));
     }
 
@@ -127,13 +125,13 @@ class UserController extends Controller
     {
 
 
-        if($request->input('role_id') == 3) {
+        if ($request->input('role_id') == 3) {
             $request['isStudent'] = 1;
-        }else {
+        } else {
             $request['isStudent'] = 0;
         }
 
-//
+        //
         $request->validate([
             'name' => 'required|string|min:5|max:255',
             'username' => 'required|string|min:5|max:20',
@@ -155,12 +153,13 @@ class UserController extends Controller
 
 
 
-        if ($request->has('password')) {
-            $user->password = $this->encryptPassword($request['password']);
-            $user->update($request->only(['name', 'username', 'email', 'contact', 'isActive', 'role_id', 'isStudent', 'course_class_id', 'password']));
-        } else {
-            $user->update($request->only(['name', 'username', 'email', 'contact', 'isActive', 'role_id', 'isStudent', 'course_class_id']));
+        if ($request->input('password') != null) {
+            $encryptedPassword = $this->encryptPassword($request->input('password'));
+            $request->merge(['password' => $encryptedPassword]);
+            $user->password = $encryptedPassword;
         }
+
+        $user->update($request->only(['name', 'username', 'email', 'contact', 'isActive', 'role_id', 'isStudent', 'course_class_id', 'password']));
 
         return redirect()->route('users.index')->with('success', 'Utilizador atualizado com sucesso!');
     }
@@ -180,7 +179,7 @@ class UserController extends Controller
     {
         $request->validate([
             'user_ids' => 'required|array',
-            'user_ids.*' => 'exists:users,id',//all items inside array must exist
+            'user_ids.*' => 'exists:users,id', //all items inside array must exist
         ]);
 
         try {
@@ -198,8 +197,8 @@ class UserController extends Controller
         return bcrypt($password);
     }
 
-//    private function setIsStudent(Request $request)
-//    {
-//        return $request->input('position') === 'formando' ? 1 : 0;
-//    }
+    //    private function setIsStudent(Request $request)
+    //    {
+    //        return $request->input('position') === 'formando' ? 1 : 0;
+    //    }
 }
