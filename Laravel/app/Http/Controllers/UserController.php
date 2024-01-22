@@ -123,6 +123,10 @@ class UserController extends Controller
 
     public function update(UserRequest  $request, User $user)
     {
+        if ($user->role_id == 3 && $request->input('role_id') != 3 && !$request->filled('password')) {
+            return redirect()->back()->with('error', 'A Password é obrigatória ao alterar de Formando para outra função.');
+        }
+
         $data = $request->validated();
 
         if ($request->filled('password') && $request->input('role_id') != 3) {
@@ -134,6 +138,7 @@ class UserController extends Controller
         $user->update($data);
 
         return redirect()->route('users.index')->with('success', 'Utilizador atualizado com sucesso!');
+
     }
 
 

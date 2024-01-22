@@ -4,7 +4,7 @@
     <div class="container">
 
         @if (session('error'))
-            <div class="alert alert-danger">
+            <div class="alert alert-danger" id="error-alert">
                 {{ session('error') }}
             </div>
         @endif
@@ -154,5 +154,11 @@
         $(document).ready(function() {
             toggleCourseClassDiv();
         });
+
+        window.setTimeout(function() {
+                $("#error-alert").fadeTo(500, 0).slideUp(500, function() {
+                    $(this).remove();
+                });
+            }, 3000);
     </script>
 @endsection
