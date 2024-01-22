@@ -54,7 +54,6 @@
                         <th scope="col">Nome</th>
                         <th scope="col">Género</th>
                         <th scope="col" style="text-align: center;">Tamanho</th>
-                        <th scope="col" style="text-align: center;">Função</th>
                         <th scope="col" style="text-align: center;">Quantidade</th>
                         <th scope="col" style="text-align: center;">Data de Entrega</th>
 
@@ -103,13 +102,11 @@
 
                                 </td>
 
-                                <td style="text-align: center; " class="text-muted">
-                                    Formando
-                                </td>
+
                                 <td style="text-align: center;">
                                     <input type="number" class="form-control quantity-input"
                                         id="quantity{{ $loop->index }}" name="quantity[]" value="1" min="1"
-                                        style="width: 60px; text-align: center;">
+                                        style="width: 80px; text-align: center;">
                                 </td>
                                 <td style="text-align: center;">
                                     <input type="date" class="form-control" id="date" name="delivery_date"
