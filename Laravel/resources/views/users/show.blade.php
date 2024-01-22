@@ -61,6 +61,11 @@
                         <label for="courseDescription" class="form-label">Curso:</label>
                         <input class="form-control" id="courseDescription" name="courseDescription" readonly value="{{ $courseDescription }}">
                     </div>
+
+                    <div>
+                        <label for="notes" class="form-label">Notas:</label>
+                        <textarea class="form-control" id="notes" name="notes" rows="3" disabled>{{ $user->notes }}</textarea>
+                    </div>
                 @endif
 
                 <div class="mb-3">
