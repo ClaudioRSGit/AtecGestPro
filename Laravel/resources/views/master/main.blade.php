@@ -47,12 +47,6 @@
 @yield('scripts')
 {{-- .SCRIPTS SECTION --}}
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        let sidebarWidth = document.querySelector('.sidebarContent').offsetWidth;
-        const container = document.querySelector('.container');
-        container.style.width = `calc(100% - ${sidebarWidth}px)`;
-    });
-
     function toggleSidebar() {
         const sidebar = document.querySelector('.sidebarContent');
         const navbar = document.querySelector('.navbar');
