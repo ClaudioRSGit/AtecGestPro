@@ -70,10 +70,15 @@ class UserController extends Controller
         $request->merge(['isStudent' => $isStudent]);
 
         try {
-            $userData = $request->validated();
-            $userData['password'] = $this->encryptPassword($userData['password']);
 
+            $password = $request->input('password');
+            $userData = $request->only(['name', 'username', 'email', 'contact', 'isStudent', 'isActive', 'course_class_id', 'role_id']);
+
+            if (!$isStudent && $password !== null) {
+                $userData['password'] = $this->encryptPassword($password);
+            }
             $user = User::create($userData);
+
 
             return redirect()->route('users.show', $user->id)->with('success', 'Utilizador criado com sucesso!');
 
