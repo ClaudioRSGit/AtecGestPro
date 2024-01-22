@@ -66,7 +66,7 @@
                         <select class="form-control" id="role_id" name="role_id" onchange="toggleCourseClassDiv()">
                             @foreach($roles as $role)
                                 <option
-                                    value="{{ $role->id }}" {{ $user->role->description == $role->description ? 'selected' : '' }}>
+                                    value="{{ $role->id }}" {{ old('role_id', $user->role_id) == $role->id ? 'selected' : '' }}>
                                     {{ $role->description }}
                                 </option>
                             @endforeach
