@@ -98,7 +98,7 @@ main > .content{
 
 .container{
     height: 100%;
-    width: 80%;
+    width: 90%;
     flex: 1 0 auto;
 }
 
@@ -138,8 +138,7 @@ td a{
 }
 
 
-tr > td:not(.filteredTrainings){
-    border-radius: 6px !important;
+tr > td{
     transition: background-color 0.2s;
     cursor: pointer;
     text-align: center;
@@ -1928,7 +1927,7 @@ pre code {
   padding: 0.75rem;
   vertical-align: top;
   border-top: 1px solid #dee2e6;
-  text-align: center !important;
+  text-align: left !important;
   vertical-align: middle !important;
 }
 
