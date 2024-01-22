@@ -141,6 +141,14 @@
         .materials {
             grid-area: materials;
             align-self: start;
+            display: flex;
+            max-height: 20rem;
+        }
+        tbody{
+            overflow: scroll;
+        }
+        tbody::-webkit-scrollbar {
+            display: none;
         }
         .startCalendar {
             grid-area: startCalendar;
