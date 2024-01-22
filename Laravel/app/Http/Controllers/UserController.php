@@ -7,6 +7,7 @@ use App\User;
 use App\CourseClass;
 use App\Course;
 use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
 
 class UserController extends Controller
 {
@@ -63,46 +64,14 @@ class UserController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(UserRequest  $request)
     {
-
-
         $isStudent = $request->input('role_id') == 3 ? 1 : 0;
         $request->merge(['isStudent' => $isStudent]);
 
-
-
-
-
         try {
-            $request->validate([
-                'name' => 'required|string|min:5|max:255',
-                'username' => 'required|string|min:5|max:20',
-                'email' => [
-                    'required',
-                    'email',
-                ],
-                'contact' => 'required|min:9|max:20',
-                'password' => [
-                    $request->input('password') != null ? 'required' : 'nullable',
-                    'string',
-                    'min:7',
-                    'regex:/^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).*$/',
-                ],
-
-                'isStudent' => 'required',
-                'isActive' => 'required',
-                'course_class_id' => 'nullable',
-                'role_id' => 'required',
-            ]);
-
-
-
-
-
-            $userData = $request->only(['name', 'username', 'email', 'contact', 'password', 'isStudent', 'isActive', 'course_class_id', 'role_id']);
+            $userData = $request->validated();
             $userData['password'] = $this->encryptPassword($userData['password']);
-
 
             $user = User::create($userData);
 

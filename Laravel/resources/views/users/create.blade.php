@@ -55,7 +55,7 @@
 
                     <div class="mb-3">
                         <label for="password" class="form-label">Password:</label>
-                        <input type="text" class="form-control" id="password" name="password" value="{{ old('password') }}">
+                        <input type="password" class="form-control" id="password" name="password" value="{{ old('password') }}">
 
                         @error('password')
                         <div class="alert alert-danger">{{ $message }}</div>
@@ -74,6 +74,7 @@
                             @endforeach
                         </select>
                     </div>
+                    <input type="hidden" name="isStudent" id="isStudent" value="{{ old('role_id') == 3 ? 1 : 0 }}">
 
 
                     <div class="mb-3" id="labelCourseClass" style="display: none;">
@@ -115,6 +116,10 @@
     <script>
         function toggleCourseClassDiv() {
             const selectedRole = $("#role_id").val();
+            const isStudentValue = selectedRole === "3" ? 1 : 0;
+
+            $("#isStudent").val(isStudentValue);
+
             if (selectedRole === "3") {
                 $("#labelCourseClass").show();
                 $("#password").closest(".mb-3").hide();
