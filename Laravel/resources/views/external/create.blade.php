@@ -143,13 +143,20 @@
             align-self: start;
             display: flex;
             max-height: 20rem;
-        }
-        tbody{
             overflow: scroll;
         }
-        tbody::-webkit-scrollbar {
+        .materials::-webkit-scrollbar {
             display: none;
         }
+        .materials thead{
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            opacity: 1;
+            background-color: #f8fafc;
+        }
+
+
         .startCalendar {
             grid-area: startCalendar;
             text-align: center;
