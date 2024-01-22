@@ -8,33 +8,12 @@
         <div class="d-flex justify-content-between mb-3">
         <div class="input-group mb-3" style="width: 60%;">
             <p class="mr-3 font-weight-bold">Formando: {{ $student->name }} </p>
-{{--            <input type="text" class="form-control" id="userToAssignClothing" placeholder="{{ $student->name }}"--}}
-{{--                value="" aria-label="Username" aria-describedby="basic-addon1" disabled="disabled">--}}
+
         </div>
 
 
-{{--            <form class="form-inline w-50" id="filterForm">--}}
-{{--                <div class="form-group search-container mr-3 w-100" style="width: 30%;">--}}
-{{--                    <input type="text" id="search" class="form-control w-100" placeholder="Pesquisar Material">--}}
-{{--                </div>--}}
-
-{{--            </form>--}}
             <div class="buttons">
-{{--                <div>--}}
-{{--                    <select class="form-control" id="sort">--}}
-{{--                        <option value="az" selected>A-Z</option>--}}
-{{--                        <option value="za">Z-A</option>--}}
-{{--                    </select>--}}
-{{--                </div>--}}
 
-{{--                <div style="display: none;">--}}
-{{--                    <select class="form-control" id="filter" disabled>--}}
-{{--                        <option value="all">Todos</option>--}}
-{{--                        <option value="trainer">Formador</option>--}}
-{{--                        <option value="trainee" selected>Formando</option>--}}
-{{--                        <option value="technical">Técnico </option>--}}
-{{--                    </select>--}}
-{{--                </div>--}}
 
             </div>
         </div>
@@ -216,22 +195,6 @@
                 updateFormData();
             });
 
-
-
-
-            // document.getElementById('apagarOnClick').addEventListener('click', function() {
-            //
-            //     document.getElementById('textarea').value = '';
-            //
-            //
-            //     const checkboxes = document.querySelectorAll('.form-check-input');
-            //     checkboxes.forEach(checkbox => {
-            //         checkbox.checked = false;
-            //     });
-            //
-            //
-            //     document.getElementById('select-all').checked = false;
-            // });
 
 
             selectAllCheckbox.addEventListener('change', function() {
