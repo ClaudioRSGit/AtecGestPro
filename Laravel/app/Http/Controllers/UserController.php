@@ -108,7 +108,7 @@ class UserController extends Controller
             }
             $user = User::create($userData);
 
-            
+
             return redirect()->route('users.show', $user->id)->with('success', 'Utilizador criado com sucesso!');
 
         } catch (\Illuminate\Validation\ValidationException $e) {
@@ -161,7 +161,7 @@ class UserController extends Controller
             $request['isStudent'] = 0;
         }
 
-
+//dd($request->all());
         $request->validate([
             'name' => 'required|string|min:5|max:255',
             'username' => 'required|string|min:5|max:20',
@@ -177,6 +177,8 @@ class UserController extends Controller
             'course_class_id' => 'nullable',
             'isActive' => 'required',
             'isStudent' => 'required',
+            'notes' => 'nullable',
+
         ]);
 
 
@@ -189,7 +191,7 @@ class UserController extends Controller
             $user->password = $encryptedPassword;
         }
 
-        $user->update($request->only(['name', 'username', 'email', 'contact', 'isActive', 'role_id', 'isStudent', 'course_class_id', 'password']));
+        $user->update($request->only(['name', 'username', 'email', 'contact', 'isActive', 'role_id', 'isStudent', 'course_class_id', 'password', 'notes']));
 
 
 
@@ -211,7 +213,7 @@ class UserController extends Controller
     {
         $request->validate([
             'user_ids' => 'required|array',
-            'user_ids.*' => 'exists:users,id',//all items inside array must exist
+            'user_ids.*' => 'exists:users,id',
         ]);
 
         try {
