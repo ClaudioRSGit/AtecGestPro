@@ -23,22 +23,27 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        $rules = [
             'name' => 'required|string|min:5|max:255',
             'username' => 'required|string|min:5|max:20',
             'email' => 'required|email',
             'contact' => 'required|min:9|max:20',
-            'password' => [
-                $this->input('password') != null ? 'required' : 'nullable',
-                'string',
-                'min:7',
-                'regex:/^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).*$/',
-            ],
             'isStudent' => 'required',
             'isActive' => 'required',
             'course_class_id' => 'nullable',
             'role_id' => 'required',
         ];
+
+        if ($this->filled('password') && $this->input('role_id') != 3) {
+        $rules['password'] = [
+            'required',
+            'string',
+            'min:7',
+            'regex:/^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).*$/',
+        ];
+    }
+
+    return $rules;
     }
 
     public function messages()

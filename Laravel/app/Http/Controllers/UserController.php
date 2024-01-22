@@ -121,45 +121,17 @@ class UserController extends Controller
     }
 
 
-    public function update(Request $request, User $user)
+    public function update(UserRequest  $request, User $user)
     {
+        $data = $request->validated();
 
-
-        if ($request->input('role_id') == 3) {
-            $request['isStudent'] = 1;
+        if ($request->filled('password') && $request->input('role_id') != 3) {
+            $data['password'] = $this->encryptPassword($request->input('password'));
         } else {
-            $request['isStudent'] = 0;
+            unset($data['password']);
         }
 
-        //
-        $request->validate([
-            'name' => 'required|string|min:5|max:255',
-            'username' => 'required|string|min:5|max:20',
-            'email' => 'required',
-            'contact' => 'required|min:9|max:20',
-            'password' => [
-                $request->input('password') != null ? 'required' : 'nullable',
-                'string',
-                'min:7',
-                'regex:/^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).*$/',
-            ],
-            'role_id' => 'required',
-            'course_class_id' => 'nullable',
-            'isActive' => 'required',
-            'isStudent' => 'required',
-        ]);
-
-
-
-
-
-        if ($request->input('password') != null) {
-            $encryptedPassword = $this->encryptPassword($request->input('password'));
-            $request->merge(['password' => $encryptedPassword]);
-            $user->password = $encryptedPassword;
-        }
-
-        $user->update($request->only(['name', 'username', 'email', 'contact', 'isActive', 'role_id', 'isStudent', 'course_class_id', 'password']));
+        $user->update($data);
 
         return redirect()->route('users.index')->with('success', 'Utilizador atualizado com sucesso!');
     }
