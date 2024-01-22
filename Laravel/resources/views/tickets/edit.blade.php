@@ -93,6 +93,14 @@
                     <label>{{ $ticket->dueByDate ? $ticket->dueByDate : 'N/A' }}</label>
                     <input type="date" class="form-control" id="dueByDate" name="dueByDate" value="{{ $ticket->dueByDate ? $ticket->dueByDate : '' }}">
                 </div>
+                <div class="mb-5">
+                    <label>Histórico do Utilizador:</label>
+                    <ul>
+                        @foreach($userTickets as $userTicketId)
+                            <li><a href="{{ route('tickets.show', $userTicketId) }}">Ticket #{{ $userTicketId }}</a></li>
+                        @endforeach
+                    </ul>
+                </div>
             </div>
         </div>
 

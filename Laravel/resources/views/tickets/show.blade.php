@@ -38,7 +38,7 @@
             </div>
             <div class="mb-3">
                 <label for="technician" class="form-label">Técnico:</label>
-                <input type="text" class="form-control" value="{{ $ticket->technician->name ?? 'N/A' }}" disabled>
+                <input type="text" class="form-control" value="{{ $ticket->requester->name ?? 'N/A' }}" disabled>
             </div>
             <div class="mb-3">
                 <label for="priority" class="form-label">Prioridade:</label>
@@ -46,11 +46,25 @@
             </div>
             <div class="mb-3">
                 <label for="category" class="form-label">Categoria:</label>
-                <input type="text" class="form-control" value="{{ $ticket->ticketCategory->description ?? 'N/A' }}" disabled>
+                    <select class="form-control" id="category" name="category" disabled>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}" {{ $ticket->category_id == $category->id ? 'selected' : '' }}>
+                                {{ $category->description }}
+                            </option>
+                        @endforeach
+                    </select>
             </div>
             <div class="mb-3">
                 <label>Data Limite:</label>
                 <input type="text" class="form-control" value="{{ $ticket->dueByDate ?? 'N/A' }}" disabled>
+            </div>
+            <div class="mb-5">
+                <label>Histórico do Utilizador:</label>
+                <ul>
+                    @foreach($userTickets as $userTicketId)
+                        <li><a href="{{ route('tickets.show', $userTicketId) }}">Ticket #{{ $userTicketId }}</a></li>
+                    @endforeach
+                </ul>
             </div>
         </div>
     </div>

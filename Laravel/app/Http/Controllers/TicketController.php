@@ -42,7 +42,14 @@ class TicketController extends Controller
 
     public function show(Ticket $ticket)
     {
-        return view('tickets.show', compact('ticket'));
+        $ticket = Ticket::with('users','requester')->find($ticket->id);
+        $users = User::all();
+        $statuses = TicketStatus::all();
+        $priorities = TicketPriority::all();
+        $categories = TicketCategory::all();
+        $userTickets = Ticket::where('user_id', $ticket->user_id)->pluck('id');
+
+        return view('tickets.show', compact('ticket', 'userTickets', 'users', 'statuses', 'priorities', 'categories'));
     }
 
     public function edit(Ticket $ticket)
@@ -52,7 +59,9 @@ class TicketController extends Controller
         $statuses = TicketStatus::all();
         $priorities = TicketPriority::all();
         $categories = TicketCategory::all();
-        return view('tickets.edit', compact('ticket', 'users', 'statuses', 'priorities', 'categories'));
+        $userTickets = Ticket::where('user_id', $ticket->user_id)->pluck('id');
+
+        return view('tickets.edit', compact('ticket', 'users', 'statuses', 'priorities', 'categories', 'userTickets'));
     }
 
     public function update(Request $request, Ticket $ticket)
