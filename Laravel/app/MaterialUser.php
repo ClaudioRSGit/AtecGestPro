@@ -25,4 +25,9 @@ class MaterialUser extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function size()
+    {
+        return $this->belongsTo(Size::class);
+    }
+
 }

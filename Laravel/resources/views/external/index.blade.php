@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container">
+    <div class="">
         @if (session('success'))
             <div class="alert alert-success" id="success-alert">
                 {{ session('success') }}

@@ -109,7 +109,7 @@
                                                         {{-- <td><input type="checkbox" class="no-propagate"></td> --}}
                                                         <td class="editDelete">
                                                             <div style="width: 40%">
-                                                                <a href="{{ route('users.edit', $student->id) }}"
+                                                                <a href="{{ route('material-user.edit', $student->id) }}"
                                                                     class="mx-2">
                                                                     <svg xmlns="http://www.w3.org/2000/svg" height="16"
                                                                         width="16" viewBox="0 0 512 512">

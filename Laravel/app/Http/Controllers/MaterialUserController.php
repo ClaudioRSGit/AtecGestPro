@@ -126,9 +126,14 @@ class MaterialUserController extends Controller
      * @param  \App\MaterialUser  $materialUser
      * @return \Illuminate\Http\Response
      */
-    public function edit(MaterialUser $materialUser)
+    public function edit($id)
     {
-        //
+        $materialUsers = MaterialUser::with('material', 'user')->where('user_id', $id)->get();//        dd($materialUsers);
+        $user = User::find($id);
+
+
+
+        return view('material-user.edit', compact('materialUsers', 'user'));
     }
 
     /**
@@ -151,6 +156,21 @@ class MaterialUserController extends Controller
      */
     public function destroy(MaterialUser $materialUser)
     {
-        //
+
+        $materialUser->delete();
+        return back()->with('success', 'Material removido com sucesso!');
     }
+
+    public function massDelete(Request $request)
+    {
+        $materialIds = $request->input('material_ids');
+
+        if (is_array($materialIds) && count($materialIds) > 0) {
+            MaterialUser::whereIn('id', $materialIds)->delete();
+            return back()->with('success', 'Materiais removidos com sucesso!');
+        }
+
+        return back()->with('error', 'Nenhum material selecionado para exclusão.');
+    }
+
 }

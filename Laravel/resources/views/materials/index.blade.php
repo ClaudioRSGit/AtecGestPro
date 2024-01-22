@@ -221,29 +221,7 @@
                 filterMaterials();
             });
 
-            function filterMaterials(searchTerm = null) {
-                checkboxes.forEach(checkbox => {
-                    const materialRow = checkbox.closest('.material-row');
-                    const isInternal = materialRow.getAttribute('data-internal') === '1';
-                    const isClothing = materialRow.getAttribute('data-clothing') === '1';
 
-                    const filterValue = filterDropdown.value;
-
-                    const matchesFilter = (
-                        (filterValue === 'all') ||
-                        (filterValue === 'internal' && isInternal) ||
-                        (filterValue === 'clothing' && isClothing) ||
-                        (filterValue === 'external' && !isInternal && !isClothing)
-                    );
-
-                    const matchesSearch = !searchTerm || (
-                        materialRow.textContent.toLowerCase().includes(searchTerm) ||
-                        materialRow.querySelector('a').textContent.toLowerCase().includes(searchTerm)
-                    );
-
-                    checkbox.closest('tr').style.display = matchesFilter && matchesSearch ? '' : 'none';
-                });
-            }
         });
 
         deleteSelectedButton.addEventListener('click', function() {
