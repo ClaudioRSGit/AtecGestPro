@@ -71,6 +71,19 @@ class MaterialSizeSeeder extends Seeder
             }
         }
 
+        //materiais tamanho unico
+
+        foreach ($sizes as $size) {
+            if ($size->size === 'Tamanho unico') {
+                foreach ([12,13,14, 17] as $material_id) {
+                    DB::table('material_sizes')->insert([
+                        'material_id' => $material_id,
+                        'size_id' => $size->id,
+                        'stock' => 5,
+                    ]);
+                }
+            }
+        }
 
 
 

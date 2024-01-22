@@ -50,8 +50,8 @@
                 <p class="toggleableElement ml-3">Formações</p>
             </div>
 
-            <div class="link clothing {{ Request::routeIs('clothing.*') ? 'selected' : '' }}"
-                onclick="location.href='{{ route('clothing.index') }}'">
+            <div class="link clothing {{ Request::routeIs('clothing.*') ? 'selected' : '' }}" onclick="location.href='{{ route('material-user.index') }}'">
+
                 <svg xmlns="http://www.w3.org/2000/svg" height="16" width="20" viewBox="0 0 640 512">
                     <path fill="#116fdc"
                         d="M211.8 0c7.8 0 14.3 5.7 16.7 13.2C240.8 51.9 277.1 80 320 80s79.2-28.1 91.5-66.8C413.9 5.7 420.4 0 428.2 0h12.6c22.5 0 44.2 7.9 61.5 22.3L628.5 127.4c6.6 5.5 10.7 13.5 11.4 22.1s-2.1 17.1-7.8 23.6l-56 64c-11.4 13.1-31.2 14.6-44.6 3.5L480 197.7V448c0 35.3-28.7 64-64 64H224c-35.3 0-64-28.7-64-64V197.7l-51.5 42.9c-13.3 11.1-33.1 9.6-44.6-3.5l-56-64c-5.7-6.5-8.5-15-7.8-23.6s4.8-16.6 11.4-22.1L137.7 22.3C155 7.9 176.7 0 199.2 0h12.6z" />
@@ -59,14 +59,12 @@
                 <p class="toggleableElement ml-3">Vestuário</p>
             </div>
 
-            <div class="link classes {{ Request::routeIs('course-classes.*') ? 'selected' : '' }}"
-                onclick="location.href='{{ route('course-classes.index') }}'">
-                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="20" viewBox="0 0 640 512">
-                    <path fill="#116fdc"
-                        d="M144 0a80 80 0 1 1 0 160A80 80 0 1 1 144 0zM512 0a80 80 0 1 1 0 160A80 80 0 1 1 512 0zM0 298.7C0 239.8 47.8 192 106.7 192h42.7c15.9 0 31 3.5 44.6 9.7c-1.3 7.2-1.9 14.7-1.9 22.3c0 38.2 16.8 72.5 43.3 96c-.2 0-.4 0-.7 0H21.3C9.6 320 0 310.4 0 298.7zM405.3 320c-.2 0-.4 0-.7 0c26.6-23.5 43.3-57.8 43.3-96c0-7.6-.7-15-1.9-22.3c13.6-6.3 28.7-9.7 44.6-9.7h42.7C592.2 192 640 239.8 640 298.7c0 11.8-9.6 21.3-21.3 21.3H405.3zM224 224a96 96 0 1 1 192 0 96 96 0 1 1 -192 0zM128 485.3C128 411.7 187.7 352 261.3 352H378.7C452.3 352 512 411.7 512 485.3c0 14.7-11.9 26.7-26.7 26.7H154.7c-14.7 0-26.7-11.9-26.7-26.7z" />
-                </svg>
-                <p class="toggleableElement ml-3">Turmas</p>
-            </div>
+{{--        <div class="link clothing {{ Request::routeIs('clothing.*') ? 'selected' : '' }}" onclick="location.href='{{ route('material-user.index') }}'">--}}
+{{--            <svg xmlns="http://www.w3.org/2000/svg" height="16" width="20" viewBox="0 0 640 512"><path fill="#116fdc" d="M211.8 0c7.8 0 14.3 5.7 16.7 13.2C240.8 51.9 277.1 80 320 80s79.2-28.1 91.5-66.8C413.9 5.7 420.4 0 428.2 0h12.6c22.5 0 44.2 7.9 61.5 22.3L628.5 127.4c6.6 5.5 10.7 13.5 11.4 22.1s-2.1 17.1-7.8 23.6l-56 64c-11.4 13.1-31.2 14.6-44.6 3.5L480 197.7V448c0 35.3-28.7 64-64 64H224c-35.3 0-64-28.7-64-64V197.7l-51.5 42.9c-13.3 11.1-33.1 9.6-44.6-3.5l-56-64c-5.7-6.5-8.5-15-7.8-23.6s4.8-16.6 11.4-22.1L137.7 22.3C155 7.9 176.7 0 199.2 0h12.6z"/></svg>--}}
+{{--            &nbsp--}}
+{{--            &nbsp--}}
+{{--            <p>Vestuário</p>--}}
+{{--        </div>--}}
 
             <div class="link courses {{ Request::routeIs('courses.*') ? 'selected' : '' }}"
                 onclick="location.href='{{ route('courses.index') }}'">
