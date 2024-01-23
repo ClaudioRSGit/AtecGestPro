@@ -9,10 +9,10 @@ class Ticket extends Model
     protected $fillable = [
         'title',
         'description',
-        'status_id',
-        'technician_id',
-        'priority_id',
-        'category_id',
+        'ticket_status_id',
+        'ticket_priority_id',
+        'ticket_category_id',
+        'attachment',
         'dueByDate',
         'user_id',
     ];

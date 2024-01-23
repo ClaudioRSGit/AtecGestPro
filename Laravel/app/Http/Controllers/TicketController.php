@@ -20,20 +20,39 @@ class TicketController extends Controller
 
     public function create()
     {
-        //
+        $statuses = TicketStatus::all();
+        $priorities = TicketPriority::all();
+        $categories = TicketCategory::all();
+        $users = User::all();
+
+        return view('tickets.create', compact('statuses', 'priorities', 'categories', 'users'));
     }
 
     public function store(Request $request)
     {
+        $request->validate([
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'status_id' => 'required|exists:ticket_statuses,id',
+            'technician_id' => 'required|exists:users,id',
+            'attachment' => 'required|file',
+            'priority_id' => 'required|exists:ticket_priorities,id',
+            'category_id' => 'required|exists:ticket_categories,id',
+            'dueByDate' => 'required|date',
+        ]);
+        if ($request->hasFile('attachment')) {
+            $filename = $request->file('attachment')->store('attachments', 'public');
+        }
         $ticket = new Ticket([
             'title' => $request->title,
             'description' => $request->description,
-            'status_id' => $request->status,
-            'technician_id' => $request->technician,
-            'priority_id' => $request->priority,
-            'category_id' => $request->category,
-            'due_by_date' => $request->dueByDate,
-            ]);
+            'ticket_status_id' => $request->status_id,
+            'ticket_priority_id' => $request->priority_id,
+            'ticket_category_id' => $request->category_id,
+            'dueByDate' => $request->dueByDate,
+            'attachment' => $filename ?? null,
+            'user_id' => $request->technician_id,
+        ]);
 
         $ticket->save();
 
@@ -70,19 +89,17 @@ class TicketController extends Controller
             'title' => 'required|string',
             'description' => 'required|string',
             'dueByDate' => 'required|date',
+            'attachment' => 'sometimes|file',
             'ticket_status_id' => 'required|exists:ticket_statuses,id',
             'ticket_priority_id' => 'required|exists:ticket_priorities,id',
             'ticket_category_id' => 'required|exists:ticket_categories,id',
         ]);
 
-        $ticket->update([
-            'title' => $validatedData['title'],
-            'description' => $validatedData['description'],
-            'due_by_date' => $validatedData['dueByDate'],
-            'ticket_status_id' => $validatedData['ticket_status_id'],
-            'ticket_priority_id' => $validatedData['ticket_priority_id'],
-            'ticket_category_id' => $validatedData['ticket_category_id'],
-        ]);
+        if ($request->hasFile('attachment')) {
+            $filename = $request->file('attachment')->store('attachments', 'public');
+            $ticket->attachment = $filename;
+        }
+        $ticket->update($request->except(['attachment']));
 
         return redirect()->route('tickets.index');
     }

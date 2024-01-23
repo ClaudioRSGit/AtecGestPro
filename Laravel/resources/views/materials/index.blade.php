@@ -124,7 +124,7 @@
                                         style="display:inline;">
                                         @csrf
                                         @method('delete')
-                                        <button type="submit" onclick="return confirm('Tem certeza que deseja excluir?')"
+                                        <button type="submit" onclick="return confirm('Tem certeza que deseja apagar?')"
                                             style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
                                             <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14"
                                                 viewBox="0 0 448 512">
