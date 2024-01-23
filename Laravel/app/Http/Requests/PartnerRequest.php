@@ -27,6 +27,8 @@ class PartnerRequest extends FormRequest
             'name' => 'required|string|max:100',
             'description' => 'required|string|max:200',
             'address' => 'required|string|max:100',
+            'contact_value.*' => 'nullable|min:9|max:20|regex:/^[\s\d()+-]+$/',
+            'contact_description.*' => 'nullable|string|max:50',
         ];
     }
 
@@ -41,6 +43,11 @@ class PartnerRequest extends FormRequest
 
             'address.required' => 'O endereço é obrigatório!',
             'address.max' => 'O endereço deve ter no máximo 100 caracteres!',
+
+            'contact_value.*.min' => 'O contato deve ter pelo menos 9 caracteres!',
+            'contact_value.*.max' => 'O contato deve ter no máximo 20 caracteres!',
+            'contact_value.*.regex' => 'Formato de contacto inválido!',
+            'contact_description.*.max' => 'A descrição deve ter no máximo 50 caracteres!',
         ];
     }
 }
