@@ -6,6 +6,8 @@ use App\Course;
 use App\CourseClass;
 use Illuminate\Http\Request;
 use App\User;
+use App\Http\Requests\CourseClassRequest;
+
 class CourseClassController extends Controller
 {
     public function index(Request $request)
@@ -59,13 +61,8 @@ class CourseClassController extends Controller
         return view('course-classes.create', compact('courses','students'));
     }
 
-    public function store(Request $request)
+    public function store(CourseClassRequest $request)
     {
-
-        $request->validate([
-            'description' => 'required',
-            'course_id' => 'required',
-        ]);
 
         $courseClass = CourseClass::create([
             'description' => $request->input('description'),

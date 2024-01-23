@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CourseRequest extends FormRequest
+class CourseClassRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,22 +24,19 @@ class CourseRequest extends FormRequest
     public function rules()
     {
         return [
-            'code' => 'required|string|min:2|max:15',
-            'description' => 'required|string|min:10|max:100',
+            'description' => 'required|string|min:5|max:15',
+            'course_id' => 'required',
         ];
     }
 
     public function messages()
     {
         return [
-            'code.required' => 'O código é obrigatório!',
-            'code.string' => 'Formato inválido!',
-            'code.min' => 'O código deve ter no miniimo 2 caracteres!',
-            'code.max' => 'O código deve ter no máximo 15 caracteres!',
             'description.required' => 'A descrição é obrigatória!',
             'description.string' => 'Formato inválido!',
-            'description.min' => 'A descrição deve ter no mínimo 10 caracteres!',
-            'description.max' => 'A descrição deve ter no máximo 100 caracteres!',
+            'description.min' => 'A descrição deve ter pelo menos 5 caracteres!',
+            'description.max' => 'A descrição deve ter no máximo 20 caracteres!',
+            'course_id' => 'O campo de curso é obrigatório!',
         ];
     }
 }
