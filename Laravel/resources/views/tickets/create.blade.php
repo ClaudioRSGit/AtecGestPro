@@ -62,6 +62,7 @@
         <div class="mb-3">
             <label for="attachment" class="form-label">Anexo:</label>
             <input type="file" class="form-control" id="attachment" name="attachment" required>
+            <p>Make sure you upload a file smaller than 20MB</p>
         </div>
 
         <button type="submit" class="btn btn-primary">Criar Ticket</button>

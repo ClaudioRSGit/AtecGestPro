@@ -35,7 +35,7 @@ class TicketController extends Controller
             'description' => 'required|string',
             'status_id' => 'required|exists:ticket_statuses,id',
             'technician_id' => 'required|exists:users,id',
-            'attachment' => 'required|file',
+            'attachment' => 'sometimes|file|max:20480',
             'priority_id' => 'required|exists:ticket_priorities,id',
             'category_id' => 'required|exists:ticket_categories,id',
             'dueByDate' => 'required|date',
@@ -89,17 +89,26 @@ class TicketController extends Controller
             'title' => 'required|string',
             'description' => 'required|string',
             'dueByDate' => 'required|date',
-            'attachment' => 'sometimes|file',
-            'ticket_status_id' => 'required|exists:ticket_statuses,id',
-            'ticket_priority_id' => 'required|exists:ticket_priorities,id',
-            'ticket_category_id' => 'required|exists:ticket_categories,id',
+            'attachment' => 'sometimes|file|max:20480', // 20MB
+            'status' => 'required|exists:ticket_statuses,id',
+            'technician' => 'required|exists:users,id',
+            'priority' => 'required|exists:ticket_priorities,id',
+            'category' => 'required|exists:ticket_categories,id',
         ]);
 
         if ($request->hasFile('attachment')) {
             $filename = $request->file('attachment')->store('attachments', 'public');
             $ticket->attachment = $filename;
         }
-        $ticket->update($request->except(['attachment']));
+        $ticket->title = $request->title;
+        $ticket->description = $request->description;
+        $ticket->ticket_status_id = $request->status;
+        $ticket->user_id = $request->technician;
+        $ticket->ticket_priority_id = $request->priority;
+        $ticket->ticket_category_id = $request->category;
+        $ticket->dueByDate = $request->dueByDate;
+
+        $ticket->save();
 
         return redirect()->route('tickets.index');
     }
@@ -109,5 +118,15 @@ class TicketController extends Controller
         $ticket->delete();
 
         return redirect()->route('tickets.index');
+    }
+
+    public function showComment($id)
+    {
+        $ticket = Ticket::with(['comments' => function($query) {
+            $query->orderBy('created_at', 'desc');
+        },
+        'comments.user'])->findOrFail($id);
+
+        return view('tickets.show', compact('ticket'));
     }
 }

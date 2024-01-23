@@ -60,6 +60,7 @@ Route::middleware(['auth', 'checkRole:admin, tecnico'])->group(function () {
     Route::post('courses/massDelete', 'CourseController@massDelete')->name('courses.massDelete');
 
     Route::resource('tickets', 'TicketController');
+    Route::post('/comments', 'CommentController@store')->name('comments.store');
 
     Route::resource('import-excel', 'ExcelImportController');
     Route::redirect('/import-excel', '/users');

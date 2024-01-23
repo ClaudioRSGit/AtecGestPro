@@ -10,17 +10,17 @@
 
             <div class="row">
                 <div class="col-md-9">
-                    <div class="border bg-light">
+
                     <div class="mb-3">
                         <label for="title" class="form-label">Título:</label>
                         <input type="text" class="form-control" id="title" name="title" value="{{ $ticket->title }}">
                     </div>
 
-                        <div class="mb-3">
-                            <label for="description" class="form-label">Descrição:</label>
-                            <textarea class="form-control" id="description" name="description">{{ $ticket->description }}</textarea>
-                        </div>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Descrição:</label>
+                        <textarea class="form-control" id="description" name="description">{{ $ticket->description }}</textarea>
                     </div>
+
                     <div class="mb-2">
                         <p>Criado a {{ $ticket->created_at }}</p>
                     </div>
@@ -34,21 +34,21 @@
                     @if($ticket->attachment)
                         <a href="{{ asset('storage/' . $ticket->attachment) }}" target="_blank">View Attachment</a>
                     @endif
-                    <div class="border bg-light">
-                        <div class="mb-3">
-                            <label for="comment" class="form-label">Comentar:</label>
-                            <textarea class="form-control" id="comment" name="comment"></textarea>
-                        </div>
-                        <div class="mb-3">
-                            <label for="comment" class="form-label">Comentários:</label>
-                            <div class="card">
-                                <div class="card-body">
-                                    <p class="card-text">Comentário 1</p>
-                                    <p class="card-text">Comentário 2</p>
-                                </div>
+
+                    <div class="mb-3">
+                        <label for="comment" class="form-label">Comentar:</label>
+                        <textarea class="form-control" id="comment" name="comment"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label for="comment" class="form-label">Comentários:</label>
+                        <div class="card">
+                            <div class="card-body">
+                                <p class="card-text">Comentário 1</p>
+                                <p class="card-text">Comentário 2</p>
                             </div>
                         </div>
                     </div>
+
                 </div>
 
                 <div class="col-md-3">
