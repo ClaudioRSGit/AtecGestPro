@@ -2,13 +2,8 @@
 
 @section('content')
 <div class="container">
-    @if(session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-    @endif
-
     <h1>Ticket #{{ $ticket->id }}</h1>
+
     <div class="row">
         <div class="col-md-9">
             <div class="mb-3">
@@ -22,7 +17,7 @@
             </div>
 
             <div class="mb-2">
-                <p>Criado em: {{ $ticket->created_at->format('d/m/Y H:i') }}</p>
+                <p>Criado em: {{ $ticket->created_at }}</p>
             </div>
 
             <div class="mb-3">
@@ -34,36 +29,23 @@
             </div>
 
             <div class="mb-3">
-                <form action="{{ route('comments.store') }}" method="post">
-                    @csrf
-                    <input type="hidden" name="ticket_id" value="{{ $ticket->id }}">
-
-                    <div class="mb-3">
-                        <label for="new-comment" class="form-label">Adicionar Comentário:</label>
-                        <textarea class="form-control" id="new-comment" name="comment" required></textarea>
-                        <button type="submit" class="btn btn-primary mt-2">Enviar Comentário</button>
-                    </div>
-                </form>
-
-                <div class="mb-3">
-                    <label for="comments" class="form-label">Comentários:</label>
-                    @foreach($ticket->comments as $comment)
-                        <div class="card mb-2">
-                            <div class="card-body d-flex justify-content-between">
-                                <div>
-                                    <p class="card-text">
-                                        {{ $comment->user->name }}: {{ $comment->description }}
-                                    </p>
-                                </div>
-                                <div>
-                                    <p class="card-text">
-                                        {{ $comment->created_at }}
-                                    </p>
-                                </div>
+                <label for="comments" class="form-label">Comentários:</label>
+                @foreach($ticket->comments as $comment)
+                    <div class="card mb-2">
+                        <div class="card-body d-flex justify-content-between">
+                            <div>
+                                <p class="card-text">
+                                    {{ $comment->user->name }}: {{ $comment->description }}
+                                </p>
+                            </div>
+                            <div>
+                                <p class="card-text">
+                                    {{ $comment->created_at }}
+                                </p>
                             </div>
                         </div>
-                    @endforeach
-                </div>
+                    </div>
+                @endforeach
             </div>
         </div>
 
@@ -85,18 +67,12 @@
 
             <div class="mb-3">
                 <label for="category" class="form-label">Categoria:</label>
-                    <select class="form-control" id="category" name="category" disabled>
-                        @foreach($categories as $category)
-                            <option value="{{ $category->id }}" {{ $ticket->category_id == $category->id ? 'selected' : '' }}>
-                                {{ $category->description }}
-                            </option>
-                        @endforeach
-                    </select>
+                <input type="text" class="form-control" value="{{ $ticket->ticketCategory->description ?? 'N/A' }}" disabled>
             </div>
 
             <div class="mb-3">
                 <label>Data Limite:</label>
-                <input type="text" class="form-control" value="{{ $ticket->dueByDate ? $ticket->dueByDate : 'N/A' }}" disabled>
+                <input type="text" class="form-control" value="{{ $ticket->dueByDate ?? 'N/A' }}" disabled>
             </div>
 
             <div class="mb-5">

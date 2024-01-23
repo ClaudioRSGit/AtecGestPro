@@ -17,7 +17,7 @@ class TicketSeeder extends Seeder
             'title' => 'Cadeira partida',
             'description' => 'A sala 19 tem uma cadeira partida',
             'dueByDate' => now()->addDays(3),
-            'attachment' => 'network_issue_attachment.pdf',
+            'attachment' => '4s3vkpyDNVzeHYwSyZF18oJWcSSuYY4cpcI1uFR5.pdf',
             'ticket_status_id' => 1,
             'ticket_priority_id' => 2,
             'ticket_category_id' => 3,
@@ -31,10 +31,12 @@ class TicketSeeder extends Seeder
             'title' => 'Cabo rede',
             'description' => 'Falta cabo de rede na sala 19',
             'dueByDate' => now()->addDays(5),
-            'attachment' => 'bug_report_attachment.docx',
+            'attachment' => '4s3vkpyDNVzeHYwSyZF18oJWcSSuYY4cpcI1uFR5',
             'ticket_status_id' => 2,
             'ticket_priority_id' => 3,
             'ticket_category_id' => 3,
+            'created_at' => '2021-01-12 14:37:10',
+            'updated_at' => '2021-01-12 14:37:10',
         ]);
 
         // Seed 3
@@ -47,6 +49,8 @@ class TicketSeeder extends Seeder
             'ticket_status_id' => 3,
             'ticket_priority_id' => 3,
             'ticket_category_id' => 1,
+            'created_at' => '2021-01-12 14:37:10',
+            'updated_at' => '2021-01-12 14:37:10',
         ]);
 
         // Seed 4
@@ -59,6 +63,8 @@ class TicketSeeder extends Seeder
             'ticket_status_id' => 4,
             'ticket_priority_id' => 2,
             'ticket_category_id' => 1,
+            'created_at' => '2021-01-12 14:37:10',
+            'updated_at' => '2021-01-12 14:37:10',
         ]);
 
         // Seed 5
@@ -71,6 +77,8 @@ class TicketSeeder extends Seeder
             'ticket_status_id' => 5,
             'ticket_priority_id' => 1,
             'ticket_category_id' => 3,
+            'created_at' => '2021-01-12 14:37:10',
+            'updated_at' => '2021-01-12 14:37:10',
         ]);
     }
 }

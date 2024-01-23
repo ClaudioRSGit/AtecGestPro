@@ -6,6 +6,10 @@ use App\Http\Controllers\CourseClassController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\ClothingController;
 use App\Http\Controllers\PartnerTrainingUserController;
+use App\Http\Controllers\MaterialUserController;
+use App\Http\Controllers\PartnerController;
+use App\Http\Controllers\TrainingController;
+use App\Http\Controllers\TicketController;
 use App\Http\Controllers\Auth\LoginController;
 
 //Main Page
@@ -60,6 +64,8 @@ Route::middleware(['auth', 'checkRole:admin, tecnico'])->group(function () {
     Route::post('courses/massDelete', 'CourseController@massDelete')->name('courses.massDelete');
 
     Route::resource('tickets', 'TicketController');
+    Route::put('/tickets/{ticket}', 'TicketController@update')->name('tickets.update');
+
     Route::post('/comments', 'CommentController@store')->name('comments.store');
 
     Route::resource('import-excel', 'ExcelImportController');
