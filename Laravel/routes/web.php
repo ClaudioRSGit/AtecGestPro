@@ -39,6 +39,7 @@ Route::middleware(['auth', 'checkRole:admin, tecnico'])->group(function () {
     Route::get('/clothing-assignment/users/{id}', 'ClothingAssignmentController@index')->name('clothing-assignment.users');
 
     Route::resource('material-user', 'MaterialUserController');
+    Route::post('material-user/massDelete', 'MaterialUserController@massDelete')->name('material-user.massDelete');
 
     Route::resource('partners', 'PartnerController');
     Route::delete('partner-contact/{partner_contact}', 'PartnerController@destroyContact')->name('partner-contact.destroy');

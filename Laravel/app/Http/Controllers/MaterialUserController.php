@@ -23,7 +23,7 @@ class MaterialUserController extends Controller
 
         $courseClasses = CourseClass::with('students')->paginate(5);
         $courses = Course::all();
-        $nonDocents = User::all()->where('isStudent', false)->where('position', '!=', 'formando');
+        $nonDocents = User::all()->where('isStudent', false)->where('isStudent', false);
         return view('material-user.index', compact('courseClasses', 'courses', 'nonDocents'));
     }
 
@@ -34,15 +34,29 @@ class MaterialUserController extends Controller
      */
     public function create($id)
     {
-        $student = User::find($id);
-        $studentCourseId = $student->courseClass->course_id;
+        $user = User::find($id);
 
-        $clothes = Material::with('sizes', 'courses')
-            ->where('isClothing', 1)
-            ->whereHas('courses', function ($query) use ($studentCourseId) {
-                $query->where('courses.id', $studentCourseId);
-            })
-            ->get();
+        if($user->isStudent==1){
+            $student = $user;
+            $studentCourseId = $student->courseClass->course_id;
+
+            $clothes = Material::with('sizes', 'courses')
+                ->where('isClothing', 1)
+                ->whereHas('courses', function ($query) use ($studentCourseId) {
+                    $query->where('courses.id', $studentCourseId);
+                })
+                ->paginate(5);
+        } else
+        {
+            $student = $user;
+
+            $clothes = Material::with('sizes', 'courses')
+                ->where('isClothing', 1)
+                ->doesntHave('courses')
+                ->paginate(5);
+        }
+
+
 
         return view('material-user.create', compact('clothes', 'student'));
     }
@@ -126,9 +140,14 @@ class MaterialUserController extends Controller
      * @param  \App\MaterialUser  $materialUser
      * @return \Illuminate\Http\Response
      */
-    public function edit(MaterialUser $materialUser)
+    public function edit($id)
     {
-        //
+        $materialUsers = MaterialUser::with('material', 'user')->where('user_id', $id)->get();//        dd($materialUsers);
+        $user = User::find($id);
+
+
+
+        return view('material-user.edit', compact('materialUsers', 'user'));
     }
 
     /**
@@ -151,6 +170,21 @@ class MaterialUserController extends Controller
      */
     public function destroy(MaterialUser $materialUser)
     {
-        //
+
+        $materialUser->delete();
+        return back()->with('success', 'Material removido com sucesso!');
     }
+
+    public function massDelete(Request $request)
+    {
+        $materialIds = $request->input('material_ids');
+
+        if (is_array($materialIds) && count($materialIds) > 0) {
+            MaterialUser::whereIn('id', $materialIds)->delete();
+            return back()->with('success', 'Materiais removidos com sucesso!');
+        }
+
+        return back()->with('error', 'Nenhum material selecionado para exclusão.');
+    }
+
 }

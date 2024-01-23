@@ -95,19 +95,19 @@
 
                 </tbody>
             </table>
-            <div style="margin-bottom: 20px;">
-                <label for="delivered">Entrega Completa</label>
-                <input type="hidden" name="delivered_all" value="0">
-                <input type="checkbox" class="form-control" id="delivered" name="delivered_all" value="1" style="width: 15px;text-align: left;">
-            </div>
-            <h5>Observações </h5>
-            <div class="row">
+
+
+            <div class="row mb-3 ">
                 <div class="col-4">
-                    <textarea class="form-control" name="additionalNotes" id="textarea" aria-label="With textarea"></textarea>
+                    <textarea placeholder="Observações" class="form-control" name="additionalNotes" id="textarea" aria-label="With textarea"></textarea>
                 </div>
-                <div class="col">
-                    <div class="buttons">
-                        <button class="btn btn-primary" type="submit">
+                <div class="col-2 d-flex ">
+                    <label for="delivered"  style="margin: auto;" class=" ">Entrega Completa</label>
+                    <input type="hidden" name="delivered_all" value="0">
+                    <input type="checkbox" class="form-control" id="delivered" name="delivered_all" value="1" style="width: 15px;text-align: left;margin: auto ">
+                </div>
+                <div class="col-6 d-flex justify-content-end" style="margin: auto">
+                        <button class="btn btn-primary mx-3" type="submit">
                             <svg xmlns="http://www.w3.org/2000/svg" width="35" height="25" fill="currentColor"
                                  class="bi bi-floppy" viewBox="0 0 16 16">
                                 <path d="M11 2H9v3h2z" />
@@ -117,7 +117,7 @@
                                     d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
                             </svg> Guardar
                         </button>
-                        <button class="btn btn-primary" type="button"
+                        <button class="btn btn-danger" type="button"
                                 onclick="window.location.href='{{ url()->previous() }}'">
                             <svg xmlns="http://www.w3.org/2000/svg" width="35" height="25" fill="currentColor"
                                  class="bi bi-x-square" viewBox="0 0 16 16">
@@ -129,8 +129,12 @@
                         </button>
                     </div>
                 </div>
-            </div>
+
         </form>
+
+        {{$clothes->links() }}
+
+
 
     </div>
 
