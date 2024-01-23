@@ -23,20 +23,28 @@ class MaterialUserController extends Controller
 
         $courseFilter = request()->query('courseFilter');
         $searchCourseClass = request()->query('searchCourseClass');
+        $searchNonDocent = request()->query('searchNonDocent');
+
+        $query = CourseClass::with('students');
+
 
         if ($courseFilter) {
-            $courseClasses = CourseClass::with('students')->where('course_id', $courseFilter)->paginate(5);
-        } else {
-            $courseClasses = CourseClass::with('students')->paginate(5);
+            $query = $query->where('course_id', $courseFilter);
         }
 
         if ($searchCourseClass) {
-            $courseClasses = CourseClass::with('students')->where('description', 'like', '%' . $searchCourseClass . '%')->paginate(5);        } else {
-            $courseClasses = CourseClass::with('students')->paginate(5);
+            $query = $query->where('description', 'like', '%' . $searchCourseClass . '%');
         }
 
+        if($searchNonDocent){
+            $nonDocents = User::where('isStudent', false)->where('name', 'like', '%' . $searchNonDocent . '%')->paginate(5);
+        } else {
+            $nonDocents = User::all()->where('isStudent', false)->where('isStudent', false);
+        }
+
+        $courseClasses = $query->paginate(5);
+
         $courses = Course::all();
-        $nonDocents = User::all()->where('isStudent', false)->where('isStudent', false);
         return view('material-user.index', compact('courseClasses', 'courses', 'nonDocents', 'courseFilter', 'searchCourseClass'));
     }
 

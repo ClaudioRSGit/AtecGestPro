@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="">
+    <div class="w-100">
         <h1>Vestuário</h1>
 
         @if (session('success'))
@@ -26,7 +26,7 @@
                     <div class="w-40 d-flex justify-content-between align-items-center h-100" style="gap: 1rem">
 
 
-                        <div class="search-container w-80">
+                        <div class="search-container ">
                             <form action="{{ route('material-user.index') }}" method="GET">
                                 <div class="input-group pr-2">
                                     <input type="text" name="searchCourseClass" class="form-control"
@@ -146,9 +146,21 @@
 
             <div class="tab-pane fade" id="outros">
                 <div class="w-100 d-flex justify-content-between align-items-center mb-3" style="gap: 1rem">
-                    <div class="search-container w-40">
-                        <input type="text" id="search" class="form-control w-80" placeholder="Pesquisar Utilizador">
-                    </div>
+
+                    <form action="{{ route('material-user.index') }}" method="GET">
+                        <div class="input-group pr-2">
+                            <input type="text" name="searchNonDocent" class="form-control"
+                                   placeholder="{{ request('searchNonDocent') ? request('searchNonDocent') : 'Procurar...' }}">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-outline-secondary">
+                                    Procurar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+
+
                     <div class="w-15">
                         <select class="form-control" id="filter">
                             <option value="all">Todos</option>
@@ -198,6 +210,19 @@
         </div>
     </div>
 
+    <script>
+        //save tab in localstorage
+        $(document).ready(function() {
+            let activeTab = localStorage.getItem('activeTab');
+            if (activeTab) {
+                $('#myTabs a[href="' + activeTab + '"]').tab('show');
+            }
+
+            $('a[data-toggle="tab"]').on('click', function(e) {
+                localStorage.setItem('activeTab', $(this).attr('href'));
+            });
+        });
+    </script>
 
     <script>
         //logica filtro curso
