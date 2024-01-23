@@ -34,11 +34,20 @@ class UserRequest extends FormRequest
             'role_id' => 'required',
         ];
 
-        if ($this->input('role_id') != 3 && !$this->isMethod('put')) {
+        if ($this->isMethod('put')) {
+            $rules['password'] = [
+                'nullable',
+                'string',
+                'min:7',
+                'max:20',
+                'regex:/^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).*$/',
+            ];
+        } else {
             $rules['password'] = [
                 'required',
                 'string',
                 'min:7',
+                'max:20',
                 'regex:/^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).*$/',
             ];
         }
@@ -67,6 +76,8 @@ class UserRequest extends FormRequest
 
             'password.required' => 'A password é obrigatória!',
             'password.regex' => 'A password deve ter pelo menos uma letra maiúscula, um caracter especial e sete caracteres!',
+            'password.min' => 'A password deve ter pelo menos uma letra maiúscula, um caracter especial e sete caracteres!',
+            'password.max' => 'A password deve no máximo vinte caracteres!',
         ];
     }
 }
