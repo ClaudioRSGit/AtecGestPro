@@ -95,10 +95,11 @@ class CourseClassController extends Controller
         return view('course-classes.edit', compact('courseClass', 'courses'));
     }
 
-    public function update(Request $request, CourseClass $courseClass)
+    public function update(CourseClassRequest $request, CourseClass $courseClass)
     {
-        dd($request->all());
-        $courseClass->update($request->all());
+        $data = $request->validated();
+        $courseClass->update($data);
+        // $courseClass->update($request->all());
 
         return redirect()->route('course-classes.index')->with('success', 'Course class updated successfully!');
     }

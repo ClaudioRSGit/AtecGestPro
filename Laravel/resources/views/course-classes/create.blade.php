@@ -18,6 +18,7 @@
             <div class="form-group">
                 <label for="course_id">Curso:</label>
                 <select class="form-control" id="course_id" name="course_id" required>
+                    
                     @foreach ($courses as $course)
                         <option value="{{ $course->id }}">{{ $course->description }}</option>
                     @endforeach
