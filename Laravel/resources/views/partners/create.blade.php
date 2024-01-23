@@ -66,13 +66,13 @@
                                         </svg>
                                     </button>
                                 </div>
+                                @error("contact_description.$index")
+                                    <div class="alert alert-danger" id="contact-alert">{{ $message }}</div>
+                                @enderror
+                                @error("contact_value.$index")
+                                    <div class="alert alert-danger" id="contact-alert">{{ $message }}</div>
+                                @enderror
                             @endforeach
-                            @error('contact_description.0')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                            @error('contact_value.0')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
                         </div>
                     </div>
                 </div>
@@ -208,5 +208,11 @@
                 });
             }
         }
+
+        window.setTimeout(function() {
+                $("#contact-alert").fadeTo(500, 0).slideUp(500, function() {
+                    $(this).remove();
+                });
+            }, 2500);
     </script>
 @endsection
