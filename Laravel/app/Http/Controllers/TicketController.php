@@ -61,7 +61,10 @@ class TicketController extends Controller
 
     public function show(Ticket $ticket)
     {
-        $ticket = Ticket::with('users','requester')->find($ticket->id);
+        $ticket = Ticket::with(['users', 'requester', 'comments' => function($query) {
+            $query->orderBy('created_at', 'desc');
+        }, 'comments.user'])->find($ticket->id);
+
         $users = User::all();
         $statuses = TicketStatus::all();
         $priorities = TicketPriority::all();
