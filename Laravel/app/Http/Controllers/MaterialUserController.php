@@ -23,7 +23,7 @@ class MaterialUserController extends Controller
 
         $courseClasses = CourseClass::with('students')->paginate(5);
         $courses = Course::all();
-        $nonDocents = User::all()->where('isStudent', false)->where('position', '!=', 'formando');
+        $nonDocents = User::all()->where('isStudent', false)->where('isStudent', false);
         return view('material-user.index', compact('courseClasses', 'courses', 'nonDocents'));
     }
 
@@ -34,15 +34,29 @@ class MaterialUserController extends Controller
      */
     public function create($id)
     {
-        $student = User::find($id);
-        $studentCourseId = $student->courseClass->course_id;
+        $user = User::find($id);
 
-        $clothes = Material::with('sizes', 'courses')
-            ->where('isClothing', 1)
-            ->whereHas('courses', function ($query) use ($studentCourseId) {
-                $query->where('courses.id', $studentCourseId);
-            })
-            ->get();
+        if($user->isStudent==1){
+            $student = $user;
+            $studentCourseId = $student->courseClass->course_id;
+
+            $clothes = Material::with('sizes', 'courses')
+                ->where('isClothing', 1)
+                ->whereHas('courses', function ($query) use ($studentCourseId) {
+                    $query->where('courses.id', $studentCourseId);
+                })
+                ->paginate(5);
+        } else
+        {
+            $student = $user;
+
+            $clothes = Material::with('sizes', 'courses')
+                ->where('isClothing', 1)
+                ->doesntHave('courses')
+                ->paginate(5);
+        }
+
+
 
         return view('material-user.create', compact('clothes', 'student'));
     }
