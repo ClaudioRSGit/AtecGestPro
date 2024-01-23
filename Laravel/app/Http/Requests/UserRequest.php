@@ -34,7 +34,7 @@ class UserRequest extends FormRequest
             'role_id' => 'required',
         ];
 
-        if ($this->filled('password') && $this->input('role_id') != 3) {
+        if ($this->input('role_id') != 3) {
         $rules['password'] = [
             'required',
             'string',
@@ -54,6 +54,8 @@ class UserRequest extends FormRequest
             'email.required' => 'O email é obrigatório!',
             'email.email' => 'O email deve ser um endereço de email válido!',
             'contact.required' => 'O contato é obrigatório!',
+            'password.required' => 'A password é obrigatória!',
+            // 'password.?' => 'A Password deve ter pelo menos uma letra maiúscula, um caracter especial e sete caracteres!',
         ];
     }
 }
