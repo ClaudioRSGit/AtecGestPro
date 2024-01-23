@@ -52,22 +52,30 @@
                                 Contacto</button>
                         </div>
                         <div id="contacts-container">
-                            <div class="contact-group mb-3">
-                                <input type="text" class="form-control" name="contact_description[]"
-                                    placeholder="Descrição">
-                                <input type="text" class="form-control" name="contact_value[]" placeholder="Contacto">
-                                <button type="button" class="btn remove-contact" onclick="removeContact(this)">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14"
-                                        viewBox="0 0 448 512">
-                                        <path fill="#116fdc"
-                                            d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z" />
-                                    </svg>
-                                </button>
-                            </div>
+                            @foreach (old('contact_description', ['']) as $index => $contactDescription)
+                                <div class="contact-group mb-3">
+                                    <input type="text" class="form-control" name="contact_description[]"
+                                        placeholder="Descrição" value="{{ $contactDescription }}">
+                                    <input type="text" class="form-control" name="contact_value[]" placeholder="Contacto"
+                                        value="{{ old('contact_value.' . $index) }}">
+                                    <button type="button" class="btn remove-contact" onclick="removeContact(this)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14"
+                                            viewBox="0 0 448 512">
+                                            <path fill="#116fdc"
+                                                d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                                @error("contact_description.$index")
+                                    <div class="alert alert-danger contact-alert">{{ $message }}</div>
+                                @enderror
+                                @error("contact_value.$index")
+                                    <div class="alert alert-danger contact-alert">{{ $message }}</div>
+                                @enderror
+                            @endforeach
                         </div>
                     </div>
                 </div>
-
             </div>
 
             <div class="row">
@@ -200,5 +208,11 @@
                 });
             }
         }
+
+        window.setTimeout(function() {
+                $(".contact-alert").fadeTo(500, 0).slideUp(500, function() {
+                    $(this).remove();
+                });
+            }, 2500);
     </script>
 @endsection
