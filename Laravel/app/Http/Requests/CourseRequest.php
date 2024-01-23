@@ -24,7 +24,7 @@ class CourseRequest extends FormRequest
     public function rules()
     {
         return [
-            'code' => 'required|string|max:15',
+            'code' => 'required|string|min:2|max:15',
             'description' => 'required|string|min:10|max:100',
         ];
     }
@@ -32,11 +32,12 @@ class CourseRequest extends FormRequest
     public function messages()
     {
         return [
-            'code.required' => 'O código é obrigatório.',
-            'code.max' => 'O código deve ter no máximo 15 caracteres.',
-            'description.required' => 'A descrição é obrigatória.',
-            'description.min' => 'A descrição deve ter no mínimo 10 caracteres.',
-            'description.max' => 'A descrição deve ter no máximo 100 caracteres.',
+            'code.required' => 'O código é obrigatório!',
+            'code.min' => 'O código deve ter no miniimo 2 caracteres!',
+            'code.max' => 'O código deve ter no máximo 15 caracteres!',
+            'description.required' => 'A descrição é obrigatória!',
+            'description.min' => 'A descrição deve ter no mínimo 10 caracteres!',
+            'description.max' => 'A descrição deve ter no máximo 100 caracteres!',
         ];
     }
 }

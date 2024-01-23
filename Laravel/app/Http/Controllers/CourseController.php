@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Course;
 use Illuminate\Http\Request;
+use App\Http\Requests\CourseRequest;
 
 class CourseController extends Controller
 {
     public function index(Request $request)
     {
         $nameFilter = $request->input('nameFilter');
-//dd($nameFilter);
+
         $query = Course::query();
 
         if ($nameFilter) {
@@ -33,13 +34,9 @@ class CourseController extends Controller
         return view('courses.create');
     }
 
-    public function store(Request $request)
+    public function store(CourseRequest $request)
     {
         try {
-            $request->validate([
-                'code' => 'required|string|max:15',
-                'description' => 'required|string|min:10|max:100',
-            ]);
 
             $course = Course::create($request->all());
 
@@ -62,14 +59,8 @@ class CourseController extends Controller
         return view('courses.edit', compact('course'));
     }
 
-    public function update(Request $request, Course $course)
+    public function update(CourseRequest $request, Course $course)
     {
-        $request->validate([
-            'code' => 'required|string|max:15',
-            'description' => 'required|string|min:10|max:100',
-        ]);
-
-
         $course->update($request->all());
 
         return redirect()->route('courses.index')->with('success', 'Curso atualizado com sucesso!');
