@@ -29,23 +29,37 @@
             </div>
 
             <div class="mb-3">
-                <label for="comments" class="form-label">Comentários:</label>
-                @foreach($ticket->comments as $comment)
-                    <div class="card mb-2">
-                        <div class="card-body d-flex justify-content-between">
-                            <div>
-                                <p class="card-text">
-                                    {{ $comment->user->name }}: {{ $comment->description }}
-                                </p>
-                            </div>
-                            <div>
-                                <p class="card-text">
-                                    {{ $comment->created_at }}
-                                </p>
+                <form action="{{ route('comments.store') }}" method="post">
+                    @csrf
+                    <input type="hidden" name="ticket_id" value="{{ $ticket->id }}">
+
+                    <div class="mb-3">
+                        <label for="new-comment" class="form-label">Adicionar Comentário:</label>
+                        <textarea class="form-control" id="new-comment" name="comment" required></textarea>
+                        <button type="submit" class="btn btn-primary mt-2">Enviar Comentário</button>
+                    </div>
+                </form>
+
+                <div class="mb-3">
+                    <label for="comments" class="form-label">Comentários:</label>
+                    @foreach($ticket->comments as $comment)
+                        <div class="card mb-2">
+                            <div class="card-body d-flex justify-content-between">
+                                <div>
+                                    <label class="card-text font-weight-bold">
+                                        {{ $comment->user->name }}:
+                                    </label>
+                                    {{ $comment->description }}
+                                </div>
+                                <div>
+                                    <p class="card-text">
+                                        {{ $comment->created_at }}
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                </div>
             </div>
         </div>
 
