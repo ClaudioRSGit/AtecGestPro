@@ -110,7 +110,7 @@
             @endforeach
             </tbody>
         </table>
-        {{ $users->links() }}
+            {{ $users->appends(request()->input())->links() }}
 
         <div class="container">
             <form action="{{ route('import-excel.importUsers') }}" method="POST" enctype="multipart/form-data">

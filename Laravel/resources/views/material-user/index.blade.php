@@ -34,16 +34,18 @@
                             </select>
                         </div>
                     </div>
-                    <div class="buttons h-100">
-                        <div class="w-30">
-                            <select class="form-control" id="filter">
-                                <option value="all">Todos</option>
-                                @foreach ($courses as $course)
-                                    <option value="{{ $course->id }}">{{ $course->description }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                    <div class="buttons ">
 
+                        <form id="courseFilterForm" action="{{ route('material-user.index') }}" method="GET">
+                            <div class="w-50">
+                                <select class="form-control" id="courseFilter" name="courseFilter" onchange="submitForm()">
+                                    <option value="" {{request('courseFilter') === '' ? 'selected' : ''}}>Todos</option>
+                                    @foreach ($courses as $course)
+                                        <option value="{{ $course->id }}" {{request('courseFilter') == $course->id ? 'selected' : ''}}>{{ $course->description }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </form>
                         <a href="{{ route('course-classes.create') }}" class="btn btn-primary">
                             <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512">
                                 <path fill="#fff"
@@ -53,14 +55,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="form-group mx-2" style="width: 30%">
-                    <select class="form-control" id="filter">
-                        <option value="all">Todos</option>
-                        @foreach($courses as $course)
-                            <option value="{{ $course->id }}">{{ $course->description }}</option>
-                        @endforeach
-                    </select>
-                </div>
+
                 <div id="accordion">
                     <div class="ms-auto">
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="select-all">
@@ -116,7 +111,7 @@
                                                             </a>
                                                         </div>
                                                         <div style="width: 40%">
-{{--  --}}
+                                                            {{--  --}}
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -192,6 +187,16 @@
 
 
     <script>
+        //logica filtro curso
+        function submitForm() {
+            let courseFilterValue = document.getElementById("courseFilter").value;
+
+            document.getElementById("courseFilterForm").submit();
+        }
+    </script>
+
+
+    <script>
         document.addEventListener('DOMContentLoaded', function () {
             var checkboxes = document.querySelectorAll('.no-propagate');
 
@@ -205,8 +210,6 @@
         document.addEventListener('DOMContentLoaded', function () {
             const selectAllCheckbox = document.getElementById('select-all');
             const checkboxes = document.querySelectorAll('.accordion-checkbox');
-            const searchInput = document.getElementById('search');
-            const filterDropdown = document.getElementById('filter');
             const sortDropdown = document.getElementById('sort');
 
             sortDropdown.addEventListener('change', function () {
@@ -253,63 +256,17 @@
                 });
             });
 
-            searchInput.addEventListener('input', function () {
-                const searchTerm = searchInput.value.toLowerCase();
-                filterInput(searchTerm);
-            });
 
-            filterDropdown.addEventListener('change', function () {
-                filterInput();
-            });
 
-            function filterInput(searchTerm = null) {
-                const courseClassCards = document.querySelectorAll('.card');
 
-                courseClassCards.forEach(card => {
-                    const courseId = card.querySelector('.accordion-checkbox').getAttribute('data-course');
-                    const filterValue = filterDropdown.value;
-
-                    const matchesFilter = (
-                        (filterValue === 'all') ||
-                        (filterValue === courseId)
-                    );
-
-                    const matchesSearch = !searchTerm || (
-                        card.textContent.toLowerCase().includes(searchTerm) ||
-                        card.querySelector('button').textContent.toLowerCase().includes(searchTerm)
-                    );
-
-                    card.style.display = matchesFilter && matchesSearch ? '' : 'none';
-                });
-            }
-
-            function filterInputNonDocent(searchTerm = null) {
-                const courseClassCards = document.querySelectorAll('.card');
-
-                courseClassCards.forEach(card => {
-                    const courseId = card.querySelector('.accordion-checkbox').getAttribute('data-course');
-                    const filterValue = filterDropdown.value;
-
-                    const matchesFilter = (
-                        (filterValue === 'all') ||
-                        (filterValue === courseId)
-                    );
-
-                    const matchesSearch = !searchTerm || (
-                        card.textContent.toLowerCase().includes(searchTerm) ||
-                        card.querySelector('button').textContent.toLowerCase().includes(searchTerm)
-                    );
-
-                    card.style.display = matchesFilter && matchesSearch ? '' : 'none';
-                });
-            }
-        });
 
         setTimeout(function () {
             $("#success-alert").fadeTo(500, 0).slideUp(500, function () {
                 $(this).remove();
             });
-        }, 2000);
+        }, 2000);}
+
+        );
     </script>
     <style>
         #accordion .card {

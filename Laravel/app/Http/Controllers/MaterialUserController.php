@@ -18,13 +18,21 @@ class MaterialUserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
 
-        $courseClasses = CourseClass::with('students')->paginate(5);
+        $courseFilter = request()->query('courseFilter');
+
+        if ($courseFilter) {
+            $courseClasses = CourseClass::with('students')->where('course_id', $courseFilter)->paginate(5);
+        } else {
+            $courseClasses = CourseClass::with('students')->paginate(5);
+        }
+
+//        $courseClasses = CourseClass::with('students')->paginate(5);
         $courses = Course::all();
         $nonDocents = User::all()->where('isStudent', false)->where('isStudent', false);
-        return view('material-user.index', compact('courseClasses', 'courses', 'nonDocents'));
+        return view('material-user.index', compact('courseClasses', 'courses', 'nonDocents', 'courseFilter'));
     }
 
     /**

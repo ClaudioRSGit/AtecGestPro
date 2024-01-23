@@ -334,7 +334,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{$trainings->links()}}
+                {{ $trainings->appends(request()->input())->links() }}
             </div>
 
         </div>
