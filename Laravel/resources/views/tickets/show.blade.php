@@ -2,13 +2,8 @@
 
 @section('content')
 <div class="container">
-    @if(session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-    @endif
-
     <h1>Ticket #{{ $ticket->id }}</h1>
+
     <div class="row">
         <div class="col-md-9">
             <div class="mb-3">
@@ -22,7 +17,7 @@
             </div>
 
             <div class="mb-2">
-                <p>Criado em: {{ $ticket->created_at->format('d/m/Y H:i') }}</p>
+                <p>Criado em: {{ $ticket->created_at }}</p>
             </div>
 
             <div class="mb-3">
@@ -51,9 +46,10 @@
                         <div class="card mb-2">
                             <div class="card-body d-flex justify-content-between">
                                 <div>
-                                    <p class="card-text">
-                                        {{ $comment->user->name }}: {{ $comment->description }}
-                                    </p>
+                                    <label class="card-text font-weight-bold">
+                                        {{ $comment->user->name }}:
+                                    </label>
+                                    {{ $comment->description }}
                                 </div>
                                 <div>
                                     <p class="card-text">
@@ -85,18 +81,12 @@
 
             <div class="mb-3">
                 <label for="category" class="form-label">Categoria:</label>
-                    <select class="form-control" id="category" name="category" disabled>
-                        @foreach($categories as $category)
-                            <option value="{{ $category->id }}" {{ $ticket->category_id == $category->id ? 'selected' : '' }}>
-                                {{ $category->description }}
-                            </option>
-                        @endforeach
-                    </select>
+                <input type="text" class="form-control" value="{{ $ticket->ticketCategory->description ?? 'N/A' }}" disabled>
             </div>
 
             <div class="mb-3">
                 <label>Data Limite:</label>
-                <input type="text" class="form-control" value="{{ $ticket->dueByDate ? $ticket->dueByDate : 'N/A' }}" disabled>
+                <input type="text" class="form-control" value="{{ $ticket->dueByDate ?? 'N/A' }}" disabled>
             </div>
 
             <div class="mb-5">

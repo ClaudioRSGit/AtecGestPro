@@ -7,6 +7,8 @@ use App\User;
 use App\TicketStatus;
 use App\TicketPriority;
 use App\TicketCategory;
+use App\TicketUser;
+
 use Illuminate\Http\Request;
 
 class TicketController extends Controller
@@ -77,43 +79,45 @@ class TicketController extends Controller
     public function edit(Ticket $ticket)
     {
         $ticket = Ticket::with('users','requester')->find($ticket->id);
-        $users = User::where('role_id', 1)->get();
+        $technicians = User::where('role_id', 1)->get();
+        $requester = User::where('id', $ticket->user_id)->first();
         $statuses = TicketStatus::all();
         $priorities = TicketPriority::all();
         $categories = TicketCategory::all();
         $userTickets = Ticket::where('user_id', $ticket->user_id)->pluck('id');
 
-        return view('tickets.edit', compact('ticket', 'users', 'statuses', 'priorities', 'categories', 'userTickets'));
+        return view('tickets.edit', compact('ticket', 'technicians', 'requester', 'statuses', 'priorities', 'categories', 'userTickets'));
     }
 
     public function update(Request $request, Ticket $ticket)
     {
-        $validatedData = $request->validate([
-            'title' => 'required|string',
+        $ticket2 = Ticket::with('users','requester','ticketPriority','ticketStatus','ticketCategory')->find($ticket->id);
+
+        $this->validate($request, [
+            'user_id' => 'required|integer|exists:users,id',
+            'title' => 'required|string|max:255',
             'description' => 'required|string',
             'dueByDate' => 'required|date',
             'attachment' => 'sometimes|file|max:20480', // 20MB
-            'status' => 'required|exists:ticket_statuses,id',
-            'technician' => 'required|exists:users,id',
-            'priority' => 'required|exists:ticket_priorities,id',
-            'category' => 'required|exists:ticket_categories,id',
+            'ticket_status_id' => 'required|integer|exists:ticket_statuses,id',
+            'ticket_priority_id' => 'required|integer|exists:ticket_priorities,id',
+            'ticket_category_id' => 'required|integer|exists:ticket_categories,id',
         ]);
 
         if ($request->hasFile('attachment')) {
             $filename = $request->file('attachment')->store('attachments', 'public');
-            $ticket->attachment = $filename;
         }
-        $ticket->title = $request->title;
-        $ticket->description = $request->description;
-        $ticket->ticket_status_id = $request->status;
-        $ticket->user_id = $request->technician;
-        $ticket->ticket_priority_id = $request->priority;
-        $ticket->ticket_category_id = $request->category;
-        $ticket->dueByDate = $request->dueByDate;
 
-        $ticket->save();
+        $ticket->user_id = $request->user_id;
+        $ticket2->title = $request->title;
+        $ticket2->description = $request->description;
+        $ticket2->ticket_priority_id = $request->priority_id;
+        $ticket2->ticket_status_id = $request->status_id;
+        $ticket2->ticket_category_id = $request->category_id;
 
-        return redirect()->route('tickets.index');
+        $ticket2->update($request->all());
+
+        return redirect()->route('tickets.index')->with('success', 'Ticket atualizado com sucesso!');
     }
 
     public function destroy(Ticket $ticket)
