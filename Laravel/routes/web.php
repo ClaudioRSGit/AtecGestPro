@@ -24,7 +24,7 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
 //Tecnico & Admin
-Route::middleware(['auth', 'checkRole:admin, tecnico'])->group(function () {
+Route::middleware(['auth', 'checkRole:admin,tecnico'])->group(function () {
     //Route::get('/home', 'HomeController@index')->name('home');
     //Route::resource('students', 'StudentController');
 

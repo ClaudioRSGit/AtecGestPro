@@ -66,17 +66,17 @@
                         <tbody class="customTableStyling">
                             <tr class="filler"></tr>
                             @foreach($materials as $material)
-                            <tr>
-                                <td>{{ $material->name }}</td>
-                                <td>{{ $material->description }}</td>
-                                <td>
-                                    <input type="number" name="material_quantities[{{ $material->id }}]" value="1" min="1" max="{{ $material->quantity }}" @if($material->quantity == 0) disabled @endif>
-                                </td>
-                                <td>
-                                    <input type="checkbox" name="materials[]" value="{{ $material->id }}" @if($material->quantity == 0) disabled @endif>
-                                </td>
-                            </tr>
-                            <tr class="filler"></tr>
+                                <tr>
+                                    <td>{{ $material->name }}</td>
+                                    <td>{{ $material->description }}</td>
+                                    <td>
+                                        <input type="number" name="material_quantities[{{ $material->id }}]" value="1" min="1" max="{{ $material->quantity }}" @if($material->quantity == 0) disabled @endif>
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" name="materials[]" value="{{ $material->id }}" @if($material->quantity == 0) disabled @endif>
+                                    </td>
+                                </tr>
+                                <tr class="filler"></tr>
                             @endforeach
                         </tbody>
                     </table>
@@ -159,7 +159,6 @@
 
         .startCalendar {
             grid-area: startCalendar;
-            text-align: center;
         }
         .startCalendar input {
             margin: auto;
