@@ -125,24 +125,31 @@ class UserController extends Controller
     }
 
 
-    public function update(UserRequest  $request, User $user)
+    public function update(UserRequest $request, User $user)
     {
-
         if ($user->role_id == 3 && $request->input('role_id') != 3 && !$request->filled('password')) {
             return redirect()->back()->with('error', 'Password obrigatória ao alterar de Formando para outra função.');
         }
 
-        if ($request->input('isStudent') != 1) {
-            $request['course_class_id'] = null;
+        $data = $request->validated();
+
+        if ($user->role_id != 3 && $request->input('role_id') == 3) {
+            $data['password'] = null;
         }
 
-        $data = $request->validated();
+        if ($request->input('isStudent') != 1) {
+            $data['course_class_id'] = null;
+        }
+
+        if ($request->filled('password') && $request->input('role_id') != 3) {
+            $data['password'] = $this->encryptPassword($request->input('password'));
+        }
 
         $user->update($data);
 
         return redirect()->route('users.index')->with('success', 'Utilizador atualizado com sucesso!');
-
     }
+
 
 
     public function destroy(User $user)
