@@ -22,6 +22,7 @@ class MaterialUserController extends Controller
     {
 
         $courseFilter = request()->query('courseFilter');
+        $searchCourseClass = request()->query('searchCourseClass');
 
         if ($courseFilter) {
             $courseClasses = CourseClass::with('students')->where('course_id', $courseFilter)->paginate(5);
@@ -29,10 +30,14 @@ class MaterialUserController extends Controller
             $courseClasses = CourseClass::with('students')->paginate(5);
         }
 
-//        $courseClasses = CourseClass::with('students')->paginate(5);
+        if ($searchCourseClass) {
+            $courseClasses = CourseClass::with('students')->where('description', 'like', '%' . $searchCourseClass . '%')->paginate(5);        } else {
+            $courseClasses = CourseClass::with('students')->paginate(5);
+        }
+
         $courses = Course::all();
         $nonDocents = User::all()->where('isStudent', false)->where('isStudent', false);
-        return view('material-user.index', compact('courseClasses', 'courses', 'nonDocents', 'courseFilter'));
+        return view('material-user.index', compact('courseClasses', 'courses', 'nonDocents', 'courseFilter', 'searchCourseClass'));
     }
 
     /**
