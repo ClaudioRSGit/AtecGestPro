@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div>
+    <div class="container">
         <div class="table-responsive">
 
             <div class="d-flex">
