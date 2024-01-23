@@ -49,8 +49,8 @@ Route::middleware(['auth', 'checkRole:admin, tecnico'])->group(function () {
     Route::resource('external', 'PartnerTrainingUserController');
     Route::post('external/massDelete', 'PartnerTrainingUserController@massDelete')->name('external.massDelete');
 
-Route::get('/material-user/create/{id}', 'MaterialUserController@create')->name('material-user.create');
-Route::post('/material-user', 'MaterialUserController@store')->name('material-user.store');
+    Route::get('/material-user/create/{id}', 'MaterialUserController@create')->name('material-user.create');
+    Route::post('/material-user', 'MaterialUserController@store')->name('material-user.store');
 
     Route::resource('course-classes', 'CourseClassController');
     Route::post('course-classes/massDelete', 'CourseClassController@massDelete')->name('course-classes.massDelete');
