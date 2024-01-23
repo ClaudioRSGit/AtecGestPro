@@ -6,6 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class MaterialUser extends Model
 {
+    protected $fillable = [
+        'material_id',
+        'user_id',
+        'quantity',
+        'size_id',
+        'delivery_date',
+        'delivered_all',
+    ];
+
     public function material()
     {
         return $this->belongsTo(Material::class);
@@ -14,6 +23,11 @@ class MaterialUser extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function size()
+    {
+        return $this->belongsTo(Size::class);
     }
 
 }

@@ -12,7 +12,7 @@ class ExcelImportController extends Controller
 {
     public function index()
     {
-        return view('users.index');
+        return view('excel.importStudents');
     }
 
     public function importUsers(Request $request)
@@ -50,6 +50,6 @@ class ExcelImportController extends Controller
 
         Excel::import(new StudentImportClass, $file);
 
-        return view('excel.importStudents');
+        return view('excel.studentsSuccess');
     }
 }

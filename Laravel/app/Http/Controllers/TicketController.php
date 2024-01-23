@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Ticket;
 use App\User;
+use App\TicketStatus;
+use App\TicketPriority;
+use App\TicketCategory;
 use Illuminate\Http\Request;
 
 class TicketController extends Controller
@@ -12,37 +15,121 @@ class TicketController extends Controller
     {
         $tickets = Ticket::with('users','requester')->get();
         $users = User::all();
-        // dd($tickets);
         return view('tickets.index', compact('tickets', 'users'));
     }
 
     public function create()
     {
-        //
+        $statuses = TicketStatus::all();
+        $priorities = TicketPriority::all();
+        $categories = TicketCategory::all();
+        $users = User::all();
+
+        return view('tickets.create', compact('statuses', 'priorities', 'categories', 'users'));
     }
 
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'status_id' => 'required|exists:ticket_statuses,id',
+            'technician_id' => 'required|exists:users,id',
+            'attachment' => 'sometimes|file|max:20480',
+            'priority_id' => 'required|exists:ticket_priorities,id',
+            'category_id' => 'required|exists:ticket_categories,id',
+            'dueByDate' => 'required|date',
+        ]);
+        if ($request->hasFile('attachment')) {
+            $filename = $request->file('attachment')->store('attachments', 'public');
+        }
+        $ticket = new Ticket([
+            'title' => $request->title,
+            'description' => $request->description,
+            'ticket_status_id' => $request->status_id,
+            'ticket_priority_id' => $request->priority_id,
+            'ticket_category_id' => $request->category_id,
+            'dueByDate' => $request->dueByDate,
+            'attachment' => $filename ?? null,
+            'user_id' => $request->technician_id,
+        ]);
+
+        $ticket->save();
+
+        return redirect()->route('tickets.index');
     }
 
     public function show(Ticket $ticket)
     {
-        //
+        $ticket = Ticket::with(['users', 'requester', 'comments' => function($query) {
+            $query->orderBy('created_at', 'desc');
+        }, 'comments.user'])->find($ticket->id);
+
+        $users = User::all();
+        $statuses = TicketStatus::all();
+        $priorities = TicketPriority::all();
+        $categories = TicketCategory::all();
+        $userTickets = Ticket::where('user_id', $ticket->user_id)->pluck('id');
+
+        return view('tickets.show', compact('ticket', 'userTickets', 'users', 'statuses', 'priorities', 'categories'));
     }
 
     public function edit(Ticket $ticket)
     {
-        //
+        $ticket = Ticket::with('users','requester')->find($ticket->id);
+        $users = User::all();
+        $statuses = TicketStatus::all();
+        $priorities = TicketPriority::all();
+        $categories = TicketCategory::all();
+        $userTickets = Ticket::where('user_id', $ticket->user_id)->pluck('id');
+
+        return view('tickets.edit', compact('ticket', 'users', 'statuses', 'priorities', 'categories', 'userTickets'));
     }
 
     public function update(Request $request, Ticket $ticket)
     {
-        //
+        $validatedData = $request->validate([
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'dueByDate' => 'required|date',
+            'attachment' => 'sometimes|file|max:20480', // 20MB
+            'status' => 'required|exists:ticket_statuses,id',
+            'technician' => 'required|exists:users,id',
+            'priority' => 'required|exists:ticket_priorities,id',
+            'category' => 'required|exists:ticket_categories,id',
+        ]);
+
+        if ($request->hasFile('attachment')) {
+            $filename = $request->file('attachment')->store('attachments', 'public');
+            $ticket->attachment = $filename;
+        }
+        $ticket->title = $request->title;
+        $ticket->description = $request->description;
+        $ticket->ticket_status_id = $request->status;
+        $ticket->user_id = $request->technician;
+        $ticket->ticket_priority_id = $request->priority;
+        $ticket->ticket_category_id = $request->category;
+        $ticket->dueByDate = $request->dueByDate;
+
+        $ticket->save();
+
+        return redirect()->route('tickets.index');
     }
 
     public function destroy(Ticket $ticket)
     {
-        //
+        $ticket->delete();
+
+        return redirect()->route('tickets.index');
+    }
+
+    public function showComment($id)
+    {
+        $ticket = Ticket::with(['comments' => function($query) {
+            $query->orderBy('created_at', 'desc');
+        },
+        'comments.user'])->findOrFail($id);
+
+        return view('tickets.show', compact('ticket'));
     }
 }

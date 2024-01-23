@@ -98,8 +98,23 @@ main > .content{
 
 .container{
     height: 100%;
-    width: 80%;
+    width: 90%;
     flex: 1 0 auto;
+}
+
+.hideElements{
+    display: none !important;
+    width: 0 !important;
+}
+.expandElements{
+    width: 95% !important;
+}
+
+.sidebarContent, .navbar, .content, .toggleableElement {
+    transition: all 0.3s ease-in-out;
+}
+.no-transition {
+    transition: none !important;
 }
 
 footer {
@@ -123,8 +138,7 @@ td a{
 }
 
 
-tr:not(th), tr:not(.filteredTrainings){
-    border-radius: 6px !important;
+tr > td{
     transition: background-color 0.2s;
     cursor: pointer;
     text-align: center;
@@ -1913,7 +1927,7 @@ pre code {
   padding: 0.75rem;
   vertical-align: top;
   border-top: 1px solid #dee2e6;
-  text-align: center !important;
+  text-align: left !important;
   vertical-align: middle !important;
 }
 

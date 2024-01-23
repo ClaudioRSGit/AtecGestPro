@@ -18,6 +18,13 @@ class CommentSeeder extends Seeder
             'user_id' => 3,
             'isPublic' => true,
         ]);
+        DB::table('comments')->insert([
+            'description' => 'teste comment teste comment teste comment',
+            'ticket_id' => 1,
+            'user_id' => 2,
+            'isPublic' => true,
+            'created_at' => '2020-05-20 15:00:00',
+        ]);
 
         // Seed 2
         DB::table('comments')->insert([

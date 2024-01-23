@@ -66,13 +66,18 @@
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
-
                 </div>
 
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="role_id" class="form-label">Função:</label>
                         <select class="form-control" id="role_id" name="role_id" onchange="toggleCourseClassDiv()">
+
+{{--
+                            @foreach($roles as $role)
+                                <option
+                                    value="{{ $role->id }}" {{ old('role_id', $user->role_id) == $role->id ? 'selected' : '' }}> --}}
+
                             @foreach ($roles as $role)
                                 <option value="{{ $role->id }}"
                                     {{ $user->role->description == $role->description ? 'selected' : '' }}>
@@ -82,6 +87,11 @@
                         </select>
                     </div>
                     <input type="hidden" name="isStudent" id="isStudent" value="{{ old('role_id') == 3 ? 1 : 0 }}">
+
+                    <div class="mb-3" id="notes">
+                        <label for="notes" class="form-label">Curso:</label>
+                        <textarea class="form-control" id="notes" name="notes">{{ $user->notes }}</textarea>
+                    </div>
 
 
                     <div class="mb-3" id="labelCourseClass">

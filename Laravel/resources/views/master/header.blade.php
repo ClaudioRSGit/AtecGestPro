@@ -1,13 +1,13 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <ul class="navbar-nav">
         <li class="nav-item">
-            <a class="nav-link mb-2">
+            <a class="nav-link mb-2 btn btn-light" onclick="toggleSidebar()">
                 <img src="https://cdn.icon-icons.com/icons2/2518/PNG/512/menu_icon_151204.png" alt="Menu"
                     style="width: 25px; height: 25px;">
             </a>
         </li>
     </ul>
-    <h5>Bem vindo, {{ Auth::user()->name }}!</h5>
+    <h5 class="ml-2">Bem vindo, {{ Auth::user()->name }}!</h5>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown">

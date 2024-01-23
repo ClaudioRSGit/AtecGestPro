@@ -23,6 +23,50 @@ class MaterialSeeder extends Seeder
             'gender' => null,
 
         ]);
+        DB::table('materials')->insert([
+            'name' => 'Martelo',
+            'description' => 'Para martelar',
+            'isInternal' => 0,
+            'quantity' => 5,
+            'acquisition_date' => '2020-12-09 21:04:24',
+            'supplier' => 'Ferragens do Zé',
+            'isClothing' => 0,
+            'gender' => null,
+
+        ]);
+        DB::table('materials')->insert([
+            'name' => 'Martelo',
+            'description' => 'Para martelar',
+            'isInternal' => 0,
+            'quantity' => 5,
+            'acquisition_date' => '2020-12-09 21:04:24',
+            'supplier' => 'Ferragens do Zé',
+            'isClothing' => 0,
+            'gender' => null,
+
+        ]);
+        DB::table('materials')->insert([
+            'name' => 'Martelo',
+            'description' => 'Para martelar',
+            'isInternal' => 0,
+            'quantity' => 5,
+            'acquisition_date' => '2020-12-09 21:04:24',
+            'supplier' => 'Ferragens do Zé',
+            'isClothing' => 0,
+            'gender' => null,
+
+        ]);
+        DB::table('materials')->insert([
+            'name' => 'Martelo',
+            'description' => 'Para martelar',
+            'isInternal' => 0,
+            'quantity' => 5,
+            'acquisition_date' => '2020-12-09 21:04:24',
+            'supplier' => 'Ferragens do Zé',
+            'isClothing' => 0,
+            'gender' => null,
+
+        ]);
 
         // Seed 3
         DB::table('materials')->insert([

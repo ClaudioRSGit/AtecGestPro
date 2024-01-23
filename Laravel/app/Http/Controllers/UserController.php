@@ -18,35 +18,36 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        //        $positionFilter = $request->input('positionFilter');
-        //        $nameFilter = $request->input('nameFilter');
+
+        $searchName = $request->input('searchName');
+        $roleFilter = $request->input('roleFilter');
+
+        $query = User::with('courseClass', 'role');
+
+        if ($roleFilter && $roleFilter !== 'all') {
+            $query->whereHas('role', function ($roleQuery) use ($roleFilter) {
+                $roleQuery->where('id', $roleFilter);
+            });
+        }
+
+        if ($searchName) {
+            $query->where('name', 'like', "%$searchName%");
+
+        }
+
+
+
+        $users = $query->paginate(5);
         $courseClasses = CourseClass::all();
         $roles = Role::all();
 
-        $query = User::with('CourseClass');
 
 
 
-        //        if ($positionFilter) {
-        //            $query->where('role_id', $positionFilter);
-        //            $users = $query->paginate(5);
-        //        } elseif ($nameFilter) {
-        //            $query->where(function ($query) use ($nameFilter) {
-        //                $query->where('name', 'like', $nameFilter . '%');
-        //                $users = $query->paginate(5);
-        //            });
-        //        } else {
-        //
-        //        }
-
-        $users = $query->paginate(5);
 
 
-        //        if ($request->ajax()) {
-        //            return view('users.partials.user_table', compact('users', 'courseClasses',  'roles'));
-        //        }
 
-        return view('users.index', compact('users', 'courseClasses', 'roles'));
+        return view('users.index', compact('users', 'courseClasses', 'roles', 'roleFilter'));
     }
 
     /**
@@ -108,7 +109,6 @@ class UserController extends Controller
             $courseDescription = null;
         }
 
-        //        dd($courseDescription);
         return view('users.show', compact('user', 'courseClasses', 'courseDescription', 'roles'));
     }
 
