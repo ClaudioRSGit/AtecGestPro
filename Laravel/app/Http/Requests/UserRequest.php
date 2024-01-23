@@ -53,7 +53,7 @@ class UserRequest extends FormRequest
             'name.min' => 'O nome deve ter pelo menos 5 caracteres!',
             'name.max' => 'O nome deve ter no máximo 200 caracteres!',
 
-            'username.required' => 'O nome de utilizador é obrigatório!',
+            'username.required' => 'O username é obrigatório!',
             'username.min' => 'O username deve ter pelo menos 5 caracteres!',
             'username.max' => 'O username deve ter no máximo 20 caracteres!',
 

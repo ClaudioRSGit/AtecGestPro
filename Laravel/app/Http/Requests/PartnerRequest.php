@@ -24,9 +24,9 @@ class PartnerRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'description' => 'required',
-            'address' => 'required',
+            'name' => 'required|string|max:100',
+            'description' => 'required|string|max:200',
+            'address' => 'required|string|max:100',
         ];
     }
 
@@ -34,8 +34,13 @@ class PartnerRequest extends FormRequest
     {
         return [
             'name.required' => 'O nome é obrigatório!',
+            'name.max' => 'O nome deve ter no máximo 100 caracteres!',
+
             'description.required' => 'A descrição é obrigatória!',
+            'description.max' => 'A descrição deve ter no máximo 200 caracteres!',
+
             'address.required' => 'O endereço é obrigatório!',
+            'address.max' => 'O endereço deve ter no máximo 100 caracteres!',
         ];
     }
 }
