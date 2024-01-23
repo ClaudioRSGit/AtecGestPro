@@ -141,7 +141,7 @@
                 </tbody>
             </table>
         </div>
-        {{ $materials->links() }}
+        {{ $materials->appends(request()->input())->links() }}
     </div>
 
     <script>
