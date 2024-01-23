@@ -136,13 +136,7 @@ class UserController extends Controller
             $request['course_class_id'] = null;
         }
 
-         $data = $request->validated();
-
-        if ($request->filled('password') && $request->input('role_id') != 3) {
-            $data['password'] = $this->encryptPassword($request->input('password'));
-        } else {
-            unset($data['password']);
-        }
+        $data = $request->validated();
 
         $user->update($data);
 

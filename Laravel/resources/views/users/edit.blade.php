@@ -112,9 +112,7 @@
                         <a href="{{ route('users.index') }}" class="btn btn-secondary">Cancelar</a>
                     </div>
                 </div>
-
             </div>
-
         </form>
     </div>
 

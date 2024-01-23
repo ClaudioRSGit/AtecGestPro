@@ -34,16 +34,16 @@ class UserRequest extends FormRequest
             'role_id' => 'required',
         ];
 
-        if ($this->input('role_id') != 3) {
-        $rules['password'] = [
-            'required',
-            'string',
-            'min:7',
-            'regex:/^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).*$/',
-        ];
-    }
+        if ($this->input('role_id') != 3 && !$this->isMethod('put')) {
+            $rules['password'] = [
+                'required',
+                'string',
+                'min:7',
+                'regex:/^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).*$/',
+            ];
+        }
 
-    return $rules;
+        return $rules;
     }
 
     public function messages()
