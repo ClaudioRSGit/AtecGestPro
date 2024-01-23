@@ -33,14 +33,16 @@
 
             <div class="buttons">
                 <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
-                <div>
-                    <select class="form-control" id="roleFilter" name="roleFilter">
-                        <option value="">Todas as Funções</option>
-                        @foreach($roles as $role)
-                            <option value="{{ $role->id }}">{{ $role->description }}</option>
-                        @endforeach
-                    </select>
-                </div>
+                <form action="{{ route('users.index') }}" method="GET" id="roleFilterForm">
+                    <div>
+                        <select class="form-control" id="roleFilter" name="roleFilter" onchange="submitForm()">
+                            <option value="" {{ request('roleFilter') === '' ? 'selected' : '' }}>Todas as Funções</option>
+                            @foreach($roles as $role)
+                                <option value="{{ $role->id }}" {{ request('roleFilter') == $role->id ? 'selected' : '' }}>{{ $role->description }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </form>
                 <a href="{{ route('users.create') }}" class="btn btn-primary">
                     <img src="{{ asset('assets/new.svg') }}">
                     Novo Utilizador
@@ -63,18 +65,19 @@
             </tr>
             </thead>
             <tbody>
-                <tr class="filler"></tr>
-                @foreach ($users as $user)
-                    <tr class="user-row customTableStyling" data-position="{{ strtolower($user) }}" data-role="{{ $user->role_id }}" onclick="location.href='{{ route('users.show', $user->id) }}'">
-                        <td>
-                            <input type="checkbox" class="no-propagate" name="selectedUsers[]" value="{{ $user->id }}">
-                        </td>
-                        <td>{{ $user->name }}</td>
-                        <td>{{ $user->username }}</td>
-                        <td>{{ $user->email }}</td>
-                        <td>
-                            {{ $user->role->description }}
-                        </td>
+            <tr class="filler"></tr>
+            @foreach ($users as $user)
+                <tr class="user-row customTableStyling" data-position="{{ strtolower($user) }}"
+                    data-role="{{ $user->role_id }}" onclick="location.href='{{ route('users.show', $user->id) }}'">
+                    <td>
+                        <input type="checkbox" class="no-propagate" name="selectedUsers[]" value="{{ $user->id }}">
+                    </td>
+                    <td>{{ $user->name }}</td>
+                    <td>{{ $user->username }}</td>
+                    <td>{{ $user->email }}</td>
+                    <td>
+                        {{ $user->role->description }}
+                    </td>
 
                     <td>{{ $user->isActive == 1 ? 'Sim' : 'Não' }}</td>
                     <td class="editDelete">
@@ -127,11 +130,7 @@
         function submitForm() {
             let roleFilterValue = document.getElementById("roleFilter").value;
 
-            if (roleFilterValue !== "") {
-                document.getElementById("roleFilterForm").submit();
-            } else {
-                document.getElementById("roleFilterForm").reset();
-            }
+            document.getElementById("roleFilterForm").submit();
         }
     </script>
 
@@ -211,48 +210,6 @@
             });
         });
 
-        document.addEventListener('DOMContentLoaded', function () {
-            const nameFilterInput = document.getElementById('nameFilter');
-            const roleFilterSelect = document.getElementById('roleFilter');
-            const userTable = document.getElementById('userTable');
-            const userRows = userTable.querySelectorAll('tbody tr');
-
-
-            nameFilterInput.addEventListener('input', function() {
-                console.log('Nome do Filtro Alterado');
-                filterUsers();
-            });
-
-            roleFilterSelect.addEventListener('change', function () {
-                console.log('Função do Filtro Alterada');
-                filterUsers();
-            });
-
-
-            function filterUsers() {
-                console.log('Filtrando Usuários...');
-
-                const nameFilter = nameFilterInput.value.toLowerCase();
-                const roleFilter = roleFilterSelect.value;
-
-
-                userRows.forEach(userRow => {
-                    const userNameElement = userRow.querySelector('td:nth-child(2)');
-                    const userRoleElement = userRow.getAttribute('data-role');
-
-                    if (userNameElement && userRoleElement) {
-                        const userName = userNameElement.textContent.toLowerCase();
-                        const userRole = userRoleElement.valueOf();
-
-                        const matchesName = userName.includes(nameFilter);
-                        const matchesRole = roleFilter === '' || userRole === roleFilter;
-
-                        userRow.style.display = matchesName && matchesRole ? '' : 'none';
-                    }
-                });
-            }
-
-        });
 
         window.setTimeout(function () {
             $("#success-alert").fadeTo(500, 0).slideUp(500, function () {

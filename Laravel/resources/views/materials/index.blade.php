@@ -170,8 +170,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             const selectAllCheckbox = document.getElementById('select-all');
             const checkboxes = document.querySelectorAll('input[name="selectedMaterials[]"]');
-            const searchInput = document.getElementById('search');
-            const filterDropdown = document.getElementById('filter');
+
             const sortDropdown = document.getElementById('sort');
 
             sortDropdown.addEventListener('change', function() {
@@ -212,14 +211,7 @@
                 });
             });
 
-            searchInput.addEventListener('input', function() {
-                const searchTerm = searchInput.value.toLowerCase();
-                filterMaterials(searchTerm);
-            });
 
-            filterDropdown.addEventListener('change', function() {
-                filterMaterials();
-            });
 
 
         });
