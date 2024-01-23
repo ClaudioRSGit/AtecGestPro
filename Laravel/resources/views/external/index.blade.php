@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="">
+    <div class="container">
         @if (session('success'))
             <div class="alert alert-success" id="success-alert">
                 {{ session('success') }}
@@ -334,7 +334,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{$trainings->links()}}
+                {{ $trainings->appends(request()->input())->links() }}
             </div>
 
         </div>

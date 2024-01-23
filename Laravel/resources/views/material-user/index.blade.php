@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="">
+    <div class="container">
         <h1>Vestuário</h1>
 
         @if (session('success'))
@@ -24,9 +24,22 @@
             <div class="tab-pane fade show active" id="formandos">
                 <div class="d-flex justify-content-between mb-3">
                     <div class="w-40 d-flex justify-content-between align-items-center h-100" style="gap: 1rem">
-                        <div class="search-container w-80">
-                            <input type="text" id="search" class="form-control" placeholder="Pesquisar Turma">
+
+
+                        <div class="search-container ">
+                            <form action="{{ route('material-user.index') }}" method="GET">
+                                <div class="input-group pr-2">
+                                    <input type="text" name="searchCourseClass" class="form-control"
+                                           placeholder="{{ request('searchCourseClass') ? request('searchCourseClass') : 'Procurar...' }}">
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-outline-secondary">
+                                            Procurar
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
+
                         <div class="w-15">
                             <select class="form-control" id="sort">
                                 <option value="az">A-Z</option>
@@ -34,16 +47,20 @@
                             </select>
                         </div>
                     </div>
-                    <div class="buttons h-100">
-                        <div class="w-30">
-                            <select class="form-control" id="filter">
-                                <option value="all">Todos</option>
-                                @foreach ($courses as $course)
-                                    <option value="{{ $course->id }}">{{ $course->description }}</option>
-                                @endforeach
-                            </select>
-                        </div>
+                    <div class="buttons ">
 
+                        <form id="courseFilterForm" action="{{ route('material-user.index') }}" method="GET">
+                            <div class="w-50">
+                                <select class="form-control" id="courseFilter" name="courseFilter"
+                                        onchange="submitForm()">
+                                    <option value="" {{request('courseFilter') === '' ? 'selected' : ''}}>Todos</option>
+                                    @foreach ($courses as $course)
+                                        <option
+                                            value="{{ $course->id }}" {{request('courseFilter') == $course->id ? 'selected' : ''}}>{{ $course->description }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </form>
                         <a href="{{ route('course-classes.create') }}" class="btn btn-primary">
                             <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512">
                                 <path fill="#fff"
@@ -53,14 +70,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="form-group mx-2" style="width: 30%">
-                    <select class="form-control" id="filter">
-                        <option value="all">Todos</option>
-                        @foreach($courses as $course)
-                            <option value="{{ $course->id }}">{{ $course->description }}</option>
-                        @endforeach
-                    </select>
-                </div>
+
                 <div id="accordion">
                     <div class="ms-auto">
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="select-all">
@@ -103,7 +113,6 @@
                                                     <td>{{ $student->name }}</a></td>
                                                     <td>{{ $student->username }}</td>
                                                     <td>{{ $student->email }}</td>
-                                                    {{-- <td><input type="checkbox" class="no-propagate"></td> --}}
                                                     <td class="editDelete">
                                                         <div style="width: 40%">
                                                             <a href="{{ route('material-user.edit', $student->id) }}"
@@ -116,7 +125,6 @@
                                                             </a>
                                                         </div>
                                                         <div style="width: 40%">
-{{--  --}}
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -138,9 +146,21 @@
 
             <div class="tab-pane fade" id="outros">
                 <div class="w-100 d-flex justify-content-between align-items-center mb-3" style="gap: 1rem">
-                    <div class="search-container w-40">
-                        <input type="text" id="search" class="form-control w-80" placeholder="Pesquisar Utilizador">
-                    </div>
+
+                    <form action="{{ route('material-user.index') }}" method="GET">
+                        <div class="input-group pr-2">
+                            <input type="text" name="searchNonDocent" class="form-control"
+                                   placeholder="{{ request('searchNonDocent') ? request('searchNonDocent') : 'Procurar...' }}">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-outline-secondary">
+                                    Procurar
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+
+
                     <div class="w-15">
                         <select class="form-control" id="filter">
                             <option value="all">Todos</option>
@@ -173,7 +193,7 @@
                             <td>{{ $nonDocent->username }}</td>
                             <td>{{ $nonDocent->email }}</td>
                             <td>
-                                <a href="{{ route('users.edit', $nonDocent->id) }}" class="mx-2">
+                                <a href="{{ route('material-user.edit', $nonDocent->id) }}" class="mx-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16"
                                          viewBox="0 0 512 512">
                                         <path fill="#116fdc"
@@ -190,6 +210,29 @@
         </div>
     </div>
 
+    <script>
+        //save tab in localstorage
+        $(document).ready(function() {
+            let activeTab = localStorage.getItem('activeTab');
+            if (activeTab) {
+                $('#myTabs a[href="' + activeTab + '"]').tab('show');
+            }
+
+            $('a[data-toggle="tab"]').on('click', function(e) {
+                localStorage.setItem('activeTab', $(this).attr('href'));
+            });
+        });
+    </script>
+
+    <script>
+        //logica filtro curso
+        function submitForm() {
+            let courseFilterValue = document.getElementById("courseFilter").value;
+
+            document.getElementById("courseFilterForm").submit();
+        }
+    </script>
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -203,113 +246,62 @@
         });
 
         document.addEventListener('DOMContentLoaded', function () {
-            const selectAllCheckbox = document.getElementById('select-all');
-            const checkboxes = document.querySelectorAll('.accordion-checkbox');
-            const searchInput = document.getElementById('search');
-            const filterDropdown = document.getElementById('filter');
-            const sortDropdown = document.getElementById('sort');
+                const selectAllCheckbox = document.getElementById('select-all');
+                const checkboxes = document.querySelectorAll('.accordion-checkbox');
+                const sortDropdown = document.getElementById('sort');
 
-            sortDropdown.addEventListener('change', function () {
-                sortMaterials();
-            });
-
-            function sortMaterials() {
-                const sortValue = sortDropdown.value;
-                const materialCards = Array.from(document.querySelectorAll('.card'));
-                const fillerCards = Array.from(document.querySelectorAll(
-                    '.fillerCard'));
-
-                materialCards.sort((a, b) => {
-                    const aName = a.querySelector('button').textContent.toLowerCase();
-                    const bName = b.querySelector('button').textContent.toLowerCase();
-
-                    if (sortValue === 'az') {
-                        return aName.localeCompare(bName);
-                    } else {
-                        return bName.localeCompare(aName);
-                    }
+                sortDropdown.addEventListener('change', function () {
+                    sortMaterials();
                 });
 
-                const accordion = document.querySelector('#accordion');
-                materialCards.forEach((card, index) => {
-                    accordion.appendChild(card);
-                    if (fillerCards[index]) {
-                        accordion.appendChild(fillerCards[index]);
-                    }
+                function sortMaterials() {
+                    const sortValue = sortDropdown.value;
+                    const materialCards = Array.from(document.querySelectorAll('.card'));
+                    const fillerCards = Array.from(document.querySelectorAll(
+                        '.fillerCard'));
+
+                    materialCards.sort((a, b) => {
+                        const aName = a.querySelector('button').textContent.toLowerCase();
+                        const bName = b.querySelector('button').textContent.toLowerCase();
+
+                        if (sortValue === 'az') {
+                            return aName.localeCompare(bName);
+                        } else {
+                            return bName.localeCompare(aName);
+                        }
+                    });
+
+                    const accordion = document.querySelector('#accordion');
+                    materialCards.forEach((card, index) => {
+                        accordion.appendChild(card);
+                        if (fillerCards[index]) {
+                            accordion.appendChild(fillerCards[index]);
+                        }
+                    });
+                }
+
+
+                selectAllCheckbox.addEventListener('change', function () {
+                    checkboxes.forEach(checkbox => {
+                        checkbox.checked = selectAllCheckbox.checked;
+                    });
                 });
-            }
 
-
-            selectAllCheckbox.addEventListener('change', function () {
                 checkboxes.forEach(checkbox => {
-                    checkbox.checked = selectAllCheckbox.checked;
+                    checkbox.addEventListener('change', function () {
+                        selectAllCheckbox.checked = checkboxes.length === document.querySelectorAll(
+                            '.accordion-checkbox:checked').length;
+                    });
                 });
-            });
 
-            checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', function () {
-                    selectAllCheckbox.checked = checkboxes.length === document.querySelectorAll(
-                        '.accordion-checkbox:checked').length;
-                });
-            });
 
-            searchInput.addEventListener('input', function () {
-                const searchTerm = searchInput.value.toLowerCase();
-                filterInput(searchTerm);
-            });
-
-            filterDropdown.addEventListener('change', function () {
-                filterInput();
-            });
-
-            function filterInput(searchTerm = null) {
-                const courseClassCards = document.querySelectorAll('.card');
-
-                courseClassCards.forEach(card => {
-                    const courseId = card.querySelector('.accordion-checkbox').getAttribute('data-course');
-                    const filterValue = filterDropdown.value;
-
-                    const matchesFilter = (
-                        (filterValue === 'all') ||
-                        (filterValue === courseId)
-                    );
-
-                    const matchesSearch = !searchTerm || (
-                        card.textContent.toLowerCase().includes(searchTerm) ||
-                        card.querySelector('button').textContent.toLowerCase().includes(searchTerm)
-                    );
-
-                    card.style.display = matchesFilter && matchesSearch ? '' : 'none';
-                });
+                setTimeout(function () {
+                    $("#success-alert").fadeTo(500, 0).slideUp(500, function () {
+                        $(this).remove();
+                    });
+                }, 2000);
             }
-
-            function filterInputNonDocent(searchTerm = null) {
-                const courseClassCards = document.querySelectorAll('.card');
-
-                courseClassCards.forEach(card => {
-                    const courseId = card.querySelector('.accordion-checkbox').getAttribute('data-course');
-                    const filterValue = filterDropdown.value;
-
-                    const matchesFilter = (
-                        (filterValue === 'all') ||
-                        (filterValue === courseId)
-                    );
-
-                    const matchesSearch = !searchTerm || (
-                        card.textContent.toLowerCase().includes(searchTerm) ||
-                        card.querySelector('button').textContent.toLowerCase().includes(searchTerm)
-                    );
-
-                    card.style.display = matchesFilter && matchesSearch ? '' : 'none';
-                });
-            }
-        });
-
-        setTimeout(function () {
-            $("#success-alert").fadeTo(500, 0).slideUp(500, function () {
-                $(this).remove();
-            });
-        }, 2000);
+        );
     </script>
     <style>
         #accordion .card {

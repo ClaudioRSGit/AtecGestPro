@@ -4704,6 +4704,7 @@ input[type=button].btn-block {
   justify-content: space-between;
   padding: 0.5rem 1rem;
   width: 87%;
+  z-index: 100;
 }
 
 .navbar .container,

@@ -22,7 +22,7 @@
 
 
     </style>
-    <div class="container pl-4">
+    <div class="container">
         <h1>Detalhes do agendamento da formação</h1>
 
         @if($partner_Training_Users)

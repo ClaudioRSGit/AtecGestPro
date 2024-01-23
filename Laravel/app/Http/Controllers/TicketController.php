@@ -77,7 +77,7 @@ class TicketController extends Controller
     public function edit(Ticket $ticket)
     {
         $ticket = Ticket::with('users','requester')->find($ticket->id);
-        $users = User::all();
+        $users = User::where('role_id', 1)->get();
         $statuses = TicketStatus::all();
         $priorities = TicketPriority::all();
         $categories = TicketCategory::all();
