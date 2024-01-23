@@ -67,10 +67,10 @@
                                     </button>
                                 </div>
                                 @error("contact_description.$index")
-                                    <div class="alert alert-danger" id="contact-alert">{{ $message }}</div>
+                                    <div class="alert alert-danger contact-alert">{{ $message }}</div>
                                 @enderror
                                 @error("contact_value.$index")
-                                    <div class="alert alert-danger" id="contact-alert">{{ $message }}</div>
+                                    <div class="alert alert-danger contact-alert">{{ $message }}</div>
                                 @enderror
                             @endforeach
                         </div>
@@ -210,7 +210,7 @@
         }
 
         window.setTimeout(function() {
-                $("#contact-alert").fadeTo(500, 0).slideUp(500, function() {
+                $(".contact-alert").fadeTo(500, 0).slideUp(500, function() {
                     $(this).remove();
                 });
             }, 2500);
