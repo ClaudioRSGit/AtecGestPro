@@ -4,11 +4,14 @@
     <div class="container">
         <h1>Tickets</h1>
         <div class="d-flex justify-content-between mb-3">
-            <form class="form-inline w-50" id="filterForm">
-                <div class="form-group search-container mr-3 w-100" style="width: 30%;">
-                    <input type="text" id="search" class="form-control w-100" placeholder="Pesquisar Ticket">
+
+            <form action="{{ route('tickets.index') }}" method="get" class="form-inline" id="ticketSearchForm">
+                <div class="form-group mr-3 search-container">
+                    <input type="text" class="form-control" id="ticketSearch" name="ticketSearch"
+                           value="{{ request('ticketSearch') }}" placeholder="Pesquisar ticket...">
                 </div>
             </form>
+
             <div class="buttons">
                 <div>
                     <select class="form-control" id="filter">
