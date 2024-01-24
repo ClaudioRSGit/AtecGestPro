@@ -66,6 +66,7 @@ class MaterialUserController extends Controller
     public function create($id)
     {
         $user = User::find($id);
+        $assignedClothes = MaterialUser::with('material', 'user')->where('user_id', $id)->get();
 
         if($user->isStudent==1){
             $student = $user;
@@ -89,7 +90,7 @@ class MaterialUserController extends Controller
 
 
 
-        return view('material-user.create', compact('clothes', 'student'));
+        return view('material-user.create', compact('clothes', 'student', 'assignedClothes'));
     }
 
     /**
