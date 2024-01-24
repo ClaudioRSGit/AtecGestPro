@@ -9,6 +9,7 @@ use App\Course;
 use App\CourseClass;
 use App\User;
 use App\Material;
+use App\Role;
 
 
 class MaterialUserController extends Controller
@@ -24,9 +25,11 @@ class MaterialUserController extends Controller
         $courseFilter = request()->query('courseFilter');
         $searchCourseClass = request()->query('searchCourseClass');
         $searchNonDocent = request()->query('searchNonDocent');
+        $roleFilter = request()->query('roleFilter');
+
 
         $query = CourseClass::with('students');
-
+        $queryNonDocent = User::where('isStudent', false);
 
         if ($courseFilter) {
             $query = $query->where('course_id', $courseFilter);
@@ -37,15 +40,22 @@ class MaterialUserController extends Controller
         }
 
         if($searchNonDocent){
-            $nonDocents = User::where('isStudent', false)->where('name', 'like', '%' . $searchNonDocent . '%')->paginate(5);
+            $queryNonDocent = User::where('isStudent', false)->where('name', 'like', '%' . $searchNonDocent . '%')->paginate(5);
         } else {
-            $nonDocents = User::all()->where('isStudent', false)->where('isStudent', false);
+            $queryNonDocent = User::all()->where('isStudent', false)->where('isStudent', false);
         }
 
+        if ($roleFilter) {
+            $queryNonDocent = $queryNonDocent->where('role_id', $roleFilter);
+        }
+
+        $nonDocents = $queryNonDocent;
+
         $courseClasses = $query->paginate(5);
+        $roles = Role::Where('name', '!=', 'formando')->get();
 
         $courses = Course::all();
-        return view('material-user.index', compact('courseClasses', 'courses', 'nonDocents', 'courseFilter', 'searchCourseClass'));
+        return view('material-user.index', compact('courseClasses', 'courses', 'roles', 'nonDocents', 'courseFilter', 'searchCourseClass'));
     }
 
     /**

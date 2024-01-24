@@ -18,7 +18,8 @@ class PartnerTrainingUserController extends Controller
     public function index(Request $request)
     {
 
-//      dd($request->all());
+
+
         $searchPtu = $request->input('ptu');
         $searchP = $request->input('p');
         $searchT = $request->input('t');
