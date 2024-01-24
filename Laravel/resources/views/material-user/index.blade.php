@@ -84,7 +84,18 @@
                                 <h2 class="mb-0">
                                     <input type="checkbox" class="accordion-checkbox"
                                         data-course="{{ $courseClass->course_id }}" data-id="{{ $courseClass->id }}">
-                                    <button class="btn btn-link" type="button" data-toggle="collapse"
+                                    @php
+                                        $allDelivered = $courseClass->students->every(function ($student) use ($usersWithMaterialsDelivered) {
+                                            return $usersWithMaterialsDelivered->contains($student->id);
+                                        });
+                                    @endphp
+                                     @if ($courseClass->students->count() <1)
+                                        @php
+                                        $allDelivered = false;
+                                        @endphp
+
+                                    @endif
+                                    <button class="btn btn-link {{ $allDelivered ? 'font-weight-bold' : ' ' }}" type="button" data-toggle="collapse"
                                         data-target="#collapse{{ $courseClass->id }}" aria-expanded="false"
                                         aria-controls="collapse{{ $courseClass->id }}">
                                         {{ $courseClass->description }}
