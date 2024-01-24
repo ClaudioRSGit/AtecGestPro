@@ -4,28 +4,38 @@ namespace App\Http\Controllers;
 
 use App\Course;
 use Illuminate\Http\Request;
+use App\Http\Requests\CourseRequest;
 
 class CourseController extends Controller
 {
     public function index(Request $request)
     {
-        $nameFilter = $request->input('nameFilter');
-//dd($nameFilter);
+
+        $courseSearch = $request->input('courseSearch');
+
         $query = Course::query();
 
-        if ($nameFilter) {
-            $query->where(function ($query) use ($nameFilter) {
-                $query->where('code', 'like', $nameFilter . '%');
+
+        $sortColumn = $request->input('sortColumn', 'description');
+        $sortDirection = $request->input('sortDirection', 'asc');
+
+        if ($sortColumn && $sortDirection){
+        $query->orderBy($sortColumn, $sortDirection);
+        }
+
+
+        if ($courseSearch) {
+            $query->where(function ($query) use ($courseSearch) {
+                $query->where('description', 'like', '%' . $courseSearch . '%')
+                    ->orWhere('code', 'like', '%' . $courseSearch . '%');
             });
         }
 
         $courses = $query->paginate(5);
 
-        if ($request->ajax()) {
-            return view('courses.partials.course_table', compact('courses'));
-        }
 
-        return view('courses.index', compact('courses'));
+
+        return view('courses.index', compact('courses', 'courseSearch', 'sortColumn', 'sortDirection'));
     }
 
     public function create()
@@ -33,13 +43,9 @@ class CourseController extends Controller
         return view('courses.create');
     }
 
-    public function store(Request $request)
+    public function store(CourseRequest $request)
     {
         try {
-            $request->validate([
-                'code' => 'required|string|max:15',
-                'description' => 'required|string|min:10|max:100',
-            ]);
 
             $course = Course::create($request->all());
 
@@ -62,14 +68,8 @@ class CourseController extends Controller
         return view('courses.edit', compact('course'));
     }
 
-    public function update(Request $request, Course $course)
+    public function update(CourseRequest $request, Course $course)
     {
-        $request->validate([
-            'code' => 'required|string|max:15',
-            'description' => 'required|string|min:10|max:100',
-        ]);
-
-
         $course->update($request->all());
 
         return redirect()->route('courses.index')->with('success', 'Curso atualizado com sucesso!');

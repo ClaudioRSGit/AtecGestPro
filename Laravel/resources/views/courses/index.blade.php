@@ -18,19 +18,19 @@
         <h1>Lista de Cursos</h1>
 
         <div class="d-flex justify-content-between mb-3">
-            <form action="{{ route('courses.index') }}" method="get" class="form-inline w-50" id="filterForm">
-                <div class="form-group mr-3 search-container w-100">
-                    <input type="text" class="form-control w-100" id="nameFilter" name="nameFilter"
-                        value="{{ request('nameFilter') }}" placeholder="Pesquisar Curso">
+
+
+
+            <form action="{{ route('courses.index') }}" method="get" class="form-inline" id="filterForm">
+                <div class="form-group mr-3 search-container">
+                    <input type="text" class="form-control" id="courseSearch" name="courseSearch"
+                           value="{{ request('courseSearch') }}" placeholder="Pesquisar curso...">
                 </div>
             </form>
+
+
+
             <div class="buttons">
-                <div>
-                    <select class="form-control" id="sort">
-                        <option value="az">A-Z</option>
-                        <option value="za">Z-A</option>
-                    </select>
-                </div>
                 <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
 
                 <a href="{{ route('courses.create') }}" class="btn btn-primary pr-1">
@@ -45,8 +45,8 @@
                     <th scope="col">
                         <input type="checkbox" id="select-all">
                     </th>
-                    <th scope="col">Código</th>
-                    <th scope="col">Descrição</th>
+                    <th><a href="{{ route('courses.index', ['sortColumn' => 'code', 'sortDirection' => $sortColumn === 'code' ? ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">Código</a></th>
+                    <th><a href="{{ route('courses.index', ['sortColumn' => 'description', 'sortDirection' => $sortColumn === 'description' ? ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">Descrição</a></th>
                     <th class="fill"></th>
                 </tr>
             </thead>
@@ -95,6 +95,12 @@
         {{ $courses->links() }}
     </div>
 
+
+    <script>
+        function submitSortCode() {
+            document.getElementById("filterForm").submit();
+        }
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var checkboxes = document.querySelectorAll('.no-propagate');
@@ -107,45 +113,15 @@
         });
 
         document.addEventListener('DOMContentLoaded', function() {
-            const nameFilterInput = document.getElementById('nameFilter');
             const courseTable = document.getElementById('courseTable');
             const courseRows = courseTable.querySelectorAll('tbody tr');
             const selectAllCheckbox = document.getElementById('select-all');
             const deleteSelectedButton = document.getElementById('delete-selected');
-            const sortDropdown = document.getElementById('sort');
 
-            sortDropdown.addEventListener('change', function() {
-                sortCourses();
-            });
 
-            function sortCourses() {
-                const sortValue = sortDropdown.value;
-                const courseRows = Array.from(courseTable.querySelectorAll('tbody tr.courses-row'));
-                const fillerRows = Array.from(courseTable.querySelectorAll('tbody tr.filler'));
 
-                courseRows.sort((a, b) => {
-                    const aName = a.querySelector('td:nth-child(2)').textContent.toLowerCase();
-                    const bName = b.querySelector('td:nth-child(2)').textContent.toLowerCase();
 
-                    if (sortValue === 'az') {
-                        return aName.localeCompare(bName);
-                    } else {
-                        return bName.localeCompare(aName);
-                    }
-                });
 
-                const tbody = courseTable.querySelector('tbody');
-                courseRows.forEach((row, index) => {
-                    tbody.appendChild(row);
-                    if (fillerRows[index]) {
-                        tbody.appendChild(fillerRows[index]);
-                    }
-                });
-            }
-
-            nameFilterInput.addEventListener('input', function() {
-                filterCourses();
-            });
 
             selectAllCheckbox.addEventListener('change', function() {
                 courseRows.forEach(courseRow => {
@@ -187,15 +163,7 @@
                 }
             });
 
-            function filterCourses() {
-                const nameFilter = nameFilterInput.value.toLowerCase();
 
-                courseRows.forEach(courseRow => {
-                    const courseName = courseRow.querySelector('td:nth-child(2)').textContent.toLowerCase();
-                    const matchesName = courseName.includes(nameFilter);
-                    courseRow.style.display = matchesName ? '' : 'none';
-                });
-            }
         });
 
         setTimeout(function() {

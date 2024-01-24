@@ -160,21 +160,17 @@
                     </form>
 
 
+                    <form id="roleFilterForm" action="{{ route('material-user.index') }}" method="GET">
+                        <div >
+                            <select class="form-control" id="roleFilter" name="roleFilter" onchange="submitFormRoles()">
+                                <option value="">Todos</option>
+                                @foreach ($roles as $role)
+                                    <option value="{{ $role->id }}" {{ request('roleFilter') == $role->id ? 'selected' : '' }}>{{ $role->description }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </form>
 
-                    <div class="w-15">
-                        <select class="form-control" id="filter">
-                            <option value="all">Todos</option>
-                            @foreach ($nonDocents as $nonDocent)
-                                @if ($nonDocent->position === 'admin')
-                                    <option value="{{ $nonDocent->id }}">Administrador</option>
-                                @elseif($nonDocent->position === 'tecnico')
-                                    <option value="{{ $nonDocent->id }}">Técnico</option>
-                                @else
-                                    <option value="{{ $nonDocent->id }}">{{ $nonDocent->position }}</option>
-                                @endif
-                            @endforeach
-                        </select>
-                    </div>
                 </div>
                 <table class="table">
                     <thead>
@@ -209,19 +205,12 @@
             </div>
         </div>
     </div>
-
     <script>
-        //save tab in localstorage
-        $(document).ready(function() {
-            let activeTab = localStorage.getItem('activeTab');
-            if (activeTab) {
-                $('#myTabs a[href="' + activeTab + '"]').tab('show');
-            }
-
-            $('a[data-toggle="tab"]').on('click', function(e) {
-                localStorage.setItem('activeTab', $(this).attr('href'));
-            });
-        });
+        //logica filtro roles
+        function submitFormRoles() {
+            let roleFilterValue = document.getElementById("roleFilter").value;
+            document.getElementById("roleFilterForm").submit();
+        }
     </script>
 
     <script>
@@ -232,6 +221,22 @@
             document.getElementById("courseFilterForm").submit();
         }
     </script>
+
+    <script>
+        //save tab in localstorage
+        $(document).ready(function () {
+            let activeTab = localStorage.getItem('activeTab');
+            if (activeTab) {
+                $('#myTabs a[href="' + activeTab + '"]').tab('show');
+            }
+
+            $('a[data-toggle="tab"]').on('click', function (e) {
+                localStorage.setItem('activeTab', $(this).attr('href'));
+            });
+        });
+    </script>
+
+
 
 
     <script>

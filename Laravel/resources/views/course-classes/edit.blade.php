@@ -9,28 +9,38 @@
 
             <div class="form-group">
                 <label for="description">Descrição:</label>
-                <input type="text" class="form-control" id="description" name="description" value="{{ $courseClass->description }}" required>
+                <input type="text" class="form-control" id="description" name="description"
+                    value="{{ $courseClass->description }}">
+
+                @error('description')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
             </div>
             <div class="form-group">
                 <label for="course_id">Curso:</label>
                 <select class="form-control" id="course_id" name="course_id" required>
-                    @foreach($courses as $course)
+                    @foreach ($courses as $course)
                         <option value="{{ $course->id }}" {{ $course->id == $courseClass->course_id ? 'selected' : '' }}>
                             {{ $course->description }}
                         </option>
                     @endforeach
                 </select>
+
+                @error('course_id')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="form-group">
                 <label for="course_code">Código do Curso:</label>
-                <input type="text" class="form-control" id="course_code" name="course_code" value="{{ $courseClass->course->code }}" readonly>
+                <input type="text" class="form-control" id="course_id" name="course_id"
+                    value="{{ $courseClass->course->id }}" readonly>
             </div>
 
             <div class="form-group">
                 <label for="students">Alunos na Turma:</label>
                 <ul>
-                    @foreach($courseClass->users as $student)
+                    @foreach ($courseClass->users as $student)
                         <li>{{ $student->name }}</li>
                     @endforeach
                 </ul>
