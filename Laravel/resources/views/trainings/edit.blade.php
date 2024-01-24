@@ -11,16 +11,29 @@
             <div class="mb-3">
                 <label for="name" class="form-label">Nome da formação</label>
                 <input type="text" class="form-control" id="name" name="name" value="{{ $training->name }}">
+
+                @error('name')
+                <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="mb-3">
                 <label for="description" class="form-label">Descrição</label>
                 <textarea class="form-control" id="description" name="description">{{ $training->description }}</textarea>
+
+                @error('description')
+                <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="mb-3">
                 <label for="isInternal" class="form-label">Categoria</label>
                 <textarea class="form-control" id="category" name="category">{{ $training->category }}</textarea>
+
+
+                @error('category')
+                <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
             </div>
 
             <button type="submit" class="btn btn-primary">Salvar Alterações</button>
