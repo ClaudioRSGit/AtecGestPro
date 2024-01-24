@@ -111,11 +111,11 @@
                                                     <tr class="customTableStyling"
                                                         onclick="location.href='{{ route('material-user.create', $student->id) }}'">
                                                         @php
-                                                            $myVariable = $usersWithMaterialsDelivered->contains($student->id) ? 'text-primary' : '';
+                                                            $myVariable = $usersWithMaterialsDelivered->contains($student->id) ? 'text-success' : '';
                                                         @endphp
-                                                        <td class="{{$myVariable}}">{{ $student->name }}</a></td>
-                                                        <td class="{{$myVariable}}">{{ $student->username }}</td>
-                                                        <td class="{{$myVariable}}">{{ $student->email }}</td>
+                                                        <td class="{{ $myVariable }}">{{ $student->name }}</a></td>
+                                                        <td class="{{ $myVariable }}">{{ $student->username }}</td>
+                                                        <td class="{{ $myVariable }}">{{ $student->email }}</td>
                                                         <td class="editDelete">
                                                             <div style="width: 40%">
                                                                 <a href="{{ route('material-user.edit', $student->id) }}"
@@ -190,9 +190,12 @@
                         @foreach ($nonDocents as $nonDocent)
                             <tr class="filler"
                                 onclick="location.href='{{ route('material-user.create', $nonDocent->id) }}'">
-                                <td >{{ $nonDocent->name }}</td>
-                                <td>{{ $nonDocent->username }}</td>
-                                <td>{{ $nonDocent->email }}</td>
+                                @php
+                                    $myVariable = $usersWithMaterialsDelivered->contains($nonDocent->id) ? 'text-success' : '';
+                                @endphp
+                                <td class="{{ $myVariable }}">{{ $nonDocent->name }}</td>
+                                <td class="{{ $myVariable }}">{{ $nonDocent->username }}</td>
+                                <td class="{{ $myVariable }}">{{ $nonDocent->email }}</td>
                                 <td>
                                     <a href="{{ route('material-user.edit', $nonDocent->id) }}" class="mx-2">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16"
