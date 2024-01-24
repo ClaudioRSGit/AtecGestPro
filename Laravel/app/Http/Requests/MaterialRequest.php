@@ -24,9 +24,9 @@ class MaterialRequest extends FormRequest
     public function rules()
     {
         return [
-                'name' => 'required|string|max:50',
-                'description' => 'nullable|string|max:200',
-                'supplier' => 'nullable|string|max:50',
+                'name' => 'required|string|min:3|max:50',
+                'description' => 'nullable|string|min:3|max:200',
+                'supplier' => 'nullable|string|min:3|max:50',
                 'acquisition_date' => 'nullable|date',
                 'isInternal' => 'required|boolean',
                 'isClothing' => 'required|boolean',
@@ -44,15 +44,18 @@ class MaterialRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required' => 'O nome é obrigatório',
-            'name.string' => 'Formato inválido',
-            'name.max' => 'O nome não pode ter mais de 50 caracteres',
+            'name.required' => 'O nome é obrigatório!',
+            'name.string' => 'Formato inválido!',
+            'name.min' => 'O nome não pode ter menos de 3 caracteres!',
+            'name.max' => 'O nome não pode ter mais de 50 caracteres!',
 
-            'description.string' => 'Formato inválido',
-            'description.max' => 'A descrição não pode ter mais de 200 caracteres',
+            'description.string' => 'Formato inválido!',
+            'description.min' => 'A descrição não pode ter menos de 3 caracteres!',
+            'description.max' => 'A descrição não pode ter mais de 200 caracteres!',
 
-            'supplier.string' => 'Formato inválido',
-            'supplier.max' => 'O fornecedor não pode ter mais de 50 caracteres',
+            'supplier.string' => 'Formato inválido!',
+            'supplier.min' => 'O nome do fornecedor não pode ter menos de 3 caracteres!',
+            'supplier.max' => 'O nome do fornecedor não pode ter mais de 50 caracteres!',
         ];
     }
 }
