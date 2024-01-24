@@ -15,8 +15,16 @@
 
 
     <div class="container">
-        <h1>Agendar formação de mercado</h1>
 
+        @error('start_date')
+        <div class="alert alert-danger success-alert">{{ $message }}</div>
+        @enderror
+
+        @error('end_date')
+        <div class="alert alert-danger success-alert">{{ $message }}</div>
+        @enderror
+
+        <h1>Agendar formação de mercado</h1>
 
         <form method="POST" action="{{ url('external') }}" style="width: 100%">
             @csrf
@@ -203,5 +211,11 @@
 
             partnerDropdown.addEventListener('change', setAddress);
         });
+
+        window.setTimeout(function () {
+            $(".success-alert").fadeTo(500, 0).slideUp(500, function () {
+                $(this).remove();
+            });
+        }, 2500);
     </script>
 @endsection
