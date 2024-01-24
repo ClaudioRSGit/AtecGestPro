@@ -26,6 +26,9 @@ class MaterialUserController extends Controller
         $searchCourseClass = request()->query('searchCourseClass');
         $searchNonDocent = request()->query('searchNonDocent');
         $roleFilter = request()->query('roleFilter');
+        $usersWithMaterialsDelivered = User::whereHas('materialUsers', function ($query) {
+            $query->where('delivered_all', true);
+        })->get();
 
 
         $query = CourseClass::with('students');
@@ -55,7 +58,7 @@ class MaterialUserController extends Controller
         $roles = Role::Where('name', '!=', 'formando')->get();
 
         $courses = Course::all();
-        return view('material-user.index', compact('courseClasses', 'courses', 'roles', 'nonDocents', 'courseFilter', 'searchCourseClass'));
+        return view('material-user.index', compact('courseClasses', 'courses', 'roles', 'nonDocents', 'courseFilter', 'searchCourseClass','usersWithMaterialsDelivered'));
     }
 
     /**

@@ -22,7 +22,6 @@ class TicketController extends Controller
         if ($ticketSearch) {
             $query->where(function ($query) use ($ticketSearch) {
                 $query->where('title', 'like', '%' . $ticketSearch . '%')
-                    ->orWhere('description', 'like', '%' . $ticketSearch . '%')
                     ->orWhereHas('requester', function ($query) use ($ticketSearch) {
                         $query->where('name', 'like', '%' . $ticketSearch . '%');
                     });
@@ -31,7 +30,7 @@ class TicketController extends Controller
 
         $tickets = $query->paginate(5);
         $users = User::all();
-        return view('tickets.index', compact('tickets', 'users'));
+        return view('tickets.index', compact('tickets', 'users', 'ticketSearch'));
     }
 
     public function create()
