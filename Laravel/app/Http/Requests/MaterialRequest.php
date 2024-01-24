@@ -46,15 +46,15 @@ class MaterialRequest extends FormRequest
         return [
             'name.required' => 'O nome é obrigatório!',
             'name.string' => 'Formato inválido!',
-            'name.min' => 'O nome não pode ter menos de 3 caracteres!',
+            'name.min' => 'O nome deve ter pelo menos 3 caracteres!',
             'name.max' => 'O nome não pode ter mais de 50 caracteres!',
 
             'description.string' => 'Formato inválido!',
-            'description.min' => 'A descrição não pode ter menos de 3 caracteres!',
+            'description.min' => 'A descrição deve ter pelo menos 3 caracteres!',
             'description.max' => 'A descrição não pode ter mais de 200 caracteres!',
 
             'supplier.string' => 'Formato inválido!',
-            'supplier.min' => 'O nome do fornecedor não pode ter menos de 3 caracteres!',
+            'supplier.min' => 'O nome do fornecedor deve ter pelo menos 3 caracteres!',
             'supplier.max' => 'O nome do fornecedor não pode ter mais de 50 caracteres!',
         ];
     }
