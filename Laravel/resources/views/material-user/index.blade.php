@@ -111,7 +111,7 @@
                                                     <tr class="customTableStyling"
                                                         onclick="location.href='{{ route('material-user.create', $student->id) }}'">
                                                         @php
-                                                            $myVariable = $usersWithMaterialsDelivered->contains($student->id) ? 'text-success' : '';
+                                                            $myVariable = $usersWithMaterialsDelivered->contains($student->id) ? 'text-primary' : '';
                                                         @endphp
                                                         <td class="{{ $myVariable }}">{{ $student->name }}</a></td>
                                                         <td class="{{ $myVariable }}">{{ $student->username }}</td>
@@ -191,7 +191,7 @@
                             <tr class="filler"
                                 onclick="location.href='{{ route('material-user.create', $nonDocent->id) }}'">
                                 @php
-                                    $myVariable = $usersWithMaterialsDelivered->contains($nonDocent->id) ? 'text-success' : '';
+                                    $myVariable = $usersWithMaterialsDelivered->contains($nonDocent->id) ? 'text-primary' : '';
                                 @endphp
                                 <td class="{{ $myVariable }}">{{ $nonDocent->name }}</td>
                                 <td class="{{ $myVariable }}">{{ $nonDocent->username }}</td>
