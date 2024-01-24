@@ -113,9 +113,9 @@
                                                         @php
                                                             $myVariable = $usersWithMaterialsDelivered->contains($student->id) ? 'text-primary' : '';
                                                         @endphp
-                                                        <td>{{ $student->name }}</a></td>
-                                                        <td>{{ $student->username }}</td>
-                                                        <td>{{ $student->email }}</td>
+                                                        <td class="{{$myVariable}}">{{ $student->name }}</a></td>
+                                                        <td class="{{$myVariable}}">{{ $student->username }}</td>
+                                                        <td class="{{$myVariable}}">{{ $student->email }}</td>
                                                         <td class="editDelete">
                                                             <div style="width: 40%">
                                                                 <a href="{{ route('material-user.edit', $student->id) }}"
