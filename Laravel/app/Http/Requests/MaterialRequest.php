@@ -13,7 +13,7 @@ class MaterialRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,20 @@ class MaterialRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+                'name' => 'required|string|max:255',
+                'description' => 'nullable|string|max:500',
+                'supplier' => 'nullable|string|max:255',
+                'acquisition_date' => 'nullable|date',
+                'isInternal' => 'required|boolean',
+                'isClothing' => 'required|boolean',
+                'gender' => 'nullable|boolean',
+                'quantity' => 'nullable|integer|min:0',
+                'sizes' => ['nullable', 'array'],
+                'sizes.*' => ['nullable', 'string', 'max:10'],
+                'stocks' => ['nullable', 'array'],
+                'stocks.*' => ['nullable', 'integer', 'min:0'],
+                'courses' => ['nullable', 'array'],
+                'courses.*' => ['nullable', 'integer', 'min:1'],
         ];
     }
 }
