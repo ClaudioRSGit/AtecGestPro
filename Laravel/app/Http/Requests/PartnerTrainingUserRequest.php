@@ -31,4 +31,13 @@ class PartnerTrainingUserRequest extends FormRequest
             'end_date' => 'required|after_or_equal:start_date',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'start_date.required' => 'Mencionar a data inicial é obrigatório!',
+            'end_date.required' => 'Mencionar a data final é obrigatório!',
+            'end_date.after_or_equal' => 'A data final deve ser igual ou posterior à data inicial!',
+        ];
+    }
 }

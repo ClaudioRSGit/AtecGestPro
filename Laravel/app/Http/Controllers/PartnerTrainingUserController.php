@@ -128,7 +128,7 @@ class PartnerTrainingUserController extends Controller
     }
 
 
-    public function update(Request $request, $id)
+    public function update(PartnerTrainingUserRequest $request, $id)
     {
 
         $partner_Training_User = PartnerTrainingUser::with('partner', 'training', 'user', 'materials')->findOrFail($id);
