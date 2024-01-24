@@ -10,21 +10,25 @@ class CourseController extends Controller
 {
     public function index(Request $request)
     {
-        $nameFilter = $request->input('nameFilter');
+
+        $courseSearch = $request->input('courseSearch');
+
+
+
+
 
         $query = Course::query();
 
-        if ($nameFilter) {
-            $query->where(function ($query) use ($nameFilter) {
-                $query->where('code', 'like', $nameFilter . '%');
+        if ($courseSearch) {
+            $query->where(function ($query) use ($courseSearch) {
+                $query->where('description', 'like', '%' . $courseSearch . '%')
+                    ->orWhere('code', 'like', '%' . $courseSearch . '%');
             });
         }
 
         $courses = $query->paginate(5);
 
-        if ($request->ajax()) {
-            return view('courses.partials.course_table', compact('courses'));
-        }
+
 
         return view('courses.index', compact('courses'));
     }
