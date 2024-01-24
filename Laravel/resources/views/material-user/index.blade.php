@@ -85,19 +85,16 @@
                                     <input type="checkbox" class="accordion-checkbox"
                                         data-course="{{ $courseClass->course_id }}" data-id="{{ $courseClass->id }}">
                                     @php
-                                        $allDelivered = $courseClass->students->every(function ($student) use ($usersWithMaterialsDelivered) {
-                                            return $usersWithMaterialsDelivered->contains($student->id);
-                                        });
+                                        $allDelivered =
+                                            $courseClass->students->count() > 0 &&
+                                            $courseClass->students->every(function ($student) use ($usersWithMaterialsDelivered) {
+                                                return $usersWithMaterialsDelivered->contains($student->id);
+                                            });
                                     @endphp
-                                     @if ($courseClass->students->count() <1)
-                                        @php
-                                        $allDelivered = false;
-                                        @endphp
 
-                                    @endif
-                                    <button class="btn btn-link {{ $allDelivered ? 'font-weight-bold' : ' ' }}" type="button" data-toggle="collapse"
-                                        data-target="#collapse{{ $courseClass->id }}" aria-expanded="false"
-                                        aria-controls="collapse{{ $courseClass->id }}">
+                                    <button class="btn btn-link {{ $allDelivered ? 'font-weight-bold' : ' ' }}"
+                                        type="button" data-toggle="collapse" data-target="#collapse{{ $courseClass->id }}"
+                                        aria-expanded="false" aria-controls="collapse{{ $courseClass->id }}">
                                         {{ $courseClass->description }}
                                     </button>
                                 </h2>
