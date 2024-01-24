@@ -16,7 +16,17 @@
     </style>
 
     <div class="container">
+
+        @error('start_date')
+        <div class="alert alert-danger success-alert">{{ $message }}</div>
+        @enderror
+
+        @error('end_date')
+        <div class="alert alert-danger success-alert">{{ $message }}</div>
+        @enderror
+
         <h1>Editar formação</h1>
+
         <form method="post" action="{{ route('external.update', $partner_Training_Users->id) }}">
             @csrf
             @method('put')
@@ -221,5 +231,11 @@
 
             partnerDropdown.addEventListener('change', setAddress);
         });
+
+        window.setTimeout(function () {
+            $(".success-alert").fadeTo(500, 0).slideUp(500, function () {
+                $(this).remove();
+            });
+        }, 2500);
     </script>
 @endsection
