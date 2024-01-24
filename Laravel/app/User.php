@@ -43,4 +43,10 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Ticket::class, 'ticket_users');
     }
+
+    public function materialUsers()
+    {
+        return $this->hasMany(MaterialUser::class);
+    }
+
 }

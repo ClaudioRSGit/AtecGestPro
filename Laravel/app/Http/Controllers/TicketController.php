@@ -13,11 +13,24 @@ use Illuminate\Http\Request;
 
 class TicketController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $tickets = Ticket::with('users','requester')->get();
+        $query = Ticket::with('users','requester');
+
+        $ticketSearch = $request->input('ticketSearch');
+
+        if ($ticketSearch) {
+            $query->where(function ($query) use ($ticketSearch) {
+                $query->where('title', 'like', '%' . $ticketSearch . '%')
+                    ->orWhereHas('requester', function ($query) use ($ticketSearch) {
+                        $query->where('name', 'like', '%' . $ticketSearch . '%');
+                    });
+            });
+        }
+
+        $tickets = $query->paginate(5);
         $users = User::all();
-        return view('tickets.index', compact('tickets', 'users'));
+        return view('tickets.index', compact('tickets', 'users', 'ticketSearch'));
     }
 
     public function create()
