@@ -13,11 +13,16 @@ class CourseController extends Controller
 
         $courseSearch = $request->input('courseSearch');
 
-
-
-
-
         $query = Course::query();
+
+
+        $sortColumn = $request->input('sortColumn', 'description');
+        $sortDirection = $request->input('sortDirection', 'asc');
+
+        if ($sortColumn && $sortDirection){
+        $query->orderBy($sortColumn, $sortDirection);
+        }
+
 
         if ($courseSearch) {
             $query->where(function ($query) use ($courseSearch) {
@@ -30,7 +35,7 @@ class CourseController extends Controller
 
 
 
-        return view('courses.index', compact('courses'));
+        return view('courses.index', compact('courses', 'courseSearch', 'sortColumn', 'sortDirection'));
     }
 
     public function create()

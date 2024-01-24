@@ -29,13 +29,7 @@
             </form>
 
 
-{{--            <div class="buttons">--}}
-{{--                <div>--}}
-{{--                    <select class="form-control" id="sort">--}}
-{{--                        <option value="az">A-Z</option>--}}
-{{--                        <option value="za">Z-A</option>--}}
-{{--                    </select>--}}
-{{--                </div>--}}
+
             <div class="buttons">
                 <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
 
@@ -51,8 +45,8 @@
                     <th scope="col">
                         <input type="checkbox" id="select-all">
                     </th>
-                    <th scope="col">Código</th>
-                    <th scope="col">Descrição</th>
+                    <th><a href="{{ route('courses.index', ['sortColumn' => 'code', 'sortDirection' => $sortColumn === 'code' ? ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">Código</a></th>
+                    <th><a href="{{ route('courses.index', ['sortColumn' => 'description', 'sortDirection' => $sortColumn === 'description' ? ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">Descrição</a></th>
                     <th class="fill"></th>
                 </tr>
             </thead>
@@ -101,6 +95,12 @@
         {{ $courses->links() }}
     </div>
 
+
+    <script>
+        function submitSortCode() {
+            document.getElementById("filterForm").submit();
+        }
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var checkboxes = document.querySelectorAll('.no-propagate');
