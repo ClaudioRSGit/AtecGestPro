@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Training;
 use Illuminate\Http\Request;
+use App\Http\Requests\TrainingRequest;
 
 class TrainingController extends Controller
 {
@@ -31,14 +32,8 @@ class TrainingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TrainingRequest $request)
     {
-        $this->validate(request(), [
-            'name' => 'required',
-            'description' => 'required',
-            'category' => 'required',
-        ]);
-
         Training::create($request->all());
 
         return redirect()->route('external.index')->with('success', 'Formação criada com sucesso');
@@ -74,19 +69,10 @@ class TrainingController extends Controller
      * @param  \App\Training  $training
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Training $training)
+    public function update(TrainingRequest $request, Training $training)
     {
-
-        $this->validate(request(),
-            [
-                'name' => 'required',
-                'description' => 'required',
-                'category' => 'required',
-
-            ]);
         $training->update($request->all());
         return redirect()->route('external.index')->with('success', 'Formação atualizada com sucesso');
-
     }
 
     /**

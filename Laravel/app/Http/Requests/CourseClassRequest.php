@@ -36,7 +36,7 @@ class CourseClassRequest extends FormRequest
             'description.string' => 'Formato inválido!',
             'description.min' => 'A descrição deve ter pelo menos 5 caracteres!',
             'description.max' => 'A descrição deve ter no máximo 20 caracteres!',
-            'course_id' => 'O campo de curso é obrigatório!',
+            'course_id.required' => 'O campo de curso é obrigatório!',
         ];
     }
 }
