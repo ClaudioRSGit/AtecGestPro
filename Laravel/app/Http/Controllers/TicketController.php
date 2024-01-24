@@ -22,25 +22,41 @@ class TicketController extends Controller
 
     public function create()
     {
-        $statuses = TicketStatus::all();
+        $statuses = TicketStatus::where('id', 1)->get();
         $priorities = TicketPriority::all();
         $categories = TicketCategory::all();
-        $users = User::all();
+        $users = User::where('role_id', 1)->get();
 
         return view('tickets.create', compact('statuses', 'priorities', 'categories', 'users'));
     }
-
+    protected function calculateDueByDate($priorityId)
+    {
+        switch ($priorityId) {
+            case 1: // Baixa
+                return now()->addWeeks(3);
+            case 2: // Normal
+                return now()->addWeeks(2);
+            case 3: // Alta
+                return now()->addWeeks(1);
+            case 4: // Urgente
+                return now()->addDay();
+            case 5: // Crítico
+                return now()->addHours(4);
+            default:
+                return now()->addWeeks(3);//Default fica como baixa prioridade
+        }
+    }
     public function store(Request $request)
     {
+        $dueByDate = $this->calculateDueByDate($request->priority_id);
+
         $request->validate([
             'title' => 'required|string',
             'description' => 'required|string',
-            'status_id' => 'required|exists:ticket_statuses,id',
             'technician_id' => 'required|exists:users,id',
             'attachment' => 'sometimes|file|max:20480',
             'priority_id' => 'required|exists:ticket_priorities,id',
             'category_id' => 'required|exists:ticket_categories,id',
-            'dueByDate' => 'required|date',
         ]);
         if ($request->hasFile('attachment')) {
             $filename = $request->file('attachment')->store('attachments', 'public');
@@ -48,10 +64,10 @@ class TicketController extends Controller
         $ticket = new Ticket([
             'title' => $request->title,
             'description' => $request->description,
-            'ticket_status_id' => $request->status_id,
+            'ticket_status_id' => 1,
             'ticket_priority_id' => $request->priority_id,
             'ticket_category_id' => $request->category_id,
-            'dueByDate' => $request->dueByDate,
+            'dueByDate' => $dueByDate,
             'attachment' => $filename ?? null,
             'user_id' => $request->technician_id,
         ]);
@@ -91,7 +107,7 @@ class TicketController extends Controller
 
     public function update(Request $request, Ticket $ticket)
     {
-        $ticket2 = Ticket::with('users','requester','ticketPriority','ticketStatus','ticketCategory')->find($ticket->id);
+        // $ticket2 = Ticket::with('users','requester','ticketPriority','ticketStatus','ticketCategory')->find($ticket->id);
 
         $this->validate($request, [
             'user_id' => 'required|integer|exists:users,id',
@@ -106,17 +122,18 @@ class TicketController extends Controller
 
         if ($request->hasFile('attachment')) {
             $filename = $request->file('attachment')->store('attachments', 'public');
+            $ticket->attachment = $filename;
         }
 
         $ticket->user_id = $request->user_id;
-        $ticket2->title = $request->title;
-        $ticket2->description = $request->description;
-        $ticket2->ticket_priority_id = $request->priority_id;
-        $ticket2->ticket_status_id = $request->status_id;
-        $ticket2->ticket_category_id = $request->category_id;
+        $ticket->title = $request->title;
+        $ticket->description = $request->description;
+        $ticket->ticket_priority_id = $request->priority_id;
+        $ticket->ticket_status_id = $request->status_id;
+        $ticket->ticket_category_id = $request->category_id;
 
-        $ticket2->update($request->all());
-
+        $ticket->update($request->all());
+        //$ticket->save();
         return redirect()->route('tickets.index')->with('success', 'Ticket atualizado com sucesso!');
     }
 

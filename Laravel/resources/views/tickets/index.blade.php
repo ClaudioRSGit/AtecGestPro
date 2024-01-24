@@ -48,7 +48,9 @@
                                 #{{ $ticket->id ? $ticket->id : 'N.A.' }}
                             </a>
                         </td>
-                        <td>{{ $ticket->title ? $ticket->title : 'N.A.' }}</td>
+                        <td>
+                            <span style="height: 15px; width: 15px; background-color: {{ $ticket->ticketPriority->id == 1 ? 'green' : ($ticket->ticketPriority->id == 2 ? 'green' : ($ticket->ticketPriority->id == 3 ? 'yellow' : ($ticket->ticketPriority->id == 4 ? 'orange' : 'red'))) }}; border-radius: 50%; display: inline-block; opacity: 0.5;"></span>
+                            {{ $ticket->title ? $ticket->title : 'N.A.' }}</td>
                         <td>{{ $ticket->requester->name ? $ticket->requester->name : 'N.A.' }}</td>
                         <td>
                             @foreach($ticket->users as $user)

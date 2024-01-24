@@ -19,7 +19,7 @@
 
         <div class="mb-3">
             <label for="status" class="form-label">Estado:</label>
-            <select class="form-control" id="status" name="status_id" required>
+            <select class="form-control" id="status" name="status_id">
                 @foreach($statuses as $status)
                     <option value="{{ $status->id }}">{{ $status->description }}</option>
                 @endforeach
@@ -55,13 +55,8 @@
         </div>
 
         <div class="mb-3">
-            <label for="dueByDate" class="form-label">Data Limite:</label>
-            <input type="date" class="form-control" id="dueByDate" name="dueByDate" required>
-        </div>
-
-        <div class="mb-3">
             <label for="attachment" class="form-label">Anexo:</label>
-            <input type="file" class="form-control" id="attachment" name="attachment" required>
+            <input type="file" class="form-control" id="attachment" name="attachment">
             <p>Make sure you upload a file smaller than 20MB</p>
         </div>
 
