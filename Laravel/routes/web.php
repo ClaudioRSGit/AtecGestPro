@@ -73,6 +73,8 @@ Route::middleware(['auth', 'checkRole:admin,tecnico'])->group(function () {
     Route::post('import-excel-users', 'ExcelImportController@importUsers')->name('import-excel.importUsers');
     Route::get('import-excel-students', 'ExcelImportController@index');
     Route::post('import-excel-students', 'ExcelImportController@importStudents')->name('import-excel.importStudents');
+
+    Route::resource('/dashboard', 'DashboardController');
 });
 
 Route::middleware(['auth', 'checkRole:user'])->group(function () {
