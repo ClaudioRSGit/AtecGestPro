@@ -13,7 +13,7 @@ class PartnerTrainingUserRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,11 @@ class PartnerTrainingUserRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'partner_id' => 'required',
+            'training_id' => 'required',
+            'user_id' => 'required',
+            'start_date' => 'required',
+            'end_date' => 'required|after_or_equal:start_date',
         ];
     }
 }
