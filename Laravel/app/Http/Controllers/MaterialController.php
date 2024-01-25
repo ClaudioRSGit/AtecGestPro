@@ -78,12 +78,13 @@ class MaterialController extends Controller
 
             $stocks = $request->input('stocks', []);
 
-            foreach ($sizes as $sizeId) {
-                $stock= $stocks[$sizeId] ?? 0;
+            if ($sizes) {
+                foreach ($sizes as $sizeId) {
+                    $stock = $stocks[$sizeId] ?? 0;
 
-                $material->sizes()->attach($sizeId, ['stock' => $stock]);
+                    $material->sizes()->attach($sizeId, ['stock' => $stock]);
 
-
+                }
             }
 
 
