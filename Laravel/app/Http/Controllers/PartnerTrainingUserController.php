@@ -10,6 +10,7 @@ use App\Training;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\PartnerTrainingUserRequest;
 
 class PartnerTrainingUserController extends Controller
 {
@@ -84,16 +85,8 @@ class PartnerTrainingUserController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(PartnerTrainingUserRequest $request)
     {
-        $this->validate(request(), [
-            'partner_id' => 'required',
-            'training_id' => 'required',
-            'user_id' => 'required',
-            'start_date' => 'required',
-            'end_date' => 'required|after_or_equal:start_date',
-        ]);
-
         $partnerTrainingUser = PartnerTrainingUser::create([
             'partner_id' => $request->input('partner_id'),
             'training_id' => $request->input('training_id'),
@@ -135,22 +128,15 @@ class PartnerTrainingUserController extends Controller
     }
 
 
-    public function update(Request $request, $id)
+    public function update(PartnerTrainingUserRequest $request, $id)
     {
 
         $partner_Training_User = PartnerTrainingUser::with('partner', 'training', 'user', 'materials')->findOrFail($id);
-        $this->validate($request, [
-            'partner_id' => 'required',
-            'training_id' => 'required',
-            'user_id' => 'required',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date|after_or_equal:start_date',
-        ]);
 
         if (strtotime($request->start_date) > strtotime($request->end_date)) {
             return redirect()->back()->withErrors(['end_date' => 'End date must be after or equal to start date']);
         }
-        //dd($request->all())  ;
+
         $partner_Training_User->update($request->all());
         $partner_Training_User = PartnerTrainingUser::with('materials')->findOrFail($id);
 

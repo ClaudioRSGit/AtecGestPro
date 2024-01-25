@@ -12,32 +12,43 @@
                     <div class="mb-3">
                         <label for="name" class="form-label">Nome do Material:</label>
                         <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
+
+                        @error('name')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
                         <label for="description" class="form-label">Descrição:</label>
-                        <textarea class="form-control" id="description"
-                                  name="description">{{ old('description') }}</textarea>
+                        <textarea class="form-control" id="description" name="description">{{ old('description') }}</textarea>
+
+                        @error('description')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
                         <label for="supplier" class="form-label">Fornecedor:</label>
                         <input type="text" class="form-control" id="supplier" name="supplier"
-                               value="{{ old('supplier') }}">
+                            value="{{ old('supplier') }}">
+
+                        @error('supplier')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
                         <label for="acquisition_date" class="form-label">Data de Aquisição:</label>
                         <input type="date" class="form-control" id="acquisition_date" name="acquisition_date"
-                               value="{{ old('acquisition_date') }}">
+                            value="{{ old('acquisition_date') }}">
                     </div>
 
 
                     <div class="mb-3" id="quantity">
                         <label for="quantity" class="form-label">Quantidade:</label>
 
-                        <input type="number" class="form-control" id="quantity" name="quantity"
-                               value="1" min="1">
+                        <input type="number" class="form-control" id="quantity" name="quantity" value="1"
+                            min="1">
                     </div>
 
                 </div>
@@ -88,18 +99,22 @@
                             <div class="flex-column me-4 scrollable-column mr-5">
                                 <div class="mb-3" id="size">
                                     <div class="d-flex flex-column">
-                                        @foreach($sizes as $size)
+                                        @foreach ($sizes as $size)
                                             <div class="d-flex align-items-center mb-2">
                                                 <div class="form-check">
-                                                    <input onchange="toggleFieldsQuantity()" class="form-check-input size-checkbox" type="checkbox" name="sizes[]"
-                                                           value="{{ $size->id }}" {{ in_array($size->id, old('sizes', [])) ? 'checked' : '' }}>
-                                                    <label  class="form-check-label" for="size{{ $size->id }}">
+                                                    <input onchange="toggleFieldsQuantity()"
+                                                        class="form-check-input size-checkbox" type="checkbox"
+                                                        name="sizes[]" value="{{ $size->id }}"
+                                                        {{ in_array($size->id, old('sizes', [])) ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="size{{ $size->id }}">
                                                         {{ $size->size }}
                                                     </label>
                                                 </div>
 
-                                                <input type="number" name="stocks[{{ $size->id }}]" value="{{ old('stocks.' . $size->id, 0) }}"
-                                                       class="form-control w-25 mx-5 quantity-input" min="0" {{ in_array($size->id, old('sizes', [])) ? '' : 'disabled' }}>
+                                                <input type="number" name="stocks[{{ $size->id }}]"
+                                                    value="{{ old('stocks.' . $size->id, 0) }}"
+                                                    class="form-control w-25 mx-5 quantity-input" min="0"
+                                                    {{ in_array($size->id, old('sizes', [])) ? '' : 'disabled' }}>
                                             </div>
                                         @endforeach
                                     </div>
@@ -110,10 +125,11 @@
                             <div class="flex-column">
                                 <div class="mb-3" id="role">
                                     <div class="d-flex flex-column scrollable-column">
-                                        @foreach($courses as $course)
+                                        @foreach ($courses as $course)
                                             <div class="form-check">
                                                 <input class="form-check-input" type="checkbox" name="courses[]"
-                                                       value="{{ $course->id }}" {{ in_array($course->id, old('courses', [])) ? 'checked' : '' }}>
+                                                    value="{{ $course->id }}"
+                                                    {{ in_array($course->id, old('courses', [])) ? 'checked' : '' }}>
                                                 <label class="form-check-label" for="course{{ $course->id }}">
                                                     {{ $course->code }}
                                                 </label>
@@ -134,13 +150,10 @@
         </form>
     </div>
     <style>
-
-
         .scrollable-column {
             max-height: 300px;
             overflow-y: auto;
         }
-
     </style>
 
     <script>
@@ -162,7 +175,7 @@
         function toggleFields() {
             let isInternalElement = document.getElementById('isInternal');
             let isClothingElement = document.getElementById('isClothing');
-             let gender = document.getElementById('gender');
+            let gender = document.getElementById('gender');
             // let size = document.getElementById('size');
             // let role = document.getElementById('role');
             let quantity = document.getElementById('quantity');
@@ -180,7 +193,7 @@
                 isInternalElement.value = 1;
             }
 
-             gender.style.display = (isInternalElement.value == 1 && isClothingElement.value == 1) ? 'block' : 'none';
+            gender.style.display = (isInternalElement.value == 1 && isClothingElement.value == 1) ? 'block' : 'none';
             // size.style.display = (isInternalElement.value == 1 && isClothingElement.value == 1) ? 'block' : 'none';
             // role.style.display = (isInternalElement.value == 1 && isClothingElement.value == 1) ? 'block' : 'none';
             // labels.style.display = (isInternalElement.value == 1 && isClothingElement.value == 1) ? 'block' : 'none';
@@ -197,5 +210,4 @@
     <div id="warningMessage" style="display: none; text-align: center; margin-top: 10px; color: red;">
         Nota: Não é possível adicionar vestuário externo.
     </div>
-
 @endsection
