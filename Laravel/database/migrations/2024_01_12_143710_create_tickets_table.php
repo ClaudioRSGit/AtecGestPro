@@ -19,7 +19,7 @@ class CreateTicketsTable extends Migration
             $table->string('title');
             $table->string('description');
             $table->dateTime('dueByDate');
-            $table->string('attachment');
+            $table->string('attachment')->nullable();
             $table->foreignId('ticket_status_id')->constrained('ticket_statuses')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('ticket_priority_id')->constrained('ticket_priorities')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('ticket_category_id')->constrained('ticket_categories')->onDelete('cascade')->onUpdate('cascade');

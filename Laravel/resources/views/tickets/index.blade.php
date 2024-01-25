@@ -154,7 +154,7 @@
         }
 
         function submitStatusForm() {
-            
+
                 document.getElementById("filterStatusForm").submit();
 
         }

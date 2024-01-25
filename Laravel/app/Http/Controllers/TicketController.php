@@ -15,8 +15,6 @@ class TicketController extends Controller
 {
     public function index(Request $request)
     {
-
-//        dd($request->all());
         $filterCategory = $request->input('filterCategory');
         $filterPriority = $request->input('filterPriority');
         $filterStatus = $request->input('filterStatus');
@@ -32,7 +30,7 @@ class TicketController extends Controller
                     });
             });
         }
-//dd($filterCategory);
+
         if ($filterCategory) {
             $query->where('ticket_category_id', $filterCategory);
         }
