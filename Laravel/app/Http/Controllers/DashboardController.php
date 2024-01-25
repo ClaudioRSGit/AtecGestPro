@@ -16,7 +16,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $usersWithMaterialsDelivered = User::whereHas('materialUsers', function ($query) {
+        $usersWithMaterialsDelivered = User::whereDoesntHave('materialUsers', function ($query) {
             $query->where('delivered_all', true);
         })->get();
 
