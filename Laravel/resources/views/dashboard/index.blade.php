@@ -3,10 +3,10 @@
 @section('content')
     <div class="container">
         <h1 class="h2">Dashboard</h1>
-        {{-- use foreach loop to <div class="card">:
+        {{-- use foreach loop to create a cart foreach ticket_statuses_id and in h5 put ticket_statuses_description <div class="card">:
         <div class="card">
             <h5 class="card-header">Total Tickets</h5>
-            and another loop for  <div class="card-body">:
+            and another loop for  <div class="card-body"> and in h5 put the count from database:
             <div class="card-body">
                 <h5 class="card-title">345k</h5>
                 <p class="card-text">Feb 1 - Apr 1, United States</p>
@@ -16,7 +16,7 @@
 
 
         <div class="row my-4">
-            <div class="col-12 col-md-6 col-lg-3 mb-4 mb-lg-0">
+            <div class="col-12 col-md-6 col-lg-3 mb-4 mb-lg-2">
                 <div class="card">
                     <h5 class="card-header">Total Tickets</h5>
                     <div class="card-body">
@@ -26,7 +26,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-6 mb-4 mb-lg-0 col-lg-3">
+            <div class="col-12 col-md-6 mb-4 mb-lg-2 col-lg-3">
                 <div class="card">
                     <h5 class="card-header">Tickets Aberto</h5>
                     <div class="card-body">
@@ -36,7 +36,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-6 mb-4 mb-lg-0 col-lg-3">
+            <div class="col-12 col-md-6 mb-4 mb-lg-2 col-lg-3">
                 <div class="card">
                     <h5 class="card-header">Tickets Em Progresso</h5>
                     <div class="card-body">
@@ -46,7 +46,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-6 mb-4 mb-lg-0 col-lg-3">
+            <div class="col-12 col-md-6 mb-4 mb-lg-2 col-lg-3">
                 <div class="card">
                     <h5 class="card-header">Tickets Pendente</h5>
                     <div class="card-body">
@@ -56,7 +56,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-6 mb-4 mb-lg-0 col-lg-3">
+            <div class="col-12 col-md-6 mb-4 mb-lg-2 col-lg-3">
                 <div class="card">
                     <h5 class="card-header">Tickets Resolvido</h5>
                     <div class="card-body">
@@ -66,7 +66,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-6 mb-4 mb-lg-0 col-lg-3">
+            <div class="col-12 col-md-6 mb-4 mb-lg-2 col-lg-3">
                 <div class="card">
                     <h5 class="card-header">Tickets Fechado</h5>
                     <div class="card-body">
@@ -76,7 +76,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-6 mb-4 mb-lg-0 col-lg-3">
+            <div class="col-12 col-md-6 mb-4 mb-lg-2 col-lg-3">
                 <div class="card">
                     <h5 class="card-header">Tickets Prioridade</h5>
                     <div class="card-body">
@@ -88,7 +88,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12 col-xl-8 mb-4 mb-lg-0">
+            <div class="col-12 col-xl-8 mb-4 mb-lg-2">
                 <div class="card">
                     <h5 class="card-header">Entregas Incompletas</h5>
                     <div class="card-body">
@@ -113,38 +113,7 @@
                                             <td><a href="#" class="btn btn-sm btn-primary">View</a></td>
                                         </tr>
                                     @endforeach
-                                    {{-- <tr>
-                                    <th scope="row">17371705</th>
-                                    <td>Volt Premium Bootstrap 5 Dashboard</td>
-                                    <td>johndoe@gmail.com</td>
-                                    <td>€61.11</td>
-                                    <td>Aug 31 2020</td>
-                                    <td><a href="#" class="btn btn-sm btn-primary">View</a></td>
-                                  </tr>
-                                  <tr>
-                                    <th scope="row">17371705</th>
-                                    <td>Volt Premium Bootstrap 5 Dashboard</td>
-                                    <td>johndoe@gmail.com</td>
-                                    <td>€61.11</td>
-                                    <td>Aug 31 2020</td>
-                                    <td><a href="#" class="btn btn-sm btn-primary">View</a></td>
-                                  </tr>
-                                  <tr>
-                                    <th scope="row">17371705</th>
-                                    <td>Volt Premium Bootstrap 5 Dashboard</td>
-                                    <td>johndoe@gmail.com</td>
-                                    <td>€61.11</td>
-                                    <td>Aug 31 2020</td>
-                                    <td><a href="#" class="btn btn-sm btn-primary">View</a></td>
-                                  </tr>
-                                  <tr>
-                                    <th scope="row">17371705</th>
-                                    <td>Volt Premium Bootstrap 5 Dashboard</td>
-                                    <td>johndoe@gmail.com</td>
-                                    <td>€61.11</td>
-                                    <td>Aug 31 2020</td>
-                                    <td><a href="#" class="btn btn-sm btn-primary">View</a></td>
-                                  </tr> --}}
+
                                 </tbody>
 
 
