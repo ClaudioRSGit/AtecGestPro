@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Dashboard;
 use Illuminate\Http\Request;
+use App\User;
+
 
 class DashboardController extends Controller
 {
@@ -14,7 +16,11 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('dashboard.index');
+        $usersWithMaterialsDelivered = User::whereHas('materialUsers', function ($query) {
+            $query->where('delivered_all', true);
+        })->get();
+
+        return view('dashboard.index', compact('usersWithMaterialsDelivered'));
     }
 
     /**
