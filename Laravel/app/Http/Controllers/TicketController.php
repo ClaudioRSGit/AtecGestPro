@@ -8,6 +8,7 @@ use App\TicketStatus;
 use App\TicketPriority;
 use App\TicketCategory;
 use App\TicketUser;
+use App\Http\Requests\TicketRequest;
 
 use Illuminate\Http\Request;
 
@@ -76,18 +77,10 @@ class TicketController extends Controller
                 return now()->addWeeks(3);//Default fica como baixa prioridade
         }
     }
-    public function store(Request $request)
+    public function store(TicketRequest $request)
     {
         $dueByDate = $this->calculateDueByDate($request->priority_id);
 
-        $request->validate([
-            'title' => 'required|string',
-            'description' => 'required|string',
-            'technician_id' => 'required|exists:users,id',
-            'attachment' => 'sometimes|file|max:20480',
-            'priority_id' => 'required|exists:ticket_priorities,id',
-            'category_id' => 'required|exists:ticket_categories,id',
-        ]);
         if ($request->hasFile('attachment')) {
             $filename = $request->file('attachment')->store('attachments', 'public');
         }
@@ -135,20 +128,9 @@ class TicketController extends Controller
         return view('tickets.edit', compact('ticket', 'technicians', 'requester', 'statuses', 'priorities', 'categories', 'userTickets'));
     }
 
-    public function update(Request $request, Ticket $ticket)
+    public function update(TicketRequest $request, Ticket $ticket)
     {
         // $ticket2 = Ticket::with('users','requester','ticketPriority','ticketStatus','ticketCategory')->find($ticket->id);
-
-        $this->validate($request, [
-            'user_id' => 'required|integer|exists:users,id',
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'dueByDate' => 'required|date',
-            'attachment' => 'sometimes|file|max:20480', // 20MB
-            'ticket_status_id' => 'required|integer|exists:ticket_statuses,id',
-            'ticket_priority_id' => 'required|integer|exists:ticket_priorities,id',
-            'ticket_category_id' => 'required|integer|exists:ticket_categories,id',
-        ]);
 
         if ($request->hasFile('attachment')) {
             $filename = $request->file('attachment')->store('attachments', 'public');
