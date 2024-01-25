@@ -3,6 +3,17 @@
 @section('content')
     <div class="container">
         <h1 class="h2">Dashboard</h1>
+        {{-- use foreach loop to <div class="card">:
+        <div class="card">
+            <h5 class="card-header">Total Tickets</h5>
+            and another loop for  <div class="card-body">:
+            <div class="card-body">
+                <h5 class="card-title">345k</h5>
+                <p class="card-text">Feb 1 - Apr 1, United States</p>
+                <p class="card-text text-success">18.2% increase since last month</p>
+            </div>
+        </div> --}}
+
 
         <div class="row my-4">
             <div class="col-12 col-md-6 col-lg-3 mb-4 mb-lg-0">
