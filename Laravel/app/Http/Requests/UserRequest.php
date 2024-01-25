@@ -44,7 +44,7 @@ class UserRequest extends FormRequest
             ];
         } else {
             $rules['password'] = [
-                'required',
+                $this->input('isStudent') == 1 ? 'nullable' : 'required',
                 'string',
                 'min:7',
                 'max:20',

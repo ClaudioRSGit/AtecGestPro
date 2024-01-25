@@ -137,6 +137,10 @@ class UserController extends Controller
             $data['password'] = null;
         }
 
+        if ($user->role_id != 3 && !$request->filled('password')){
+            unset($data['password']);
+        }
+
         if ($request->input('isStudent') != 1) {
             $data['course_class_id'] = null;
         }
