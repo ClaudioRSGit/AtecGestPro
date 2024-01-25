@@ -24,7 +24,7 @@ class MaterialRequest extends FormRequest
     public function rules()
     {
         return [
-                'name' => 'required|string|min:3|max:50',
+                'name' => 'required|string|min:2|max:50',
                 'description' => 'nullable|string|min:3|max:200',
                 'supplier' => 'nullable|string|min:3|max:50',
                 'acquisition_date' => 'nullable|date',
@@ -46,7 +46,7 @@ class MaterialRequest extends FormRequest
         return [
             'name.required' => 'O nome é obrigatório!',
             'name.string' => 'Formato inválido!',
-            'name.min' => 'O nome deve ter pelo menos 3 caracteres!',
+            'name.min' => 'O nome deve ter pelo menos 2 caracteres!',
             'name.max' => 'O nome não pode ter mais de 50 caracteres!',
 
             'description.string' => 'Formato inválido!',
