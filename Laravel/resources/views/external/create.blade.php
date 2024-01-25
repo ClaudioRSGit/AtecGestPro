@@ -65,10 +65,10 @@
                     <table class="table bg-white">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>Quantity</th>
-                                <th>Select</th>
+                                <th>Nome</th>
+                                <th>Descrição</th>
+                                <th>Quantidade</th>
+                                <th>Selecionar</th>
                             </tr>
                         </thead>
                         <tbody class="customTableStyling">
