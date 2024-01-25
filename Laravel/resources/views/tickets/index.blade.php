@@ -139,13 +139,9 @@
                 @endforeach
                 </tbody>
             </table>
-<<<<<<< HEAD
-            {{ $tickets->links() }}
-=======
+
             {{ $tickets->appends(request()->input())->links() }}
 
-
->>>>>>> ad57157a1c4f09699f6a79bee84a8da1e94a8a56
         </div>
     </div>
     <script>
