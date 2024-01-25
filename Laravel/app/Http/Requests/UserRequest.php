@@ -23,11 +23,13 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
+        $userId = $this->user ? $this->user->id : null;
+
         $rules = [
             'name' => 'required|string|min:3|max:200',
-            'username' => 'required|string|min:5|max:20|unique:users',
-            'email' => 'required|email|unique:users',
-            'contact' => 'required|min:9|max:20|unique:users|regex:/^[\s\d()+-]+$/',
+            'username' => ['required', 'string', 'min:5', 'max:20', 'unique:users,username,' . $userId],
+            'email' => ['required', 'email', 'unique:users,email,' . $userId],
+            'contact' => ['required', 'min:9', 'max:20', 'regex:/^[\s\d()+-]+$/', 'unique:users,contact,' . $userId],
             'isStudent' => 'required',
             'isActive' => 'required',
             'course_class_id' => 'nullable',

@@ -54,7 +54,7 @@ class CourseController extends Controller
         } catch (\Illuminate\Validation\ValidationException $e) {
             return redirect()->back()->withErrors($e->validator)->withInput();
         } catch (\Exception $e) {
-            return redirect()->back();
+            return redirect()->back()->with('success', 'Curso criado com sucesso!');;
         }
     }
 

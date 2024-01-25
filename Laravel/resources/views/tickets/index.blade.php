@@ -139,8 +139,8 @@
                 @endforeach
                 </tbody>
             </table>
-            {{ $tickets->appends(request()->input())->links() }}
 
+            {{ $tickets->appends(request()->input())->links() }}
 
         </div>
     </div>
