@@ -7,7 +7,7 @@
         <div class="row my-4">
             <div class="col-12 col-md-6 col-lg-3 mb-4 mb-lg-0">
                 <div class="card">
-                    <h5 class="card-header">Customers</h5>
+                    <h5 class="card-header">Total Tickets</h5>
                     <div class="card-body">
                       <h5 class="card-title">345k</h5>
                       <p class="card-text">Feb 1 - Apr 1, United States</p>
@@ -17,7 +17,7 @@
             </div>
             <div class="col-12 col-md-6 mb-4 mb-lg-0 col-lg-3">
                 <div class="card">
-                    <h5 class="card-header">Revenue</h5>
+                    <h5 class="card-header">Tickets Resolvidos</h5>
                     <div class="card-body">
                       <h5 class="card-title">$2.4k</h5>
                       <p class="card-text">Feb 1 - Apr 1, United States</p>
@@ -27,7 +27,7 @@
             </div>
             <div class="col-12 col-md-6 mb-4 mb-lg-0 col-lg-3">
                 <div class="card">
-                    <h5 class="card-header">Purchases</h5>
+                    <h5 class="card-header">Tickets Abertos</h5>
                     <div class="card-body">
                       <h5 class="card-title">43</h5>
                       <p class="card-text">Feb 1 - Apr 1, United States</p>
@@ -37,7 +37,7 @@
             </div>
             <div class="col-12 col-md-6 mb-4 mb-lg-0 col-lg-3">
                 <div class="card">
-                    <h5 class="card-header">Traffic</h5>
+                    <h5 class="card-header">Tickets Prioridade</h5>
                     <div class="card-body">
                       <h5 class="card-title">64k</h5>
                       <p class="card-text">Feb 1 - Apr 1, United States</p>
@@ -49,7 +49,7 @@
         <div class="row">
             <div class="col-12 col-xl-8 mb-4 mb-lg-0">
                 <div class="card">
-                    <h5 class="card-header">Latest transactions</h5>
+                    <h5 class="card-header">Entregas Incompletas</h5>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table">
@@ -82,7 +82,7 @@
             </div>
             <div class="col-12 col-xl-4">
                 <div class="card">
-                    <h5 class="card-header">Traffic last 6 months</h5>
+                    <h5 class="card-header">Foracoes</h5>
                     <div class="card-body">
                         <div id="traffic-chart"></div>
                     </div>
