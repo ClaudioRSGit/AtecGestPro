@@ -15,9 +15,14 @@ class TicketController extends Controller
 {
     public function index(Request $request)
     {
+
+//        dd($request->all());
+        $filterCategory = $request->input('filterCategory');
+        $filterPriority = $request->input('filterPriority');
+        $filterStatus = $request->input('filterStatus');
+        $ticketSearch = $request->input('ticketSearch');
         $query = Ticket::with('users','requester');
 
-        $ticketSearch = $request->input('ticketSearch');
 
         if ($ticketSearch) {
             $query->where(function ($query) use ($ticketSearch) {
@@ -27,10 +32,24 @@ class TicketController extends Controller
                     });
             });
         }
+//dd($filterCategory);
+        if ($filterCategory) {
+            $query->where('ticket_category_id', $filterCategory);
+        }
+        if ($filterPriority) {
+            $query->where('ticket_priority_id', $filterPriority);
+        }
+        if ($filterStatus) {
+            $query->where('ticket_status_id', $filterStatus);
+        }
 
         $tickets = $query->paginate(5);
         $users = User::all();
-        return view('tickets.index', compact('tickets', 'users', 'ticketSearch'));
+        $categories = TicketCategory::all();
+        $priorities = TicketPriority::all();
+        $statuses = TicketStatus::all();
+
+        return view('tickets.index', compact('tickets', 'users', 'ticketSearch', 'filterCategory', 'filterPriority', 'filterStatus', 'categories', 'priorities', 'statuses'));
     }
 
     public function create()
