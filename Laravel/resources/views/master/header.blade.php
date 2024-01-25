@@ -9,6 +9,7 @@
     </ul>
     <h5 class="ml-2">Bem vindo, {{ Auth::user()->name }}!</h5>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
         <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown">
                 <a class="nav-link" href="#" id="notificacoesDropdown" role="button" data-toggle="dropdown"
@@ -17,8 +18,7 @@
                         alt="Sininho" style="width: 30px; height: 30px; margin-right: 5px;">
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="notificacoesDropdown">
-                    <a class="dropdown-item" href="#">Notificação 1</a>
-                    <a class="dropdown-item" href="#">Notificação 2</a>
+                    @livewire('notification-component')
                 </div>
             </li>
             <li class="nav-item dropdown">

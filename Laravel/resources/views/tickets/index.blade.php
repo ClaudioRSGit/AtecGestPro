@@ -95,7 +95,7 @@
                     @endforeach
                 </tbody>
             </table>
-            {{-- {{ $tickets->links() }} --}}
+            {{ $tickets->links() }}
         </div>
     </div>
 @endsection
