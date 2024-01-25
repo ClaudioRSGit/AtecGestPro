@@ -15,8 +15,13 @@
     {{-- .STYLE SECTION --}}
 </head>
 <body>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    {{-- Chartist.js, a library for creating responsive charts --}}
     <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+    {{-- Popper.js, a library used for positioning  tooltips and popovers in Bootstrap. --}}
+    {{-- integrity It allows the browser to verify that the fetched resource has been delivered without unexpected manipulation--}}
+    {{-- crossorigin  It allows the script to be loaded from a different domain.--}}
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+
 
     {{-- Main --}}
 <main>
