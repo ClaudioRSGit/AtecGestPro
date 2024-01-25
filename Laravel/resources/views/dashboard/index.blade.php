@@ -96,23 +96,7 @@
                                     <td>Aug 28 2020</td>
                                     <td><a href="#" class="btn btn-sm btn-primary">View</a></td>
                                   </tr>
-                                  <tr>
-                                    <th scope="row">17371705</th>
-                                    <td>Volt Premium Bootstrap 5 Dashboard</td>
-                                    <td>johndoe@gmail.com</td>
-                                    <td>€61.11</td>
-                                    <td>Aug 31 2020</td>
-                                    <td><a href="#" class="btn btn-sm btn-primary">View</a></td>
-                                  </tr>
-                                  <tr>
-                                    <th scope="row">17370540</th>
-                                    <td>Pixel Pro Premium Bootstrap UI Kit</td>
-                                    <td>jacob.monroe@company.com</td>
-                                    <td>$153.11</td>
-                                    <td>Aug 28 2020</td>
-                                    <td><a href="#" class="btn btn-sm btn-primary">View</a></td>
-                                  </tr>
-                                </tbody>
+
                               </table>
                         </div>
                         <a href="#" class="btn btn-block btn-light">View all</a>
