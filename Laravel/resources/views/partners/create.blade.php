@@ -101,6 +101,8 @@
             });
         });
 
+        const maxContacts = 3;
+
         function validateForm() {
             const firstContactGroup = document.querySelector('.contact-group');
             const firstDescriptionInput = firstContactGroup.querySelector('input[name^="contact_description"]');
@@ -138,48 +140,53 @@
                 const value = contactGroup.querySelector('input[name^="contact_value"]').value.trim();
                 return description !== '' && value !== '';
             });
+            
+            if (contactGroups.length < maxContacts) {
+                if (allFieldsFilled) {
+                    const newContactGroup = document.createElement('div');
+                    newContactGroup.classList.add('contact-group', 'mb-3');
 
-            if (allFieldsFilled) {
-                const newContactGroup = document.createElement('div');
-                newContactGroup.classList.add('contact-group', 'mb-3');
+                    const inputDescription = document.createElement('input');
+                    inputDescription.type = 'text';
+                    inputDescription.classList.add('form-control');
+                    inputDescription.name = 'contact_description[]';
+                    inputDescription.placeholder = 'Descrição';
 
-                const inputDescription = document.createElement('input');
-                inputDescription.type = 'text';
-                inputDescription.classList.add('form-control');
-                inputDescription.name = 'contact_description[]';
-                inputDescription.placeholder = 'Descrição';
+                    const inputValue = document.createElement('input');
+                    inputValue.type = 'text';
+                    inputValue.classList.add('form-control');
+                    inputValue.name = 'contact_value[]';
+                    inputValue.placeholder = 'Contacto';
 
-                const inputValue = document.createElement('input');
-                inputValue.type = 'text';
-                inputValue.classList.add('form-control');
-                inputValue.name = 'contact_value[]';
-                inputValue.placeholder = 'Contacto';
+                    const removeButton = document.createElement('button');
+                    removeButton.type = 'button';
+                    removeButton.classList.add('btn', 'remove-contact');
+                    removeButton.innerHTML =
+                        '<svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><path fill="#116fdc" d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z"/></svg>';
+                    removeButton.addEventListener('click', function() {
+                        if (contactGroups.length > 1 || (contactGroups.length === 1 && (inputDescription.value
+                                .trim() !== '' || inputValue.value.trim() !== ''))) {
+                            newContactGroup.remove();
+                            updateRemoveButtonState();
+                        }
+                    });
 
-                const removeButton = document.createElement('button');
-                removeButton.type = 'button';
-                removeButton.classList.add('btn', 'remove-contact');
-                removeButton.innerHTML =
-                    '<svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><path fill="#116fdc" d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z"/></svg>';
-                removeButton.addEventListener('click', function() {
-                    if (contactGroups.length > 1 || (contactGroups.length === 1 && (inputDescription.value
-                            .trim() !== '' || inputValue.value.trim() !== ''))) {
-                        newContactGroup.remove();
-                        updateRemoveButtonState();
-                    }
-                });
+                    newContactGroup.appendChild(inputDescription);
+                    newContactGroup.appendChild(inputValue);
+                    contactsContainer.appendChild(newContactGroup);
+                    newContactGroup.appendChild(removeButton);
+                    updateRemoveButtonState();
 
-                newContactGroup.appendChild(inputDescription);
-                newContactGroup.appendChild(inputValue);
-                contactsContainer.appendChild(newContactGroup);
-                newContactGroup.appendChild(removeButton);
-                updateRemoveButtonState();
-
-                inputDescription.value = '';
-                inputValue.value = '';
+                    inputDescription.value = '';
+                    inputValue.value = '';
+                } else {
+                    alert('Preencha todos os campos dos contactos anteriores!');
+                }
             } else {
-                alert('Preencha todos os campos dos contactos anteriores!');
+                alert('Número máximo de contactos atingido!');
             }
         }
+
 
         function removeContact(button) {
             const contactGroup = button.closest('.contact-group');
@@ -210,9 +217,9 @@
         }
 
         window.setTimeout(function() {
-                $(".contact-alert").fadeTo(500, 0).slideUp(500, function() {
-                    $(this).remove();
-                });
-            }, 2500);
+            $(".contact-alert").fadeTo(500, 0).slideUp(500, function() {
+                $(this).remove();
+            });
+        }, 2500);
     </script>
 @endsection

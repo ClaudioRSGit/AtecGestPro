@@ -15,33 +15,26 @@ class MaterialController extends Controller
     {
         $search = $request->input('search');
         $materialFilter = $request->input('materialFilter');
+        $sortColumn = $request->input('sortColumn', 'name'); // default sort by 'name'
+        $sortDirection = $request->input('sortDirection', 'asc'); // default sort direction 'asc'
+
+        $query = Material::with('sizes', 'courses');
 
         if ($materialFilter === "internal") {
-            $materials = Material::with('sizes', 'courses')
-                ->where('isInternal', 1)
-                ->where('isClothing', 0)
-                ->paginate(5);
+            $query->where('isInternal', 1)->where('isClothing', 0);
         } elseif ($materialFilter === "external") {
-            $materials = Material::with('sizes', 'courses')
-                ->where('isInternal', 0)
-                ->paginate(5);
+            $query->where('isInternal', 0);
         } elseif ($materialFilter === "clothing") {
-            $materials = Material::with('sizes', 'courses')
-                ->where('isClothing', 1)
-                ->paginate(5);
-        } elseif ($materialFilter === "all") {
-            $materials = Material::with('sizes', 'courses')->paginate(5);
-        } else {
-            $materials = Material::with('sizes', 'courses')->paginate(5);
+            $query->where('isClothing', 1);
         }
 
         if ($search) {
-            $materials = Material::with('sizes', 'courses')
-                ->where('name', 'like', "%$search%")
-                ->paginate(5);
+            $query->where('name', 'like', "%$search%");
         }
 
-        return view('materials.index', compact('materials', 'search', 'materialFilter'));
+        $materials = $query->orderBy($sortColumn, $sortDirection)->paginate(5);
+
+        return view('materials.index', compact('materials', 'search', 'materialFilter', 'sortColumn', 'sortDirection'));
     }
 
 
@@ -86,9 +79,6 @@ class MaterialController extends Controller
 
                 }
             }
-
-
-            //  dd(DB::getQueryLog());
 
 
             return redirect()->route('materials.show', $material->id)->with('success', 'Material inserido com sucesso!');

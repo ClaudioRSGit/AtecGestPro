@@ -144,9 +144,6 @@ main > .content{
 .sidebarContent, .navbar, .content, .toggleableElement {
     transition: all 0.3s ease-in-out;
 }
-.no-transition {
-    transition: none !important;
-}
 
 footer {
     flex-shrink: 0;
@@ -262,6 +259,9 @@ thead th{
     height: 100%;
 }
 
+input[type="number"]{
+    text-align: center;
+}
 
 
 

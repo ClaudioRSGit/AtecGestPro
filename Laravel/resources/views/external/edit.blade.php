@@ -74,6 +74,7 @@
                 </div>
 
                 <div class="startCalendar">
+                    <label for="start_date">Data de Início:</label>
                     <input type="datetime-local" class="form-control flatpickr" id="start_date" name="start_date" value="{{ date('Y-m-d\TH:i:s', strtotime($partner_Training_Users->start_date)) }}" required>
                 </div>
 
