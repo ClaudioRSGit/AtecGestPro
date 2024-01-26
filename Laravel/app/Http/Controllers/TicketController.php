@@ -11,9 +11,9 @@ use App\TicketUser;
 use App\Action;
 use App\Notification;
 use App\NotificationUser;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\TicketRequest;
 
 class TicketController extends Controller
 {
@@ -64,7 +64,7 @@ class TicketController extends Controller
 
         return view('tickets.create', compact('statuses', 'priorities', 'categories', 'technicians'));
     }
-    protected function calculateDueByDate($priorityId)
+    public function calculateDueByDate($priorityId)
     {
         switch ($priorityId) {
             case 1: // Baixa
@@ -81,20 +81,11 @@ class TicketController extends Controller
                 return now()->addWeeks(3);//Default fica como baixa prioridade
         }
     }
-    public function store(Request $request)
+    public function store(TicketRequest $request)
     {
         $loggedInUserId = Auth::id();
         $dueByDate = $this->calculateDueByDate($request->priority_id);
-
-        $request->validate([
-
-            'title' => 'required|string',
-            'description' => 'required|string',
-            'technician_id' => 'required|exists:users,id',
-            'attachment' => 'sometimes|file|max:20480',
-            'priority_id' => 'required|exists:ticket_priorities,id',
-            'category_id' => 'required|exists:ticket_categories,id',
-        ]);
+        $filename = 'Sem Anexo';
         if ($request->hasFile('attachment')) {
             $filename = $request->file('attachment')->store('attachments', 'public');
         }
@@ -105,8 +96,8 @@ class TicketController extends Controller
             'ticket_priority_id' => $request->priority_id,
             'ticket_category_id' => $request->category_id,
             'dueByDate' => $dueByDate,
-            'attachment' => $filename ?? null,
             'user_id' => $loggedInUserId,
+            'attachment' => $filename,
         ]);
 
         $ticket->save();
@@ -117,7 +108,7 @@ class TicketController extends Controller
         ]);
 
         $notification = Notification::create([
-            'description' => 'Novo ticket: #' . $ticket->id,
+            'description' => 'Novo ticket criado: #' . $ticket->id,
             'code' => 'TICKET',
             'object_id' => $ticket->id,
         ]);
@@ -164,12 +155,12 @@ class TicketController extends Controller
     public function update(Request $request, Ticket $ticket)
     {
         // $ticket2 = Ticket::with('users','requester','ticketPriority','ticketStatus','ticketCategory')->find($ticket->id);
-
+        $dueByDate = $this->calculateDueByDate($request->priority_id);
         $this->validate($request, [
             'user_id' => 'required|integer|exists:users,id',
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'dueByDate' => 'required|date',
+            'dueByDate' => 'sometimes|date',
             'attachment' => 'sometimes|file|max:20480', // 20MB
             'ticket_status_id' => 'required|integer|exists:ticket_statuses,id',
             'ticket_priority_id' => 'required|integer|exists:ticket_priorities,id',
@@ -187,6 +178,7 @@ class TicketController extends Controller
         $ticket->ticket_priority_id = $request->priority_id;
         $ticket->ticket_status_id = $request->status_id;
         $ticket->ticket_category_id = $request->category_id;
+        $ticket->dueByDate = $dueByDate;
 
         $ticket->update($request->all());
 
