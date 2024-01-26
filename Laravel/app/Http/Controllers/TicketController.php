@@ -13,6 +13,7 @@ use App\Notification;
 use App\NotificationUser;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TicketController extends Controller
 {
@@ -55,12 +56,13 @@ class TicketController extends Controller
 
     public function create()
     {
+
         $statuses = TicketStatus::where('id', 1)->get();
         $priorities = TicketPriority::all();
         $categories = TicketCategory::all();
-        $users = User::where('role_id', 1)->get();
+        $technicians = User::where('role_id', 4)->get();
 
-        return view('tickets.create', compact('statuses', 'priorities', 'categories', 'users'));
+        return view('tickets.create', compact('statuses', 'priorities', 'categories', 'technicians'));
     }
     protected function calculateDueByDate($priorityId)
     {
@@ -81,9 +83,11 @@ class TicketController extends Controller
     }
     public function store(Request $request)
     {
+        $loggedInUserId = Auth::id();
         $dueByDate = $this->calculateDueByDate($request->priority_id);
 
         $request->validate([
+
             'title' => 'required|string',
             'description' => 'required|string',
             'technician_id' => 'required|exists:users,id',
@@ -102,16 +106,23 @@ class TicketController extends Controller
             'ticket_category_id' => $request->category_id,
             'dueByDate' => $dueByDate,
             'attachment' => $filename ?? null,
-            'user_id' => $request->technician_id,
+            'user_id' => $loggedInUserId,
         ]);
 
         $ticket->save();
+
+        TicketUser::create([
+            'ticket_id' => $ticket->id,
+            'user_id' => $request->technician_id,
+        ]);
 
         $notification = Notification::create([
             'description' => 'Novo ticket: #' . $ticket->id,
             'code' => 'TICKET',
             'object_id' => $ticket->id,
         ]);
+
+
 
         NotificationUser::create([
             'user_id' => $ticket->user_id,

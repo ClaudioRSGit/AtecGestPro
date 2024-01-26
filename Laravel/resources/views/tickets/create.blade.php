@@ -38,8 +38,8 @@
                 <label for="technician" class="form-label">Técnico Responsável:</label>
                 <select class="form-control" id="technician" name="technician_id" required>
                     <option value="">Selecione um técnico</option>
-                    @foreach ($users as $user)
-                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                    @foreach ($technicians as $technician)
+                        <option value="{{ $technician->id }}">{{ $technician->name }}</option>
                     @endforeach
                 </select>
             </div>
