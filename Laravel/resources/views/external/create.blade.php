@@ -91,11 +91,13 @@
                 </div>
 
                 <div class="startCalendar">
+                    <label for="start_date">Data de Início:</label>
                     <input type="datetime-local" class="form-control flatpickr" id="start_date" name="start_date"
                     required placeholder="Selecione a data de início">
                 </div>
 
                 <div class="endCalendar">
+                    <label for="end_date">Data de Fim:</label>
                     <input type="datetime-local" class="form-control flatpickr" id="end_date" name="end_date"
                     required placeholder="Selecione a data de fim">
                 </div>
