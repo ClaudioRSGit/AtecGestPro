@@ -74,6 +74,7 @@
                 </div>
 
                 <div class="startCalendar">
+                    <label for="start_date">Data de Início:</label>
                     <input type="datetime-local" class="form-control flatpickr" id="start_date" name="start_date" value="{{ date('Y-m-d\TH:i:s', strtotime($partner_Training_Users->start_date)) }}" required>
                 </div>
 
@@ -86,10 +87,10 @@
                     <table class="table bg-white">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>Quantity</th>
-                                <th>Select</th>
+                                <th>Nome</th>
+                                <th>Descrição</th>
+                                <th>Quantidade</th>
+                                <th>Selecionar</th>
                             </tr>
                         </thead>
                         <tbody class="customTableStyling">

@@ -66,7 +66,6 @@ Route::middleware(['auth', 'checkRole:admin,tecnico'])->group(function () {
     Route::resource('courses', 'CourseController');
     Route::post('courses/massDelete', 'CourseController@massDelete')->name('courses.massDelete');
 
-    Route::resource('tickets', 'TicketController');
     Route::put('/tickets/{ticket}', 'TicketController@update')->name('tickets.update');
 
     Route::post('/comments', 'CommentController@store')->name('comments.store');
@@ -78,5 +77,6 @@ Route::middleware(['auth', 'checkRole:admin,tecnico'])->group(function () {
     Route::post('import-excel-students', 'ExcelImportController@importStudents')->name('import-excel.importStudents');
 });
 
-Route::middleware(['auth', 'checkRole:user'])->group(function () {
+Route::middleware(['auth', 'checkRole:user,admin,tecnico'])->group(function () {
+    Route::resource('tickets', 'TicketController');
 });

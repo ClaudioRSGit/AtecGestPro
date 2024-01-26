@@ -82,7 +82,7 @@ class CourseClassController extends Controller
         else if($request->has('import')){
             return redirect()->route('import-excel.importStudents');
         }
-        return redirect()->route('course-classes.index')->with('success', 'Course class created successfully!');
+        return redirect()->route('course-classes.index')->with('success', 'Turma criada com sucesso!');
 
     }
 
@@ -101,13 +101,13 @@ class CourseClassController extends Controller
         $courseClass->update($data);
         // $courseClass->update($request->all());
 
-        return redirect()->route('course-classes.index')->with('success', 'Course class updated successfully!');
+        return redirect()->route('course-classes.index')->with('success', 'Turma atualizada com sucesso!');
     }
 
     public function destroy(CourseClass $courseClass)
     {
         $courseClass->delete();
-        return redirect()->route('course-classes.index')->with('success', 'Course class deleted successfully!');
+        return redirect()->route('course-classes.index')->with('success', 'Turma apagada com sucesso!');
     }
 
     public function massDelete(Request $request)

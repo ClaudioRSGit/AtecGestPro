@@ -8,6 +8,9 @@ use App\TicketStatus;
 use App\TicketPriority;
 use App\TicketCategory;
 use App\TicketUser;
+use App\Action;
+use App\Notification;
+use App\NotificationUser;
 use Illuminate\Http\Request;
 use App\Http\Requests\TicketRequest;
 
@@ -96,6 +99,18 @@ class TicketController extends Controller
 
         $ticket->save();
 
+        $notification = Notification::create([
+            'description' => 'Novo ticket: #' . $ticket->id,
+            'code' => 'TICKET',
+            'object_id' => $ticket->id,
+        ]);
+
+        NotificationUser::create([
+            'user_id' => $ticket->user_id,
+            'notification_id' => $notification->id,
+            'isRead' => false,
+        ]);
+
         return redirect()->route('tickets.index');
     }
 
@@ -155,6 +170,7 @@ class TicketController extends Controller
         $ticket->ticket_category_id = $request->category_id;
 
         $ticket->update($request->all());
+
         //$ticket->save();
         return redirect()->route('tickets.index')->with('success', 'Ticket atualizado com sucesso!');
     }
