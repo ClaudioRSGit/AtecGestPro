@@ -56,8 +56,10 @@
                 <th scope="col">
                     <input type="checkbox" id="select-all">
                 </th>
-                <th scope="col">Nome</th>
-                <th scope="col">Username</th>
+                <th><a href="{{ route('users.index', ['sortColumn' => 'name', 'sortDirection' => $sortColumn === 'name' ?
+                ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">Nome</a></th>
+                <th><a href="{{ route('users.index', ['sortColumn' => 'username', 'sortDirection' => $sortColumn === 'username' ?
+                ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">Username</a></th>
                 <th scope="col">Email</th>
                 <th scope="col">Função</th>
                 <th scope="col">Ativo</th>
