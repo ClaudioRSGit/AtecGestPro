@@ -105,7 +105,7 @@
                             @endforeach
                         </td>
                         <td>{{ $ticket->ticketStatus->description ? $ticket->ticketStatus->description : 'N.A.' }}</td>
-                        <td>{{ $ticket->created_at ? $ticket->created_at->format('d/m/Y') : 'N.A.' }}</td>
+                        <td>{{ $ticket->created_at ? $ticket->created_at->format('Y-m-d') : 'N.A.' }}</td>
                         <td>{{ $ticket->dueByDate ? \Carbon\Carbon::parse($ticket->dueByDate)->toDateString() : 'N.A.' }}</td>
                         <td class="editDelete">
                             <div>
