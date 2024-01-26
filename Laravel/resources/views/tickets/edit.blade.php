@@ -82,10 +82,7 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="mb-3">
-                        <label>Data Limite:</label>
-                        <input type="date" class="form-control" id="dueByDate" name="dueByDate" value="{{ $ticket->dueByDate ? $ticket->dueByDate : '' }}">
-                    </div>
+
                     <div>
                         <label>Histórico do Utilizador:</label>
                         <ul>
