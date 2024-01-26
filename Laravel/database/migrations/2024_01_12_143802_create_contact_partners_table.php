@@ -15,7 +15,7 @@ class CreateContactPartnersTable extends Migration
     {
         Schema::create('contact_partners', function (Blueprint $table) {
             $table->id();
-            $table->string('contact')->nullable();;
+            $table->string('contact')->nullable()->unique();
             $table->string('description')->nullable();
             $table->foreignId('partner_id')->constrained('partners')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
