@@ -62,7 +62,7 @@ class TicketController extends Controller
 
         return view('tickets.create', compact('statuses', 'priorities', 'categories', 'users'));
     }
-    protected function calculateDueByDate($priorityId)
+    public function calculateDueByDate($priorityId)
     {
         switch ($priorityId) {
             case 1: // Baixa
@@ -82,7 +82,7 @@ class TicketController extends Controller
     public function store(TicketRequest $request)
     {
         $dueByDate = $this->calculateDueByDate($request->priority_id);
-
+        $filename = 'Sem Anexo';
         if ($request->hasFile('attachment')) {
             $filename = $request->file('attachment')->store('attachments', 'public');
         }
@@ -93,7 +93,7 @@ class TicketController extends Controller
             'ticket_priority_id' => $request->priority_id,
             'ticket_category_id' => $request->category_id,
             'dueByDate' => $dueByDate,
-            'attachment' => $filename ?? null,
+            'attachment' => $filename,
             'user_id' => $request->technician_id,
         ]);
 

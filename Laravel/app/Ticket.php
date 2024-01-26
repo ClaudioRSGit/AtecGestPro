@@ -12,8 +12,9 @@ class Ticket extends Model
         'ticket_status_id',
         'ticket_priority_id',
         'ticket_category_id',
-        'attachment',
         'user_id',
+        'dueByDate',
+        'attachment'
     ];
     public function ticketHistories()
     {
