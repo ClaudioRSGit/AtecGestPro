@@ -8,8 +8,8 @@ use App\TicketStatus;
 use App\TicketPriority;
 use App\TicketCategory;
 use App\TicketUser;
-
 use Illuminate\Http\Request;
+use App\Http\Requests\TicketRequest;
 
 class TicketController extends Controller
 {
@@ -76,18 +76,10 @@ class TicketController extends Controller
                 return now()->addWeeks(3);//Default fica como baixa prioridade
         }
     }
-    public function store(Request $request)
+    public function store(TicketRequest $request)
     {
         $dueByDate = $this->calculateDueByDate($request->priority_id);
 
-        $request->validate([
-            'title' => 'required|string',
-            'description' => 'required|string',
-            'technician_id' => 'required|exists:users,id',
-            'attachment' => 'sometimes|file|max:20480',
-            'priority_id' => 'required|exists:ticket_priorities,id',
-            'category_id' => 'required|exists:ticket_categories,id',
-        ]);
         if ($request->hasFile('attachment')) {
             $filename = $request->file('attachment')->store('attachments', 'public');
         }
