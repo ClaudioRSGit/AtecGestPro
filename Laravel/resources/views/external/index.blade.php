@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container">
+    <div class="">
         @if (session('success'))
             <div class="alert alert-success" id="success-alert">
                 {{ session('success') }}
@@ -93,8 +93,6 @@
                                 <td class="{{ optional($partner_Training_User->partner)->name ? '' : 'text-danger' }}">
                                     {{ optional($partner_Training_User->partner)->name ?? 'O Parceiro foi apagado do sistema.' }}
                                 </td>
-
-
                                 <td>{{ optional($partner_Training_User->partner)->address }}</td>
                                 <td>{{ optional($partner_Training_User->user)->name }}</td>
                                 <td class="{{ optional($partner_Training_User->training)->name ? '' : 'text-danger' }}">
