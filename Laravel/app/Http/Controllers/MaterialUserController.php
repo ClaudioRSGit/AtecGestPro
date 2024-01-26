@@ -127,8 +127,10 @@ class MaterialUserController extends Controller
                 'quantity' => $itemQuantity,
                 'size_id' => $itemSize,
                 'delivery_date' => $itemDeliveryDate,
-                'delivered_all' => $request->get('delivered_all'),
+//                'delivered_all' => $request->get('delivered_all'),
             ]);
+
+
 
 
             $materialUser->save();
@@ -152,6 +154,18 @@ class MaterialUserController extends Controller
                 $student->notes = $existingNotes . "\n" . $timestamp . ": " . $newNote;
                 $student->save();
             }
+
+            $allDeliveries = MaterialUser::where('user_id', $request->get('user_id'))->get();
+
+            $allDeliveries->each(function ($item, $key) {
+                if($item->delivered_all == 0){
+                    $item->delivered_all = 1;
+                    $item->save();
+                }elseif ($item->delivered_all == 1){
+                    $item->delivered_all = 0;
+                    $item->save();
+                }
+            });
 
         }
 

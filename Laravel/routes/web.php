@@ -22,9 +22,9 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login')->
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::middleware('throttle:1,1')->group(function () {
-    Route::post('users.create', 'UserController@create')->name('users.create');
-});
+//Route::middleware('throttle:1,1')->group(function () {
+//    Route::post('users.create', 'UserController@create')->name('users.create');
+//});
 
 //Tecnico & Admin
 Route::middleware(['auth', 'checkRole:admin,tecnico'])->group(function () {
