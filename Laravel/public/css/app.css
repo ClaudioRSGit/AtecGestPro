@@ -232,6 +232,8 @@ thead th{
 
 .search-container input {
     padding-left: 40px;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
 .search-container:before {

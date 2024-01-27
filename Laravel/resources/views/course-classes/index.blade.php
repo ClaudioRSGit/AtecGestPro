@@ -19,8 +19,10 @@
             <div class="search-container">
                 <form action="{{ route('course-classes.index') }}" method="GET">
                     <div class="input-group pr-2">
-                        <input type="text" name="courseClassSearch" class="form-control "
-                               placeholder="{{ request('courseClassSearch') ? request('courseClassSearch') : 'Procurar...' }}">
+                        <div class="search-container">
+                            <input type="text" name="courseClassSearch" class="form-control "
+                            placeholder="{{ request('courseClassSearch') ? request('courseClassSearch') : 'Procurar...' }}">
+                        </div>
                         <div class="input-group-append">
                             <button type="submit" class="btn btn-outline-secondary flex-shrink-0">
                                 Procurar

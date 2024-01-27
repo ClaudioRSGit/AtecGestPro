@@ -21,8 +21,10 @@
 
             <form action="{{ route('users.index') }}" method="GET">
                 <div class="input-group pr-2">
-                    <input type="text" name="searchName" class="form-control"
-                           placeholder="{{ request('searchName') ? request('searchName') : 'Procurar...' }}">
+                    <div class="search-container">
+                        <input type="text" name="searchName" class="form-control"
+                        placeholder="{{ request('searchName') ? request('searchName') : 'Procurar...' }}">
+                    </div>
                     <div class="input-group-append">
                         <button type="submit" class="btn btn-outline-secondary">
                             Procurar

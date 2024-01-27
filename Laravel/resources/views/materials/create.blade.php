@@ -48,7 +48,7 @@
                         <label for="quantity" class="form-label">Quantidade:</label>
 
                         <input type="number" class="form-control" id="quantity" name="quantity" value="1"
-                            min="1">
+                            min="1" style="text-align: left;">
                     </div>
 
                 </div>

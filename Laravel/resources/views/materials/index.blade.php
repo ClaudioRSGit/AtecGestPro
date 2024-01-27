@@ -9,8 +9,10 @@
 
                 <form action="{{ route('materials.index') }}" method="GET">
                     <div class="input-group pr-2">
-                        <input type="text" name="search" class="form-control"
-                               placeholder="{{ request('search') ? request('search') : 'Procurar...' }}">
+                        <div class="search-container">
+                            <input type="text" name="search" class="form-control"
+                            placeholder="{{ request('search') ? request('search') : 'Procurar...' }}">
+                        </div>
                         <div class="input-group-append">
                             <button type="submit" class="btn btn-outline-secondary">
                                 Procurar

@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="">
+    <div class="container">
         @if (session('success'))
             <div class="alert alert-success" id="success-alert">
                 {{ session('success') }}
@@ -31,7 +31,7 @@
 
         <ul class="nav nav-tabs mb-3" id="myTabs">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#externalTable">Gestão de F. Externas</a>
+                <a class="nav-link active" data-toggle="tab" href="#externalTable">Gestão de F. Mercado</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#partnersTable">Gestão de Parceiros</a>
@@ -49,7 +49,9 @@
                 <div class=" d-flex">
                     <form action="{{ route('external.index') }}" method="GET">
                         <div class="input-group pr-2">
-                            <input type="text" name="ptu" class="form-control" placeholder="{{ request('ptu') ? request('ptu') : 'Procurar...' }}">
+                            <div class="search-container">
+                                <input type="text" name="ptu" class="form-control" placeholder="{{ request('ptu') ? request('ptu') : 'Procurar...' }}">
+                            </div>
                             <div class="input-group-append">
                                 <button type="submit" class="btn btn-outline-secondary">
                                     Procurar
@@ -144,7 +146,9 @@
                 <div class="d-flex mb-3">
                     <form action="{{ route('external.index') }}" method="GET">
                         <div class="input-group pr-2">
-                            <input type="text" name="p" class="form-control" placeholder="{{ request('p') ? request('p') : 'Procurar...' }}">
+                            <div class="search-container">
+                                <input type="text" name="p" class="form-control" placeholder="{{ request('p') ? request('p') : 'Procurar...' }}">
+                            </div>
                             <div class="input-group-append">
                                 <button type="submit" class="btn btn-outline-secondary">
                                     Procurar
@@ -254,10 +258,12 @@
 
 
 
-                <div class=" d-flex">
+                <div class="d-flex">
                     <form action="{{ route('external.index') }}" method="GET">
                         <div class="input-group pr-2">
-                            <input type="text" name="t" class="form-control" placeholder="{{ request('t') ? request('t') : 'Procurar...' }}">
+                            <div class="search-container">
+                                <input type="text" name="t" class="form-control" placeholder="{{ request('t') ? request('t') : 'Procurar...' }}">
+                            </div>
                             <div class="input-group-append">
                                 <button type="submit" class="btn btn-outline-secondary">
                                     Procurar

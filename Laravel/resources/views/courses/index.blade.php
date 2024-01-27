@@ -22,9 +22,16 @@
 
 
             <form action="{{ route('courses.index') }}" method="get" class="form-inline" id="filterForm">
-                <div class="form-group mr-3 search-container">
-                    <input type="text" class="form-control" id="courseSearch" name="courseSearch"
-                           value="{{ request('courseSearch') }}" placeholder="Pesquisar curso...">
+                <div class="input-group pr-2">
+                    <div class="search-container">
+                        <input type="text" class="form-control" id="courseSearch" name="courseSearch"
+                            value="{{ request('courseSearch') }}" placeholder="Pesquisar curso...">
+                    </div>
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-outline-secondary">
+                            Procurar
+                        </button>
+                    </div>
                 </div>
             </form>
 

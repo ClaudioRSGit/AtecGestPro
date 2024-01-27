@@ -59,7 +59,7 @@
                     </div>
                     <div class="mx-3 " id="gender">
                         <label for="gender">Género:</label>
-                        <input disabled type="text" name="gender" placeholder="{{ $material->gender == 1 ? 'Masculino' : 'Femenino' }}">
+                        <input disabled type="text" name="gender" placeholder="{{ $material->gender == 1 ? 'Masculino' : 'Feminino' }}">
 
                     </div>
                 </div>
