@@ -95,7 +95,38 @@ main > .content{
     padding: 0 3%;
 }
 
+.notification-item {
+    padding: 2px;
+    margin-bottom: 5px;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
 
+.read {
+    color: grey;
+}
+
+.unread {
+    color: black;
+    font-weight: bold;
+    background-color: #f0f0f0;
+}
+
+.delete-btn {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: #888;
+    font-size: 16px;
+}
+
+.delete-btn:hover {
+    color: #c00;
+}
 .container{
     height: 100%;
     width: 90%;
