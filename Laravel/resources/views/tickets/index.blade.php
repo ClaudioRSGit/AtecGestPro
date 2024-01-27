@@ -5,20 +5,24 @@
         <h1>Tickets</h1>
         <div class="d-flex justify-content-between mb-3">
 
-            <div class="row w-100">
-                <div class="col-2">
                     <form action="{{ route('tickets.index') }}" method="get" class="form-inline" id="ticketSearchForm">
-                        <div class="form-group mr-3 search-container">
-                            <input type="text" class="form-control" id="ticketSearch" name="ticketSearch"
-                                   value="{{ request('ticketSearch') }}"
-                                   placeholder="{{ request('ticketSearch') ? request('ticketSearch') : 'Pesquisar ticket...' }}">
+                        <div class="input-group">
+                            <div class="form-group search-container">
+                                <input type="text" class="form-control" id="ticketSearch" name="ticketSearch"
+                                value="{{ request('ticketSearch') }}"
+                                placeholder="{{ request('ticketSearch') ? request('ticketSearch') : 'Pesquisar ticket...' }}">
+                            </div>
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-outline-secondary">
+                                    Procurar
+                                </button>
+                            </div>
                         </div>
 
                     </form>
-                </div>
 
 
-                <div class="buttons col-10">
+                <div class="buttons">
 
 
                     <form id="filterCategoryForm" action="{{ route('tickets.index') }}" method="GET">
@@ -66,7 +70,6 @@
                 </div>
             </div>
 
-        </div>
         <div class="accordion" id="ticketsAccordion">
             <table class="table bg-white rounded-top">
                 <thead>
@@ -143,7 +146,6 @@
             {{ $tickets->appends(request()->input())->links() }}
 
         </div>
-    </div>
     <script>
 
 
