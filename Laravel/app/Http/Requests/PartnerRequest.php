@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+
 class PartnerRequest extends FormRequest
 {
     /**
@@ -23,13 +24,49 @@ class PartnerRequest extends FormRequest
      */
     public function rules()
     {
+        $partnerId = $this->partner ? $this->partner->id : null;
+
         return [
-            'name' => 'required|string|max:100',
+            'name' => ['required', 'string', 'max:100', 'unique:partners,name,' . $partnerId],
             'description' => 'required|string|max:200',
             'address' => 'required|string|max:100',
-            'contact_value.*' => 'nullable|min:9|max:20|regex:/^[\s\d()+-]+$/',
+            'contact_value.*' => [
+                'nullable',
+                'min:9',
+                'max:20',
+                'regex:/^[\s\d()+-]+$/',
+                function ($value, $fail) use ($partnerId) {
+                    if (!is_null($value)) {
+                        $exists = \DB::table('contact_partners')
+                            ->where('contact', $value)
+                            ->where('partner_id', '<>', $partnerId)
+                            ->exists();
+
+                        if ($exists) {
+                            $fail('O contato já existe!');
+                        }
+                    }
+                },
+            ],
             'contact_description.*' => 'nullable|string|max:50',
-            'existing_contact_values.*' => 'nullable|min:9|max:20|regex:/^[\s\d()+-]+$/',
+            'existing_contact_values.*' => [
+                'nullable',
+                'min:9',
+                'max:20',
+                'regex:/^[\s\d()+-]+$/',
+                function ($value, $fail) use ($partnerId) {
+                    if (!is_null($value)) {
+                        $exists = \DB::table('contact_partners')
+                            ->where('contact', $value)
+                            ->where('partner_id', '<>', $partnerId)
+                            ->exists();
+
+                        if ($exists) {
+                            $fail('O contato já existe!');
+                        }
+                    }
+                },
+            ],
             'existing_contact_descriptions.*' => 'nullable|string|max:50',
         ];
     }
@@ -39,6 +76,7 @@ class PartnerRequest extends FormRequest
         return [
             'name.required' => 'O nome é obrigatório!',
             'name.max' => 'O nome deve ter no máximo 100 caracteres!',
+            'name.unique' => 'O nome já existe!',
 
             'description.required' => 'A descrição é obrigatória!',
             'description.max' => 'A descrição deve ter no máximo 200 caracteres!',
