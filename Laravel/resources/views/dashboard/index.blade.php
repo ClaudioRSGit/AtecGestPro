@@ -99,7 +99,7 @@
                                             <td>{{ $user->username }}</td>
                                             <td>{{ $user->email }}</td>
 
-                                            <td><a href="#" class="btn btn-sm btn-primary">View</a></td>
+                                            <td  class="btn btn-sm btn-primary" onclick="location.href='{{ route('users.show', $user->id) }}'">View</td>
                                         </tr>
                                     @endforeach
 
