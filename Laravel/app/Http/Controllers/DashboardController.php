@@ -20,7 +20,29 @@ class DashboardController extends Controller
             $query->where('delivered_all', true);
         })->get();
 
-        return view('dashboard.index', compact('usersWithMaterialsDelivered'));
+        $ticketStatusOpen = DB::table('tickets')
+        ->where('ticket_status_id', 1)
+        ->count();
+
+        $ticketStatusProgress = DB::table('tickets')
+        ->where('ticket_status_id', 2)
+        ->count();
+
+        $ticketStatusPending = DB::table('tickets')
+        ->where('ticket_status_id', 3)
+        ->count();
+
+        $ticketStatusSolved = DB::table('tickets')
+        ->where('ticket_status_id', 4)
+        ->count();
+
+        $ticketStatusClosed = DB::table('tickets')
+        ->where('ticket_status_id', 5)
+        ->count();
+
+
+
+        return view('dashboard.index', compact('usersWithMaterialsDelivered', 'ticketStatusOpen', 'ticketStatusProgress', 'ticketStatusPending', 'ticketStatusSolved', 'ticketStatusClosed'));
     }
 
     /**
