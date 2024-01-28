@@ -45,9 +45,14 @@ class DashboardController extends Controller
         $ticketTotal = DB::table('tickets')
         ->count();
 
+        $ticketStatusCounts = DB::table('tickets')
+        ->select('ticket_status_id', DB::raw('count(*) as total'))
+        ->groupBy('ticket_status_id')
+        ->get();
 
 
-        return view('dashboard.index', compact('usersWithMaterialsDelivered', 'ticketStatusOpen', 'ticketStatusProgress', 'ticketStatusPending', 'ticketStatusSolved', 'ticketStatusClosed', 'ticketTotal'));
+
+        return view('dashboard.index', compact('usersWithMaterialsDelivered', 'ticketStatusOpen', 'ticketStatusProgress', 'ticketStatusPending', 'ticketStatusSolved', 'ticketStatusClosed', 'ticketTotal', 'ticketStatusCounts'));
     }
 
     /**
