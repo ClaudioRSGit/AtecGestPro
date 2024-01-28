@@ -65,16 +65,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-6 mb-4 mb-lg-2 col-lg-3">
-                <div class="card">
-                    <h5 class="card-header">Tickets Prioridade</h5>
-                    <div class="card-body">
-                        <h5 class="card-title">64k</h5>
-                        <p class="card-text">Feb 1 - Apr 1, United States</p>
-                        <p class="card-text text-success">2.5% increase since last month</p>
-                    </div>
-                </div>
-            </div>
+
         </div>
         <div class="row">
             <div class="col-12 col-xl-8 mb-4 mb-lg-2">
@@ -108,17 +99,27 @@
 
                             </table>
                         </div>
-                        <a href="#" class="btn btn-block btn-light">View all</a>
+                        {{-- <a href="#" class="btn btn-block btn-light">View all</a> --}}
                     </div>
                 </div>
             </div>
             <div class="col-12 col-xl-4">
-                <div class="card">
+                <div class="card mb-2">
                     <h5 class="card-header">Número de Formações Externas</h5>
                     <div class="card-body">
                         <div id="traffic-chart"></div>
                     </div>
                 </div>
+
+
+                    <div class="card ">
+                        <h5 class="card-header">Tickets Prioridade</h5>
+                        <div class="card-body">
+                            <h5 class="card-title">64k</h5>
+
+                        </div>
+                    </div>
+
             </div>
         </div>
     </div>
