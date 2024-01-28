@@ -146,24 +146,27 @@
         }
 
         function addContactFields() {
-            const contactGroups = document.querySelectorAll('.contact-group');
+        const contactGroups = document.querySelectorAll('.contact-group');
+        const maxContacts = 3;
 
+        if (contactGroups.length < maxContacts) {
             if (contactGroups.length === 0) {
                 addNewContactGroup();
-                return;
-            }
+            } else {
+                const lastContactGroup = contactGroups[contactGroups.length - 1];
+                const lastDescriptionInput = lastContactGroup.querySelector('[name^="new_contact_descriptions"]');
+                const lastValueInput = lastContactGroup.querySelector('[name^="new_contact_values"]');
 
-            const lastContactGroup = contactGroups[contactGroups.length - 1];
-            const lastDescriptionInput = lastContactGroup.querySelector('[name^="new_contact_descriptions"]');
-            const lastValueInput = lastContactGroup.querySelector('[name^="new_contact_values"]');
-
-            if (lastDescriptionInput && lastValueInput && (lastDescriptionInput.value.trim() === '' || lastValueInput.value
-                    .trim() === '')) {
-                alert('Preencha todos os campos dos contacto anteriores!');
-                return;
+                if (lastDescriptionInput && lastValueInput && (lastDescriptionInput.value.trim() === '' || lastValueInput.value.trim() === '')) {
+                    alert('Preencha todos os campos dos contactos anteriores!');
+                } else {
+                    addNewContactGroup();
+                }
             }
-            addNewContactGroup();
+        } else {
+            alert('Número máximo de contactos atingido!');
         }
+    }
 
         function addNewContactGroup() {
             const contactsContainer = document.getElementById('contacts-container');

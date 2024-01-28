@@ -7,6 +7,7 @@ use App\Material;
 use App\Size;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\MaterialRequest;
 
 class MaterialController extends Controller
 {
@@ -14,33 +15,26 @@ class MaterialController extends Controller
     {
         $search = $request->input('search');
         $materialFilter = $request->input('materialFilter');
+        $sortColumn = $request->input('sortColumn', 'name'); // default sort by 'name'
+        $sortDirection = $request->input('sortDirection', 'asc'); // default sort direction 'asc'
+
+        $query = Material::with('sizes', 'courses');
 
         if ($materialFilter === "internal") {
-            $materials = Material::with('sizes', 'courses')
-                ->where('isInternal', 1)
-                ->where('isClothing', 0)
-                ->paginate(5);
+            $query->where('isInternal', 1)->where('isClothing', 0);
         } elseif ($materialFilter === "external") {
-            $materials = Material::with('sizes', 'courses')
-                ->where('isInternal', 0)
-                ->paginate(5);
+            $query->where('isInternal', 0);
         } elseif ($materialFilter === "clothing") {
-            $materials = Material::with('sizes', 'courses')
-                ->where('isClothing', 1)
-                ->paginate(5);
-        } elseif ($materialFilter === "all") {
-            $materials = Material::with('sizes', 'courses')->paginate(5);
-        } else {
-            $materials = Material::with('sizes', 'courses')->paginate(5);
+            $query->where('isClothing', 1);
         }
 
         if ($search) {
-            $materials = Material::with('sizes', 'courses')
-                ->where('name', 'like', "%$search%")
-                ->paginate(5);
+            $query->where('name', 'like', "%$search%");
         }
 
-        return view('materials.index', compact('materials', 'search', 'materialFilter'));
+        $materials = $query->orderBy($sortColumn, $sortDirection)->paginate(5);
+
+        return view('materials.index', compact('materials', 'search', 'materialFilter', 'sortColumn', 'sortDirection'));
     }
 
 
@@ -54,27 +48,13 @@ class MaterialController extends Controller
         return view('materials.create', compact('sizes', 'courses'));
     }
 
-    public function store(Request $request)
+    public function store(MaterialRequest $request)
     {
 
         //DB::connection()->enableQueryLog();
         try {
-            $request->validate([
-                'name' => 'required|string|max:255',
-                'description' => 'nullable|string|max:500',
-                'supplier' => 'nullable|string|max:255',
-                'acquisition_date' => 'nullable|date',
-                'isInternal' => 'required|boolean',
-                'isClothing' => 'required|boolean',
-                'gender' => 'nullable|boolean',
-                'quantity' => 'nullable|integer|min:0',
-                'sizes' => ['nullable', 'array'],
-                'sizes.*' => ['nullable', 'string', 'max:10'],
-                'stocks' => ['nullable', 'array'],
-                'stocks.*' => ['nullable', 'integer', 'min:0'],
-            ]);
-
             $quantity = $request->input('quantity');
+
             if ($request->input('isClothing')) {
                 $quantity = 0;
             }
@@ -91,16 +71,14 @@ class MaterialController extends Controller
 
             $stocks = $request->input('stocks', []);
 
-            foreach ($sizes as $sizeId) {
-                $stock= $stocks[$sizeId] ?? 0;
+            if ($sizes) {
+                foreach ($sizes as $sizeId) {
+                    $stock = $stocks[$sizeId] ?? 0;
 
-                $material->sizes()->attach($sizeId, ['stock' => $stock]);
+                    $material->sizes()->attach($sizeId, ['stock' => $stock]);
 
-
+                }
             }
-
-
-            //  dd(DB::getQueryLog());
 
 
             return redirect()->route('materials.show', $material->id)->with('success', 'Material inserido com sucesso!');
@@ -132,25 +110,8 @@ class MaterialController extends Controller
         return view('materials.edit', compact('material' , 'sizes', 'courses' , 'sizesAll' , 'coursesAll'));
     }
 
-    public function update(Request $request, Material $material)
+    public function update(MaterialRequest $request, Material $material)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'nullable|string|max:500',
-            'supplier' => 'nullable|string|max:255',
-            'acquisition_date' => 'nullable|date',
-            'isInternal' => 'required|boolean',
-            'isClothing' => 'required|boolean',
-            'gender' => 'nullable|boolean',
-            'quantity' => 'nullable|integer|min:0',
-            'sizes' => ['nullable', 'array'],
-            'sizes.*' => ['nullable', 'string', 'max:10'],
-            'stocks' => ['nullable', 'array'],
-            'stocks.*' => ['nullable', 'integer', 'min:0'],
-            'courses' => ['nullable', 'array'],
-            'courses.*' => ['nullable', 'integer', 'min:1'],
-        ]);
-
         if ($request->input('isClothing') == 0) {
             $request->merge([
                 'gender' => null,

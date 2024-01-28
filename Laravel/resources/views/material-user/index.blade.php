@@ -29,8 +29,10 @@
                         <div class="search-container ">
                             <form action="{{ route('material-user.index') }}" method="GET">
                                 <div class="input-group pr-2">
-                                    <input type="text" name="searchCourseClass" class="form-control"
+                                    <div class="search-container">
+                                        <input type="text" name="searchCourseClass" class="form-control"
                                         placeholder="{{ request('searchCourseClass') ? request('searchCourseClass') : 'Procurar...' }}">
+                                    </div>
                                     <div class="input-group-append">
                                         <button type="submit" class="btn btn-outline-secondary">
                                             Procurar
@@ -160,8 +162,10 @@
 
                     <form action="{{ route('material-user.index') }}" method="GET">
                         <div class="input-group pr-2">
-                            <input type="text" name="searchNonDocent" class="form-control"
+                            <div class="search-container">
+                                <input type="text" name="searchNonDocent" class="form-control"
                                 placeholder="{{ request('searchNonDocent') ? request('searchNonDocent') : 'Procurar...' }}">
+                            </div>
                             <div class="input-group-append">
                                 <button type="submit" class="btn btn-outline-secondary">
                                     Procurar

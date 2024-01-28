@@ -91,6 +91,7 @@
         background-color: #fff;
         border-right: 1px solid #e5e5e5;
         overflow: hidden;
+        container: sidebar / inline-size;
     }
     .collapsedSidebar {
         width: 5% !important;
@@ -177,5 +178,16 @@
     .selected>p {
         font-weight: bold;
         color: #116fdc;
+    }
+    .sidebarContent h5{
+        opacity: 1;
+        transition: opacity .5s .2s;
+    }
+
+    @container sidebar (max-width: 145px){
+        .sidebarContent h5, .sidebarContent p{
+            opacity: 0 !important;
+            width: 0 !important;
+        }
     }
 </style>

@@ -8,16 +8,23 @@ use App\TicketStatus;
 use App\TicketPriority;
 use App\TicketCategory;
 use App\TicketUser;
-
+use App\Action;
+use App\Notification;
+use App\NotificationUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\TicketRequest;
 
 class TicketController extends Controller
 {
     public function index(Request $request)
     {
+        $filterCategory = $request->input('filterCategory');
+        $filterPriority = $request->input('filterPriority');
+        $filterStatus = $request->input('filterStatus');
+        $ticketSearch = $request->input('ticketSearch');
         $query = Ticket::with('users','requester');
 
-        $ticketSearch = $request->input('ticketSearch');
 
         if ($ticketSearch) {
             $query->where(function ($query) use ($ticketSearch) {
@@ -28,48 +35,91 @@ class TicketController extends Controller
             });
         }
 
+        if ($filterCategory) {
+            $query->where('ticket_category_id', $filterCategory);
+        }
+        if ($filterPriority) {
+            $query->where('ticket_priority_id', $filterPriority);
+        }
+        if ($filterStatus) {
+            $query->where('ticket_status_id', $filterStatus);
+        }
+
         $tickets = $query->paginate(5);
         $users = User::all();
-        return view('tickets.index', compact('tickets', 'users', 'ticketSearch'));
+        $categories = TicketCategory::all();
+        $priorities = TicketPriority::all();
+        $statuses = TicketStatus::all();
+
+        return view('tickets.index', compact('tickets', 'users', 'ticketSearch', 'filterCategory', 'filterPriority', 'filterStatus', 'categories', 'priorities', 'statuses'));
     }
 
     public function create()
     {
-        $statuses = TicketStatus::all();
+
+        $statuses = TicketStatus::where('id', 1)->get();
         $priorities = TicketPriority::all();
         $categories = TicketCategory::all();
-        $users = User::all();
+        $technicians = User::where('role_id', 4)->get();
 
-        return view('tickets.create', compact('statuses', 'priorities', 'categories', 'users'));
+        return view('tickets.create', compact('statuses', 'priorities', 'categories', 'technicians'));
     }
-
-    public function store(Request $request)
+    public function calculateDueByDate($priorityId)
     {
-        $request->validate([
-            'title' => 'required|string',
-            'description' => 'required|string',
-            'status_id' => 'required|exists:ticket_statuses,id',
-            'technician_id' => 'required|exists:users,id',
-            'attachment' => 'sometimes|file|max:20480',
-            'priority_id' => 'required|exists:ticket_priorities,id',
-            'category_id' => 'required|exists:ticket_categories,id',
-            'dueByDate' => 'required|date',
-        ]);
+        switch ($priorityId) {
+            case 1: // Baixa
+                return now()->addWeeks(3);
+            case 2: // Normal
+                return now()->addWeeks(2);
+            case 3: // Alta
+                return now()->addWeeks(1);
+            case 4: // Urgente
+                return now()->addDay();
+            case 5: // Crítico
+                return now()->addHours(4);
+            default:
+                return now()->addWeeks(3);//Default fica como baixa prioridade
+        }
+    }
+    public function store(TicketRequest $request)
+    {
+        $loggedInUserId = Auth::id();
+        $dueByDate = $this->calculateDueByDate($request->priority_id);
+        $filename = 'Sem Anexo';
         if ($request->hasFile('attachment')) {
             $filename = $request->file('attachment')->store('attachments', 'public');
         }
         $ticket = new Ticket([
             'title' => $request->title,
             'description' => $request->description,
-            'ticket_status_id' => $request->status_id,
+            'ticket_status_id' => 1,
             'ticket_priority_id' => $request->priority_id,
             'ticket_category_id' => $request->category_id,
-            'dueByDate' => $request->dueByDate,
-            'attachment' => $filename ?? null,
-            'user_id' => $request->technician_id,
+            'dueByDate' => $dueByDate,
+            'user_id' => $loggedInUserId,
+            'attachment' => $filename,
         ]);
 
         $ticket->save();
+
+        TicketUser::create([
+            'ticket_id' => $ticket->id,
+            'user_id' => $request->technician_id,
+        ]);
+
+        $notification = Notification::create([
+            'description' => 'Novo ticket criado: #' . $ticket->id,
+            'code' => 'TICKET',
+            'object_id' => $ticket->id,
+        ]);
+
+
+
+        NotificationUser::create([
+            'user_id' => $ticket->user_id,
+            'notification_id' => $notification->id,
+            'isRead' => false,
+        ]);
 
         return redirect()->route('tickets.index');
     }
@@ -104,13 +154,13 @@ class TicketController extends Controller
 
     public function update(Request $request, Ticket $ticket)
     {
-        $ticket2 = Ticket::with('users','requester','ticketPriority','ticketStatus','ticketCategory')->find($ticket->id);
-
+        // $ticket2 = Ticket::with('users','requester','ticketPriority','ticketStatus','ticketCategory')->find($ticket->id);
+        $dueByDate = $this->calculateDueByDate($request->priority_id);
         $this->validate($request, [
             'user_id' => 'required|integer|exists:users,id',
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'dueByDate' => 'required|date',
+            'dueByDate' => 'sometimes|date',
             'attachment' => 'sometimes|file|max:20480', // 20MB
             'ticket_status_id' => 'required|integer|exists:ticket_statuses,id',
             'ticket_priority_id' => 'required|integer|exists:ticket_priorities,id',
@@ -119,17 +169,20 @@ class TicketController extends Controller
 
         if ($request->hasFile('attachment')) {
             $filename = $request->file('attachment')->store('attachments', 'public');
+            $ticket->attachment = $filename;
         }
 
         $ticket->user_id = $request->user_id;
-        $ticket2->title = $request->title;
-        $ticket2->description = $request->description;
-        $ticket2->ticket_priority_id = $request->priority_id;
-        $ticket2->ticket_status_id = $request->status_id;
-        $ticket2->ticket_category_id = $request->category_id;
+        $ticket->title = $request->title;
+        $ticket->description = $request->description;
+        $ticket->ticket_priority_id = $request->priority_id;
+        $ticket->ticket_status_id = $request->status_id;
+        $ticket->ticket_category_id = $request->category_id;
+        $ticket->dueByDate = $dueByDate;
 
-        $ticket2->update($request->all());
+        $ticket->update($request->all());
 
+        //$ticket->save();
         return redirect()->route('tickets.index')->with('success', 'Ticket atualizado com sucesso!');
     }
 

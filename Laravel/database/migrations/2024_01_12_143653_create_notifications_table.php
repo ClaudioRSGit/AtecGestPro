@@ -16,7 +16,7 @@ class CreateNotificationsTable extends Migration
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
             $table->string('description');
-            $table->foreignId('notification_type_id')->constrained('notification_types')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('code');
             $table->string('object_id');
             $table->timestamps();
             $table->softDeletes('deleted_at', 0);

@@ -15,8 +15,16 @@
 
 
     <div class="container">
-        <h1>Agendar formação de mercado</h1>
 
+        @error('start_date')
+        <div class="alert alert-danger success-alert">{{ $message }}</div>
+        @enderror
+
+        @error('end_date')
+        <div class="alert alert-danger success-alert">{{ $message }}</div>
+        @enderror
+
+        <h1>Agendar formação de mercado</h1>
 
         <form method="POST" action="{{ url('external') }}" style="width: 100%">
             @csrf
@@ -57,10 +65,10 @@
                     <table class="table bg-white">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>Quantity</th>
-                                <th>Select</th>
+                                <th>Nome</th>
+                                <th>Descrição</th>
+                                <th>Quantidade</th>
+                                <th>Selecionar</th>
                             </tr>
                         </thead>
                         <tbody class="customTableStyling">
@@ -83,11 +91,13 @@
                 </div>
 
                 <div class="startCalendar">
+                    <label for="start_date">Data de Início:</label>
                     <input type="datetime-local" class="form-control flatpickr" id="start_date" name="start_date"
                     required placeholder="Selecione a data de início">
                 </div>
 
                 <div class="endCalendar">
+                    <label for="end_date">Data de Fim:</label>
                     <input type="datetime-local" class="form-control flatpickr" id="end_date" name="end_date"
                     required placeholder="Selecione a data de fim">
                 </div>
@@ -203,5 +213,11 @@
 
             partnerDropdown.addEventListener('change', setAddress);
         });
+
+        window.setTimeout(function () {
+            $(".success-alert").fadeTo(500, 0).slideUp(500, function () {
+                $(this).remove();
+            });
+        }, 2500);
     </script>
 @endsection

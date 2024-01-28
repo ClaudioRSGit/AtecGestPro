@@ -42,23 +42,27 @@
 
                 <div class="mb-3">
                     <label for="comments" class="form-label">Comentários:</label>
-                    @foreach($ticket->comments as $comment)
-                        <div class="card mb-2">
-                            <div class="card-body d-flex justify-content-between">
-                                <div>
-                                    <label class="card-text font-weight-bold">
-                                        {{ $comment->user->name }}:
-                                    </label>
-                                    {{ $comment->description }}
-                                </div>
-                                <div>
-                                    <p class="card-text">
-                                        {{ $comment->created_at }}
-                                    </p>
+                    @if ($ticket->comments->isNotEmpty())
+                        @foreach($ticket->comments as $comment)
+                            <div class="card mb-2">
+                                <div class="card-body d-flex justify-content-between">
+                                    <div>
+                                        <label class="card-text font-weight-bold">
+                                            {{ $comment->user->name }}:
+                                        </label>
+                                        {{ $comment->description }}
+                                    </div>
+                                    <div>
+                                        <p class="card-text">
+                                            {{ $comment->created_at }}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    @else
+                    <p>Não existem comentários para este ticket.</p>
+                    @endif
                 </div>
             </div>
         </div>

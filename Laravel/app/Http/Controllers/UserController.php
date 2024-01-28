@@ -18,9 +18,11 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-
+//        dd($request);
         $searchName = $request->input('searchName');
         $roleFilter = $request->input('roleFilter');
+        $sortColumn = $request->input('sortColumn', 'name');
+        $sortDirection = $request->input('sortDirection', 'asc');
 
         $query = User::with('courseClass', 'role');
 
@@ -32,24 +34,14 @@ class UserController extends Controller
 
         if ($searchName) {
             $query->where('name', 'like', "%$searchName%");
-
         }
 
-
-
-        $users = $query->paginate(5);
+        $users = $query->orderBy($sortColumn, $sortDirection)->paginate(5);
         $courseClasses = CourseClass::all();
         $roles = Role::all();
 
-
-
-
-
-
-
-        return view('users.index', compact('users', 'courseClasses', 'roles', 'roleFilter'));
+        return view('users.index', compact('users', 'courseClasses', 'roles', 'roleFilter', 'sortColumn', 'sortDirection'));
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -135,6 +127,10 @@ class UserController extends Controller
 
         if ($user->role_id != 3 && $request->input('role_id') == 3) {
             $data['password'] = null;
+        }
+
+        if ($user->role_id != 3 && !$request->filled('password')){
+            unset($data['password']);
         }
 
         if ($request->input('isStudent') != 1) {

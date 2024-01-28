@@ -20,7 +20,7 @@
                 <label for="course_id">Curso:</label>
                 <select class="form-control" id="course_id" name="course_id" required>
                     @foreach ($courses as $course)
-                        <option value="{{ $course->id }}" {{ $course->id == $courseClass->course_id ? 'selected' : '' }}>
+                        <option value="{{ $course->id }}" {{ $course->id == $courseClass->course_id ? 'selected' : '' }} data-code="{{ $course->code }}">
                             {{ $course->description }}
                         </option>
                     @endforeach
@@ -33,7 +33,7 @@
 
             <div class="form-group">
                 <label for="course_code">Código do Curso:</label>
-                <input type="text" class="form-control" id="course_id" name="course_id"
+                <input type="text" class="form-control" id="courseCode_id" name="course_id"
                     value="{{ $courseClass->course->id }}" readonly>
             </div>
 
@@ -51,3 +51,19 @@
         </form>
     </div>
 @endsection
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var courseDropdown = document.getElementById('course_id');
+        var courseCode = document.getElementById('courseCode_id');
+
+        function setCourseCode() {
+            var selectedOption = courseDropdown.options[courseDropdown.selectedIndex];
+            courseCode.value = selectedOption.getAttribute('data-code');
+        }
+
+        setCourseCode();
+
+        courseDropdown.addEventListener('change', setCourseCode);
+    });
+</script>
