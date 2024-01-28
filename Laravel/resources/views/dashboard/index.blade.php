@@ -90,7 +90,8 @@
                                             <td>{{ $user->username }}</td>
                                             <td>{{ $user->email }}</td>
 
-                                            <td  class="btn btn-sm btn-primary" onclick="location.href='{{ route('users.show', $user->id) }}'">View</td>
+                                            <td class="btn btn-sm btn-primary"
+                                                onclick="location.href='{{ route('users.show', $user->id) }}'">View</td>
                                         </tr>
                                     @endforeach
 
@@ -112,13 +113,15 @@
                 </div>
 
 
-                    <div class="card ">
-                        <h5 class="card-header">Tickets Prioridade</h5>
-                        <div class="card-body">
-                            <h5 class="card-title">64k</h5>
+                <div class="card ">
+                    <h5 class="card-header">Tickets Prioridade</h5>
+                    <div class="card-body">
+                        @foreach($ticketStatusCounts as $statusCount)
+                            <h5> {{ $statusCount->description }} : {{ $statusCount->total }}</h5>
+                        @endforeach
 
-                        </div>
                     </div>
+                </div>
 
             </div>
         </div>

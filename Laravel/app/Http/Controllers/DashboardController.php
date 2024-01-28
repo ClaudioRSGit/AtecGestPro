@@ -46,8 +46,9 @@ class DashboardController extends Controller
         ->count();
 
         $ticketStatusCounts = DB::table('tickets')
-        ->select('ticket_status_id', DB::raw('count(*) as total'))
-        ->groupBy('ticket_status_id')
+        ->join('ticket_priorities', 'tickets.ticket_priority_id', '=', 'ticket_priorities.id')
+        ->select('ticket_priorities.description', DB::raw('count(*) as total'))
+        ->groupBy('ticket_priorities.description')
         ->get();
 
 
