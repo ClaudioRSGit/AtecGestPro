@@ -40,9 +40,12 @@ class DashboardController extends Controller
         ->where('ticket_status_id', 5)
         ->count();
 
+        $ticketTotal = DB::table('tickets')
+        ->count();
 
 
-        return view('dashboard.index', compact('usersWithMaterialsDelivered', 'ticketStatusOpen', 'ticketStatusProgress', 'ticketStatusPending', 'ticketStatusSolved', 'ticketStatusClosed'));
+
+        return view('dashboard.index', compact('usersWithMaterialsDelivered', 'ticketStatusOpen', 'ticketStatusProgress', 'ticketStatusPending', 'ticketStatusSolved', 'ticketStatusClosed', 'ticketTotal'));
     }
 
     /**
