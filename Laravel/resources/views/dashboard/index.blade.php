@@ -30,7 +30,7 @@
                 <div class="card">
                     <h5 class="card-header">Tickets Aberto</h5>
                     <div class="card-body">
-                        <h5 class="card-title">{{ $ticketTotal }}</h5>
+                        <h5 class="card-title">{{ $ticketStatusOpen }}</h5>
                         <p class="card-text">Feb 1 - Apr 1, United States</p>
                         <p class="card-text text-success">4.6% increase since last month</p>
                     </div>
@@ -40,7 +40,7 @@
                 <div class="card">
                     <h5 class="card-header">Tickets Em Progresso</h5>
                     <div class="card-body">
-                        <h5 class="card-title">{{ $ticketTotal }}</h5>
+                        <h5 class="card-title">{{ $ticketStatusProgress }}</h5>
                         <p class="card-text">Feb 1 - Apr 1, United States</p>
                         <p class="card-text text-danger">2.6% decrease since last month</p>
                     </div>
@@ -50,7 +50,7 @@
                 <div class="card">
                     <h5 class="card-header">Tickets Pendente</h5>
                     <div class="card-body">
-                        <h5 class="card-title">{{ $ticketTotal }}</h5>
+                        <h5 class="card-title">{{ $ticketStatusPending }}</h5>
                         <p class="card-text">Feb 1 - Apr 1, United States</p>
                         <p class="card-text text-danger">2.6% decrease since last month</p>
                     </div>
@@ -60,7 +60,7 @@
                 <div class="card">
                     <h5 class="card-header">Tickets Resolvido</h5>
                     <div class="card-body">
-                        <h5 class="card-title">{{ $ticketTotal }}</h5>
+                        <h5 class="card-title">{{ $ticketStatusSolved }}</h5>
                         <p class="card-text">Feb 1 - Apr 1, United States</p>
                         <p class="card-text text-danger">2.6% decrease since last month</p>
                     </div>
@@ -70,7 +70,7 @@
                 <div class="card">
                     <h5 class="card-header">Tickets Fechado</h5>
                     <div class="card-body">
-                        <h5 class="card-title">{{ $ticketTotal }}</h5>
+                        <h5 class="card-title">{{ $ticketStatusClosed }}</h5>
                         <p class="card-text">Feb 1 - Apr 1, United States</p>
                         <p class="card-text text-danger">2.6% decrease since last month</p>
                     </div>
