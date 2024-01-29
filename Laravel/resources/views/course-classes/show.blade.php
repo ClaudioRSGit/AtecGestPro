@@ -4,7 +4,7 @@
     <div class="container">
         <h1>Detalhes da Turma</h1>
 
-        <form>
+        <form class="w-50">
             <div class="form-group">
                 <label for="description">Descrição:</label>
                 <input type="text" class="form-control" id="description" name="description" value="{{ $courseClass->description }}" disabled>
