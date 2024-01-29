@@ -25,7 +25,7 @@
 
             <div class="col-3 col-md-6 col-lg-3 mb-4 mb-lg-2 d-flex">
                 <div class="card flex-grow-1">
-
+                    <h5 class="card-header">Tickets Estados</h5>
                     <div class="card-body">
                         <canvas id="pieChart"></canvas>
 
@@ -56,6 +56,7 @@
                                         <th>Nome</th>
                                         <th>Username</th>
                                         <th>Email</th>
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -66,7 +67,8 @@
                                             <td>{{ $user->email }}</td>
                                             <td class="btn btn-sm btn-primary"
                                                 onclick="location.href='{{ route('material-user.create', $user->id) }}'">
-                                                View</td>
+                                                View
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -80,21 +82,14 @@
 
 
                 <div class="card mb-2">
+                    <h5 class="card-header">Tickets Prioridade</h5>
                     <div class="card-body">
                         <canvas id="pieChartPri"></canvas>
 
                     </div>
                 </div>
 
-                <div class="card ">
-                    <h5 class="card-header">Tickets Prioridade</h5>
-                    <div class="card-body">
-                        @foreach ($ticketStatusCounts as $statusCount)
-                            <h5> {{ $statusCount->description }} : {{ $statusCount->total }}</h5>
-                        @endforeach
 
-                    </div>
-                </div>
 
             </div>
         </div>
@@ -169,27 +164,20 @@
     </script>
 
     <style>
-        /* .table th{
-            width: 100%;
-            white-space: nowrap;
-        }
-        .table td {
-            width: 90%;
-            white-space: nowrap;
-        } */
 
-        .table-responsive {
+
+        /* .table-responsive {
             max-height: 300px;
-            /* Adjust this value as per your requirement */
-        }
+
+        } */
 
         .table-responsive thead th {
             position: sticky;
             top: 0;
             background: #fff;
-            /* To make the header non-transparent while scrolling */
+
             box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
-            /* Optional: adds a shadow effect */
+
         }
 
         #usersTable {
@@ -199,7 +187,7 @@
             background-color: #cbeaf8;
             overflow-y: scroll;
             overflow-x: hidden;
-            height: 400px;
+            height: 370px;
         }
 
 
