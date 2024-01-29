@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Ticket;
 use App\TicketHistory;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,10 @@ class TicketHistoryController extends Controller
      */
     public function index()
     {
-        //
+        $tickets = Ticket::all();
+        $ticketHistories = TicketHistory::with('ticket')->get();
+
+        return view('ticket-histories.index', compact('ticketHistories', 'tickets'));
     }
 
     /**
@@ -44,9 +48,13 @@ class TicketHistoryController extends Controller
      * @param  \App\TicketHistory  $ticketHistory
      * @return \Illuminate\Http\Response
      */
-    public function show(TicketHistory $ticketHistory)
+    public function show($id)
     {
-        //
+
+        $ticket = Ticket::find($id);
+        $ticketHistories = TicketHistory::where('ticket_id', $id)->get();
+
+        return view('ticket-histories.show', compact('ticketHistories', 'ticket'));
     }
 
     /**

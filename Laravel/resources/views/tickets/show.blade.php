@@ -75,7 +75,7 @@
 
             <div class="mb-3">
                 <label for="technician" class="form-label">Técnico:</label>
-                <input type="text" class="form-control" value="{{ $ticket->requester->name ?? 'N/A' }}" disabled>
+                <input type="text" class="form-control" value="{{ $technician->name ?? 'N/A' }}" disabled>
             </div>
 
             <div class="mb-3">
@@ -100,6 +100,14 @@
                         <li><a href="{{ route('tickets.show', $userTicketId) }}">Ticket #{{ $userTicketId }}</a></li>
                     @endforeach
                 </ul>
+            </div>
+
+
+            <div class="mb-5">
+                <div class="mb-5">
+                    <label>Histórico do Ticket:</label>
+                    <a href="{{ route('ticket-histories.show', $ticket->id) }}">Ver Histórico</a>
+                </div>
             </div>
         </div>
     </div>
