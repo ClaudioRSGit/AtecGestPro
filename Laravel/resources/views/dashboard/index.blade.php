@@ -169,6 +169,29 @@
     </script>
 
     <style>
+        /* .table th{
+            width: 100%;
+            white-space: nowrap;
+        }
+        .table td {
+            width: 90%;
+            white-space: nowrap;
+        } */
+
+        .table-responsive {
+            max-height: 300px;
+            /* Adjust this value as per your requirement */
+        }
+
+        .table-responsive thead th {
+            position: sticky;
+            top: 0;
+            background: #fff;
+            /* To make the header non-transparent while scrolling */
+            box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+            /* Optional: adds a shadow effect */
+        }
+
         #usersTable {
             box-shadow: 1px 2px 1px 2px rgb(230, 229, 229);
             margin: 15px;
@@ -180,26 +203,26 @@
         }
 
 
-            .card-header {
-                margin-bottom: 0;
-            }
+        .card-header {
+            margin-bottom: 0;
+        }
 
-            .card-body {
-                padding-top: 0;
-            }
+        .card-body {
+            padding-top: 0;
+        }
 
 
         /*
 
-            #usersTable::-webkit-scrollbar {
-                display: none;
-            }
+                    #usersTable::-webkit-scrollbar {
+                        display: none;
+                    }
 
 
-            #usersTable {
-                -ms-overflow-style: none;
-                scrollbar-width: none;
-            }
-        */
+                    #usersTable {
+                        -ms-overflow-style: none;
+                        scrollbar-width: none;
+                    }
+                */
     </style>
 @endsection
