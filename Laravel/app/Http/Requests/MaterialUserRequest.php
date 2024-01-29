@@ -13,7 +13,7 @@ class MaterialUserRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,12 @@ class MaterialUserRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'selectedClothing' => 'required|array',
+            'user_id' => 'required',
+            'quantity' => 'required|array',
+            'material_size_id' => 'required|array',
+            'delivery_date' => 'required|array',
+            'delivered_all' => 'required',
         ];
     }
 }

@@ -10,6 +10,7 @@ use App\CourseClass;
 use App\User;
 use App\Material;
 use App\Role;
+use App\Http\Requests\MaterialUserRequest;
 
 
 class MaterialUserController extends Controller
@@ -102,17 +103,8 @@ class MaterialUserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MaterialUserRequest $request)
     {
-        $request->validate([
-            'selectedClothing' => 'required|array',
-            'user_id' => 'required',
-            'quantity' => 'required|array',
-            'material_size_id' => 'required|array',
-            'delivery_date' => 'required|array',
-            'delivered_all' => 'required',
-        ]);
-
         $selectedClothingitems = $request->get('selectedClothing');
         $note = $request->get('additionalNotes');
 
