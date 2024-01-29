@@ -22,6 +22,23 @@ class DashboardController extends Controller
             $query->where('delivered_all', true);
         })->get();
 
+        $userStudentsCount = User::where('isStudent', true)->count();
+
+        $userRolesCounts = DB::table('users')
+        ->join('roles', 'users.role_id', '=', 'roles.id')
+        ->select('roles.name', DB::raw('count(*) as total'))
+        ->groupBy('roles.name')
+        ->get();
+
+        $materialInternalCount = DB::table('materials')
+        ->where('isInternal', true)
+        ->count();
+
+        $materialExternalCount = DB::table('materials')
+        ->where('isInternal', false)
+        ->count();
+
+
         $ticketStatusOpen = DB::table('tickets')
         ->where('ticket_status_id', 1)
         ->count();
@@ -51,9 +68,23 @@ class DashboardController extends Controller
         ->groupBy('ticket_priorities.description')
         ->get();
 
+        $data = [            'labels' => ['Abertos', 'Em Progresso', 'Pendentes', 'Resolvidos', 'Fechados'],
+        'data' => [$ticketStatusOpen, $ticketStatusProgress, $ticketStatusPending, $ticketStatusSolved, $ticketStatusClosed],
+        ];
+
+        $labels = $ticketStatusCounts->pluck('description');
+        $dataTicketsPriority = $ticketStatusCounts->pluck('total');
+
+        $chartData = [
+            'labels' => $labels,
+            'data' => $dataTicketsPriority,
+        ];
 
 
-        return view('dashboard.index', compact('usersWithMaterialsDelivered', 'ticketStatusOpen', 'ticketStatusProgress', 'ticketStatusPending', 'ticketStatusSolved', 'ticketStatusClosed', 'ticketTotal', 'ticketStatusCounts'));
+
+        return view('dashboard.index', compact('usersWithMaterialsDelivered', 'ticketStatusOpen', 'ticketStatusProgress',
+         'ticketStatusPending','ticketStatusSolved', 'ticketStatusClosed', 'ticketTotal', 'ticketStatusCounts', 'userStudentsCount',
+          'userRolesCounts', 'materialInternalCount', 'materialExternalCount', 'data', 'chartData'));
     }
 
     /**

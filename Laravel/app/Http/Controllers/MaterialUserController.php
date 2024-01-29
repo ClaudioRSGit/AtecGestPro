@@ -72,7 +72,7 @@ class MaterialUserController extends Controller
         $user = User::find($id);
         $assignedClothes = MaterialUser::with('material', 'user')->where('user_id', $id)->get();
 
-        if($user->isStudent==1){
+        if($user->isStudent==1 && $user->courseClass){
             $student = $user;
             $studentCourseId = $student->courseClass->course_id;
 
