@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <h1>Criar Turma</h1>
-        <form method="post" action="{{ route('course-classes.store') }}" id="createCourseClassForm" class="mb-3">
+        <form method="post" action="{{ route('course-classes.store') }}" id="createCourseClassForm" class="w-70 mb-3">
             @csrf
 
             <div class="form-group">
@@ -18,7 +18,7 @@
             <div class="form-group">
                 <label for="course_id">Curso:</label>
                 <select class="form-control" id="course_id" name="course_id" required>
-                    
+
                     @foreach ($courses as $course)
                         <option value="{{ $course->id }}">{{ $course->description }}</option>
                     @endforeach

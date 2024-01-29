@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <h1>Editar Turma</h1>
-        <form method="post" action="{{ route('course-classes.update', $courseClass->id) }}">
+        <form method="post" action="{{ route('course-classes.update', $courseClass->id) }}" class="w-50">
             @csrf
             @method('put')
 
