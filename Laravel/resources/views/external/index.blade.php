@@ -204,7 +204,7 @@
                                         </div>
                                     </div>
                                 </td>
-                                <td>
+                                <td class="pl-4">
 
 
                                     <form action="{{ route('external.index') }}" method="GET">
