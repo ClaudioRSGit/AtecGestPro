@@ -74,7 +74,7 @@
                                     <tr>
                                         <td>{{ $materialTrainings->name }}</td>
                                         <td>{{ $materialTrainings->description }}</td>
-                                        <td>{{ $materialTrainings->pivot->quantity }}</td>
+                                        <td class="pl-5">{{ $materialTrainings->pivot->quantity }}</td>
                                     </tr>
                                     <tr class="filler"></tr>
                                 @endforeach

@@ -25,8 +25,8 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <th scope="col">
-                                <input type="checkbox" id="select-all">
+                            <th scope="col" class="h-100 d-flex justify-content-center align-items-center">
+                                <input type="checkbox" id="select-all" class="h-100">
                             </th>
                             <th scope="col">Nome</th>
                             <th scope="col" style="text-align: center;">Tamanho</th>
@@ -42,7 +42,7 @@
                             @endphp
                             <tr class="material-row">
                                 <td>
-                                    <div class="form-check">
+                                    <div class="form-check d-flex justify-content-center align-items-center">
                                         <input class="form-check-input" name="selectedClothing[{{ $clothingItem->id }}]"
                                                type="checkbox" value="{{ $clothingItem->id }}"
                                                data-size-select="#filter{{ $loop->index }}"
@@ -82,7 +82,7 @@
 
                                     </select>
                                 </td>
-                                <td style="text-align: center;">
+                                <td class="pl-4">
                                     <input type="number" class="form-control quantity-input"
                                            id="quantity{{ $loop->index }}"
                                            name="quantity[{{ $clothingItem->id }}]" value="1" min="1"
@@ -157,7 +157,6 @@
 
 
     </div>
-
 
 
 
