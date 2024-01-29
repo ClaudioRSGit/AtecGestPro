@@ -14,10 +14,8 @@
                 <div class="card flex-grow-1">
                     <h5 class="card-header">Usuarios e Materiais</h5>
                     <div class="card-body">
-                        @foreach($userRolesCounts as $roleCount)
-
+                        @foreach ($userRolesCounts as $roleCount)
                             <h4> {{ $roleCount->name }} : {{ $roleCount->total }}</h4>
-
                         @endforeach
                         <h4>Material interno : {{ $materialInternalCount }}</h4>
                         <h4>Material Externo : {{ $materialExternalCount }}</h4>
@@ -70,7 +68,8 @@
                                             <td>{{ $user->email }}</td>
 
                                             <td class="btn btn-sm btn-primary"
-                                                onclick="location.href='{{ route('material-user.create', $user->id) }}'">View</td>
+                                                onclick="location.href='{{ route('material-user.create', $user->id) }}'">
+                                                View</td>
                                         </tr>
                                     @endforeach
 
@@ -87,9 +86,8 @@
 
 
                 <div class="card mb-2">
-                    <h5 class="card-header">Tickets Prioridade</h5>
                     <div class="card-body">
-                        <h1>Grafico aqui </h1>
+                        <canvas id="pieChartPri"></canvas>
 
                     </div>
                 </div>
@@ -97,7 +95,7 @@
                 <div class="card ">
                     <h5 class="card-header">Tickets Prioridade</h5>
                     <div class="card-body">
-                        @foreach($ticketStatusCounts as $statusCount)
+                        @foreach ($ticketStatusCounts as $statusCount)
                             <h5> {{ $statusCount->description }} : {{ $statusCount->total }}</h5>
                         @endforeach
 
@@ -109,13 +107,41 @@
     </div>
 
     <script>
-         var ctx = document.getElementById('pieChart').getContext('2d');
+        // Pie chart ticket status
+        var ctx = document.getElementById('pieChart').getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'pie',
             data: {
                 labels: @json($data['labels']),
                 datasets: [{
                     data: @json($data['data']),
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.7)',
+                        'rgba(54, 162, 235, 0.7)',
+                        'rgba(255, 206, 86, 0.7)',
+                        'rgba(75, 192, 192, 0.7)',
+                        'rgba(153, 102, 255, 0.7)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+        });
+
+        // Pie chart ticket priority
+        var ctxPri = document.getElementById('pieChartPri').getContext('2d');
+        var myChartPri = new Chart(ctxPri, {
+            type: 'pie',
+            data: {
+                labels: @json($chartData['labels']),
+                datasets: [{
+                    data: @json($chartData['data']),
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.7)',
                         'rgba(54, 162, 235, 0.7)',

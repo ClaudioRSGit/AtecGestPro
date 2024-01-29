@@ -72,11 +72,19 @@ class DashboardController extends Controller
         'data' => [$ticketStatusOpen, $ticketStatusProgress, $ticketStatusPending, $ticketStatusSolved, $ticketStatusClosed],
         ];
 
+        $labels = $ticketStatusCounts->pluck('description');
+        $dataTicketsPriority = $ticketStatusCounts->pluck('total');
+
+        $chartData = [
+            'labels' => $labels,
+            'data' => $dataTicketsPriority,
+        ];
+
 
 
         return view('dashboard.index', compact('usersWithMaterialsDelivered', 'ticketStatusOpen', 'ticketStatusProgress',
          'ticketStatusPending','ticketStatusSolved', 'ticketStatusClosed', 'ticketTotal', 'ticketStatusCounts', 'userStudentsCount',
-          'userRolesCounts', 'materialInternalCount', 'materialExternalCount', 'data'));
+          'userRolesCounts', 'materialInternalCount', 'materialExternalCount', 'data', 'chartData'));
     }
 
     /**
