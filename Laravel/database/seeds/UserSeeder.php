@@ -11,6 +11,21 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        // PLEASE DONT DELETE THIS SEEDER
+        DB::table('users')->insert([
+            'name' => 'Fila de Espera',
+            'username' => '',
+            'email' => '',
+            'contact' => '',
+            'password' => bcrypt('password123'),
+            'notes' => '',
+            'isActive' => true,
+            'isStudent' => false,
+            'course_class_id' => null,
+            'role_id' => 4,
+        ]);
+
+
         // Seed 1
         DB::table('users')->insert([
             'name' => 'Vasco Trindade',

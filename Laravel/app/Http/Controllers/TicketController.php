@@ -25,7 +25,10 @@ class TicketController extends Controller
         $filterStatus = $request->input('filterStatus');
         $ticketSearch = $request->input('ticketSearch');
         $query = Ticket::with('users','requester');
-
+        $waitingQueueTickets = Ticket::whereHas('users', function ($query) {
+            $query->where('role_id', 4)->where('name', 'Fila de Espera');
+        })->get();
+        $recycledTickets = Ticket::onlyTrashed()->get();
 
         if ($ticketSearch) {
             $query->where(function ($query) use ($ticketSearch) {
@@ -52,7 +55,7 @@ class TicketController extends Controller
         $priorities = TicketPriority::all();
         $statuses = TicketStatus::all();
 
-        return view('tickets.index', compact('tickets', 'users', 'ticketSearch', 'filterCategory', 'filterPriority', 'filterStatus', 'categories', 'priorities', 'statuses'));
+        return view('tickets.index', compact('tickets', 'users', 'ticketSearch', 'filterCategory', 'filterPriority', 'filterStatus', 'categories', 'priorities', 'statuses', 'waitingQueueTickets', 'recycledTickets'));
     }
 
     public function create()
@@ -61,9 +64,7 @@ class TicketController extends Controller
         $statuses = TicketStatus::where('id', 1)->get();
         $priorities = TicketPriority::all();
         $categories = TicketCategory::all();
-        $technicians = User::where('role_id', 4)->get();
-
-
+        $technicians = User::where('role_id', 4)->where('name', 'Fila de Espera')->get();
 
         return view('tickets.create', compact('statuses', 'priorities', 'categories', 'technicians'));
     }
@@ -154,7 +155,7 @@ class TicketController extends Controller
     public function edit(Ticket $ticket)
     {
         $ticket = Ticket::with('users','requester')->find($ticket->id);
-        $technicians = User::where('role_id', 4)->get();
+        $technicians = User::where('role_id', 4)->where('name', 'Fila de Espera')->get();
         $requester = User::where('id', $ticket->user_id)->first();
         $statuses = TicketStatus::all();
         $priorities = TicketPriority::all();
@@ -172,9 +173,6 @@ class TicketController extends Controller
         $oldTicketTechnician = clone TicketUser::where('ticket_id', $ticket->id)->first('user_id');
         $newUserId = $request->technician_id;
         $ticketId = $ticket->id;
-
-
-
 
         $dueByDate = $this->calculateDueByDate($request->ticket_priority_id);
 
@@ -195,16 +193,12 @@ class TicketController extends Controller
             $ticket->attachment = $filename;
         }
 
-
-
         $ticket->update($request->all());
 
 
         TicketUser::where('ticket_id', $ticketId)->update([
             'user_id' => $newUserId,
         ]);
-
-
 
         $ticketInfo = $this->generateTicketInfo($oldTicket, $ticket, $oldTicketTechnician->user_id, $newUserId);
 
@@ -285,5 +279,20 @@ class TicketController extends Controller
         return $ticketInfo;
     }
 
+    public function restore($id)
+    {
+        $ticket = Ticket::onlyTrashed()->findOrFail($id);
+        $ticket->restore();
+
+        return redirect()->route('tickets.index')->with('success', 'Restaurado com sucesso!');
+    }
+
+    public function forceDelete($id)
+    {
+        $ticket = Ticket::onlyTrashed()->findOrFail($id);
+        $ticket->forceDelete();
+
+        return redirect()->route('tickets.index')->with('success', 'Ticket apagado permanentemente!');
+    }
 
 }
