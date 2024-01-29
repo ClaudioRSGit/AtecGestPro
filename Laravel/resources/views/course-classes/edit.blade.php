@@ -47,7 +47,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Atualizar Turma</button>
-            <a href="{{ route('course-classes.index') }}" class="btn btn-secondary">Voltar</a>
+            <a href="{{ route('course-classes.index') }}" class="btn btn-secondary">Cancelar</a>
         </form>
     </div>
 @endsection

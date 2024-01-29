@@ -26,8 +26,8 @@
                 <tr>
                     <th scope="row">Ações:</th>
                     <td>
-                        <a href="{{ route('trainings.edit', $training->id) }}" class="btn btn-warning">Editar</a>
-                        <a href="{{ url()->previous() }}" class="btn btn-primary">Voltar</a>
+                        <a href="{{ route('trainings.edit', $training->id) }}" class="btn btn-primary">Editar</a>
+                        <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
                     </td>
             </tbody>
         </table>

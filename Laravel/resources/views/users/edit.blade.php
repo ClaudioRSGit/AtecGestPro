@@ -4,8 +4,14 @@
     <div class="container">
 
         @if (session('error'))
-            <div class="alert alert-danger" id="error-alert">
+            <div class="alert alert-danger error-alert">
                 {{ session('error') }}
+            </div>
+        @endif
+
+        @if ($errors->has('password') && old('role_id') != 3 && $user->role_id == 3)
+            <div class="alert alert-danger error-alert">
+                {{ $errors->first('password') }}
             </div>
         @endif
 
@@ -73,8 +79,8 @@
                         <label for="role_id" class="form-label">Função:</label>
                         <select class="form-control" id="role_id" name="role_id" onchange="toggleCourseClassDiv()">
 
-{{--
-                            @foreach($roles as $role)
+                            {{--
+                            @foreach ($roles as $role)
                                 <option
                                     value="{{ $role->id }}" {{ old('role_id', $user->role_id) == $role->id ? 'selected' : '' }}> --}}
 
@@ -116,10 +122,9 @@
                     </div>
 
                     <div class="buttons d-flex justify-content-start align-items-center">
-                        <label for="actions">Ações:</label>
                         <button type="submit" class="btn btn-primary">Salvar Alterações</button>
-                        <button type="submit" form="deleteForm" class="btn btn-danger">Excluir</button>
                         <a href="{{ route('users.index') }}" class="btn btn-secondary">Cancelar</a>
+                        <button type="submit" form="deleteForm" class="btn btn-danger">Excluir</button>
                     </div>
                 </div>
             </div>
@@ -164,9 +169,9 @@
         });
 
         window.setTimeout(function() {
-                $("#error-alert").fadeTo(500, 0).slideUp(500, function() {
-                    $(this).remove();
-                });
-            }, 3000);
+            $(".error-alert").fadeTo(500, 0).slideUp(500, function() {
+                $(this).remove();
+            });
+        }, 3000);
     </script>
 @endsection

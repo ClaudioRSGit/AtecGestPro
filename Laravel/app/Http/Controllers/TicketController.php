@@ -124,11 +124,11 @@ class TicketController extends Controller
             'isRead' => false,
         ]);
 
+        return redirect()->route('tickets.index')->with('success', 'Ticket criado com sucesso!');
         $ticketInfo = 'Ticket #' . $ticket->id . ' foi criado por ' . User::find($loggedInUserId)->name . '.';
 
         $this->logTicketHistory($ticket->id, 1, $ticketInfo);
 
-        return redirect()->route('tickets.index');
     }
 
 

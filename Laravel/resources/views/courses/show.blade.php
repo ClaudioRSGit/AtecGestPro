@@ -27,7 +27,7 @@
 
                 <div class="form-group">
                     <a href="{{ route('courses.edit', $course->id) }}" class="btn btn-primary">Editar</a>
-                    <a href="{{ url()->previous() }}" class="btn btn-secondary">Voltar</a>
+                    <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
                 </div>
             </div>
         </div>

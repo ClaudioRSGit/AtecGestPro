@@ -4,12 +4,12 @@
     <div class="container">
         <h1>Ticket #{{ $ticket->id }}</h1>
 
-        <form method="post" action="{{ route('tickets.update', $ticket->id) }}" enctype="multipart/form-data">
+        <form class="mb-3" method="post" action="{{ route('tickets.update', $ticket->id) }}" enctype="multipart/form-data">
 
             @csrf
             @method('put')
 
-            <div class="row">
+            <div class="row mb-3">
                 <div class="col-md-9">
                     <div class="mb-3">
                         <label for="requester" class="form-label">Utilizador:</label>
@@ -29,7 +29,7 @@
                         <p>Criado a {{ $ticket->created_at }}</p>
                     </div>
 
-                    <div class="mb-3">
+                    <div>
                         <label for="attachment" class="form-label">Anexo:</label>
                         <input type="file" class="form-control" id="attachment" name="attachment">
                         <p>Make sure you upload a file smaller than 20MB</p>

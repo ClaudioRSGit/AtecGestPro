@@ -77,10 +77,10 @@
                                 <tr>
                                     <td>{{ $material->name }}</td>
                                     <td>{{ $material->description }}</td>
-                                    <td>
+                                    <td class="pl-4">
                                         <input type="number" name="material_quantities[{{ $material->id }}]" value="1" min="1" max="{{ $material->quantity }}" @if($material->quantity == 0) disabled @endif>
                                     </td>
-                                    <td>
+                                    <td class="pl-5">
                                         <input type="checkbox" name="materials[]" value="{{ $material->id }}" @if($material->quantity == 0) disabled @endif>
                                     </td>
                                 </tr>
@@ -104,7 +104,7 @@
 
                 <div class="btns">
                     <button type="submit" class="btn btn-primary">Agendar formação</button>
-                    <a href="{{ route('external.index') }}" class="btn btn-secondary ">Voltar</a>
+                    <a href="{{ route('external.index') }}" class="btn btn-secondary">Cancelar</a>
                 </div>
 
             </div>

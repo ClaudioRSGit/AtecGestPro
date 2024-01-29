@@ -41,9 +41,8 @@
         </div>
 
                 <div class="form-group">
-                    <label for="actions">Ações:</label>
                     <a href="{{ route('partners.edit', $partner->id) }}" class="btn btn-primary">Editar</a>
-                    <a href="{{ url()->previous() }}" class="btn btn-secondary">Voltar</a>
+                    <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
                 </div>
             </div>
 

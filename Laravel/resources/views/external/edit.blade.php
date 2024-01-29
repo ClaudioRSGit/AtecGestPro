@@ -99,10 +99,10 @@
                                 <tr>
                                     <td>{{ $material->name }}</td>
                                     <td>{{ $material->description }}</td>
-                                    <td>
+                                    <td class="pl-4">
                                         <input type="number" name="material_quantities[{{ $material->id }}]" value="{{ $material->pivot->quantity ?? 1 }}" min="0" max="{{ $material->quantity + $material->pivot->quantity }}"  >
                                     </td>
-                                    <td>
+                                    <td class="pl-5">
                                         <input type="checkbox" name="materials[{{ $material->id }}]" value="{{ $material->id }}" {{ $material->pivot->quantity > 0 ? 'checked' : '' }} >
                                     </td>
                                 </tr>
@@ -114,10 +114,10 @@
                                     <tr>
                                         <td>{{ $material->name }}</td>
                                         <td>{{ $material->description }}</td>
-                                        <td>
+                                        <td class="pl-4">
                                             <input type="number" name="material_quantities[{{ $material->id }}]" value="0" min="0" max="{{ $material->quantity }}">
                                         </td>
-                                        <td>
+                                        <td class="pl-5">
                                             <input type="checkbox" name="materials[{{ $material->id }}]" value="{{ $material->id }}">
                                         </td>
                                     </tr>
@@ -133,7 +133,7 @@
 
                 <div class="btns">
                     <button type="submit" class="btn btn-primary">Atualizar formação</button>
-                    <a href="{{ route('external.index') }}" class="btn btn-secondary">Voltar</a>
+                    <a href="{{ route('external.index') }}" class="btn btn-secondary">Cancelar</a>
                 </div>
             </div>
         </form>

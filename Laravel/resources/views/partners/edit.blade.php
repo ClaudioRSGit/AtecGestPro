@@ -90,7 +90,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary" onclick="submitForm()">Atualizar Parceiro</button>
-            <a href="{{ route('external.index') }}" class="btn btn-secondary">Voltar</a>
+            <a href="{{ route('external.index') }}" class="btn btn-secondary">Cancelar</a>
         </form>
     </div>
 
