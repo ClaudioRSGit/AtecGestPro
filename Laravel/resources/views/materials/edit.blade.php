@@ -141,11 +141,11 @@
                             </div>
                         </div>
                     </div>
+        <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
+        <button type="submit" class="btn btn-primary">Guardar Material</button>
                 </div>
             </div>
         </form>
-        <button type="submit" class="btn btn-primary">Guardar Material</button>
-        <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
     </div>
     <style>
         .scrollable-column {
