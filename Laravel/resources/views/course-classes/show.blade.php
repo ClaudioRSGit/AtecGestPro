@@ -36,7 +36,7 @@
             </div>
         </form>
 
-        <a href="{{ route('course-classes.edit', $courseClass->id) }}" class="btn btn-warning">Editar Turma</a>
-        <a href="{{ url()->previous() }}" class="btn btn-secondary">Voltar</a>
+        <a href="{{ route('course-classes.edit', $courseClass->id) }}" class="btn btn-primary">Editar Turma</a>
+        <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
     </div>
 @endsection

@@ -122,10 +122,9 @@
                     </div>
 
                     <div class="buttons d-flex justify-content-start align-items-center">
-                        <label for="actions">Ações:</label>
                         <button type="submit" class="btn btn-primary">Salvar Alterações</button>
-                        <button type="submit" form="deleteForm" class="btn btn-danger">Excluir</button>
                         <a href="{{ route('users.index') }}" class="btn btn-secondary">Cancelar</a>
+                        <button type="submit" form="deleteForm" class="btn btn-danger">Excluir</button>
                     </div>
                 </div>
             </div>

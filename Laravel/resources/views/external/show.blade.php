@@ -97,8 +97,8 @@
                 </div>
 
                 <div class="btns">
-                    <a href="{{ route('external.edit', $partner_Training_Users->id) }}" class="btn btn-warning">Editar</a>
-                    <a href="{{ route('external.index') }}" class="btn btn-primary">Voltar</a>
+                    <a href="{{ route('external.edit', $partner_Training_Users->id) }}" class="btn btn-primary">Editar</a>
+                    <a href="{{ route('external.index') }}" class="btn btn-secondary">Cancelar</a>
                 </div>
             </div>
         @else

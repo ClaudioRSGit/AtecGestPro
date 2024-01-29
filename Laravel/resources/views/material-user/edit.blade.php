@@ -60,7 +60,7 @@
             </table>
             <br>
             <div class="d-flex justify-content-end">
-                <a href="{{ route('material-user.index') }}" class="btn btn-primary mx-2">Voltar</a>
+                <a href="{{ route('material-user.index') }}" class="btn btn-secondary mx-2">Cancelar</a>
                 <button id="delete-selected" class="btn btn-danger">Excluir selecionados</button>
             </div>
 

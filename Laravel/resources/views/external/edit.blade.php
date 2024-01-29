@@ -133,7 +133,7 @@
 
                 <div class="btns">
                     <button type="submit" class="btn btn-primary">Atualizar formação</button>
-                    <a href="{{ route('external.index') }}" class="btn btn-secondary">Voltar</a>
+                    <a href="{{ route('external.index') }}" class="btn btn-secondary">Cancelar</a>
                 </div>
             </div>
         </form>

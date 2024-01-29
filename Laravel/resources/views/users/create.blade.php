@@ -102,13 +102,13 @@
                             <option value="0">Desativado</option>
                         </select>
                     </div>
+                    <div class="buttons d-flex justify-content-start align-items-center">
+                        <button type="submit" class="btn btn-primary">Criar Utilizador</button>
+                        <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
+                    </div>
                 </div>
 
 
-                <div class="buttons">
-                    <button type="submit" class="btn btn-primary">Criar Utilizador</button>
-                    <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
-                </div>
             </div>
         </form>
     </div>
