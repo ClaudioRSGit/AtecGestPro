@@ -144,8 +144,10 @@ class TicketController extends Controller
         $priorities = TicketPriority::all();
         $categories = TicketCategory::all();
         $userTickets = Ticket::where('user_id', $ticket->user_id)->pluck('id');
+        $ticketTechnician = TicketUser::where('ticket_id', $ticket->id)->first('user_id');
+        $technician = User::where('id', $ticketTechnician->user_id)->first();
 
-        return view('tickets.show', compact('ticket', 'userTickets', 'users', 'statuses', 'priorities', 'categories'));
+        return view('tickets.show', compact('ticket', 'userTickets', 'users', 'statuses', 'priorities', 'categories', 'technician'));
     }
 
     public function edit(Ticket $ticket)

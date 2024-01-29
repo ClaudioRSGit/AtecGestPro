@@ -75,7 +75,7 @@
 
             <div class="mb-3">
                 <label for="technician" class="form-label">Técnico:</label>
-                <input type="text" class="form-control" value="{{ $ticket->requester->name ?? 'N/A' }}" disabled>
+                <input type="text" class="form-control" value="{{ $technician->name ?? 'N/A' }}" disabled>
             </div>
 
             <div class="mb-3">
