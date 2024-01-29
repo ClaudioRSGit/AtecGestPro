@@ -170,7 +170,7 @@ class TicketController extends Controller
 
         $oldTicket = clone $ticket;
         $oldTicketTechnician = clone TicketUser::where('ticket_id', $ticket->id)->first('user_id');
-
+        $newUserId = $request->technician_id;
         $ticketId = $ticket->id;
 
 
@@ -195,17 +195,9 @@ class TicketController extends Controller
             $ticket->attachment = $filename;
         }
 
-        $newUserId = $request->technician_id;
 
-//        $ticket->title = $request->title;
-//        $ticket->description = $request->description;
-//        $ticket->ticket_priority_id = $request->priority_id;
-//        $ticket->ticket_status_id = $request->status_id;
-//        $ticket->ticket_category_id = $request->category_id;
-//        $ticket->dueByDate = $dueByDate;
 
         $ticket->update($request->all());
-
 
 
         TicketUser::where('ticket_id', $ticketId)->update([
@@ -214,39 +206,7 @@ class TicketController extends Controller
 
 
 
-        $ticketInfo = '';
-
-        if ($oldTicket->ticket_status_id != $ticket->ticket_status_id) {
-            $oldStatusName = TicketStatus::find($oldTicket->ticket_status_id)->description;
-            $newStatusName = TicketStatus::find($ticket->ticket_status_id)->description;
-            $ticketInfo .= 'O estado do ticket #' . $ticket->id . ' foi atualizado de ' . $oldStatusName . ' para ' . $newStatusName . ' por ' . User::find(Auth::id())->name . ".\n";
-        }
-
-        if ($oldTicket->ticket_priority_id != $ticket->ticket_priority_id) {
-            $oldPriorityName = TicketPriority::find($oldTicket->ticket_priority_id)->description;
-            $newPriorityName = TicketPriority::find($ticket->ticket_priority_id)->description;
-            $ticketInfo .= 'A prioridade do ticket #' . $ticket->id . ' foi atualizada de ' . $oldPriorityName . ' para ' . $newPriorityName . ' por ' . User::find(Auth::id())->name . ".\n";
-        }
-
-        if ($oldTicket->ticket_category_id != $ticket->ticket_category_id) {
-            $oldCategoryName = TicketCategory::find($oldTicket->ticket_category_id)->name;
-            $newCategoryName = TicketCategory::find($ticket->ticket_category_id)->name;
-            $ticketInfo .= 'A categoria do ticket #' . $ticket->id . ' foi atualizada de ' . $oldCategoryName . ' para ' . $newCategoryName . ' por ' . User::find(Auth::id())->name . ".\n";
-        }
-
-        if ($oldTicket->dueByDate != $ticket->dueByDate) {
-            $ticketInfo .= 'A data de vencimento do ticket #' . $ticket->id . ' foi atualizada de ' . $oldTicket->dueByDate . ' para ' . $ticket->dueByDate . ' por ' . User::find(Auth::id())->name . ".\n"; ;
-        }
-
-        if ($oldTicketTechnician->user_id != $newUserId) {
-            $oldTechnicianName = User::find($oldTicketTechnician->user_id)->name;
-            $newTechnicianName = User::find($newUserId)->name;
-            $ticketInfo .= 'O técnico assignado ao ticket #' . $ticket->id . ' foi alterado de ' . $oldTechnicianName . ' para ' . $newTechnicianName . ' por ' . User::find(Auth::id())->name . ".\n";
-        }
-
-        if ($oldTicket->title != $ticket->title) {
-            $ticketInfo .= 'O titulo do ticket #' . $ticket->id . ' foi alterado de ' . $oldTicket->title . ' para ' . $ticket->title . ' por ' . User::find(Auth::id())->name . ".\n";
-        }
+        $ticketInfo = $this->generateTicketInfo($oldTicket, $ticket, $oldTicketTechnician->user_id, $newUserId);
 
         if (!empty($ticketInfo)) {
             $this->logTicketHistory($ticket->id, 2, $ticketInfo);
@@ -284,6 +244,45 @@ class TicketController extends Controller
             'action_id' => $actionId,
             'ticket_info' => $ticketInfo,
         ]);
+    }
+
+    public function generateTicketInfo($oldTicket, $ticket, $oldUserId, $newUserId)
+    {
+        $ticketInfo = '';
+
+        if ($oldTicket->ticket_status_id != $ticket->ticket_status_id) {
+            $oldStatusName = TicketStatus::find($oldTicket->ticket_status_id)->description;
+            $newStatusName = TicketStatus::find($ticket->ticket_status_id)->description;
+            $ticketInfo .= 'O estado do ticket #' . $ticket->id . ' foi atualizado de ' . $oldStatusName . ' para ' . $newStatusName . ' por ' . User::find(Auth::id())->name . ".\n";
+        }
+
+        if ($oldTicket->ticket_priority_id != $ticket->ticket_priority_id) {
+            $oldPriorityName = TicketPriority::find($oldTicket->ticket_priority_id)->description;
+            $newPriorityName = TicketPriority::find($ticket->ticket_priority_id)->description;
+            $ticketInfo .= 'A prioridade do ticket #' . $ticket->id . ' foi atualizada de ' . $oldPriorityName . ' para ' . $newPriorityName . ' por ' . User::find(Auth::id())->name . ".\n";
+        }
+
+        if ($oldTicket->ticket_category_id != $ticket->ticket_category_id) {
+            $oldCategoryName = TicketCategory::find($oldTicket->ticket_category_id)->name;
+            $newCategoryName = TicketCategory::find($ticket->ticket_category_id)->name;
+            $ticketInfo .= 'A categoria do ticket #' . $ticket->id . ' foi atualizada de ' . $oldCategoryName . ' para ' . $newCategoryName . ' por ' . User::find(Auth::id())->name . ".\n";
+        }
+
+        if ($oldTicket->dueByDate != $ticket->dueByDate) {
+            $ticketInfo .= 'A data de vencimento do ticket #' . $ticket->id . ' foi atualizada de ' . $oldTicket->dueByDate . ' para ' . $ticket->dueByDate . ' por ' . User::find(Auth::id())->name . ".\n"; ;
+        }
+
+        if ($oldUserId != $newUserId) {
+            $oldTechnicianName = User::find($oldUserId)->name;
+            $newTechnicianName = User::find($newUserId)->name;
+            $ticketInfo .= 'O técnico assignado ao ticket #' . $ticket->id . ' foi alterado de ' . $oldTechnicianName . ' para ' . $newTechnicianName . ' por ' . User::find(Auth::id())->name . ".\n";
+        }
+
+        if ($oldTicket->title != $ticket->title) {
+            $ticketInfo .= 'O titulo do ticket #' . $ticket->id . ' foi alterado de ' . $oldTicket->title . ' para ' . $ticket->title . ' por ' . User::find(Auth::id())->name . ".\n";
+        }
+
+        return $ticketInfo;
     }
 
 
