@@ -67,7 +67,7 @@ class MaterialController extends Controller
 
             $material->courses()->attach($request->input('courses'));
 
-            $sizes = $request->input('sizes');
+            $sizes = $request->input('sizes', []);
 
             $stocks = $request->input('stocks', []);
 
@@ -122,15 +122,14 @@ class MaterialController extends Controller
         }
         $material->update($request->all());
 
-        // Update the related courses
         $material->courses()->sync($request->input('courses', []));
 
-        // Update the related sizes and stocks
+
         $sizes = $request->input('sizes', []);
         $stocks = $request->input('stocks', []);
         $syncData = [];
-        foreach ($sizes as $index => $sizeId) {
-            $stock = $stocks[$index] ?? 0;
+        foreach ($sizes as  $sizeId) {
+            $stock = $stocks[$sizeId] ?? 0;
             $syncData[$sizeId] = ['stock' => $stock];
         }
 

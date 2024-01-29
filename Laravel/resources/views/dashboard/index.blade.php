@@ -3,68 +3,45 @@
 @section('content')
     <div class="container">
         <h1 class="h2">Dashboard</h1>
-        {{-- use foreach loop to create a cart foreach ticket_statuses_id and in h5 put ticket_statuses_description <div class="card">:
-        <div class="card">
-            <h5 class="card-header">Total Tickets</h5>
-            and another loop for  <div class="card-body"> and in h5 put the count from database:
-            <div class="card-body">
-                <h5 class="card-title">345k</h5>
-                <p class="card-text">Feb 1 - Apr 1, United States</p>
-                <p class="card-text text-success">18.2% increase since last month</p>
-            </div>
-        </div> --}}
+
 
 
         <div class="row my-4">
-            <div class="col-12 col-md-6 col-lg-3 mb-4 mb-lg-2">
-                <div class="card">
-                    <h5 class="card-header">Total Tickets</h5>
+
+            <div class="col-3 col-md-6 mb-4 mb-lg-2 col-lg-3 d-flex">
+
+
+                <div class="card flex-grow-1">
+                    <h5 class="card-header">Usuários & Materiais</h5>
                     <div class="card-body">
-                        <h5 class="card-title">{{ $ticketTotal }}</h5>
+                        @foreach ($userRolesCounts as $roleCount)
+                            <h4> {{ $roleCount->name }} : {{ $roleCount->total }}</h4>
+                        @endforeach
+                        <h4>Material interno : {{ $materialInternalCount }}</h4>
+                        <h4>Material Externo : {{ $materialExternalCount }}</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-3 col-md-6 col-lg-3 mb-4 mb-lg-2 d-flex">
+                <div class="card flex-grow-1">
+                    <h5 class="card-header">Tickets Estados</h5>
+                    <div class="card-body">
+                        <canvas id="pieChart"></canvas>
 
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-6 mb-4 mb-lg-2 col-lg-3">
-                <div class="card">
-                    <h5 class="card-header">Tickets Aberto</h5>
+
+            <div class="col-6 col-md-6 mb-4 mb-lg-2 col-lg-6 d-flex">
+                <div class="card flex-grow-1">
+                    <h5 class="card-header">Número de Formações Externas</h5>
                     <div class="card-body">
-                        <h5 class="card-title">{{ $ticketStatusOpen }}</h5>
+                        <div id="traffic-chart"></div>
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-6 mb-4 mb-lg-2 col-lg-3">
-                <div class="card">
-                    <h5 class="card-header">Tickets Em Progresso</h5>
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $ticketStatusProgress }}</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 mb-4 mb-lg-2 col-lg-3">
-                <div class="card">
-                    <h5 class="card-header">Tickets Pendente</h5>
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $ticketStatusPending }}</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 mb-4 mb-lg-2 col-lg-3">
-                <div class="card">
-                    <h5 class="card-header">Tickets Resolvido</h5>
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $ticketStatusSolved }}</h5>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12 col-md-6 mb-4 mb-lg-2 col-lg-3">
-                <div class="card">
-                    <h5 class="card-header">Tickets Fechado</h5>
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $ticketStatusClosed }}</h5>
-                    </div>
-                </div>
-            </div>
+
 
         </div>
         <div class="row">
@@ -72,62 +49,92 @@
                 <div class="card">
                     <h5 class="card-header">Entregas Incompletas</h5>
                     <div class="card-body">
-                        <div class="table-responsive">
+                        <div id="usersTable" class="table-responsive">
                             <table class="table">
                                 <thead>
                                     <tr>
                                         <th>Nome</th>
                                         <th>Username</th>
                                         <th>Email</th>
-
+                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($usersWithMaterialsDelivered as $user)
                                         <tr>
-
                                             <td>{{ $user->name }}</td>
                                             <td>{{ $user->username }}</td>
                                             <td>{{ $user->email }}</td>
-
                                             <td class="btn btn-sm btn-primary"
-                                                onclick="location.href='{{ route('users.show', $user->id) }}'">View</td>
+                                                onclick="location.href='{{ route('material-user.create', $user->id) }}'">
+                                                View
+                                            </td>
                                         </tr>
                                     @endforeach
-
                                 </tbody>
-
-
                             </table>
                         </div>
-                        {{-- <a href="#" class="btn btn-block btn-light">View all</a> --}}
+
                     </div>
                 </div>
             </div>
             <div class="col-12 col-xl-4">
+
+
                 <div class="card mb-2">
-                    <h5 class="card-header">Número de Formações Externas</h5>
+                    <h5 class="card-header">Tickets Prioridades</h5>
                     <div class="card-body">
-                        <div id="traffic-chart"></div>
+                        <canvas id="pieChartPri"></canvas>
+
                     </div>
                 </div>
 
 
-                <div class="card ">
-                    <h5 class="card-header">Tickets Prioridade</h5>
-                    <div class="card-body">
-                        @foreach($ticketStatusCounts as $statusCount)
-                            <h5> {{ $statusCount->description }} : {{ $statusCount->total }}</h5>
-                        @endforeach
-
-                    </div>
-                </div>
 
             </div>
         </div>
     </div>
 
+
+
+
+
     <script>
+        function createPieChart(elementId, labels, data) {
+        var ctx = document.getElementById(elementId).getContext('2d');
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: data,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.7)',
+                        'rgba(54, 162, 235, 0.7)',
+                        'rgba(255, 206, 86, 0.7)',
+                        'rgba(75, 192, 192, 0.7)',
+                        'rgba(153, 102, 255, 0.7)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+        });
+    }
+
+    //grafic of tickets states
+    createPieChart('pieChart', @json($data['labels']), @json($data['data']));
+    //grafic of tickets priorities
+    createPieChart('pieChartPri', @json($chartData['labels']), @json($chartData['data']));
+
+
+
         new Chartist.Line('#traffic-chart', {
             labels: ['January', 'Februrary', 'March', 'April', 'May', 'June'],
             series: [
@@ -138,4 +145,36 @@
             showArea: true
         });
     </script>
+
+    <style>
+
+        .table-responsive thead th {
+            position: sticky;
+            top: 0;
+            background: #fff;
+
+            box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+
+        }
+
+        #usersTable {
+            box-shadow: 1px 2px 1px 2px rgb(230, 229, 229);
+            margin: 15px;
+            border: 1px solid #141313;
+            background-color: #cbeaf8;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            height: 370px;
+        }
+
+
+        .card-header {
+            margin-bottom: 0;
+        }
+
+        .card-body {
+            padding-top: 0;
+        }
+
+    </style>
 @endsection

@@ -160,17 +160,6 @@
         text-decoration: underline;
     }
 
-    .dashboard{
-        /* pointer-events: none; */
-        /* background-color: lightgray; */
-    }
-
-    .dashboard>a,
-    .dashboard>svg>path{
-        fill: gray !important;
-        color: gray !important;
-    }
-
     .selected {
         background-color: rgba(17, 111, 220, 0.1);
     }
