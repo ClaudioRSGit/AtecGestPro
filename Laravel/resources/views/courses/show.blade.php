@@ -11,8 +11,8 @@
 
         <h1>Detalhes do Curso</h1>
 
-        <div class="row">
-            <div class="col-md-6">
+        <div>
+            <div class="w-50">
                 <div class="mb-3">
                     <label for="code" class="form-label">Nome do Curso:</label>
                     <input type="text" class="form-control" id="code" name="code" value="{{ $course->code }}"

@@ -4,7 +4,7 @@
     <div class="container">
         <h1>Editar Training</h1>
 
-        <form method="post" action="{{ route('trainings.update', $training->id) }}">
+        <form method="post" action="{{ route('trainings.update', $training->id) }}" class="w-70">
             @csrf
             @method('put')
 

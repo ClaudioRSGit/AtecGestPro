@@ -8,7 +8,7 @@
             @csrf
             @method('put')
 
-            <div class="row">
+            <div class="w-50">
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="code" class="form-label">Código do Curso:</label>
