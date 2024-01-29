@@ -101,6 +101,14 @@
                     @endforeach
                 </ul>
             </div>
+
+
+            <div class="mb-5">
+                <div class="mb-5">
+                    <label>Histórico do Ticket:</label>
+                    <a href="{{ route('ticket-histories.show', $ticket->id) }}">Ver Histórico</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>

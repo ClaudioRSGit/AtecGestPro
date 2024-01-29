@@ -259,7 +259,10 @@ class TicketController extends Controller
     {
         $ticket->delete();
 
-        return redirect()->route('tickets.index');
+//        $this->logTicketHistory($ticket->id, 3, 'Ticket #' . $ticket->id . ' foi removido por ' . User::find(Auth::id())->name . '.');
+
+        return redirect()->route('tickets.index')->with('success', 'Ticket removido com sucesso!');
+
     }
 
     public function showComment($id)
@@ -280,4 +283,6 @@ class TicketController extends Controller
             'ticket_info' => $ticketInfo,
         ]);
     }
+
+
 }
