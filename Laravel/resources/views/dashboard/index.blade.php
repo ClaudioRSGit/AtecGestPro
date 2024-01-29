@@ -74,7 +74,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        {{-- <a href="#" class="btn btn-block btn-light">View all</a> --}}
+
                     </div>
                 </div>
             </div>
@@ -95,15 +95,19 @@
         </div>
     </div>
 
+
+
+
+
     <script>
-        // Pie chart ticket status
-        var ctx = document.getElementById('pieChart').getContext('2d');
-        var myChart = new Chart(ctx, {
+        function createPieChart(elementId, labels, data) {
+        var ctx = document.getElementById(elementId).getContext('2d');
+        new Chart(ctx, {
             type: 'pie',
             data: {
-                labels: @json($data['labels']),
+                labels: labels,
                 datasets: [{
-                    data: @json($data['data']),
+                    data: data,
                     backgroundColor: [
                         'rgba(255, 99, 132, 0.7)',
                         'rgba(54, 162, 235, 0.7)',
@@ -122,34 +126,12 @@
                 }]
             },
         });
+    }
 
-        // Pie chart ticket priority
-        var ctxPri = document.getElementById('pieChartPri').getContext('2d');
-        var myChartPri = new Chart(ctxPri, {
-            type: 'pie',
-            data: {
-                labels: @json($chartData['labels']),
-                datasets: [{
-                    data: @json($chartData['data']),
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.7)',
-                        'rgba(54, 162, 235, 0.7)',
-                        'rgba(255, 206, 86, 0.7)',
-                        'rgba(75, 192, 192, 0.7)',
-                        'rgba(153, 102, 255, 0.7)',
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                    ],
-                    borderWidth: 1
-                }]
-            },
-
-        });
+    //grafic of tickets states
+    createPieChart('pieChart', @json($data['labels']), @json($data['data']));
+    //grafic of tickets priorities
+    createPieChart('pieChartPri', @json($chartData['labels']), @json($chartData['data']));
 
 
 
@@ -165,12 +147,6 @@
     </script>
 
     <style>
-
-
-        /* .table-responsive {
-            max-height: 300px;
-
-        } */
 
         .table-responsive thead th {
             position: sticky;
@@ -200,18 +176,5 @@
             padding-top: 0;
         }
 
-
-        /*
-
-                    #usersTable::-webkit-scrollbar {
-                        display: none;
-                    }
-
-
-                    #usersTable {
-                        -ms-overflow-style: none;
-                        scrollbar-width: none;
-                    }
-                */
     </style>
 @endsection
