@@ -59,7 +59,8 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($usersWithMaterialsDelivered as $user)
+                                    <div class="overflow-auto">
+                                        @foreach ($usersWithMaterialsDelivered as $user)
                                         <tr>
                                             <td>{{ $user->name }}</td>
                                             <td>{{ $user->username }}</td>
@@ -69,6 +70,9 @@
                                                 View</td>
                                         </tr>
                                     @endforeach
+
+                                    </div>
+
                                 </tbody>
                             </table>
                         </div>
