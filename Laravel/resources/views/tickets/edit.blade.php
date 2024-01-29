@@ -45,7 +45,7 @@
                         <label for="status" class="form-label">Estado:</label>
                         <select class="form-control" id="status" name="ticket_status_id">
                             @foreach($statuses as $status)
-                                <option value="{{ $status->id }}" {{ $ticket->ticketStatus->id == $status->id ? 'selected' : '' }}>
+                                <option value="{{ $status->id }}" {{ $status->id == $ticket->ticketStatus->id ? 'selected' : '' }}>
                                     {{ $status->description }}
                                 </option>
                             @endforeach
@@ -56,7 +56,7 @@
                         <label for="priority" class="form-label">Prioridade:</label>
                         <select class="form-control" id="priority" name="ticket_priority_id">
                             @foreach($priorities as $priority)
-                                <option value="{{ $priority->id }}" {{ $ticket->priority_id == $priority->id ? 'selected' : '' }}>
+                                <option value="{{ $priority->id }}" {{ $priority->id == $ticket->ticketPriority->id ? 'selected' : '' }}>
                                     {{ $priority->description }}
                                 </option>
                             @endforeach
@@ -64,10 +64,11 @@
                     </div>
                     <div class="mb-3">
                         <label for="technician" class="form-label">Técnico:</label>
-                        <select class="form-control" id="technician" name="user_id">
-                            <option value="">{{$ticket->requester->name}}</option>
+
+                        <select class="form-control" id="technician_id" name="technician_id">
+
                             @foreach($technicians as $technician)
-                                <option value="{{ $technician->id }}" {{ $ticket->user_id == $technician->id ? 'selected' : '' }}>{{ $technician->name }}
+                                <option value="{{ $technician->id }}" {{ $ticketTechnician->user_id == $technician->id ? 'selected' : '' }}>{{ $technician->name }}
                                 </option>
                             @endforeach
                         </select>
@@ -76,12 +77,14 @@
                         <label for="category" class="form-label">Categoria:</label>
                         <select class="form-control" id="category" name="ticket_category_id">
                             @foreach($categories as $category)
-                                <option value="{{ $category->id }}" {{ $ticket->category_id == $category->id ? 'selected' : '' }}>
+                                <option value="{{ $category->id }}" {{ $category->id == $ticket->ticketCategory->id ? 'selected' : '' }}>
                                     {{ $category->description }}
                                 </option>
                             @endforeach
                         </select>
                     </div>
+
+
 
                     <div>
                         <label>Histórico do Utilizador:</label>

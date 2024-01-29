@@ -16,8 +16,9 @@ class CreateTicketHistoriesTable extends Migration
         Schema::create('ticket_histories', function (Blueprint $table) {
             $table->id();
             $table->foreignId('ticket_id')->constrained('tickets')->onDelete('cascade')->onUpdate('cascade');
-            $table->string('ticket_info');
+            $table->text('ticket_info');
             $table->foreignId('action_id')->constrained('actions')->onDelete('cascade')->onUpdate('cascade');
+            $table->timestamps();
         });
     }
 
