@@ -12,7 +12,7 @@
 
 
                 <div class="card flex-grow-1">
-                    <h5 class="card-header">Usuarios e Materiais</h5>
+                    <h5 class="card-header">Usuários & Materiais</h5>
                     <div class="card-body">
                         @foreach ($userRolesCounts as $roleCount)
                             <h4> {{ $roleCount->name }} : {{ $roleCount->total }}</h4>
@@ -82,7 +82,7 @@
 
 
                 <div class="card mb-2">
-                    <h5 class="card-header">Tickets Prioridade</h5>
+                    <h5 class="card-header">Tickets Prioridades</h5>
                     <div class="card-body">
                         <canvas id="pieChartPri"></canvas>
 
@@ -148,6 +148,7 @@
                     borderWidth: 1
                 }]
             },
+
         });
 
 
