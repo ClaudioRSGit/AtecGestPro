@@ -120,32 +120,32 @@
 
 
                                 <div class="flex-column">
-                                <div class="mb-3">
-                                    <p class="form-label font-weight-bold">Cursos:</p>
-                                </div>
-                                <div class="mb-3" id="role">
-                                    <div class="d-flex flex-column scrollable-column">
-                                        @foreach ($coursesAll as $courseAll)
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="courses[]"
-                                                    value="{{ $courseAll->id }}"
-                                                    {{ in_array($courseAll->id, $material->courses->pluck('id')->toArray()) ? 'checked' : '' }}>
-                                                <label class="form-check-label" for="course{{ $courseAll->id }}">
-                                                    {{ $courseAll->code }}
-                                                </label>
-                                            </div>
-                                        @endforeach
+                                    <div class="mb-3">
+                                        <p class="form-label font-weight-bold">Cursos:</p>
+                                    </div>
+                                    <div class="mb-3" id="role">
+                                        <div class="d-flex flex-column scrollable-column">
+                                            @foreach ($coursesAll as $courseAll)
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="courses[]"
+                                                        value="{{ $courseAll->id }}"
+                                                        {{ in_array($courseAll->id, $material->courses->pluck('id')->toArray()) ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="course{{ $courseAll->id }}">
+                                                        {{ $courseAll->code }}
+                                                    </label>
+                                                </div>
+                                            @endforeach
 
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                         </div>
                     </div>
+                        <button type="submit" class="btn btn-primary">Guardar Material</button>
+                        <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
                 </div>
             </div>
         </form>
-        <button type="submit" class="btn btn-primary">Guardar Material</button>
-        <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
     </div>
     <style>
         .scrollable-column {
