@@ -22,6 +22,15 @@ class DashboardController extends Controller
             $query->where('delivered_all', true);
         })->get();
 
+        $userStudentsCount = User::where('isStudent', true)->count();
+
+        $userRolesCounts = DB::table('users')
+        ->join('roles', 'users.role_id', '=', 'roles.id')
+        ->select('roles.name', DB::raw('count(*) as total'))
+        ->groupBy('roles.name')
+        ->get();
+
+
         $ticketStatusOpen = DB::table('tickets')
         ->where('ticket_status_id', 1)
         ->count();
@@ -53,7 +62,7 @@ class DashboardController extends Controller
 
 
 
-        return view('dashboard.index', compact('usersWithMaterialsDelivered', 'ticketStatusOpen', 'ticketStatusProgress', 'ticketStatusPending', 'ticketStatusSolved', 'ticketStatusClosed', 'ticketTotal', 'ticketStatusCounts'));
+        return view('dashboard.index', compact('usersWithMaterialsDelivered', 'ticketStatusOpen', 'ticketStatusProgress', 'ticketStatusPending', 'ticketStatusSolved', 'ticketStatusClosed', 'ticketTotal', 'ticketStatusCounts', 'userStudentsCount', 'userRolesCounts'));
     }
 
     /**
