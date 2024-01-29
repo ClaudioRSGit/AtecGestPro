@@ -50,7 +50,7 @@
                     <h5 class="card-header">Entregas Incompletas</h5>
                     <div class="card-body">
                         <div id="usersTable" class="table-responsive">
-                            <table  class="table">
+                            <table class="table">
                                 <thead>
                                     <tr>
                                         <th>Nome</th>
@@ -176,7 +176,30 @@
             background-color: #cbeaf8;
             overflow-y: scroll;
             overflow-x: hidden;
-            height: 500px;
+            height: 400px;
         }
+
+
+            .card-header {
+                margin-bottom: 0;
+            }
+
+            .card-body {
+                padding-top: 0;
+            }
+
+
+        /*
+
+            #usersTable::-webkit-scrollbar {
+                display: none;
+            }
+
+
+            #usersTable {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+        */
     </style>
 @endsection
