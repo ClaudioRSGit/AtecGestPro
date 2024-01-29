@@ -59,8 +59,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <div class="overflow-auto">
-                                        @foreach ($usersWithMaterialsDelivered as $user)
+                                    @foreach ($usersWithMaterialsDelivered as $user)
                                         <tr>
                                             <td>{{ $user->name }}</td>
                                             <td>{{ $user->username }}</td>
@@ -70,9 +69,21 @@
                                                 View</td>
                                         </tr>
                                     @endforeach
+                                    <tr> <td> Jenny</td> <td>01</td> <td> Docker</td></tr>
 
-                                    </div>
+                                    <tr> <td> Herry</td> <td>02</td> <td> HTML/CSS</td></tr>
 
+                                    <tr> <td> Marry </td> <td>03</td> <td> Git</td></tr>
+
+                                    <tr> <td> Jazzy </td> <td>04</td> <td> Javascript</td></tr>
+
+                                    <tr> <td> Edward </td> <td>05</td> <td> Windows</td></tr>
+
+                                    <tr> <td> Bella </td> <td>06</td> <td> Discord</td></tr>
+
+                                    <tr> <td> Bunny </td> <td>07</td> <td> Git</td></tr>
+
+                                    <tr> <td> Jack </td> <td>08</td> <td> HTML/CSS</td></tr>
                                 </tbody>
                             </table>
                         </div>
@@ -177,4 +188,16 @@
             showArea: true
         });
     </script>
+
+    <style>
+        .table-responsive {
+            box-shadow: 1px 2px 1px 2px rgb(230, 229, 229);
+            margin: 15px;
+            border: 1px solid #141313;
+            background-color: #cbeaf8;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            height: 300px;
+        }
+    </style>
 @endsection
