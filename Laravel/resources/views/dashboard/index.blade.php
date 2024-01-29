@@ -30,14 +30,19 @@
                     </div>
                 </div>
             </div>
-            {{-- <div class="col-12 col-md-6 mb-4 mb-lg-2 col-lg-3">
+             <div class="col-12 col-md-6 mb-4 mb-lg-2 col-lg-3">
                 <div class="card">
-                    <h5 class="card-header"></h5>
+                    <h5 class="card-header">Usuarios</h5>
                     <div class="card-body">
+                        @foreach($userRolesCounts as $roleCount)
 
+                            <h5> {{ $roleCount->name }} : {{ $roleCount->total }}</h5>
+
+                        @endforeach
                     </div>
                 </div>
             </div>
+            {{--
             <div class="col-12 col-md-6 mb-4 mb-lg-2 col-lg-3">
                 <div class="card">
                     <h5 class="card-header"></h5>
