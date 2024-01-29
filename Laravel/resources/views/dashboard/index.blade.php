@@ -16,6 +16,27 @@
 
 
         <div class="row my-4">
+
+            <div class="col-3 col-md-6 mb-4 mb-lg-2 col-lg-3 d-flex">
+
+                <div style="width: 80%; margin: auto;">
+                    <canvas id="pieChart"></canvas>
+                </div>
+
+                <div class="card flex-grow-1">
+                    <h5 class="card-header">Usuarios e Materiais</h5>
+                    <div class="card-body">
+                        @foreach($userRolesCounts as $roleCount)
+
+                            <h4> {{ $roleCount->name }} : {{ $roleCount->total }}</h4>
+
+                        @endforeach
+                        <h4>Material interno : {{ $materialInternalCount }}</h4>
+                        <h4>Material Externo : {{ $materialExternalCount }}</h4>
+                    </div>
+                </div>
+            </div>
+
             <div class="col-3 col-md-6 col-lg-3 mb-4 mb-lg-2 d-flex">
                 <div class="card flex-grow-1">
                     <h5 class="card-header">Tickets</h5>
@@ -30,20 +51,7 @@
                     </div>
                 </div>
             </div>
-             <div class="col-3 col-md-6 mb-4 mb-lg-2 col-lg-3 d-flex">
-                <div class="card flex-grow-1">
-                    <h5 class="card-header">Usuarios e Materiais</h5>
-                    <div class="card-body">
-                        @foreach($userRolesCounts as $roleCount)
 
-                            <h4> {{ $roleCount->name }} : {{ $roleCount->total }}</h4>
-
-                        @endforeach
-                        <h4>Material interno : {{ $materialInternalCount }}</h4>
-                        <h4>Material Externo : {{ $materialExternalCount }}</h4>
-                    </div>
-                </div>
-            </div>
             <div class="col-6 col-md-6 mb-4 mb-lg-2 col-lg-6 d-flex">
                 <div class="card flex-grow-1">
                     <h5 class="card-header">Número de Formações Externas</h5>
@@ -127,6 +135,13 @@
             <div class="col-12 col-xl-4">
 
 
+                <div class="card mb-2">
+                    <h5 class="card-header">Tickets Prioridade</h5>
+                    <div class="card-body">
+                        <h1>Grafico aqui </h1>
+
+                    </div>
+                </div>
 
                 <div class="card ">
                     <h5 class="card-header">Tickets Prioridade</h5>
@@ -143,6 +158,32 @@
     </div>
 
     <script>
+         var ctx = document.getElementById('pieChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: @json($data['labels']),
+                datasets: [{
+                    data: @json($data['data']),
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.7)',
+                        'rgba(54, 162, 235, 0.7)',
+                        'rgba(255, 206, 86, 0.7)',
+                        'rgba(75, 192, 192, 0.7)',
+                        'rgba(153, 102, 255, 0.7)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+        });
+
         new Chartist.Line('#traffic-chart', {
             labels: ['January', 'Februrary', 'March', 'April', 'May', 'June'],
             series: [

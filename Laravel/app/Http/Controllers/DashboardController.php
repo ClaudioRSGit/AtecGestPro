@@ -68,11 +68,15 @@ class DashboardController extends Controller
         ->groupBy('ticket_priorities.description')
         ->get();
 
+        $data = [            'labels' => ['Abertos', 'Em Progresso', 'Pendentes', 'Resolvidos', 'Fechados'],
+        'data' => [$ticketStatusOpen, $ticketStatusProgress, $ticketStatusPending, $ticketStatusSolved, $ticketStatusClosed],
+        ];
+
 
 
         return view('dashboard.index', compact('usersWithMaterialsDelivered', 'ticketStatusOpen', 'ticketStatusProgress',
          'ticketStatusPending','ticketStatusSolved', 'ticketStatusClosed', 'ticketTotal', 'ticketStatusCounts', 'userStudentsCount',
-          'userRolesCounts', 'materialInternalCount', 'materialExternalCount'));
+          'userRolesCounts', 'materialInternalCount', 'materialExternalCount', 'data'));
     }
 
     /**

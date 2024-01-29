@@ -16,6 +16,7 @@
 </head>
 <body>
     {{-- Chartist.js, a library for creating responsive charts --}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
     {{-- Popper.js, a library used for positioning  tooltips and popovers in Bootstrap. --}}
     {{-- integrity It allows the browser to verify that the fetched resource has been delivered without unexpected manipulation--}}
