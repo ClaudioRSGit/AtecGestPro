@@ -77,8 +77,8 @@
                         <div class="mx-3 " id="gender">
                             <label for="gender">Género:</label>
                             <select class="form-control" id="gender" name="gender">
-                                <option value="1" {{ $material->gender === 1 ? 'selected' : '' }}>Masculino</option>
-                                <option value="0" {{ $material->gender === 0 ? 'selected' : '' }}>Feminino</option>
+                                <option value="1" {{ $material->gender == 1 ? 'selected' : '' }}>Masculino</option>
+                                <option value="0" {{ $material->gender == 0 ? 'selected' : '' }}>Feminino</option>
                             </select>
                         </div>
                     </div>
