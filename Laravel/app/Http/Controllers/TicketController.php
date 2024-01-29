@@ -121,7 +121,7 @@ class TicketController extends Controller
             'isRead' => false,
         ]);
 
-        return redirect()->route('tickets.index');
+        return redirect()->route('tickets.index')->with('success', 'Ticket criado com sucesso!');
     }
 
     public function show(Ticket $ticket)
