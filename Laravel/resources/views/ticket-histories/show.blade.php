@@ -6,10 +6,10 @@
 
         <div>
             @foreach($ticketHistories as $history)
-                <br>
+
                 <h5>{{$history->action->description}} - {{$history->created_at}}</h5>
 
-                <p>{!! nl2br(str_replace('.', '.<br>', e($history->ticket_info))) !!}</p>
+                <p>{!! nl2br(str_replace('.', ".\n", e($history->ticket_info))) !!}</p>
             @endforeach
         </div>
     </div>
