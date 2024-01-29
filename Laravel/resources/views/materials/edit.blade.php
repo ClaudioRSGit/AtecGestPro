@@ -46,39 +46,39 @@
                     <div class="form-group">
                         <label for="acquisition_date">Data de Aquisição:</label>
                         <input type="date" class="form-control" id="acquisition_date" name="acquisition_date"
-                            value="{{ !empty($material->acquisition_date) ? $material->acquisition_date : 'Não disponível' }}">
+                            value="{{ !empty($material->acquisition_date) ? \Carbon\Carbon::parse($material->acquisition_date)->format('Y-m-d') : 'Não disponível' }}">
 
                     </div>
 
 
-                    <div class="mb-3" id="quantity">
-                        <label for="quantity">Quantidade:</label>
-                        <input type="number" class="form-control" id="quantity" name="quantity"
-                            value="{{ $material->quantity }}">
-                    </div>
 
                 </div>
                 <div class="col-md-6">
-                    <div class="row d-flex">
-                        <div class="mx-3">
-                            <label for="isInternal">Material interno?</label>
-                            <select class="form-select" id="isInternal" name="isInternal">
-                                <option value="1" {{ $material->isInternal ? 'selected' : '' }}>Sim</option>
-                                <option value="0" {{ !$material->isInternal ? 'selected' : '' }}>Não</option>
-                            </select>
-                        </div>
-                        <div class="mx-3">
-                            <label for="isClothing">É vestuário?</label>
-                            <select class="form-select" id="isClothing" name="isClothing">
-                                <option value="1" {{ $material->isClothing ? 'selected' : '' }}>Sim</option>
-                                <option value="0" {{ !$material->isClothing ? 'selected' : '' }}>Não</option>
-                            </select>
-                        </div>
-                        <div class="mx-3 " id="gender">
+                    <div class="row grid mb-3">
+                        <div class="mx-3 gender mb-3" id="gender">
                             <label for="gender">Género:</label>
                             <select class="form-control" id="gender" name="gender">
                                 <option value="1" {{ $material->gender === 1 ? 'selected' : '' }}>Masculino</option>
                                 <option value="0" {{ $material->gender === 0 ? 'selected' : '' }}>Feminino</option>
+                            </select>
+                        </div>
+                        <div class="mx-3 qty mb-3" id="quantity">
+                            <label for="quantity">Quantidade:</label>
+                            <input type="number" class="form-control text-left" id="quantity" name="quantity"
+                            value="{{ $material->quantity }}">
+                        </div>
+                        <div class="mx-3 internal">
+                            <label for="isInternal">Material interno?</label>
+                            <select class="form-control" id="isInternal" name="isInternal">
+                                <option value="1" {{ $material->isInternal ? 'selected' : '' }}>Sim</option>
+                                <option value="0" {{ !$material->isInternal ? 'selected' : '' }}>Não</option>
+                            </select>
+                        </div>
+                        <div class="mx-3 clothing">
+                            <label for="isClothing">É vestuário?</label>
+                            <select class="form-control" id="isClothing" name="isClothing">
+                                <option value="1" {{ $material->isClothing ? 'selected' : '' }}>Sim</option>
+                                <option value="0" {{ !$material->isClothing ? 'selected' : '' }}>Não</option>
                             </select>
                         </div>
                     </div>
@@ -86,31 +86,20 @@
                     <div id="hide">
 
 
-                        <div class="d-flex flex-row" id="labels">
 
-                            <div class="col-8">
+                        <div class="d-flex flex-row">
+                            <div class="flex-column w-75">
                                 <div class="mb-3">
                                     <p class="form-label font-weight-bold">Tamanho e stock: </p>
                                 </div>
-                            </div>
-
-                            <div class="col-4">
-                                <div class="mb-3">
-                                    <p class="form-label font-weight-bold">Cursos:</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="d-flex flex-row">
-                            <div class="flex-column me-4 scrollable-column mr-5">
-                                <div class="mb-3" id="size">
+                                <div class="mb-3 mr-4 scrollable-column mr-5" id="size">
                                     <div class="d-flex flex-column">
                                         @foreach ($sizesAll as $sizeAll)
-                                            <div class="d-flex align-items-center mb-2">
-                                                <div class="form-check">
-                                                    <input onchange="toggleFieldsQuantity()"
-                                                        class="form-check-input size-checkbox" type="checkbox"
-                                                        name="sizes[]" value="{{ $sizeAll->id }}"
+                                        <div class="d-flex justify-content-between align-items-center mb-2 px-5">
+                                            <div class="form-check">
+                                                <input onchange="toggleFieldsQuantity()"
+                                                class="form-check-input size-checkbox" type="checkbox"
+                                                name="sizes[]" value="{{ $sizeAll->id }}"
                                                         {{ in_array($sizeAll->id, $material->sizes->pluck('id')->toArray()) ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="size{{ $sizeAll->id }}">
                                                         {{ $sizeAll->size }}
@@ -118,19 +107,22 @@
                                                 </div>
 
                                                 <input type="number" name="stocks[{{ $sizeAll->id }}]"
-                                                    value="{{ old('stocks.' . $sizeAll->id, $material->sizes->where('id', $sizeAll->id)->first()->pivot->stock ?? 0) }}"
-                                                    class="form-control w-25 mx-5 quantity-input" min="0"
-                                                    {{ in_array($sizeAll->id, $material->sizes->pluck('id')->toArray()) ? '' : 'disabled' }}>
+                                                value="{{ old('stocks.' . $sizeAll->id, $material->sizes->where('id', $sizeAll->id)->first()->pivot->stock ?? 0) }}"
+                                                class="form-control w-25 mx-5 quantity-input" min="0"
+                                                {{ in_array($sizeAll->id, $material->sizes->pluck('id')->toArray()) ? '' : 'disabled' }}>
                                             </div>
-                                        @endforeach
+                                            @endforeach
 
 
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
 
-                            <div class="flex-column">
+                                <div class="flex-column">
+                                <div class="mb-3">
+                                    <p class="form-label font-weight-bold">Cursos:</p>
+                                </div>
                                 <div class="mb-3" id="role">
                                     <div class="d-flex flex-column scrollable-column">
                                         @foreach ($coursesAll as $courseAll)
@@ -149,19 +141,36 @@
                             </div>
                         </div>
                     </div>
-                    <div class="m-3">
-
-                        <button type="submit" class="btn btn-primary">Guardar Material</button>
-                        <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
-                    </div>
                 </div>
             </div>
         </form>
+        <button type="submit" class="btn btn-primary">Guardar Material</button>
+        <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
     </div>
     <style>
         .scrollable-column {
             max-height: 300px;
             overflow-y: auto;
+        }
+
+        .gender{
+            grid-area: gender;
+        }
+        .qty{
+            grid-area: quantity;
+        }
+        .internal{
+            grid-area: internal;
+        }
+        .clothing{
+            grid-area: clothing;
+        }
+
+        .grid{
+            display: grid;
+            grid-template-areas:
+                'gender quantity'
+                'internal clothing';
         }
     </style>
 

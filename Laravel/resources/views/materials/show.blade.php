@@ -34,7 +34,7 @@
                 <div class="form-group">
                     <label for="acquisition_date">Data de Aquisição:</label>
                     <input disabled type="date" class="form-control" id="acquisition_date"
-                           name="acquisition_date" value="{{ !empty($material->acquisition_date) ? $material->acquisition_date : 'Não disponível' }}" >
+                           name="acquisition_date" value="{{ !empty($material->acquisition_date) ? \Carbon\Carbon::parse($material->acquisition_date)->format('Y-m-d') : 'Não disponível' }}" >
 
                 </div>
 
