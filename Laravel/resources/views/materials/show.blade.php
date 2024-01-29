@@ -116,13 +116,14 @@
                         </div>
                     </div>
 
+                    @elseif ($material->isClothing==1 && $material->sizes->isEmpty())
+
+                    <div class="m-3">
+                        <h1>Não existe stock disponivel</h1>
+                    </div>
 
                 @endif
 
-                <div class="m-3">
-
-
-                </div>
             </div>
         </div>
         <a href="{{ url()->previous() }}" class="btn btn-secondary">Voltar</a>
