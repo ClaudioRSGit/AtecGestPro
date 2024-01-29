@@ -36,9 +36,11 @@
                     <div class="card-body">
                         @foreach($userRolesCounts as $roleCount)
 
-                            <h5> {{ $roleCount->name }} : {{ $roleCount->total }}</h5>
+                            <h4> {{ $roleCount->name }} : {{ $roleCount->total }}</h4>
 
                         @endforeach
+                        <h4>Total internal materials: {{ $materialInternalCount }}</h4>
+                        <h4>Total external materials: {{ $materialExternalCount }}</h4>
                     </div>
                 </div>
             </div>

@@ -34,6 +34,10 @@ class DashboardController extends Controller
         ->where('isInternal', true)
         ->count();
 
+        $materialExternalCount = DB::table('materials')
+        ->where('isInternal', false)
+        ->count();
+
 
         $ticketStatusOpen = DB::table('tickets')
         ->where('ticket_status_id', 1)
@@ -66,8 +70,9 @@ class DashboardController extends Controller
 
 
 
-        return view('dashboard.index', compact('usersWithMaterialsDelivered', 'ticketStatusOpen', 'ticketStatusProgress', 'ticketStatusPending',
-         'ticketStatusSolved', 'ticketStatusClosed', 'ticketTotal', 'ticketStatusCounts', 'userStudentsCount', 'userRolesCounts', 'materialInternalCount'));
+        return view('dashboard.index', compact('usersWithMaterialsDelivered', 'ticketStatusOpen', 'ticketStatusProgress',
+         'ticketStatusPending','ticketStatusSolved', 'ticketStatusClosed', 'ticketTotal', 'ticketStatusCounts', 'userStudentsCount',
+          'userRolesCounts', 'materialInternalCount', 'materialExternalCount'));
     }
 
     /**
