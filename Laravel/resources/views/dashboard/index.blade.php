@@ -155,6 +155,14 @@
             },
         });
 
+        // table scroll
+        // $(document).ready(function() {
+        //     $('#usersTable').DataTable({
+        //         "scrollY": "200px",
+        //         "scrollCollapse": true,
+        //     });
+        // });
+
         new Chartist.Line('#traffic-chart', {
             labels: ['January', 'Februrary', 'March', 'April', 'May', 'June'],
             series: [
