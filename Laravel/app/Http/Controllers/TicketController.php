@@ -81,6 +81,7 @@ class TicketController extends Controller
             case 5: // Crítico
                 return now()->addHours(4);
             default:
+
                 return now()->addWeeks(3);//Default fica como baixa prioridade
         }
     }
@@ -175,7 +176,8 @@ class TicketController extends Controller
 
 
 
-        $dueByDate = $this->calculateDueByDate($request->priority_id);
+        $dueByDate = $this->calculateDueByDate($request->ticket_priority_id);
+
         $request->merge(['dueByDate' => $dueByDate]);
 
         $this->validate($request, [
