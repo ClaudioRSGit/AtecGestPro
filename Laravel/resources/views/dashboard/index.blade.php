@@ -16,8 +16,8 @@
 
 
         <div class="row my-4">
-            <div class="col-12 col-md-6 col-lg-3 mb-4 mb-lg-2">
-                <div class="card">
+            <div class="col-3 col-md-6 col-lg-3 mb-4 mb-lg-2 d-flex">
+                <div class="card flex-grow-1">
                     <h5 class="card-header">Tickets</h5>
                     <div class="card-body">
                         <h5 class="card-title">Total Tickets : {{ $ticketTotal }}</h5>
@@ -30,17 +30,25 @@
                     </div>
                 </div>
             </div>
-             <div class="col-12 col-md-6 mb-4 mb-lg-2 col-lg-3">
-                <div class="card">
-                    <h5 class="card-header">Usuarios</h5>
+             <div class="col-3 col-md-6 mb-4 mb-lg-2 col-lg-3 d-flex">
+                <div class="card flex-grow-1">
+                    <h5 class="card-header">Usuarios e Materiais</h5>
                     <div class="card-body">
                         @foreach($userRolesCounts as $roleCount)
 
                             <h4> {{ $roleCount->name }} : {{ $roleCount->total }}</h4>
 
                         @endforeach
-                        <h4>Total internal materials: {{ $materialInternalCount }}</h4>
-                        <h4>Total external materials: {{ $materialExternalCount }}</h4>
+                        <h4>Material interno : {{ $materialInternalCount }}</h4>
+                        <h4>Material Externo : {{ $materialExternalCount }}</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6 col-md-6 mb-4 mb-lg-2 col-lg-6 d-flex">
+                <div class="card flex-grow-1">
+                    <h5 class="card-header">Número de Formações Externas</h5>
+                    <div class="card-body">
+                        <div id="traffic-chart"></div>
                     </div>
                 </div>
             </div>
@@ -117,12 +125,7 @@
                 </div>
             </div>
             <div class="col-12 col-xl-4">
-                <div class="card mb-2">
-                    <h5 class="card-header">Número de Formações Externas</h5>
-                    <div class="card-body">
-                        <div id="traffic-chart"></div>
-                    </div>
-                </div>
+
 
 
                 <div class="card ">
