@@ -67,6 +67,8 @@ Route::middleware(['auth', 'checkRole:admin,tecnico'])->group(function () {
     Route::post('courses/massDelete', 'CourseController@massDelete')->name('courses.massDelete');
 
     Route::put('/tickets/{ticket}', 'TicketController@update')->name('tickets.update');
+    Route::get('/tickets/restore/{id}', 'TicketController@restore')->name('tickets.restore');
+    Route::delete('/tickets/forceDelete/{id}', 'TicketController@forceDelete')->name('tickets.forceDelete');
 
     Route::post('/comments', 'CommentController@store')->name('comments.store');
 
