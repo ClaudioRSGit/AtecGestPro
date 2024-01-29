@@ -18,53 +18,58 @@
         <div class="row my-4">
             <div class="col-12 col-md-6 col-lg-3 mb-4 mb-lg-2">
                 <div class="card">
-                    <h5 class="card-header">Total Tickets</h5>
+                    <h5 class="card-header">Tickets</h5>
                     <div class="card-body">
-                        <h5 class="card-title">{{ $ticketTotal }}</h5>
+                        <h5 class="card-title">Total Tickets : {{ $ticketTotal }}</h5>
+                        <h5 class="card-title">Tickets Aberto : {{ $ticketStatusOpen }}</h5>
+                        <h5 class="card-title">Tickets Em Progresso : {{ $ticketStatusProgress }}</h5>
+                        <h5 class="card-title">Tickets Pendente : {{ $ticketStatusPending }}</h5>
+                        <h5 class="card-title">Tickets Resolvido : {{ $ticketStatusSolved }}</h5>
+                        <h5 class="card-title">Tickets Fechado : {{ $ticketStatusClosed }}</h5>
+
+                    </div>
+                </div>
+            </div>
+            {{-- <div class="col-12 col-md-6 mb-4 mb-lg-2 col-lg-3">
+                <div class="card">
+                    <h5 class="card-header"></h5>
+                    <div class="card-body">
 
                     </div>
                 </div>
             </div>
             <div class="col-12 col-md-6 mb-4 mb-lg-2 col-lg-3">
                 <div class="card">
-                    <h5 class="card-header">Tickets Aberto</h5>
+                    <h5 class="card-header"></h5>
                     <div class="card-body">
-                        <h5 class="card-title">{{ $ticketStatusOpen }}</h5>
+
                     </div>
                 </div>
             </div>
             <div class="col-12 col-md-6 mb-4 mb-lg-2 col-lg-3">
                 <div class="card">
-                    <h5 class="card-header">Tickets Em Progresso</h5>
+                    <h5 class="card-header"></h5>
                     <div class="card-body">
-                        <h5 class="card-title">{{ $ticketStatusProgress }}</h5>
+
                     </div>
                 </div>
             </div>
             <div class="col-12 col-md-6 mb-4 mb-lg-2 col-lg-3">
                 <div class="card">
-                    <h5 class="card-header">Tickets Pendente</h5>
+                    <h5 class="card-header"></h5>
                     <div class="card-body">
-                        <h5 class="card-title">{{ $ticketStatusPending }}</h5>
+
                     </div>
                 </div>
             </div>
             <div class="col-12 col-md-6 mb-4 mb-lg-2 col-lg-3">
                 <div class="card">
-                    <h5 class="card-header">Tickets Resolvido</h5>
+                    <h5 class="card-header"></h5>
                     <div class="card-body">
-                        <h5 class="card-title">{{ $ticketStatusSolved }}</h5>
+
                     </div>
                 </div>
-            </div>
-            <div class="col-12 col-md-6 mb-4 mb-lg-2 col-lg-3">
-                <div class="card">
-                    <h5 class="card-header">Tickets Fechado</h5>
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $ticketStatusClosed }}</h5>
-                    </div>
-                </div>
-            </div>
+            </div> --}}
 
         </div>
         <div class="row">
