@@ -50,32 +50,26 @@
                     <h5 class="card-header">Entregas Incompletas</h5>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <table class="table">
+                            <table id="usersTable" class="table">
                                 <thead>
                                     <tr>
                                         <th>Nome</th>
                                         <th>Username</th>
                                         <th>Email</th>
-
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($usersWithMaterialsDelivered as $user)
                                         <tr>
-
                                             <td>{{ $user->name }}</td>
                                             <td>{{ $user->username }}</td>
                                             <td>{{ $user->email }}</td>
-
                                             <td class="btn btn-sm btn-primary"
                                                 onclick="location.href='{{ route('material-user.create', $user->id) }}'">
                                                 View</td>
                                         </tr>
                                     @endforeach
-
                                 </tbody>
-
-
                             </table>
                         </div>
                         {{-- <a href="#" class="btn btn-block btn-light">View all</a> --}}
