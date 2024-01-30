@@ -90,16 +90,11 @@
                     </div>
                     <input type="hidden" name="isStudent" id="isStudent" value="{{ old('role_id') == 3 ? 1 : 0 }}">
 
-                    <div class="mb-3" id="labelCourseClass">
-                        <div class="mb-3" id="notes">
-                            <label for="notes" class="form-label">Notas:</label>
-                            <textarea class="form-control" id="notes" name="notes">{{ $user->notes }}</textarea>
-                        </div>
-                    </div>
+
 
                     <div class="mb-3" id="labelCourseClass">
                         <label for="course_class_id" class="form-label">Turma:</label>
-                        <select class="form-select" id="course_class_id" name="course_class_id">
+                        <select class="form-control" id="course_class_id" name="course_class_id">
                             @foreach ($courseClasses as $class)
                                 <option value="{{ $class->id }}"
                                     {{ old('course_class_id', $user->course_class_id) == $class->id ? 'selected' : '' }}>
@@ -112,11 +107,19 @@
 
                     <div class="mb-3">
                         <label for="isActive" class="form-label">Estado:</label>
-                        <select class="form-select" id="isActive" name="isActive">
+                        <select class="form-control" id="isActive" name="isActive">
                             <option value="1" {{ $user->isActive == 1 ? 'selected' : '' }}>Ativo</option>
                             <option value="0" {{ $user->isActive == 0 ? 'selected' : '' }}>Desativado</option>
                         </select>
                     </div>
+
+                    <div class="mb-3" id="labelCourseClass">
+                        <div class="mb-3" id="notes">
+                            <label for="notes" class="form-label">Notas:</label>
+                            <textarea class="form-control" id="notes" name="notes">{{ $user->notes }}</textarea>
+                        </div>
+                    </div>
+
 
                     <div class="buttons d-flex justify-content-start align-items-center">
                         <button type="submit" class="btn btn-primary">Salvar Alterações</button>
