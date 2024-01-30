@@ -4,32 +4,32 @@
     <div class="container">
         <h1>Detalhes da formação</h1>
 
-        <table class="table">
-            <tbody>
-                <tr>
-                    <th scope="row">ID:</th>
-                    <td>{{ $training->id }}</td>
-                </tr>
-                <tr>
-                    <th scope="row">Nome da formação:</th>
-                    <td>{{ $training->name }}</td>
-                </tr>
-                <tr>
-                    <th scope="row">Descrição:</th>
-                    <td>{{ $training->description }}</td>
-                </tr>
-                <tr>
-                    <th scope="row">Categoria:</th>
-                    <td>{{ $training->isInternal ? 'Sim' : 'Não' }}</td>
-                </tr>
+        <div class="w-50 mb-3">
+            <div>
+                <label>ID:</label>
+                <input class="form-control" value="{{ $training->id }}" disabled>
+            </div>
 
-                <tr>
-                    <th scope="row">Ações:</th>
-                    <td>
-                        <a href="{{ route('trainings.edit', $training->id) }}" class="btn btn-primary">Editar</a>
-                        <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
-                    </td>
-            </tbody>
-        </table>
+            <div>
+                <label>Nome da formação:</label>
+                <input class="form-control" value="{{ $training->name }}" disabled>
+            </div>
+
+            <div>
+                <label>Descrição:</label>
+                <input class="form-control" value="{{ $training->description }}" disabled>
+            </div>
+
+            <div>
+                <label>Categoria:</label>
+                <input class="form-control" value="{{ $training->isInternal ? 'Sim' : 'Não' }}" disabled>
+            </div>
+
+
+        </div>
+        <div>
+            <a href="{{ route('trainings.edit', $training->id) }}" class="btn btn-primary">Editar</a>
+            <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
+        </div>
     </div>
 @endsection
