@@ -1,6 +1,17 @@
 @extends('master.main')
 
+@section('styles')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_blue.css">
+
+@endsection
+
 @section('content')
+<style>
+    .flatpickr {
+        width: 308px;
+    }
+</style>
     <div class="container">
         <h1>Criar Novo Material</h1>
 
@@ -39,8 +50,8 @@
 
                     <div class="mb-3">
                         <label for="acquisition_date" class="form-label">Data de Aquisição:</label>
-                        <input type="date" class="form-control" id="acquisition_date" name="acquisition_date"
-                            value="{{ old('acquisition_date') }}">
+                        <input type="datetime-local" class="form-control flatpickr" id="acquisition_date" name="acquisition_date"
+                        required placeholder="Selecione a data de início">
                     </div>
 
 
@@ -138,6 +149,12 @@
         </div>
     </div>
     <style>
+        .form-control[readonly] {
+            opacity: 0 !important;
+            height: 0;
+            padding: 0;
+        }
+
         .scrollable-column {
             max-height: 300px;
             overflow-y: auto;
@@ -216,4 +233,21 @@
     </script>
 
 
+@endsection
+
+@section('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        jQuery(function () {
+            flatpickr("#acquisition_date", {
+                inline: true,
+                altInput: true,
+                altFormat: "F j, Y",
+                dateFormat: "Y-m-d",
+                minDate: "today",
+
+
+            });
+        });
+    </script>
 @endsection
