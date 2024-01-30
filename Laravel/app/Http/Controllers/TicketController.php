@@ -120,10 +120,8 @@ class TicketController extends Controller
             'object_id' => $ticket->id,
         ]);
 
-
-
         NotificationUser::create([
-            'user_id' => $ticket->user_id,
+            'user_id' => $request->technician_id,
             'notification_id' => $notification->id,
             'isRead' => false,
         ]);
@@ -208,7 +206,17 @@ class TicketController extends Controller
             $this->logTicketHistory($ticket->id, 2, $ticketInfo);
         }
 
+        $notification = Notification::create([
+            'description' => 'Novo ticket criado: #' . $ticket->id,
+            'code' => 'TICKET',
+            'object_id' => $ticket->id,
+        ]);
 
+        NotificationUser::create([
+            'user_id' => $request->technician_id,
+            'notification_id' => $notification->id,
+            'isRead' => false,
+        ]);
 
         return redirect()->route('tickets.index')->with('success', 'Ticket atualizado com sucesso!');
     }

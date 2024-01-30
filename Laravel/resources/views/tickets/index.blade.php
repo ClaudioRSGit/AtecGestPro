@@ -97,7 +97,6 @@
             <table class="table bg-white rounded-top">
                 <thead>
                     <tr>
-                        <th scope="col"><input type="checkbox" id="select-all"></th>
                         <th scope="col">Número</th>
                         <th scope="col">Título</th>
                         <th scope="col">Utilizador</th>
@@ -113,7 +112,6 @@
                         <tr class="customTableStyling" id="heading{{ $ticket->id }}"
                             onclick="location.href='{{ route('tickets.show', $ticket->id) }}'">
 
-                            <td><input type="checkbox"></td>
                             <td>
                                 <a class="btn btn-link" data-toggle="collapse" data-target="#collapse{{ $ticket->id }}"
                                     aria-expanded="true" aria-controls="collapse{{ $ticket->id }}">
