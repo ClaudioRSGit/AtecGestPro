@@ -77,6 +77,8 @@ Route::middleware(['auth', 'checkRole:admin,tecnico'])->group(function () {
     Route::post('import-excel-users', 'ExcelImportController@importUsers')->name('import-excel.importUsers');
     Route::get('import-excel-students', 'ExcelImportController@index');
     Route::post('import-excel-students', 'ExcelImportController@importStudents')->name('import-excel.importStudents');
+    Route::post('users/{user}/restore', 'UserController@restore')->name('users.restore');
+    Route::delete('users/{user}/forceDelete', 'UserController@forceDelete')->name('users.forceDelete');
 
 
 

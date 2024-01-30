@@ -112,7 +112,7 @@
                                    style="width: 15px;text-align: left;margin: auto "
                                 {{ old('delivered_all', $student->materialUsers()->where('delivered_all', 1)->exists()) ? 'checked' : '' }}>
                         </div>
-                        
+
                         <div class="col-6 d-flex justify-content-end" style="margin: auto">
                             <button class="btn btn-primary mx-3" type="submit">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="35" height="25" fill="currentColor"

@@ -40,7 +40,9 @@ class UserController extends Controller
         $courseClasses = CourseClass::all();
         $roles = Role::all();
 
-        return view('users.index', compact('users', 'courseClasses', 'roles', 'roleFilter', 'sortColumn', 'sortDirection'));
+        $deletedUsers = User::onlyTrashed()->paginate(5);
+
+        return view('users.index', compact('users', 'courseClasses', 'roles', 'roleFilter', 'sortColumn', 'sortDirection', 'searchName', 'deletedUsers'));
     }
     /**
      * Show the form for creating a new resource.
@@ -184,4 +186,20 @@ class UserController extends Controller
     //    {
     //        return $request->input('position') === 'formando' ? 1 : 0;
     //    }
+
+    public function restore($id)
+    {
+        $user = User::withTrashed()->find($id);
+        $user->restore();
+
+        return redirect()->back()->with('success', 'Utilizador restaurado com  sucesso');
+    }
+
+    public function forceDelete($id)
+    {
+        $user = User::withTrashed()->find($id);
+        $user->forceDelete();
+
+        return redirect()->back()->with('success', 'O utilizador foi removido permanentemente');
+    }
 }

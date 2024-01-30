@@ -2,6 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\TrashedContact;
+use App\Rules\TrashedEmail;
+use App\Rules\TrashedUser;
+use App\User;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserRequest extends FormRequest
@@ -25,11 +29,13 @@ class UserRequest extends FormRequest
     {
         $userId = $this->user ? $this->user->id : null;
 
+
+
         $rules = [
             'name' => 'required|string|min:3|max:200',
-            'username' => ['required', 'string', 'min:5', 'max:20', 'unique:users,username,' . $userId],
-            'email' => ['required', 'email', 'unique:users,email,' . $userId],
-            'contact' => ['required', 'min:9', 'max:20', 'regex:/^[\s\d()+-]+$/', 'unique:users,contact,' . $userId],
+            'username' => ['required', 'string', 'min:5', 'max:20', new TrashedUser($userId)],
+            'email' => ['required', 'email', new TrashedEmail($userId)],
+            'contact' => ['required', 'min:9', 'max:20', 'regex:/^[\s\d()+-]+$/', new TrashedContact($userId)],
             'isStudent' => 'required',
             'isActive' => 'required',
             'course_class_id' => 'nullable',
@@ -59,6 +65,8 @@ class UserRequest extends FormRequest
 
     public function messages()
     {
+
+
         return [
             'name.required' => 'O nome é obrigatório!',
             'name.min' => 'O nome deve ter pelo menos 5 caracteres!',
@@ -67,17 +75,17 @@ class UserRequest extends FormRequest
             'username.required' => 'O username é obrigatório!',
             'username.min' => 'O username deve ter pelo menos 5 caracteres!',
             'username.max' => 'O username deve ter no máximo 20 caracteres!',
-            'username.unique' => 'O username já existe!',
+//            'username.unique' => 'O username já existe!',
 
             'email.required' => 'O email é obrigatório!',
             'email.email' => 'Formato de email inválido!',
-            'email.unique' => 'O email já existe!',
+//            'email.unique' => 'O email já existe!',
 
             'contact.required' => 'O contato é obrigatório!',
             'contact.min' => 'O contato deve ter pelo menos 9 caracteres!',
             'contact.max' => 'O contato deve ter no máximo 20 caracteres!',
             'contact.regex' => 'Formato de contacto inválido!',
-            'contact.unique' => 'O contacto já existe!',
+//            'contact.unique' => 'O contacto já existe!',
 
             'password.required' => 'A password é obrigatória!',
             'password.regex' => 'A password deve ter pelo menos uma letra maiúscula, um caracter especial e sete caracteres!',

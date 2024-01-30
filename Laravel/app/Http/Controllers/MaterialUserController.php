@@ -56,9 +56,11 @@ class MaterialUserController extends Controller
         $nonDocents = $queryNonDocent;
 
         $courseClasses = $query->paginate(5);
+
         $roles = Role::Where('name', '!=', 'formando')->get();
 
         $courses = Course::all();
+
         return view('material-user.index', compact('courseClasses', 'courses', 'roles', 'nonDocents', 'courseFilter', 'searchCourseClass','usersWithMaterialsDelivered'));
     }
 
