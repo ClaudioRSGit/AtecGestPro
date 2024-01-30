@@ -179,7 +179,7 @@
                     <img src="{{ asset('assets/noTickets.png') }}" class="noTicket">
                 </div>
 
-            @else
+    @else
     <table class="table bg-white rounded-top">
         <thead>
             <tr>

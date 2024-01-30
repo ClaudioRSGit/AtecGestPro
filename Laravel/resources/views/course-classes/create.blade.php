@@ -49,7 +49,6 @@
                             <th>Nome</th>
                             <th>Username</th>
                             <th>Email</th>
-                            <th>Ações</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -59,10 +58,6 @@
                                 <td>{{ $student->name }}</td>
                                 <td>{{ $student->username }}</td>
                                 <td>{{ $student->email }}</td>
-                                <td>
-                                    <span>Edit</span>
-                                    <span>Delete</span>
-                                </td>
                             </tr>
                         @endforeach
                     </tbody>

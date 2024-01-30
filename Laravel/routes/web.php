@@ -78,12 +78,13 @@ Route::middleware(['auth', 'checkRole:admin,tecnico'])->group(function () {
     Route::get('import-excel-students', 'ExcelImportController@index');
     Route::post('import-excel-students', 'ExcelImportController@importStudents')->name('import-excel.importStudents');
 
-    Route::get('ticket-histories', 'TicketHistoryController@index');
-    Route::get('ticket-histories/{id}', 'TicketHistoryController@show')->name('ticket-histories.show');
+
 
     Route::resource('/dashboard', 'DashboardController');
 });
 
-Route::middleware(['auth', 'checkRole:user,admin,tecnico'])->group(function () {
+Route::middleware(['auth', 'checkRole:user,admin,tecnico,funcionario'])->group(function () {
     Route::resource('tickets', 'TicketController');
+    Route::get('ticket-histories', 'TicketHistoryController@index');
+    Route::get('ticket-histories/{id}', 'TicketHistoryController@show')->name('ticket-histories.show');
 });

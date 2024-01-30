@@ -24,13 +24,19 @@ class TicketController extends Controller
         $filterPriority = $request->input('filterPriority');
         $filterStatus = $request->input('filterStatus');
         $ticketSearch = $request->input('ticketSearch');
-        $query = Ticket::with('users','requester');
-        $waitingQueueTickets = Ticket::whereHas('users', function ($query) {
-            $query->where('role_id', 4)
-                  ->where('name', 'Fila de Espera');
-        })->get();
 
-        $recycledTickets = Ticket::onlyTrashed()->get();
+        if (auth()->user()->role_id == 2) {
+            $query = Ticket::where('user_id', auth()->id());
+            $waitingQueueTickets = Ticket::where('user_id', auth()->id());
+            $recycledTickets = Ticket::onlyTrashed()->where('user_id', auth()->id())->get();
+        } else {
+            $query = Ticket::with('users','requester');
+            $waitingQueueTickets = Ticket::whereHas('users', function ($query) {
+                $query->where('role_id', 4)
+                      ->where('name', 'Fila de Espera');
+                    })->get();
+            $recycledTickets = Ticket::onlyTrashed()->get();
+        }
 
         if ($ticketSearch) {
             $query->where(function ($query) use ($ticketSearch) {
@@ -50,6 +56,7 @@ class TicketController extends Controller
         if ($filterStatus) {
             $query->where('ticket_status_id', $filterStatus);
         }
+
 
         $tickets = $query->paginate(5);
         $users = User::all();
@@ -174,7 +181,12 @@ class TicketController extends Controller
         $newUserId = $request->technician_id;
         $ticketId = $ticket->id;
 
-        $dueByDate = $this->calculateDueByDate($request->ticket_priority_id);
+        if ($ticket->ticket_priority_id != $request->ticket_priority_id) {
+            $dueByDate = $this->calculateDueByDate($request->ticket_priority_id);
+        }
+        else{
+            $dueByDate = $ticket->dueByDate;
+        }
 
         $request->merge(['dueByDate' => $dueByDate]);
 
