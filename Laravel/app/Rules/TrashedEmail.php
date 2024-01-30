@@ -13,10 +13,16 @@ class TrashedEmail implements Rule
     protected $message = '';
     protected $implicitAttributes = [];
     protected $currentRule;
+    protected $userId;
+
+    public function __construct($userId)
+    {
+        $this->userId = $userId;
+    }
 
     public function passes($attribute, $value)
     {
-        $user = User::withTrashed()->where('email', $value)->first();
+        $user = User::withTrashed()->where('email', $value)->where('id', '!=', $this->userId)->first();
 
         if (!$user) {
             return true;

@@ -14,10 +14,16 @@ class TrashedUser implements Rule
     protected $message = '';
     protected $implicitAttributes = [];
     protected $currentRule;
+    protected $userId;
+
+    public function __construct($userId)
+    {
+        $this->userId = $userId;
+    }
 
     public function passes($attribute, $value)
     {
-        $user = User::withTrashed()->where('username', $value)->first();
+        $user = User::withTrashed()->where('username', $value)->where('id', '!=', $this->userId)->first();
 
         if (!$user) {
             return true;
@@ -31,6 +37,7 @@ class TrashedUser implements Rule
         $this->message = 'O username já existe!';
         return false;
     }
+
     public function message()
     {
         return $this->message;

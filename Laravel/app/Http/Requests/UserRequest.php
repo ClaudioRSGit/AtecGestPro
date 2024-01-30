@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Rules\TrashedContact;
 use App\Rules\TrashedEmail;
 use App\Rules\TrashedUser;
+use App\User;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UserRequest extends FormRequest
@@ -29,11 +30,12 @@ class UserRequest extends FormRequest
         $userId = $this->user ? $this->user->id : null;
 
 
+
         $rules = [
             'name' => 'required|string|min:3|max:200',
-            'username' => ['required', 'string', 'min:5', 'max:20', new TrashedUser],
-            'email' => ['required', 'email', new TrashedEmail],
-            'contact' => ['required', 'min:9', 'max:20', 'regex:/^[\s\d()+-]+$/', new TrashedContact],
+            'username' => ['required', 'string', 'min:5', 'max:20', new TrashedUser($userId)],
+            'email' => ['required', 'email', new TrashedEmail($userId)],
+            'contact' => ['required', 'min:9', 'max:20', 'regex:/^[\s\d()+-]+$/', new TrashedContact($userId)],
             'isStudent' => 'required',
             'isActive' => 'required',
             'course_class_id' => 'nullable',
