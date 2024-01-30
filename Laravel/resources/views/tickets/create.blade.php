@@ -36,8 +36,7 @@
 
             <div class="mb-3">
                 <label for="technician" class="form-label">Técnico Responsável:</label>
-                <select class="form-control" id="technician" name="technician_id" required>
-                    <option value="">Selecione um técnico</option>
+                <select class="form-control" id="technician" name="technician_id">
                     @foreach ($technicians as $technician)
                         <option value="{{ $technician->id }}">{{ $technician->name }}</option>
                     @endforeach
