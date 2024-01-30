@@ -135,8 +135,7 @@ class MaterialController extends Controller
 
         $material->sizes()->sync($syncData);
 
-        return redirect()->route('materials.index')->with('success', 'Material atualizado com sucesso!');
-    }
+        return redirect()->route('materials.show', ['material' => $material->id])->with('success', 'Material atualizado com sucesso!');    }
 
     public function destroy(Material $material)
     {

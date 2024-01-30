@@ -4,6 +4,12 @@
     <div class="container">
         <h1>Lista de Materiais</h1>
 
+        @if (session('success'))
+            <div class="alert alert-success" id="success-alert">
+                {{ session('success') }}
+            </div>
+        @endif
+
         <div class="d-flex justify-content-between mb-3 w-100">
             <div class="d-flex justify-content-between w-40">
 
@@ -151,6 +157,13 @@
         {{ $materials->appends(request()->input())->links() }}
     </div>
 
+    <script>
+        window.setTimeout(function() {
+            $("#success-alert").fadeTo(500, 0).slideUp(500, function() {
+                $(this).remove();
+            });
+        }, 2000);
+    </script>
     <script>
         //logica filtro
         function submitForm() {

@@ -4,6 +4,7 @@
     <div class="container">
         <h1>Editar Material</h1>
 
+
         <form method="post" action="{{ route('materials.update', $material->id) }}">
             @csrf
             @method('put')

@@ -126,8 +126,7 @@
 
             </div>
         </div>
-        <a href="{{ url()->previous() }}" class="btn btn-secondary">Voltar</a>
-    </div>
+        <a href="{{ route('materials.index') }}" class="btn btn-secondary">Voltar</a>    </div>
 
     <style>
 

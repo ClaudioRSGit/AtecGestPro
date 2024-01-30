@@ -125,13 +125,12 @@
                         </div>
                     </div>
                 </div>
+                </div>
                     <div class="m-3">
                         <button type="submit" class="btn btn-primary">Criar Material</button>
                         <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
                     </div>
-                </div>
             </div>
-        </div>
         </div>
         </form>
         <div id="warningMessage" style="display: none; text-align: center; margin-top: 10px; color: red;">

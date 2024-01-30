@@ -14,7 +14,7 @@
     </style>
 
 
-    <div class="container">
+    <div class="">
 
         @error('start_date')
         <div class="alert alert-danger success-alert">{{ $message }}</div>
