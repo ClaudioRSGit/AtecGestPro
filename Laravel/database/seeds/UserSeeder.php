@@ -50,7 +50,7 @@ class UserSeeder extends Seeder
             'isActive' => true,
             'isStudent' => false,
             'course_class_id' => null,
-            'role_id' => 2,
+            'role_id' => 3,
         ]);
         // Seed 3
         DB::table('users')->insert([

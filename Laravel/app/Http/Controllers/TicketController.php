@@ -26,8 +26,10 @@ class TicketController extends Controller
         $ticketSearch = $request->input('ticketSearch');
         $query = Ticket::with('users','requester');
         $waitingQueueTickets = Ticket::whereHas('users', function ($query) {
-            $query->where('role_id', 4)->where('name', 'Fila de Espera');
+            $query->where('role_id', 4)
+                  ->where('name', 'Fila de Espera');
         })->get();
+
         $recycledTickets = Ticket::onlyTrashed()->get();
 
         if ($ticketSearch) {
@@ -64,7 +66,7 @@ class TicketController extends Controller
         $statuses = TicketStatus::where('id', 1)->get();
         $priorities = TicketPriority::all();
         $categories = TicketCategory::all();
-        $technicians = User::where('role_id', 4)->where('name', 'Fila de Espera')->get();
+        $technicians = User::where('name', 'Fila de Espera')->get();
 
         return view('tickets.create', compact('statuses', 'priorities', 'categories', 'technicians'));
     }
@@ -118,18 +120,16 @@ class TicketController extends Controller
             'object_id' => $ticket->id,
         ]);
 
-
-
         NotificationUser::create([
-            'user_id' => $ticket->user_id,
+            'user_id' => $request->technician_id,
             'notification_id' => $notification->id,
             'isRead' => false,
         ]);
 
-        return redirect()->route('tickets.index')->with('success', 'Ticket criado com sucesso!');
         $ticketInfo = 'Ticket #' . $ticket->id . ' foi criado por ' . User::find($loggedInUserId)->name . '.';
 
         $this->logTicketHistory($ticket->id, 1, $ticketInfo);
+        return redirect()->route('tickets.index')->with('success', 'Ticket criado com sucesso!');
 
     }
 
@@ -155,7 +155,7 @@ class TicketController extends Controller
     public function edit(Ticket $ticket)
     {
         $ticket = Ticket::with('users','requester')->find($ticket->id);
-        $technicians = User::where('role_id', 4)->where('name', 'Fila de Espera')->get();
+        $technicians = User::where('role_id', 4)->get();
         $requester = User::where('id', $ticket->user_id)->first();
         $statuses = TicketStatus::all();
         $priorities = TicketPriority::all();
@@ -206,7 +206,17 @@ class TicketController extends Controller
             $this->logTicketHistory($ticket->id, 2, $ticketInfo);
         }
 
+        $notification = Notification::create([
+            'description' => 'Novo ticket criado: #' . $ticket->id,
+            'code' => 'TICKET',
+            'object_id' => $ticket->id,
+        ]);
 
+        NotificationUser::create([
+            'user_id' => $request->technician_id,
+            'notification_id' => $notification->id,
+            'isRead' => false,
+        ]);
 
         return redirect()->route('tickets.index')->with('success', 'Ticket atualizado com sucesso!');
     }

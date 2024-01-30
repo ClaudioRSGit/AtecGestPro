@@ -24,7 +24,7 @@ class UserController extends Controller
         $sortColumn = $request->input('sortColumn', 'name');
         $sortDirection = $request->input('sortDirection', 'asc');
 
-        $query = User::with('courseClass', 'role');
+        $query = User::with('courseClass', 'role')->where('name', '!=', 'Fila de Espera');
 
         if ($roleFilter && $roleFilter !== 'all') {
             $query->whereHas('role', function ($roleQuery) use ($roleFilter) {

@@ -1,6 +1,17 @@
 @extends('master.main')
 
+@section('styles')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_blue.css">
+@endsection
+
 @section('content')
+    <style>
+        .flatpickr {
+            width: 308px;
+        }
+    </style>
+
     <div class="container">
         <h1>Editar Material</h1>
 
@@ -46,8 +57,8 @@
 
                     <div class="form-group">
                         <label for="acquisition_date">Data de Aquisição:</label>
-                        <input type="date" class="form-control" id="acquisition_date" name="acquisition_date"
-                            value="{{ !empty($material->acquisition_date) ? \Carbon\Carbon::parse($material->acquisition_date)->format('Y-m-d') : 'Não disponível' }}">
+                        <input type="datetime-local" class="form-control flatpickr" id="acquisition_date" name="acquisition_date"
+                            value="{{ !empty($material->acquisition_date) ? \Carbon\Carbon::parse($material->acquisition_date)->format('Y-m-d') : 'Não disponível' }}" required>
 
                     </div>
 
@@ -147,8 +158,17 @@
                 </div>
             </div>
         </form>
+        <div id="warningMessage" style="display: none; text-align: center; margin-top: 10px; color: red;">
+            Nota: Não é possível adicionar vestuário externo.
+        </div>
     </div>
     <style>
+        .form-control[readonly] {
+            opacity: 0 !important;
+            height: 0;
+            padding: 0;
+        }
+
         .scrollable-column {
             max-height: 300px;
             overflow-y: auto;
@@ -223,7 +243,18 @@
         document.getElementById('isInternal').addEventListener('change', toggleFields);
         document.getElementById('isClothing').addEventListener('change', toggleFields);
     </script>
-    <div id="warningMessage" style="display: none; text-align: center; margin-top: 10px; color: red;">
-        Nota: Não é possível adicionar vestuário externo.
-    </div>
+
+@endsection
+
+@section('scripts')
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        flatpickr(".flatpickr", {
+            inline: true,
+            altInput: true,
+            altFormat: "F j, Y H:i",
+            dateFormat: "Y-m-d\TH:i:s",
+            minDate: "today",
+        });
+    </script>
 @endsection

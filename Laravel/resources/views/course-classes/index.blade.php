@@ -14,7 +14,7 @@
             <div class="alert alert-danger">{{ $errorMessage }}</div>
         @endif
 
-        <div class=" d-flex justify-content-between mb-3 ">
+        <div class="d-flex justify-content-between mb-3">
 
             <div class="search-container">
                 <form action="{{ route('course-classes.index') }}" method="GET">
@@ -24,7 +24,7 @@
                             placeholder="{{ request('courseClassSearch') ? request('courseClassSearch') : 'Procurar...' }}">
                         </div>
                         <div class="input-group-append">
-                            <button type="submit" class="btn btn-outline-secondary flex-shrink-0">
+                            <button type="submit" class="btn btn-outline-secondary">
                                 Procurar
                             </button>
                         </div>
@@ -32,11 +32,8 @@
                 </form>
             </div>
 
-
-
             <div class="drop">
                 <form id="courseFilterForm" action="{{ route('course-classes.index') }}" method="GET">
-                    <div>
                         <select class="form-control " id="courseFilter" name="courseFilter" onchange="submitForm()">
                             <option value="all">Todas os cursos</option>
                             @foreach($courses as $course)
@@ -44,9 +41,7 @@
                                     value="{{ $course->id }}" {{ $courseFilter == $course->id ? 'selected' : '' }}>{{ $course->description }}</option>
                             @endforeach
                         </select>
-                    </div>
                 </form>
-
             </div>
 
 
@@ -233,16 +228,6 @@
         }, 2000);
     </script>
     <style>
-        .navTools {
-            display: flex;
-            height: auto;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .drop {
-            width: 49%;
-        }
 
         #accordion .card {
             border: none;

@@ -44,9 +44,9 @@ class MaterialUserController extends Controller
         }
 
         if($searchNonDocent){
-            $queryNonDocent = User::where('isStudent', false)->where('name', 'like', '%' . $searchNonDocent . '%')->paginate(5);
+            $queryNonDocent = User::where('isStudent', false)->where('name', '!=', 'Fila de Espera')->where('name', 'like', '%' . $searchNonDocent . '%')->paginate(5);
         } else {
-            $queryNonDocent = User::all()->where('isStudent', false)->where('isStudent', false);
+            $queryNonDocent = User::all()->where('isStudent', false)->where('name', '!=', 'Fila de Espera')->where('isStudent', false);
         }
 
         if ($roleFilter) {
