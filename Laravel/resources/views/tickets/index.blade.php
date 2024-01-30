@@ -12,9 +12,9 @@
 
         <div class="d-flex justify-content-between mb-3">
 
-            <form action="{{ route('tickets.index') }}" method="get" class="form-inline" id="ticketSearchForm">
-                <div class="input-group">
-                    <div class="form-group search-container">
+            <form action="{{ route('tickets.index') }}" method="get" id="ticketSearchForm">
+                <div class="input-group pr-2">
+                    <div class="search-container">
                         <input type="text" class="form-control" id="ticketSearch" name="ticketSearch"
                             value="{{ request('ticketSearch') }}"
                             placeholder="{{ request('ticketSearch') ? request('ticketSearch') : 'Pesquisar ticket...' }}">
@@ -27,11 +27,7 @@
                 </div>
 
             </form>
-
-
             <div class="buttons">
-
-
                 <form id="filterCategoryForm" action="{{ route('tickets.index') }}" method="GET">
                     <select class="form-control w-auto" id="filterCategory" name="filterCategory"
                         onchange="submitCategoryForm()">
@@ -94,6 +90,12 @@
         <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="allTickets" role="tabpanel" aria-labelledby="all-tickets-tab">
 
+                @if (count($tickets) === 0)
+                <div>
+                    <img src="{{ asset('assets/noTickets.png') }}" class="noTicket">
+                </div>
+
+            @else
             <table class="table bg-white rounded-top">
                 <thead>
                     <tr>
@@ -108,6 +110,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                    <tr class="filler"></tr>
                     @foreach ($tickets as $ticket)
                         <tr class="customTableStyling" id="heading{{ $ticket->id }}"
                             onclick="location.href='{{ route('tickets.show', $ticket->id) }}'">
@@ -119,9 +122,11 @@
                                 </a>
                             </td>
                             <td>
-                                <span
-                                    style="height: 15px; width: 15px; background-color: {{ $ticket->ticketPriority->id == 1 ? 'green' : ($ticket->ticketPriority->id == 2 ? 'green' : ($ticket->ticketPriority->id == 3 ? 'yellow' : ($ticket->ticketPriority->id == 4 ? 'orange' : 'red'))) }}; border-radius: 50%; display: inline-block; opacity: 0.5;"></span>
-                                {{ $ticket->title ? $ticket->title : 'N.A.' }}
+                                <div class="d-flex align-items-center">
+                                    <span class="mr-2"
+                                        style="height: 15px; width: 15px; background-color: {{ $ticket->ticketPriority->id == 1 ? 'green' : ($ticket->ticketPriority->id == 2 ? 'green' : ($ticket->ticketPriority->id == 3 ? 'yellow' : ($ticket->ticketPriority->id == 4 ? 'orange' : 'red'))) }}; border-radius: 50%; display: inline-block; opacity: 0.5;"></span>
+                                    <p>{{ $ticket->title ? $ticket->title : 'N.A.' }}</p>
+                                </div>
                             </td>
                             <td>{{ $ticket->requester->name ? $ticket->requester->name : 'N.A.' }}</td>
                             <td>
@@ -164,9 +169,17 @@
                     @endforeach
                 </tbody>
             </table>
+                @endif
+
         </div>
 
 <div class="tab-pane fade" id="waitingQueue" role="tabpanel" aria-labelledby="waiting-queue-tab">
+    @if (count($tickets) === 0)
+                <div>
+                    <img src="{{ asset('assets/noTickets.png') }}" class="noTicket">
+                </div>
+
+            @else
     <table class="table bg-white rounded-top">
         <thead>
             <tr>
@@ -183,7 +196,13 @@
             @foreach ($waitingQueueTickets as $ticket)
                 <tr class="customTableStyling">
                     <td>#{{ $ticket->id }}</td>
-                    <td>{{ $ticket->title }}</td>
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <span class="mr-2"
+                                style="height: 15px; width: 15px; background-color: {{ $ticket->ticketPriority->id == 1 ? 'green' : ($ticket->ticketPriority->id == 2 ? 'green' : ($ticket->ticketPriority->id == 3 ? 'yellow' : ($ticket->ticketPriority->id == 4 ? 'orange' : 'red'))) }}; border-radius: 50%; display: inline-block; opacity: 0.5;"></span>
+                            <p>{{ $ticket->title ? $ticket->title : 'N.A.' }}</p>
+                        </div>
+                    </td>
                     <td>{{ $ticket->requester->name }}</td>
                     <td>
                         @foreach ($ticket->users as $user)
@@ -223,6 +242,7 @@
             @endforeach
         </tbody>
     </table>
+    @endif
 </div>
 
 
@@ -236,14 +256,19 @@
                 <th scope="col">Técnico</th>
                 <th scope="col">Estado</th>
                 <th scope="col">Data de Abertura</th>
-                <th scope="col">Ações</th>
+                <th scope="col">Restaurar</th>
+                <th scope="col">Apagar</th>
             </tr>
         </thead>
         <tbody>
             @foreach ($recycledTickets as $ticket)
                 <tr class="customTableStyling">
                     <td>#{{ $ticket->id }}</td>
-                    <td>{{ $ticket->title }}</td>
+                    <td class="d-flex align-items-center">
+                        <span class="mr-2"
+                            style="height: 15px; width: 15px; background-color: {{ $ticket->ticketPriority->id == 1 ? 'green' : ($ticket->ticketPriority->id == 2 ? 'green' : ($ticket->ticketPriority->id == 3 ? 'yellow' : ($ticket->ticketPriority->id == 4 ? 'orange' : 'red'))) }}; border-radius: 50%; display: inline-block; opacity: 0.5;"></span>
+                        <p>{{ $ticket->title ? $ticket->title : 'N.A.' }}</p>
+                    </td>
                     <td>{{ $ticket->requester->name }}</td>
                     <td>
                         @foreach ($ticket->users as $user)
@@ -253,11 +278,17 @@
                     <td>{{ $ticket->ticketStatus->description }}</td>
                     <td>{{ $ticket->created_at->format('d-m-Y') }}</td>
                     <td>
-                        <a href="{{ route('tickets.restore', $ticket->id) }}" class="btn btn-success btn-sm">Restore</a>
+                        <a href="{{ route('tickets.restore', $ticket->id) }}">
+                            <img src="{{ asset('assets/restore.svg') }}">
+                        </a>
+                    </td>
+                    <td>
                         <form action="{{ route('tickets.forceDelete', $ticket->id) }}" method="POST" style="display: inline;">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Tem a certeza que deseja apagar permanentemente?')">Permanent Delete</button>
+                            <button type="submit" onclick="return confirm('Tem a certeza que deseja apagar permanentemente?')" style="border: none; background: none; padding: 0;">
+                                <img src="{{ asset('assets/permaDelete.svg') }}" alt="Delete">
+                            </button>
                         </form>
                     </td>
                 </tr>
@@ -271,29 +302,44 @@
             {{ $tickets->appends(request()->input())->links() }}
 
         </div>
-        <script>
-            function submitCategoryForm() {
 
-                document.getElementById("filterCategoryForm").submit();
-
+        <style>
+            thead th{
+                border-top: none!important;
             }
-
-            function submitStatusForm() {
-
-                document.getElementById("filterStatusForm").submit();
-
+            .noTicket {
+                margin-top: 100px!important;
+                width: 20%;
+                height: auto;
+                margin: 0 auto;
+                display: block;
+                opacity: 0.5;
             }
+        </style>
 
-            function submitPriorityForm() {
+    <script>
+        function submitCategoryForm() {
 
-                document.getElementById("filterPriorityForm").submit();
+            document.getElementById("filterCategoryForm").submit();
 
-            }
+        }
 
-            window.setTimeout(function() {
-                $("#success-alert").fadeTo(500, 0).slideUp(500, function() {
-                    $(this).remove();
-                });
-            }, 2000);
-        </script>
+        function submitStatusForm() {
+
+            document.getElementById("filterStatusForm").submit();
+
+        }
+
+        function submitPriorityForm() {
+
+            document.getElementById("filterPriorityForm").submit();
+
+        }
+
+        window.setTimeout(function() {
+            $("#success-alert").fadeTo(500, 0).slideUp(500, function() {
+                $(this).remove();
+            });
+        }, 2000);
+    </script>
     @endsection
