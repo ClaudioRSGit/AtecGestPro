@@ -26,50 +26,50 @@
                     <div class="mb-3">
                         <label for="name" class="form-label">Nome do Utilizador:</label>
                         <input type="text" class="form-control" id="name" name="name"
-                            value="{{ $user->name }}">
+                               value="{{ $user->name }}">
 
                         @error('name')
-                            <div class="alert alert-danger">{{ $message }}</div>
+                        <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
 
                     <div class="mb-3">
                         <label for="username" class="form-label">Username:</label>
                         <input type="text" class="form-control" id="username" name="username"
-                            value="{{ $user->username }}">
+                               value="{{ $user->username }}">
 
                         @error('username')
-                            <div class="alert alert-danger">{{ $message }}</div>
+                        <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
 
                     <div class="mb-3">
                         <label for="email" class="form-label">Email:</label>
                         <input type="text" class="form-control" id="email" name="email"
-                            value="{{ $user->email }}">
+                               value="{{ $user->email }}">
 
                         @error('email')
-                            <div class="alert alert-danger">{{ $message }}</div>
+                        <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
 
                     <div class="mb-3">
                         <label for="contact" class="form-label">Contacto:</label>
                         <input type="text" class="form-control" id="contact" name="contact"
-                            value="{{ $user->contact }}">
+                               value="{{ $user->contact }}">
 
                         @error('contact')
-                            <div class="alert alert-danger">{{ $message }}</div>
+                        <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
 
                     <div class="mb-3">
                         <label for="password" class="form-label">Password:</label>
                         <input type="password" class="form-control" id="password" name="password"
-                            placeholder="{{ $user->password ? 'Não altere para manter a password existente' : '' }}">
+                               placeholder="{{ $user->password ? 'Não altere para manter a password existente' : '' }}">
 
                         @error('password')
-                            <div class="alert alert-danger">{{ $message }}</div>
+                        <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
@@ -79,10 +79,6 @@
                         <label for="role_id" class="form-label">Função:</label>
                         <select class="form-control" id="role_id" name="role_id" onchange="toggleCourseClassDiv()">
 
-                            {{--
-                            @foreach ($roles as $role)
-                                <option
-                                    value="{{ $role->id }}" {{ old('role_id', $user->role_id) == $role->id ? 'selected' : '' }}> --}}
 
                             @foreach ($roles as $role)
                                 <option value="{{ $role->id }}"
@@ -94,11 +90,12 @@
                     </div>
                     <input type="hidden" name="isStudent" id="isStudent" value="{{ old('role_id') == 3 ? 1 : 0 }}">
 
-                    <div class="mb-3" id="notes">
-                        <label for="notes" class="form-label">Curso:</label>
-                        <textarea class="form-control" id="notes" name="notes">{{ $user->notes }}</textarea>
+                    <div class="mb-3" id="labelCourseClass">
+                        <div class="mb-3" id="notes">
+                            <label for="notes" class="form-label">Notas:</label>
+                            <textarea class="form-control" id="notes" name="notes">{{ $user->notes }}</textarea>
+                        </div>
                     </div>
-
 
                     <div class="mb-3" id="labelCourseClass">
                         <label for="course_class_id" class="form-label">Turma:</label>
@@ -162,14 +159,15 @@
             }
         }
 
-        function updateCourseDescription(select) {}
+        function updateCourseDescription(select) {
+        }
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             toggleCourseClassDiv();
         });
 
-        window.setTimeout(function() {
-            $(".error-alert").fadeTo(500, 0).slideUp(500, function() {
+        window.setTimeout(function () {
+            $(".error-alert").fadeTo(500, 0).slideUp(500, function () {
                 $(this).remove();
             });
         }, 3000);
