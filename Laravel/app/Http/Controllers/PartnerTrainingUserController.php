@@ -75,7 +75,7 @@ class PartnerTrainingUserController extends Controller
     {
         $partner_Training_Users = PartnerTrainingUser::all();
         $partners = Partner::all();
-        $users = User::all();
+        $users = User::all()->where('name', '!=', 'Fila de Espera');
         $trainings = Training::all();
 
         $materials = DB::table('materials')->where('isInternal', '=', false)->get();
@@ -120,7 +120,7 @@ class PartnerTrainingUserController extends Controller
         $partner_Training_Users = PartnerTrainingUser::with('partner', 'training', 'user', 'materials')->findOrFail($id);
         $partners = Partner::all();
         $trainings = Training::all();
-        $users = User::all();
+        $users = User::all()->where('name', '!=', 'Fila de Espera');
 
 
         $materials = Material::with('partnerTrainingUsers')->where('isInternal', false)->get();
