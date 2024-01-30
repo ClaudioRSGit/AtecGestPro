@@ -119,9 +119,8 @@ class MaterialUserController extends Controller
                 'quantity' => $itemQuantity,
                 'size_id' => $itemSize,
                 'delivery_date' => $itemDeliveryDate,
-//                'delivered_all' => $request->get('delivered_all'),
+                'delivered_all' => $request->get('delivered_all'),
             ]);
-
 
 
 
@@ -149,14 +148,11 @@ class MaterialUserController extends Controller
 
             $allDeliveries = MaterialUser::where('user_id', $request->get('user_id'))->get();
 
-            $allDeliveries->each(function ($item, $key) {
-                if($item->delivered_all == 0){
-                    $item->delivered_all = 1;
-                    $item->save();
-                }elseif ($item->delivered_all == 1){
-                    $item->delivered_all = 0;
-                    $item->save();
-                }
+            $deliveredAllValue = $request->delivered_all;
+
+            $allDeliveries->each(function ($item, $key) use ($deliveredAllValue) {
+                $item->delivered_all = $deliveredAllValue;
+                $item->save();
             });
 
         }
@@ -183,7 +179,7 @@ class MaterialUserController extends Controller
      */
     public function edit($id)
     {
-        $materialUsers = MaterialUser::with('material', 'user')->where('user_id', $id)->get();//        dd($materialUsers);
+        $materialUsers = MaterialUser::with('material', 'user')->where('user_id', $id)->get();
         $user = User::find($id);
 
 

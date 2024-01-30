@@ -109,8 +109,10 @@
                             <label for="delivered" style="margin: auto;" class=" ">Entrega Completa</label>
                             <input type="hidden" name="delivered_all" value="0">
                             <input type="checkbox" class="form-control" id="delivered" name="delivered_all" value="1"
-                                   style="width: 15px;text-align: left;margin: auto ">
+                                   style="width: 15px;text-align: left;margin: auto "
+                                {{ old('delivered_all', $student->materialUsers()->where('delivered_all', 1)->exists()) ? 'checked' : '' }}>
                         </div>
+                        
                         <div class="col-6 d-flex justify-content-end" style="margin: auto">
                             <button class="btn btn-primary mx-3" type="submit">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="35" height="25" fill="currentColor"
