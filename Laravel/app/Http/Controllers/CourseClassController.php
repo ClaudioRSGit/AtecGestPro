@@ -91,15 +91,32 @@ class CourseClassController extends Controller
     {
         $courseClass->load('course', 'users');
         $courses = Course::all();
+        $students = User::where('course_class_id', $courseClass->id)->where('isStudent', true)->get();
+        $studentsWithoutClassCourse = User::whereNull('course_class_id')->where('isStudent', '=', '1')->get();
 
-        return view('course-classes.edit', compact('courseClass', 'courses'));
+        return view('course-classes.edit', compact('courseClass', 'courses', 'studentsWithoutClassCourse', 'students'));
     }
 
     public function update(CourseClassRequest $request, CourseClass $courseClass)
     {
         $data = $request->validated();
         $courseClass->update($data);
-        // $courseClass->update($request->all());
+
+        if ($request->has('studentsToAdd')) {
+            foreach ($request->input('studentsToAdd') as $student) {
+                $user = User::find($student);
+                $user->course_class_id = $courseClass->id;
+                $user->save();
+            }
+        }
+
+        if ($request->has('studentsToRemove')) {
+            foreach ($request->input('studentsToRemove') as $student) {
+                $user = User::find($student);
+                $user->course_class_id = null;
+                $user->save();
+            }
+        }
 
         return redirect()->route('course-classes.index')->with('success', 'Turma atualizada com sucesso!');
     }
@@ -124,5 +141,8 @@ class CourseClassController extends Controller
             return redirect()->back()->with('error', 'Erro ao excluir as turmas selecionadas. Por favor, tente novamente.');
         }
     }
+
+
+
 
 }
