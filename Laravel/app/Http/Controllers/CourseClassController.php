@@ -52,18 +52,16 @@ class CourseClassController extends Controller
     public function create()
     {
         $courses = Course::all();
-        //select * from users where isStudent = 1
+
 
 
         $students = User::where('isStudent', 1)->whereNull('course_class_id')->paginate(5);
 
-        //dd($students->toArray());
         return view('course-classes.create', compact('courses','students'));
     }
 
     public function store(CourseClassRequest $request)
     {
-
         $courseClass = CourseClass::create([
             'description' => $request->input('description'),
             'course_id' => $request->input('course_id'),
@@ -89,6 +87,7 @@ class CourseClassController extends Controller
 
     public function edit(CourseClass $courseClass)
     {
+
         $courseClass->load('course', 'users');
         $courses = Course::all();
         $students = User::where('course_class_id', $courseClass->id)->where('isStudent', true)->get();

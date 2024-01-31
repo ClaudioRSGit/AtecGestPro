@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CourseClassRequest extends FormRequest
 {
@@ -23,8 +24,12 @@ class CourseClassRequest extends FormRequest
      */
     public function rules()
     {
+
+        $courseClassId = $this->course_id ? $this->course_id : null;
+
         return [
-            'description' => 'unique:course_classes,description|required|string|min:5|max:15',
+
+            'description' => ['required', 'string', 'min:5', 'max:15', 'unique:course_classes,description,' . $courseClassId],
             'course_id' => 'required',
         ];
     }
