@@ -49,4 +49,12 @@ class User extends Authenticatable
         return $this->hasMany(MaterialUser::class);
     }
 
+    public function getInitialsAttribute()
+    {
+        $nameParts = explode(' ', $this->name);
+        $firstNameInitial = $nameParts[0][0] ?? '';
+        $lastNameInitial = count($nameParts) > 1 ? $nameParts[count($nameParts) - 1][0] : '';
+
+        return strtoupper($firstNameInitial . $lastNameInitial);
+    }
 }
