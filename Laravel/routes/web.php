@@ -22,8 +22,14 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login')->
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-//Route::middleware('throttle:1,1')->group(function () {
+//Route::middleware('throttle:5,1')->group(function () {
 //    Route::post('users.create', 'UserController@create')->name('users.create');
+//    Route::post('materials.create', 'MaterialController@create')->name('materials.create');
+//    Route::post('tickets.create', 'TicketController@create')->name('tickets.create');
+//    Route::post('external.create', 'PartnerTrainingUserController@create')->name('external.create');
+//    Route::post('partners.create', 'PartnerController@create')->name('partners.create');
+//    Route::post('courses.create', 'CourseController@create')->name('courses.create');
+//    Route::post('course-classes.create', 'CourseClassController@create')->name('course-classes.create');
 //});
 
 //Tecnico & Admin
