@@ -24,11 +24,10 @@
             </div>
         </li>
         <li class="nav-item dropdown">
-            <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            <img src="https://pbs.twimg.com/profile_images/1087303987307728898/yyr4CwNs_400x400.jpg"
-            alt="Imagem Dropdown" class="rounded-circle"
-            style="width: 30px; height: 30px; margin-right: 5px;">
+            <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="rounded-circle bg-primary text-white" style="width: 30px; height: 30px; font-size: 15px; margin-right: 5px; display: inline-block; text-align: center; line-height: 30px;">
+                    <strong>{{ Auth::user()->initials }}</strong>
+                </span>
             </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                     @if (Auth::user()->hasRole('admin') || Auth::user()->hasRole('tecnico'))
