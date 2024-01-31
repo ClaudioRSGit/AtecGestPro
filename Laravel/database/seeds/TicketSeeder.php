@@ -133,5 +133,19 @@ class TicketSeeder extends Seeder
             'created_at' => '2021-01-12 14:37:10',
             'updated_at' => '2021-01-12 14:37:10',
         ]);
+        // Seed 10
+        DB::table('tickets')->insert([
+            'user_id' => 5,
+            'title' => 'PC não liga',
+            'description' => 'O pc 14 da sala 15 não liga',
+            'dueByDate' => now()->addDays(2),
+            'attachment' => 'password_reset_request_attachment.pdf',
+            'ticket_status_id' => 5,
+            'ticket_priority_id' => 1,
+            'ticket_category_id' => 3,
+            'created_at' => '2021-01-12 14:37:10',
+            'updated_at' => '2021-01-12 14:37:10',
+            'deleted_at' => '2022-01-12 14:37:10',
+        ]);
     }
 }
