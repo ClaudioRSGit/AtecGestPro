@@ -1,7 +1,7 @@
 @extends('master.main')
 @section('title', 'Criar Curso')
 @section('content')
-    <div class="container">
+    <div class="w-100">
 
         @if (session('success'))
             <div class="alert alert-success" id="success-alert">
@@ -28,7 +28,7 @@
         @endif
 
 
-        <form class="w-50" method="post" action="{{ route('courses.store') }}" enctype="multipart/form-data" id="courseForm">
+        <form class="" method="post" action="{{ route('courses.store') }}" enctype="multipart/form-data" id="courseForm">
             @csrf
             @method('POST')
 
