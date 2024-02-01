@@ -1,7 +1,7 @@
 @extends('master.main')
-
+@section('title', 'Dashboard')
 @section('content')
-    <div class="container">
+    <div class="w-100">
 
 
 

@@ -1,12 +1,12 @@
 @extends('master.main')
-
+@section('title', 'Editar Entrega')
 @section('content')
 
     <div class="container">
         <div class="table-responsive">
 
             <div class="d-flex">
-                <h1>Lista de materiais entregues a {{$user->name}}</h1>
+                <h3>Lista de materiais entregues a {{$user->name}}</h3>
             </div>
 
             <br>

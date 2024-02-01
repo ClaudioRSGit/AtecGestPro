@@ -1,9 +1,30 @@
 @extends('master.main')
-
+@section('title', 'Detalhes da Turma')
 @section('content')
     <div class="container">
-        <h1>Detalhes da Turma</h1>
+        @if (session('success'))
+            <div class="alert alert-success" id="success-alert">
+                {{ session('success') }}
+            </div>
 
+            <script>
+                setTimeout(function() {
+                    $('#success-alert').fadeOut('slow');
+                }, 3000);
+            </script>
+        @endif
+
+        @if (session('error'))
+            <div class="alert alert-danger" id="error-alert">
+                {{ session('error') }}
+            </div>
+
+            <script>
+                setTimeout(function() {
+                    $('#error-alert').fadeOut('slow');
+                }, 3000);
+            </script>
+        @endif
         <form class="w-50">
             <div class="form-group">
                 <label for="description">Descrição:</label>

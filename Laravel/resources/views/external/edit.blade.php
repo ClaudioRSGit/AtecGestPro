@@ -1,5 +1,5 @@
 @extends('master.main')
-
+@section('title', 'Editar Formação')
 @section('styles')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_blue.css">
@@ -25,7 +25,6 @@
         <div class="alert alert-danger success-alert">{{ $message }}</div>
         @enderror
 
-        <h1>Editar formação</h1>
 
         <form method="post" action="{{ route('external.update', $partner_Training_Users->id) }}">
             @csrf

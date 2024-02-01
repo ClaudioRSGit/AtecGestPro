@@ -1,7 +1,30 @@
 @extends('master.main')
-
+@section('title', 'Detalhes do Ticket')
 @section('content')
 <div class="container">
+    @if (session('success'))
+        <div class="alert alert-success" id="success-alert">
+            {{ session('success') }}
+        </div>
+
+        <script>
+            setTimeout(function() {
+                $('#success-alert').fadeOut('slow');
+            }, 3000);
+        </script>
+    @endif
+
+    @if (session('error'))
+        <div class="alert alert-danger" id="error-alert">
+            {{ session('error') }}
+        </div>
+
+        <script>
+            setTimeout(function() {
+                $('#error-alert').fadeOut('slow');
+            }, 3000);
+        </script>
+    @endif
     <h1>Ticket #{{ $ticket->id }}</h1>
 
     <div class="row">

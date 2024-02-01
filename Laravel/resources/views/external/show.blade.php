@@ -1,5 +1,5 @@
 @extends('master.main')
-
+@section('title', 'Detalhes do agendamento da formação')
 @section('styles')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_blue.css">
@@ -31,7 +31,6 @@
 
     </style>
     <div class="container">
-        <h1>Detalhes do agendamento da formação</h1>
 
         @if($partner_Training_Users)
             <div class="grid">

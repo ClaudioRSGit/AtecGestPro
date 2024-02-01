@@ -1,4 +1,6 @@
 @extends('master.main')
+@section('title', 'Gestão de Formações Externas')
+
 
 @section('content')
     <div class="w-100">

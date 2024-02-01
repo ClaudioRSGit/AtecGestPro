@@ -1,16 +1,30 @@
 @extends('master.main')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
+@section('title', 'Gestão de turmas')
 @section('content')
     <div class="w-100">
-        @if(session('success'))
+        @if (session('success'))
             <div class="alert alert-success" id="success-alert">
                 {{ session('success') }}
             </div>
+
+            <script>
+                setTimeout(function() {
+                    $('#success-alert').fadeOut('slow');
+                }, 3000);
+            </script>
         @endif
 
-        @if(isset($errorMessage))
-            <div class="alert alert-danger">{{ $errorMessage }}</div>
+        @if (session('error'))
+            <div class="alert alert-danger" id="error-alert">
+                {{ session('error') }}
+            </div>
+
+            <script>
+                setTimeout(function() {
+                    $('#error-alert').fadeOut('slow');
+                }, 3000);
+            </script>
         @endif
 
         <div class="d-flex justify-content-between mb-3">

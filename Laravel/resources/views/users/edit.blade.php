@@ -1,18 +1,30 @@
 @extends('master.main')
-
+@section('title', 'Editar Utilizador')
 @section('content')
-    <div class="container">
+    <div class="w-100">
 
-        @if (session('error'))
-            <div class="alert alert-danger error-alert">
-                {{ session('error') }}
+        @if (session('success'))
+            <div class="alert alert-success" id="success-alert">
+                {{ session('success') }}
             </div>
+
+            <script>
+                setTimeout(function() {
+                    $('#success-alert').fadeOut('slow');
+                }, 3000);
+            </script>
         @endif
 
-        @if ($errors->has('password') && old('role_id') != 3 && $user->role_id == 3)
-            <div class="alert alert-danger error-alert">
-                {{ $errors->first('password') }}
+        @if (session('error'))
+            <div class="alert alert-danger" id="error-alert">
+                {{ session('error') }}
             </div>
+
+            <script>
+                setTimeout(function() {
+                    $('#error-alert').fadeOut('slow');
+                }, 3000);
+            </script>
         @endif
 
         <h1>Editar Utilizador</h1>

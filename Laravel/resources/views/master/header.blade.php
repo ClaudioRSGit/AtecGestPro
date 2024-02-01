@@ -17,24 +17,7 @@
             </div>
         </div>
         <div class="col-4 ">
-            @if(Request::path() == 'external')
-                <h3 class="text-center">Gestão de formações</h3>
-            @elseif(Request::path() == 'courses')
-                <h3 class="text-center">Gestão de cursos</h3>
-            @elseif(Request::path() == 'tickets')
-                <h3 class="text-center">Gestão de tickets</h3>
-            @elseif(Request::path() == 'users')
-                <h3 class="text-center">Gestão de utilizadores</h3>
-            @elseif(Request::path() == 'course-classes')
-                <h3 class="text-center">Gestão de turmas</h3>
-            @elseif(Request::path() == 'materials')
-                <h3 class="text-center">Gestão de materiais</h3>
-            @elseif(Request::path() == 'material-user')
-                <h3 class="text-center">Gestão de fardas</h3>
-            @elseif(Request::path() == 'dashboard')
-                <h3 class="text-center">Dashboard</h3>
-
-            @endif
+            <h5 class="mt-1">@yield('title')</h5>
         </div>
         <div class="col-4">
             <div class="collapse navbar-collapse" id="navbarSupportedContent">

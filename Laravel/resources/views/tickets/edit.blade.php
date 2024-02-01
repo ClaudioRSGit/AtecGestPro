@@ -1,7 +1,30 @@
 @extends('master.main')
-
+@section('title', 'Editar Ticket')
 @section('content')
-    <div class="container">
+    <div class="w-100">
+        @if (session('success'))
+            <div class="alert alert-success" id="success-alert">
+                {{ session('success') }}
+            </div>
+
+            <script>
+                setTimeout(function() {
+                    $('#success-alert').fadeOut('slow');
+                }, 3000);
+            </script>
+        @endif
+
+        @if (session('error'))
+            <div class="alert alert-danger" id="error-alert">
+                {{ session('error') }}
+            </div>
+
+            <script>
+                setTimeout(function() {
+                    $('#error-alert').fadeOut('slow');
+                }, 3000);
+            </script>
+        @endif
         <h1>Ticket #{{ $ticket->id }}</h1>
 
         <form class="mb-3" method="post" action="{{ route('tickets.update', $ticket->id) }}" enctype="multipart/form-data">

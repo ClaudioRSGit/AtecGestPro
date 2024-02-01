@@ -1,5 +1,5 @@
 @extends('master.main')
-
+@section('title', 'Editar Material')
 @section('styles')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_blue.css">
@@ -13,7 +13,6 @@
     </style>
 
     <div class="container">
-        <h1>Editar Material</h1>
 
 
         <form method="post" action="{{ route('materials.update', $material->id) }}">

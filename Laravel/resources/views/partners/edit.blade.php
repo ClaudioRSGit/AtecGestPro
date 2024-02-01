@@ -1,15 +1,32 @@
 @extends('master.main')
-
+@section('title', 'Editar Parceiro')
 @section('content')
     <div class="container">
 
-        @if (session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
+        @if (session('success'))
+            <div class="alert alert-success" id="success-alert">
+                {{ session('success') }}
             </div>
+
+            <script>
+                setTimeout(function() {
+                    $('#success-alert').fadeOut('slow');
+                }, 3000);
+            </script>
         @endif
 
-        <h1>Editar Parceiro</h1>
+        @if (session('error'))
+            <div class="alert alert-danger" id="error-alert">
+                {{ session('error') }}
+            </div>
+
+            <script>
+                setTimeout(function() {
+                    $('#error-alert').fadeOut('slow');
+                }, 3000);
+            </script>
+        @endif
+
         <form method="post" action="{{ route('partners.update', $partner->id) }}">
 
             @csrf

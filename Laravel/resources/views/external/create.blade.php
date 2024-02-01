@@ -1,4 +1,5 @@
 @extends('master.main')
+@section('title', 'Agendar formação de mercado')
 
 @section('styles')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
@@ -16,15 +17,6 @@
 
     <div class="">
 
-        @error('start_date')
-        <div class="alert alert-danger success-alert">{{ $message }}</div>
-        @enderror
-
-        @error('end_date')
-        <div class="alert alert-danger success-alert">{{ $message }}</div>
-        @enderror
-
-        <h1>Agendar formação de mercado</h1>
 
         <form method="POST" action="{{ url('external') }}" style="width: 100%">
             @csrf

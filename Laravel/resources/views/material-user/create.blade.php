@@ -1,5 +1,5 @@
 @extends('master.main')
-
+@section('title', 'Entregar vestuário')
 @section('content')
     <div class="w-100">
 
@@ -7,7 +7,6 @@
 
         <div class="row">
             <div class="col-8">
-                <h1>Atribuir</h1>
 
                 <div class="d-flex justify-content-between mb-3">
                     <div class="input-group mb-3" style="width: 60%;">

@@ -1,5 +1,5 @@
 @extends('master.main')
-
+@section('title', 'Entrega de Materiais')
 @section('content')
     <div class="w-100">
 

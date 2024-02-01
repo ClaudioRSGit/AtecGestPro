@@ -1,8 +1,8 @@
 @extends('master.main')
-
+@section('title', 'Historico do Ticket' )
 @section('content')
     <div>
-        <h1>Historico de Ticket: {{ $ticket->id }}</h1>
+        <h1>Ticket: {{ $ticket->id }}</h1>
 
         <div>
             @foreach($ticketHistories as $history)

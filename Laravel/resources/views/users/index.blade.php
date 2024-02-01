@@ -1,5 +1,5 @@
 @extends('master.main')
-
+@section('title', 'Utilizadores')
 @section('content')
     <div class="w-100">
 
