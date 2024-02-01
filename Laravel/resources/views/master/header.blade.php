@@ -44,6 +44,7 @@
 
     </form>
 </nav>
+@livewireScripts
 <script>
     window.livewire.on('redirectToTicket', ticketId => {
         window.location.href = '/tickets/' + ticketId;
