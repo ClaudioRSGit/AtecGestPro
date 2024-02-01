@@ -37,11 +37,10 @@
             </div>
 
 
-
             <div class="row">
                 <h3 class="my-3">Atribuir alunos à turma</h3>
                 <div class="d-flex justify-content-between w-100">
-                    <div class="form-group mr-3 w-75 search-container">
+                    <div class="form-group mr-3 w-25 search-container">
                         <input type="text" id="search" class="form-control w-100" placeholder="Pesquisar Aluno">
                     </div>
                     <div class="form-group w-25">
@@ -51,16 +50,17 @@
                         </a>
                     </div>
                 </div>
-                <table class="table" id="studentsTable">
-                    <thead>
+                <div class="scrollable w-100">
+                    <table class="table" id="studentsTable">
+                        <thead>
                         <tr>
                             <th><input type="checkbox" id="select-all"></th>
                             <th>Nome</th>
                             <th>Username</th>
                             <th>Email</th>
                         </tr>
-                    </thead>
-                    <tbody>
+                        </thead>
+                        <tbody>
                         @foreach ($students as $student)
                             <tr>
                                 <td><input type="checkbox" name="selected_students[]" value="{{ $student->id }}"></td>
@@ -69,34 +69,42 @@
                                 <td>{{ $student->email }}</td>
                             </tr>
                         @endforeach
-                    </tbody>
-                </table>
-                {{ $students->links() }}
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
 
             <button type="submit" class="btn btn-primary" name="noImport" id="criarTurmaBtn">Criar Turma</button>
             <button type="submit" class="btn btn-primary" name="import">Criar Turma e importar alunos a partir de
-                Excel</button>
+                Excel
+            </button>
             <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
         </form>
 
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <style>
+
+        .scrollable {
+            height: 300px;
+            overflow-y: scroll;
+        }
+    </style>
+
     <script>
-        $(document).ready(function() {
-            $("#select-all").click(function() {
+        $(document).ready(function () {
+            $("#select-all").click(function () {
                 $("input[name='selected_students[]']").prop('checked', $(this).prop('checked'));
             });
 
-            $("#criarTurmaBtn").click(function() {
+            $("#criarTurmaBtn").click(function () {
                 document.getElementById('createCourseClassForm').submit();
             });
 
-            $("#search").on("keyup", function() {
+            $("#search").on("keyup", function () {
                 let value = $(this).val().toLowerCase();
-                $("#studentsTable tbody tr").filter(function() {
+                $("#studentsTable tbody tr").filter(function () {
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
                 });
             });

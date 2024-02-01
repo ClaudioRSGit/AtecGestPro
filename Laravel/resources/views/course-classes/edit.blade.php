@@ -41,32 +41,35 @@
 
             <div class="row my-3 ">
                 <div class="col-6 ">
-                    <div class="form-group card">
+                    <div class="form-group card ">
                         <label class="pl-2 pt-2 font-weight-bold" for="students">Remover alunos</label>
                         @if($students->isEmpty())
                             <p class="pl-2 pb-2 font-weight-bold text-danger" style="text-align: center">Não existem
                                 alunos nesta turma</p>
                         @else
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th>Nome</th>
-                                    <th>Username</th>
-                                    <th class="center-checkbox">Remover</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach ($students as $student)
+                            <div class="scrollable">
+                                <table class="table">
+                                    <thead>
                                     <tr>
-                                        <td>{{ $student->name }}</td>
-                                        <td>{{ $student->username }}</td>
-                                        <td class="center-checkbox">
-                                            <input type="checkbox" name="studentsToRemove[]" value="{{ $student->id }}">
-                                        </td>
+                                        <th>Nome</th>
+                                        <th>Username</th>
+                                        <th class="center-checkbox">Remover</th>
                                     </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                    @foreach ($students as $student)
+                                        <tr>
+                                            <td>{{ $student->name }}</td>
+                                            <td>{{ $student->username }}</td>
+                                            <td class="center-checkbox">
+                                                <input type="checkbox" name="studentsToRemove[]"
+                                                       value="{{ $student->id }}">
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         @endif
                     </div>
                 </div>
@@ -78,26 +81,29 @@
                             <p class="pl-2 pb-2 font-weight-bold text-danger" style="text-align: center">Não existem
                                 alunos sem turma para adicionar</p>
                         @else
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th>Nome</th>
-                                    <th>Username</th>
-                                    <th class="center-checkbox">Adicionar</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                @foreach ($studentsWithoutClassCourse as $student)
+                            <div class="scrollable">
+                                <table class="table">
+                                    <thead>
                                     <tr>
-                                        <td>{{ $student->name }}</td>
-                                        <td>{{ $student->username }}</td>
-                                        <td class="center-checkbox">
-                                            <input type="checkbox" name="studentsToAdd[]" value="{{ $student->id }}">
-                                        </td>
+                                        <th>Nome</th>
+                                        <th>Username</th>
+                                        <th class="center-checkbox">Adicionar</th>
                                     </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                    @foreach ($studentsWithoutClassCourse as $student)
+                                        <tr>
+                                            <td>{{ $student->name }}</td>
+                                            <td>{{ $student->username }}</td>
+                                            <td class="center-checkbox">
+                                                <input type="checkbox" name="studentsToAdd[]"
+                                                       value="{{ $student->id }}">
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         @endif
                     </div>
                 </div>
@@ -117,21 +123,24 @@
             justify-content: center;
             align-items: center;
         }
+
+        .scrollable {
+            max-height: 300px;
+            overflow-y: auto;
+        }
     </style>
 @endsection
 
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var courseDropdown = document.getElementById('course_id');
-        var courseCode = document.getElementById('courseCode_id');
+{{--<script>--}}
+{{--    document.addEventListener('DOMContentLoaded', function () {--}}
+{{--        var courseDropdown = document.getElementById('course_id');--}}
 
-        function setCourseCode() {
-            var selectedOption = courseDropdown.options[courseDropdown.selectedIndex];
-            courseCode.value = selectedOption.getAttribute('data-code');
-        }
+{{--        function setCourseCode() {--}}
+{{--            var selectedOption = courseDropdown.options[courseDropdown.selectedIndex];--}}
+{{--        }--}}
 
-        setCourseCode();
+{{--        setCourseCode();--}}
 
-        courseDropdown.addEventListener('change', setCourseCode);
-    });
-</script>
+{{--        courseDropdown.addEventListener('change', setCourseCode);--}}
+{{--    });--}}
+{{--</script>--}}
