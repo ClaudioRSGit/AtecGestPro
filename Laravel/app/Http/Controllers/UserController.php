@@ -169,7 +169,11 @@ class UserController extends Controller
 
         $user->update($data);
 
-        return redirect()->route('users.index')->with('success', 'Utilizador atualizado com sucesso!');
+        if ($user->hasRole('funcionario')) {
+            return redirect()->route('master.main')->with('success', 'Utilizador atualizado com sucesso!');
+        } else {
+            return redirect()->route('users.index')->with('success', 'Utilizador atualizado com sucesso!');
+        }
     }
 
 
