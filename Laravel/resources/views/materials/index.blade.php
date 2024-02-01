@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container">
+    <div class="w-100">
         <h1>Lista de Materiais</h1>
 
         @if (session('success'))
