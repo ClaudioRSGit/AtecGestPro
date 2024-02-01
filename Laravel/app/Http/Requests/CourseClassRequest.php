@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class CourseClassRequest extends FormRequest
 {
@@ -23,8 +24,14 @@ class CourseClassRequest extends FormRequest
      */
     public function rules()
     {
+        $courseClass = $this->route('course_class');
+
+
+        $courseClassId = $courseClass ? $courseClass->id : null;
+
         return [
-            'description' => 'required|string|min:5|max:15',
+
+            'description' => ['required', 'string', 'min:5', 'max:15', 'unique:course_classes,description,' . $courseClassId],
             'course_id' => 'required',
         ];
     }
@@ -37,6 +44,7 @@ class CourseClassRequest extends FormRequest
             'description.min' => 'A descrição deve ter pelo menos 5 caracteres!',
             'description.max' => 'A descrição deve ter no máximo 20 caracteres!',
             'course_id.required' => 'O campo de curso é obrigatório!',
+            'description.unique' => 'Já existe uma turma com essa descrição!',
         ];
     }
 }

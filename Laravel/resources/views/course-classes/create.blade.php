@@ -1,35 +1,44 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container">
+    <div class="w-100">
         <h1>Criar Turma</h1>
-        <form method="post" action="{{ route('course-classes.store') }}" id="createCourseClassForm" class="w-70 mb-3">
+
+        <form method="post" action="{{ route('course-classes.store') }}" id="createCourseClassForm" class=" mb-3">
             @csrf
 
-            <div class="form-group">
-                <label for="description">Descrição:</label>
-                <input type="text" class="form-control" id="description" name="description">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="description">Descrição:</label>
+                        <input type="text" class="form-control" id="description" name="description">
 
-                @error('description')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
+                        @error('description')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="course_id">Curso:</label>
+                        <select class="form-control" id="course_id" name="course_id" required>
+
+                            @foreach ($courses as $course)
+                                <option value="{{ $course->id }}">{{ $course->description }}</option>
+                            @endforeach
+                        </select>
+
+                        @error('course_id')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                </div>
             </div>
 
-            <div class="form-group">
-                <label for="course_id">Curso:</label>
-                <select class="form-control" id="course_id" name="course_id" required>
 
-                    @foreach ($courses as $course)
-                        <option value="{{ $course->id }}">{{ $course->description }}</option>
-                    @endforeach
-                </select>
 
-                @error('course_id')
-                    <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div class="container">
+            <div class="row">
                 <h3 class="my-3">Atribuir alunos à turma</h3>
                 <div class="d-flex justify-content-between w-100">
                     <div class="form-group mr-3 w-75 search-container">

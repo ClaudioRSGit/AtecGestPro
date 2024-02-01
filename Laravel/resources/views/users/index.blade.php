@@ -168,7 +168,8 @@
                             <th scope="col">Nome</th>
                             <th scope="col">Username</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Ações</th>
+                            <th scope="col">Restaurar</th>
+                            <th scope="col">Apagar</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -182,7 +183,6 @@
 
                                 <td class="editDelete">
 
-                                    <div>
                                         <form method="post" action="{{ route('users.restore', $deletedUser->id) }}"
                                               style="display:inline;">
                                             @csrf
@@ -192,7 +192,9 @@
                                                 <img src="{{ asset('assets/restore.svg') }}">
                                             </button>
                                         </form>
+                                </td>
 
+                                <td>
                                         <form method="post" action="{{ route('users.forceDelete', $deletedUser->id) }}"
                                               style="display:inline;">
                                             @csrf
@@ -204,9 +206,8 @@
 
                                             </button>
                                         </form>
-                                    </div>
-
                                 </td>
+
                             </tr>
                             <tr class="filler" style="background-color: #f8fafc"></tr>
                         @endforeach

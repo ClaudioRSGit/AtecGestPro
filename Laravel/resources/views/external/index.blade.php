@@ -207,7 +207,7 @@
                                 <td class="pl-4">
 
 
-                                    <form action="{{ route('external.index') }}" method="GET">
+                                    <form action="{{ route('external.index') }}" method="GET" class="viewPartnersForm">
                                         <input type="text" name="ptu" class="form-control" hidden value="{{ $partner->name }}">
                                         <div class="input-group-append">
                                             <button type="submit" class="btn btn-info btn-sm filteredPtus no-propagate">
@@ -347,10 +347,23 @@
     </div>
 
     <script>
+        $(document).ready(function() {
+            $('.viewPartnersForm').on('submit', function(e) {
+                e.preventDefault();
+                window.location.hash = 'externalTable';
+                this.submit();
+            });
+        });
+    </script>
+
+    <script>
+        //gravar tab ativa
         $(document).ready(function () {
             function determineContext() {
                 return 'pagination';
             }
+
+
 
             function getFragment() {
                 return window.location.hash.substring(1);
