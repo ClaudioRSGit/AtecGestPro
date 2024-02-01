@@ -1,6 +1,6 @@
 <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-<div class="container mx-auto d-flex align-items-center">
+<div class="container mx-auto d-flex align-items-center loginPage">
     <div class="row justify-content-center w-100 ">
         <div class="col-md-6">
             <div class="card my-auto">
