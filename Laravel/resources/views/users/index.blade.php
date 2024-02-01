@@ -341,7 +341,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            // var checkboxes = document.querySelectorAll('.no-propagate');
+             let checkboxes = document.querySelectorAll('.no-propagate');
 
             checkboxes.forEach(function (checkbox) {
                 checkbox.addEventListener('click', function (event) {
