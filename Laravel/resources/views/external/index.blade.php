@@ -27,7 +27,7 @@
         @endif
 
 
-        <h1>Formações de mercado</h1>
+
 
         <ul class="nav nav-tabs mb-3" id="myTabs">
             <li class="nav-item">

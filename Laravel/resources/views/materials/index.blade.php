@@ -2,7 +2,6 @@
 
 @section('content')
     <div class="w-100">
-        <h1>Lista de Materiais</h1>
 
         @if (session('success'))
             <div class="alert alert-success" id="success-alert">

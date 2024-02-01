@@ -15,7 +15,6 @@
             </div>
         @endif
 
-        <h1>Lista de Cursos</h1>
 
         <div class="d-flex justify-content-between mb-3">
 

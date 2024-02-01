@@ -27,7 +27,6 @@
             </script>
         @endif
 
-        <h1 class="mb-4">Utilizadores</h1>
 
         <ul class="nav nav-tabs mb-3" id="userTabs">
             <li class="nav-item">
