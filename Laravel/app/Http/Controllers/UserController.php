@@ -8,6 +8,8 @@ use App\CourseClass;
 use App\Course;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
@@ -18,7 +20,7 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-//        dd($request);
+        //        dd($request);
         $searchName = $request->input('searchName');
         $roleFilter = $request->input('roleFilter');
         $sortColumn = $request->input('sortColumn', 'name');
@@ -110,12 +112,34 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        $courseClasses = CourseClass::all();
-        $courses = Course::all();
-        $roles = Role::all();
-        $user->load('CourseClass.Course', 'Role');
+        // $courseClasses = CourseClass::all();
+        // $courses = Course::all();
+        // $roles = Role::all();
+        // $user->load('CourseClass.Course', 'Role');
 
-        return view('users.edit', compact('user', 'courseClasses', 'courses', 'roles'));
+        // return view('users.edit', compact('user', 'courseClasses', 'courses', 'roles'));
+
+        $authenticatedUser = Auth::user();
+
+        if ($authenticatedUser->hasRole('funcionario')) {
+            if ($authenticatedUser->id === $user->id) {
+                $courseClasses = CourseClass::all();
+                $courses = Course::all();
+                $roles = Role::all();
+                $user->load('CourseClass.Course', 'Role');
+
+                return view('users.edit', compact('user', 'courseClasses', 'courses', 'roles'));
+            }
+        } else {
+            $courseClasses = CourseClass::all();
+            $courses = Course::all();
+            $roles = Role::all();
+            $user->load('CourseClass.Course', 'Role');
+
+            return view('users.edit', compact('user', 'courseClasses', 'courses', 'roles'));
+        }
+
+        return abort(403, 'Acesso não autorizado!');
     }
 
 
@@ -131,7 +155,7 @@ class UserController extends Controller
             $data['password'] = null;
         }
 
-        if ($user->role_id != 3 && !$request->filled('password')){
+        if ($user->role_id != 3 && !$request->filled('password')) {
             unset($data['password']);
         }
 
