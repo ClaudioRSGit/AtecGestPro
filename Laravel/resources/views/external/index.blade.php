@@ -352,7 +352,7 @@
             function determineContext() {
                 return 'pagination';
             }
-            
+
             $('#viewPartnersForm').on('submit', function(e) {
                 e.preventDefault();
                 window.location.hash = 'externalTable';
