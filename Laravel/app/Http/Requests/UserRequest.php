@@ -42,7 +42,23 @@ class UserRequest extends FormRequest
             'role_id' => 'required',
         ];
 
+        // if ($this->isMethod('put')) {
+        //     $rules['password'] = [
+        //         'nullable',
+        //         'string',
+        //         'min:7',
+        //         'max:20',
+        //         'regex:/^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).*$/',
+        //     ];
+        // } else {
         if ($this->isMethod('put')) {
+            if ($this->user && $this->user->hasRole('funcionario')) {
+                $rules['isStudent'] = 'nullable';
+                $rules['isActive'] = 'nullable';
+                $rules['course_class_id'] = 'nullable';
+                $rules['role_id'] = 'nullable';
+            }
+
             $rules['password'] = [
                 'nullable',
                 'string',
@@ -75,17 +91,17 @@ class UserRequest extends FormRequest
             'username.required' => 'O username é obrigatório!',
             'username.min' => 'O username deve ter pelo menos 5 caracteres!',
             'username.max' => 'O username deve ter no máximo 20 caracteres!',
-//            'username.unique' => 'O username já existe!',
+            //            'username.unique' => 'O username já existe!',
 
             'email.required' => 'O email é obrigatório!',
             'email.email' => 'Formato de email inválido!',
-//            'email.unique' => 'O email já existe!',
+            //            'email.unique' => 'O email já existe!',
 
             'contact.required' => 'O contato é obrigatório!',
             'contact.min' => 'O contato deve ter pelo menos 9 caracteres!',
             'contact.max' => 'O contato deve ter no máximo 20 caracteres!',
             'contact.regex' => 'Formato de contacto inválido!',
-//            'contact.unique' => 'O contacto já existe!',
+            //            'contact.unique' => 'O contacto já existe!',
 
             'password.required' => 'A password é obrigatória!',
             'password.regex' => 'A password deve ter pelo menos uma letra maiúscula, um caracter especial e sete caracteres!',
