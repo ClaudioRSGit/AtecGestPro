@@ -12,7 +12,7 @@
 
 
                 <div class="card flex-grow-1">
-                    <h5 class="card-header">Usuários & Materiais</h5>
+                    <h5 class="card-header"><strong>Usuários & Materiais</strong></h5>
                     <ul class="list-group list-group-flush">
                         @foreach ($userRolesCounts as $roleCount)
                             <li class="list-group-item">
@@ -142,7 +142,8 @@
         //grafic of number of external formations per month changing dinamically
         var chartDataStartDate = @json($chartDataStartDate);
 
-        var currentMonth = new Date().getMonth() + 1;
+        // 7 is only for test purposes, the graphic will show the data  until the current month
+        var currentMonth = 7;// new Date().getMonth() + 1;
         var labels = chartDataStartDate.labels.slice(0, currentMonth);
 
         new Chartist.Line('#traffic-chart', {
