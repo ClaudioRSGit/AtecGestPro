@@ -31,7 +31,7 @@
 
             <div class="col-3 col-md-6 col-lg-3 mb-4 mb-lg-2 d-flex">
                 <div class="card flex-grow-1">
-                    <h5 class="card-header">Tickets Estados</h5>
+                    <h5 class="card-header"><strong>Tickets Estados</strong></h5>
                     <div class="card-body">
                         <canvas id="pieChart"></canvas>
 
@@ -41,7 +41,7 @@
 
             <div class="col-6 col-md-6 mb-4 mb-lg-2 col-lg-6 d-flex">
                 <div class="card flex-grow-1">
-                    <h5 class="card-header">Número de Formações Externas</h5>
+                    <h5 class="card-header"><strong>Número de Formações Externas</strong></h5>
                     <div class="card-body d-flex flex-column justify-content-end">
                         <div id="traffic-chart" style="width: 100%; height: 100%;"></div>
                     </div>
@@ -52,7 +52,7 @@
         <div class="row">
             <div class="col-12 col-xl-8 mb-4 mb-lg-2">
                 <div class="card">
-                    <h5 class="card-header">Entregas Incompletas</h5>
+                    <h5 class="card-header"><strong>Entregas Incompletas</strong></h5>
                     <div class="card-body">
                         <div id="usersTable" class="table-responsive">
                             <table class="table">
@@ -87,7 +87,7 @@
 
 
                 <div class="card mb-2">
-                    <h5 class="card-header">Tickets Prioridades</h5>
+                    <h5 class="card-header"><strong>Tickets Prioridades</strong></h5>
                     <div class="card-body">
                         <canvas id="pieChartPri"></canvas>
 
