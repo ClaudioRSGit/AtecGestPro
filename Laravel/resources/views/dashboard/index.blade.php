@@ -135,45 +135,23 @@
 
 
         //grafic of number of external formations per month changing dinamically
-        // var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        // var currentMonth = 4;//new Date().getMonth() + 1;
-        // var labels = months.slice(0, currentMonth);
+        var chartDataStartDate = @json($chartDataStartDate);
 
-        // new Chartist.Line('#traffic-chart', {
-        //     labels: labels,
-        //     series: [
-        //         [23000, 25000, 19000, 34000, 56000, 64000].slice(0, currentMonth)
-        //     ]
-        // }, {
-        //     low: 1,
-        //     showArea: true
-        // });
+        var currentMonth = new Date().getMonth() + 1;
+        var labels = chartDataStartDate.labels.slice(0, currentMonth);
 
-        document.addEventListener('DOMContentLoaded', function() {
-            var ctx = document.getElementById('traffic-chart').getContext('2d');
-
-            var chartDataStartDate = @json($chartDataStartDate);
-
-            new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: chartDataStartDate.labels,
-                    datasets: [{
-                        data: chartDataStartDate.data,
-                        fill: true,
-                        borderColor: 'rgb(75, 192, 192)',
-                        tension: 0.1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
+        new Chartist.Line('#traffic-chart', {
+            labels: labels,
+            series: [
+                chartDataStartDate.data.slice(0, currentMonth)
+            ]
+        }, {
+            low: 1,
+            showArea: true
         });
+
+
+
     </script>
 
     <style>
