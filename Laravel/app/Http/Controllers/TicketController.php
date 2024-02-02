@@ -178,7 +178,6 @@ class TicketController extends Controller
 
     public function update(Request $request, Ticket $ticket)
     {
-
         $oldTicket = clone $ticket;
         $oldTicketTechnician = clone TicketUser::where('ticket_id', $ticket->id)->first('user_id');
         $newUserId = $request->technician_id;
@@ -196,8 +195,8 @@ class TicketController extends Controller
         $this->validate($request, [
             'title' => 'required|string|max:255',
             'description' => 'required|string',
-            'dueByDate' => 'sometimes|date',
-            'attachment' => 'sometimes|file|max:20480',
+            'dueByDate' => 'required|date',
+            'attachment' => 'sometimes|file|max:20480', // 20MB
             'ticket_status_id' => 'required|integer|exists:ticket_statuses,id',
             'ticket_priority_id' => 'required|integer|exists:ticket_priorities,id',
             'ticket_category_id' => 'required|integer|exists:ticket_categories,id',
@@ -208,8 +207,14 @@ class TicketController extends Controller
             $ticket->attachment = $filename;
         }
 
-        $ticket->update($request->all());
+        $ticket->title = $request->title;
+        $ticket->description = $request->description;
+        $ticket->dueByDate = $request->dueByDate;
+        $ticket->ticket_priority_id = $request->ticket_priority_id;
+        $ticket->ticket_status_id = $request->ticket_status_id;
+        $ticket->ticket_category_id = $request->ticket_category_id;
 
+        $ticket->save();
 
         TicketUser::where('ticket_id', $ticketId)->update([
             'user_id' => $newUserId,
@@ -322,14 +327,14 @@ class TicketController extends Controller
 
     public function sendEmail($id)
     {
-//        dd($id);
-        $ticket = Ticket::with('requester')->find($id);
-//        dd($ticket->requester->email);
+// // dd($id);
+//         $ticket = Ticket::with('requester')->find($id);
+// //        dd($ticket->requester->email);
 
-        $email = new TicketEmail($ticket);
-//        dd($email);
-        Mail::to($ticket->requester->email)->send($email);
-        return view('tickets.show', compact('ticket'));
+//         $email = new TicketEmail($ticket);
+// //        dd($email);
+//         Mail::to($ticket->requester->email)->send($email);
+//         return view('tickets.show', compact('ticket'));
     }
 
 }

@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Mail from Laravel</title>
+    <title>Atec Gest Pro</title>
 </head>
 <body>
     <h1>Olá {{ $ticket->requester->name }},</h1>
     <p>O ticket #{{$ticket->id}}, com o título {{ $ticket->title }} foi criado com sucesso.</p>
-    <p>Descrição</p>
-    <p>{{ $ticket->description }}</p>
 
-    <p>Pode consultar o seu ticket na App Atec Gest Pro</p>
-    <p>Atenciosamente</p>
-    <p>Equipa Atec Gest Pro</p>
+    <p>Pode consultar o seu ticket em localhost:8000/tickets/{{$ticket->id}}</p>
+    <br><p>Atenciosamente</p>
+    <p>Equipa Técnica</p>
 </body>
 </html>
