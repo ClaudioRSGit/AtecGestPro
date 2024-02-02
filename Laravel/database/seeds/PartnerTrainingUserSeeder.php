@@ -57,6 +57,6 @@ class PartnerTrainingUserSeeder extends Seeder
 
         ]);
 
-        factory(App\PartnerTrainingUser::class, 20)->create();
+        factory(App\PartnerTrainingUser::class, 30)->create();
     }
 }
