@@ -67,8 +67,9 @@
                 </form>
 
 
-                <a href="{{ route('tickets.create') }}" class="btn btn-primary">
-                    <img src="{{ asset('assets/new.svg') }}"> Novo Ticket
+                <a href="{{ route('tickets.create') }}" class="btn btn-primary d-flex">
+                    <img src="{{ asset('assets/new.svg') }}">
+                    <p class="novoTicket d-flex align-items-center">Novo Ticket</p>
                 </a>
 
 
@@ -115,12 +116,7 @@
                         <tr class="customTableStyling" id="heading{{ $ticket->id }}"
                             onclick="location.href='{{ route('tickets.show', $ticket->id) }}'">
 
-                            <td>
-                                <a class="btn btn-link" data-toggle="collapse" data-target="#collapse{{ $ticket->id }}"
-                                    aria-expanded="true" aria-controls="collapse{{ $ticket->id }}">
-                                    #{{ $ticket->id ? $ticket->id : 'N.A.' }}
-                                </a>
-                            </td>
+                            <td class="pl-4">#{{ $ticket->id ? $ticket->id : 'N.A.' }}</td>
                             <td>
                                 <div class="d-flex align-items-center">
                                     <span class="mr-2"
@@ -195,7 +191,7 @@
         <tbody>
             @foreach ($waitingQueueTickets as $ticket)
                 <tr class="customTableStyling">
-                    <td>#{{ $ticket->id }}</td>
+                    <td class="pl-4">#{{ $ticket->id }}</td>
                     <td>
                         <div class="d-flex align-items-center">
                             <span class="mr-2"
@@ -314,6 +310,12 @@
                 margin: 0 auto;
                 display: block;
                 opacity: 0.5;
+            }
+
+            @media (max-width: 1080px) {
+                .noTicket {
+                    width: 50%;
+                }
             }
         </style>
 
