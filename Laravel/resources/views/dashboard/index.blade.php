@@ -146,12 +146,12 @@
                 chartDataStartDate.data.slice(0, currentMonth)
             ]
         }, {
-            low: 1,
-            showArea: true
+            low: 0,
+            showArea: true,
+            axisY: {
+                ticks: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+            }
         });
-
-
-
     </script>
 
     <style>
