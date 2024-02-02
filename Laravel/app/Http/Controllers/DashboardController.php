@@ -107,7 +107,7 @@ class DashboardController extends Controller
         }
 
         $chartDataStartDate = [
-            'labels' => ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            'labels' => ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
             'data' => $counts,
         ];
 

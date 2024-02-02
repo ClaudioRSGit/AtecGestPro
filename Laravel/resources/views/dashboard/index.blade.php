@@ -137,7 +137,7 @@
         //grafic of number of external formations per month changing dinamically
         var chartDataStartDate = @json($chartDataStartDate);
 
-        var currentMonth = new Date().getMonth() + 1;
+        var currentMonth = 12;//new Date().getMonth() + 1;
         var labels = chartDataStartDate.labels.slice(0, currentMonth);
 
         new Chartist.Line('#traffic-chart', {
@@ -152,10 +152,13 @@
     </script>
 
     <style>
-        .ct-series-a .ct-area,
+        .ct-series-a .ct-area{
+            fill: #36A2EB;
+
+        }
         .ct-series-a .ct-line,
         .ct-series-a .ct-point {
-            fill: #36A2EB;
+
             stroke: #36A2EB;
         }
 

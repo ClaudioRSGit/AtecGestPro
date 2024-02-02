@@ -56,5 +56,7 @@ class PartnerTrainingUserSeeder extends Seeder
             'end_date' => '2024-12-02 00:00:00',
 
         ]);
+
+        factory(App\PartnerTrainingUser::class, 20)->create();
     }
 }
