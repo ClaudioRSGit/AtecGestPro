@@ -152,7 +152,6 @@
     </script>
 
     <style>
-
         .ct-series-a .ct-area,
         .ct-series-a .ct-line,
         .ct-series-a .ct-point {
@@ -173,10 +172,10 @@
             box-shadow: 1px 2px 1px 2px rgb(230, 229, 229);
             margin: 15px;
             border: 1px solid #141313;
-            background-color: #cbeaf8;
-            overflow-y: scroll;
-            overflow-x: hidden;
-            height: 370px;
+            background-color: rgba(203, 234, 248, 0.3);
+            overflow-y: auto;
+            overflow-x: auto;
+            height: 355px;
         }
 
 
