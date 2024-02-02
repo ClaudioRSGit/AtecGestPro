@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\TicketEmail;
 use App\Ticket;
 use App\TicketHistory;
 use App\User;
@@ -15,6 +16,7 @@ use App\NotificationUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\TicketRequest;
+use Illuminate\Support\Facades\Mail;
 
 class TicketController extends Controller
 {
@@ -136,6 +138,7 @@ class TicketController extends Controller
         $ticketInfo = 'Ticket #' . $ticket->id . ' foi criado por ' . User::find($loggedInUserId)->name . '.';
 
         $this->logTicketHistory($ticket->id, 1, $ticketInfo);
+        $this->sendEmail($ticket->id);
         return redirect()->route('tickets.index')->with('success', 'Ticket criado com sucesso!');
 
     }
@@ -194,7 +197,7 @@ class TicketController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'dueByDate' => 'sometimes|date',
-            'attachment' => 'sometimes|file|max:20480', // 20MB
+            'attachment' => 'sometimes|file|max:20480',
             'ticket_status_id' => 'required|integer|exists:ticket_statuses,id',
             'ticket_priority_id' => 'required|integer|exists:ticket_priorities,id',
             'ticket_category_id' => 'required|integer|exists:ticket_categories,id',
@@ -315,6 +318,18 @@ class TicketController extends Controller
         $ticket->forceDelete();
 
         return redirect()->route('tickets.index')->with('success', 'Ticket apagado permanentemente!');
+    }
+
+    public function sendEmail($id)
+    {
+//        dd($id);
+        $ticket = Ticket::with('requester')->find($id);
+//        dd($ticket->requester->email);
+
+        $email = new TicketEmail($ticket);
+//        dd($email);
+        Mail::to($ticket->requester->email)->send($email);
+        return view('tickets.show', compact('ticket'));
     }
 
 }
