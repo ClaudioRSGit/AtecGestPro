@@ -101,57 +101,82 @@
 
     <script>
         function createPieChart(elementId, labels, data) {
-        var ctx = document.getElementById(elementId).getContext('2d');
-        new Chart(ctx, {
-            type: 'pie',
-            data: {
-                labels: labels,
-                datasets: [{
-                    data: data,
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.7)',
-                        'rgba(54, 162, 235, 0.7)',
-                        'rgba(255, 206, 86, 0.7)',
-                        'rgba(75, 192, 192, 0.7)',
-                        'rgba(153, 102, 255, 0.7)',
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                    ],
-                    borderWidth: 1
-                }]
-            },
-        });
-    }
+            var ctx = document.getElementById(elementId).getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.7)',
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(255, 206, 86, 0.7)',
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(153, 102, 255, 0.7)',
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+            });
+        }
 
-    //grafic of tickets states
-    createPieChart('pieChart', @json($data['labels']), @json($data['data']));
-    //grafic of tickets priorities
-    createPieChart('pieChartPri', @json($chartData['labels']), @json($chartData['data']));
+        //grafic of tickets states
+        createPieChart('pieChart', @json($data['labels']), @json($data['data']));
+        //grafic of tickets priorities
+        createPieChart('pieChartPri', @json($chartData['labels']), @json($chartData['data']));
 
 
-    //grafic of number of external formations per month changing dinamically
-        var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        var currentMonth = 4;//new Date().getMonth() + 1;
-        var labels = months.slice(0, currentMonth);
+        //grafic of number of external formations per month changing dinamically
+        // var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        // var currentMonth = 4;//new Date().getMonth() + 1;
+        // var labels = months.slice(0, currentMonth);
 
-        new Chartist.Line('#traffic-chart', {
-            labels: labels,
-            series: [
-                [23000, 25000, 19000, 34000, 56000, 64000].slice(0, currentMonth)
-            ]
-        }, {
-            low: 1,
-            showArea: true
+        // new Chartist.Line('#traffic-chart', {
+        //     labels: labels,
+        //     series: [
+        //         [23000, 25000, 19000, 34000, 56000, 64000].slice(0, currentMonth)
+        //     ]
+        // }, {
+        //     low: 1,
+        //     showArea: true
+        // });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var ctx = document.getElementById('traffic-chart').getContext('2d');
+
+            var chartDataStartDate = @json($chartDataStartDate);
+
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: chartDataStartDate.labels,
+                    datasets: [{
+                        data: chartDataStartDate.data,
+                        fill: true,
+                        borderColor: 'rgb(75, 192, 192)',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
         });
     </script>
 
     <style>
-
         .table-responsive thead th {
             position: sticky;
             top: 0;
@@ -179,6 +204,5 @@
         .card-body {
             padding-top: 0;
         }
-
     </style>
 @endsection
