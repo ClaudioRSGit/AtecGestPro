@@ -86,8 +86,11 @@ class DashboardController extends Controller
         //     ->get();
 
 
-            $startDateCounts = DB::table('partner_training_users')
+        $currentYear = date('Y');
+
+        $startDateCounts = DB::table('partner_training_users')
             ->select(DB::raw('MONTH(start_date) as month'), DB::raw('count(*) as count'))
+            ->whereYear('start_date', $currentYear)
             ->groupBy('month')
             ->get()
             ->keyBy('month')
