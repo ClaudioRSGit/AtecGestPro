@@ -19,8 +19,16 @@ class CheckRole
     public function handle($request, Closure $next, ...$roles)
     {
         if (Auth::check()) {
+            $user = Auth::user();
+
+            if ($user->hasRole('funcionario')) {
+                if ($request->routeIs('users.edit', ['user' => $user->id])) {
+                    return $next($request);
+                }
+            }
+
             foreach ($roles as $role) {
-                if (Auth::user()->hasRole($role)) {
+                if ($user->hasRole($role)) {
                     return $next($request);
                 }
             }

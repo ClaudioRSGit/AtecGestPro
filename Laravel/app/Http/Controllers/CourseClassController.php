@@ -55,7 +55,7 @@ class CourseClassController extends Controller
 
 
 
-        $students = User::where('isStudent', 1)->whereNull('course_class_id')->paginate(5);
+        $students = User::where('isStudent', 1)->whereNull('course_class_id')->get();
 
         return view('course-classes.create', compact('courses','students'));
     }

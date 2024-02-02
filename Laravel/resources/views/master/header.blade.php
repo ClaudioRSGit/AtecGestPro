@@ -30,9 +30,7 @@
                 </span>
             </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                    @if (Auth::user()->hasRole('admin') || Auth::user()->hasRole('tecnico'))
                     <a class="dropdown-item" href="{{ route('users.edit', ['user' => Auth::user()]) }}">Perfil</a>
-                    @endif
                     <a class="dropdown-item" href="#"
                         onclick="event.preventDefault(); localStorage.clear(); document.getElementById('logout-form').submit();">Sair</a>
                 </div>
@@ -44,6 +42,7 @@
 
     </form>
 </nav>
+@livewireScripts
 <script>
     window.livewire.on('redirectToTicket', ticketId => {
         window.location.href = '/tickets/' + ticketId;

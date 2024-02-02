@@ -91,8 +91,11 @@ Route::middleware(['auth', 'checkRole:admin,tecnico'])->group(function () {
     Route::resource('/dashboard', 'DashboardController');
 });
 
-Route::middleware(['auth', 'checkRole:user,admin,tecnico,funcionario'])->group(function () {
+Route::middleware(['auth', 'checkRole:admin,tecnico,funcionario'])->group(function () {
     Route::resource('tickets', 'TicketController');
     Route::get('ticket-histories', 'TicketHistoryController@index');
     Route::get('ticket-histories/{id}', 'TicketHistoryController@show')->name('ticket-histories.show');
+
+    Route::get('users/{user}/edit', 'UserController@edit')->name('users.edit');
+    Route::put('users/{user}', 'UserController@update')->name('users.update');
 });
