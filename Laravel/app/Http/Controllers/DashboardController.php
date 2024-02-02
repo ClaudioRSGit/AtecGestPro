@@ -88,7 +88,7 @@ class DashboardController extends Controller
 
         return view('dashboard.index', compact('usersWithMaterialsDelivered', 'ticketStatusOpen', 'ticketStatusProgress',
          'ticketStatusPending','ticketStatusSolved', 'ticketStatusClosed', 'ticketTotal', 'ticketStatusCounts', 'userStudentsCount',
-          'userRolesCounts', 'materialInternalCount', 'materialExternalCount', 'data', 'chartData'));
+          'userRolesCounts', 'materialInternalCount', 'materialExternalCount', 'data', 'chartData', 'startDateCounts'));
     }
 
     /**
