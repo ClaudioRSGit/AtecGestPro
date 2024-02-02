@@ -37,11 +37,10 @@
                 <div class="card flex-grow-1">
                     <h5 class="card-header">Número de Formações Externas</h5>
                     <div class="card-body d-flex flex-column justify-content-end">
-                        <div id="traffic-chart"></div>
+                        <div id="traffic-chart" style="width: 100%; height: 100%;"></div>
                     </div>
                 </div>
             </div>
-
 
         </div>
         <div class="row">
