@@ -134,14 +134,18 @@
     createPieChart('pieChartPri', @json($chartData['labels']), @json($chartData['data']));
 
 
+    //grafic of number of external formations per month changing dinamically
+        var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+        var currentMonth = new Date().getMonth() + 1; // getMonth() returns a zero-based index, so we add 1
+        var labels = months.slice(0, currentMonth);
 
         new Chartist.Line('#traffic-chart', {
-            labels: ['January', 'Februrary', 'March', 'April', 'May', 'June'],
+            labels: labels,
             series: [
-                [23000, 25000, 19000, 34000, 56000, 64000]
+                [23000, 25000, 19000, 34000, 56000, 64000].slice(0, currentMonth)
             ]
         }, {
-            low: 0,
+            low: 1,
             showArea: true
         });
     </script>
