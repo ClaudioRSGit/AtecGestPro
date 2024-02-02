@@ -136,7 +136,7 @@
 
     //grafic of number of external formations per month changing dinamically
         var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-        var currentMonth = new Date().getMonth() + 1; // getMonth() returns a zero-based index, so we add 1
+        var currentMonth = 4;//new Date().getMonth() + 1;
         var labels = months.slice(0, currentMonth);
 
         new Chartist.Line('#traffic-chart', {
