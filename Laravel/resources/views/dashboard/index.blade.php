@@ -156,43 +156,51 @@
     </script>
 
     <style>
-        .ct-line.custom-color {
+        /* .ct-line.custom-color {
             stroke: #3211a8;
+
+        }
+        */
+
+        .ct-area.custom-area-color {
+            fill: #3211a8;
 
         }
 
 
-            .ct-area.custom-area-color {
-                fill: #3211a8;
+        .ct-series-a .ct-bar,
+        .ct-series-a .ct-line,
+        .ct-series-a .ct-point,
+        .ct-series-a .ct-slice-donut {
+            stroke: #0e46ca;
+        }
 
-            }
+        .table-responsive thead th {
+            position: sticky;
+            top: 0;
+            background: #fff;
 
-            .table-responsive thead th {
-                position: sticky;
-                top: 0;
-                background: #fff;
+            box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
 
-                box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+        }
 
-            }
-
-            #usersTable {
-                box-shadow: 1px 2px 1px 2px rgb(230, 229, 229);
-                margin: 15px;
-                border: 1px solid #141313;
-                background-color: #cbeaf8;
-                overflow-y: scroll;
-                overflow-x: hidden;
-                height: 370px;
-            }
+        #usersTable {
+            box-shadow: 1px 2px 1px 2px rgb(230, 229, 229);
+            margin: 15px;
+            border: 1px solid #141313;
+            background-color: #cbeaf8;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            height: 370px;
+        }
 
 
-            .card-header {
-                margin-bottom: 0;
-            }
+        .card-header {
+            margin-bottom: 0;
+        }
 
-            .card-body {
-                padding-top: 0;
-            }
+        .card-body {
+            padding-top: 0;
+        }
     </style>
 @endsection
