@@ -42,7 +42,7 @@ class PartnerController extends Controller
         $uniqueContacts = array_unique($contacts);
 
         if (count($contacts) !== count($uniqueContacts)) {
-            return redirect()->back()->withInput()->with('error', 'Valores de contato duplicados. Remova ou corrija os grupos duplicados!');
+            return redirect()->back()->withInput()->with('error', 'Valores de contacto duplicados. Remova ou corrija os grupos duplicados!');
         }
 
         $partner = Partner::create($request->only(['name', 'description', 'address']));
@@ -92,6 +92,17 @@ class PartnerController extends Controller
      */
     public function update(PartnerRequest $request, Partner $partner)
     {
+
+        $allContactValues = array_merge(
+            $request->input('existing_contact_values', []),
+            $request->input('new_contact_values', [])
+        );
+
+        $uniqueContactValues = array_unique(array_filter($allContactValues));
+
+        if (count($allContactValues) !== count($uniqueContactValues)) {
+            return redirect()->back()->withInput()->with('error', 'Valores de contacto duplicados. Remova ou corrija os grupos duplicados!');
+        }
 
         $partner->update($request->only(['name', 'description', 'address']));
 
