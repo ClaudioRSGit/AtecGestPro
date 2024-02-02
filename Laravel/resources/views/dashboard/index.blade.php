@@ -147,22 +147,13 @@
             ]
         }, {
             low: 0,
-            showArea: true,
-            classNames: {
-                line: 'ct-line custom-color',
-                area: 'ct-area custom-area-color'
-            }
+            showArea: true
         });
     </script>
 
     <style>
-        /* .ct-line.custom-color {
-            stroke: #3211a8;
 
-        }
-        */
-
-        .ct-area.custom-area-color {
+        .ct-series-a .ct-area {
             fill: #3211a8;
 
         }
