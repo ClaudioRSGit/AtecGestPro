@@ -38,23 +38,26 @@ class PartnerController extends Controller
      */
     public function store(PartnerRequest $request)
     {
-        $partner = Partner::create($request->only(['name', 'description', 'address']));
+        $contacts = $request->input('contact_value');
+        $uniqueContacts = array_unique($contacts);
 
-        // Adding contacts to the partner_contacts table
-        $contacts = $request->input('contact_description');
-        $values = $request->input('contact_value');
-
-        if ($contacts && $values) {
-            foreach ($contacts as $key => $contact) {
-                ContactPartner::create([
-                    'contact' => $values[$key],
-                    'description' => $contact,
-                    'partner_id' => $partner->id,
-                ]);
-            }
+        if (count($contacts) !== count($uniqueContacts)) {
+            return redirect()->back()->withInput()->with('error', 'Valores de contato duplicados. Remova ou corrija os grupos duplicados!');
         }
 
-        return redirect()->route('external.index')->with('success', 'Parceiro criado com sucesso');
+        $partner = Partner::create($request->only(['name', 'description', 'address']));
+
+        $contactDescriptions = $request->input('contact_description');
+
+        foreach ($contactDescriptions as $key => $contactDescription) {
+            ContactPartner::create([
+                'contact' => $contacts[$key],
+                'description' => $contactDescription,
+                'partner_id' => $partner->id,
+            ]);
+        }
+
+        return redirect()->route('external.index')->with('success', 'Parceiro criado com sucesso!');
     }
 
     /**
@@ -140,7 +143,7 @@ class PartnerController extends Controller
         }
     }
 
-    public function destroyContact(ContactPartner $partner_contact )
+    public function destroyContact(ContactPartner $partner_contact)
     {
         $partnerId = $partner_contact->partner_id;
 
