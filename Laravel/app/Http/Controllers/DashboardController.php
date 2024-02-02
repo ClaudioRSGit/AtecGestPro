@@ -86,9 +86,32 @@ class DashboardController extends Controller
             ->get();
 
 
+            $startDateCounts = DB::table('partner_training_users')
+            ->select(DB::raw('MONTH(start_date) as month'), DB::raw('count(*) as count'))
+            ->groupBy('month')
+            ->get()
+            ->keyBy('month')
+            ->toArray();
+
+
+        $months = range(1, 12);
+        $counts = array_fill(0, 12, 0);
+
+        foreach ($months as $month) {
+            if (isset($startDateCounts[$month])) {
+                $counts[$month - 1] = $startDateCounts[$month]->count;
+            }
+        }
+
+        $chartDataStartDate = [
+            'labels' => ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+            'data' => $counts,
+        ];
+
+
         return view('dashboard.index', compact('usersWithMaterialsDelivered', 'ticketStatusOpen', 'ticketStatusProgress',
          'ticketStatusPending','ticketStatusSolved', 'ticketStatusClosed', 'ticketTotal', 'ticketStatusCounts', 'userStudentsCount',
-          'userRolesCounts', 'materialInternalCount', 'materialExternalCount', 'data', 'chartData', 'startDateCounts'));
+          'userRolesCounts', 'materialInternalCount', 'materialExternalCount', 'data', 'chartData', 'chartDataStartDate'));
     }
 
     /**
