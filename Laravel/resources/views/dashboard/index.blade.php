@@ -148,39 +148,51 @@
         }, {
             low: 0,
             showArea: true,
-            axisY: {
-                ticks: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+            classNames: {
+                line: 'ct-line custom-color',
+                area: 'ct-area custom-area-color'
             }
         });
     </script>
 
     <style>
-        .table-responsive thead th {
-            position: sticky;
-            top: 0;
-            background: #fff;
-
-            box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+        .ct-line.custom-color {
+            stroke: #3211a8;
 
         }
 
-        #usersTable {
-            box-shadow: 1px 2px 1px 2px rgb(230, 229, 229);
-            margin: 15px;
-            border: 1px solid #141313;
-            background-color: #cbeaf8;
-            overflow-y: scroll;
-            overflow-x: hidden;
-            height: 370px;
-        }
+
+            .ct-area.custom-area-color {
+                fill: #3211a8;
+
+            }
+
+            .table-responsive thead th {
+                position: sticky;
+                top: 0;
+                background: #fff;
+
+                box-shadow: 0 2px 2px -1px rgba(0, 0, 0, 0.4);
+
+            }
+
+            #usersTable {
+                box-shadow: 1px 2px 1px 2px rgb(230, 229, 229);
+                margin: 15px;
+                border: 1px solid #141313;
+                background-color: #cbeaf8;
+                overflow-y: scroll;
+                overflow-x: hidden;
+                height: 370px;
+            }
 
 
-        .card-header {
-            margin-bottom: 0;
-        }
+            .card-header {
+                margin-bottom: 0;
+            }
 
-        .card-body {
-            padding-top: 0;
-        }
+            .card-body {
+                padding-top: 0;
+            }
     </style>
 @endsection
