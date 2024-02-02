@@ -153,17 +153,11 @@
 
     <style>
 
-        .ct-series-a .ct-area {
-            fill: #3211a8;
-
-        }
-
-
-        .ct-series-a .ct-bar,
+        .ct-series-a .ct-area,
         .ct-series-a .ct-line,
-        .ct-series-a .ct-point,
-        .ct-series-a .ct-slice-donut {
-            stroke: #0e46ca;
+        .ct-series-a .ct-point {
+            fill: #36A2EB;
+            stroke: #36A2EB;
         }
 
         .table-responsive thead th {
