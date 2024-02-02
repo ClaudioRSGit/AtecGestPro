@@ -80,10 +80,10 @@ class DashboardController extends Controller
             'data' => $dataTicketsPriority,
         ];
 
-        $startDateCounts = DB::table('partner_training_users')
-            ->select(DB::raw('MONTH(start_date) as month'), DB::raw('count(*) as count'))
-            ->groupBy('month')
-            ->get();
+        // $startDateCounts = DB::table('partner_training_users')
+        //     ->select(DB::raw('MONTH(start_date) as month'), DB::raw('count(*) as count'))
+        //     ->groupBy('month')
+        //     ->get();
 
 
             $startDateCounts = DB::table('partner_training_users')
