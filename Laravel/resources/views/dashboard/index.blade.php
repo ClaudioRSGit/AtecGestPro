@@ -13,13 +13,19 @@
 
                 <div class="card flex-grow-1">
                     <h5 class="card-header">Usuários & Materiais</h5>
-                    <div class="card-body">
+                    <ul class="list-group list-group-flush">
                         @foreach ($userRolesCounts as $roleCount)
-                            <h4> {{ $roleCount->name }} : {{ $roleCount->total }}</h4>
+                            <li class="list-group-item">
+                                <strong>{{ $roleCount->name }} :</strong> {{ $roleCount->total }}
+                            </li>
                         @endforeach
-                        <h4>Material interno : {{ $materialInternalCount }}</h4>
-                        <h4>Material Externo : {{ $materialExternalCount }}</h4>
-                    </div>
+                        <li class="list-group-item">
+                            <strong>Material interno :</strong> {{ $materialInternalCount }}
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Material Externo :</strong> {{ $materialExternalCount }}
+                        </li>
+                    </ul>
                 </div>
             </div>
 
