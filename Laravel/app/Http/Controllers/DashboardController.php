@@ -80,11 +80,41 @@ class DashboardController extends Controller
             'data' => $dataTicketsPriority,
         ];
 
+        // $startDateCounts = DB::table('partner_training_users')
+        //     ->select(DB::raw('MONTH(start_date) as month'), DB::raw('count(*) as count'))
+        //     ->groupBy('month')
+        //     ->get();
+
+
+        $currentYear = date('Y');
+
+        $startDateCounts = DB::table('partner_training_users')
+            ->select(DB::raw('MONTH(start_date) as month'), DB::raw('count(*) as count'))
+            ->whereYear('start_date', $currentYear)
+            ->groupBy('month')
+            ->get()
+            ->keyBy('month')
+            ->toArray();
+
+
+        $months = range(1, 12);
+        $counts = array_fill(0, 12, 0);
+
+        foreach ($months as $month) {
+            if (isset($startDateCounts[$month])) {
+                $counts[$month - 1] = $startDateCounts[$month]->count;
+            }
+        }
+
+        $chartDataStartDate = [
+            'labels' => ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            'data' => $counts,
+        ];
 
 
         return view('dashboard.index', compact('usersWithMaterialsDelivered', 'ticketStatusOpen', 'ticketStatusProgress',
          'ticketStatusPending','ticketStatusSolved', 'ticketStatusClosed', 'ticketTotal', 'ticketStatusCounts', 'userStudentsCount',
-          'userRolesCounts', 'materialInternalCount', 'materialExternalCount', 'data', 'chartData'));
+          'userRolesCounts', 'materialInternalCount', 'materialExternalCount', 'data', 'chartData', 'chartDataStartDate'));
     }
 
     /**

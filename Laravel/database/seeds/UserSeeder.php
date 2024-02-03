@@ -32,7 +32,7 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'Vasco Trindade',
             'username' => 'T3698521',
-            'email' => 'vasco.trindade.t3698521@edu.atec.pt',
+            'email' => 'claudio.silva.t0123173@edu.atec.pt',
             'contact' => '912345678',
             'password' => bcrypt('password123'),
             'notes' => '',
@@ -178,7 +178,7 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'tecnico',
             'username' => 'tecnico',
-            'email' => 'jose.silva.t0231c89@edu.atec.pt',
+            'email' => 'ricardo.ferreira.t0123185@edu.atec.pt',
             'contact' => '934592939',
             'password' => bcrypt('Password*123'),
             'notes' => '',
