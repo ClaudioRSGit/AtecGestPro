@@ -189,6 +189,7 @@
             </tr>
         </thead>
         <tbody>
+            <tr class="filler"></tr>
             @foreach ($waitingQueueTickets as $ticket)
                 <tr class="customTableStyling">
                     <td class="pl-4">#{{ $ticket->id }}</td>
