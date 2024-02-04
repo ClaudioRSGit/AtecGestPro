@@ -237,10 +237,10 @@ thead th{
     justify-content: space-between;
     align-items: center;
 }
-.editDelete div{
+.editDelete div, .restore, .delete{
     transition: all 0.3s ease-in-out;
 }
-.editDelete div:hover{
+.editDelete div:hover, .restore:hover, .delete:hover{
     transform: translateY(-3px);
     color: #fff;
 }
