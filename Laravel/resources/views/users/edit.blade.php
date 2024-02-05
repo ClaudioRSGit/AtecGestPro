@@ -74,7 +74,9 @@
                     </div>
                 </div>
 
-                @if (!Auth::user()->hasRole('funcionario'))
+
+
+
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="role_id" class="form-label">Função:</label>
@@ -120,19 +122,12 @@
                                 <textarea class="form-control" id="notes" name="notes">{{ $user->notes }}</textarea>
                             </div>
                         </div>
-                        <div class="buttons d-flex justify-content-start align-items-center pt-3">
-                            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
-                            <a href="{{ route('users.index') }}" class="btn btn-secondary">Cancelar</a>
-                            <button type="submit" form="deleteForm" class="btn btn-danger">Excluir</button>
-                        </div>
                     </div>
-                @else
-                    <div class="buttons d-flex justify-content-start align-items-center pl-3">
+                    <div class="buttons d-flex justify-content-start align-items-center pt-3">
                         <button type="submit" class="btn btn-primary">Salvar Alterações</button>
                         <a href="{{ route('users.index') }}" class="btn btn-secondary">Cancelar</a>
                         <button type="submit" form="deleteForm" class="btn btn-danger">Excluir</button>
                     </div>
-                @endif
             </div>
         </form>
     </div>
