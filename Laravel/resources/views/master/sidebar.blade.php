@@ -41,7 +41,7 @@
                 <p class="toggleableElement ml-3">Material</p>
             </div>
 
-            <div class="link trainings {{ Request::routeIs('external.*') ? 'selected' : '' }}"
+            <div class="link trainings {{ Request::routeIs('external.*') ? 'selected' : '' }} {{ Request::routeIs('partners.*') ? 'selected' : '' }} {{ Request::routeIs('trainings.*') ? 'selected' : '' }}"
                 onclick="location.href='{{ route('external.index') }}'">
                 <svg xmlns="http://www.w3.org/2000/svg" height="16" width="20" viewBox="0 0 640 512">
                     <path fill="#116fdc"
