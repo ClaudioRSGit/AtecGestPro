@@ -160,6 +160,10 @@
             </div>
             <div class="tab-pane fade " id="recycleTable">
 
+                @if($deletedUsers->isEmpty())
+                    <img src="{{ asset('assets/reciclagem_azul_extra_bold_2_sem fundo.png') }}" alt="Não existem registos" class="bin">
+                @else
+
                 <div class="">
                     <table class="table">
                         <thead>
@@ -215,11 +219,23 @@
                     </table>
                     {{ $deletedUsers->appends(request()->input())->links() }}
                 </div>
+                @endif
 
             </div>
 
         </div>
     </div>
+
+    <style>
+        .bin{
+            margin-top: 100px!important;
+            width: 200px;
+            height: 200px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+    </style>
 
     <script>
         $(document).ready(function () {
