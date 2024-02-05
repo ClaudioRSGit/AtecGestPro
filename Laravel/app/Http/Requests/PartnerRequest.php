@@ -35,16 +35,24 @@ class PartnerRequest extends FormRequest
                 'min:9',
                 'max:20',
                 'regex:/^[\s\d()+-]+$/',
-                function ($value, $fail) use ($partnerId) {
+                function ($attribute, $value, $fail) use ($partnerId) {
                     if (!is_null($value)) {
-                        $exists = \DB::table('contact_partners')
-                            ->where('contact', $value)
-                            ->where('partner_id', '<>', $partnerId)
-                            ->exists();
+                        \DB::beginTransaction();
+                        try {
+                            $exists = \DB::table('contact_partners')
+                                ->where('contact', $value)
+                                ->where('partner_id', '<>', $partnerId)
+                                ->exists();
 
-                        if ($exists) {
-                            $fail('O contato já existe!');
+                            if ($exists) {
+                                \DB::rollBack();
+                                $fail('O contacto já existe!');
+                            }
+                        } catch (\Exception $e) {
+                            \DB::rollBack();
+                            $fail('Erro ao validar o contacto!');
                         }
+                        \DB::commit();
                     }
                 },
             ],
