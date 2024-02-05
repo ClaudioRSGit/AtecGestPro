@@ -51,7 +51,7 @@
                     <div class="mb-3">
                         <div class="d-flex justify-content-between align-items-center">
                             <label for="contacts" class="form-label">Contactos:</label>
-                            <button type="button" class="btn btn-primary" onclick="addContactFields()">Novo
+                            <button type="button" class="btn btn-primary mb-3" onclick="addContactFields()">Novo
                                 Contacto</button>
                         </div>
                         <div id="contacts-container">
