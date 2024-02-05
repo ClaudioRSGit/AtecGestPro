@@ -28,7 +28,33 @@ class TicketController extends Controller
         $filterStatus = $request->input('filterStatus');
         $ticketSearch = $request->input('ticketSearch');
 
+        $sort = $request->query('sort');
+        $direction = $request->query('direction', 'asc');
+        $query = Ticket::query();
+//        dd($sort, $direction);
+        switch ($sort) {
+            case 'number':
+                $sortColumn = 'id';
+                break;
+            case 'title':
+                $sortColumn = 'title';
+                break;
+            case 'user':
+                $sortColumn = 'user_id';
+                break;
+            case 'technician':
+                $sortColumn = 'ticket_users.user_id';
+                break;
+            default:
+                $sortColumn = 'id';
+        }
 
+        if ($sort === 'technician') {
+            $query->join('ticket_users', 'tickets.id', '=', 'ticket_users.ticket_id')
+                ->select('tickets.*', 'ticket_users.user_id as technician_id')
+                ->groupBy('tickets.id');
+            $sortColumn = \DB::raw('ticket_users.user_id');
+        }
 
 
         if (auth()->user()->role_id == 2) {
@@ -64,6 +90,7 @@ class TicketController extends Controller
         }
 
 
+        $query->orderBy($sortColumn ,  $direction);
 
         $tickets = $query->paginate(5);
         $users = User::all();
@@ -71,7 +98,7 @@ class TicketController extends Controller
         $priorities = TicketPriority::all();
         $statuses = TicketStatus::all();
 
-        return view('tickets.index', compact('tickets', 'users', 'ticketSearch', 'filterCategory', 'filterPriority', 'filterStatus', 'categories', 'priorities', 'statuses', 'waitingQueueTickets', 'recycledTickets'));
+        return view('tickets.index', compact('tickets', 'users', 'ticketSearch', 'filterCategory', 'filterPriority', 'filterStatus', 'categories', 'priorities', 'statuses', 'waitingQueueTickets', 'recycledTickets', 'sort', 'direction'));
     }
 
     public function create()

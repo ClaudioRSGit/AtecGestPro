@@ -105,13 +105,34 @@
                         </div>
 
                     @else
+                        @php
+                            $currentSort = request('sort');
+                            $currentDirection = request('direction', 'asc');
+                            $newDirection = $currentDirection == 'asc' ? 'desc' : 'asc';
+                        @endphp
                         <table class="table bg-white rounded-top">
                             <thead>
                             <tr>
-                                <th scope="col">Número</th>
-                                <th scope="col">Título</th>
-                                <th scope="col">Utilizador</th>
-                                <th scope="col">Técnico</th>
+                                <th scope="col">
+                                    <a href="{{ route('tickets.index', ['sort' => 'number', 'direction' => $currentSort === 'number' ? $newDirection : 'asc']) }}">
+                                        Número
+                                    </a>
+                                </th>
+                                <th scope="col">
+                                    <a href="{{ route('tickets.index', ['sort' => 'title', 'direction' => $currentSort === 'title' ? $newDirection : 'asc']) }}">
+                                        Título
+                                    </a>
+                                </th>
+                                <th scope="col">
+                                    <a href="{{ route('tickets.index', ['sort' => 'user', 'direction' => $currentSort === 'user' ? $newDirection : 'asc']) }}">
+                                        Utilizador
+                                    </a>
+                                </th>
+                                <th scope="col">
+                                    <a href="{{ route('tickets.index', ['sort' => 'technician', 'direction' => $currentSort === 'technician' ? $newDirection : 'asc']) }}">
+                                        Técnico
+                                    </a>
+                                </th>
                                 <th scope="col">Estado</th>
                                 <th scope="col">Data de Abertura</th>
                                 <th scope="col">Data de Vencimento</th>
@@ -250,7 +271,7 @@
                             </tbody>
                         </table>
                     @endif
-                        {{ $waitingQueueTickets->appends(request()->input())->links() }}
+                    {{ $waitingQueueTickets->appends(request()->input())->links() }}
                 </div>
 
 
