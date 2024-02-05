@@ -245,7 +245,7 @@ class TicketController extends Controller
     {
         $ticket->delete();
 
-//        $this->logTicketHistory($ticket->id, 3, 'Ticket #' . $ticket->id . ' foi removido por ' . User::find(Auth::id())->name . '.');
+        $this->logTicketHistory($ticket->id, 3, 'O ticket #' . $ticket->id . ' foi removido por ' . User::find(Auth::id())->name . '.');
 
         return redirect()->route('tickets.index')->with('success', 'Ticket removido com sucesso!');
 
@@ -314,13 +314,19 @@ class TicketController extends Controller
         $ticket = Ticket::onlyTrashed()->findOrFail($id);
         $ticket->restore();
 
+        $this->logTicketHistory($ticket->id, 3, 'O ticket #' . $ticket->id . ' foi restaurado por ' . User::find(Auth::id())->name . '.');
+
+
         return redirect()->route('tickets.index')->with('success', 'Restaurado com sucesso!');
     }
 
     public function forceDelete($id)
     {
         $ticket = Ticket::onlyTrashed()->findOrFail($id);
+        $this->logTicketHistory($ticket->id, 3, 'O ticket #' . $ticket->id . ' foi apagado permanentemente por ' . User::find(Auth::id())->name . '.');
+
         $ticket->forceDelete();
+
 
         return redirect()->route('tickets.index')->with('success', 'Ticket apagado permanentemente!');
     }
