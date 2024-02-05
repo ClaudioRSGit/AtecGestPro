@@ -2,6 +2,7 @@
 
 @section('styles')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
     <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_blue.css">
 
 @endsection
@@ -14,7 +15,7 @@
     </style>
 
 
-    <div class="">
+    <div class="w-100">
 
         @error('start_date')
         <div class="alert alert-danger success-alert">{{ $message }}</div>
@@ -33,7 +34,7 @@
                     <label for="training_id">Formação:</label>
                     <select class="form-control" id="training_id" name="training_id" required>
                         @foreach($trainings as $training)
-                        <option value="{{ $training->id }}">{{ $training->name }}</option>
+                            <option value="{{ $training->id }}">{{ $training->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -41,7 +42,8 @@
                     <label for="partner_id">Parceiro:</label>
                     <select class="form-control" id="partner_id" name="partner_id" required>
                         @foreach($partners as $partner)
-                            <option value="{{ $partner->id }}" data-address="{{ $partner->address }}">{{ $partner->name }}</option>
+                            <option value="{{ $partner->id }}"
+                                    data-address="{{ $partner->address }}">{{ $partner->name }}</option>
                         @endforeach
                     </select>
                 </div>
@@ -64,28 +66,31 @@
                 <div class="materials">
                     <table class="table bg-white">
                         <thead>
-                            <tr>
-                                <th>Nome</th>
-                                <th>Descrição</th>
-                                <th>Quantidade</th>
-                                <th>Selecionar</th>
-                            </tr>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Descrição</th>
+                            <th>Quantidade</th>
+                            <th>Selecionar</th>
+                        </tr>
                         </thead>
                         <tbody class="customTableStyling">
+                        <tr class="filler"></tr>
+                        @foreach($materials as $material)
+                            <tr>
+                                <td>{{ $material->name }}</td>
+                                <td>{{ $material->description }}</td>
+                                <td class="pl-4">
+                                    <input type="number" name="material_quantities[{{ $material->id }}]" value="1"
+                                           min="1" max="{{ $material->quantity }}"
+                                           @if($material->quantity == 0) disabled @endif>
+                                </td>
+                                <td class="pl-5">
+                                    <input type="checkbox" name="materials[]" value="{{ $material->id }}"
+                                           @if($material->quantity == 0) disabled @endif>
+                                </td>
+                            </tr>
                             <tr class="filler"></tr>
-                            @foreach($materials as $material)
-                                <tr>
-                                    <td>{{ $material->name }}</td>
-                                    <td>{{ $material->description }}</td>
-                                    <td class="pl-4">
-                                        <input type="number" name="material_quantities[{{ $material->id }}]" value="1" min="1" max="{{ $material->quantity }}" @if($material->quantity == 0) disabled @endif>
-                                    </td>
-                                    <td class="pl-5">
-                                        <input type="checkbox" name="materials[]" value="{{ $material->id }}" @if($material->quantity == 0) disabled @endif>
-                                    </td>
-                                </tr>
-                                <tr class="filler"></tr>
-                            @endforeach
+                        @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -93,13 +98,13 @@
                 <div class="startCalendar">
                     <label for="start_date">Data de Início:</label>
                     <input type="datetime-local" class="form-control flatpickr" id="start_date" name="start_date"
-                    required placeholder="Selecione a data de início">
+                           required placeholder="Selecione a data de início">
                 </div>
 
                 <div class="endCalendar">
                     <label for="end_date">Data de Fim:</label>
                     <input type="datetime-local" class="form-control flatpickr" id="end_date" name="end_date"
-                    required placeholder="Selecione a data de fim">
+                           required placeholder="Selecione a data de fim">
                 </div>
 
                 <div class="btns">
@@ -133,21 +138,27 @@
             place-items: center;
             grid-gap: 1rem;
         }
-        .grid > div{
+
+        .grid > div {
             width: 100%;
         }
+
         .partner {
             grid-area: partner;
         }
+
         .training {
             grid-area: training;
         }
+
         .technician {
             grid-area: technician;
         }
+
         .address {
             grid-area: address;
         }
+
         .materials {
             grid-area: materials;
             align-self: start;
@@ -155,10 +166,12 @@
             max-height: 20rem;
             overflow: scroll;
         }
+
         .materials::-webkit-scrollbar {
             display: none;
         }
-        .materials thead{
+
+        .materials thead {
             position: sticky;
             top: 0;
             z-index: 1;
@@ -170,12 +183,15 @@
         .startCalendar {
             grid-area: startCalendar;
         }
+
         .startCalendar input {
             margin: auto;
         }
+
         .endCalendar {
             grid-area: endCalendar;
         }
+
         .btns {
             grid-area: buttons;
         }
@@ -187,7 +203,9 @@
 
 @section('scripts')
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/pt.js"></script>
     <script>
+
         jQuery(function () {
             flatpickr("#start_date, #end_date", {
                 inline: true,
@@ -195,12 +213,11 @@
                 altFormat: "F j, Y",
                 dateFormat: "Y-m-d",
                 minDate: "today",
-
-
+                locale: "pt"
             });
         });
 
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             var partnerDropdown = document.getElementById('partner_id');
             var addressField = document.getElementById('address');
 

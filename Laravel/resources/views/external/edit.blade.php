@@ -210,13 +210,18 @@
 
 @section('scripts')
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/pt.js"></script>
+
     <script>
-        flatpickr(".flatpickr", {
-            inline: true,
-            altInput: true,
-            altFormat: "F j, Y H:i",
-            dateFormat: "Y-m-d\TH:i:s",
-            minDate: "today",
+        jQuery(function () {
+            flatpickr("#start_date, #end_date", {
+                inline: true,
+                altInput: true,
+                altFormat: "F j, Y",
+                dateFormat: "Y-m-d",
+                minDate: "today",
+                locale: "pt"
+            });
         });
 
         document.addEventListener('DOMContentLoaded', function() {
