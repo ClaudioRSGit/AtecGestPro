@@ -18,7 +18,7 @@
         <form method="post" action="{{ route('materials.store') }}">
             @csrf
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-6 mb-3">
 
                     <div class="mb-3">
                         <label for="name" class="form-label">Nome do Material:</label>
@@ -72,14 +72,14 @@
                             <input type="number" class="form-control" id="quantity" name="quantity" value="1"
                                 min="1" style="text-align: left;">
                         </div>
-                        <div class="mx-3 internal">
+                        <div class="mx-3 internal mb-3">
                             <label for="isInternal" class="form-label">Material interno?</label>
                             <select class="form-control" id="isInternal" name="isInternal" onchange="toggleFields()">
                                 <option value="1" {{ old('isInternal') == 1 ? 'selected' : '' }}>Sim</option>
                                 <option value="0" {{ old('isInternal') == 0 ? 'selected' : '' }}>Não</option>
                             </select>
                         </div>
-                        <div class="mx-3 clothing">
+                        <div class="mx-3 clothing mb-3">
                             <label for="isClothing" class="form-label">É vestuário?</label>
                             <select class="form-control" id="isClothing" name="isClothing" onchange="toggleFields()">
                                 <option value="1" {{ old('isClothing') == 1 ? 'selected' : '' }}>Sim</option>
@@ -137,10 +137,10 @@
                     </div>
                 </div>
                 </div>
-                    <div class="m-3">
-                        <button type="submit" class="btn btn-primary">Criar Material</button>
-                        <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
-                    </div>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary">Criar Material</button>
+                <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
             </div>
         </div>
         </form>
@@ -176,8 +176,8 @@
         .grid{
             display: grid;
             grid-template-areas:
-                'gender quantity'
-                'internal clothing';
+                'internal clothing'
+                'gender quantity';
         }
     </style>
 

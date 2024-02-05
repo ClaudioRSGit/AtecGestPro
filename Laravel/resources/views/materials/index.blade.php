@@ -110,13 +110,15 @@
                         <td>{{ $material->supplier !== null ? $material->supplier : 'N.A.' }}</td>
 
                         <td>
-                            @if($material->isClothing == 0)
+                            @if($material->isClothing === 0)
                                 N.A.
                             @else
-                                @if($material->gender == 1)
+                                @if($material->gender === 1)
                                     Masculino
-                                @elseif($material->gender == 0)
+                                @elseif($material->gender === 0)
                                     Feminino
+                                @else
+                                    N.A.
                                 @endif
                             @endif
 
