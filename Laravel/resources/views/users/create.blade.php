@@ -79,7 +79,7 @@
 
                     <div class="mb-3" id="labelCourseClass" style="display: none;">
                         <label for="course_class_id" class="form-label">Turma:</label>
-                        <select class="form-select" id="course_class_id" name="course_class_id" onchange="updateCourseDescription(this)">
+                        <select class="form-control" id="course_class_id" name="course_class_id" onchange="updateCourseDescription(this)">
                             @foreach($courseClasses as $class)
                                 <option
                                     value="{{ $class->id }}"
