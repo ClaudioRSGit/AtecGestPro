@@ -134,7 +134,7 @@
                 'technician address startCalendar'
                 'materials materials endCalendar'
                 'materials materials endCalendar'
-                '. buttons .';
+                'buttons . .';
             place-items: center;
             grid-gap: 1rem;
         }

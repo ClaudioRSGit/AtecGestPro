@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class LoginController extends Controller
 {
@@ -56,6 +57,9 @@ class LoginController extends Controller
         $credentials = $request->only('username', 'password');
 
         if (Auth::attempt($credentials, $request->filled('remember'))) {
+            if (!Storage::disk('public')->exists('attachments')) {
+                Storage::disk('public')->makeDirectory('attachments');
+            }
             return true;
         }
 
