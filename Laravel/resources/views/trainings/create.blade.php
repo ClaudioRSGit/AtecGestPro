@@ -4,7 +4,7 @@
     <div class="container">
         <h1>Criar Nova formação</h1>
 
-        <form method="POST" action="{{ url('trainings') }}">
+        <form method="POST" action="{{ url('trainings') }}" class="w-50">
             @csrf
 
             <div class="mb-3">
