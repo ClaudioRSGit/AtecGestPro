@@ -261,5 +261,9 @@
             background-image: url('assets/search.svg');
             background-size: cover;
         }
+
+        .buttons{
+            height: calc(1.6em + 0.75rem + 2px);
+        }
     </style>
 @endsection

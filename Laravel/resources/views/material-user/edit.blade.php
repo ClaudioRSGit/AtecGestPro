@@ -59,7 +59,7 @@
                 </tbody>
             </table>
             <br>
-            <div class="d-flex justify-content-end">
+            <div>
                 <a href="{{ route('material-user.index') }}" class="btn btn-secondary mx-2">Cancelar</a>
                 <button id="delete-selected" class="btn btn-danger">Excluir selecionados</button>
             </div>
