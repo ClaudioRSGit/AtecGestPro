@@ -2,13 +2,14 @@
 <html>
 <head>
     <title>404 Not Found</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <style>
        body{
   margin:0;
   padding:0;
   font-family: 'Tomorrow', sans-serif;
   height:100vh;
-background-image: linear-gradient(to top, #0a51bb, #1f1746, #131537, #0d1028, #050819);
+background-image: linear-gradient(to top, #ffffff, #f2f2f2, #e6e6e6, #55a1d4, #0886da);
   display:flex;
   justify-content:center;
   align-items:center;
@@ -82,8 +83,9 @@ h1{
         <div>ERROR</div>
         <h1>404</h1>
         <hr>
-        <div>Page Not Found</div>
-      </div>
+        <div class="mb-2">Page Not Found</div>
+        <a href="http://127.0.0.1:8000/external/create" class="btn btn-primary mb-3 ">Voltar</a>
+    </div>
 
       <div class="astronaut">
         <img src="https://images.vexels.com/media/users/3/152639/isolated/preview/506b575739e90613428cdb399175e2c8-space-astronaut-cartoon-by-vexels.png" alt="" class="src">
