@@ -67,8 +67,9 @@
                 </form>
 
 
-                <a href="{{ route('tickets.create') }}" class="btn btn-primary">
-                    <img src="{{ asset('assets/new.svg') }}"> Novo Ticket
+                <a href="{{ route('tickets.create') }}" class="btn btn-primary d-flex">
+                    <img src="{{ asset('assets/new.svg') }}">
+                    <p class="novoTicket d-flex align-items-center">Novo Ticket</p>
                 </a>
 
 
@@ -115,12 +116,7 @@
                         <tr class="customTableStyling" id="heading{{ $ticket->id }}"
                             onclick="location.href='{{ route('tickets.show', $ticket->id) }}'">
 
-                            <td>
-                                <a class="btn btn-link" data-toggle="collapse" data-target="#collapse{{ $ticket->id }}"
-                                    aria-expanded="true" aria-controls="collapse{{ $ticket->id }}">
-                                    #{{ $ticket->id ? $ticket->id : 'N.A.' }}
-                                </a>
-                            </td>
+                            <td class="pl-4">#{{ $ticket->id ? $ticket->id : 'N.A.' }}</td>
                             <td>
                                 <div class="d-flex align-items-center">
                                     <span class="mr-2"
@@ -193,9 +189,10 @@
             </tr>
         </thead>
         <tbody>
+            <tr class="filler"></tr>
             @foreach ($waitingQueueTickets as $ticket)
                 <tr class="customTableStyling">
-                    <td>#{{ $ticket->id }}</td>
+                    <td class="pl-4">#{{ $ticket->id }}</td>
                     <td>
                         <div class="d-flex align-items-center">
                             <span class="mr-2"
@@ -212,7 +209,7 @@
                     <td>{{ $ticket->ticketStatus->description }}</td>
                     <td>{{ $ticket->created_at->format('d-m-Y') }}</td>
                     <td class="editDelete">
-                        <div>
+                        <div class="w-50">
                             <a href="{{ route('tickets.edit', $ticket->id) }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16"
                                     viewBox="0 0 512 512">
@@ -221,7 +218,7 @@
                                 </svg>
                             </a>
                         </div>
-                        <div>
+                        <div class="w-50">
                             <form method="post" action="{{ route('tickets.destroy', $ticket->id) }}"
                                 style="display:inline;">
                                 @csrf
@@ -263,7 +260,7 @@
         <tbody>
             @foreach ($recycledTickets as $ticket)
                 <tr class="customTableStyling">
-                    <td>#{{ $ticket->id }}</td>
+                    <td class="pl-4">#{{ $ticket->id }}</td>
                     <td class="d-flex align-items-center">
                         <span class="mr-2"
                             style="height: 15px; width: 15px; background-color: {{ $ticket->ticketPriority->id == 1 ? 'green' : ($ticket->ticketPriority->id == 2 ? 'green' : ($ticket->ticketPriority->id == 3 ? 'yellow' : ($ticket->ticketPriority->id == 4 ? 'orange' : 'red'))) }}; border-radius: 50%; display: inline-block; opacity: 0.5;"></span>
@@ -277,19 +274,23 @@
                     </td>
                     <td>{{ $ticket->ticketStatus->description }}</td>
                     <td>{{ $ticket->created_at->format('d-m-Y') }}</td>
-                    <td>
-                        <a href="{{ route('tickets.restore', $ticket->id) }}">
-                            <img src="{{ asset('assets/restore.svg') }}">
-                        </a>
+                    <td class="pl-4">
+                        <div class="restore w-100 h-100 d-flex align-items-center">
+                            <a href="{{ route('tickets.restore', $ticket->id) }}">
+                                <img src="{{ asset('assets/restore.svg') }}">
+                            </a>
+                        </div>
                     </td>
-                    <td>
-                        <form action="{{ route('tickets.forceDelete', $ticket->id) }}" method="POST" style="display: inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" onclick="return confirm('Tem a certeza que deseja apagar permanentemente?')" style="border: none; background: none; padding: 0;">
-                                <img src="{{ asset('assets/permaDelete.svg') }}" alt="Delete">
-                            </button>
-                        </form>
+                    <td class="pl-4">
+                        <div class="delete w-100 h-100 d-flex align-items-center">
+                            <form action="{{ route('tickets.forceDelete', $ticket->id) }}" method="POST" style="display: inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" onclick="return confirm('Tem a certeza que deseja apagar permanentemente?')" style="border: none; background: none; padding: 0;">
+                                    <img src="{{ asset('assets/permaDelete.svg') }}" alt="Delete">
+                                </button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
                 <tr class="filler"></tr>
@@ -314,6 +315,12 @@
                 margin: 0 auto;
                 display: block;
                 opacity: 0.5;
+            }
+
+            @media (max-width: 1080px) {
+                .noTicket {
+                    width: 50%;
+                }
             }
         </style>
 

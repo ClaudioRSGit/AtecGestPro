@@ -135,3 +135,9 @@
         </div>
     </div>
 @endsection
+
+<style>
+    .col-md-9{
+                padding-left: 0 !important;
+            }
+</style>
