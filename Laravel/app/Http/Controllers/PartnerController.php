@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Partner;
-use App\Partner_contact;
+use App\ContactPartner;
 use Illuminate\Http\Request;
+use App\Http\Requests\PartnerRequest;
 
 class PartnerController extends Controller
 {
@@ -35,34 +36,28 @@ class PartnerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PartnerRequest $request)
     {
-        $this->validate(
-            request(),
-            [
-                'name' => 'required',
-                'description' => 'required',
-                'address' => 'required',
-            ]
-        );
+        $contacts = $request->input('contact_value');
+        $uniqueContacts = array_unique($contacts);
+
+        if (count($contacts) !== count($uniqueContacts)) {
+            return redirect()->back()->withInput()->with('error', 'Valores de contacto duplicados. Remova ou corrija os grupos duplicados!');
+        }
 
         $partner = Partner::create($request->only(['name', 'description', 'address']));
 
-        // Adding contacts to the partner_contacts table
-        $contacts = $request->input('contact_description');
-        $values = $request->input('contact_value');
+        $contactDescriptions = $request->input('contact_description');
 
-        if ($contacts && $values) {
-            foreach ($contacts as $key => $contact) {
-                Partner_contact::create([
-                    'contact' => $values[$key],
-                    'description' => $contact,
-                    'partner_id' => $partner->id,
-                ]);
-            }
+        foreach ($contactDescriptions as $key => $contactDescription) {
+            ContactPartner::create([
+                'contact' => $contacts[$key],
+                'description' => $contactDescription,
+                'partner_id' => $partner->id,
+            ]);
         }
 
-        return redirect()->route('external.index')->with('success', 'Parceiro criado com sucesso');
+        return redirect()->route('external.index')->with('success', 'Parceiro criado com sucesso!');
     }
 
     /**
@@ -95,13 +90,19 @@ class PartnerController extends Controller
      * @param  \App\Partner  $partner
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Partner $partner)
+    public function update(PartnerRequest $request, Partner $partner)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string|max:500',
-            'address' => 'required|string|max:500',
-        ]);
+
+        $allContactValues = array_merge(
+            $request->input('existing_contact_values', []),
+            $request->input('new_contact_values', [])
+        );
+
+        $uniqueContactValues = array_unique(array_filter($allContactValues));
+
+        if (count($allContactValues) !== count($uniqueContactValues)) {
+            return redirect()->back()->withInput()->with('error', 'Valores de contacto duplicados. Remova ou corrija os grupos duplicados!');
+        }
 
         $partner->update($request->only(['name', 'description', 'address']));
 
@@ -111,7 +112,7 @@ class PartnerController extends Controller
         $existingContactValues = $request->input('existing_contact_values', []);
 
         foreach ($existingContactIds as $key => $existingContactId) {
-            $existingContact = Partner_contact::find($existingContactId);
+            $existingContact = ContactPartner::find($existingContactId);
             $existingContact->update([
                 'contact' => $existingContactValues[$key],
                 'description' => $existingContactDescriptions[$key],
@@ -123,7 +124,7 @@ class PartnerController extends Controller
         $newContactValues = $request->input('new_contact_values', []);
 
         foreach ($newContactDescriptions as $key => $newContactDescription) {
-            Partner_contact::create([
+            ContactPartner::create([
                 'contact' => $newContactValues[$key],
                 'description' => $newContactDescription,
                 'partner_id' => $partner->id,
@@ -143,10 +144,30 @@ class PartnerController extends Controller
     public function destroy(Partner $partner)
     {
         try {
+
             $partner->delete();
+            $partner->contactPartner()->delete();
+
             return redirect()->route('external.index')->with('success', 'Parceiro excluído com sucesso!');
         } catch (\Exception $e) {
             return redirect()->route('external.index')->with('error', 'Erro ao excluir o Parceiro. Por favor, tente novamente.');
+        }
+    }
+
+    public function destroyContact(ContactPartner $partner_contact)
+    {
+        $partnerId = $partner_contact->partner_id;
+
+        $partner = Partner::find($partnerId);
+
+        $partner->update(['updated_at' => now()]);
+
+        try {
+            $partner_contact->delete();
+
+            return response()->json(['success' => 'Contacto excluído com sucesso!']);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Erro ao excluir o Contacto. Por favor, tente novamente.'], 500);
         }
     }
 

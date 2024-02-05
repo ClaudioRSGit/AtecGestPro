@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Notification_Type;
+use App\NotificationType;
 use Faker\Generator as Faker;
 
-$factory->define(Notification_Type::class, function (Faker $faker) {
+$factory->define(NotificationType::class, function (Faker $faker) {
     return [
         //
     ];

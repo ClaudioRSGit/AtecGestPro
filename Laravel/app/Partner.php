@@ -4,26 +4,20 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Partner_Trainings_Users;
-use App\Partner_contact;
 
 class Partner extends Model
 {
-    protected $fillable = [
-        'name',
-        'description',
-        'address',
-    ];
+    use softDeletes;
 
-    use SoftDeletes;
+    protected $guarded = [];
 
-    public function partnerTrainingsUsers()
+    public function partnerTrainingUsers()
     {
-        return $this->hasMany(Partner_Trainings_Users::class);
+        return $this->hasMany(PartnerTrainingUser::class);
     }
 
-    public function partnerContacts()
+    public function contactPartner()
     {
-        return $this->hasMany(Partner_contact::class);
+        return $this->hasMany(ContactPartner::class);
     }
 }

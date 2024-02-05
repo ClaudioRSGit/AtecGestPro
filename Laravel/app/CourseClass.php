@@ -3,22 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use App\Course;
-use App\User;
 
 class CourseClass extends Model
 {
-    protected $fillable = [
-        'description',
+
+    protected $guarded = [
+
     ];
-
-    use SoftDeletes;
-
-    public function students()
-    {
-        return $this->hasMany(User::class, 'course_class_id');
-    }
     public function course()
     {
         return $this->belongsTo(Course::class);
@@ -27,5 +18,10 @@ class CourseClass extends Model
     public function users()
     {
         return $this->hasMany(User::class);
+    }
+
+    public function students()
+    {
+        return $this->hasMany(User::class)->where('isStudent', true);
     }
 }

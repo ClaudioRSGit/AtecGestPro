@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Role;
 use App\User;
 use App\CourseClass;
 use App\Course;
 use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
@@ -16,30 +20,32 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
+        //        dd($request);
+        $searchName = $request->input('searchName');
         $roleFilter = $request->input('roleFilter');
-        $nameFilter = $request->input('nameFilter');
+        $sortColumn = $request->input('sortColumn', 'name');
+        $sortDirection = $request->input('sortDirection', 'asc');
 
-        $query = User::query();
+        $query = User::with('courseClass', 'role')->where('name', '!=', 'Fila de Espera');
 
-        if ($roleFilter) {
-            $query->where('role', $roleFilter);
-        }
-
-        if ($nameFilter) {
-            $query->where(function ($query) use ($nameFilter) {
-                $query->where('name', 'like', $nameFilter . '%');
+        if ($roleFilter && $roleFilter !== 'all') {
+            $query->whereHas('role', function ($roleQuery) use ($roleFilter) {
+                $roleQuery->where('id', $roleFilter);
             });
         }
 
-        $users = $query->paginate(5);
-
-        if ($request->ajax()) {
-            return view('users.partials.user_table', compact('users'));
+        if ($searchName) {
+            $query->where('name', 'like', "%$searchName%");
         }
 
-        return view('users.index', compact('users'));
-    }
+        $users = $query->orderBy($sortColumn, $sortDirection)->paginate(5);
+        $courseClasses = CourseClass::all();
+        $roles = Role::all();
 
+        $deletedUsers = User::onlyTrashed()->paginate(5);
+
+        return view('users.index', compact('users', 'courseClasses', 'roles', 'roleFilter', 'sortColumn', 'sortDirection', 'searchName', 'deletedUsers'));
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -49,124 +55,129 @@ class UserController extends Controller
     {
         $courseClasses = CourseClass::all();
         $courses = Course::all();
+        $roles = Role::all();
 
-        return view('users.create', compact('courseClasses', 'courses'));
+        return view('users.create', compact('courseClasses', 'courses', 'roles'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+
+    public function store(UserRequest  $request)
     {
+        $isStudent = $request->input('role_id') == 3 ? 1 : 0;
+        $request->merge(['isStudent' => $isStudent]);
+
+        if ($isStudent != 1) {
+            $request->merge(['course_class_id' => null]);
+        }
+
         try {
-            $request->validate([
-                'name' => 'required|string|min:5|max:255',
-                'username' => 'required|string|min:5|max:20',
-                'email' => [
-                    'required',
-                    'email',
-                ],
-                'contact' => 'required|min:9|max:20',
-                'password' => [
-                    'nullable',
-                    'string',
-                    'min:7',
-                    'regex:/^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).*$/',
-                ],
-                'role' => 'required',
-                'isActive' => 'required',
-                'isStudent' => 'nullable',
-            ]);
 
-            $request['isStudent'] = $this->setIsStudent($request);
-            $request['password'] = $this->encryptPassword($request['password']);
-            $user = User::create($request->all());
+            $password = $request->input('password');
+            $userData = $request->only(['name', 'username', 'email', 'contact', 'isStudent', 'isActive', 'course_class_id', 'role_id']);
 
-            return redirect()->route('users.show', $user->id);
+            if (!$isStudent && $password !== null) {
+                $userData['password'] = $this->encryptPassword($password);
+            }
+            $user = User::create($userData);
 
+
+            return redirect()->route('users.show', $user->id)->with('success', 'Utilizador criado com sucesso!');
         } catch (\Illuminate\Validation\ValidationException $e) {
             return redirect()->back()->withErrors($e->validator)->withInput();
         } catch (\Exception $e) {
-            return redirect()->back();
+            return redirect()->back()->with('error', 'Erro ao criar o utilizador. Por favor, tente novamente.');
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
+
     public function show(User $user)
     {
-        $courseClasses = CourseClass::all();
-        $courses = Course::all();
+        $courseClasses = CourseClass::with('Course')->get();
+        $roles = Role::all();
 
-        return view('users.show', compact('user', 'courseClasses', 'courses'));
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
-    {
-        $courseClasses = CourseClass::all();
-        $courses = Course::all();
 
-        return view('users.edit', compact('user', 'courseClasses', 'courses'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, User $user)
-    {
-        $request->validate([
-            'name' => 'required|string|min:5|max:255',
-            'username' => 'required|string|min:5|max:20',
-            'email' => [
-                'required',
-                'email',
-            ],
-            'contact' => 'required|min:9|max:20',
-            'password' => [
-                'nullable',
-                'string',
-                'min:7',
-                'regex:/^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).*$/',
-            ],
-            'role' => 'required',
-            'isActive' => 'required',
-            'isStudent' => 'nullable',
-        ]);
-
-        $request['isStudent'] = $this->setIsStudent($request);
-        $user->update($request->except('password'));
-
-        if ($request->has('password')) {
-            $user->password = $this->encryptPassword($request['password']);
-            $user->save();
+        if ($user->isStudent == 1) {
+            $user->load('courseClass', 'role');
+            $courseDescription = $user->courseClass ? $user->courseClass->course->description : null;
+        } else {
+            $user->load('role');
+            $courseDescription = null;
         }
 
-        return redirect()->route('users.index')->with('success', 'Utilizador atualizado com sucesso!');
+        return view('users.show', compact('user', 'courseClasses', 'courseDescription', 'roles'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\User  $user
-     * @return \Illuminate\Http\Response
-     */
+
+
+    public function edit(User $user)
+    {
+        // $courseClasses = CourseClass::all();
+        // $courses = Course::all();
+        // $roles = Role::all();
+        // $user->load('CourseClass.Course', 'Role');
+
+        // return view('users.edit', compact('user', 'courseClasses', 'courses', 'roles'));
+
+        $authenticatedUser = Auth::user();
+
+        if ($authenticatedUser->hasRole('funcionario')) {
+            if ($authenticatedUser->id === $user->id) {
+                $courseClasses = CourseClass::all();
+                $courses = Course::all();
+                $roles = Role::all();
+                $user->load('CourseClass.Course', 'Role');
+
+                return view('users.edit', compact('user', 'courseClasses', 'courses', 'roles'));
+            }
+        } else {
+            $courseClasses = CourseClass::all();
+            $courses = Course::all();
+            $roles = Role::all();
+            $user->load('CourseClass.Course', 'Role');
+
+            return view('users.edit', compact('user', 'courseClasses', 'courses', 'roles'));
+        }
+
+        return abort(403, 'Acesso não autorizado!');
+    }
+
+
+    public function update(UserRequest $request, User $user)
+    {
+        if ($user->role_id == 3 && $request->input('role_id') != 3 && !$request->filled('password')) {
+            return redirect()->back()->with('error', 'Password obrigatória ao alterar de Formando para outra função.');
+        }
+
+        $data = $request->validated();
+
+        if ($user->role_id != 3 && $request->input('role_id') == 3) {
+            $data['password'] = null;
+        }
+
+        if ($user->role_id != 3 && !$request->filled('password')) {
+            unset($data['password']);
+        }
+
+        if ($request->input('isStudent') != 1) {
+            $data['course_class_id'] = null;
+        }
+
+        if ($request->filled('password') && $request->input('role_id') != 3) {
+            $data['password'] = $this->encryptPassword($request->input('password'));
+        }
+
+        $user->update($data);
+
+        if ($user->hasRole('funcionario')) {
+            return redirect()->route('master.main')->with('success', 'Utilizador atualizado com sucesso!');
+        } else {
+            return redirect()->route('users.index')->with('success', 'Utilizador atualizado com sucesso!');
+        }
+    }
+
+
+
     public function destroy(User $user)
     {
         try {
@@ -181,7 +192,7 @@ class UserController extends Controller
     {
         $request->validate([
             'user_ids' => 'required|array',
-            'user_ids.*' => 'exists:users,id',//all items inside array must exist
+            'user_ids.*' => 'exists:users,id', //all items inside array must exist
         ]);
 
         try {
@@ -199,8 +210,24 @@ class UserController extends Controller
         return bcrypt($password);
     }
 
-    private function setIsStudent(Request $request)
+    //    private function setIsStudent(Request $request)
+    //    {
+    //        return $request->input('position') === 'formando' ? 1 : 0;
+    //    }
+
+    public function restore($id)
     {
-        return $request->input('role') === 'formando' ? 1 : 0;
+        $user = User::withTrashed()->find($id);
+        $user->restore();
+
+        return redirect()->back()->with('success', 'Utilizador restaurado com  sucesso');
+    }
+
+    public function forceDelete($id)
+    {
+        $user = User::withTrashed()->find($id);
+        $user->forceDelete();
+
+        return redirect()->back()->with('success', 'O utilizador foi removido permanentemente');
     }
 }

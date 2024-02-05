@@ -22,14 +22,14 @@
                 </div>
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-6 pl-4">
                 <div class="mb-3">
                     <label for="contacts" class="form-label">Contatos:</label>
 
-                    @if ($partner->partnerContacts->isEmpty())
+                    @if ($partner->contactPartner->isEmpty())
                         <p>Sem Contatos Associados</p>
                     @else
-                        @foreach($partner->partnerContacts as $contact)
+                        @foreach($partner->contactPartner as $contact)
                             <div class="mb-2">
                                 <input type="text" class="form-control" name="contact_description[]" value="{{ $contact->description }}" placeholder="Descrição" disabled>
                                 <input type="text" class="form-control" name="contact_value[]" value="{{ $contact->contact }}" placeholder="Contato" disabled>
@@ -41,11 +41,10 @@
         </div>
 
                 <div class="form-group">
-                    <label for="actions">Ações:</label>
                     <a href="{{ route('partners.edit', $partner->id) }}" class="btn btn-primary">Editar</a>
-                    <a href="{{ url()->previous() }}" class="btn btn-secondary">Voltar</a>
+                    <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
                 </div>
             </div>
-        </div>
+
     </div>
 @endsection
