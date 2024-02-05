@@ -28,17 +28,20 @@ class TicketController extends Controller
         $filterStatus = $request->input('filterStatus');
         $ticketSearch = $request->input('ticketSearch');
 
+
+
+
         if (auth()->user()->role_id == 2) {
             $query = Ticket::where('user_id', auth()->id());
-            $waitingQueueTickets = Ticket::where('user_id', auth()->id());
-            $recycledTickets = Ticket::onlyTrashed()->where('user_id', auth()->id())->get();
+            $waitingQueueTickets = Ticket::where('user_id', auth()->id())->paginate(5);
+            $recycledTickets = Ticket::onlyTrashed()->where('user_id', auth()->id())->paginate(5);
         } else {
             $query = Ticket::with('users','requester');
             $waitingQueueTickets = Ticket::whereHas('users', function ($query) {
                 $query->where('role_id', 4)
                       ->where('name', 'Fila de Espera');
-                    })->get();
-            $recycledTickets = Ticket::onlyTrashed()->get();
+                    })->paginate(5);
+            $recycledTickets = Ticket::onlyTrashed()->paginate(5);
         }
 
         if ($ticketSearch) {
@@ -59,6 +62,7 @@ class TicketController extends Controller
         if ($filterStatus) {
             $query->where('ticket_status_id', $filterStatus);
         }
+
 
 
         $tickets = $query->paginate(5);
