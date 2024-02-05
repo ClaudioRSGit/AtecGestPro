@@ -16,6 +16,7 @@ use App\NotificationUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\TicketRequest;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class TicketController extends Controller
@@ -333,14 +334,16 @@ class TicketController extends Controller
 
     public function sendEmail($id)
     {
-// // dd($id);
-//         $ticket = Ticket::with('requester')->find($id);
-// //        dd($ticket->requester->email);
 
-//         $email = new TicketEmail($ticket);
-// //        dd($email);
-//         Mail::to($ticket->requester->email)->send($email);
-//         return view('tickets.show', compact('ticket'));
+        try {
+            $ticket = Ticket::with('requester')->find($id);
+            $email = new TicketEmail($ticket);
+            Mail::to($ticket->requester->email)->send($email);
+        } catch (\Exception $e) {
+            Log::error('Mail sending failed: ' . $e->getMessage());
+            return back()->with('error', 'O envio de email falhou.');
+        }
+         return view('tickets.show', compact('ticket'));
     }
 
 }
