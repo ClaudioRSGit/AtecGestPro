@@ -22,7 +22,7 @@
 
             <div class="row">
 
-                <div class="col-md-6">
+                <div class="col-md-6 mb-3">
 
                     <div class="mb-3">
                         <label for="name" class="form-label">Nome do Material:</label>
@@ -79,14 +79,14 @@
                             <input type="number" class="form-control text-left" id="quantity" name="quantity"
                             value="{{ $material->quantity }}">
                         </div>
-                        <div class="mx-3 internal">
+                        <div class="mx-3 internal mb-3">
                             <label for="isInternal">Material interno?</label>
                             <select class="form-control" id="isInternal" name="isInternal">
                                 <option value="1" {{ $material->isInternal ? 'selected' : '' }}>Sim</option>
                                 <option value="0" {{ !$material->isInternal ? 'selected' : '' }}>Não</option>
                             </select>
                         </div>
-                        <div class="mx-3 clothing">
+                        <div class="mx-3 clothing mb-3">
                             <label for="isClothing">É vestuário?</label>
                             <select class="form-control" id="isClothing" name="isClothing">
                                 <option value="1" {{ $material->isClothing ? 'selected' : '' }}>Sim</option>
@@ -153,8 +153,10 @@
                                 </div>
                         </div>
                     </div>
-                        <button type="submit" class="btn btn-primary">Guardar Material</button>
-                        <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary">Guardar Material</button>
+                    <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
                 </div>
             </div>
         </form>
@@ -190,8 +192,8 @@
         .grid{
             display: grid;
             grid-template-areas:
-                'gender quantity'
-                'internal clothing';
+                'internal clothing'
+                'gender quantity';
         }
     </style>
 

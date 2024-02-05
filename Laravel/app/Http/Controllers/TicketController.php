@@ -16,7 +16,6 @@ use App\NotificationUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\TicketRequest;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class TicketController extends Controller
@@ -277,7 +276,7 @@ class TicketController extends Controller
     {
         $ticket->delete();
 
-        $this->logTicketHistory($ticket->id, 3, 'O ticket #' . $ticket->id . ' foi removido por ' . User::find(Auth::id())->name . '.');
+//        $this->logTicketHistory($ticket->id, 3, 'Ticket #' . $ticket->id . ' foi removido por ' . User::find(Auth::id())->name . '.');
 
         return redirect()->route('tickets.index')->with('success', 'Ticket removido com sucesso!');
 
@@ -346,34 +345,26 @@ class TicketController extends Controller
         $ticket = Ticket::onlyTrashed()->findOrFail($id);
         $ticket->restore();
 
-        $this->logTicketHistory($ticket->id, 3, 'O ticket #' . $ticket->id . ' foi restaurado por ' . User::find(Auth::id())->name . '.');
-
-
         return redirect()->route('tickets.index')->with('success', 'Restaurado com sucesso!');
     }
 
     public function forceDelete($id)
     {
         $ticket = Ticket::onlyTrashed()->findOrFail($id);
-        $this->logTicketHistory($ticket->id, 3, 'O ticket #' . $ticket->id . ' foi apagado permanentemente por ' . User::find(Auth::id())->name . '.');
-
         $ticket->forceDelete();
-
 
         return redirect()->route('tickets.index')->with('success', 'Ticket apagado permanentemente!');
     }
 
     public function sendEmail($id)
     {
+// // dd($id);
+//         $ticket = Ticket::with('requester')->find($id);
+// //        dd($ticket->requester->email);
 
-//        try {
-//            $ticket = Ticket::with('requester')->find($id);
-//            $email = new TicketEmail($ticket);
-//            Mail::to($ticket->requester->email)->send($email);
-//        } catch (\Exception $e) {
-//            Log::error('Mail sending failed: ' . $e->getMessage());
-//            return back()->with('error', 'O envio de email falhou.');
-//        }
+//         $email = new TicketEmail($ticket);
+// //        dd($email);
+//         Mail::to($ticket->requester->email)->send($email);
 //         return view('tickets.show', compact('ticket'));
     }
 

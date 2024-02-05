@@ -79,7 +79,7 @@
 
                     <div class="mb-3" id="labelCourseClass" style="display: none;">
                         <label for="course_class_id" class="form-label">Turma:</label>
-                        <select class="form-select" id="course_class_id" name="course_class_id" onchange="updateCourseDescription(this)">
+                        <select class="form-control" id="course_class_id" name="course_class_id" onchange="updateCourseDescription(this)">
                             @foreach($courseClasses as $class)
                                 <option
                                     value="{{ $class->id }}"
@@ -97,15 +97,15 @@
 
                     <div class="mb-3">
                         <label for="isActive" class="form-label">Estado:</label>
-                        <select class="form-select" id="isActive" name="isActive">
+                        <select class="form-control" id="isActive" name="isActive">
                             <option value="1">Ativo</option>
                             <option value="0">Desativado</option>
                         </select>
                     </div>
-                    <div class="buttons d-flex justify-content-start align-items-center">
-                        <button type="submit" class="btn btn-primary">Criar Utilizador</button>
-                        <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
-                    </div>
+                </div>
+                <div class="buttons d-flex justify-content-start align-items-center">
+                    <button type="submit" class="btn btn-primary">Criar Utilizador</button>
+                    <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
                 </div>
 
 
