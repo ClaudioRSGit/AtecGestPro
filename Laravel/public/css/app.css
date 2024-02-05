@@ -64,6 +64,28 @@ html {
     background-image: radial-gradient(circle, rgba(17, 111, 220, 0.1), rgba(120, 143, 228, 0.2), rgba(173, 177, 237, 0.1), rgba(217, 215, 246, 0), rgba(255, 255, 255, 0.1));
     z-index: -1;
 }
+.loginPage::before {
+    content: '';
+    position: absolute;
+    top: 1%;
+    right: 0%;
+    bottom: 0%;
+    left: 50%;
+    position: fixed;
+    background-image: radial-gradient(circle, rgba(17, 111, 220, 0.1), rgba(120, 143, 228, 0.2), rgba(173, 177, 237, 0.1), rgba(217, 215, 246, 0), rgba(255, 255, 255, 0.1));
+    z-index: -1;
+}
+.loginPage::after {
+    content: '';
+    position: absolute;
+    top: 1%;
+    right: 10%;
+    bottom: 0%;
+    left: 0%;
+    position: fixed;
+    background-image: radial-gradient(circle, rgba(17, 111, 220, 0.1), rgba(120, 143, 228, 0.2), rgba(173, 177, 237, 0.1), rgba(217, 215, 246, 0), rgba(255, 255, 255, 0.1));
+    z-index: -1;
+}
 article,
 aside,
 figcaption,
@@ -215,10 +237,10 @@ thead th{
     justify-content: space-between;
     align-items: center;
 }
-.editDelete div{
+.editDelete div, .restore, .delete{
     transition: all 0.3s ease-in-out;
 }
-.editDelete div:hover{
+.editDelete div:hover, .restore:hover, .delete:hover{
     transform: translateY(-3px);
     color: #fff;
 }
@@ -267,6 +289,17 @@ input[type="number"]{
 
 
 
+@media (max-width: 1082px) {
+    .links > div{
+        padding: 0;
+        margin: 0;
+    }
+    .toggleableElement{
+        display: none !important;
+        margin: 0;
+        width: 0;
+    }
+}
 
 
 
@@ -8927,6 +8960,10 @@ button.bg-dark:focus {
 .pl-4,
 .px-4 {
   padding-left: 1.5rem !important;
+}
+
+.pl-4{
+    padding-left: 2rem !important;
 }
 
 .p-5 {

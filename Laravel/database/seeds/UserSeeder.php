@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
+//use faker
+use Faker\Factory as Faker;
 
 class UserSeeder extends Seeder
 {
@@ -30,7 +32,7 @@ class UserSeeder extends Seeder
         DB::table('users')->insert([
             'name' => 'Vasco Trindade',
             'username' => 'T3698521',
-            'email' => 'vasco.trindade.t3698521@edu.atec.pt',
+            'email' => 'claudio.silva.t0123173@edu.atec.pt',
             'contact' => '912345678',
             'password' => bcrypt('password123'),
             'notes' => '',
@@ -159,6 +161,7 @@ class UserSeeder extends Seeder
             'course_class_id' => null,
             'role_id' => 4,
         ]);
+        // Seed 11
         DB::table('users')->insert([
             'name' => 'admin',
             'username' => 'admin',
@@ -171,10 +174,11 @@ class UserSeeder extends Seeder
             'course_class_id' => null,
             'role_id' => 1,
         ]);
+        // Seed 12
         DB::table('users')->insert([
             'name' => 'tecnico',
             'username' => 'tecnico',
-            'email' => 'jose.silva.t0231c89@edu.atec.pt',
+            'email' => 'ricardo.ferreira.t0123185@edu.atec.pt',
             'contact' => '934592939',
             'password' => bcrypt('Password*123'),
             'notes' => '',
@@ -183,5 +187,59 @@ class UserSeeder extends Seeder
             'course_class_id' => null,
             'role_id' => 4,
         ]);
+
+        $faker = Faker::create();
+
+        for ($i = 0; $i < 50; $i++) {
+            $firstName = $faker->firstName;
+            $lastName = $faker->lastName;
+            $username = 'T' . $faker->unique()->randomNumber(7);
+            $email = strtolower($firstName . '.' . $lastName . '.' . $username . '@edu.atec.pt');
+            $contact = $faker->numerify('#########');
+            $courseClassId = ($i % 5) + 1;
+            $password = null;
+            $isStudent = true;
+            $roleId = 3;
+
+            DB::table('users')->insert([
+                'name' => $firstName . ' ' . $lastName,
+                'username' => $username,
+                'email' => $email,
+                'contact' => $contact,
+                'password' => $password,
+                'notes' => '',
+                'isActive' => true,
+                'isStudent' => $isStudent,
+                'course_class_id' => $courseClassId,
+                'role_id' => $roleId,
+            ]);
+        }
+
+        for ($i = 0; $i < 30; $i++) {
+            $firstName = $faker->firstName;
+            $lastName = $faker->lastName;
+            $username = 'T' . $faker->unique()->randomNumber(7);
+            $email = strtolower($firstName . '.' . $lastName . '.' . $username . '@edu.atec.pt');
+            $contact = $faker->numerify('#########');
+            $password = null;
+            $isStudent = true;
+            $roleId = 3;
+
+            DB::table('users')->insert([
+                'name' => $firstName . ' ' . $lastName,
+                'username' => $username,
+                'email' => $email,
+                'contact' => $contact,
+                'password' => $password,
+                'notes' => '',
+                'isActive' => true,
+                'isStudent' => $isStudent,
+                'course_class_id' => null,
+                'role_id' => $roleId,
+            ]);
+        }
+
+
+
     }
 }

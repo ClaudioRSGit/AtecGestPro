@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="">
+    <div class="container">
         @if (session('success'))
             <div class="alert alert-success" id="success-alert">
                 {{ session('success') }}
@@ -64,7 +64,7 @@
                     <button class="btn btn-danger mb-3 mr-2" id="delete-selected-ptus">Excluir Selecionados</button>
 
 
-                    <a href="{{ route('external.create') }}" class="btn btn-primary mb-3 ">Nova Formação</a>
+                    <a href="{{ route('external.create') }}" class="btn btn-primary mb-3 ">Nova F. mercado</a>
 
                 </div>
 
@@ -250,7 +250,8 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{ $partners->links()}}
+                {{ $partners->appends(request()->input())->links() }}
+
             </div>
 
             <div class="tab-pane fade" id="trainingsTable">
@@ -281,7 +282,7 @@
 
                 <table class="table bg-white">
                     <thead>
-                        <tr>
+                        <tr >
                             <th scope="col">
                                 <input type="checkbox" id="select-all-trainings">
                             </th>
@@ -403,7 +404,6 @@
             });
         });
     </script>
-
     <script>
         document.addEventListener("DOMContentLoaded", function() {
 

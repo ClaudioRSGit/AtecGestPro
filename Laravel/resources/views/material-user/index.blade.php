@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container">
+    <div class="w-100">
         <h1>Vestuário</h1>
 
         @if (session('success'))
@@ -67,16 +67,14 @@
 
                 <div id="accordion">
                     <div class="ms-auto">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="select-all">
-                        <label for="select-all"></label>
+
                         <span>&nbsp; &nbsp;Turma</span>
                     </div>
                     @foreach ($courseClasses as $courseClass)
                         <div class="card mb-2 mt-2">
                             <div class="card-header bg-white" id="heading{{ $courseClass->id }}">
                                 <h2 class="mb-0">
-                                    <input type="checkbox" class="accordion-checkbox"
-                                        data-course="{{ $courseClass->course_id }}" data-id="{{ $courseClass->id }}">
+
                                     @php
                                         $allDelivered =
                                             $courseClass->students->count() > 0 &&
@@ -250,74 +248,6 @@
 
 
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var checkboxes = document.querySelectorAll('.no-propagate');
-
-            checkboxes.forEach(function(checkbox) {
-                checkbox.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                });
-            });
-        });
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const selectAllCheckbox = document.getElementById('select-all');
-            const checkboxes = document.querySelectorAll('.accordion-checkbox');
-            const sortDropdown = document.getElementById('sort');
-
-            sortDropdown.addEventListener('change', function() {
-                sortMaterials();
-            });
-
-            function sortMaterials() {
-                const sortValue = sortDropdown.value;
-                const materialCards = Array.from(document.querySelectorAll('.card'));
-                const fillerCards = Array.from(document.querySelectorAll(
-                    '.fillerCard'));
-
-                materialCards.sort((a, b) => {
-                    const aName = a.querySelector('button').textContent.toLowerCase();
-                    const bName = b.querySelector('button').textContent.toLowerCase();
-
-                    if (sortValue === 'az') {
-                        return aName.localeCompare(bName);
-                    } else {
-                        return bName.localeCompare(aName);
-                    }
-                });
-
-                const accordion = document.querySelector('#accordion');
-                materialCards.forEach((card, index) => {
-                    accordion.appendChild(card);
-                    if (fillerCards[index]) {
-                        accordion.appendChild(fillerCards[index]);
-                    }
-                });
-            }
-
-
-            selectAllCheckbox.addEventListener('change', function() {
-                checkboxes.forEach(checkbox => {
-                    checkbox.checked = selectAllCheckbox.checked;
-                });
-            });
-
-            checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
-                    selectAllCheckbox.checked = checkboxes.length === document.querySelectorAll(
-                        '.accordion-checkbox:checked').length;
-                });
-            });
-
-
-            setTimeout(function() {
-                $("#success-alert").fadeTo(500, 0).slideUp(500, function() {
-                    $(this).remove();
-                });
-            }, 2000);
-        });
-    </script>
     <style>
         #accordion .card {
             border: none;

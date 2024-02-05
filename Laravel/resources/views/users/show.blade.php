@@ -30,6 +30,14 @@
                     <label for="contact" class="form-label">Contacto:</label>
                     <input type="text" class="form-control" id="contact" name="contact" value="{{ $user->contact }}" disabled>
                 </div>
+
+                <div class="mb-3">
+                    <label for="isActive" class="form-label">Estado:</label>
+                    <select class="form-control" id="isActive" name="isActive" disabled>
+                        <option value="1" {{ $user->isActive === 1 ? 'selected' : '' }}>Ativo</option>
+                        <option value="0" {{ $user->isActive === 0 ? 'selected' : '' }}>Desativado</option>
+                    </select>
+                </div>
             </div>
 
             <div class="col-md-6">
@@ -46,7 +54,7 @@
                 @if ($user->isStudent == 1)
                 <div class="mb-3">
                     <label for="course_class_id" class="form-label">Turma:</label>
-                    <select class="form-select" id="course_class_id" name="course_class_id" disabled>
+                    <select class="form-control" id="course_class_id" name="course_class_id" disabled>
                         @foreach($courseClasses as $class)
                         <option value="{{ $class->id }}" {{ $user->course_class_id == $class->id ? 'selected' : '' }}>
                             {{ $class->description }}
@@ -68,21 +76,20 @@
                     </div>
                 @endif
 
-                <div class="mb-3">
-                    <label for="isActive" class="form-label">Estado:</label>
-                    <select class="form-select" id="isActive" name="isActive" disabled>
-                        <option value="1" {{ $user->isActive === 1 ? 'selected' : '' }}>Ativo</option>
-                        <option value="0" {{ $user->isActive === 0 ? 'selected' : '' }}>Desativado</option>
-                    </select>
-                </div>
 
-                <div class="form-group">
-                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary">Editar</a>
-                    <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
-                </div>
+            </div>
+            <div class="form-group">
+                <a href="{{ route('users.edit', $user->id) }}" class="btn btn-primary">Editar</a>
+                <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
             </div>
         </div>
     </div>
+
+    <style>
+        .col-md-6 {
+            padding-left: 0;
+        }
+    </style>
 
     <script>
           window.setTimeout(function() {

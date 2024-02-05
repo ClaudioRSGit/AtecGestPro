@@ -105,6 +105,6 @@
         }
     });
 </script>
-    @livewireScripts
+
 </body>
 </html>
