@@ -335,15 +335,15 @@ class TicketController extends Controller
     public function sendEmail($id)
     {
 
-        try {
-            $ticket = Ticket::with('requester')->find($id);
-            $email = new TicketEmail($ticket);
-            Mail::to($ticket->requester->email)->send($email);
-        } catch (\Exception $e) {
-            Log::error('Mail sending failed: ' . $e->getMessage());
-            return back()->with('error', 'O envio de email falhou.');
-        }
-         return view('tickets.show', compact('ticket'));
+//        try {
+//            $ticket = Ticket::with('requester')->find($id);
+//            $email = new TicketEmail($ticket);
+//            Mail::to($ticket->requester->email)->send($email);
+//        } catch (\Exception $e) {
+//            Log::error('Mail sending failed: ' . $e->getMessage());
+//            return back()->with('error', 'O envio de email falhou.');
+//        }
+//         return view('tickets.show', compact('ticket'));
     }
 
 }
