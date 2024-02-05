@@ -207,7 +207,7 @@ class TicketController extends Controller
         return view('tickets.edit', compact('ticket', 'technicians',  'requester', 'statuses', 'priorities', 'categories', 'userTickets', 'ticketTechnician'));
     }
 
-    public function update(Request $request, Ticket $ticket)
+    public function update(TicketRequest $request, Ticket $ticket)
     {
         $oldTicket = clone $ticket;
         $oldTicketTechnician = clone TicketUser::where('ticket_id', $ticket->id)->first('user_id');
@@ -223,15 +223,6 @@ class TicketController extends Controller
 
         $request->merge(['dueByDate' => $dueByDate]);
 
-        $this->validate($request, [
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'dueByDate' => 'required|date',
-            'attachment' => 'sometimes|file|max:20480', // 20MB
-            'ticket_status_id' => 'required|integer|exists:ticket_statuses,id',
-            'ticket_priority_id' => 'required|integer|exists:ticket_priorities,id',
-            'ticket_category_id' => 'required|integer|exists:ticket_categories,id',
-        ]);
 
         if ($request->hasFile('attachment')) {
             $filename = $request->file('attachment')->store('attachments', 'public');
