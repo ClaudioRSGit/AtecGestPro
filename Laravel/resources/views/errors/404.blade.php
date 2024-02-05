@@ -84,7 +84,7 @@ h1{
         <h1>404</h1>
         <hr>
         <div class="mb-2">Page Not Found</div>
-        <a href="{{ url()->previous() }}" class="btn btn-primary mb-3 ">Voltar</a>
+        <a href="{{ url()->previous() }}" class="btn btn-outline-primary mb-3 ">Voltar</a>
     </div>
 
       <div class="astronaut">
