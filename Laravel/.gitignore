@@ -1,7 +1,4 @@
 /node_modules
-/public/hot
-/storage/*.key
-/storage/debugbar/*
 /vendor
 .env
 .env.backup
