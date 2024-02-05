@@ -1,7 +1,9 @@
 <html>
 
 <head>
-<title>T-Rex Game</title>
+<title>404 error</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 <meta name="description" content="Ripped T-Rex/Dino game of Chromium">
 <meta property="og:title" content="Play the hidden T-Rex Dinosaur game of Chromium .">
 <meta property="og:type" content="article">
@@ -2551,6 +2553,14 @@ html[subframe] body {
    }(document, 'script', 'facebook-jssdk'));
 </script>
 <div id="main-frame-error" class="interstitial-wrapper" jstcache="0">
+    <div class="text-center">
+        <div>ERROR</div>
+        <h1>404</h1>
+        <div class="mb-2">Page Not Found</div>
+        <hr>
+
+
+    </div>
     <div id="offline-resources" jstcache="0">
     <div id="offline-resources-1x" jstcache="0">
       <img id="1x-obstacle-large" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJYAAAAyCAMAAACJUtIoAAAACVBMVEX////39/dTU1OabbyfAAAAAXRSTlMAQObYZgAAAXhJREFUeF7t2NGqAjEMANGM///RlwvaYQndULuFPJgHUYaEI6IPhgNAOA8HZ+3U6384F5y1U6YzAZTWG+dZamnFEstBFtCKJZSHWMADLJ18z+JqpQeLdKoDC8siC5iFCQs4znIxB5B1t6F3lQWkL4N0JsF+u6GXJdbI+FKW+yWr3lhgCZ2VSag3Nlk/FnRkIRbasLCO0oulikMsvmGpeiGLZ1jOMgtIP5bODivYYUXEIVbwFCt4khVssRgsgidZwQaLd2A8m7MYLGTl4KeQQs2y4kMAMGGlmQViDIb5O6xZnnLD485dIBzqDSE1yyFdL4Iqu4XJqUUWl/NVAFSZq1P6a5aqbAUM2epQbBioWflUBABiUyhYyZoCBev8XyMAObDNOhOAfiyxmHU0YNlldGAphGjFCjA3YkUn1o/1Y3EkZFZ5isCC6NUgwDBn1RuXH96doNfAhDXfsIyJ2AnolcCVhay0kcYbW0HvCO8OwIcJ3GzkORpkFuUP/1Ec8FW1qJkAAAAASUVORK5CYII=" jstcache="0">
@@ -2595,7 +2605,7 @@ html[subframe] body {
 				data-show-faces="false">
 			</div></td>
 			<td style="padding-left:15px;"><div class="g-plusone" data-size="medium" data-href="http://apps.thecodepost.org/trex/trex.html"></div></td>
-			<td><a href="https://twitter.com/share" class="twitter-share-button" data-url="http://apps.thecodepost.org/trex/trex.html" data-text="Cool Hidden T-Rex game" data-via="thecodepost" data-hashtags="trexgame">Tweet</a>
+			<td><a href="{{ url()->previous() }}" class="btn btn-outline-secondary mb-3 ">Voltar</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></td>
 	  </tr></table>
     </div>
