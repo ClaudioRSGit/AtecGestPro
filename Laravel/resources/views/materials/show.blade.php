@@ -38,33 +38,33 @@
 
                 </div>
 
-
-            </div>
-            <div class="col-md-6">
                 <div class="row grid mb-3">
-                    <div class="mx-3 gender mb-3" id="gender">
-                        @if (!$material->gender == null)
+                    <div class="gender mb-3" id="gender">
+                        @if ($material->gender !== null)
                             <label for="gender">Género:</label>
                             <input disabled type="text" class="form-control" name="gender" placeholder="{{ $material->gender == 1 ? 'Masculino' : 'Feminino' }}">
                         @endif
                     </div>
                     @if($material->isClothing == 0)
-                        <div class="mx-3 qty mb-3" id="quantity">
+                        <div class="qty mb-3" id="quantity">
                             <label for="quantity">Quantidade:</label>
                             <input disabled type="number" class="form-control text-left" id="quantity" name="quantity" value="{{ $material->quantity }}">
                         </div>
                     @endif
-                    <div class="mx-3 internal mb-3">
+                    <div class="internal mb-3">
                         <label for="isInternal">Material interno?</label>
                         <input disabled type="text" class="form-control" id="isInternal" name="isInternal" placeholder="{{ $material->isInternal == 1 ? 'Sim' : 'Não' }}">
                     </div>
-                    <div class="mx-3 clothing mb-3">
+                    <div class="clothing mb-3">
                         <label for="isClothing">É vestuário?</label>
                         <input disabled type="text" class="form-control" class="" name="isClothing" placeholder="{{ $material->isClothing == 1 ? 'Sim' : 'Não' }}">
 
                     </div>
                 </div>
 
+
+            </div>
+            <div class="col-md-6">
                 @if($material->isClothing==1 && !$material->sizes->isEmpty())
 
 
@@ -162,6 +162,7 @@
             grid-template-areas:
                 'internal clothing'
                 'gender quantity';
+            gap: 0 1rem;
         }
 
     </style>
