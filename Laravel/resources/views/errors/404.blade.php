@@ -84,7 +84,7 @@ h1{
         <h1>404</h1>
         <hr>
         <div class="mb-2">Page Not Found</div>
-        <a href="http://127.0.0.1:8000/external/create" class="btn btn-primary mb-3 ">Voltar</a>
+        <a href="{{ url()->previous() }}" class="btn btn-primary mb-3 ">Voltar</a>
     </div>
 
       <div class="astronaut">
