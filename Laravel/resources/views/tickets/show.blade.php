@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="w-100">
-        <h1>Ticket #{{ $ticket->id }}</h1>
+        <h1 >Ticket #{{ $ticket->id }}</h1>
 
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
@@ -137,7 +137,7 @@
                             </div>
                         </div>
                     </div>
-                </div>x\
+                </div>
             </div>
 
 
