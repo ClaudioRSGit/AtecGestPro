@@ -7,6 +7,10 @@
     <div class="row">
         <div class="col-md-9">
             <div class="mb-3">
+                <label for="requester" class="form-label">Utilizador:</label>
+                <input type="text" class="form-control" id="requester" name="requester" value="{{ $requester->name }}" disabled>
+            </div>
+            <div class="mb-3">
                 <label for="title" class="form-label">Título:</label>
                 <input type="text" class="form-control" id="title" value="{{ $ticket->title }}" disabled>
             </div>
@@ -68,6 +72,7 @@
         </div>
 
         <div class="col-md-3">
+
             <div class="mb-3">
                 <label for="status" class="form-label">Estado:</label>
                 <input type="text" class="form-control" value="{{ $ticket->ticketStatus->description ?? 'N/A' }}" disabled>
