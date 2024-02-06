@@ -182,6 +182,14 @@ class TicketController extends Controller
             $query->orderBy('created_at', 'desc');
         }, 'comments.user'])->find($ticket->id);
 
+
+        $id = $ticket->id;
+        $ticketHistories = TicketHistory::where('ticket_id', $id)->get();
+
+
+
+
+
         $users = User::all();
         $statuses = TicketStatus::all();
         $priorities = TicketPriority::all();
@@ -191,7 +199,7 @@ class TicketController extends Controller
         $technician = User::where('id', $ticketTechnician->user_id)->first();
         $requester = User::where('id', $ticket->user_id)->first();
 
-        return view('tickets.show', compact('ticket', 'userTickets', 'users', 'statuses', 'priorities', 'categories', 'technician', 'requester'));
+        return view('tickets.show', compact('ticket', 'userTickets', 'users', 'statuses', 'priorities', 'categories', 'technician', 'requester', 'ticketHistories'));
     }
 
     public function edit(Ticket $ticket)
