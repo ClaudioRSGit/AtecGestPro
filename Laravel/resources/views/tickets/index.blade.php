@@ -24,80 +24,80 @@
 
         <div>
             <div class="tab-content" id="myTabContent">
-                <div class="d-flex justify-content-between my-3">
 
-                    <form action="{{ route('tickets.index') }}" method="get" id="ticketSearchForm">
-                        <div class="input-group pr-2">
-                            <div class="search-container">
-                                <input type="text" class="form-control" id="ticketSearch" name="ticketSearch"
-                                       value="{{ request('ticketSearch') }}"
-                                       placeholder="{{ request('ticketSearch') ? request('ticketSearch') : 'Pesquisar ticket...' }}">
-                            </div>
-                            <div class="input-group-append">
-                                <button type="submit" class="btn btn-outline-secondary">
-                                    Procurar
-                                </button>
-                            </div>
-                        </div>
-
-                    </form>
-                    <div class="buttons">
-                        <form id="filterCategoryForm" action="{{ route('tickets.index') }}" method="GET">
-                            <select class="form-control w-auto" id="filterCategory" name="filterCategory"
-                                    onchange="submitCategoryForm()">
-                                <option value="" {{ $filterCategory === '' ? 'selected' : '' }}>Todas as categorias
-                                </option>
-                                @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}"
-                                        {{ (int) $filterCategory === $category->id ? 'selected' : '' }}>{{ $category->description }}
-                                    </option>
-                                @endforeach
-
-                            </select>
-                        </form>
-
-                        <form id="filterStatusForm" action="{{ route('tickets.index') }}" method="GET">
-                            <select class="form-control w-auto" id="filterStatus" name="filterStatus" onchange="submitStatusForm()">
-                                <option value="" {{ $filterStatus === '' ? 'selected' : '' }}>Todos os estados</option>
-                                @foreach ($statuses as $status)
-                                    <option value="{{ $status->id }}"
-                                        {{ (int) $filterStatus === $status->id ? 'selected' : '' }}>{{ $status->description }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        </form>
-
-                        <form id="filterPriorityForm" action="{{ route('tickets.index') }}" method="GET">
-                            <select class="form-control w-auto" id="filterPriority" name="filterPriority"
-                                    onchange="submitPriorityForm()">
-                                <option value="" {{ $filterPriority === '' ? 'selected' : '' }}>Todas as prioridades
-                                </option>
-                                @foreach ($priorities as $priority)
-                                    <option value="{{ $priority->id }}"
-                                        {{ (int) $filterPriority === $priority->id ? 'selected' : '' }}>
-                                        {{ $priority->description }}</option>
-                                @endforeach
-                            </select>
-                        </form>
-
-
-                        {{-- <a href="{{ route('tickets.create') }}" class="btn btn-primary d-flex">
-                            <img src="{{ asset('assets/new.svg') }}">
-                            <p class="novoTicket d-flex align-items-center">Novo Ticket</p>
-                        </a> --}}
-                        <div class="form-control btn-primary w-20 dropdown">
-                            <button onclick="showOptions()" class="btn btn-primary open w-100 h-100">Novo ticket</button>
-                            <div id="options" class="options w-100 h-auto">
-                                <button id="openTicket" class=" btn btn-primary">Ticket rápido</button>
-                                <a href="{{ route('tickets.create') }}" class="btn-primary">Ticket completo</a>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
 
                 <div class="tab-pane fade show active" id="allTickets" role="tabpanel" aria-labelledby="all-tickets-tab">
+                    <div class="d-flex justify-content-between my-3">
 
+                        <form action="{{ route('tickets.index') }}" method="get" id="ticketSearchForm">
+                            <div class="input-group pr-2">
+                                <div class="search-container">
+                                    <input type="text" class="form-control" id="ticketSearch" name="ticketSearch"
+                                           value="{{ request('ticketSearch') }}"
+                                           placeholder="{{ request('ticketSearch') ? request('ticketSearch') : 'Pesquisar ticket...' }}">
+                                </div>
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-outline-secondary">
+                                        Procurar
+                                    </button>
+                                </div>
+                            </div>
+
+                        </form>
+                        <div class="buttons">
+                            <form id="filterCategoryForm" action="{{ route('tickets.index') }}" method="GET">
+                                <select class="form-control w-auto" id="filterCategory" name="filterCategory"
+                                        onchange="submitCategoryForm()">
+                                    <option value="" {{ $filterCategory === '' ? 'selected' : '' }}>Todas as categorias
+                                    </option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}"
+                                            {{ (int) $filterCategory === $category->id ? 'selected' : '' }}>{{ $category->description }}
+                                        </option>
+                                    @endforeach
+
+                                </select>
+                            </form>
+
+                            <form id="filterStatusForm" action="{{ route('tickets.index') }}" method="GET">
+                                <select class="form-control w-auto" id="filterStatus" name="filterStatus" onchange="submitStatusForm()">
+                                    <option value="" {{ $filterStatus === '' ? 'selected' : '' }}>Todos os estados</option>
+                                    @foreach ($statuses as $status)
+                                        <option value="{{ $status->id }}"
+                                            {{ (int) $filterStatus === $status->id ? 'selected' : '' }}>{{ $status->description }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </form>
+
+                            <form id="filterPriorityForm" action="{{ route('tickets.index') }}" method="GET">
+                                <select class="form-control w-auto" id="filterPriority" name="filterPriority"
+                                        onchange="submitPriorityForm()">
+                                    <option value="" {{ $filterPriority === '' ? 'selected' : '' }}>Todas as prioridades
+                                    </option>
+                                    @foreach ($priorities as $priority)
+                                        <option value="{{ $priority->id }}"
+                                            {{ (int) $filterPriority === $priority->id ? 'selected' : '' }}>
+                                            {{ $priority->description }}</option>
+                                    @endforeach
+                                </select>
+                            </form>
+
+
+                            {{-- <a href="{{ route('tickets.create') }}" class="btn btn-primary d-flex">
+                                <img src="{{ asset('assets/new.svg') }}">
+                                <p class="novoTicket d-flex align-items-center">Novo Ticket</p>
+                            </a> --}}
+                            <div class="form-control btn-primary w-20 dropdown">
+                                <button onclick="showOptions()" class="btn btn-primary open w-100 h-100">Novo ticket</button>
+                                <div id="options" class="options w-100 h-auto">
+                                    <button id="openTicket" class=" btn btn-primary">Ticket rápido</button>
+                                    <a href="{{ route('tickets.create') }}" class="btn-primary">Ticket completo</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
                     @if (count($tickets) === 0)
                         <div>
                             <img src="{{ asset('assets/noTickets.png') }}" class="noTicket">
