@@ -67,11 +67,17 @@
                 </form>
 
 
-                <a href="{{ route('tickets.create') }}" class="btn btn-primary d-flex">
+                {{-- <a href="{{ route('tickets.create') }}" class="btn btn-primary d-flex">
                     <img src="{{ asset('assets/new.svg') }}">
                     <p class="novoTicket d-flex align-items-center">Novo Ticket</p>
-                </a>
-
+                </a> --}}
+                <div class="form-control btn-primary w-20 dropdown">
+                    <button onclick="showOptions()" class="btn btn-primary open w-100 h-100">Novo ticket</button>
+                    <div id="options" class="options w-100 h-auto">
+                        <button id="openTicket" class=" btn btn-primary">Ticket rápido</button>
+                        <a href="{{ route('tickets.create') }}" class="btn-primary">Ticket completo</a>
+                    </div>
+                </div>
 
             </div>
         </div>
@@ -299,8 +305,14 @@
     </table>
 </div>
 
+</div>
+    {{ $tickets->appends(request()->input())->links() }}
+    <div id="box" class="box" style="display: none";>
+        @component('tickets.quickTicket', ['priorities' => $priorities, 'categories' => $categories])
+
+        @endcomponent
     </div>
-            {{ $tickets->appends(request()->input())->links() }}
+
 
         </div>
 
@@ -315,6 +327,33 @@
                 margin: 0 auto;
                 display: block;
                 opacity: 0.5;
+            }
+            .dropdown {
+                position: relative;
+                display: inline-block;
+            }
+            .options{
+                display: none;
+                position: absolute;
+                overflow: auto;
+                z-index: 1;
+            }
+            .options a {
+                text-decoration: none;
+                display: block;
+                padding: 12px 16px;
+            }
+            .show{
+                display: block;
+            }
+            .open{
+                border: none;
+                cursor: pointer;
+                padding: 0;
+            }
+
+            .box{
+                display: none;
             }
 
             @media (max-width: 1080px) {
@@ -360,6 +399,28 @@
             if (lastTab) {
                 $('[href="' + lastTab + '"]').tab('show');
             }
+        });
+    </script>
+
+    <script>
+        function showOptions() {
+            document.getElementById("options").classList.toggle("show");
+        }
+        window.onclick = function(event) {
+            if (!event.target.matches('.open')) {
+                var dropdowns = document.getElementsByClassName("options");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+
+        document.getElementById('openTicket').addEventListener('click', function() {
+            document.getElementById('box').style.display = 'block';
         });
     </script>
 
