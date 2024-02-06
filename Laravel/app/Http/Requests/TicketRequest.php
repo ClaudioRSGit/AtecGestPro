@@ -23,19 +23,29 @@ class TicketRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            // 'user_id' => 'required|integer|exists:users,id',
+        $rules = [
             'title' => 'required|string|min:2|max:50',
             'description' => 'required|string|min:5|max:100',
             'technician_id' => 'required|exists:users,id',
-            // 'dueByDate' => 'required|date',
             'attachment' => 'sometimes|file|max:20480', // 20MB
             'priority_id' => 'required|exists:ticket_priorities,id',
             'category_id' => 'required|exists:ticket_categories,id',
-            // 'ticket_status_id' => 'required|integer|exists:ticket_statuses,id',
-            // 'ticket_priority_id' => 'required|integer|exists:ticket_priorities,id',
-            // 'ticket_category_id' => 'required|integer|exists:ticket_categories,id',
         ];
+
+        if ($this->isMethod('put')) {
+            $rules = [
+                // 'dueByDate' => 'required|date',
+                'title' => 'required|string|min:2|max:50',
+                'description' => 'required|string|min:5|max:100',
+                'technician_id' => 'required|exists:users,id',
+                'attachment' => 'sometimes|file|max:20480', // 20MB
+                'ticket_status_id' => 'required|integer|exists:ticket_statuses,id',
+                'ticket_priority_id' => 'required|integer|exists:ticket_priorities,id',
+                'ticket_category_id' => 'required|integer|exists:ticket_categories,id',
+            ];
+        }
+
+        return $rules;
     }
 
     public function messages()
