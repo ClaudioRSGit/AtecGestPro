@@ -91,7 +91,7 @@
                                         value="{{ $partner_Training_User->id }}">
                                 </td>
 
-                                <td class="{{ optional($partner_Training_User->partner)->name ? '' : 'text-danger' }}">
+                                <td class="clickable {{ optional($partner_Training_User->partner)->name ? '' : 'text-danger' }}">
                                     <a href="{{ route('external.show', $partner_Training_User->id) }}" class="d-flex align-items-center w-auto h-100">
                                         {{ optional($partner_Training_User->partner)->name ?? 'O Parceiro foi apagado do sistema.' }}
                                     </a>
@@ -182,7 +182,7 @@
                                     <input type="checkbox" class="no-propagate" name="selectedPartners[]"
                                         value="{{ $partner->id }}">
                                 </td>
-                                <td>
+                                <td class="clickable">
                                     <a href="{{ route('partners.show', $partner->id) }}" class="d-flex align-items-center h-100">{{ $partner->name }}</a>
                                 </td>
                                 <td>{{ $partner->description }}</td>
@@ -302,7 +302,7 @@
                                     <input type="checkbox" class="no-propagate" name="selectedTrainings[]"
                                         value="{{ $training->id }}">
                                 </td>
-                                <td>
+                                <td class="clickable">
                                     <a href="{{ route('trainings.show', $training->id) }}" class="d-flex align-items-center w-auto h-100">{{ $training->name }}</a>
                                 </td>
                                 <td>{{ $training->description }}</td>

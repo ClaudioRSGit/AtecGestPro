@@ -186,10 +186,10 @@ td a{
     color: black !important;
     text-decoration: none !important;
 }
-td > a{
+.clickable a{
     transition: all 0.3s ease-in-out;
 }
-td > a:hover{
+.clickable a:hover{
     transform: translateY(-3px);
     color: #3490dc !important;
 }
