@@ -85,15 +85,16 @@
                     <tbody class="customTableStyling">
                         <tr class="filler"></tr>
                         @foreach ($partner_Training_Users as $partner_Training_User)
-                            <tr class="customTableStyling"
-                                onclick="location.href='{{ route('external.show', $partner_Training_User->id) }}'">
+                            <tr class="customTableStyling">
                                 <td>
                                     <input type="checkbox" class="no-propagate" name="selectedPtus[]"
                                         value="{{ $partner_Training_User->id }}">
                                 </td>
 
-                                <td class="{{ optional($partner_Training_User->partner)->name ? '' : 'text-danger' }}">
-                                    {{ optional($partner_Training_User->partner)->name ?? 'O Parceiro foi apagado do sistema.' }}
+                                <td class="clickable {{ optional($partner_Training_User->partner)->name ? '' : 'text-danger' }}">
+                                    <a href="{{ route('external.show', $partner_Training_User->id) }}" class="d-flex align-items-center w-auto h-100">
+                                        {{ optional($partner_Training_User->partner)->name ?? 'O Parceiro foi apagado do sistema.' }}
+                                    </a>
                                 </td>
                                 <td>{{ optional($partner_Training_User->partner)->address }}</td>
                                 <td>{{ optional($partner_Training_User->user)->name }}</td>
@@ -104,7 +105,7 @@
                                 <td>{{ $partner_Training_User->start_date }}</td>
                                 <td>
 
-                                    <div class="d-flex justify-content-between mb-3 editDelete">
+                                    <div class="d-flex justify-content-between editDelete">
                                         <div style="width: 40%">
                                             <a href="{{ route('external.edit', $partner_Training_User->id) }}">
                                                 <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16"
@@ -176,13 +177,14 @@
                     <tbody>
                         <tr class="filler"></tr>
                         @foreach ($partners as $partner)
-                            <tr class="customTableStyling"
-                                onclick="location.href='{{ route('partners.show', $partner->id) }}'">
+                            <tr class="customTableStyling">
                                 <td>
                                     <input type="checkbox" class="no-propagate" name="selectedPartners[]"
                                         value="{{ $partner->id }}">
                                 </td>
-                                <td>{{ $partner->name }}</td>
+                                <td class="clickable">
+                                    <a href="{{ route('partners.show', $partner->id) }}" class="d-flex align-items-center h-100">{{ $partner->name }}</a>
+                                </td>
                                 <td>{{ $partner->description }}</td>
                                 <td>{{ $partner->address }}</td>
                                 <td>
@@ -295,17 +297,18 @@
                     <tbody id="trainingsTable">
                         <tr class="filler"></tr>
                         @foreach ($trainings as $training)
-                            <tr class="customTableStyling"
-                                onclick="location.href='{{ route('trainings.show', $training->id) }}'">
+                            <tr class="customTableStyling">
                                 <td>
                                     <input type="checkbox" class="no-propagate" name="selectedTrainings[]"
                                         value="{{ $training->id }}">
                                 </td>
-                                <td>{{ $training->name }}</td>
+                                <td class="clickable">
+                                    <a href="{{ route('trainings.show', $training->id) }}" class="d-flex align-items-center w-auto h-100">{{ $training->name }}</a>
+                                </td>
                                 <td>{{ $training->description }}</td>
                                 <td>{{ $training->category }}</td>
                                 <td>
-                                    <div class="d-flex justify-content-between mb-3 editDelete">
+                                    <div class="d-flex justify-content-between editDelete">
                                         <div style="width: 40%">
                                             <a href="{{ route('trainings.edit', $training->id) }}">
                                                 <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16"
