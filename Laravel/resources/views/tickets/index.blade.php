@@ -66,11 +66,6 @@
                     </select>
                 </form>
 
-
-                {{-- <a href="{{ route('tickets.create') }}" class="btn btn-primary d-flex">
-                    <img src="{{ asset('assets/new.svg') }}">
-                    <p class="novoTicket d-flex align-items-center">Novo Ticket</p>
-                </a> --}}
                 <div class="form-control btn-primary w-20 dropdown">
                     <button onclick="showOptions()" class="btn btn-primary open w-100 h-100">Novo ticket</button>
                     <div id="options" class="options w-100 h-auto">
