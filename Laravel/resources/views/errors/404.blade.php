@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <title>404 error</title>
+    <title>404 error page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <meta name="description" content="Ripped T-Rex/Dino game of Chromium">
@@ -2244,8 +2244,8 @@
     </style>
     <style>
         /* Copyright 2013 The Chromium Authors. All rights reserved.
- * Use of this source code is governed by a BSD-style license that can be
- * found in the LICENSE file. */
+        * Use of this source code is governed by a BSD-style license that can be
+        * found in the LICENSE file. */
 
         /* Don't use the main frame div when the error is in a subframe. */
         html[subframe] #main-frame-error {

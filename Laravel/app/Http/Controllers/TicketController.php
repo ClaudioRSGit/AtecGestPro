@@ -27,17 +27,46 @@ class TicketController extends Controller
         $filterStatus = $request->input('filterStatus');
         $ticketSearch = $request->input('ticketSearch');
 
+        $sort = $request->query('sort');
+        $direction = $request->query('direction', 'asc');
+        $query = Ticket::query();
+//        dd($sort, $direction);
+        switch ($sort) {
+            case 'number':
+                $sortColumn = 'id';
+                break;
+            case 'title':
+                $sortColumn = 'title';
+                break;
+            case 'user':
+                $sortColumn = 'user_id';
+                break;
+            case 'technician':
+                $sortColumn = 'ticket_users.user_id';
+                break;
+            default:
+                $sortColumn = 'id';
+        }
+
+        if ($sort === 'technician') {
+            $query->join('ticket_users', 'tickets.id', '=', 'ticket_users.ticket_id')
+                ->select('tickets.*', 'ticket_users.user_id as technician_id')
+                ->groupBy('tickets.id');
+            $sortColumn = \DB::raw('ticket_users.user_id');
+        }
+
+
         if (auth()->user()->role_id == 2) {
             $query = Ticket::where('user_id', auth()->id());
-            $waitingQueueTickets = Ticket::where('user_id', auth()->id());
-            $recycledTickets = Ticket::onlyTrashed()->where('user_id', auth()->id())->get();
+            $waitingQueueTickets = Ticket::where('user_id', auth()->id())->paginate(5);
+            $recycledTickets = Ticket::onlyTrashed()->where('user_id', auth()->id())->paginate(5);
         } else {
             $query = Ticket::with('users','requester');
             $waitingQueueTickets = Ticket::whereHas('users', function ($query) {
                 $query->where('role_id', 4)
                       ->where('name', 'Fila de Espera');
-                    })->get();
-            $recycledTickets = Ticket::onlyTrashed()->get();
+                    })->paginate(5);
+            $recycledTickets = Ticket::onlyTrashed()->paginate(5);
         }
 
         if ($ticketSearch) {
@@ -60,13 +89,15 @@ class TicketController extends Controller
         }
 
 
+        $query->orderBy($sortColumn ,  $direction);
+
         $tickets = $query->paginate(5);
         $users = User::all();
         $categories = TicketCategory::all();
         $priorities = TicketPriority::all();
         $statuses = TicketStatus::all();
 
-        return view('tickets.index', compact('tickets', 'users', 'ticketSearch', 'filterCategory', 'filterPriority', 'filterStatus', 'categories', 'priorities', 'statuses', 'waitingQueueTickets', 'recycledTickets'));
+        return view('tickets.index', compact('tickets', 'users', 'ticketSearch', 'filterCategory', 'filterPriority', 'filterStatus', 'categories', 'priorities', 'statuses', 'waitingQueueTickets', 'recycledTickets', 'sort', 'direction'));
     }
 
     public function create()
@@ -139,7 +170,7 @@ class TicketController extends Controller
 
         $this->logTicketHistory($ticket->id, 1, $ticketInfo);
         $this->sendEmail($ticket->id);
-        return redirect()->route('tickets.index')->with('success', 'Ticket criado com sucesso!');
+        return redirect()->route('tickets.index')->with('success', 'Ticket criado com sucesso!')->with('active_tab', 'allTickets');
 
     }
 
@@ -151,6 +182,14 @@ class TicketController extends Controller
             $query->orderBy('created_at', 'desc');
         }, 'comments.user'])->find($ticket->id);
 
+
+        $id = $ticket->id;
+        $ticketHistories = TicketHistory::where('ticket_id', $id)->get();
+
+
+
+
+
         $users = User::all();
         $statuses = TicketStatus::all();
         $priorities = TicketPriority::all();
@@ -158,8 +197,9 @@ class TicketController extends Controller
         $userTickets = Ticket::where('user_id', $ticket->user_id)->pluck('id');
         $ticketTechnician = TicketUser::where('ticket_id', $ticket->id)->first('user_id');
         $technician = User::where('id', $ticketTechnician->user_id)->first();
+        $requester = User::where('id', $ticket->user_id)->first();
 
-        return view('tickets.show', compact('ticket', 'userTickets', 'users', 'statuses', 'priorities', 'categories', 'technician'));
+        return view('tickets.show', compact('ticket', 'userTickets', 'users', 'statuses', 'priorities', 'categories', 'technician', 'requester', 'ticketHistories'));
     }
 
     public function edit(Ticket $ticket)
@@ -176,7 +216,7 @@ class TicketController extends Controller
         return view('tickets.edit', compact('ticket', 'technicians',  'requester', 'statuses', 'priorities', 'categories', 'userTickets', 'ticketTechnician'));
     }
 
-    public function update(Request $request, Ticket $ticket)
+    public function update(TicketRequest $request, Ticket $ticket)
     {
         $oldTicket = clone $ticket;
         $oldTicketTechnician = clone TicketUser::where('ticket_id', $ticket->id)->first('user_id');
@@ -192,15 +232,6 @@ class TicketController extends Controller
 
         $request->merge(['dueByDate' => $dueByDate]);
 
-        $this->validate($request, [
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'dueByDate' => 'required|date',
-            'attachment' => 'sometimes|file|max:20480', // 20MB
-            'ticket_status_id' => 'required|integer|exists:ticket_statuses,id',
-            'ticket_priority_id' => 'required|integer|exists:ticket_priorities,id',
-            'ticket_category_id' => 'required|integer|exists:ticket_categories,id',
-        ]);
 
         if ($request->hasFile('attachment')) {
             $filename = $request->file('attachment')->store('attachments', 'public');
@@ -238,16 +269,16 @@ class TicketController extends Controller
             'isRead' => false,
         ]);
 
-        return redirect()->route('tickets.index')->with('success', 'Ticket atualizado com sucesso!');
+        return redirect()->route('tickets.index')->with('success', 'Ticket atualizado com sucesso!')->with('active_tab', 'allTickets');
     }
 
     public function destroy(Ticket $ticket)
     {
         $ticket->delete();
 
-//        $this->logTicketHistory($ticket->id, 3, 'Ticket #' . $ticket->id . ' foi removido por ' . User::find(Auth::id())->name . '.');
+        $this->logTicketHistory($ticket->id, 3, 'O ticket #' . $ticket->id . ' foi removido por ' . User::find(Auth::id())->name . '.');
 
-        return redirect()->route('tickets.index')->with('success', 'Ticket removido com sucesso!');
+        return redirect()->route('tickets.index')->with('success', 'Ticket removido com sucesso!')->with('active_tab', 'allTickets');
 
     }
 
@@ -314,7 +345,9 @@ class TicketController extends Controller
         $ticket = Ticket::onlyTrashed()->findOrFail($id);
         $ticket->restore();
 
-        return redirect()->route('tickets.index')->with('success', 'Restaurado com sucesso!');
+        $this->logTicketHistory($ticket->id, 4, 'O ticket #' . $ticket->id . ' foi restaurado por ' . User::find(Auth::id())->name . '.');
+
+        return redirect()->route('tickets.index')->with('success', 'Restaurado com sucesso!')->with('active_tab', 'allTickets');
     }
 
     public function forceDelete($id)
@@ -322,7 +355,7 @@ class TicketController extends Controller
         $ticket = Ticket::onlyTrashed()->findOrFail($id);
         $ticket->forceDelete();
 
-        return redirect()->route('tickets.index')->with('success', 'Ticket apagado permanentemente!');
+        return redirect()->route('tickets.index')->with('success', 'Ticket apagado permanentemente!')->with('active_tab', 'allTickets');
     }
 
     public function sendEmail($id)

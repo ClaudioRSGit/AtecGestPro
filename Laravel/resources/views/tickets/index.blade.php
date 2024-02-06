@@ -1,86 +1,18 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container">
+    <div class="container fade-in">
         @if (session('success'))
             <div class="alert alert-success" id="success-alert">
                 {{ session('success') }}
             </div>
         @endif
 
+
+
+
         <h1>Tickets</h1>
 
-        <div class="d-flex justify-content-between mb-3">
-
-            <form action="{{ route('tickets.index') }}" method="get" id="ticketSearchForm">
-                <div class="input-group pr-2">
-                    <div class="search-container">
-                        <input type="text" class="form-control" id="ticketSearch" name="ticketSearch"
-                            value="{{ request('ticketSearch') }}"
-                            placeholder="{{ request('ticketSearch') ? request('ticketSearch') : 'Pesquisar ticket...' }}">
-                    </div>
-                    <div class="input-group-append">
-                        <button type="submit" class="btn btn-outline-secondary">
-                            Procurar
-                        </button>
-                    </div>
-                </div>
-
-            </form>
-            <div class="buttons">
-                <form id="filterCategoryForm" action="{{ route('tickets.index') }}" method="GET">
-                    <select class="form-control w-auto" id="filterCategory" name="filterCategory"
-                        onchange="submitCategoryForm()">
-                        <option value="" {{ $filterCategory === '' ? 'selected' : '' }}>Todas as categorias
-                        </option>
-                        @foreach ($categories as $category)
-                            <option value="{{ $category->id }}"
-                                {{ (int) $filterCategory === $category->id ? 'selected' : '' }}>{{ $category->description }}
-                            </option>
-                        @endforeach
-
-                    </select>
-                </form>
-
-                <form id="filterStatusForm" action="{{ route('tickets.index') }}" method="GET">
-                    <select class="form-control w-auto" id="filterStatus" name="filterStatus" onchange="submitStatusForm()">
-                        <option value="" {{ $filterStatus === '' ? 'selected' : '' }}>Todos os estados</option>
-                        @foreach ($statuses as $status)
-                            <option value="{{ $status->id }}"
-                                {{ (int) $filterStatus === $status->id ? 'selected' : '' }}>{{ $status->description }}
-                            </option>
-                        @endforeach
-                    </select>
-                </form>
-
-                <form id="filterPriorityForm" action="{{ route('tickets.index') }}" method="GET">
-                    <select class="form-control w-auto" id="filterPriority" name="filterPriority"
-                        onchange="submitPriorityForm()">
-                        <option value="" {{ $filterPriority === '' ? 'selected' : '' }}>Todas as prioridades
-                        </option>
-                        @foreach ($priorities as $priority)
-                            <option value="{{ $priority->id }}"
-                                {{ (int) $filterPriority === $priority->id ? 'selected' : '' }}>
-                                {{ $priority->description }}</option>
-                        @endforeach
-                    </select>
-                </form>
-
-
-                {{-- <a href="{{ route('tickets.create') }}" class="btn btn-primary d-flex">
-                    <img src="{{ asset('assets/new.svg') }}">
-                    <p class="novoTicket d-flex align-items-center">Novo Ticket</p>
-                </a> --}}
-                <div class="form-control btn-primary w-20 dropdown">
-                    <button onclick="showOptions()" class="btn btn-primary open w-100 h-100">Novo ticket</button>
-                    <div id="options" class="options w-100 h-auto">
-                        <button id="openTicket" class=" btn btn-primary">Ticket rápido</button>
-                        <a href="{{ route('tickets.create') }}" class="btn-primary">Ticket completo</a>
-                    </div>
-                </div>
-
-            </div>
-        </div>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="all-tickets-tab" data-toggle="tab" href="#allTickets" role="tab" aria-controls="allTickets" aria-selected="true">Todos os tickets</a>
@@ -94,228 +26,355 @@
         </ul>
 
         <div>
-        <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="allTickets" role="tabpanel" aria-labelledby="all-tickets-tab">
+            <div class="tab-content" id="myTabContent">
 
-                @if (count($tickets) === 0)
-                <div>
-                    <img src="{{ asset('assets/noTickets.png') }}" class="noTicket">
-                </div>
 
-            @else
-            <table class="table bg-white rounded-top">
-                <thead>
-                    <tr>
-                        <th scope="col">Número</th>
-                        <th scope="col">Título</th>
-                        <th scope="col">Utilizador</th>
-                        <th scope="col">Técnico</th>
-                        <th scope="col">Estado</th>
-                        <th scope="col">Data de Abertura</th>
-                        <th scope="col">Data de Vencimento</th>
-                        <th scope="col">Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="filler"></tr>
-                    @foreach ($tickets as $ticket)
-                        <tr class="customTableStyling" id="heading{{ $ticket->id }}"
-                            onclick="location.href='{{ route('tickets.show', $ticket->id) }}'">
+                <div class="tab-pane fade show active" id="allTickets" role="tabpanel" aria-labelledby="all-tickets-tab">
+                    <div class="d-flex justify-content-between my-3">
 
-                            <td class="pl-4">#{{ $ticket->id ? $ticket->id : 'N.A.' }}</td>
-                            <td>
-                                <div class="d-flex align-items-center">
-                                    <span class="mr-2"
-                                        style="height: 15px; width: 15px; background-color: {{ $ticket->ticketPriority->id == 1 ? 'green' : ($ticket->ticketPriority->id == 2 ? 'green' : ($ticket->ticketPriority->id == 3 ? 'yellow' : ($ticket->ticketPriority->id == 4 ? 'orange' : 'red'))) }}; border-radius: 50%; display: inline-block; opacity: 0.5;"></span>
-                                    <p>{{ $ticket->title ? $ticket->title : 'N.A.' }}</p>
+                        <form action="{{ route('tickets.index') }}" method="get" id="ticketSearchForm">
+                            <div class="input-group pr-2">
+                                <div class="search-container">
+                                    <input type="text" class="form-control" id="ticketSearch" name="ticketSearch"
+                                           value="{{ request('ticketSearch') }}"
+                                           placeholder="{{ request('ticketSearch') ? request('ticketSearch') : 'Pesquisar ticket...' }}">
                                 </div>
-                            </td>
-                            <td>{{ $ticket->requester->name ? $ticket->requester->name : 'N.A.' }}</td>
-                            <td>
-                                @foreach ($ticket->users as $user)
-                                    {{ $user->name }}
-                                @endforeach
-                            </td>
-                            <td>{{ $ticket->ticketStatus->description ? $ticket->ticketStatus->description : 'N.A.' }}</td>
-                            <td>{{ $ticket->created_at ? $ticket->created_at->format('d-m-Y') : 'N.A.' }}</td>
-                            <td>{{ $ticket->dueByDate ? \Carbon\Carbon::parse($ticket->dueByDate)->format('d-m-Y') : 'N.A.' }}
-                            </td>
-                            <td class="editDelete">
-                                <div>
-                                    <a href="{{ route('tickets.edit', $ticket->id) }}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16"
-                                            viewBox="0 0 512 512">
-                                            <path fill="#116fdc"
-                                                d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z" />
-                                        </svg>
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-outline-secondary">
+                                        Procurar
+                                    </button>
+                                </div>
+                            </div>
+
+                        </form>
+                        <div class="buttons">
+                            <form id="filterCategoryForm" action="{{ route('tickets.index') }}" method="GET">
+                                <select class="form-control w-auto" id="filterCategory" name="filterCategory"
+                                        onchange="submitCategoryForm()">
+                                    <option value="" {{ $filterCategory === '' ? 'selected' : '' }}>Todas as categorias
+                                    </option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}"
+                                            {{ (int) $filterCategory === $category->id ? 'selected' : '' }}>{{ $category->description }}
+                                        </option>
+                                    @endforeach
+
+                                </select>
+                            </form>
+
+                            <form id="filterStatusForm" action="{{ route('tickets.index') }}" method="GET">
+                                <select class="form-control w-auto" id="filterStatus" name="filterStatus" onchange="submitStatusForm()">
+                                    <option value="" {{ $filterStatus === '' ? 'selected' : '' }}>Todos os estados</option>
+                                    @foreach ($statuses as $status)
+                                        <option value="{{ $status->id }}"
+                                            {{ (int) $filterStatus === $status->id ? 'selected' : '' }}>{{ $status->description }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </form>
+
+                            <form id="filterPriorityForm" action="{{ route('tickets.index') }}" method="GET">
+                                <select class="form-control w-auto" id="filterPriority" name="filterPriority"
+                                        onchange="submitPriorityForm()">
+                                    <option value="" {{ $filterPriority === '' ? 'selected' : '' }}>Todas as prioridades
+                                    </option>
+                                    @foreach ($priorities as $priority)
+                                        <option value="{{ $priority->id }}"
+                                            {{ (int) $filterPriority === $priority->id ? 'selected' : '' }}>
+                                            {{ $priority->description }}</option>
+                                    @endforeach
+                                </select>
+                            </form>
+
+
+                            {{-- <a href="{{ route('tickets.create') }}" class="btn btn-primary d-flex">
+                                <img src="{{ asset('assets/new.svg') }}">
+                                <p class="novoTicket d-flex align-items-center">Novo Ticket</p>
+                            </a> --}}
+                            <div class="form-control btn-primary w-20 dropdown">
+                                <button onclick="showOptions()" class="btn btn-primary open w-100 h-100">Novo ticket</button>
+                                <div id="options" class="options w-100 h-auto">
+                                    <button id="openTicket" class=" btn btn-primary">Ticket rápido</button>
+                                    <a href="{{ route('tickets.create') }}" class="btn-primary">Ticket completo</a>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    @if (count($tickets) === 0)
+                        <div>
+                            <img src="{{ asset('assets/noTickets.png') }}" class="noTicket">
+                        </div>
+
+                    @else
+                        @php
+                            $currentSort = request('sort');
+                            $currentDirection = request('direction', 'asc');
+                            $newDirection = $currentDirection == 'asc' ? 'desc' : 'asc';
+                        @endphp
+                        <table class="table bg-white rounded-top">
+                            <thead>
+                            <tr>
+                                <th scope="col">
+                                    <a href="{{ route('tickets.index', ['sort' => 'number', 'direction' => $currentSort === 'number' ? $newDirection : 'asc']) }}">
+                                        Número
                                     </a>
-                                </div>
-                                <div>
-                                    <form method="post" action="{{ route('tickets.destroy', $ticket->id) }}"
-                                        style="display:inline;">
-                                        @csrf
-                                        @method('delete')
-                                        <button type="submit" onclick="return confirm('Tem certeza que deseja apagar?')"
-                                            style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
-                                            <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14"
-                                                viewBox="0 0 448 512">
-                                                <path fill="#116fdc"
-                                                    d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z" />
-                                            </svg>
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                        <tr class="filler"></tr>
-                    @endforeach
-                </tbody>
-            </table>
-                @endif
+                                </th>
+                                <th scope="col">
+                                    <a href="{{ route('tickets.index', ['sort' => 'title', 'direction' => $currentSort === 'title' ? $newDirection : 'asc']) }}">
+                                        Título
+                                    </a>
+                                </th>
+                                <th scope="col">
+                                    <a href="{{ route('tickets.index', ['sort' => 'user', 'direction' => $currentSort === 'user' ? $newDirection : 'asc']) }}">
+                                        Utilizador
+                                    </a>
+                                </th>
+                                <th scope="col">
+                                    <a href="{{ route('tickets.index', ['sort' => 'technician', 'direction' => $currentSort === 'technician' ? $newDirection : 'asc']) }}">
+                                        Técnico
+                                    </a>
+                                </th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Data de Abertura</th>
+                                <th scope="col">Data de Vencimento</th>
+                                <th scope="col">Ações</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="filler"></tr>
+                            @foreach ($tickets as $ticket)
+                                <tr class="customTableStyling" id="heading{{ $ticket->id }}"
+                                    onclick="location.href='{{ route('tickets.show', $ticket->id) }}'">
 
-        </div>
-
-<div class="tab-pane fade" id="waitingQueue" role="tabpanel" aria-labelledby="waiting-queue-tab">
-    @if (count($tickets) === 0)
-                <div>
-                    <img src="{{ asset('assets/noTickets.png') }}" class="noTicket">
+                                    <td class="pl-4">#{{ $ticket->id ? $ticket->id : 'N.A.' }}</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                    <span class="mr-2"
+                                          style="height: 15px; width: 15px; background-color: {{ $ticket->ticketPriority->id == 1 ? 'green' : ($ticket->ticketPriority->id == 2 ? 'green' : ($ticket->ticketPriority->id == 3 ? 'yellow' : ($ticket->ticketPriority->id == 4 ? 'orange' : 'red'))) }}; border-radius: 50%; display: inline-block; opacity: 0.5;"></span>
+                                            <p>{{ $ticket->title ? $ticket->title : 'N.A.' }}</p>
+                                        </div>
+                                    </td>
+                                    <td>{{ $ticket->requester->name ? $ticket->requester->name : 'N.A.' }}</td>
+                                    <td>
+                                        @foreach ($ticket->users as $user)
+                                            {{ $user->name }}
+                                        @endforeach
+                                    </td>
+                                    <td>{{ $ticket->ticketStatus->description ? $ticket->ticketStatus->description : 'N.A.' }}</td>
+                                    <td>{{ $ticket->created_at ? $ticket->created_at->format('d-m-Y') : 'N.A.' }}</td>
+                                    <td>{{ $ticket->dueByDate ? \Carbon\Carbon::parse($ticket->dueByDate)->format('d-m-Y') : 'N.A.' }}
+                                    </td>
+                                    <td class="editDelete">
+                                        <div>
+                                            <a href="{{ route('tickets.edit', $ticket->id) }}">
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16"
+                                                     viewBox="0 0 512 512">
+                                                    <path fill="#116fdc"
+                                                          d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z" />
+                                                </svg>
+                                            </a>
+                                        </div>
+                                        <div>
+                                            <form method="post" action="{{ route('tickets.destroy', $ticket->id) }}"
+                                                  style="display:inline;">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="submit" onclick="return confirm('Tem certeza que deseja apagar?')"
+                                                        style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14"
+                                                         viewBox="0 0 448 512">
+                                                        <path fill="#116fdc"
+                                                              d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z" />
+                                                    </svg>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="filler"></tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    @endif
+                        {{ $tickets->appends(request()->input())->links() }}
                 </div>
 
-    @else
-    <table class="table bg-white rounded-top">
-        <thead>
-            <tr>
-                <th scope="col">Número</th>
-                <th scope="col">Título</th>
-                <th scope="col">Utilizador</th>
-                <th scope="col">Técnico</th>
-                <th scope="col">Estado</th>
-                <th scope="col">Data de Abertura</th>
-                <th scope="col">Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class="filler"></tr>
-            @foreach ($waitingQueueTickets as $ticket)
-                <tr class="customTableStyling">
-                    <td class="pl-4">#{{ $ticket->id }}</td>
-                    <td>
-                        <div class="d-flex align-items-center">
+                <div class="tab-pane fade" id="waitingQueue" role="tabpanel" aria-labelledby="waiting-queue-tab">
+                    @if (count($tickets) === 0)
+                        <div>
+                            <img src="{{ asset('assets/noTickets.png') }}" class="noTicket">
+                        </div>
+
+                    @else
+                        <table class="table bg-white rounded-top">
+                            <thead>
+                            <tr>
+                                <th scope="col">Número</th>
+                                <th scope="col">Título</th>
+                                <th scope="col">Utilizador</th>
+                                <th scope="col">Técnico</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Data de Abertura</th>
+                                <th scope="col">Ações</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="filler"></tr>
+                            @foreach ($waitingQueueTickets as $ticket)
+                                <tr class="customTableStyling">
+                                    <td class="pl-4">#{{ $ticket->id }}</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
                             <span class="mr-2"
-                                style="height: 15px; width: 15px; background-color: {{ $ticket->ticketPriority->id == 1 ? 'green' : ($ticket->ticketPriority->id == 2 ? 'green' : ($ticket->ticketPriority->id == 3 ? 'yellow' : ($ticket->ticketPriority->id == 4 ? 'orange' : 'red'))) }}; border-radius: 50%; display: inline-block; opacity: 0.5;"></span>
-                            <p>{{ $ticket->title ? $ticket->title : 'N.A.' }}</p>
-                        </div>
-                    </td>
-                    <td>{{ $ticket->requester->name }}</td>
-                    <td>
-                        @foreach ($ticket->users as $user)
-                            {{ $user->name }}
-                        @endforeach
-                    </td>
-                    <td>{{ $ticket->ticketStatus->description }}</td>
-                    <td>{{ $ticket->created_at->format('d-m-Y') }}</td>
-                    <td class="editDelete">
-                        <div class="w-50">
-                            <a href="{{ route('tickets.edit', $ticket->id) }}">
-                                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16"
-                                    viewBox="0 0 512 512">
-                                    <path fill="#116fdc"
-                                        d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z" />
-                                </svg>
-                            </a>
-                        </div>
-                        <div class="w-50">
-                            <form method="post" action="{{ route('tickets.destroy', $ticket->id) }}"
-                                style="display:inline;">
-                                @csrf
-                                @method('delete')
-                                <button type="submit" onclick="return confirm('Tem certeza que deseja apagar?')"
-                                    style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14"
-                                        viewBox="0 0 448 512">
-                                        <path fill="#116fdc"
-                                            d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z" />
-                                    </svg>
-                                </button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
-                <tr class="filler"></tr>
-            @endforeach
-        </tbody>
-    </table>
-    @endif
-</div>
+                                  style="height: 15px; width: 15px; background-color: {{ $ticket->ticketPriority->id == 1 ? 'green' : ($ticket->ticketPriority->id == 2 ? 'green' : ($ticket->ticketPriority->id == 3 ? 'yellow' : ($ticket->ticketPriority->id == 4 ? 'orange' : 'red'))) }}; border-radius: 50%; display: inline-block; opacity: 0.5;"></span>
+                                            <p>{{ $ticket->title ? $ticket->title : 'N.A.' }}</p>
+                                        </div>
+                                    </td>
+                                    <td>{{ $ticket->requester->name }}</td>
+                                    <td>
+                                        @foreach ($ticket->users as $user)
+                                            {{ $user->name }}
+                                        @endforeach
+                                    </td>
+                                    <td>{{ $ticket->ticketStatus->description }}</td>
+                                    <td>{{ $ticket->created_at->format('d-m-Y') }}</td>
+                                    <td class="editDelete">
+                                        <div class="w-50">
+                                            <a href="{{ route('tickets.edit', $ticket->id) }}">
+                                                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16"
+                                                     viewBox="0 0 512 512">
+                                                    <path fill="#116fdc"
+                                                          d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z" />
+                                                </svg>
+                                            </a>
+                                        </div>
+                                        <div class="w-50">
+                                            <form method="post" action="{{ route('tickets.destroy', $ticket->id) }}"
+                                                  style="display:inline;">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="submit" onclick="return confirm('Tem certeza que deseja apagar?')"
+                                                        style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14"
+                                                         viewBox="0 0 448 512">
+                                                        <path fill="#116fdc"
+                                                              d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z" />
+                                                    </svg>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="filler"></tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    @endif
+                        {{ $waitingQueueTickets->appends(request()->input())->links() }}
+                </div>
 
-
-<div class="tab-pane fade" id="recycling" role="tabpanel" aria-labelledby="recycling-tab">
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th scope="col">Número</th>
-                <th scope="col">Título</th>
-                <th scope="col">Utilizador</th>
-                <th scope="col">Técnico</th>
-                <th scope="col">Estado</th>
-                <th scope="col">Data de Abertura</th>
-                <th scope="col">Restaurar</th>
-                <th scope="col">Apagar</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($recycledTickets as $ticket)
-                <tr class="customTableStyling">
-                    <td class="pl-4">#{{ $ticket->id }}</td>
-                    <td class="d-flex align-items-center">
+                <div class="tab-pane fade" id="recycling" role="tabpanel" aria-labelledby="recycling-tab">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th scope="col">Número</th>
+                            <th scope="col">Título</th>
+                            <th scope="col">Utilizador</th>
+                            <th scope="col">Técnico</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Data de Abertura</th>
+                            <th scope="col">Restaurar</th>
+                            <th scope="col">Apagar</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach ($recycledTickets as $ticket)
+                            <tr class="customTableStyling">
+                                <td class="pl-4">#{{ $ticket->id }}</td>
+                                <td class="d-flex align-items-center">
                         <span class="mr-2"
-                            style="height: 15px; width: 15px; background-color: {{ $ticket->ticketPriority->id == 1 ? 'green' : ($ticket->ticketPriority->id == 2 ? 'green' : ($ticket->ticketPriority->id == 3 ? 'yellow' : ($ticket->ticketPriority->id == 4 ? 'orange' : 'red'))) }}; border-radius: 50%; display: inline-block; opacity: 0.5;"></span>
-                        <p>{{ $ticket->title ? $ticket->title : 'N.A.' }}</p>
-                    </td>
-                    <td>{{ $ticket->requester->name }}</td>
-                    <td>
-                        @foreach ($ticket->users as $user)
-                            {{ $user->name }}
+                              style="height: 15px; width: 15px; background-color: {{ $ticket->ticketPriority->id == 1 ? 'green' : ($ticket->ticketPriority->id == 2 ? 'green' : ($ticket->ticketPriority->id == 3 ? 'yellow' : ($ticket->ticketPriority->id == 4 ? 'orange' : 'red'))) }}; border-radius: 50%; display: inline-block; opacity: 0.5;"></span>
+                                    <p>{{ $ticket->title ? $ticket->title : 'N.A.' }}</p>
+                                </td>
+                                <td>{{ $ticket->requester->name }}</td>
+                                <td>
+                                    @foreach ($ticket->users as $user)
+                                        {{ $user->name }}
+                                    @endforeach
+                                </td>
+                                <td>{{ $ticket->ticketStatus->description }}</td>
+                                <td>{{ $ticket->created_at->format('d-m-Y') }}</td>
+                                <td class="pl-4">
+                                    <div class="restore w-100 h-100 d-flex align-items-center">
+                                        <a href="{{ route('tickets.restore', $ticket->id) }}">
+                                            <img src="{{ asset('assets/restore.svg') }}">
+                                        </a>
+                                    </div>
+                                </td>
+                                <td class="pl-4">
+                                    <div class="delete w-100 h-100 d-flex align-items-center">
+                                        <form action="{{ route('tickets.forceDelete', $ticket->id) }}" method="POST" style="display: inline;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" onclick="return confirm('Tem a certeza que deseja apagar permanentemente?')" style="border: none; background: none; padding: 0;">
+                                                <img src="{{ asset('assets/permaDelete.svg') }}" alt="Delete">
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="filler"></tr>
                         @endforeach
-                    </td>
-                    <td>{{ $ticket->ticketStatus->description }}</td>
-                    <td>{{ $ticket->created_at->format('d-m-Y') }}</td>
-                    <td class="pl-4">
-                        <div class="restore w-100 h-100 d-flex align-items-center">
-                            <a href="{{ route('tickets.restore', $ticket->id) }}">
-                                <img src="{{ asset('assets/restore.svg') }}">
-                            </a>
-                        </div>
-                    </td>
-                    <td class="pl-4">
-                        <div class="delete w-100 h-100 d-flex align-items-center">
-                            <form action="{{ route('tickets.forceDelete', $ticket->id) }}" method="POST" style="display: inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" onclick="return confirm('Tem a certeza que deseja apagar permanentemente?')" style="border: none; background: none; padding: 0;">
-                                    <img src="{{ asset('assets/permaDelete.svg') }}" alt="Delete">
-                                </button>
-                            </form>
-                        </div>
-                    </td>
-                </tr>
-                <tr class="filler"></tr>
-            @endforeach
-        </tbody>
-    </table>
-</div>
+                        </tbody>
+                    </table>
+                    {{ $recycledTickets->appends(request()->input())->links() }}
+                </div>
 
-</div>
-    {{ $tickets->appends(request()->input())->links() }}
-    <div id="box" class="box" style="display: none";>
-        @component('tickets.quickTicket', ['priorities' => $priorities, 'categories' => $categories])
+            </div>
 
-        @endcomponent
-    </div>
+            <div id="box" class="box" style="display: none";>
+                @component('tickets.quickTicket', ['priorities' => $priorities, 'categories' => $categories])
+
+                @endcomponent
+            </div>
 
 
         </div>
 
+            <style>
+                .fade-in {
+                    animation: fadeIn ease 1s;
+                    -webkit-animation: fadeIn ease 1s;
+                    -moz-animation: fadeIn ease 1s;
+                    -o-animation: fadeIn ease 1s;
+                }
+
+                @keyframes fadeIn {
+                    0% {opacity:0;}
+                    100% {opacity:1;}
+                }
+
+                @-moz-keyframes fadeIn {
+                    0% {opacity:0;}
+                    100% {opacity:1;}
+                }
+
+                @-webkit-keyframes fadeIn {
+                    0% {opacity:0;}
+                    100% {opacity:1;}
+                }
+
+                @-o-keyframes fadeIn {
+                    0% {opacity:0;}
+                    100% {opacity:1;}
+                }
+
+                @-ms-keyframes fadeIn {
+                    0% {opacity:0;}
+                    100% {opacity:1;}
+                }
+            </style>
         <style>
             thead th{
                 border-top: none!important;
@@ -363,65 +422,74 @@
             }
         </style>
 
-    <script>
-        function submitCategoryForm() {
+        <script>
+            function submitCategoryForm() {
 
-            document.getElementById("filterCategoryForm").submit();
+                document.getElementById("filterCategoryForm").submit();
 
-        }
-
-        function submitStatusForm() {
-
-            document.getElementById("filterStatusForm").submit();
-
-        }
-
-        function submitPriorityForm() {
-
-            document.getElementById("filterPriorityForm").submit();
-
-        }
-
-        window.setTimeout(function() {
-            $("#success-alert").fadeTo(500, 0).slideUp(500, function() {
-                $(this).remove();
-            });
-        }, 2000);
-    </script>
-
-    <script>
-        $(function() {
-            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-                localStorage.setItem('lastTab', $(this).attr('href'));
-            });
-
-            let lastTab = localStorage.getItem('lastTab');
-            if (lastTab) {
-                $('[href="' + lastTab + '"]').tab('show');
             }
-        });
-    </script>
 
-    <script>
-        function showOptions() {
-            document.getElementById("options").classList.toggle("show");
-        }
-        window.onclick = function(event) {
-            if (!event.target.matches('.open')) {
-                var dropdowns = document.getElementsByClassName("options");
-                var i;
-                for (i = 0; i < dropdowns.length; i++) {
-                    var openDropdown = dropdowns[i];
-                    if (openDropdown.classList.contains('show')) {
-                        openDropdown.classList.remove('show');
+            function submitStatusForm() {
+
+                document.getElementById("filterStatusForm").submit();
+
+            }
+
+            function submitPriorityForm() {
+
+                document.getElementById("filterPriorityForm").submit();
+
+            }
+
+            window.setTimeout(function() {
+                $("#success-alert").fadeTo(500, 0).slideUp(500, function() {
+                    $(this).remove();
+                });
+            }, 2000);
+        </script>
+
+        <script>
+            $(function() {
+                $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                    localStorage.setItem('lastTab', $(this).attr('href'));
+                });
+
+
+                let lastTab = localStorage.getItem('lastTab');
+                let activeTabFromServer = "{{ session('active_tab') }}";
+
+                if (activeTabFromServer) {
+                    lastTab = activeTabFromServer;
+                    localStorage.setItem('lastTab', activeTabFromServer);
+
+                }
+
+                if (lastTab) {
+                    $('[href="' + lastTab + '"]').tab('show');
+                }
+            });
+        </script>
+
+        <script>
+            function showOptions() {
+                document.getElementById("options").classList.toggle("show");
+            }
+            window.onclick = function(event) {
+                if (!event.target.matches('.open')) {
+                    var dropdowns = document.getElementsByClassName("options");
+                    var i;
+                    for (i = 0; i < dropdowns.length; i++) {
+                        var openDropdown = dropdowns[i];
+                        if (openDropdown.classList.contains('show')) {
+                            openDropdown.classList.remove('show');
+                        }
                     }
                 }
             }
-        }
 
-        document.getElementById('openTicket').addEventListener('click', function() {
-            document.getElementById('box').style.display = 'block';
-        });
-    </script>
+            document.getElementById('openTicket').addEventListener('click', function() {
+                document.getElementById('box').style.display = 'block';
+            });
+        </script>
 
-    @endsection
+@endsection

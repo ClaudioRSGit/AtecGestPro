@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
 
-        @if(session('error'))
+        @if (session('error'))
             <div class="alert alert-danger">
                 {{ session('error') }}
             </div>
@@ -19,34 +19,38 @@
                 <div class="col-md-6">
                     <div class="mb-3">
                         <label for="name" class="form-label">Nome do Utilizador:</label>
-                        <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
+                        <input type="text" class="form-control" id="name" name="name"
+                            value="{{ old('name') }}">
 
                         @error('name')
-                        <div class="alert alert-danger">{{ $message }}</div>
+                            <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
 
                     <div class="mb-3">
                         <label for="username" class="form-label">Username:</label>
-                        <input type="text" class="form-control" id="username" name="username" value="{{ old('username') }}">
+                        <input type="text" class="form-control" id="username" name="username"
+                            value="{{ old('username') }}">
 
                         @error('username')
                             <div class="alert alert-danger">{{ $message }}</div>
-                         @enderror
+                        @enderror
                     </div>
 
                     <div class="mb-3">
                         <label for="email" class="form-label">Email:</label>
-                        <input type="text" class="form-control" id="email" name="email" value="{{ old('email') }}">
+                        <input type="text" class="form-control" id="email" name="email"
+                            value="{{ old('email') }}">
 
                         @error('email')
-                        <div class="alert alert-danger">{{ $message }}</div>
+                            <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
 
                     <div class="mb-3">
                         <label for="contact" class="form-label">Contacto:</label>
-                        <input type="text" class="form-control" id="contact" name="contact" value="{{ old('contact') }}">
+                        <input type="text" class="form-control" id="contact" name="contact"
+                            value="{{ old('contact') }}">
 
                         @error('contact')
                             <div class="alert alert-danger">{{ $message }}</div>
@@ -55,10 +59,11 @@
 
                     <div class="mb-3">
                         <label for="password" class="form-label">Password:</label>
-                        <input type="password" class="form-control" id="password" name="password" value="{{ old('password') }}">
+                        <input type="password" class="form-control" id="password" name="password"
+                            value="{{ old('password') }}">
 
                         @error('password')
-                        <div class="alert alert-danger">{{ $message }}</div>
+                            <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
@@ -67,10 +72,10 @@
                     <div class="mb-3">
                         <label for="role_id" class="form-label">Função:</label>
                         <select class="form-control" id="role_id" name="role_id" onchange="toggleCourseClassDiv()">
-                            @foreach($roles as $role)
-                                <option value="{{ $role->id }}" {{ $role->description }}>
-                                    {{ $role->description }}
-                                </option>
+                            @foreach ($roles as $role)
+                            <option value="{{ $role->id }}" {{ old('role_id') == $role->id ? 'selected' : '' }}>
+                                {{ $role->description }}
+                            </option>
                             @endforeach
                         </select>
                     </div>
@@ -79,10 +84,10 @@
 
                     <div class="mb-3" id="labelCourseClass" style="display: none;">
                         <label for="course_class_id" class="form-label">Turma:</label>
-                        <select class="form-control" id="course_class_id" name="course_class_id" onchange="updateCourseDescription(this)">
-                            @foreach($courseClasses as $class)
-                                <option
-                                    value="{{ $class->id }}"
+                        <select class="form-control" id="course_class_id" name="course_class_id"
+                            onchange="updateCourseDescription(this)">
+                            @foreach ($courseClasses as $class)
+                                <option value="{{ $class->id }}"
                                     data-course-description="{{ $class->course->description }}"
                                     {{ old('course_class_id') == $class->id || (isset($user) && $user->course_class_id == $class->id) ? 'selected' : '' }}>
                                     {{ $class->description }}
@@ -98,8 +103,8 @@
                     <div class="mb-3">
                         <label for="isActive" class="form-label">Estado:</label>
                         <select class="form-control" id="isActive" name="isActive">
-                            <option value="1">Ativo</option>
-                            <option value="0">Desativado</option>
+                            <option value="1" {{ old('isActive') == '1' ? 'selected' : '' }}>Ativo</option>
+                            <option value="0" {{ old('isActive') == '0' ? 'selected' : '' }}>Desativado</option>
                         </select>
                     </div>
                 </div>
@@ -133,6 +138,4 @@
             toggleCourseClassDiv();
         });
     </script>
-
-
 @endsection
