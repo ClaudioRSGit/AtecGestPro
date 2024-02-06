@@ -186,11 +186,17 @@ td a{
     color: black !important;
     text-decoration: none !important;
 }
+td > a{
+    transition: all 0.3s ease-in-out;
+}
+td > a:hover{
+    transform: translateY(-3px);
+    color: #3490dc !important;
+}
 
 
 tr > td{
     transition: background-color 0.2s;
-    cursor: pointer;
     text-align: center;
     vertical-align: middle;
 }
