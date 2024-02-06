@@ -170,7 +170,7 @@ class TicketController extends Controller
 
         $this->logTicketHistory($ticket->id, 1, $ticketInfo);
         $this->sendEmail($ticket->id);
-        return redirect()->route('tickets.index')->with('success', 'Ticket criado com sucesso!');
+        return redirect()->route('tickets.index')->with('success', 'Ticket criado com sucesso!')->with('active_tab', 'allTickets');
 
     }
 
@@ -261,16 +261,16 @@ class TicketController extends Controller
             'isRead' => false,
         ]);
 
-        return redirect()->route('tickets.index')->with('success', 'Ticket atualizado com sucesso!');
+        return redirect()->route('tickets.index')->with('success', 'Ticket atualizado com sucesso!')->with('active_tab', 'allTickets');
     }
 
     public function destroy(Ticket $ticket)
     {
         $ticket->delete();
 
-//        $this->logTicketHistory($ticket->id, 3, 'Ticket #' . $ticket->id . ' foi removido por ' . User::find(Auth::id())->name . '.');
+        $this->logTicketHistory($ticket->id, 3, 'O ticket #' . $ticket->id . ' foi removido por ' . User::find(Auth::id())->name . '.');
 
-        return redirect()->route('tickets.index')->with('success', 'Ticket removido com sucesso!');
+        return redirect()->route('tickets.index')->with('success', 'Ticket removido com sucesso!')->with('active_tab', 'allTickets');
 
     }
 
@@ -337,7 +337,9 @@ class TicketController extends Controller
         $ticket = Ticket::onlyTrashed()->findOrFail($id);
         $ticket->restore();
 
-        return redirect()->route('tickets.index')->with('success', 'Restaurado com sucesso!');
+        $this->logTicketHistory($ticket->id, 4, 'O ticket #' . $ticket->id . ' foi restaurado por ' . User::find(Auth::id())->name . '.');
+
+        return redirect()->route('tickets.index')->with('success', 'Restaurado com sucesso!')->with('active_tab', 'allTickets');
     }
 
     public function forceDelete($id)
@@ -345,7 +347,7 @@ class TicketController extends Controller
         $ticket = Ticket::onlyTrashed()->findOrFail($id);
         $ticket->forceDelete();
 
-        return redirect()->route('tickets.index')->with('success', 'Ticket apagado permanentemente!');
+        return redirect()->route('tickets.index')->with('success', 'Ticket apagado permanentemente!')->with('active_tab', 'allTickets');
     }
 
     public function sendEmail($id)

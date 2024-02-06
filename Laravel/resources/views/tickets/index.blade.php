@@ -8,6 +8,9 @@
             </div>
         @endif
 
+
+
+
         <h1>Tickets</h1>
 
         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -271,7 +274,6 @@
                         {{ $waitingQueueTickets->appends(request()->input())->links() }}
                 </div>
 
-
                 <div class="tab-pane fade" id="recycling" role="tabpanel" aria-labelledby="recycling-tab">
                     <table class="table table-hover">
                         <thead>
@@ -419,7 +421,16 @@
                     localStorage.setItem('lastTab', $(this).attr('href'));
                 });
 
+
                 let lastTab = localStorage.getItem('lastTab');
+                let activeTabFromServer = "{{ session('active_tab') }}";
+
+                if (activeTabFromServer) {
+                    lastTab = activeTabFromServer;
+                    localStorage.setItem('lastTab', activeTabFromServer);
+
+                }
+
                 if (lastTab) {
                     $('[href="' + lastTab + '"]').tab('show');
                 }
