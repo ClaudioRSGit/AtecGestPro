@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container">
+    <div class="w-100">
         <h1>Ticket #{{ $ticket->id }}</h1>
 
         <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -19,7 +19,7 @@
             <div class="tab-pane fade show active" id="ticket-details" role="tabpanel"
                  aria-labelledby="ticket-details-tab">
 
-                <div class="row">
+                <div class="row my-2">
                     <div class="col-md-9">
                         <div class="mb-3">
                             <label for="requester" class="form-label">Utilizador:</label>
@@ -137,21 +137,29 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>x\
             </div>
 
 
                 <div class="tab-pane fade" id="ticket-history" role="tabpanel" aria-labelledby="ticket-history-tab">
                     <div class="my-2">
-                        <h1>Historico de Ticket: {{ $ticket->id }}</h1>
+                        <div class="card bg-primary">
 
-                        <div>
-                            @foreach($ticketHistories as $history)
-
-                                <h5>{{$history->action->description}} - {{$history->created_at}}</h5>
-
-                                <p>{!! nl2br(str_replace('.', ".\n", e($history->ticket_info))) !!}</p>
-                            @endforeach
+                            <div class="card-body ">
+                                @foreach($ticketHistories as $history)
+                                    <div class="card mb-3 shadow-lg">
+                                        <div class="card-header d-flex justify-content-center align-items-center">
+                                            <h5 class="mb-0">{{$history->action->description}}</h5>
+                                        </div>
+                                        <div class="card-body d-flex justify-content-center align-items-center">
+                                            <p class="card-title">{{$history->created_at}}</p>
+                                        </div>
+                                        <div class="card-body d-flex justify-content-center align-items-center">
+                                            <p>{!! nl2br(str_replace('.', ".\n", e($history->ticket_info))) !!}</p>
+                                        </div>
+                                    </div>
+                                @endforeach
+                            </div>
                         </div>
                     </div>
                 </div>
