@@ -10,6 +10,77 @@
 
         {{--        <h1>Tickets</h1>--}}
 
+        <div class="d-flex justify-content-between mb-3">
+
+            <form action="{{ route('tickets.index') }}" method="get" id="ticketSearchForm">
+                <div class="input-group pr-2">
+                    <div class="search-container">
+                        <input type="text" class="form-control" id="ticketSearch" name="ticketSearch"
+                            value="{{ request('ticketSearch') }}"
+                            placeholder="{{ request('ticketSearch') ? request('ticketSearch') : 'Pesquisar ticket...' }}">
+                    </div>
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-outline-secondary">
+                            Procurar
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+            <div class="buttons">
+                <form id="filterCategoryForm" action="{{ route('tickets.index') }}" method="GET">
+                    <select class="form-control w-auto" id="filterCategory" name="filterCategory"
+                        onchange="submitCategoryForm()">
+                        <option value="" {{ $filterCategory === '' ? 'selected' : '' }}>Todas as categorias
+                        </option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}"
+                                {{ (int) $filterCategory === $category->id ? 'selected' : '' }}>{{ $category->description }}
+                            </option>
+                        @endforeach
+
+                    </select>
+                </form>
+
+                <form id="filterStatusForm" action="{{ route('tickets.index') }}" method="GET">
+                    <select class="form-control w-auto" id="filterStatus" name="filterStatus" onchange="submitStatusForm()">
+                        <option value="" {{ $filterStatus === '' ? 'selected' : '' }}>Todos os estados</option>
+                        @foreach ($statuses as $status)
+                            <option value="{{ $status->id }}"
+                                {{ (int) $filterStatus === $status->id ? 'selected' : '' }}>{{ $status->description }}
+                            </option>
+                        @endforeach
+                    </select>
+                </form>
+
+                <form id="filterPriorityForm" action="{{ route('tickets.index') }}" method="GET">
+                    <select class="form-control w-auto" id="filterPriority" name="filterPriority"
+                        onchange="submitPriorityForm()">
+                        <option value="" {{ $filterPriority === '' ? 'selected' : '' }}>Todas as prioridades
+                        </option>
+                        @foreach ($priorities as $priority)
+                            <option value="{{ $priority->id }}"
+                                {{ (int) $filterPriority === $priority->id ? 'selected' : '' }}>
+                                {{ $priority->description }}</option>
+                        @endforeach
+                    </select>
+                </form>
+
+
+                {{-- <a href="{{ route('tickets.create') }}" class="btn btn-primary d-flex">
+                    <img src="{{ asset('assets/new.svg') }}">
+                    <p class="novoTicket d-flex align-items-center">Novo Ticket</p>
+                </a> --}}
+                <div class="form-control btn-primary w-20 dropdown">
+                    <button onclick="showOptions()" class="btn btn-primary open w-100 h-100">Novo ticket</button>
+                    <div id="options" class="options w-100 h-auto">
+                        <button id="openTicket" class=" btn btn-primary">Ticket rápido</button>
+                        <a href="{{ route('tickets.create') }}" class="btn-primary">Ticket completo</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="all-tickets-tab" data-toggle="tab" href="#allTickets" role="tab"
@@ -337,6 +408,14 @@
 
             </div>
 
+</div>
+    {{ $tickets->appends(request()->input())->links() }}
+    <div id="box" class="box" style="display: none";>
+        @component('tickets.quickTicket', ['priorities' => $priorities, 'categories' => $categories])
+
+        @endcomponent
+    </div>
+
 
         </div>
 
@@ -353,6 +432,33 @@
                 display: block;
                 opacity: 0.5;
             }
+            .dropdown {
+                position: relative;
+                display: inline-block;
+            }
+            .options{
+                display: none;
+                position: absolute;
+                overflow: auto;
+                z-index: 1;
+            }
+            .options a {
+                text-decoration: none;
+                display: block;
+                padding: 12px 16px;
+            }
+            .show{
+                display: block;
+            }
+            .open{
+                border: none;
+                cursor: pointer;
+                padding: 0;
+            }
+
+            .box{
+                display: none;
+            }
 
             @media (max-width: 1080px) {
                 .noTicket {
@@ -368,6 +474,29 @@
 
             }
 
+    <script>
+        function showOptions() {
+            document.getElementById("options").classList.toggle("show");
+        }
+        window.onclick = function(event) {
+            if (!event.target.matches('.open')) {
+                var dropdowns = document.getElementsByClassName("options");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+
+        document.getElementById('openTicket').addEventListener('click', function() {
+            document.getElementById('box').style.display = 'block';
+        });
+    </script>
+
+    @endsection
             function submitStatusForm() {
 
                 document.getElementById("filterStatusForm").submit();
