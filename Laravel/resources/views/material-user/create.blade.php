@@ -1,7 +1,10 @@
 @extends('master.main')
 
 @section('content')
-    <div class="w-100">
+    <div class="container w-100">
+
+
+
         <div class="row">
             <div class="col-8">
                 <h1>Atribuir</h1>

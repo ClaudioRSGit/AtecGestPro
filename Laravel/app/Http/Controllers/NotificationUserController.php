@@ -7,79 +7,13 @@ use Illuminate\Http\Request;
 
 class NotificationUserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function readAll()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\NotificationUser  $notificationUser
-     * @return \Illuminate\Http\Response
-     */
-    public function show(NotificationUser $notificationUser)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\NotificationUser  $notificationUser
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(NotificationUser $notificationUser)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\NotificationUser  $notificationUser
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, NotificationUser $notificationUser)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\NotificationUser  $notificationUser
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(NotificationUser $notificationUser)
-    {
-        //
+        try {
+            NotificationUser::where('user_id', auth()->id())->update(['isRead' => true]);
+            return back()->with('success', 'Todas as notificações foram marcadas como lidas.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Não foi possível marcar as notificações como lidas. Erro: ' . $e->getMessage());
+        }
     }
 }

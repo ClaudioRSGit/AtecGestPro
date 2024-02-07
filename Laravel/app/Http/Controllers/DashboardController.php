@@ -22,7 +22,7 @@ class DashboardController extends Controller
             $query->where('delivered_all', true);
         })->where('username', '<>', '')->get();
 
-        $userStudentsCount = User::where('isStudent', true)->count();
+        $userStudentsCount = User::where('isStudent', true)->where('name' , '!=', 'Fila de Espera')->count();
 
         $userRolesCounts = DB::table('users')
         ->join('roles', 'users.role_id', '=', 'roles.id')

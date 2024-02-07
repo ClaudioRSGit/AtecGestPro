@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 @section('content')
-    <div class="w-100">
+    <div class="container w-100">
         <h1>Turmas</h1>
         @if (session('success'))
             <div class="alert alert-success" id="success-alert">
