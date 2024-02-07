@@ -26,17 +26,16 @@ class TrainingController extends Controller
         return view('trainings.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(TrainingRequest $request)
     {
-        Training::create($request->all());
+        try {
+            Training::create($request->all());
 
-        return redirect()->route('external.index')->with('success', 'Formação criada com sucesso');
+            return redirect()->route('external.index')->with('success', 'Formação criada com sucesso');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erro ao criar Formação. Por favor, tente novamente.');
+        }
     }
 
 
@@ -62,17 +61,16 @@ class TrainingController extends Controller
         return view('trainings.edit', compact('training'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Training  $training
-     * @return \Illuminate\Http\Response
-     */
+
     public function update(TrainingRequest $request, Training $training)
     {
-        $training->update($request->all());
-        return redirect()->route('external.index')->with('success', 'Formação atualizada com sucesso');
+        try {
+            $training->update($request->all());
+
+            return redirect()->route('external.index')->with('success', 'Formação atualizada com sucesso');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erro ao atualizar Formação. Por favor, tente novamente.');
+        }
     }
 
     /**
@@ -83,28 +81,28 @@ class TrainingController extends Controller
      */
     public function destroy(Training $training)
     {
-       // $training->partnerTrainingUsers()->delete();
-        $training->delete();
-        return redirect()->back()->with('success','Formação eliminada com sucesso');
+        try {
+            $training->delete();
+
+            return redirect()->route('external.index')->with('success', 'Formação eliminada com sucesso');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erro ao eliminar Formação. Por favor, tente novamente.');
+        }
     }
 
     public function massDelete(Request $request)
     {
-
-//        dd($request->all());
-
         $request->validate([
             'training_ids' => 'required|array',
-            'training_ids.*' => 'exists:trainings,id',]);
-
-//        dd($request->all());
+            'training_ids.*' => 'exists:trainings,id',
+        ]);
 
         try {
             Training::whereIn('id', $request->input('training_ids'))->delete();
 
-            return redirect()->back()->with('success', 'Formações selecionadas excluídas com sucesso!');
+            return redirect()->route('external.index')->with('success', 'Formações selecionadas excluídas com sucesso!');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Erro ao excluir Formações selecionadas. Por favor, tente novamente.');
+            return redirect()->route('external.index')->with('error', 'Erro ao excluir Formações selecionadas. Por favor, tente novamente.');
         }
     }
 }
