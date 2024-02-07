@@ -41,16 +41,14 @@
             </li>
         </ul>
 
-
         <div class="tab-content">
-
             <div class="tab-pane fade show active" id="externalTable">
-
                 <div class="d-flex justify-content-between mb-3">
                     <form action="{{ route('external.index') }}" method="GET">
                         <div class="input-group pr-2">
                             <div class="search-container">
-                                <input type="text" name="ptu" class="form-control" placeholder="{{ request('ptu') ? request('ptu') : 'Procurar...' }}">
+                                <input type="text" name="ptu" class="form-control"
+                                    placeholder="{{ request('ptu') ? request('ptu') : 'Procurar...' }}">
                             </div>
                             <div class="input-group-append">
                                 <button type="submit" class="btn btn-outline-secondary">
@@ -60,18 +58,15 @@
                         </div>
                     </form>
 
-
                     <div class="buttons">
                         <button class="btn btn-danger mr-2" id="delete-selected-ptus">Excluir Selecionados</button>
                         <a href="{{ route('external.create') }}" class="btn btn-primary">Nova F. mercado</a>
                     </div>
-
                 </div>
 
                 <table class="table bg-white" id="externalTable">
                     <thead>
                         <tr>
-
                             <th scope="col">Parceiro</th>
                             <th scope="col">Morada</th>
                             <th scope="col">Técnico</th>
@@ -84,10 +79,10 @@
                         <tr class="filler"></tr>
                         @foreach ($partner_Training_Users as $partner_Training_User)
                             <tr class="customTableStyling">
-
-
-                                <td class="clickable {{ optional($partner_Training_User->partner)->name ? '' : 'text-danger' }}">
-                                    <a href="{{ route('external.show', $partner_Training_User->id) }}" class="d-flex align-items-center w-auto h-100">
+                                <td
+                                    class="clickable {{ optional($partner_Training_User->partner)->name ? '' : 'text-danger' }}">
+                                    <a href="{{ route('external.show', $partner_Training_User->id) }}"
+                                        class="d-flex align-items-center w-auto h-100">
                                         {{ optional($partner_Training_User->partner)->name ?? 'O Parceiro foi apagado do sistema.' }}
                                     </a>
                                 </td>
@@ -96,10 +91,8 @@
                                 <td class="{{ optional($partner_Training_User->training)->name ? '' : 'text-danger' }}">
                                     {{ optional($partner_Training_User->training)->name ?: 'A Formação foi apagada do sistema' }}
                                 </td>
-
                                 <td>{{ $partner_Training_User->start_date }}</td>
                                 <td>
-
                                     <div class="d-flex justify-content-between editDelete">
                                         <div style="width: 40%">
                                             <a href="{{ route('external.edit', $partner_Training_User->id) }}">
@@ -135,7 +128,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{ $partner_Training_Users->links()}}
+                {{ $partner_Training_Users->links() }}
             </div>
 
             <div class="tab-pane fade" id="partnersTable">
@@ -143,7 +136,8 @@
                     <form action="{{ route('external.index') }}" method="GET">
                         <div class="input-group pr-2">
                             <div class="search-container">
-                                <input type="text" name="p" class="form-control" placeholder="{{ request('p') ? request('p') : 'Procurar...' }}">
+                                <input type="text" name="p" class="form-control"
+                                    placeholder="{{ request('p') ? request('p') : 'Procurar...' }}">
                             </div>
                             <div class="input-group-append">
                                 <button type="submit" class="btn btn-outline-secondary">
@@ -160,7 +154,6 @@
                 <table class="table bg-white">
                     <thead>
                         <tr>
-
                             <th scope="col">Parceiro</th>
                             <th scope="col">Descrição</th>
                             <th scope="col">Morada</th>
@@ -173,9 +166,9 @@
                         <tr class="filler"></tr>
                         @foreach ($partners as $partner)
                             <tr class="customTableStyling">
-
                                 <td class="clickable">
-                                    <a href="{{ route('partners.show', $partner->id) }}" class="d-flex align-items-center h-100">{{ $partner->name }}</a>
+                                    <a href="{{ route('partners.show', $partner->id) }}"
+                                        class="d-flex align-items-center h-100">{{ $partner->name }}</a>
                                 </td>
                                 <td>{{ $partner->description }}</td>
                                 <td>{{ $partner->address }}</td>
@@ -199,10 +192,10 @@
                                     </div>
                                 </td>
                                 <td class="pl-4">
-
-
-                                    <form action="{{ route('external.index') }}" method="GET" class="viewPartnersForm">
-                                        <input type="text" name="ptu" class="form-control" hidden value="{{ $partner->name }}">
+                                    <form action="{{ route('external.index') }}" method="GET"
+                                        class="viewPartnersForm">
+                                        <input type="text" name="ptu" class="form-control" hidden
+                                            value="{{ $partner->name }}">
                                         <div class="input-group-append">
                                             <button type="submit" class="btn btn-info btn-sm filteredPtus">
                                                 Ver
@@ -245,19 +238,15 @@
                     </tbody>
                 </table>
                 {{ $partners->appends(request()->input())->links() }}
-
             </div>
 
             <div class="tab-pane fade" id="trainingsTable">
-
-
-
-
                 <div class="d-flex justify-content-between mb-3">
                     <form action="{{ route('external.index') }}" method="GET">
                         <div class="input-group pr-2">
                             <div class="search-container">
-                                <input type="text" name="t" class="form-control" placeholder="{{ request('t') ? request('t') : 'Procurar...' }}">
+                                <input type="text" name="t" class="form-control"
+                                    placeholder="{{ request('t') ? request('t') : 'Procurar...' }}">
                             </div>
                             <div class="input-group-append">
                                 <button type="submit" class="btn btn-outline-secondary">
@@ -276,7 +265,7 @@
 
                 <table class="table bg-white">
                     <thead>
-                        <tr >
+                        <tr>
 
                             <th scope="col">Nome da formação</th>
                             <th scope="col">Descrição</th>
@@ -290,7 +279,8 @@
                             <tr class="customTableStyling">
 
                                 <td class="clickable">
-                                    <a href="{{ route('trainings.show', $training->id) }}" class="d-flex align-items-center w-auto h-100">{{ $training->name }}</a>
+                                    <a href="{{ route('trainings.show', $training->id) }}"
+                                        class="d-flex align-items-center w-auto h-100">{{ $training->name }}</a>
                                 </td>
                                 <td>{{ $training->description }}</td>
                                 <td>{{ $training->category }}</td>
@@ -333,69 +323,6 @@
             </div>
 
         </div>
-
-
     </div>
-
-    <script>
-        $(document).ready(function() {
-            $('.viewPartnersForm').on('submit', function(e) {
-                e.preventDefault();
-                window.location.hash = 'externalTable';
-                this.submit();
-            });
-        });
-    </script>
-
-    <script>
-        //gravar tab ativa
-        $(document).ready(function () {
-            function determineContext() {
-                return 'pagination';
-            }
-
-
-
-            function getFragment() {
-                return window.location.hash.substring(1);
-            }
-
-            function setFragment(fragment) {
-                history.pushState(null, null, '#' + fragment);
-            }
-
-            function setActiveTab(tabId) {
-                $(`#myTabs a[href="#${tabId}"]`).tab('show');
-            }
-
-            const activeTabInfo = localStorage.getItem('activeTabInfo');
-
-            if (activeTabInfo) {
-                const { tabId, context } = JSON.parse(activeTabInfo);
-                setActiveTab(tabId);
-                setFragment(tabId);
-            }
-
-            $('#myTabs a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-                const tabId = $(e.target).attr('href').substring(1);
-                const context = determineContext();
-
-                const activeTabInfo = JSON.stringify({ tabId, context });
-                localStorage.setItem('activeTabInfo', activeTabInfo);
-
-                setFragment(tabId);
-
-
-            });
-
-            window.addEventListener('hashchange', function () {
-                const fragment = getFragment();
-                setActiveTab(fragment);
-            });
-        });
-    </script>
-
-
-
-
+    <script type="module" src="{{ asset('js/external/index.js') }}"></script>
 @endsection
