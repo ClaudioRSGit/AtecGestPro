@@ -294,7 +294,12 @@ thead th{
     background-size: cover;
 }
 
-
+.critical{
+    background-color: rgba(255, 0, 0, 0.2);
+}
+.critical:hover{
+    background-color: rgba(255, 0, 0, 0.5)!important;
+}
 
 .buttons {
     width: 70%;

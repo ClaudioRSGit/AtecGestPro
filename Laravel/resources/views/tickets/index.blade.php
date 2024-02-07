@@ -134,7 +134,7 @@
                             <tbody>
                             <tr class="filler"></tr>
                             @foreach ($tickets as $ticket)
-                                <tr class="customTableStyling" id="heading{{ $ticket->id }}">
+                                <tr class="customTableStyling {{ $ticket->ticketPriority->id == 5 ? 'critical' : '' }}" id="heading{{ $ticket->id }}">
 
                                     <td class="pl-4">#{{ $ticket->id ? $ticket->id : 'N.A.' }}</td>
                                     <td class="clickable">
@@ -212,7 +212,7 @@
                             <tbody>
                             <tr class="filler"></tr>
                             @foreach ($waitingQueueTickets as $ticket)
-                                <tr class="customTableStyling">
+                                <tr class="customTableStyling {{ $ticket->ticketPriority->id == 5 ? 'critical' : '' }}">
                                     <td class="pl-4">#{{ $ticket->id }}</td>
                                     <td class="clickable">
                                         <div class="d-flex align-items-center">
@@ -285,7 +285,7 @@
                         </thead>
                         <tbody>
                         @foreach ($recycledTickets as $ticket)
-                            <tr class="customTableStyling">
+                            <tr class="customTableStyling {{ $ticket->ticketPriority->id == 5 ? 'critical' : '' }}">
                                 <td class="pl-4">#{{ $ticket->id }}</td>
                                 <td class="d-flex align-items-center clickable">
                                     <span class="mr-2"
