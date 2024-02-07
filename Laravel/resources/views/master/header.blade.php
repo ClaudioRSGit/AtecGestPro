@@ -12,14 +12,12 @@
 
         <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown">
-
                 <a class="nav-link" href="#" id="notificacoesDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 <img src="https://static.vecteezy.com/system/resources/previews/010/366/202/original/bell-icon-transparent-notification-free-png.png"
                 alt="Sininho" style="width: 30px; height: 30px; margin-right: 5px;">
             </a>
-            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="notificacoesDropdown" style="width: 250px;">
-
+            <div class="dropdown-menu dropdown-menu-right notification-area" aria-labelledby="notificacoesDropdown">
                 @livewire('notification-component')
             </div>
         </li>

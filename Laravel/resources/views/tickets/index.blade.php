@@ -131,9 +131,8 @@
                                     </a>
                                 </th>
                                 <th scope="col">
-                                    <a href="{{ route('tickets.index', ['sort' => 'technician', 'direction' => $currentSort === 'technician' ? $newDirection : 'asc']) }}">
                                         Técnico
-                                    </a>
+
                                 </th>
                                 <th scope="col">Estado</th>
                                 <th scope="col">Data de Abertura</th>
