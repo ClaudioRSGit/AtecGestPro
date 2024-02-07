@@ -21,9 +21,7 @@
             @method('put')
 
             <div class="row">
-
                 <div class="col-md-6 mb-3">
-
                     <div class="mb-3">
                         <label for="name" class="form-label">Nome do Material:</label>
                         <input type="text" class="form-control" id="name" name="name"
@@ -53,8 +51,6 @@
                         @enderror
                     </div>
 
-
-
                     <div class="form-group">
                         <label for="acquisition_date">Data de Aquisição:</label>
                         <input type="datetime-local" class="form-control flatpickr" id="acquisition_date"
@@ -63,10 +59,8 @@
                             required>
 
                     </div>
-
-
-
                 </div>
+
                 <div class="col-md-6">
                     <div class="row grid mb-3">
                         <div class="mx-3 gender mb-3" id="gender">
@@ -98,9 +92,6 @@
                     </div>
 
                     <div id="hide">
-
-
-
                         <div class="d-flex flex-row">
                             <div class="flex-column w-75">
                                 <div class="mb-3">
@@ -131,7 +122,6 @@
                                     </div>
                                 </div>
                             </div>
-
 
                             <div class="flex-column">
                                 <div class="mb-3">
