@@ -46,7 +46,7 @@
 
             <div class="tab-pane fade show active" id="externalTable">
 
-                <div class=" d-flex">
+                <div class="d-flex justify-content-between mb-3">
                     <form action="{{ route('external.index') }}" method="GET">
                         <div class="input-group pr-2">
                             <div class="search-container">
@@ -61,10 +61,10 @@
                     </form>
 
 
-                    <button class="btn btn-danger mb-3 mr-2" id="delete-selected-ptus">Excluir Selecionados</button>
-
-
-                    <a href="{{ route('external.create') }}" class="btn btn-primary mb-3 ">Nova F. mercado</a>
+                    <div class="buttons">
+                        <button class="btn btn-danger mr-2" id="delete-selected-ptus">Excluir Selecionados</button>
+                        <a href="{{ route('external.create') }}" class="btn btn-primary">Nova F. mercado</a>
+                    </div>
 
                 </div>
 
@@ -87,7 +87,7 @@
                         @foreach ($partner_Training_Users as $partner_Training_User)
                             <tr class="customTableStyling">
                                 <td>
-                                    <input type="checkbox" class="no-propagate" name="selectedPtus[]"
+                                    <input type="checkbox" name="selectedPtus[]"
                                         value="{{ $partner_Training_User->id }}">
                                 </td>
 
@@ -144,7 +144,7 @@
             </div>
 
             <div class="tab-pane fade" id="partnersTable">
-                <div class="d-flex mb-3">
+                <div class="d-flex justify-content-between mb-3">
                     <form action="{{ route('external.index') }}" method="GET">
                         <div class="input-group pr-2">
                             <div class="search-container">
@@ -157,8 +157,10 @@
                             </div>
                         </div>
                     </form>
-                    <button class="btn btn-danger mr-2" id="delete-selected">Excluir Selecionados</button>
-                    <a href="{{ route('partners.create') }}" class="btn btn-primary">Novo Parceiro</a>
+                    <div class="buttons">
+                        <button class="btn btn-danger mr-2" id="delete-selected">Excluir Selecionados</button>
+                        <a href="{{ route('partners.create') }}" class="btn btn-primary">Novo Parceiro</a>
+                    </div>
                 </div>
                 <table class="table bg-white">
                     <thead>
@@ -179,7 +181,7 @@
                         @foreach ($partners as $partner)
                             <tr class="customTableStyling">
                                 <td>
-                                    <input type="checkbox" class="no-propagate" name="selectedPartners[]"
+                                    <input type="checkbox" name="selectedPartners[]"
                                         value="{{ $partner->id }}">
                                 </td>
                                 <td class="clickable">
@@ -212,7 +214,7 @@
                                     <form action="{{ route('external.index') }}" method="GET" class="viewPartnersForm">
                                         <input type="text" name="ptu" class="form-control" hidden value="{{ $partner->name }}">
                                         <div class="input-group-append">
-                                            <button type="submit" class="btn btn-info btn-sm filteredPtus no-propagate">
+                                            <button type="submit" class="btn btn-info btn-sm filteredPtus">
                                                 Ver
                                             </button>
                                         </div>
@@ -261,7 +263,7 @@
 
 
 
-                <div class="d-flex">
+                <div class="d-flex justify-content-between mb-3">
                     <form action="{{ route('external.index') }}" method="GET">
                         <div class="input-group pr-2">
                             <div class="search-container">
@@ -275,10 +277,10 @@
                         </div>
                     </form>
 
-                    <button class="btn btn-danger mb-3 mr-2" id="delete-selected-trainings">Excluir Selecionados</button>
-
-
-                    <a href="{{ route('trainings.create') }}" class="btn btn-primary mb-3">Nova Formação</a>
+                    <div class="buttons">
+                        <button class="btn btn-danger mr-2" id="delete-selected-trainings">Excluir Selecionados</button>
+                        <a href="{{ route('trainings.create') }}" class="btn btn-primary">Nova Formação</a>
+                    </div>
 
                 </div>
 
@@ -299,7 +301,7 @@
                         @foreach ($trainings as $training)
                             <tr class="customTableStyling">
                                 <td>
-                                    <input type="checkbox" class="no-propagate" name="selectedTrainings[]"
+                                    <input type="checkbox" name="selectedTrainings[]"
                                         value="{{ $training->id }}">
                                 </td>
                                 <td class="clickable">
@@ -415,19 +417,12 @@
             const selectAllPtusCheckbox = document.getElementById('select-all-ptus');
 
             deleteselectedPtusButton.addEventListener('click', function(event) {
-                event.stopPropagation();
                 massDeletePtus();
             });
 
             selectAllPtusCheckbox.addEventListener('change', function() {
                 ptuCheckboxes.forEach(checkbox => {
                     checkbox.checked = selectAllPtusCheckbox.checked;
-                });
-            });
-
-            ptuCheckboxes.forEach(checkbox => {
-                checkbox.addEventListener('click', function(event) {
-                    event.stopPropagation();
                 });
             });
 
@@ -471,34 +466,18 @@
     </script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const checkboxes = document.querySelectorAll('.no-propagate');
-
-            checkboxes.forEach(function(checkbox) {
-                checkbox.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                });
-            });
-        });
         document.addEventListener("DOMContentLoaded", function() {
             const deleteSelectedButton = document.getElementById('delete-selected');
             const checkboxes = document.getElementsByName('selectedPartners[]');
             const selectAllCheckbox = document.getElementById('select-all-partners');
 
             deleteSelectedButton.addEventListener('click', function(event) {
-                event.stopPropagation();
                 massDelete();
             });
 
             selectAllCheckbox.addEventListener('change', function() {
                 checkboxes.forEach(checkbox => {
                     checkbox.checked = selectAllCheckbox.checked;
-                });
-            });
-
-            checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('click', function(event) {
-                    event.stopPropagation();
                 });
             });
 
@@ -551,19 +530,12 @@
             const selectAllTrainingsCheckbox = document.getElementById('select-all-trainings');
 
             deleteSelectedTrainingsButton.addEventListener('click', function(event) {
-                event.stopPropagation();
                 massDeleteTrainings();
             });
 
             selectAllTrainingsCheckbox.addEventListener('change', function() {
                 trainingCheckboxes.forEach(checkbox => {
                     checkbox.checked = selectAllTrainingsCheckbox.checked;
-                });
-            });
-
-            trainingCheckboxes.forEach(checkbox => {
-                checkbox.addEventListener('click', function(event) {
-                    event.stopPropagation();
                 });
             });
 
