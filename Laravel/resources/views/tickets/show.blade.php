@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="w-100">
+    <div class="container w-100">
         <h1 >Ticket #{{ $ticket->id }}</h1>
 
         <ul class="nav nav-tabs" id="myTab" role="tablist">

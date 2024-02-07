@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div>
+    <div class="container">
         <h1>Historico de Ticket: {{ $ticket->id }}</h1>
 
         <div>
