@@ -2,9 +2,6 @@
 
 @section('content')
     <div class="w-100">
-
-
-
         <div class="row">
             <div class="col-8">
                 <h1>Atribuir</h1>
@@ -12,11 +9,7 @@
                 <div class="d-flex justify-content-between mb-3">
                     <div class="input-group mb-3" style="width: 60%;">
                         <p class="mr-3 font-weight-bold">Formando: {{ $student->name }} </p>
-
                     </div>
-
-
-
                 </div>
                 <form action="{{ route('material-user.store') }}" method="post">
                     @csrf
@@ -99,7 +92,6 @@
                         </tbody>
                     </table>
 
-
                     <div class="row mb-3 ">
                         <div class="col-4">
                             <textarea placeholder="Observações" class="form-control" name="additionalNotes"
@@ -138,9 +130,9 @@
                             </button>
                         </div>
                     </div>
-
                 </form>
             </div>
+
             <div class="col-4 card badge-secondary">
                 <h3 class="pt-2">Materiais atribuídos</h3>
                 <hr>
@@ -153,90 +145,8 @@
                 @endforelse
             </div>
         </div>
-
-
         {{$clothes->links() }}
-
-
     </div>
 
-
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const selectAllCheckbox = document.getElementById('select-all');
-            const checkboxes = document.querySelectorAll('.form-check-input');
-
-            $(document).ready(function () {
-                $('.material-row .size-select').each(function (index, select) {
-                    var quantityInput = $('.material-row .quantity-input').eq(index);
-                    $(select).change(function () {
-                        var selectedOption = $(this).children("option:selected");
-                        var stock = parseInt(selectedOption.data('stock'));
-                        quantityInput.attr('max', stock);
-
-                        if (parseInt(quantityInput.val()) > stock) {
-                            quantityInput.val(stock);
-                        }
-                    }).trigger('change');
-
-                    quantityInput.on('input', function () {
-                        var max = parseInt($(this).attr('max'));
-                        if (parseInt($(this).val()) > max) {
-                            $(this).val(max);
-                        }
-                    });
-                });
-            });
-
-            function updateFormData() {
-                const formData = new FormData(document.querySelector('form'));
-
-                document.querySelectorAll('.form-check-input:checked').forEach(function (checkbox) {
-                    const clothingId = checkbox.value;
-                    const selectElement = document.querySelector(`.size-select[data-clothing-id="${clothingId}"]`);
-                    const selectedOption = selectElement.options[selectElement.selectedIndex];
-                    const materialSizeId = selectedOption.value;
-
-                    formData.set(`material_size_id[${clothingId}]`, materialSizeId);
-                });
-
-                document.querySelectorAll('.material-row .size-select:not(:checked)').forEach(function (select) {
-                    const clothingId = select.getAttribute('data-clothing-id');
-                    formData.delete(`material_size_id[${clothingId}]`);
-                });
-
-
-            }
-
-
-            document.querySelector('form').addEventListener('submit', function (e) {
-                updateFormData();
-            });
-
-
-            selectAllCheckbox.addEventListener('change', function () {
-                checkboxes.forEach(checkbox => {
-                    checkbox.checked = selectAllCheckbox.checked;
-                });
-            });
-
-            checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', function () {
-                    selectAllCheckbox.checked = checkboxes.length === document.querySelectorAll(
-                        'input[name="selectedClothing[]"]:checked').length;
-                });
-            });
-
-
-            $(document).ready(function () {
-                $('form').on('keydown', function (e) {
-                    if (e.keyCode == 13) {
-                        e.preventDefault();
-                        return false;
-                    }
-                });
-            });
-        });
-    </script>
+    <script type="module" src="{{ asset('js/material-user/create.js') }}"></script>
 @endsection
