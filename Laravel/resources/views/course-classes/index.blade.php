@@ -46,7 +46,6 @@
 
 
             <div class="buttons">
-                <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
                 <a href="{{ route('course-classes.create') }}" class="btn btn-primary">
                     <img src="{{ asset('assets/new.svg') }}">
                     Criar Turma

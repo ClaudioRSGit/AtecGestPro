@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container">
+    <div class="container w-100">
         @if (session('success'))
             <div class="alert alert-success message-alert">
                 {{ session('success') }}
@@ -46,7 +46,6 @@
                     </form>
 
                     <div class="buttons">
-                        <button class="btn btn-danger mr-2" id="delete-selected-ptus">Excluir Selecionados</button>
                         <a href="{{ route('external.create') }}" class="btn btn-primary">Nova F. mercado</a>
                     </div>
                 </div>
@@ -134,7 +133,6 @@
                         </div>
                     </form>
                     <div class="buttons">
-                        <button class="btn btn-danger mr-2" id="delete-selected">Excluir Selecionados</button>
                         <a href="{{ route('partners.create') }}" class="btn btn-primary">Novo Parceiro</a>
                     </div>
                 </div>
@@ -244,7 +242,6 @@
                     </form>
 
                     <div class="buttons">
-                        <button class="btn btn-danger mr-2" id="delete-selected-trainings">Excluir Selecionados</button>
                         <a href="{{ route('trainings.create') }}" class="btn btn-primary">Nova Formação</a>
                     </div>
 
