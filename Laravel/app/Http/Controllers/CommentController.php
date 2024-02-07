@@ -4,25 +4,21 @@ namespace App\Http\Controllers;
 
 use App\Comment;
 use Illuminate\Http\Request;
+use App\Notification;
+use App\NotificationUser;
+use App\Ticket;
+use App\TicketUser;
 
 class CommentController extends Controller
 {
-    public function index()
-    {
-        //
-    }
-
-    public function create()
-    {
-        //
-    }
-
     public function store(Request $request)
     {
         $request->validate([
             'comment' => 'required|string',
-            'ticket_id' => 'required|exists:tickets,id'
+            'ticket_id' => 'required|exists:tickets,id',
         ]);
+
+        $ticket = Ticket::findOrFail($request->ticket_id);
 
         $comment = new Comment();
         $comment->description = $request->comment;
@@ -30,26 +26,31 @@ class CommentController extends Controller
         $comment->user_id = auth()->id();
         $comment->save();
 
+        if ($ticket->user_id !== auth()->id()) {
+            Notification::create([
+                'description' => 'O seu ticket #' . $ticket->id . ' foi comentado.',
+                'code' => 'TICKET',
+                'object_id' => $ticket->id,
+            ])->users()->attach($ticket->user_id, ['isRead' => false]);
+        }
+
+        $technicianId = TicketUser::where('ticket_id', $ticket->id)->first();
+
+        if ($technicianId && $technicianId->user_id !== auth()->id()) {
+            $notificationTechnician = Notification::create([
+                'description' => 'Um ticket que você está atendendo (#' . $ticket->id . ') foi comentado.',
+                'code' => 'TICKET_TECHNICIAN',
+                'object_id' => $ticket->id,
+            ]);
+
+            NotificationUser::create([
+                'user_id' => $technicianId->user_id,
+                'notification_id' => $notificationTechnician->id,
+                'isRead' => false,
+            ]);
+        }
+
         return redirect()->route('tickets.show', $comment->ticket_id)->with('success', 'Comentário adicionado com sucesso.');
     }
 
-    public function show(Comment $comment)
-    {
-        //
-    }
-
-    public function edit(Comment $comment)
-    {
-        //
-    }
-
-    public function update(Request $request, Comment $comment)
-    {
-        //
-    }
-
-    public function destroy(Comment $comment)
-    {
-        //
-    }
 }

@@ -117,7 +117,7 @@ class TicketController extends Controller
                 return now()->addHours(4);
             default:
 
-                return now()->addWeeks(3);//Default fica como baixa prioridade
+                return now()->addWeeks(3);
         }
     }
     public function store(TicketRequest $request)
@@ -147,7 +147,7 @@ class TicketController extends Controller
         ]);
 
         $notification = Notification::create([
-            'description' => 'Novo ticket criado: #' . $ticket->id,
+            'description' => 'Ticket atribuido: #' . $ticket->id,
             'code' => 'TICKET',
             'object_id' => $ticket->id,
         ]);
@@ -166,21 +166,14 @@ class TicketController extends Controller
 
     }
 
-
-
     public function show(Ticket $ticket)
     {
         $ticket = Ticket::with(['users', 'requester', 'comments' => function($query) {
             $query->orderBy('created_at', 'desc');
         }, 'comments.user'])->find($ticket->id);
 
-
         $id = $ticket->id;
         $ticketHistories = TicketHistory::where('ticket_id', $id)->get();
-
-
-
-
 
         $users = User::all();
         $statuses = TicketStatus::all();
@@ -250,7 +243,7 @@ class TicketController extends Controller
         }
 
         $notification = Notification::create([
-            'description' => 'Novo ticket criado: #' . $ticket->id,
+            'description' => 'Ticket atribuido: #' . $ticket->id,
             'code' => 'TICKET',
             'object_id' => $ticket->id,
         ]);

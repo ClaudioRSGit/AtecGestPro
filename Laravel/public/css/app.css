@@ -138,8 +138,6 @@ main > .content{
     background-color: #0056b3;
 }
 .notification-item {
-    padding: 2px;
-    margin-bottom: 5px;
     border: 1px solid #ddd;
     border-radius: 2px;
     background-color: white;
