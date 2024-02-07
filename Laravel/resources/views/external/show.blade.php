@@ -174,16 +174,6 @@
 </style>
 
 @section('scripts')
-
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script>
-    flatpickr(".flatpickr", {
-            inline: true,
-            altInput: true,
-            altFormat: "F j, Y H:i",
-            dateFormat: "Y-m-d\TH:i:s",
-            minDate: "today",
-        });
-</script>
-
+<script type="module" src="{{ asset('js/external/show.js') }}"></script>
 @endsection
