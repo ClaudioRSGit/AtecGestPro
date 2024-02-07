@@ -49,9 +49,9 @@
         <table class="table" id="courseTable">
             <thead style="width: 100%">
                 <tr class="no-hover">
-                    <th scope="col">
-                        <input type="checkbox" id="select-all">
-                    </th>
+{{--                    <th scope="col">--}}
+{{--                        <input type="checkbox" id="select-all">--}}
+{{--                    </th>--}}
                     <th><a href="{{ route('courses.index', ['sortColumn' => 'code', 'sortDirection' => $sortColumn === 'code' ? ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">Código</a></th>
                     <th><a href="{{ route('courses.index', ['sortColumn' => 'description', 'sortDirection' => $sortColumn === 'description' ? ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">Descrição</a></th>
                     <th class="fill"></th>
@@ -61,10 +61,10 @@
                 <tr class="filler"></tr>
                 @foreach ($courses as $course)
                     <tr class="courses-row customTableStyling" style="width: 100%">
-                        <td>
-                            <input type="checkbox" name="selectedCourses[]"
-                                value="{{ $course->id }}">
-                        </td>
+{{--                        <td>--}}
+{{--                            <input type="checkbox" name="selectedCourses[]"--}}
+{{--                                value="{{ $course->id }}">--}}
+{{--                        </td>--}}
                         <td class="clickable" style="width: 10%">
                             <a href="{{ route('courses.show', $course->id) }}" class="d-flex align-items-center w-auto h-100">{{ $course->code }}</a>
                         </td>

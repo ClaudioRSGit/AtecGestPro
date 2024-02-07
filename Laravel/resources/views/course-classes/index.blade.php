@@ -58,8 +58,7 @@
 
         <div id="accordion">
             <div class="ms-auto">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" id="select-all">
-                <label for="select-all"></label>
+
                 <span>&nbsp; &nbsp;Turma</span>
             </div>
             @foreach ($courseClasses as $courseClass)

@@ -85,20 +85,4 @@ class CourseController extends Controller
         }
     }
 
-    public function massDelete(Request $request)
-    {
-        $request->validate([
-            'course_ids' => 'required|array',
-            'course_ids.*' => 'exists:courses,id',//all items inside array must exist
-        ]);
-
-        try {
-
-            Course::whereIn('id', $request->input('course_ids'))->delete();
-            return redirect()->back()->with('success', 'Cursos selecionados excluídos com sucesso!');
-        } catch (\Exception $e) {
-
-            return redirect()->back()->with('error', 'Erro ao excluir cursos selecionados. Por favor, tente novamente.');
-        }
-    }
 }

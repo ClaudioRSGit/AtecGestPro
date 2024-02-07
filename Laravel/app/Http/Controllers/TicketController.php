@@ -30,7 +30,7 @@ class TicketController extends Controller
         $sort = $request->query('sort');
         $direction = $request->query('direction', 'asc');
         $query = Ticket::query();
-//        dd($sort, $direction);
+
         switch ($sort) {
             case 'number':
                 $sortColumn = 'id';
@@ -41,19 +41,11 @@ class TicketController extends Controller
             case 'user':
                 $sortColumn = 'user_id';
                 break;
-            case 'technician':
-                $sortColumn = 'ticket_users.user_id';
-                break;
             default:
                 $sortColumn = 'id';
         }
 
-        if ($sort === 'technician') {
-            $query->join('ticket_users', 'tickets.id', '=', 'ticket_users.ticket_id')
-                ->select('tickets.*', 'ticket_users.user_id as technician_id')
-                ->groupBy('tickets.id');
-            $sortColumn = \DB::raw('ticket_users.user_id');
-        }
+
 
 
         if (auth()->user()->role_id == 2) {
