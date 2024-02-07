@@ -34,13 +34,11 @@ document.addEventListener('DOMContentLoaded', toggleFields);
 document.getElementById('isInternal').addEventListener('change', toggleFields);
 document.getElementById('isClothing').addEventListener('change', toggleFields);
 
-jQuery(function () {
-    flatpickr("#acquisition_date", {
-        inline: true,
-        altInput: true,
-        altFormat: "F j, Y",
-        dateFormat: "Y-m-d",
-        minDate: "today",
-    });
+flatpickr(".flatpickr", {
+    inline: true,
+    altInput: true,
+    altFormat: "F j, Y H:i",
+    dateFormat: "Y-m-d\TH:i:s",
+    minDate: "today",
 });
 

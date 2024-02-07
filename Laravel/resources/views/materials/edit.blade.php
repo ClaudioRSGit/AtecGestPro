@@ -57,8 +57,10 @@
 
                     <div class="form-group">
                         <label for="acquisition_date">Data de Aquisição:</label>
-                        <input type="datetime-local" class="form-control flatpickr" id="acquisition_date" name="acquisition_date"
-                            value="{{ !empty($material->acquisition_date) ? \Carbon\Carbon::parse($material->acquisition_date)->format('Y-m-d') : 'Não disponível' }}" required>
+                        <input type="datetime-local" class="form-control flatpickr" id="acquisition_date"
+                            name="acquisition_date"
+                            value="{{ !empty($material->acquisition_date) ? \Carbon\Carbon::parse($material->acquisition_date)->format('Y-m-d') : 'Não disponível' }}"
+                            required>
 
                     </div>
 
@@ -77,7 +79,7 @@
                         <div class="mx-3 qty mb-3" id="quantity">
                             <label for="quantity">Quantidade:</label>
                             <input type="number" class="form-control text-left" id="quantity" name="quantity"
-                            value="{{ $material->quantity }}">
+                                value="{{ $material->quantity }}">
                         </div>
                         <div class="mx-3 internal mb-3">
                             <label for="isInternal">Material interno?</label>
@@ -107,11 +109,11 @@
                                 <div class="mb-3 mr-4 scrollable-column mr-5" id="size">
                                     <div class="d-flex flex-column">
                                         @foreach ($sizesAll as $sizeAll)
-                                        <div class="d-flex justify-content-between align-items-center mb-2 px-5">
-                                            <div class="form-check">
-                                                <input onchange="toggleFieldsQuantity()"
-                                                class="form-check-input size-checkbox" type="checkbox"
-                                                name="sizes[]" value="{{ $sizeAll->id }}"
+                                            <div class="d-flex justify-content-between align-items-center mb-2 px-5">
+                                                <div class="form-check">
+                                                    <input onchange="toggleFieldsQuantity()"
+                                                        class="form-check-input size-checkbox" type="checkbox"
+                                                        name="sizes[]" value="{{ $sizeAll->id }}"
                                                         {{ in_array($sizeAll->id, $material->sizes->pluck('id')->toArray()) ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="size{{ $sizeAll->id }}">
                                                         {{ $sizeAll->size }}
@@ -119,38 +121,38 @@
                                                 </div>
 
                                                 <input type="number" name="stocks[{{ $sizeAll->id }}]"
-                                                value="{{ old('stocks.' . $sizeAll->id, $material->sizes->where('id', $sizeAll->id)->first()->pivot->stock ?? 0) }}"
-                                                class="form-control w-25 mx-5 quantity-input" min="0"
-                                                {{ in_array($sizeAll->id, $material->sizes->pluck('id')->toArray()) ? '' : 'disabled' }}>
+                                                    value="{{ old('stocks.' . $sizeAll->id, $material->sizes->where('id', $sizeAll->id)->first()->pivot->stock ?? 0) }}"
+                                                    class="form-control w-25 mx-5 quantity-input" min="0"
+                                                    {{ in_array($sizeAll->id, $material->sizes->pluck('id')->toArray()) ? '' : 'disabled' }}>
                                             </div>
-                                            @endforeach
+                                        @endforeach
 
 
-                                        </div>
                                     </div>
                                 </div>
+                            </div>
 
 
-                                <div class="flex-column">
-                                    <div class="mb-3">
-                                        <p class="form-label font-weight-bold">Cursos:</p>
-                                    </div>
-                                    <div class="mb-3" id="role">
-                                        <div class="d-flex flex-column scrollable-column">
-                                            @foreach ($coursesAll as $courseAll)
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="courses[]"
-                                                        value="{{ $courseAll->id }}"
-                                                        {{ in_array($courseAll->id, $material->courses->pluck('id')->toArray()) ? 'checked' : '' }}>
-                                                    <label class="form-check-label" for="course{{ $courseAll->id }}">
-                                                        {{ $courseAll->code }}
-                                                    </label>
-                                                </div>
-                                            @endforeach
+                            <div class="flex-column">
+                                <div class="mb-3">
+                                    <p class="form-label font-weight-bold">Cursos:</p>
+                                </div>
+                                <div class="mb-3" id="role">
+                                    <div class="d-flex flex-column scrollable-column">
+                                        @foreach ($coursesAll as $courseAll)
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="courses[]"
+                                                    value="{{ $courseAll->id }}"
+                                                    {{ in_array($courseAll->id, $material->courses->pluck('id')->toArray()) ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="course{{ $courseAll->id }}">
+                                                    {{ $courseAll->code }}
+                                                </label>
+                                            </div>
+                                        @endforeach
 
-                                        </div>
                                     </div>
                                 </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -164,99 +166,45 @@
             Nota: Não é possível adicionar vestuário externo.
         </div>
     </div>
-    <style>
-        .form-control[readonly] {
-            opacity: 0 !important;
-            height: 0;
-            padding: 0;
-        }
-
-        .scrollable-column {
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        .gender{
-            grid-area: gender;
-        }
-        .qty{
-            grid-area: quantity;
-        }
-        .internal{
-            grid-area: internal;
-        }
-        .clothing{
-            grid-area: clothing;
-        }
-
-        .grid{
-            display: grid;
-            grid-template-areas:
-                'internal clothing'
-                'gender quantity';
-        }
-    </style>
-
-    <script>
-        function toggleFieldsQuantity() {
-
-            const sizeCheckboxes = document.querySelectorAll('.size-checkbox');
-            const quantityInputs = document.querySelectorAll('.quantity-input');
-
-
-            sizeCheckboxes.forEach((checkbox, index) => {
-                quantityInputs[index].disabled = !checkbox.checked;
-            });
-
-        }
-    </script>
-    <script>
-        function toggleFields() {
-            let isInternalElement = document.getElementById('isInternal');
-            let isClothingElement = document.getElementById('isClothing');
-            let gender = document.getElementById('gender');
-            // let size = document.getElementById('size');
-            // let role = document.getElementById('role');
-            let quantity = document.getElementById('quantity');
-            // let labels = document.getElementById('labels');
-            let hide = document.getElementById('hide');
-
-            if (isInternalElement.value == 0) {
-                isClothingElement.value = 0;
-                warningMessage.style.display = 'block';
-            } else {
-                warningMessage.style.display = 'none';
-            }
-
-            if (isClothingElement.value == 1) {
-                isInternalElement.value = 1;
-            }
-
-            gender.style.display = (isInternalElement.value == 1 && isClothingElement.value == 1) ? 'block' : 'none';
-            // size.style.display = (isInternalElement.value == 1 && isClothingElement.value == 1) ? 'block' : 'none';
-            // role.style.display = (isInternalElement.value == 1 && isClothingElement.value == 1) ? 'block' : 'none';
-            // labels.style.display = (isInternalElement.value == 1 && isClothingElement.value == 1) ? 'block' : 'none';
-            quantity.style.display = (isInternalElement.value == 1 && isClothingElement.value == 1) ? 'none' : 'block';
-            hide.style.display = (isInternalElement.value == 1 && isClothingElement.value == 1) ? 'block' : 'none';
-        }
-
-        document.addEventListener('DOMContentLoaded', toggleFields);
-
-        document.getElementById('isInternal').addEventListener('change', toggleFields);
-        document.getElementById('isClothing').addEventListener('change', toggleFields);
-    </script>
-
 @endsection
+
+<style>
+    .form-control[readonly] {
+        opacity: 0 !important;
+        height: 0;
+        padding: 0;
+    }
+
+    .scrollable-column {
+        max-height: 300px;
+        overflow-y: auto;
+    }
+
+    .gender {
+        grid-area: gender;
+    }
+
+    .qty {
+        grid-area: quantity;
+    }
+
+    .internal {
+        grid-area: internal;
+    }
+
+    .clothing {
+        grid-area: clothing;
+    }
+
+    .grid {
+        display: grid;
+        grid-template-areas:
+            'internal clothing'
+            'gender quantity';
+    }
+</style>
 
 @section('scripts')
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script>
-        flatpickr(".flatpickr", {
-            inline: true,
-            altInput: true,
-            altFormat: "F j, Y H:i",
-            dateFormat: "Y-m-d\TH:i:s",
-            minDate: "today",
-        });
-    </script>
+    <script type="module" src="{{ asset('js/materials/edit.js') }}"></script>
 @endsection
