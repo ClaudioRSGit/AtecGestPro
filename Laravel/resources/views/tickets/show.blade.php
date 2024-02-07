@@ -119,7 +119,7 @@
                             <input type="text" class="form-control" value="{{ $ticket->dueByDate ?? 'N/A' }}" disabled>
                         </div>
 
-                        <div class="mb-5">
+                        <div class="mb-5" id="histTickets">
                             <label>Histórico do Utilizador:</label>
                             <ul>
                                 @foreach($userTickets as $userTicketId)
@@ -167,4 +167,18 @@
         </div>
 
     </div>
+
+
+    <style>
+        #histTickets {
+            box-shadow: 1px 2px 1px 2px rgb(230, 229, 229);
+            margin: 15px;
+            border: 1px solid #141313;
+            /* background-color: rgba(203, 234, 248, 0.3); */
+            overflow-y: auto;
+            overflow-x: auto;
+            height: 55px;
+        }
+
+    </style>
 @endsection
