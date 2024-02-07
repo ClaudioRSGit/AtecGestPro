@@ -51,7 +51,6 @@ class MaterialController extends Controller
     public function store(MaterialRequest $request)
     {
 
-        //DB::connection()->enableQueryLog();
         try {
             $quantity = $request->input('quantity');
 
@@ -110,32 +109,36 @@ class MaterialController extends Controller
         return view('materials.edit', compact('material' , 'sizes', 'courses' , 'sizesAll' , 'coursesAll'));
     }
 
-    public function update(MaterialRequest $request, Material $material)
+    public function update(Request $request, Material $material)
     {
-        if ($request->input('isClothing') == 0) {
-            $request->merge([
-                'gender' => null,
-                'sizes' => [],
-                'stocks' => [],
-                'courses' => [],
-            ]);
+        try {
+            if ($request->input('isClothing') == 0) {
+                $request->merge([
+                    'gender' => null,
+                    'sizes' => [],
+                    'stocks' => [],
+                    'courses' => [],
+                ]);
+            }
+            $material->update($request->all());
+
+            $material->courses()->sync($request->input('courses', []));
+
+            $sizes = $request->input('sizes', []);
+            $stocks = $request->input('stocks', []);
+            $syncData = [];
+            foreach ($sizes as  $sizeId) {
+                $stock = $stocks[$sizeId] ?? 0;
+                $syncData[$sizeId] = ['stock' => $stock];
+            }
+
+            $material->sizes()->sync($syncData);
+
+            return redirect()->route('materials.show', ['material' => $material->id])->with('success', 'Material atualizado com sucesso!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erro ao atualizar material!');
         }
-        $material->update($request->all());
-
-        $material->courses()->sync($request->input('courses', []));
-
-
-        $sizes = $request->input('sizes', []);
-        $stocks = $request->input('stocks', []);
-        $syncData = [];
-        foreach ($sizes as  $sizeId) {
-            $stock = $stocks[$sizeId] ?? 0;
-            $syncData[$sizeId] = ['stock' => $stock];
-        }
-
-        $material->sizes()->sync($syncData);
-
-        return redirect()->route('materials.show', ['material' => $material->id])->with('success', 'Material atualizado com sucesso!');    }
+    }
 
     public function destroy(Material $material)
     {
@@ -151,17 +154,14 @@ class MaterialController extends Controller
     {
         $request->validate([
             'material_ids' => 'required|array',
-            'material_ids.*' => 'exists:materials,id',//all items inside array must exist
+            'material_ids.*' => 'exists:materials,id',
         ]);
 
         try {
-
             Material::whereIn('id', $request->input('material_ids'))->delete();
             return redirect()->back()->with('success', 'Materiais selecionados excluídos com sucesso!');
         } catch (\Exception $e) {
-
             return redirect()->back()->with('error', 'Erro ao excluir os materiais selecionados. Por favor, tente novamente.');
-            //return redirect()->route('materials.index')->with('error', 'Erro ao excluir o material. Por favor, tente novamente.');
         }
     }
 
