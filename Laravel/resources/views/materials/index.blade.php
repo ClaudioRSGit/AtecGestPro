@@ -86,7 +86,7 @@
                     <tr class="material-row customTableStyling" data-internal="{{ $material->isInternal }}"
                         data-clothing="{{ $material->isClothing }}">
                         <td>
-                            <input type="checkbox" class="no-propagate" name="selectedMaterials[]"
+                            <input type="checkbox" name="selectedMaterials[]"
                                    value="{{ $material->id }}">
                         </td>
                         <td class="clickable">
@@ -176,16 +176,6 @@
     </script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var checkboxes = document.querySelectorAll('.no-propagate');
-
-            checkboxes.forEach(function (checkbox) {
-                checkbox.addEventListener('click', function (event) {
-                    event.stopPropagation();
-                });
-            });
-        });
-
         const deleteSelectedButton = document.getElementById('delete-selected');
         document.addEventListener('DOMContentLoaded', function () {
             const selectAllCheckbox = document.getElementById('select-all');

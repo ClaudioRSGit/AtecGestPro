@@ -87,7 +87,7 @@
                         @foreach ($partner_Training_Users as $partner_Training_User)
                             <tr class="customTableStyling">
                                 <td>
-                                    <input type="checkbox" class="no-propagate" name="selectedPtus[]"
+                                    <input type="checkbox" name="selectedPtus[]"
                                         value="{{ $partner_Training_User->id }}">
                                 </td>
 
@@ -179,7 +179,7 @@
                         @foreach ($partners as $partner)
                             <tr class="customTableStyling">
                                 <td>
-                                    <input type="checkbox" class="no-propagate" name="selectedPartners[]"
+                                    <input type="checkbox" name="selectedPartners[]"
                                         value="{{ $partner->id }}">
                                 </td>
                                 <td class="clickable">
@@ -212,7 +212,7 @@
                                     <form action="{{ route('external.index') }}" method="GET" class="viewPartnersForm">
                                         <input type="text" name="ptu" class="form-control" hidden value="{{ $partner->name }}">
                                         <div class="input-group-append">
-                                            <button type="submit" class="btn btn-info btn-sm filteredPtus no-propagate">
+                                            <button type="submit" class="btn btn-info btn-sm filteredPtus">
                                                 Ver
                                             </button>
                                         </div>
@@ -299,7 +299,7 @@
                         @foreach ($trainings as $training)
                             <tr class="customTableStyling">
                                 <td>
-                                    <input type="checkbox" class="no-propagate" name="selectedTrainings[]"
+                                    <input type="checkbox" name="selectedTrainings[]"
                                         value="{{ $training->id }}">
                                 </td>
                                 <td class="clickable">
@@ -415,19 +415,12 @@
             const selectAllPtusCheckbox = document.getElementById('select-all-ptus');
 
             deleteselectedPtusButton.addEventListener('click', function(event) {
-                event.stopPropagation();
                 massDeletePtus();
             });
 
             selectAllPtusCheckbox.addEventListener('change', function() {
                 ptuCheckboxes.forEach(checkbox => {
                     checkbox.checked = selectAllPtusCheckbox.checked;
-                });
-            });
-
-            ptuCheckboxes.forEach(checkbox => {
-                checkbox.addEventListener('click', function(event) {
-                    event.stopPropagation();
                 });
             });
 
@@ -471,34 +464,18 @@
     </script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const checkboxes = document.querySelectorAll('.no-propagate');
-
-            checkboxes.forEach(function(checkbox) {
-                checkbox.addEventListener('click', function(event) {
-                    event.stopPropagation();
-                });
-            });
-        });
         document.addEventListener("DOMContentLoaded", function() {
             const deleteSelectedButton = document.getElementById('delete-selected');
             const checkboxes = document.getElementsByName('selectedPartners[]');
             const selectAllCheckbox = document.getElementById('select-all-partners');
 
             deleteSelectedButton.addEventListener('click', function(event) {
-                event.stopPropagation();
                 massDelete();
             });
 
             selectAllCheckbox.addEventListener('change', function() {
                 checkboxes.forEach(checkbox => {
                     checkbox.checked = selectAllCheckbox.checked;
-                });
-            });
-
-            checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('click', function(event) {
-                    event.stopPropagation();
                 });
             });
 
@@ -551,19 +528,12 @@
             const selectAllTrainingsCheckbox = document.getElementById('select-all-trainings');
 
             deleteSelectedTrainingsButton.addEventListener('click', function(event) {
-                event.stopPropagation();
                 massDeleteTrainings();
             });
 
             selectAllTrainingsCheckbox.addEventListener('change', function() {
                 trainingCheckboxes.forEach(checkbox => {
                     checkbox.checked = selectAllTrainingsCheckbox.checked;
-                });
-            });
-
-            trainingCheckboxes.forEach(checkbox => {
-                checkbox.addEventListener('click', function(event) {
-                    event.stopPropagation();
                 });
             });
 
