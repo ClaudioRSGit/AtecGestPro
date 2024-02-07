@@ -114,7 +114,7 @@ main > .content{
     align-items: flex-start;
     justify-content: flex-start;
     flex: 1 0 auto;
-    padding: 0 3%;
+    padding: 0 3rem;
 }
 .notification-area{
     width: 250px;
@@ -357,6 +357,9 @@ input[type="number"]{
 }
 
 
+textarea{
+    resize: none !important;
+}
 
 @media (max-width: 1082px) {
     .links > div{

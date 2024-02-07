@@ -8,7 +8,22 @@
             </div>
         @endif
 
-        <h1>Tickets</h1>
+
+
+
+        <div class="d-flex justify-content-between align-items-center">
+            <h1>Tickets</h1>
+            <div onclick="showOptions()" class="form-control btn-primary w-20 dropdown" style="max-width: 10rem;">
+                <div class="d-flex align-items-center w-100 h-100">
+                    <img src="{{ asset('assets/new.svg') }}">
+                    <p id="open" class="btn text-white">Novo ticket</p>
+                </div>
+                <div id="options" class="dropdown-menu w-100 h-auto">
+                    <button id="openTicket" class="btn dropdown-item" onclick="showQuickTicket()">Ticket rápido</button>
+                    <button onclick="location.href='{{ route('tickets.create') }}'" class="btn dropdown-item">Ticket completo</a>
+                </div>
+            </div>
+        </div>
 
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
@@ -48,7 +63,8 @@
                             <form id="filterCategoryForm" action="{{ route('tickets.index') }}" method="GET">
                                 <select class="form-control w-auto" id="filterCategory" name="filterCategory"
                                         onchange="submitCategoryForm()">
-                                    <option value="" {{ $filterCategory === '' ? 'selected' : '' }}>Todas as categorias
+                                    <option value="" {{ $filterCategory === '' ? 'selected' : '' }}>
+                                        Todas as categorias
                                     </option>
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}"
@@ -73,24 +89,17 @@
                             <form id="filterPriorityForm" action="{{ route('tickets.index') }}" method="GET">
                                 <select class="form-control w-auto" id="filterPriority" name="filterPriority"
                                         onchange="submitPriorityForm()">
-                                    <option value="" {{ $filterPriority === '' ? 'selected' : '' }}>Todas as prioridades
+                                    <option value="" {{ $filterPriority === '' ? 'selected' : '' }}>
+                                        Todas as prioridades
                                     </option>
                                     @foreach ($priorities as $priority)
                                         <option value="{{ $priority->id }}"
                                             {{ (int) $filterPriority === $priority->id ? 'selected' : '' }}>
-                                            {{ $priority->description }}</option>
+                                            {{ $priority->description }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </form>
-
-                            <div class="form-control btn-primary w-20 dropdown">
-                                <button onclick="showOptions()" class="btn btn-primary open w-100 h-100">Novo ticket</button>
-                                <div id="options" class="options w-100 h-auto">
-                                    <button id="openTicket" class=" btn btn-primary">Ticket rápido</button>
-                                    <a href="{{ route('tickets.create') }}" class="btn-primary">Ticket completo</a>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
                     @if (count($tickets) === 0)
@@ -153,8 +162,7 @@
                                     </td>
                                     <td class="ticket-status-{{ $ticket->ticketStatus->id }}">{{ $ticket->ticketStatus->description ? $ticket->ticketStatus->description : 'N.A.' }}</td>
                                     <td>{{ $ticket->created_at ? $ticket->created_at->format('d-m-Y') : 'N.A.' }}</td>
-                                    <td>{{ $ticket->dueByDate ? \Carbon\Carbon::parse($ticket->dueByDate)->format('d-m-Y') : 'N.A.' }}
-                                    </td>
+                                    <td>{{ $ticket->dueByDate ? \Carbon\Carbon::parse($ticket->dueByDate)->format('d-m-Y') : 'N.A.' }}</td>
                                     <td class="editDelete">
                                         <div>
                                             <a href="{{ route('tickets.edit', $ticket->id) }}">
@@ -328,14 +336,13 @@
 
             </div>
 
-            <div id="box" class="box" style="display: none";>
-                @component('tickets.quickTicket', ['priorities' => $priorities, 'categories' => $categories])
-
-                @endcomponent
-            </div>
 
 
         </div>
+    </div>
+    @component('tickets.quickTicket', ['priorities' => $priorities, 'categories' => $categories])
+
+    @endcomponent
 
             <style>
                 .fade-in {
@@ -392,7 +399,7 @@
                 overflow: auto;
                 z-index: 1;
             }
-            .options a {
+            .options * {
                 text-decoration: none;
                 display: block;
                 padding: 12px 16px;
@@ -400,15 +407,12 @@
             .show{
                 display: block;
             }
-            .open{
-                border: none;
-                cursor: pointer;
-                padding: 0;
+            #options *{
+                width: 10rem;
+                border-radius: 0 !important;
             }
 
-            .box{
-                display: none;
-            }
+
 
             @media (max-width: 1080px) {
                 .noTicket {
@@ -480,7 +484,7 @@
                 document.getElementById("options").classList.toggle("show");
             }
             window.onclick = function(event) {
-                if (!event.target.matches('.open')) {
+                if (!event.target.matches('#open')) {
                     var dropdowns = document.getElementsByClassName("options");
                     var i;
                     for (i = 0; i < dropdowns.length; i++) {
@@ -492,9 +496,10 @@
                 }
             }
 
-            document.getElementById('openTicket').addEventListener('click', function() {
-                document.getElementById('box').style.display = 'block';
-            });
+            function showQuickTicket() {
+                document.querySelector('.quickTicket').style.display = 'block';
+                document.querySelector('.container').classList.add('w-70');
+            }
         </script>
 
 @endsection
