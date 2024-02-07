@@ -30,7 +30,7 @@
         }
 
     </style>
-    <div class="container">
+    <div class="container w-100">
         <h1>Detalhes do agendamento da formação</h1>
 
         @if($partner_Training_Users)

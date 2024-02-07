@@ -41,6 +41,7 @@ class CourseClassController extends Controller
         }
 
     }
+
     public function show(CourseClass $courseClass)
     {
         $courses = Course::all();
@@ -54,34 +55,35 @@ class CourseClassController extends Controller
         $courses = Course::all();
 
 
-
         $students = User::where('isStudent', 1)->whereNull('course_class_id')->get();
 
-        return view('course-classes.create', compact('courses','students'));
+        return view('course-classes.create', compact('courses', 'students'))->with('success', 'Turma criada com sucesso!');
     }
 
     public function store(CourseClassRequest $request)
     {
-        $courseClass = CourseClass::create([
-            'description' => $request->input('description'),
-            'course_id' => $request->input('course_id'),
-        ]);
+        try {
+            $courseClass = CourseClass::create([
+                'description' => $request->input('description'),
+                'course_id' => $request->input('course_id'),
+            ]);
 
-
-        if($request->has('noImport')){
-            if ($request->has('selected_students')) {
-                foreach ($request->input('selected_students') as $student) {
-                    $user = User::find($student);
-                    $user->course_class_id = $courseClass->id;
-                    $user->save();
+            if ($request->has('noImport')) {
+                if ($request->has('selected_students')) {
+                    foreach ($request->input('selected_students') as $student) {
+                        $user = User::find($student);
+                        $user->course_class_id = $courseClass->id;
+                        $user->save();
+                    }
                 }
+            } else if ($request->has('import')) {
+                return redirect()->route('import-excel.importStudents');
             }
-        }
-        else if($request->has('import')){
-            return redirect()->route('import-excel.importStudents');
-        }
-        return redirect()->route('course-classes.index')->with('success', 'Turma criada com sucesso!');
+            return redirect()->route('course-classes.index')->with('success', 'Turma criada com sucesso!');
+        } catch (\Exception $e) {
 
+            return redirect()->route('course-classes.index')->with('error', 'Erro ao criar turma!');
+        }
     }
 
 
@@ -98,50 +100,40 @@ class CourseClassController extends Controller
 
     public function update(CourseClassRequest $request, CourseClass $courseClass)
     {
-        $data = $request->validated();
-        $courseClass->update($data);
+        try {
+            $data = $request->validated();
+            $courseClass->update($data);
 
-        if ($request->has('studentsToAdd')) {
-            foreach ($request->input('studentsToAdd') as $student) {
-                $user = User::find($student);
-                $user->course_class_id = $courseClass->id;
-                $user->save();
+            if ($request->has('studentsToAdd')) {
+                foreach ($request->input('studentsToAdd') as $student) {
+                    $user = User::find($student);
+                    $user->course_class_id = $courseClass->id;
+                    $user->save();
+                }
             }
-        }
 
-        if ($request->has('studentsToRemove')) {
-            foreach ($request->input('studentsToRemove') as $student) {
-                $user = User::find($student);
-                $user->course_class_id = null;
-                $user->save();
+            if ($request->has('studentsToRemove')) {
+                foreach ($request->input('studentsToRemove') as $student) {
+                    $user = User::find($student);
+                    $user->course_class_id = null;
+                    $user->save();
+                }
             }
-        }
 
-        return redirect()->route('course-classes.index')->with('success', 'Turma atualizada com sucesso!');
+            return redirect()->route('course-classes.index')->with('success', 'Turma atualizada com sucesso!');
+        } catch (\Exception $e) {
+            return redirect()->route('course-classes.index')->with('error', 'Erro ao atualizar turma!');
+        }
     }
-
     public function destroy(CourseClass $courseClass)
     {
-        $courseClass->delete();
-        return redirect()->route('course-classes.index')->with('success', 'Turma apagada com sucesso!');
-    }
-
-    public function massDelete(Request $request)
-    {
-        $request->validate([
-            'course_class_ids' => 'required|array',
-            'course_class_ids.*' => 'exists:course_classes,id',
-        ]);
-
         try {
-            CourseClass::whereIn('id', $request->input('course_class_ids'))->delete();
-            return redirect()->back()->with('success', 'Turmas selecionadas excluídas com sucesso!');
+            $courseClass->delete();
+            return redirect()->route('course-classes.index')->with('success', 'Turma apagada com sucesso!');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Erro ao excluir as turmas selecionadas. Por favor, tente novamente.');
+            return redirect()->route('course-classes.index')->with('error', 'Erro ao apagar turma!');
         }
     }
-
-
 
 
 }

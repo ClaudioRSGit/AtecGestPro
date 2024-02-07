@@ -20,7 +20,6 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        //        dd($request);
         $searchName = $request->input('searchName');
         $roleFilter = $request->input('roleFilter');
         $sortColumn = $request->input('sortColumn', 'name');
@@ -145,43 +144,47 @@ class UserController extends Controller
 
     public function update(UserRequest $request, User $user)
     {
-        if ($user->role_id == 3 && $request->input('role_id') != 3 && !$request->filled('password')) {
-            return redirect()->back()->with('error', 'Password obrigatória ao alterar de Formando para outra função.');
-        }
+        try {
+            if ($user->role_id == 3 && $request->input('role_id') != 3 && !$request->filled('password')) {
+                return redirect()->back()->with('error', 'Password obrigatória ao alterar de Formando para outra função.');
+            }
 
-        $data = $request->validated();
+            $data = $request->validated();
 
-        if ($user->role_id != 3 && $request->input('role_id') == 3) {
-            $data['password'] = null;
-        }
+            if ($user->role_id != 3 && $request->input('role_id') == 3) {
+                $data['password'] = null;
+            }
 
-        if ($user->role_id != 3 && !$request->filled('password')) {
-            unset($data['password']);
-        }
+            if ($user->role_id != 3 && !$request->filled('password')) {
+                unset($data['password']);
+            }
 
-        if ($request->input('isStudent') != 1) {
-            $data['course_class_id'] = null;
-        }
+            if ($request->input('isStudent') != 1) {
+                $data['course_class_id'] = null;
+            }
 
-        if ($request->filled('password') && $request->input('role_id') != 3) {
-            $data['password'] = $this->encryptPassword($request->input('password'));
-        }
+            if ($request->filled('password') && $request->input('role_id') != 3) {
+                $data['password'] = $this->encryptPassword($request->input('password'));
+            }
 
-        $user->update($data);
+            $user->update($data);
 
-        if ($user->hasRole('funcionario')) {
-            return redirect()->route('master.main')->with('success', 'Utilizador atualizado com sucesso!');
-        } else {
-            return redirect()->route('users.index')->with('success', 'Utilizador atualizado com sucesso!');
+            if ($user->hasRole('funcionario')) {
+                return redirect()->route('master.main')->with('success', 'Utilizador atualizado com sucesso!');
+            } else {
+                return redirect()->route('users.index')->with('success', 'Utilizador atualizado com sucesso!');
+            }
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Error while updating the user. Please try again.');
         }
     }
-
 
 
     public function destroy(User $user)
     {
         try {
             $user->delete();
+
             return redirect()->route('users.index')->with('success', 'Utilizador excluído com sucesso!');
         } catch (\Exception $e) {
             return redirect()->route('users.index')->with('error', 'Erro ao excluir o utilizador. Por favor, tente novamente.');
@@ -196,11 +199,10 @@ class UserController extends Controller
         ]);
 
         try {
-
             User::whereIn('id', $request->input('user_ids'))->delete();
+
             return redirect()->back()->with('success', 'Utilizadores selecionados excluídos com sucesso!');
         } catch (\Exception $e) {
-
             return redirect()->back()->with('error', 'Erro ao excluir utilizadores selecionados. Por favor, tente novamente.');
         }
     }
@@ -217,17 +219,25 @@ class UserController extends Controller
 
     public function restore($id)
     {
-        $user = User::withTrashed()->find($id);
-        $user->restore();
+        try {
+            $user = User::withTrashed()->find($id);
+            $user->restore();
 
-        return redirect()->back()->with('success', 'Utilizador restaurado com  sucesso');
+            return redirect()->back()->with('success', 'Utilizador restaurado com sucesso');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erro ao restaurar o utilizador. Por favor, tente novamente.');
+        }
     }
 
     public function forceDelete($id)
     {
-        $user = User::withTrashed()->find($id);
-        $user->forceDelete();
+        try {
+            $user = User::withTrashed()->find($id);
+            $user->forceDelete();
 
-        return redirect()->back()->with('success', 'O utilizador foi removido permanentemente');
+            return redirect()->back()->with('success', 'O utilizador foi removido permanentemente');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erro ao remover permanentemente o utilizador. Por favor, tente novamente.');
+        }
     }
 }

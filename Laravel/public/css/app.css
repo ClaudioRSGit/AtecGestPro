@@ -116,10 +116,28 @@ main > .content{
     flex: 1 0 auto;
     padding: 0 3rem;
 }
+.notification-area{
+    width: 250px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+.notification-area::-webkit-scrollbar {
+    width: 8px;
+}
 
+.notification-area::-webkit-scrollbar-track {
+    background-color: rgba(0,0,0,0.1);
+}
+
+.notification-area::-webkit-scrollbar-thumb {
+    background-color: rgba(17, 111, 220, 0.8);
+    border-radius: 4px;
+}
+
+.notification-area::-webkit-scrollbar-thumb:hover {
+    background-color: #0056b3;
+}
 .notification-item {
-    padding: 2px;
-    margin-bottom: 5px;
     border: 1px solid #ddd;
     border-radius: 2px;
     background-color: white;
@@ -275,8 +293,53 @@ thead th{
     background-image: url('../assets/search.svg');
     background-size: cover;
 }
+.ticket-prio{
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    display: inline-block;
+    opacity: 0.5;
+}
+.ticket-priority-1{
+    background-color: rgb(17, 222, 17);
+}
+.ticket-priority-2{
+    background-color: green;
+}
+.ticket-priority-3{
+    background-color: yellow;
+}
+.ticket-priority-4{
+    background-color: orange;
+}
+.ticket-priority-5{
+    background-color: red;
+}
 
+.ticket-status-1 {
+    color: #116FDC;
+}
+.ticket-status-2 {
+    color: rgb(34, 177, 34);
+}
+.ticket-status-3 {
+    color: #FEAF00;
+}
+.ticket-status-4 {
+    color: rgb(5, 69, 5);
+    font-weight: bold;
+}
+.ticket-status-5 {
+    color: red;
+    font-weight: bold;
+}
 
+.critical{
+    background-color: rgba(255, 0, 0, 0.2);
+}
+.critical:hover{
+    background-color: rgba(255, 0, 0, 0.5)!important;
+}
 
 .buttons {
     width: 70%;

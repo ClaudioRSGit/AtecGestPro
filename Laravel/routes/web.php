@@ -11,6 +11,12 @@ use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\TrainingController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\CourseController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ExcelImportController;
+use App\Http\Controllers\NotificationUserController;
+use App\Http\Controllers\TicketHistoryController;
 
 //Main Page
 Route::get('/', function () {
@@ -76,7 +82,6 @@ Route::middleware(['auth', 'checkRole:admin,tecnico'])->group(function () {
     Route::get('/tickets/restore/{id}', 'TicketController@restore')->name('tickets.restore');
     Route::delete('/tickets/forceDelete/{id}', 'TicketController@forceDelete')->name('tickets.forceDelete');
 
-    Route::post('/comments', 'CommentController@store')->name('comments.store');
 
     Route::resource('import-excel', 'ExcelImportController');
     Route::redirect('/import-excel', '/users');
@@ -94,8 +99,10 @@ Route::middleware(['auth', 'checkRole:admin,tecnico'])->group(function () {
 Route::middleware(['auth', 'checkRole:admin,tecnico,funcionario'])->group(function () {
     Route::resource('tickets', 'TicketController');
     Route::get('ticket-histories', 'TicketHistoryController@index');
-    Route::get('ticket-histories/{id}', 'TicketHistoryController@show')->name('ticket-histories.show');
+    Route::get('ticket-histories/{id}', 'TicketHistoryController@show');
+    Route::get('/notifications/readAll', [NotificationUserController::class, 'readAll'])->name('notifications.readAll');
 
+    Route::post('/comments', 'CommentController@store')->name('comments.store');
     Route::get('users/{user}/edit', 'UserController@edit')->name('users.edit');
     Route::put('users/{user}', 'UserController@update')->name('users.update');
 });

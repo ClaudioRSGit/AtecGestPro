@@ -114,7 +114,6 @@
                         <div>
                             <img src="{{ asset('assets/noTickets.png') }}" class="noTicket">
                         </div>
-
                     @else
                         @php
                             $currentSort = request('sort');
@@ -140,9 +139,8 @@
                                     </a>
                                 </th>
                                 <th scope="col">
-                                    <a href="{{ route('tickets.index', ['sort' => 'technician', 'direction' => $currentSort === 'technician' ? $newDirection : 'asc']) }}">
                                         Técnico
-                                    </a>
+
                                 </th>
                                 <th scope="col">Estado</th>
                                 <th scope="col">Data de Abertura</th>
@@ -153,13 +151,12 @@
                             <tbody>
                             <tr class="filler"></tr>
                             @foreach ($tickets as $ticket)
-                                <tr class="customTableStyling" id="heading{{ $ticket->id }}">
+                                <tr class="customTableStyling {{ $ticket->ticketPriority->id == 5 ? 'critical' : '' }}" id="heading{{ $ticket->id }}">
 
                                     <td class="pl-4">#{{ $ticket->id ? $ticket->id : 'N.A.' }}</td>
                                     <td class="clickable">
                                         <div class="d-flex align-items-center">
-                                            <span class="mr-2"
-                                                style="height: 15px; width: 15px; background-color: {{ $ticket->ticketPriority->id == 1 ? 'green' : ($ticket->ticketPriority->id == 2 ? 'green' : ($ticket->ticketPriority->id == 3 ? 'yellow' : ($ticket->ticketPriority->id == 4 ? 'orange' : 'red'))) }}; border-radius: 50%; display: inline-block; opacity: 0.5;"></span>
+                                            <span class="mr-2 ticket-prio ticket-priority-{{ $ticket->ticketPriority->id }}"></span>
                                             <a href="{{ route('tickets.show', $ticket->id) }}" class="d-flex align-items-center w-auto h-100">{{ $ticket->title ? $ticket->title : 'N.A.' }}</a>
                                         </div>
                                     </td>
@@ -171,7 +168,7 @@
                                             <a href="{{ route('users.show', $user->id) }}" class="d-flex align-items-center w-auto h-100">{{ $user->name }}</a>
                                         @endforeach
                                     </td>
-                                    <td>{{ $ticket->ticketStatus->description ? $ticket->ticketStatus->description : 'N.A.' }}</td>
+                                    <td class="ticket-status-{{ $ticket->ticketStatus->id }}">{{ $ticket->ticketStatus->description ? $ticket->ticketStatus->description : 'N.A.' }}</td>
                                     <td>{{ $ticket->created_at ? $ticket->created_at->format('d-m-Y') : 'N.A.' }}</td>
                                     <td>{{ $ticket->dueByDate ? \Carbon\Carbon::parse($ticket->dueByDate)->format('d-m-Y') : 'N.A.' }}</td>
                                     <td class="editDelete">
@@ -210,11 +207,10 @@
                 </div>
 
                 <div class="tab-pane fade" id="waitingQueue" role="tabpanel" aria-labelledby="waiting-queue-tab">
-                    @if (count($tickets) === 0)
+                    @if (count($waitingQueueTickets) === 0)
                         <div>
                             <img src="{{ asset('assets/noTickets.png') }}" class="noTicket">
                         </div>
-
                     @else
                         <table class="table bg-white rounded-top">
                             <thead>
@@ -231,12 +227,11 @@
                             <tbody>
                             <tr class="filler"></tr>
                             @foreach ($waitingQueueTickets as $ticket)
-                                <tr class="customTableStyling">
+                                <tr class="customTableStyling {{ $ticket->ticketPriority->id == 5 ? 'critical' : '' }}">
                                     <td class="pl-4">#{{ $ticket->id }}</td>
                                     <td class="clickable">
                                         <div class="d-flex align-items-center">
-                                            <span class="mr-2"
-                                                style="height: 15px; width: 15px; background-color: {{ $ticket->ticketPriority->id == 1 ? 'green' : ($ticket->ticketPriority->id == 2 ? 'green' : ($ticket->ticketPriority->id == 3 ? 'yellow' : ($ticket->ticketPriority->id == 4 ? 'orange' : 'red'))) }}; border-radius: 50%; display: inline-block; opacity: 0.5;"></span>
+                                            <span class="mr-2 ticket-prio ticket-priority-{{ $ticket->ticketPriority->id }}"></span>
                                             <a href="{{ route('tickets.show', $ticket->id) }}">{{ $ticket->title ? $ticket->title : 'N.A.' }}</a>
                                         </div>
                                     </td>
@@ -248,7 +243,7 @@
                                             <a href="{{ route('users.show', $user->id) }}" class="d-flex align-items-center w-auto h-100">{{ $user->name }}</a>
                                         @endforeach
                                     </td>
-                                    <td>{{ $ticket->ticketStatus->description }}</td>
+                                    <td class="ticket-status-{{ $ticket->ticketStatus->id }}">{{ $ticket->ticketStatus->description }}</td>
                                     <td>{{ $ticket->created_at->format('d-m-Y') }}</td>
                                     <td class="editDelete">
                                         <div class="w-50">
@@ -286,6 +281,9 @@
                 </div>
 
                 <div class="tab-pane fade" id="recycling" role="tabpanel" aria-labelledby="recycling-tab">
+                    @if($recycledTickets->isEmpty())
+                        <img src="{{ asset('assets/reciclagem_azul_extra_bold_2_sem fundo.png') }}" alt="Não existem registos" class="bin">
+                    @else
                     <table class="table table-hover">
                         <thead>
                         <tr>
@@ -301,11 +299,10 @@
                         </thead>
                         <tbody>
                         @foreach ($recycledTickets as $ticket)
-                            <tr class="customTableStyling">
+                            <tr class="customTableStyling {{ $ticket->ticketPriority->id == 5 ? 'critical' : '' }}">
                                 <td class="pl-4">#{{ $ticket->id }}</td>
                                 <td class="d-flex align-items-center clickable">
-                                    <span class="mr-2"
-                                        style="height: 15px; width: 15px; background-color: {{ $ticket->ticketPriority->id == 1 ? 'green' : ($ticket->ticketPriority->id == 2 ? 'green' : ($ticket->ticketPriority->id == 3 ? 'yellow' : ($ticket->ticketPriority->id == 4 ? 'orange' : 'red'))) }}; border-radius: 50%; display: inline-block; opacity: 0.5;"></span>
+                                    <span class="mr-2 ticket-prio ticket-priority-{{ $ticket->ticketPriority->id }}"></span>
                                     <a href="{{ route('tickets.show', $ticket->id) }}">{{ $ticket->title ? $ticket->title : 'N.A.' }}</a>
                                 </td>
                                 <td class="clickable">
@@ -316,7 +313,7 @@
                                         <a href="{{ route('users.show', $user->name) }}" class="d-flex align-items-center w-auto h-100">{{ $user->name }}</a>
                                     @endforeach
                                 </td>
-                                <td>{{ $ticket->ticketStatus->description }}</td>
+                                <td class="ticket-status-{{ $ticket->ticketStatus->id }}">{{ $ticket->ticketStatus->description }}</td>
                                 <td>{{ $ticket->created_at->format('d-m-Y') }}</td>
                                 <td class="pl-4">
                                     <div class="restore w-100 h-100 d-flex align-items-center">
@@ -341,6 +338,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    @endif
                     {{ $recycledTickets->appends(request()->input())->links() }}
                 </div>
 
@@ -429,6 +427,16 @@
                     width: 50%;
                 }
             }
+
+             .bin{
+                 margin-top: 100px!important;
+                 width: 200px;
+                 height: 200px;
+                 display: block;
+                 margin-left: auto;
+                 margin-right: auto;
+             }
+
         </style>
 
         <script>

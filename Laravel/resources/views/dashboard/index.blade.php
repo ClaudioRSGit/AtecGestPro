@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container">
+    <div class="container w-100">
         <h1 class="h2">Dashboard</h1>
 
 
@@ -72,7 +72,7 @@
                                             <td>{{ $user->email }}</td>
                                             <td class="btn btn-sm btn-primary"
                                                 onclick="location.href='{{ route('material-user.create', $user->id) }}'">
-                                                View
+                                                Visualizar
                                             </td>
                                         </tr>
                                     @endforeach

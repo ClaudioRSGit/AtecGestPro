@@ -19,47 +19,41 @@ class PartnerController extends Controller
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         $partners = Partner::all();
         return view('partners.create', compact('partners'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(PartnerRequest $request)
+
+    public function store(Request $request)
     {
-        $contacts = $request->input('contact_value');
-        $uniqueContacts = array_unique($contacts);
+        try {
+            $contacts = $request->input('contact_value');
+            $uniqueContacts = array_unique($contacts);
 
-        if (count($contacts) !== count($uniqueContacts)) {
-            return redirect()->back()->withInput()->with('error', 'Valores de contacto duplicados. Remova ou corrija os grupos duplicados!');
+            if (count($contacts) !== count($uniqueContacts)) {
+                return redirect()->back()->withInput()->with('error', 'Valores de contacto duplicados. Remova ou corrija os grupos duplicados!');
+            }
+
+            $partner = Partner::create($request->only(['name', 'description', 'address']));
+
+            $contactDescriptions = $request->input('contact_description');
+
+            foreach ($contactDescriptions as $key => $contactDescription) {
+                ContactPartner::create([
+                    'contact' => $contacts[$key],
+                    'description' => $contactDescription,
+                    'partner_id' => $partner->id,
+                ]);
+            }
+
+            return redirect()->route('external.index')->with('success', 'Parceiro criado com sucesso!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erro ao criar parceiro!');
         }
-
-        $partner = Partner::create($request->only(['name', 'description', 'address']));
-
-        $contactDescriptions = $request->input('contact_description');
-
-        foreach ($contactDescriptions as $key => $contactDescription) {
-            ContactPartner::create([
-                'contact' => $contacts[$key],
-                'description' => $contactDescription,
-                'partner_id' => $partner->id,
-            ]);
-        }
-
-        return redirect()->route('external.index')->with('success', 'Parceiro criado com sucesso!');
     }
-
     /**
      * Display the specified resource.
      *
@@ -83,57 +77,53 @@ class PartnerController extends Controller
         return view('partners.edit', compact('partner'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Partner  $partner
-     * @return \Illuminate\Http\Response
-     */
-    public function update(PartnerRequest $request, Partner $partner)
+
+    public function update(Request $request, Partner $partner)
     {
+        try {
+            $allContactValues = array_merge(
+                $request->input('existing_contact_values', []),
+                $request->input('new_contact_values', [])
+            );
 
-        $allContactValues = array_merge(
-            $request->input('existing_contact_values', []),
-            $request->input('new_contact_values', [])
-        );
+            $uniqueContactValues = array_unique(array_filter($allContactValues));
 
-        $uniqueContactValues = array_unique(array_filter($allContactValues));
+            if (count($allContactValues) !== count($uniqueContactValues)) {
+                return redirect()->back()->withInput()->with('error', 'Valores de contacto duplicados. Remova ou corrija os grupos duplicados!');
+            }
 
-        if (count($allContactValues) !== count($uniqueContactValues)) {
-            return redirect()->back()->withInput()->with('error', 'Valores de contacto duplicados. Remova ou corrija os grupos duplicados!');
+            $partner->update($request->only(['name', 'description', 'address']));
+
+            // Update contacts
+            $existingContactIds = $request->input('existing_contact_ids', []);
+            $existingContactDescriptions = $request->input('existing_contact_descriptions', []);
+            $existingContactValues = $request->input('existing_contact_values', []);
+
+            foreach ($existingContactIds as $key => $existingContactId) {
+                $existingContact = ContactPartner::find($existingContactId);
+                $existingContact->update([
+                    'contact' => $existingContactValues[$key],
+                    'description' => $existingContactDescriptions[$key],
+                ]);
+            }
+
+            // New contacts
+            $newContactDescriptions = $request->input('new_contact_descriptions', []);
+            $newContactValues = $request->input('new_contact_values', []);
+
+            foreach ($newContactDescriptions as $key => $newContactDescription) {
+                ContactPartner::create([
+                    'contact' => $newContactValues[$key],
+                    'description' => $newContactDescription,
+                    'partner_id' => $partner->id,
+                ]);
+            }
+
+            return redirect()->route('external.index')->with('success', 'Parceiro atualizado com sucesso!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erro ao atualizar parceiro!');
         }
-
-        $partner->update($request->only(['name', 'description', 'address']));
-
-        // Update contacts
-        $existingContactIds = $request->input('existing_contact_ids', []);
-        $existingContactDescriptions = $request->input('existing_contact_descriptions', []);
-        $existingContactValues = $request->input('existing_contact_values', []);
-
-        foreach ($existingContactIds as $key => $existingContactId) {
-            $existingContact = ContactPartner::find($existingContactId);
-            $existingContact->update([
-                'contact' => $existingContactValues[$key],
-                'description' => $existingContactDescriptions[$key],
-            ]);
-        }
-
-        // New contacts
-        $newContactDescriptions = $request->input('new_contact_descriptions', []);
-        $newContactValues = $request->input('new_contact_values', []);
-
-        foreach ($newContactDescriptions as $key => $newContactDescription) {
-            ContactPartner::create([
-                'contact' => $newContactValues[$key],
-                'description' => $newContactDescription,
-                'partner_id' => $partner->id,
-            ]);
-        }
-
-        return redirect()->route('external.index')->with('success', 'Parceiro atualizado com sucesso!');
     }
-
 
     /**
      * Remove the specified resource from storage.

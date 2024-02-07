@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container">
+    <div class="container w-100">
         @if (session('success'))
             <div class="alert alert-success" id="success-alert">
                 {{ session('success') }}
@@ -62,7 +62,6 @@
 
 
                     <div class="buttons">
-                        <button class="btn btn-danger mr-2" id="delete-selected-ptus">Excluir Selecionados</button>
                         <a href="{{ route('external.create') }}" class="btn btn-primary">Nova F. mercado</a>
                     </div>
 
@@ -71,9 +70,7 @@
                 <table class="table bg-white" id="externalTable">
                     <thead>
                         <tr>
-                            <th scope="col">
-                                <input type="checkbox" id="select-all-ptus">
-                            </th>
+
                             <th scope="col">Parceiro</th>
                             <th scope="col">Morada</th>
                             <th scope="col">Técnico</th>
@@ -86,10 +83,7 @@
                         <tr class="filler"></tr>
                         @foreach ($partner_Training_Users as $partner_Training_User)
                             <tr class="customTableStyling">
-                                <td>
-                                    <input type="checkbox" name="selectedPtus[]"
-                                        value="{{ $partner_Training_User->id }}">
-                                </td>
+
 
                                 <td class="clickable {{ optional($partner_Training_User->partner)->name ? '' : 'text-danger' }}">
                                     <a href="{{ route('external.show', $partner_Training_User->id) }}" class="d-flex align-items-center w-auto h-100">
@@ -158,16 +152,13 @@
                         </div>
                     </form>
                     <div class="buttons">
-                        <button class="btn btn-danger mr-2" id="delete-selected">Excluir Selecionados</button>
                         <a href="{{ route('partners.create') }}" class="btn btn-primary">Novo Parceiro</a>
                     </div>
                 </div>
                 <table class="table bg-white">
                     <thead>
                         <tr>
-                            <th scope="col">
-                                <input type="checkbox" id="select-all-partners">
-                            </th>
+
                             <th scope="col">Parceiro</th>
                             <th scope="col">Descrição</th>
                             <th scope="col">Morada</th>
@@ -180,10 +171,7 @@
                         <tr class="filler"></tr>
                         @foreach ($partners as $partner)
                             <tr class="customTableStyling">
-                                <td>
-                                    <input type="checkbox" name="selectedPartners[]"
-                                        value="{{ $partner->id }}">
-                                </td>
+
                                 <td class="clickable">
                                     <a href="{{ route('partners.show', $partner->id) }}" class="d-flex align-items-center h-100">{{ $partner->name }}</a>
                                 </td>
@@ -278,7 +266,6 @@
                     </form>
 
                     <div class="buttons">
-                        <button class="btn btn-danger mr-2" id="delete-selected-trainings">Excluir Selecionados</button>
                         <a href="{{ route('trainings.create') }}" class="btn btn-primary">Nova Formação</a>
                     </div>
 
@@ -287,9 +274,7 @@
                 <table class="table bg-white">
                     <thead>
                         <tr >
-                            <th scope="col">
-                                <input type="checkbox" id="select-all-trainings">
-                            </th>
+
                             <th scope="col">Nome da formação</th>
                             <th scope="col">Descrição</th>
                             <th scope="col">Categoria</th>
@@ -300,10 +285,7 @@
                         <tr class="filler"></tr>
                         @foreach ($trainings as $training)
                             <tr class="customTableStyling">
-                                <td>
-                                    <input type="checkbox" name="selectedTrainings[]"
-                                        value="{{ $training->id }}">
-                                </td>
+
                                 <td class="clickable">
                                     <a href="{{ route('trainings.show', $training->id) }}" class="d-flex align-items-center w-auto h-100">{{ $training->name }}</a>
                                 </td>
@@ -407,174 +389,6 @@
                 const fragment = getFragment();
                 setActiveTab(fragment);
             });
-        });
-    </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-
-            const deleteselectedPtusButton = document.getElementById('delete-selected-ptus');
-            const ptuCheckboxes = document.getElementsByName('selectedPtus[]');
-            const selectAllPtusCheckbox = document.getElementById('select-all-ptus');
-
-            deleteselectedPtusButton.addEventListener('click', function(event) {
-                massDeletePtus();
-            });
-
-            selectAllPtusCheckbox.addEventListener('change', function() {
-                ptuCheckboxes.forEach(checkbox => {
-                    checkbox.checked = selectAllPtusCheckbox.checked;
-                });
-            });
-
-            function massDeletePtus() {
-                let ptuIds = [];
-                ptuCheckboxes.forEach(checkbox => {
-                    if (checkbox.checked) {
-                        ptuIds.push(checkbox.value);
-                    }
-                });
-
-                if (ptuIds.length > 0) {
-                    if (confirm('Tem certeza que deseja excluir as formações selecionadas?')) {
-                        let form = document.createElement('form');
-                        form.action = '{{ route('external.massDelete') }}';
-                        form.method = 'post';
-                        form.style.display = 'none';
-
-                        let inputToken = document.createElement('input');
-                        inputToken.type = 'hidden';
-                        inputToken.name = '_token';
-                        inputToken.value = '{{ csrf_token() }}';
-                        form.appendChild(inputToken);
-
-                        ptuIds.forEach(ptuId => {
-                            let inputPtu = document.createElement('input');
-                            inputPtu.type = 'hidden';
-                            inputPtu.name = 'ptu_ids[]';
-                            inputPtu.value = ptuId;
-                            form.appendChild(inputPtu);
-                        });
-
-                        document.body.appendChild(form);
-                        form.submit();
-                    }
-                } else {
-                    alert('Selecione pelo menos uma formação para excluir.');
-                }
-            }
-        });
-    </script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const deleteSelectedButton = document.getElementById('delete-selected');
-            const checkboxes = document.getElementsByName('selectedPartners[]');
-            const selectAllCheckbox = document.getElementById('select-all-partners');
-
-            deleteSelectedButton.addEventListener('click', function(event) {
-                massDelete();
-            });
-
-            selectAllCheckbox.addEventListener('change', function() {
-                checkboxes.forEach(checkbox => {
-                    checkbox.checked = selectAllCheckbox.checked;
-                });
-            });
-
-
-            function massDelete() {
-                let partnerIds = [];
-                checkboxes.forEach(checkbox => {
-                    if (checkbox.checked) {
-                        partnerIds.push(checkbox.value);
-                    }
-                });
-
-                if (partnerIds.length > 0) {
-                    if (confirm('Tem certeza que deseja excluir os parceiros selecionados?')) {
-                        let form = document.createElement('form');
-                        form.action = '{{ route('partners.massDelete') }}';
-                        form.method = 'post';
-                        form.style.display = 'none';
-
-                        let input = document.createElement('input');
-                        input.type = 'hidden';
-                        input.name = '_token';
-                        input.value = '{{ csrf_token() }}';
-                        form.appendChild(input);
-
-                        partnerIds.forEach(partnerId => {
-                            let inputPartner = document.createElement('input');
-                            inputPartner.type = 'hidden';
-                            inputPartner.name = 'partner_ids[]';
-                            inputPartner.value = partnerId;
-                            form.appendChild(inputPartner);
-                        });
-
-                        document.body.appendChild(form);
-                        form.submit();
-                    }
-                } else {
-                    alert('Selecione pelo menos um parceiro para excluir.');
-                }
-            }
-
-
-        });
-    </script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const deleteSelectedTrainingsButton = document.getElementById('delete-selected-trainings');
-            const trainingCheckboxes = document.getElementsByName('selectedTrainings[]');
-            const selectAllTrainingsCheckbox = document.getElementById('select-all-trainings');
-
-            deleteSelectedTrainingsButton.addEventListener('click', function(event) {
-                massDeleteTrainings();
-            });
-
-            selectAllTrainingsCheckbox.addEventListener('change', function() {
-                trainingCheckboxes.forEach(checkbox => {
-                    checkbox.checked = selectAllTrainingsCheckbox.checked;
-                });
-            });
-
-            function massDeleteTrainings() {
-                let trainingIds = [];
-                trainingCheckboxes.forEach(checkbox => {
-                    if (checkbox.checked) {
-                        trainingIds.push(checkbox.value);
-                    }
-                });
-
-                if (trainingIds.length > 0) {
-                    if (confirm('Tem certeza que deseja excluir as formações selecionadas?')) {
-                        let form = document.createElement('form');
-                        form.action = '{{ route('trainings.massDelete') }}';
-                        form.method = 'post';
-                        form.style.display = 'none';
-
-                        let inputToken = document.createElement('input');
-                        inputToken.type = 'hidden';
-                        inputToken.name = '_token';
-                        inputToken.value = '{{ csrf_token() }}';
-                        form.appendChild(inputToken);
-
-                        trainingIds.forEach(trainingId => {
-                            let inputTraining = document.createElement('input');
-                            inputTraining.type = 'hidden';
-                            inputTraining.name = 'training_ids[]';
-                            inputTraining.value = trainingId;
-                            form.appendChild(inputTraining);
-                        });
-
-                        document.body.appendChild(form);
-                        form.submit();
-                    }
-                } else {
-                    alert('Selecione pelo menos uma formação para excluir.');
-                }
-            }
         });
     </script>
 

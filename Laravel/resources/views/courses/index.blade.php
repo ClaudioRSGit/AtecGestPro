@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="w-100">
+    <div class="container w-100">
 
         @if (session('success'))
             <div class="alert alert-success" id="success-alert">
@@ -38,7 +38,6 @@
 
 
             <div class="buttons">
-                <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
 
                 <a href="{{ route('courses.create') }}" class="btn btn-primary pr-1">
                     <img src="{{ asset('assets/new.svg') }}"> Novo Curso
@@ -49,9 +48,7 @@
         <table class="table" id="courseTable">
             <thead style="width: 100%">
                 <tr class="no-hover">
-                    <th scope="col">
-                        <input type="checkbox" id="select-all">
-                    </th>
+
                     <th><a href="{{ route('courses.index', ['sortColumn' => 'code', 'sortDirection' => $sortColumn === 'code' ? ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">Código</a></th>
                     <th><a href="{{ route('courses.index', ['sortColumn' => 'description', 'sortDirection' => $sortColumn === 'description' ? ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">Descrição</a></th>
                     <th class="fill"></th>
@@ -61,10 +58,7 @@
                 <tr class="filler"></tr>
                 @foreach ($courses as $course)
                     <tr class="courses-row customTableStyling" style="width: 100%">
-                        <td>
-                            <input type="checkbox" name="selectedCourses[]"
-                                value="{{ $course->id }}">
-                        </td>
+
                         <td class="clickable" style="width: 10%">
                             <a href="{{ route('courses.show', $course->id) }}" class="d-flex align-items-center w-auto h-100">{{ $course->code }}</a>
                         </td>
@@ -110,59 +104,6 @@
         }
     </script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const courseTable = document.getElementById('courseTable');
-            const courseRows = courseTable.querySelectorAll('tbody tr');
-            const selectAllCheckbox = document.getElementById('select-all');
-            const deleteSelectedButton = document.getElementById('delete-selected');
-
-
-
-
-
-
-            selectAllCheckbox.addEventListener('change', function() {
-                courseRows.forEach(courseRow => {
-                    const checkbox = courseRow.querySelector('input[name="selectedCourses[]"]');
-                    checkbox.checked = selectAllCheckbox.checked;
-                });
-            });
-
-            deleteSelectedButton.addEventListener('click', function() {
-                const selectedCourses = Array.from(document.querySelectorAll(
-                        'input[name="selectedCourses[]"]:checked'))
-                    .map(checkbox => checkbox.value);
-
-                if (selectedCourses.length > 0 && confirm(
-                        'Tem certeza que deseja excluir os cursos selecionados?')) {
-                    const form = document.createElement('form');
-                    form.method = 'POST';
-                    form.action = '{{ route('courses.massDelete') }}';
-                    form.style.display = 'none';
-
-                    const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
-
-                    selectedCourses.forEach(courseId => {
-                        const input = document.createElement('input');
-                        input.type = 'hidden';
-                        input.name = 'course_ids[]';
-                        input.value = courseId;
-                        form.appendChild(input);
-                    });
-
-                    const csrfInput = document.createElement('input');
-                    csrfInput.type = 'hidden';
-                    csrfInput.name = '_token';
-                    csrfInput.value = csrfToken;
-                    form.appendChild(csrfInput);
-
-                    document.body.appendChild(form);
-                    form.submit();
-                }
-            });
-
-
-        });
 
         setTimeout(function() {
             $("#success-alert").fadeTo(500, 0).slideUp(500, function() {
