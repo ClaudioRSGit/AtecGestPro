@@ -43,18 +43,13 @@ class CourseController extends Controller
         return view('courses.create');
     }
 
-    public function store(CourseRequest $request)
+    public function store(Request $request)
     {
         try {
-
             $course = Course::create($request->all());
-
             return redirect()->route('courses.show', $course->id)->with('success', 'Curso criado com sucesso!');
-
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            return redirect()->back()->withErrors($e->validator)->withInput();
         } catch (\Exception $e) {
-            return redirect()->back()->with('success', 'Curso criado com sucesso!');;
+            return redirect()->back()->with('error', 'Erro ao criar curso!');
         }
     }
 
@@ -68,11 +63,15 @@ class CourseController extends Controller
         return view('courses.edit', compact('course'));
     }
 
-    public function update(CourseRequest $request, Course $course)
+    public function update(Request $request, Course $course)
     {
-        $course->update($request->all());
-
-        return redirect()->route('courses.index')->with('success', 'Curso atualizado com sucesso!');
+        try {
+            $course->update($request->all());
+            return redirect()->route('courses.index')->with('success', 'Curso atualizado com sucesso!');
+        }
+        catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erro ao atualizar curso!');
+        }
     }
 
     public function destroy(Course $course)
