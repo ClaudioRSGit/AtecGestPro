@@ -136,7 +136,7 @@
 
             <div class="tab-pane fade" id="ticket-history" role="tabpanel" aria-labelledby="ticket-history-tab">
                 <div class="my-2">
-                    <div class="card bg-primary">
+                    <div class="card ">
 
                         <div class="card-body ">
                             @foreach ($ticketHistories as $history)
