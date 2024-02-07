@@ -20,7 +20,7 @@ class DashboardController extends Controller
     {
         $usersWithMaterialsDelivered = User::whereDoesntHave('materialUsers', function ($query) {
             $query->where('delivered_all', true);
-        })->get();
+        })->where('username', '<>', '')->get();
 
         $userStudentsCount = User::where('isStudent', true)->count();
 
