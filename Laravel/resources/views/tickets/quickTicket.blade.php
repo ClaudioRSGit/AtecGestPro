@@ -35,7 +35,7 @@
         <div class="mb-3">
             <label for="attachment" class="form-label">Anexo:</label>
             <input type="file" class="form-control" id="attachment" name="attachment">
-            <p>Make sure you upload a file smaller than 20MB</p>
+            <p>Assegure-se que seleciona um ficheiro com menos de 20MBs</p>
         </div>
 
         <div class="mb-3">

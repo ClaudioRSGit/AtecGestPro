@@ -100,14 +100,6 @@
                                     @endforeach
                                 </select>
                             </form>
-
-
-                            {{-- <a href="{{ route('tickets.create') }}" class="btn btn-primary d-flex">
-                                <img src="{{ asset('assets/new.svg') }}">
-                                <p class="novoTicket d-flex align-items-center">Novo Ticket</p>
-                            </a> --}}
-
-
                         </div>
                     </div>
                     @if (count($tickets) === 0)
