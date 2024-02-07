@@ -4,13 +4,13 @@
 @section('content')
     <div class="w-100">
         <h1>Turmas</h1>
-        @if(session('success'))
+        @if (session('success'))
             <div class="alert alert-success" id="success-alert">
                 {{ session('success') }}
             </div>
         @endif
 
-        @if(isset($errorMessage))
+        @if (isset($errorMessage))
             <div class="alert alert-danger">{{ $errorMessage }}</div>
         @endif
 
@@ -21,7 +21,7 @@
                     <div class="input-group pr-2">
                         <div class="search-container">
                             <input type="text" name="courseClassSearch" class="form-control "
-                            placeholder="{{ request('courseClassSearch') ? request('courseClassSearch') : 'Procurar...' }}">
+                                placeholder="{{ request('courseClassSearch') ? request('courseClassSearch') : 'Procurar...' }}">
                         </div>
                         <div class="input-group-append">
                             <button type="submit" class="btn btn-outline-secondary">
@@ -34,13 +34,13 @@
 
             <div class="drop">
                 <form id="courseFilterForm" action="{{ route('course-classes.index') }}" method="GET">
-                        <select class="form-control " id="courseFilter" name="courseFilter" onchange="submitForm()">
-                            <option value="all">Todas os cursos</option>
-                            @foreach($courses as $course)
-                                <option
-                                    value="{{ $course->id }}" {{ $courseFilter == $course->id ? 'selected' : '' }}>{{ $course->description }}</option>
-                            @endforeach
-                        </select>
+                    <select class="form-control " id="courseFilter" name="courseFilter" onchange="submitForm()">
+                        <option value="all">Todas os cursos</option>
+                        @foreach ($courses as $course)
+                            <option value="{{ $course->id }}" {{ $courseFilter == $course->id ? 'selected' : '' }}>
+                                {{ $course->description }}</option>
+                        @endforeach
+                    </select>
                 </form>
             </div>
 
@@ -65,14 +65,14 @@
             @foreach ($courseClasses as $courseClass)
                 <div class="card mb-2 mt-2">
                     <div class="card-header bg-white d-flex justify-content-between align-items-center"
-                         id="heading{{ $courseClass->id }}">
+                        id="heading{{ $courseClass->id }}">
                         <h2 class="mb-0">
                             <input type="checkbox" name="selectedCourseClass[]" class="accordion-checkbox"
-                                   data-course="{{ $courseClass->course_id }}" data-id="{{ $courseClass->id }}"
-                                   value="{{$courseClass->id}}">
+                                data-course="{{ $courseClass->course_id }}" data-id="{{ $courseClass->id }}"
+                                value="{{ $courseClass->id }}">
                             <button class="btn btn-link" type="button" data-toggle="collapse"
-                                    data-target="#collapse{{ $courseClass->id }}" aria-expanded="false"
-                                    aria-controls="collapse{{ $courseClass->id }}">
+                                data-target="#collapse{{ $courseClass->id }}" aria-expanded="false"
+                                aria-controls="collapse{{ $courseClass->id }}">
                                 {{ $courseClass->description }}
                             </button>
                         </h2>
@@ -80,9 +80,9 @@
                             <div class="d-flex justify-content-center align-items-center" style="width: 30%">
                                 <a href="{{ route('course-classes.edit', $courseClass->id) }}">
                                     <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16"
-                                         viewBox="0 0 512 512">
+                                        viewBox="0 0 512 512">
                                         <path fill="#116fdc"
-                                              d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z"/>
+                                            d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z" />
                                     </svg>
                                 </a>
                             </div>
@@ -94,15 +94,15 @@
                             </div>
                             <div class="d-flex justify-content-center align-items-center" style="width: 30%">
                                 <form method="POST" action="{{ route('course-classes.destroy', $courseClass->id) }}"
-                                      style="display: inline; margin: 0 !important">
+                                    style="display: inline; margin: 0 !important">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" onclick="return confirm('Tem certeza que deseja excluir?')"
-                                            style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
+                                        style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14"
-                                             viewBox="0 0 448 512">
+                                            viewBox="0 0 448 512">
                                             <path fill="#116fdc"
-                                                  d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z"/>
+                                                d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z" />
                                         </svg>
                                     </button>
                                 </form>
@@ -111,7 +111,7 @@
                     </div>
 
                     <div id="collapse{{ $courseClass->id }}" class="collapse"
-                         aria-labelledby="heading{{ $courseClass->id }}" data-parent="#accordion">
+                        aria-labelledby="heading{{ $courseClass->id }}" data-parent="#accordion">
                         <div class="card-body">
                             @if ($courseClass->users->count() > 0)
                                 <ul>
@@ -130,105 +130,9 @@
         {{ $courseClasses->links() }}
     </div>
 
+    <script type="module" src="{{ asset('js/course-classes/index.js') }}"></script>
 
-    <script>
-        //logica filtro
-        function submitForm() {
-            document.getElementById("courseFilterForm").submit();
-        }
-    </script>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const selectAllCheckbox = document.getElementById('select-all');
-            const checkboxes = document.querySelectorAll('.accordion-checkbox');
-            const searchInput = document.getElementById('search');
-            const filterDropdown = document.getElementById('filter');
-            const deleteSelectedButton = document.getElementById('delete-selected');
-
-            selectAllCheckbox.addEventListener('change', function () {
-                checkboxes.forEach(checkbox => {
-                    checkbox.checked = selectAllCheckbox.checked;
-                });
-            });
-
-            checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', function () {
-                    selectAllCheckbox.checked = checkboxes.length === document.querySelectorAll(
-                        '.accordion-checkbox:checked').length;
-                });
-            });
-
-            searchInput.addEventListener('input', function () {
-                const searchTerm = searchInput.value.toLowerCase();
-                filterMaterials(searchTerm);
-            });
-
-            filterDropdown.addEventListener('change', function () {
-                filterMaterials();
-            });
-
-            function filterMaterials(searchTerm = null) {
-                const courseClassCards = document.querySelectorAll('.card');
-
-                courseClassCards.forEach(card => {
-                    const courseId = card.querySelector('.accordion-checkbox').getAttribute('data-course');
-                    const filterValue = filterDropdown.value;
-
-                    const matchesFilter = (
-                        (filterValue === 'all') ||
-                        (filterValue === courseId)
-                    );
-
-                    const matchesSearch = !searchTerm || (
-                        card.textContent.toLowerCase().includes(searchTerm) ||
-                        card.querySelector('button').textContent.toLowerCase().includes(searchTerm)
-                    );
-
-                    card.style.display = matchesFilter && matchesSearch ? '' : 'none';
-                });
-            }
-
-            deleteSelectedButton.addEventListener('click', function () {
-                const selectedCourseClass = Array.from(document.querySelectorAll(
-                    'input[name="selectedCourseClass[]"]:checked'))
-                    .map(checkbox => checkbox.value);
-                if (selectedCourseClass.length > 0 && confirm(
-                    'Tem certeza que deseja excluir as turmas selecionadas?')) {
-                    const form = document.createElement('form');
-                    form.method = 'POST';
-                    form.action = '{{ route('course-classes.massDelete') }}';
-                    form.style.display = 'none';
-                    const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
-                    selectedCourseClass.forEach(courseClassId => {
-                        const input = document.createElement('input');
-                        input.type = 'hidden';
-                        input.name = 'course_class_ids[]';
-                        input.value = courseClassId;
-                        form.appendChild(input);
-                    });
-                    const csrfInput = document.createElement('input');
-                    csrfInput.type = 'hidden';
-                    csrfInput.name = '_token';
-                    csrfInput.value = csrfToken;
-                    form.appendChild(csrfInput);
-
-                    document.body.appendChild(form);
-                    form.submit();
-                }
-            });
-
-
-        });
-
-        window.setTimeout(function () {
-            $("#success-alert").fadeTo(500, 0).slideUp(500, function () {
-                $(this).remove();
-            });
-        }, 2000);
-    </script>
     <style>
-
         #accordion .card {
             border: none;
         }
@@ -262,7 +166,7 @@
             background-size: cover;
         }
 
-        .buttons{
+        .buttons {
             height: calc(1.6em + 0.75rem + 2px);
         }
     </style>
