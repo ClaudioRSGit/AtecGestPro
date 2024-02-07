@@ -107,59 +107,60 @@ class MaterialUserController extends Controller
      */
     public function store(MaterialUserRequest $request)
     {
-        $selectedClothingitems = $request->get('selectedClothing');
-        $note = $request->get('additionalNotes');
+        try {
+            $selectedClothingitems = $request->get('selectedClothing');
+            $note = $request->get('additionalNotes');
 
-        foreach ($selectedClothingitems as $index => $selectedClothingitem) {
+            foreach ($selectedClothingitems as $index => $selectedClothingitem) {
 
-            $itemSize = $request->get('material_size_id')[$index];
-            $itemQuantity = $request->get('quantity')[$index];
-            $itemDeliveryDate = $request->get('delivery_date')[$index];
-            $materialUser = new MaterialUser([
-                'material_id' => $selectedClothingitem,
-                'user_id' => $request->get('user_id'),
-                'quantity' => $itemQuantity,
-                'size_id' => $itemSize,
-                'delivery_date' => $itemDeliveryDate,
-                'delivered_all' => $request->get('delivered_all'),
-            ]);
+                $itemSize = $request->get('material_size_id')[$index];
+                $itemQuantity = $request->get('quantity')[$index];
+                $itemDeliveryDate = $request->get('delivery_date')[$index];
+                $materialUser = new MaterialUser([
+                    'material_id' => $selectedClothingitem,
+                    'user_id' => $request->get('user_id'),
+                    'quantity' => $itemQuantity,
+                    'size_id' => $itemSize,
+                    'delivery_date' => $itemDeliveryDate,
+                    'delivered_all' => $request->get('delivered_all'),
+                ]);
 
+                $materialUser->save();
 
+                $materialSize = MaterialSize::where('material_id', $selectedClothingitem)
+                    ->where('size_id', $itemSize)
+                    ->first();
 
-            $materialUser->save();
+                if ($materialSize) {
+                    $newStock = $materialSize->stock - $itemQuantity;
+                    $materialSize->stock = $newStock;
+                    $materialSize->save();
+                }
 
-            $materialSize = MaterialSize::where('material_id', $selectedClothingitem)
-                ->where('size_id', $itemSize)
-                ->first();
+                if ($note) {
+                    $student = User::find($request->get('user_id'));
+                    $existingNotes = $student->notes;
+                    $newNote = $note;
+                    $timestamp = now()->toDateTimeString();
 
-            if ($materialSize) {
-                $newStock = $materialSize->stock - $itemQuantity;
-                $materialSize->stock = $newStock;
-                $materialSize->save();
+                    $student->notes = $existingNotes . "\n" . $timestamp . ": " . $newNote;
+                    $student->save();
+                }
+
+                $allDeliveries = MaterialUser::where('user_id', $request->get('user_id'))->get();
+
+                $deliveredAllValue = $request->delivered_all;
+
+                $allDeliveries->each(function ($item, $key) use ($deliveredAllValue) {
+                    $item->delivered_all = $deliveredAllValue;
+                    $item->save();
+                });
             }
 
-            if ($note) {
-                $student = User::find($request->get('user_id'));
-                $existingNotes = $student->notes;
-                $newNote = $note;
-                $timestamp = now()->toDateTimeString();
-
-                $student->notes = $existingNotes . "\n" . $timestamp . ": " . $newNote;
-                $student->save();
-            }
-
-            $allDeliveries = MaterialUser::where('user_id', $request->get('user_id'))->get();
-
-            $deliveredAllValue = $request->delivered_all;
-
-            $allDeliveries->each(function ($item, $key) use ($deliveredAllValue) {
-                $item->delivered_all = $deliveredAllValue;
-                $item->save();
-            });
-
+            return redirect()->route('material-user.index')->with('success', 'Material entregue com sucesso!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erro ao entregar o material. Por favor, tente novamente.');
         }
-
-        return redirect()->route('material-user.index')->with('success', 'Material entregue com sucesso!');
     }
 
     /**
@@ -209,9 +210,12 @@ class MaterialUserController extends Controller
      */
     public function destroy(MaterialUser $materialUser)
     {
-
-        $materialUser->delete();
-        return back()->with('success', 'Material removido com sucesso!');
+        try {
+            $materialUser->delete();
+            return back()->with('success', 'Material removido com sucesso!');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Erro ao remover o material. Por favor, tente novamente.');
+        }
     }
 
     public function massDelete(Request $request)
@@ -219,8 +223,12 @@ class MaterialUserController extends Controller
         $materialIds = $request->input('material_ids');
 
         if (is_array($materialIds) && count($materialIds) > 0) {
-            MaterialUser::whereIn('id', $materialIds)->delete();
-            return back()->with('success', 'Materiais removidos com sucesso!');
+            try {
+                MaterialUser::whereIn('id', $materialIds)->delete();
+                return back()->with('success', 'Materiais removidos com sucesso!');
+            } catch (\Exception $e) {
+                return back()->with('error', 'Erro ao remover os materiais selecionados. Por favor, tente novamente.');
+            }
         }
 
         return back()->with('error', 'Nenhum material selecionado para exclusão.');

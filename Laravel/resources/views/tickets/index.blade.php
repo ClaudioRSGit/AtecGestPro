@@ -97,7 +97,6 @@
                         <div>
                             <img src="{{ asset('assets/noTickets.png') }}" class="noTicket">
                         </div>
-
                     @else
                         @php
                             $currentSort = request('sort');
@@ -193,11 +192,10 @@
                 </div>
 
                 <div class="tab-pane fade" id="waitingQueue" role="tabpanel" aria-labelledby="waiting-queue-tab">
-                    @if (count($tickets) === 0)
+                    @if (count($waitingQueueTickets) === 0)
                         <div>
                             <img src="{{ asset('assets/noTickets.png') }}" class="noTicket">
                         </div>
-
                     @else
                         <table class="table bg-white rounded-top">
                             <thead>
@@ -269,6 +267,9 @@
                 </div>
 
                 <div class="tab-pane fade" id="recycling" role="tabpanel" aria-labelledby="recycling-tab">
+                    @if($recycledTickets->isEmpty())
+                        <img src="{{ asset('assets/reciclagem_azul_extra_bold_2_sem fundo.png') }}" alt="Não existem registos" class="bin">
+                    @else
                     <table class="table table-hover">
                         <thead>
                         <tr>
@@ -324,6 +325,7 @@
                         @endforeach
                         </tbody>
                     </table>
+                    @endif
                     {{ $recycledTickets->appends(request()->input())->links() }}
                 </div>
 
@@ -416,6 +418,16 @@
                     width: 50%;
                 }
             }
+
+             .bin{
+                 margin-top: 100px!important;
+                 width: 200px;
+                 height: 200px;
+                 display: block;
+                 margin-left: auto;
+                 margin-right: auto;
+             }
+
         </style>
 
         <script>
