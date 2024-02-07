@@ -7,10 +7,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class MaterialPartnerTrainingUser extends Model
 {
-    use softDeletes;
+    use SoftDeletes;
+
     protected $fillable = [
         'material_id', 'partner_training_user_id', 'quantity'
     ];
+
+
+
     public function material()
     {
         return $this->belongsTo(Material::class);
