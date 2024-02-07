@@ -17,7 +17,8 @@
                 <img src="https://static.vecteezy.com/system/resources/previews/010/366/202/original/bell-icon-transparent-notification-free-png.png"
                 alt="Sininho" style="width: 30px; height: 30px; margin-right: 5px;">
             </a>
-            <div class="dropdown-menu dropdown-menu-right notification-area" aria-labelledby="notificacoesDropdown">
+
+                        <div class="dropdown-menu dropdown-menu-right notification-area" aria-labelledby="notificacoesDropdown">
                 @livewire('notification-component')
             </div>
         </li>

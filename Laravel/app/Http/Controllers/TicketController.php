@@ -147,18 +147,6 @@ class TicketController extends Controller
                 'user_id' => $request->technician_id,
             ]);
 
-        $notification = Notification::create([
-            'description' => 'Ticket atribuido: #' . $ticket->id,
-            'code' => 'TICKET',
-            'object_id' => $ticket->id,
-        ]);
-
-            NotificationUser::create([
-                'user_id' => $request->technician_id,
-                'notification_id' => $notification->id,
-                'isRead' => false,
-            ]);
-
             $ticketInfo = 'Ticket #' . $ticket->id . ' foi criado por ' . User::find($loggedInUserId)->name . '.';
 
             $this->logTicketHistory($ticket->id, 1, $ticketInfo);
@@ -245,17 +233,16 @@ class TicketController extends Controller
             }
 
             $notification = Notification::create([
-                'description' => 'Novo ticket criado: #' . $ticket->id,
+                'description' => 'Ticket atribuido: #' . $ticket->id,
                 'code' => 'TICKET',
                 'object_id' => $ticket->id,
             ]);
 
-        $notification = Notification::create([
-            'description' => 'Ticket atribuido: #' . $ticket->id,
-            'code' => 'TICKET',
-            'object_id' => $ticket->id,
-        ]);
-
+            NotificationUser::create([
+                'user_id' => $request->technician_id,
+                'notification_id' => $notification->id,
+                'isRead' => false,
+            ]);
             return redirect()->route('tickets.index')->with('success', 'Ticket atualizado com sucesso!')->with('active_tab', 'allTickets');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Não foi possivel atualizar o ticket. Por favor, tente novamente.');
