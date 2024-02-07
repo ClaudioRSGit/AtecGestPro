@@ -48,3 +48,7 @@ $(document).ready(function () {
         setActiveTab(fragment);
     });
 });
+
+setTimeout(function () {
+    $('.message-alert').fadeOut('slow');
+}, 3000);
