@@ -139,8 +139,7 @@
                                     <td class="pl-4">#{{ $ticket->id ? $ticket->id : 'N.A.' }}</td>
                                     <td class="clickable">
                                         <div class="d-flex align-items-center">
-                                            <span class="mr-2"
-                                                style="height: 15px; width: 15px; background-color: {{ $ticket->ticketPriority->id == 1 ? 'green' : ($ticket->ticketPriority->id == 2 ? 'green' : ($ticket->ticketPriority->id == 3 ? 'yellow' : ($ticket->ticketPriority->id == 4 ? 'orange' : 'red'))) }}; border-radius: 50%; display: inline-block; opacity: 0.5;"></span>
+                                            <span class="mr-2 ticket-prio ticket-priority-{{ $ticket->ticketPriority->id }}"></span>
                                             <a href="{{ route('tickets.show', $ticket->id) }}" class="d-flex align-items-center w-auto h-100">{{ $ticket->title ? $ticket->title : 'N.A.' }}</a>
                                         </div>
                                     </td>
@@ -152,7 +151,7 @@
                                             <a href="{{ route('users.show', $user->id) }}" class="d-flex align-items-center w-auto h-100">{{ $user->name }}</a>
                                         @endforeach
                                     </td>
-                                    <td>{{ $ticket->ticketStatus->description ? $ticket->ticketStatus->description : 'N.A.' }}</td>
+                                    <td class="ticket-status-{{ $ticket->ticketStatus->id }}">{{ $ticket->ticketStatus->description ? $ticket->ticketStatus->description : 'N.A.' }}</td>
                                     <td>{{ $ticket->created_at ? $ticket->created_at->format('d-m-Y') : 'N.A.' }}</td>
                                     <td>{{ $ticket->dueByDate ? \Carbon\Carbon::parse($ticket->dueByDate)->format('d-m-Y') : 'N.A.' }}
                                     </td>
@@ -216,8 +215,7 @@
                                     <td class="pl-4">#{{ $ticket->id }}</td>
                                     <td class="clickable">
                                         <div class="d-flex align-items-center">
-                                            <span class="mr-2"
-                                                style="height: 15px; width: 15px; background-color: {{ $ticket->ticketPriority->id == 1 ? 'green' : ($ticket->ticketPriority->id == 2 ? 'green' : ($ticket->ticketPriority->id == 3 ? 'yellow' : ($ticket->ticketPriority->id == 4 ? 'orange' : 'red'))) }}; border-radius: 50%; display: inline-block; opacity: 0.5;"></span>
+                                            <span class="mr-2 ticket-prio ticket-priority-{{ $ticket->ticketPriority->id }}"></span>
                                             <a href="{{ route('tickets.show', $ticket->id) }}">{{ $ticket->title ? $ticket->title : 'N.A.' }}</a>
                                         </div>
                                     </td>
@@ -229,7 +227,7 @@
                                             <a href="{{ route('users.show', $user->id) }}" class="d-flex align-items-center w-auto h-100">{{ $user->name }}</a>
                                         @endforeach
                                     </td>
-                                    <td>{{ $ticket->ticketStatus->description }}</td>
+                                    <td class="ticket-status-{{ $ticket->ticketStatus->id }}">{{ $ticket->ticketStatus->description }}</td>
                                     <td>{{ $ticket->created_at->format('d-m-Y') }}</td>
                                     <td class="editDelete">
                                         <div class="w-50">
@@ -288,8 +286,7 @@
                             <tr class="customTableStyling {{ $ticket->ticketPriority->id == 5 ? 'critical' : '' }}">
                                 <td class="pl-4">#{{ $ticket->id }}</td>
                                 <td class="d-flex align-items-center clickable">
-                                    <span class="mr-2"
-                                        style="height: 15px; width: 15px; background-color: {{ $ticket->ticketPriority->id == 1 ? 'green' : ($ticket->ticketPriority->id == 2 ? 'green' : ($ticket->ticketPriority->id == 3 ? 'yellow' : ($ticket->ticketPriority->id == 4 ? 'orange' : 'red'))) }}; border-radius: 50%; display: inline-block; opacity: 0.5;"></span>
+                                    <span class="mr-2 ticket-prio ticket-priority-{{ $ticket->ticketPriority->id }}"></span>
                                     <a href="{{ route('tickets.show', $ticket->id) }}">{{ $ticket->title ? $ticket->title : 'N.A.' }}</a>
                                 </td>
                                 <td class="clickable">
@@ -300,7 +297,7 @@
                                         <a href="{{ route('users.show', $user->name) }}" class="d-flex align-items-center w-auto h-100">{{ $user->name }}</a>
                                     @endforeach
                                 </td>
-                                <td>{{ $ticket->ticketStatus->description }}</td>
+                                <td class="ticket-status-{{ $ticket->ticketStatus->id }}">{{ $ticket->ticketStatus->description }}</td>
                                 <td>{{ $ticket->created_at->format('d-m-Y') }}</td>
                                 <td class="pl-4">
                                     <div class="restore w-100 h-100 d-flex align-items-center">

@@ -293,6 +293,46 @@ thead th{
     background-image: url('../assets/search.svg');
     background-size: cover;
 }
+.ticket-prio{
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    display: inline-block;
+    opacity: 0.5;
+}
+.ticket-priority-1{
+    background-color: rgb(17, 222, 17);
+}
+.ticket-priority-2{
+    background-color: green;
+}
+.ticket-priority-3{
+    background-color: yellow;
+}
+.ticket-priority-4{
+    background-color: orange;
+}
+.ticket-priority-5{
+    background-color: red;
+}
+
+.ticket-status-1 {
+    color: #116FDC;
+}
+.ticket-status-2 {
+    color: rgb(34, 177, 34);
+}
+.ticket-status-3 {
+    color: #FEAF00;
+}
+.ticket-status-4 {
+    color: rgb(5, 69, 5);
+    font-weight: bold;
+}
+.ticket-status-5 {
+    color: red;
+    font-weight: bold;
+}
 
 .critical{
     background-color: rgba(255, 0, 0, 0.2);
