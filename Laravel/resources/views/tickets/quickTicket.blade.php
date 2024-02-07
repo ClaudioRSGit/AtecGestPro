@@ -34,7 +34,7 @@
 
         <div class="mb-3">
             <label for="attachment" class="form-label">Anexo:</label>
-            <input type="file" class="form-control" id="attachment" name="attachment">
+            <input type="file" class="form-control" id="attachment" name="attachment" text="Escolher ficheiro">
             <p>Assegure-se que seleciona um ficheiro com menos de 20MBs</p>
         </div>
 
@@ -48,7 +48,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary mb-3 w-100">Criar Ticket</button>
-        <a href="{{ route('tickets.index') }}" class="btn btn-secondary w-100">Cancelar</a>
+        <button onclick="closeTicket()" class="btn btn-secondary w-100">Cancelar</a>
     </form>
 </div>
 
