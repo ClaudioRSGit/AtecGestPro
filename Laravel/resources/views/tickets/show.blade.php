@@ -119,14 +119,16 @@
                             <input type="text" class="form-control" value="{{ $ticket->dueByDate ?? 'N/A' }}" disabled>
                         </div>
 
-                        <div class="mb-5" id="histTickets">
+                        <div>
                             <label>Histórico do Utilizador:</label>
-                            <ul>
-                                @foreach($userTickets as $userTicketId)
-                                    <li><a href="{{ route('tickets.show', $userTicketId) }}">Ticket
-                                            #{{ $userTicketId }}</a></li>
-                                @endforeach
-                            </ul>
+                            <div class="mb-5" id="histTickets">
+                                <ul>
+                                    @foreach($userTickets as $userTicketId)
+                                        <li><a href="{{ route('tickets.show', $userTicketId) }}">Ticket
+                                                #{{ $userTicketId }}</a></li>
+                                    @endforeach
+                                </ul>
+                            </div>
                         </div>
 
 
@@ -137,7 +139,7 @@
                             </div>
                         </div>
                     </div>
-                </div>x\
+                </div>
             </div>
 
 
