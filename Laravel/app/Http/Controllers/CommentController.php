@@ -19,18 +19,22 @@ class CommentController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
-            'comment' => 'required|string',
-            'ticket_id' => 'required|exists:tickets,id'
-        ]);
+        try {
+            $request->validate([
+                'comment' => 'required|string',
+                'ticket_id' => 'required|exists:tickets,id'
+            ]);
 
-        $comment = new Comment();
-        $comment->description = $request->comment;
-        $comment->ticket_id = $request->ticket_id;
-        $comment->user_id = auth()->id();
-        $comment->save();
+            $comment = new Comment();
+            $comment->description = $request->comment;
+            $comment->ticket_id = $request->ticket_id;
+            $comment->user_id = auth()->id();
+            $comment->save();
 
-        return redirect()->route('tickets.show', $comment->ticket_id)->with('success', 'Comentário adicionado com sucesso.');
+            return redirect()->route('tickets.show', $comment->ticket_id)->with('success', 'Comentário adicionado com sucesso.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Não foi possivel adicionar o comentário');
+        }
     }
 
     public function show(Comment $comment)
