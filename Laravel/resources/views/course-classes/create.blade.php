@@ -14,7 +14,7 @@
                         <input type="text" class="form-control" id="description" name="description">
 
                         @error('description')
-                        <div class="alert alert-danger">{{ $message }}</div>
+                            <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
@@ -29,7 +29,7 @@
                         </select>
 
                         @error('course_id')
-                        <div class="alert alert-danger">{{ $message }}</div>
+                            <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
 
@@ -53,22 +53,22 @@
                 <div class="scrollable w-100">
                     <table class="table" id="studentsTable">
                         <thead>
-                        <tr>
-                            <th><input type="checkbox" id="select-all"></th>
-                            <th>Nome</th>
-                            <th>Username</th>
-                            <th>Email</th>
-                        </tr>
+                            <tr>
+                                <th><input type="checkbox" id="select-all"></th>
+                                <th>Nome</th>
+                                <th>Username</th>
+                                <th>Email</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        @foreach ($students as $student)
-                            <tr>
-                                <td><input type="checkbox" name="selected_students[]" value="{{ $student->id }}"></td>
-                                <td>{{ $student->name }}</td>
-                                <td>{{ $student->username }}</td>
-                                <td>{{ $student->email }}</td>
-                            </tr>
-                        @endforeach
+                            @foreach ($students as $student)
+                                <tr>
+                                    <td><input type="checkbox" name="selected_students[]" value="{{ $student->id }}"></td>
+                                    <td>{{ $student->name }}</td>
+                                    <td>{{ $student->username }}</td>
+                                    <td>{{ $student->email }}</td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -85,29 +85,11 @@
     </div>
 
     <style>
-
         .scrollable {
             height: 300px;
             overflow-y: scroll;
         }
     </style>
 
-    <script>
-        $(document).ready(function () {
-            $("#select-all").click(function () {
-                $("input[name='selected_students[]']").prop('checked', $(this).prop('checked'));
-            });
-
-            $("#criarTurmaBtn").click(function () {
-                document.getElementById('createCourseClassForm').submit();
-            });
-
-            $("#search").on("keyup", function () {
-                let value = $(this).val().toLowerCase();
-                $("#studentsTable tbody tr").filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-                });
-            });
-        });
-    </script>
+    <script type="module" src="{{ asset('js/course-classes/create.js') }}"></script>
 @endsection
