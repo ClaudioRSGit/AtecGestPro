@@ -72,7 +72,7 @@
                                             <td>{{ $user->email }}</td>
                                             <td class="btn btn-sm btn-primary"
                                                 onclick="location.href='{{ route('material-user.create', $user->id) }}'">
-                                                Visualizar
+                                                Ver
                                             </td>
                                         </tr>
                                     @endforeach
