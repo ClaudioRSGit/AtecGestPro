@@ -1,9 +1,11 @@
 <div>
     @if($notifications->isNotEmpty())
-        @foreach ($notifications as $notificationUser)
-            <div class="notification-item mx-2">
-                @if($notificationUser->isRead)
-                    <img src="{{ asset('assets/bell.svg') }}" alt="Read Notification">
+    <a href="{{ route('notifications.readAll') }}" class="d-flex justify-content-center">Marcar todas como lidas</a>
+    @foreach ($notifications as $notificationUser)
+
+        <div class="notification-item mx-2">
+            @if($notificationUser->isRead)
+            <img src="{{ asset('assets/bell.svg') }}" alt="Read Notification">
                 @else
                     <img src="{{ asset('assets/bell2.svg') }}" alt="Unread Notification">
                 @endif
