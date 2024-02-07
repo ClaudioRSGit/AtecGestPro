@@ -117,7 +117,7 @@ class TicketController extends Controller
                 return now()->addHours(4);
             default:
 
-                return now()->addWeeks(3);//Default fica como baixa prioridade
+                return now()->addWeeks(3);
         }
     }
     public function store(TicketRequest $request)
@@ -147,11 +147,11 @@ class TicketController extends Controller
                 'user_id' => $request->technician_id,
             ]);
 
-            $notification = Notification::create([
-                'description' => 'Novo ticket criado: #' . $ticket->id,
-                'code' => 'TICKET',
-                'object_id' => $ticket->id,
-            ]);
+        $notification = Notification::create([
+            'description' => 'Ticket atribuido: #' . $ticket->id,
+            'code' => 'TICKET',
+            'object_id' => $ticket->id,
+        ]);
 
             NotificationUser::create([
                 'user_id' => $request->technician_id,
@@ -169,20 +169,14 @@ class TicketController extends Controller
         }
     }
 
-
     public function show(Ticket $ticket)
     {
         $ticket = Ticket::with(['users', 'requester', 'comments' => function($query) {
             $query->orderBy('created_at', 'desc');
         }, 'comments.user'])->find($ticket->id);
 
-
         $id = $ticket->id;
         $ticketHistories = TicketHistory::where('ticket_id', $id)->get();
-
-
-
-
 
         $users = User::all();
         $statuses = TicketStatus::all();
@@ -256,11 +250,11 @@ class TicketController extends Controller
                 'object_id' => $ticket->id,
             ]);
 
-            NotificationUser::create([
-                'user_id' => $request->technician_id,
-                'notification_id' => $notification->id,
-                'isRead' => false,
-            ]);
+        $notification = Notification::create([
+            'description' => 'Ticket atribuido: #' . $ticket->id,
+            'code' => 'TICKET',
+            'object_id' => $ticket->id,
+        ]);
 
             return redirect()->route('tickets.index')->with('success', 'Ticket atualizado com sucesso!')->with('active_tab', 'allTickets');
         } catch (\Exception $e) {

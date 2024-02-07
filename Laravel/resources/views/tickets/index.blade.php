@@ -8,9 +8,6 @@
             </div>
         @endif
 
-
-
-
         <h1>Tickets</h1>
 
         <ul class="nav nav-tabs" id="myTab" role="tablist">
