@@ -60,13 +60,14 @@
             <tbody>
                 <tr class="filler"></tr>
                 @foreach ($courses as $course)
-                    <tr class="courses-row customTableStyling"
-                        onclick="location.href='{{ route('courses.show', $course->id) }}'" style="width: 100%">
+                    <tr class="courses-row customTableStyling" style="width: 100%">
                         <td>
                             <input type="checkbox" class="no-propagate" name="selectedCourses[]"
                                 value="{{ $course->id }}">
                         </td>
-                        <td style="width: 10%">{{ $course->code }}</td>
+                        <td class="clickable" style="width: 10%">
+                            <a href="{{ route('courses.show', $course->id) }}" class="d-flex align-items-center w-auto h-100">{{ $course->code }}</a>
+                        </td>
                         <td style="width: 70%">{{ $course->description }}</td>
                         <td class="editDelete">
                             <div style="width: 40%">
