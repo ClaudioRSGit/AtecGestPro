@@ -33,11 +33,5 @@
         </div>
     </div>
 
-    <script>
-         setTimeout(function() {
-            $("#success-alert").fadeTo(500, 0).slideUp(500, function() {
-                $(this).remove();
-            });
-        }, 2000);
-    </script>
+    <script type="module" src="{{ asset('js/courses/show.js') }}"></script>
 @endsection
