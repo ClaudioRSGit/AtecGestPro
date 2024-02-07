@@ -46,7 +46,7 @@
 
             <div class="tab-pane fade show active" id="externalTable">
 
-                <div class=" d-flex">
+                <div class="d-flex justify-content-between mb-3">
                     <form action="{{ route('external.index') }}" method="GET">
                         <div class="input-group pr-2">
                             <div class="search-container">
@@ -61,10 +61,10 @@
                     </form>
 
 
-                    <button class="btn btn-danger mb-3 mr-2" id="delete-selected-ptus">Excluir Selecionados</button>
-
-
-                    <a href="{{ route('external.create') }}" class="btn btn-primary mb-3 ">Nova F. mercado</a>
+                    <div class="buttons">
+                        <button class="btn btn-danger mr-2" id="delete-selected-ptus">Excluir Selecionados</button>
+                        <a href="{{ route('external.create') }}" class="btn btn-primary">Nova F. mercado</a>
+                    </div>
 
                 </div>
 
@@ -144,7 +144,7 @@
             </div>
 
             <div class="tab-pane fade" id="partnersTable">
-                <div class="d-flex mb-3">
+                <div class="d-flex justify-content-between mb-3">
                     <form action="{{ route('external.index') }}" method="GET">
                         <div class="input-group pr-2">
                             <div class="search-container">
@@ -157,8 +157,10 @@
                             </div>
                         </div>
                     </form>
-                    <button class="btn btn-danger mr-2" id="delete-selected">Excluir Selecionados</button>
-                    <a href="{{ route('partners.create') }}" class="btn btn-primary">Novo Parceiro</a>
+                    <div class="buttons">
+                        <button class="btn btn-danger mr-2" id="delete-selected">Excluir Selecionados</button>
+                        <a href="{{ route('partners.create') }}" class="btn btn-primary">Novo Parceiro</a>
+                    </div>
                 </div>
                 <table class="table bg-white">
                     <thead>
@@ -261,7 +263,7 @@
 
 
 
-                <div class="d-flex">
+                <div class="d-flex justify-content-between mb-3">
                     <form action="{{ route('external.index') }}" method="GET">
                         <div class="input-group pr-2">
                             <div class="search-container">
@@ -275,10 +277,10 @@
                         </div>
                     </form>
 
-                    <button class="btn btn-danger mb-3 mr-2" id="delete-selected-trainings">Excluir Selecionados</button>
-
-
-                    <a href="{{ route('trainings.create') }}" class="btn btn-primary mb-3">Nova Formação</a>
+                    <div class="buttons">
+                        <button class="btn btn-danger mr-2" id="delete-selected-trainings">Excluir Selecionados</button>
+                        <a href="{{ route('trainings.create') }}" class="btn btn-primary">Nova Formação</a>
+                    </div>
 
                 </div>
 
