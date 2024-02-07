@@ -99,13 +99,14 @@
                     <tr class="filler"></tr>
                     @foreach ($users as $user)
                         <tr class="user-row customTableStyling" data-position="{{ strtolower($user) }}"
-                            data-role="{{ $user->role_id }}"
-                            onclick="location.href='{{ route('users.show', $user->id) }}'">
+                            data-role="{{ $user->role_id }}">
                             <td>
-                                <input type="checkbox" class="no-propagate" name="selectedUsers[]"
+                                <input type="checkbox" name="selectedUsers[]"
                                        value="{{ $user->id }}">
                             </td>
-                            <td>{{ $user->name }}</td>
+                            <td class="clickable">
+                                <a href="{{ route('users.show', $user->id) }}" class="d-flex align-items-center w-auto h-100">{{ $user->name }}</a>
+                            </td>
                             <td>{{ $user->username }}</td>
                             <td>{{ $user->email }}</td>
                             <td>
@@ -298,19 +299,12 @@
             const selectAllCheckbox = document.getElementById('select-all');
 
             deleteSelectedButton.addEventListener('click', function (event) {
-                event.stopPropagation();
                 massDeleteUsers();
             });
 
             selectAllCheckbox.addEventListener('change', function () {
                 userCheckboxes.forEach(checkbox => {
                     checkbox.checked = selectAllCheckbox.checked;
-                });
-            });
-
-            userCheckboxes.forEach(checkbox => {
-                checkbox.addEventListener('click', function (event) {
-                    event.stopPropagation();
                 });
             });
 
@@ -351,21 +345,6 @@
                 }
             }
         });
-
-    </script>
-
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-             let checkboxes = document.querySelectorAll('.no-propagate');
-
-            checkboxes.forEach(function (checkbox) {
-                checkbox.addEventListener('click', function (event) {
-                    event.stopPropagation();
-                });
-            });
-        });
-
 
     </script>
 @endsection

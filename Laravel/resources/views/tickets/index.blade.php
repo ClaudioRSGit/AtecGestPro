@@ -1,12 +1,15 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container">
+    <div class="container fade-in">
         @if (session('success'))
             <div class="alert alert-success" id="success-alert">
                 {{ session('success') }}
             </div>
         @endif
+
+
+
 
         <h1>Tickets</h1>
 
@@ -128,9 +131,8 @@
                                     </a>
                                 </th>
                                 <th scope="col">
-                                    <a href="{{ route('tickets.index', ['sort' => 'technician', 'direction' => $currentSort === 'technician' ? $newDirection : 'asc']) }}">
                                         Técnico
-                                    </a>
+
                                 </th>
                                 <th scope="col">Estado</th>
                                 <th scope="col">Data de Abertura</th>
@@ -141,21 +143,22 @@
                             <tbody>
                             <tr class="filler"></tr>
                             @foreach ($tickets as $ticket)
-                                <tr class="customTableStyling" id="heading{{ $ticket->id }}"
-                                    onclick="location.href='{{ route('tickets.show', $ticket->id) }}'">
+                                <tr class="customTableStyling" id="heading{{ $ticket->id }}">
 
                                     <td class="pl-4">#{{ $ticket->id ? $ticket->id : 'N.A.' }}</td>
-                                    <td>
+                                    <td class="clickable">
                                         <div class="d-flex align-items-center">
-                                    <span class="mr-2"
-                                          style="height: 15px; width: 15px; background-color: {{ $ticket->ticketPriority->id == 1 ? 'green' : ($ticket->ticketPriority->id == 2 ? 'green' : ($ticket->ticketPriority->id == 3 ? 'yellow' : ($ticket->ticketPriority->id == 4 ? 'orange' : 'red'))) }}; border-radius: 50%; display: inline-block; opacity: 0.5;"></span>
-                                            <p>{{ $ticket->title ? $ticket->title : 'N.A.' }}</p>
+                                            <span class="mr-2"
+                                                style="height: 15px; width: 15px; background-color: {{ $ticket->ticketPriority->id == 1 ? 'green' : ($ticket->ticketPriority->id == 2 ? 'green' : ($ticket->ticketPriority->id == 3 ? 'yellow' : ($ticket->ticketPriority->id == 4 ? 'orange' : 'red'))) }}; border-radius: 50%; display: inline-block; opacity: 0.5;"></span>
+                                            <a href="{{ route('tickets.show', $ticket->id) }}" class="d-flex align-items-center w-auto h-100">{{ $ticket->title ? $ticket->title : 'N.A.' }}</a>
                                         </div>
                                     </td>
-                                    <td>{{ $ticket->requester->name ? $ticket->requester->name : 'N.A.' }}</td>
-                                    <td>
+                                    <td class="clickable">
+                                        <a href="{{ route('users.show', $ticket->requester->id) }}" class="d-flex align-items-center w-auto h-100">{{ $ticket->requester->name ? $ticket->requester->name : 'N.A.' }}</a>
+                                    </td>
+                                    <td class="clickable">
                                         @foreach ($ticket->users as $user)
-                                            {{ $user->name }}
+                                            <a href="{{ route('users.show', $user->id) }}" class="d-flex align-items-center w-auto h-100">{{ $user->name }}</a>
                                         @endforeach
                                     </td>
                                     <td>{{ $ticket->ticketStatus->description ? $ticket->ticketStatus->description : 'N.A.' }}</td>
@@ -221,17 +224,19 @@
                             @foreach ($waitingQueueTickets as $ticket)
                                 <tr class="customTableStyling">
                                     <td class="pl-4">#{{ $ticket->id }}</td>
-                                    <td>
+                                    <td class="clickable">
                                         <div class="d-flex align-items-center">
-                            <span class="mr-2"
-                                  style="height: 15px; width: 15px; background-color: {{ $ticket->ticketPriority->id == 1 ? 'green' : ($ticket->ticketPriority->id == 2 ? 'green' : ($ticket->ticketPriority->id == 3 ? 'yellow' : ($ticket->ticketPriority->id == 4 ? 'orange' : 'red'))) }}; border-radius: 50%; display: inline-block; opacity: 0.5;"></span>
-                                            <p>{{ $ticket->title ? $ticket->title : 'N.A.' }}</p>
+                                            <span class="mr-2"
+                                                style="height: 15px; width: 15px; background-color: {{ $ticket->ticketPriority->id == 1 ? 'green' : ($ticket->ticketPriority->id == 2 ? 'green' : ($ticket->ticketPriority->id == 3 ? 'yellow' : ($ticket->ticketPriority->id == 4 ? 'orange' : 'red'))) }}; border-radius: 50%; display: inline-block; opacity: 0.5;"></span>
+                                            <a href="{{ route('tickets.show', $ticket->id) }}">{{ $ticket->title ? $ticket->title : 'N.A.' }}</a>
                                         </div>
                                     </td>
-                                    <td>{{ $ticket->requester->name }}</td>
-                                    <td>
+                                    <td class="clickable">
+                                        <a href="{{ route('users.show', $ticket->requester->id) }}" class="d-flex align-items-center w-auto h-100">{{ $ticket->requester->name }}</a>
+                                    </td>
+                                    <td class="clickable">
                                         @foreach ($ticket->users as $user)
-                                            {{ $user->name }}
+                                            <a href="{{ route('users.show', $user->id) }}" class="d-flex align-items-center w-auto h-100">{{ $user->name }}</a>
                                         @endforeach
                                     </td>
                                     <td>{{ $ticket->ticketStatus->description }}</td>
@@ -271,7 +276,6 @@
                         {{ $waitingQueueTickets->appends(request()->input())->links() }}
                 </div>
 
-
                 <div class="tab-pane fade" id="recycling" role="tabpanel" aria-labelledby="recycling-tab">
                     <table class="table table-hover">
                         <thead>
@@ -290,15 +294,17 @@
                         @foreach ($recycledTickets as $ticket)
                             <tr class="customTableStyling">
                                 <td class="pl-4">#{{ $ticket->id }}</td>
-                                <td class="d-flex align-items-center">
-                        <span class="mr-2"
-                              style="height: 15px; width: 15px; background-color: {{ $ticket->ticketPriority->id == 1 ? 'green' : ($ticket->ticketPriority->id == 2 ? 'green' : ($ticket->ticketPriority->id == 3 ? 'yellow' : ($ticket->ticketPriority->id == 4 ? 'orange' : 'red'))) }}; border-radius: 50%; display: inline-block; opacity: 0.5;"></span>
-                                    <p>{{ $ticket->title ? $ticket->title : 'N.A.' }}</p>
+                                <td class="d-flex align-items-center clickable">
+                                    <span class="mr-2"
+                                        style="height: 15px; width: 15px; background-color: {{ $ticket->ticketPriority->id == 1 ? 'green' : ($ticket->ticketPriority->id == 2 ? 'green' : ($ticket->ticketPriority->id == 3 ? 'yellow' : ($ticket->ticketPriority->id == 4 ? 'orange' : 'red'))) }}; border-radius: 50%; display: inline-block; opacity: 0.5;"></span>
+                                    <a href="{{ route('tickets.show', $ticket->id) }}">{{ $ticket->title ? $ticket->title : 'N.A.' }}</a>
                                 </td>
-                                <td>{{ $ticket->requester->name }}</td>
-                                <td>
+                                <td class="clickable">
+                                    <a href="{{ route('users.show', $ticket->requester->id) }}" class="d-flex align-items-center w-auto h-100">{{ $ticket->requester->name }}</a>
+                                </td>
+                                <td class="clickable">
                                     @foreach ($ticket->users as $user)
-                                        {{ $user->name }}
+                                        <a href="{{ route('users.show', $user->name) }}" class="d-flex align-items-center w-auto h-100">{{ $user->name }}</a>
                                     @endforeach
                                 </td>
                                 <td>{{ $ticket->ticketStatus->description }}</td>
@@ -340,6 +346,39 @@
 
         </div>
 
+            <style>
+                .fade-in {
+                    animation: fadeIn ease 1s;
+                    -webkit-animation: fadeIn ease 1s;
+                    -moz-animation: fadeIn ease 1s;
+                    -o-animation: fadeIn ease 1s;
+                }
+
+                @keyframes fadeIn {
+                    0% {opacity:0;}
+                    100% {opacity:1;}
+                }
+
+                @-moz-keyframes fadeIn {
+                    0% {opacity:0;}
+                    100% {opacity:1;}
+                }
+
+                @-webkit-keyframes fadeIn {
+                    0% {opacity:0;}
+                    100% {opacity:1;}
+                }
+
+                @-o-keyframes fadeIn {
+                    0% {opacity:0;}
+                    100% {opacity:1;}
+                }
+
+                @-ms-keyframes fadeIn {
+                    0% {opacity:0;}
+                    100% {opacity:1;}
+                }
+            </style>
         <style>
             thead th{
                 border-top: none!important;
@@ -419,7 +458,16 @@
                     localStorage.setItem('lastTab', $(this).attr('href'));
                 });
 
+
                 let lastTab = localStorage.getItem('lastTab');
+                let activeTabFromServer = "{{ session('active_tab') }}";
+
+                if (activeTabFromServer) {
+                    lastTab = activeTabFromServer;
+                    localStorage.setItem('lastTab', activeTabFromServer);
+
+                }
+
                 if (lastTab) {
                     $('[href="' + lastTab + '"]').tab('show');
                 }

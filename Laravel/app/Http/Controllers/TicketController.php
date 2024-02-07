@@ -30,7 +30,7 @@ class TicketController extends Controller
         $sort = $request->query('sort');
         $direction = $request->query('direction', 'asc');
         $query = Ticket::query();
-//        dd($sort, $direction);
+
         switch ($sort) {
             case 'number':
                 $sortColumn = 'id';
@@ -41,19 +41,11 @@ class TicketController extends Controller
             case 'user':
                 $sortColumn = 'user_id';
                 break;
-            case 'technician':
-                $sortColumn = 'ticket_users.user_id';
-                break;
             default:
                 $sortColumn = 'id';
         }
 
-        if ($sort === 'technician') {
-            $query->join('ticket_users', 'tickets.id', '=', 'ticket_users.ticket_id')
-                ->select('tickets.*', 'ticket_users.user_id as technician_id')
-                ->groupBy('tickets.id');
-            $sortColumn = \DB::raw('ticket_users.user_id');
-        }
+
 
 
         if (auth()->user()->role_id == 2) {
@@ -170,7 +162,7 @@ class TicketController extends Controller
 
         $this->logTicketHistory($ticket->id, 1, $ticketInfo);
         $this->sendEmail($ticket->id);
-        return redirect()->route('tickets.index')->with('success', 'Ticket criado com sucesso!');
+        return redirect()->route('tickets.index')->with('success', 'Ticket criado com sucesso!')->with('active_tab', 'allTickets');
 
     }
 
@@ -182,6 +174,14 @@ class TicketController extends Controller
             $query->orderBy('created_at', 'desc');
         }, 'comments.user'])->find($ticket->id);
 
+
+        $id = $ticket->id;
+        $ticketHistories = TicketHistory::where('ticket_id', $id)->get();
+
+
+
+
+
         $users = User::all();
         $statuses = TicketStatus::all();
         $priorities = TicketPriority::all();
@@ -191,7 +191,7 @@ class TicketController extends Controller
         $technician = User::where('id', $ticketTechnician->user_id)->first();
         $requester = User::where('id', $ticket->user_id)->first();
 
-        return view('tickets.show', compact('ticket', 'userTickets', 'users', 'statuses', 'priorities', 'categories', 'technician', 'requester'));
+        return view('tickets.show', compact('ticket', 'userTickets', 'users', 'statuses', 'priorities', 'categories', 'technician', 'requester', 'ticketHistories'));
     }
 
     public function edit(Ticket $ticket)
@@ -261,16 +261,16 @@ class TicketController extends Controller
             'isRead' => false,
         ]);
 
-        return redirect()->route('tickets.index')->with('success', 'Ticket atualizado com sucesso!');
+        return redirect()->route('tickets.index')->with('success', 'Ticket atualizado com sucesso!')->with('active_tab', 'allTickets');
     }
 
     public function destroy(Ticket $ticket)
     {
         $ticket->delete();
 
-//        $this->logTicketHistory($ticket->id, 3, 'Ticket #' . $ticket->id . ' foi removido por ' . User::find(Auth::id())->name . '.');
+        $this->logTicketHistory($ticket->id, 3, 'O ticket #' . $ticket->id . ' foi removido por ' . User::find(Auth::id())->name . '.');
 
-        return redirect()->route('tickets.index')->with('success', 'Ticket removido com sucesso!');
+        return redirect()->route('tickets.index')->with('success', 'Ticket removido com sucesso!')->with('active_tab', 'allTickets');
 
     }
 
@@ -337,7 +337,9 @@ class TicketController extends Controller
         $ticket = Ticket::onlyTrashed()->findOrFail($id);
         $ticket->restore();
 
-        return redirect()->route('tickets.index')->with('success', 'Restaurado com sucesso!');
+        $this->logTicketHistory($ticket->id, 4, 'O ticket #' . $ticket->id . ' foi restaurado por ' . User::find(Auth::id())->name . '.');
+
+        return redirect()->route('tickets.index')->with('success', 'Restaurado com sucesso!')->with('active_tab', 'allTickets');
     }
 
     public function forceDelete($id)
@@ -345,7 +347,7 @@ class TicketController extends Controller
         $ticket = Ticket::onlyTrashed()->findOrFail($id);
         $ticket->forceDelete();
 
-        return redirect()->route('tickets.index')->with('success', 'Ticket apagado permanentemente!');
+        return redirect()->route('tickets.index')->with('success', 'Ticket apagado permanentemente!')->with('active_tab', 'allTickets');
     }
 
     public function sendEmail($id)

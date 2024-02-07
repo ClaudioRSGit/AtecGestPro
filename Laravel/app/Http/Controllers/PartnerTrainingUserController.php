@@ -196,36 +196,4 @@ class PartnerTrainingUserController extends Controller
     }
 
 
-    public function massDelete(Request $request)
-    {
-        $request->validate([
-            'ptu_ids' => 'required|array',
-            'ptu_ids.*' => 'exists:partner_training_users,id',
-        ]);
-
-        try {
-            $partnerTrainingUsers = PartnerTrainingUser::whereIn('id', $request->input('ptu_ids'))->get();
-
-            foreach ($partnerTrainingUsers as $partnerTrainingUser) {
-                $materials = $partnerTrainingUser->materials;
-
-                foreach ($materials as $material) {
-                    $quantity = $material->pivot->quantity ?? 0;
-
-                    $material->increment('quantity', $quantity);
-                }
-
-                MaterialPartnerTrainingUser::where('partner_training_user_id', $partnerTrainingUser->id)->delete();
-            }
-
-            // Delete PartnerTrainingUsers
-            PartnerTrainingUser::whereIn('id', $request->input('ptu_ids'))->delete();
-
-            return redirect()->back()->with('success', 'Formações selecionadas excluídas com sucesso!');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Erro ao excluir Formações selecionadas. Por favor, tente novamente.');
-        }
-    }
-
-
 }

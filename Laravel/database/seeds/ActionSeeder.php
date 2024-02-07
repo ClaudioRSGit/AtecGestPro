@@ -25,5 +25,10 @@ class ActionSeeder extends Seeder
         DB::table('actions')->insert([
             'description' => 'DELETE',
         ]);
+        // Seed 4
+        DB::table('actions')->insert([
+            'description' => 'RESTORE',
+        ]);
+
     }
 }
