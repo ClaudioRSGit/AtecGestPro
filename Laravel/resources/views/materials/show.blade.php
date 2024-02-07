@@ -9,7 +9,6 @@
             </div>
         @endif
         <div class="row mb-3">
-
             <div class="col-md-6">
 
                 <div class="mb-3">
@@ -29,13 +28,10 @@
                            value="{{ $material->suplier }}">
                 </div>
 
-
-
                 <div class="form-group">
                     <label for="acquisition_date">Data de Aquisição:</label>
                     <input disabled type="date" class="form-control" id="acquisition_date"
                            name="acquisition_date" value="{{ !empty($material->acquisition_date) ? \Carbon\Carbon::parse($material->acquisition_date)->format('Y-m-d') : 'Não disponível' }}" >
-
                 </div>
 
                 <div class="row grid mb-3">
@@ -62,13 +58,9 @@
                     </div>
                 </div>
 
-
             </div>
             <div class="col-md-6">
                 @if($material->isClothing==1 && !$material->sizes->isEmpty())
-
-
-
                     <div class="d-flex flex-row">
                         <div class="flex-column">
                             <div class="mb-3">
@@ -119,11 +111,9 @@
                     </div>
 
                     @elseif ($material->isClothing==1 && $material->sizes->isEmpty())
-
                     <div class="m-3">
                         <h1>Não existe stock disponivel</h1>
                     </div>
-
                 @endif
 
             </div>
@@ -131,7 +121,6 @@
         <a href="{{ route('materials.index') }}" class="btn btn-secondary">Voltar</a>    </div>
 
     <style>
-
 
         .scrollable-column {
             max-height: 300px;
@@ -166,23 +155,6 @@
         }
 
     </style>
-    <script>
-        function toggleFieldsQuantity() {
 
-            const sizeCheckboxes = document.querySelectorAll('.size-checkbox');
-            const quantityInputs = document.querySelectorAll('.quantity-input');
-
-
-            sizeCheckboxes.forEach((checkbox, index) => {
-                quantityInputs[index].disabled = !checkbox.checked;
-            });
-
-        }
-        setTimeout(function() {
-                $("#success-alert").fadeTo(500, 0).slideUp(500, function() {
-                    $(this).remove();
-                });
-            }, 2000);
-    </script>
-
+    <script type="module" src="{{ asset('js/materials/show.js') }}"></script>
 @endsection
