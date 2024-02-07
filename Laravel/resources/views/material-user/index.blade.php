@@ -107,12 +107,13 @@
                                             <tbody>
                                             <tr class="filler"></tr>
                                             @foreach ($courseClass->students as $student)
-                                                <tr class="customTableStyling"
-                                                    onclick="location.href='{{ route('material-user.create', $student->id) }}'">
+                                                <tr class="customTableStyling">
                                                     @php
                                                         $myVariable = $usersWithMaterialsDelivered->contains($student->id) ? 'text-primary' : '';
                                                     @endphp
-                                                    <td class="{{ $myVariable }}">{{ $student->name }}</a></td>
+                                                    <td class="clickable {{ $myVariable }}">
+                                                        <a href="{{ route('material-user.create', $student->id) }}" class="d-flex align-items-center w-auto h-100">{{ $student->name }}</a>
+                                                    </td>
                                                     <td class="{{ $myVariable }}">{{ $student->username }}</td>
                                                     <td class="{{ $myVariable }}">{{ $student->email }}</td>
                                                     <td class="editDelete">
@@ -189,12 +190,13 @@
                     </thead>
                     <tbody class="customTableStyling">
                     @foreach ($nonDocents as $nonDocent)
-                        <tr class="filler"
-                            onclick="location.href='{{ route('material-user.create', $nonDocent->id) }}'">
+                        <tr class="filler">
                             @php
                                 $myVariable = $usersWithMaterialsDelivered->contains($nonDocent->id) ? 'text-primary' : '';
                             @endphp
-                            <td class="{{ $myVariable }}">{{ $nonDocent->name }}</td>
+                            <td class="clickable {{ $myVariable }}">
+                                <a href="{{ route('material-user.create', $nonDocent->id) }}" class="d-flex align-items-center w-auto h-100">{{ $nonDocent->name }}</a>
+                            </td>
                             <td class="{{ $myVariable }}">{{ $nonDocent->username }}</td>
                             <td class="{{ $myVariable }}">{{ $nonDocent->email }}</td>
                             <td>
