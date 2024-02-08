@@ -353,4 +353,36 @@ class TicketController extends Controller
 //         return view('tickets.show', compact('ticket'));
     }
 
+    public function storeQuickTicket(Request $request){
+        try {
+            $loggedInUserId = Auth::id();
+            $dueByDate = $this->calculateDueByDate($request->priority_id);
+            $filename = 'Sem Anexo';
+            if ($request->hasFile('attachment')) {
+                $filename = $request->file('attachment')->store('attachments', 'public');
+            }
+            $ticket = new Ticket([
+                'title' => $request->title,
+                'description' => $request->description,
+                'ticket_status_id' => 1,
+                'ticket_priority_id' => $request->priority_id,
+                'ticket_category_id' => $request->category_id,
+                'user_id' => $loggedInUserId,
+                'dueByDate' => $dueByDate,
+                'attachment' => $filename,
+            ]);
+
+            $ticket->save();
+
+            $ticketInfo = 'Ticket #' . $ticket->id . ' foi criado por ' . User::find($loggedInUserId)->name . '.';
+
+            $this->logTicketHistory($ticket->id, 1, $ticketInfo);
+            $this->sendEmail($ticket->id);
+
+            return redirect()->route('tickets.index')->with('success', 'Ticket criado com sucesso!')->with('active_tab', 'allTickets');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erro ao criar o ticket. Por favor, tente novamente.');
+        }
+    }
+
 }
