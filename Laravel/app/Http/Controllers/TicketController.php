@@ -374,6 +374,11 @@ class TicketController extends Controller
 
             $ticket->save();
 
+            TicketUser::create([
+                'ticket_id' => $ticket->id,
+                'user_id' => $loggedInUserId,
+            ]);
+
             $ticketInfo = 'Ticket #' . $ticket->id . ' foi criado por ' . User::find($loggedInUserId)->name . '.';
 
             $this->logTicketHistory($ticket->id, 1, $ticketInfo);
