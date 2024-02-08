@@ -38,28 +38,28 @@ class PartnerTrainingUserController extends Controller
                         })
                         ->orWhereHas('user', function ($query) use ($searchPtu) {
                             $query->where('name', 'like', "%$searchPtu%");
-                        })->paginate(5);
+                        })->paginate(5, ['*'], 'ptuPage');
                 } else {
-                    $partner_Training_Users = PartnerTrainingUser::with('partner', 'training', 'user')->paginate(5);
+                    $partner_Training_Users = PartnerTrainingUser::with('partner', 'training', 'user')->paginate(5, ['*'], 'ptuPage');
                 }
 
 
                 if ($searchP) {
                     $partners = Partner::with('partnerTrainingUsers', 'contactPartner')
                         ->where('name', 'like', "%$searchP%")
-                        ->paginate(5);
+                        ->paginate(10, ['*'], 'pPage');
                 } else {
-                    $partners = Partner::with('partnerTrainingUsers', 'contactPartner')->paginate(5);
+                    $partners = Partner::with('partnerTrainingUsers', 'contactPartner')->paginate(5, ['*'], 'pPage');
                 }
 
                 if ($searchT) {
-                    $trainings = Training::where('name', 'like', "%$searchT%")->paginate(5);
+                    $trainings = Training::where('name', 'like', "%$searchT%")->paginate(5, ['*'], 'tPage');
                 } else {
-                    $trainings = Training::with('partnerTrainingUsers')->paginate(5);
+                    $trainings = Training::with('partnerTrainingUsers')->paginate(5, ['*'], 'tPage');
                 }
 
 
-        return view('external.index', compact('partner_Training_Users', 'partners', 'trainings'));
+        return view('external.index', compact('partner_Training_Users', 'partners', 'trainings', 'searchPtu', 'searchP', 'searchT'));
     }
 
     public function show($id)
