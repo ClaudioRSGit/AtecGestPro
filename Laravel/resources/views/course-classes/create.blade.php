@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="w-70">
+    <div class="container w-100">
         <h1>Criar Turma</h1>
 
         <form method="post" action="{{ route('course-classes.store') }}" id="createCourseClassForm" class=" mb-3">

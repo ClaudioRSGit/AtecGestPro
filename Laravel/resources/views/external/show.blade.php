@@ -30,7 +30,7 @@
         }
 
     </style>
-    <div class="container">
+    <div class="container w-100">
         <h1>Detalhes do agendamento da formação</h1>
 
         @if($partner_Training_Users)
@@ -53,7 +53,11 @@
                     <input class="form-control {{ optional($partner_Training_Users->partner)->address ? '' : 'text-danger' }}" value="{{ optional($partner_Training_Users->partner)->address ?? 'O parceiro foi eliminado.' }}" disabled>
                 </div>
 
-                <div class="materials">
+                <div class="materials d-flex justify-content-center">
+                    @php
+                        $materialTraining = $partner_Training_Users->materials;
+                    @endphp
+                    @if($materialTraining->isNotEmpty())
                     <table class="table bg-white">
                         <thead>
                             <tr>
@@ -65,11 +69,9 @@
 
                         <tbody class="customTableStyling">
                             <tr class="filler"></tr>
-                                @php
-                                    $materialTraining = $partner_Training_Users->materials;
-                                @endphp
 
-                            @if($materialTraining->isNotEmpty())
+
+
                                 @foreach($materialTraining as $materialTrainings)
                                     <tr>
                                         <td>{{ $materialTrainings->name }}</td>
@@ -79,7 +81,7 @@
                                     <tr class="filler"></tr>
                                 @endforeach
                             @else
-                                <p>Não existem materiais associados a esta formação</p>
+                                <h5 class="">Não existem materiais associados a esta formação</h5>
                             @endif
                             </td>
                         </tbody>

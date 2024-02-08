@@ -38,28 +38,28 @@ class PartnerTrainingUserController extends Controller
                         })
                         ->orWhereHas('user', function ($query) use ($searchPtu) {
                             $query->where('name', 'like', "%$searchPtu%");
-                        })->paginate(5);
+                        })->paginate(5, ['*'], 'ptuPage');
                 } else {
-                    $partner_Training_Users = PartnerTrainingUser::with('partner', 'training', 'user')->paginate(5);
+                    $partner_Training_Users = PartnerTrainingUser::with('partner', 'training', 'user')->paginate(5, ['*'], 'ptuPage');
                 }
 
 
                 if ($searchP) {
                     $partners = Partner::with('partnerTrainingUsers', 'contactPartner')
                         ->where('name', 'like', "%$searchP%")
-                        ->paginate(5);
+                        ->paginate(10, ['*'], 'pPage');
                 } else {
-                    $partners = Partner::with('partnerTrainingUsers', 'contactPartner')->paginate(5);
+                    $partners = Partner::with('partnerTrainingUsers', 'contactPartner')->paginate(5, ['*'], 'pPage');
                 }
 
                 if ($searchT) {
-                    $trainings = Training::where('name', 'like', "%$searchT%")->paginate(5);
+                    $trainings = Training::where('name', 'like', "%$searchT%")->paginate(5, ['*'], 'tPage');
                 } else {
-                    $trainings = Training::with('partnerTrainingUsers')->paginate(5);
+                    $trainings = Training::with('partnerTrainingUsers')->paginate(5, ['*'], 'tPage');
                 }
 
 
-        return view('external.index', compact('partner_Training_Users', 'partners', 'trainings'));
+        return view('external.index', compact('partner_Training_Users', 'partners', 'trainings', 'searchPtu', 'searchP', 'searchT'));
     }
 
     public function show($id)
@@ -87,33 +87,33 @@ class PartnerTrainingUserController extends Controller
 
     public function store(PartnerTrainingUserRequest $request)
     {
-        $partnerTrainingUser = PartnerTrainingUser::create([
-            'partner_id' => $request->input('partner_id'),
-            'training_id' => $request->input('training_id'),
-            'user_id' => $request->input('user_id'),
-            'start_date' => $request->input('start_date'),
-            'end_date' => $request->input('end_date')]);
+        try {
+            $partnerTrainingUser = PartnerTrainingUser::create([
+                'partner_id' => $request->input('partner_id'),
+                'training_id' => $request->input('training_id'),
+                'user_id' => $request->input('user_id'),
+                'start_date' => $request->input('start_date'),
+                'end_date' => $request->input('end_date')]);
 
-        $materials = $request->input('materials', []);
-        $materialQuantities = $request->input('material_quantities', []);
+            $materials = $request->input('materials', []);
+            $materialQuantities = $request->input('material_quantities', []);
 
+            foreach ($materials as $materialId) {
+                $quantity = $materialQuantities[$materialId] ?? 1;
+                $material = Material::find($materialId);
 
-        foreach ($materials as $materialId) {
-            $quantity = $materialQuantities[$materialId] ?? 1;
-            $material = Material::find($materialId);
+                $partnerTrainingUser->materials()->attach($materialId, ['quantity' => $quantity]);
 
-
-            $partnerTrainingUser->materials()->attach($materialId, ['quantity' => $quantity]);
-
-
-            if ($material) {
-                $material->decrement('quantity', $quantity);
+                if ($material) {
+                    $material->decrement('quantity', $quantity);
+                }
             }
+
+            return redirect()->route('external.index')->with('success', 'Formação externa criada com sucesso');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erro ao criar a formação formação externa. Por favor, tente novamente.');
         }
-
-        return redirect()->route('external.index')->with('success', 'Formação criada com sucesso');
     }
-
 
     public function edit($id)
     {
@@ -130,70 +130,70 @@ class PartnerTrainingUserController extends Controller
 
     public function update(PartnerTrainingUserRequest $request, $id)
     {
+        try {
+            $partner_Training_User = PartnerTrainingUser::with('partner', 'training', 'user', 'materials')->findOrFail($id);
 
-        $partner_Training_User = PartnerTrainingUser::with('partner', 'training', 'user', 'materials')->findOrFail($id);
-
-        if (strtotime($request->start_date) > strtotime($request->end_date)) {
-            return redirect()->back()->withErrors(['end_date' => 'End date must be after or equal to start date']);
-        }
-
-        $partner_Training_User->update($request->all());
-        $partner_Training_User = PartnerTrainingUser::with('materials')->findOrFail($id);
-
-        $selectedMaterials = $request->input('materials');
-        $materialQuantities = $request->input('material_quantities');
-
-        if ($selectedMaterials) {
-            foreach ($selectedMaterials as $materialId) {
-                $quantityInserted = $materialQuantities[$materialId] ?? 1;
-                $currentQuantity = $partner_Training_User->materials->where('id', $materialId)->first()->pivot->quantity ?? 0;
-                $quantityDecreased = $currentQuantity > $quantityInserted;
-                $stock = $partner_Training_User->materials->where('id', $materialId)->first()->quantity ?? 0;
-                $stockTotal = $stock + $currentQuantity;
-
-
-                if ($quantityInserted > 0) {
-                    $partner_Training_User->materials()->syncWithoutDetaching([
-
-                        $materialId => ['quantity' => $quantityInserted],
-                    ]);
-                } else {
-                    $partner_Training_User->materials()->detach($materialId);
-                }
-
-                $material = Material::find($materialId);
-
-
-                $material->quantity = $stockTotal - $quantityInserted;
-                $material->save();
+            if (strtotime($request->start_date) > strtotime($request->end_date)) {
+                return redirect()->back()->withErrors(['end_date' => 'End date must be after or equal to start date']);
             }
+
+            $partner_Training_User->update($request->all());
+            $partner_Training_User = PartnerTrainingUser::with('materials')->findOrFail($id);
+
+            $selectedMaterials = $request->input('materials');
+            $materialQuantities = $request->input('material_quantities');
+
+            if ($selectedMaterials) {
+                foreach ($selectedMaterials as $materialId) {
+                    $quantityInserted = $materialQuantities[$materialId] ?? 1;
+                    $currentQuantity = $partner_Training_User->materials->where('id', $materialId)->first()->pivot->quantity ?? 0;
+                    $quantityDecreased = $currentQuantity > $quantityInserted;
+                    $stock = $partner_Training_User->materials->where('id', $materialId)->first()->quantity ?? 0;
+                    $stockTotal = $stock + $currentQuantity;
+
+                    if ($quantityInserted > 0) {
+                        $partner_Training_User->materials()->syncWithoutDetaching([
+                            $materialId => ['quantity' => $quantityInserted],
+                        ]);
+                    } else {
+                        $partner_Training_User->materials()->detach($materialId);
+                    }
+
+                    $material = Material::find($materialId);
+                    $material->quantity = $stockTotal - $quantityInserted;
+                    $material->save();
+                }
+            }
+
+            return redirect()->route('external.index')->with('success', 'Formação atualizada com sucesso');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erro ao atualizar a formação. Por favor, tente novamente.');
         }
-
-        return redirect()->route('external.index')->with('success', 'Formação atualizada com sucesso');
     }
-
 
     public function destroy($id)
     {
+        try {
+            $partnerTrainingUser = PartnerTrainingUser::find($id);
 
-        $partnerTrainingUser = PartnerTrainingUser::find($id);
+            if (!$partnerTrainingUser) {
+                return redirect()->route('partner-training-users.index')->with('error', 'PartnerTrainingUser not found.');
+            }
 
-        if (!$partnerTrainingUser) {
-            return redirect()->route('partner-training-users.index')->with('error', 'PartnerTrainingUser not found.');
+            $materials = $partnerTrainingUser->materials;
+
+            MaterialPartnerTrainingUser::where('partner_training_user_id', $partnerTrainingUser->id)->delete();
+
+            foreach ($materials as $material) {
+                $material->increment('quantity', $material->pivot->quantity);
+            }
+
+            $partnerTrainingUser->delete();
+
+            return redirect()->route('external.index')->with('success', 'Formação eliminada com sucesso');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erro ao eliminar a formação. Por favor, tente novamente.');
         }
-
-        $materials = $partnerTrainingUser->materials;
-
-        MaterialPartnerTrainingUser::where('partner_training_user_id', $partnerTrainingUser->id)->delete();
-
-        foreach ($materials as $material) {
-            $material->increment('quantity', $material->pivot->quantity);
-        }
-
-        $partnerTrainingUser->delete();
-
-        return redirect()->route('external.index')->with('success', 'Formação eliminada com sucesso');
     }
-
 
 }

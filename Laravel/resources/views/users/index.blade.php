@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="w-100">
+    <div class="container w-100">
 
         @if (session('success'))
             <div class="alert alert-success" id="success-alert">
@@ -146,7 +146,8 @@
                     @endforeach
                     </tbody>
                 </table>
-                {{ $users->appends(request()->input())->links() }}
+
+                {{ $users->appends(['uPage' => $users->currentPage()])->links() }}
 
                 <div class="container">
                     <form action="{{ route('import-excel.importUsers') }}" method="POST" enctype="multipart/form-data">
@@ -218,7 +219,7 @@
                         @endforeach
                         </tbody>
                     </table>
-                    {{ $deletedUsers->appends(request()->input())->links() }}
+                    {{ $deletedUsers->appends(['dPage' => $deletedUsers->currentPage()])->links() }}
                 </div>
                 @endif
 

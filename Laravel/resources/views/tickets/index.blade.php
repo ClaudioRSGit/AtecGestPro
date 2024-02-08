@@ -8,7 +8,22 @@
             </div>
         @endif
 
-        <h1>Tickets</h1>
+
+
+
+        <div class="d-flex justify-content-between align-items-center">
+            <h1>Tickets</h1>
+            <div onclick="showOptions()" class="form-control btn-primary w-20 dropdown" style="max-width: 10rem;">
+                <div class="d-flex align-items-center w-100 h-100">
+                    <img src="{{ asset('assets/new.svg') }}">
+                    <p id="open" class="btn text-white">Novo ticket</p>
+                </div>
+                <div id="options" class="dropdown-menu w-100 h-auto">
+                    <button id="openTicket" class="btn dropdown-item" onclick="showQuickTicket()">Ticket rápido</button>
+                    <button onclick="location.href='{{ route('tickets.create') }}'" class="btn dropdown-item">Ticket completo</a>
+                </div>
+            </div>
+        </div>
 
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
@@ -48,7 +63,8 @@
                             <form id="filterCategoryForm" action="{{ route('tickets.index') }}" method="GET">
                                 <select class="form-control w-auto" id="filterCategory" name="filterCategory"
                                         onchange="submitCategoryForm()">
-                                    <option value="" {{ $filterCategory === '' ? 'selected' : '' }}>Todas as categorias
+                                    <option value="" {{ $filterCategory === '' ? 'selected' : '' }}>
+                                        Todas as categorias
                                     </option>
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}"
@@ -73,24 +89,17 @@
                             <form id="filterPriorityForm" action="{{ route('tickets.index') }}" method="GET">
                                 <select class="form-control w-auto" id="filterPriority" name="filterPriority"
                                         onchange="submitPriorityForm()">
-                                    <option value="" {{ $filterPriority === '' ? 'selected' : '' }}>Todas as prioridades
+                                    <option value="" {{ $filterPriority === '' ? 'selected' : '' }}>
+                                        Todas as prioridades
                                     </option>
                                     @foreach ($priorities as $priority)
                                         <option value="{{ $priority->id }}"
                                             {{ (int) $filterPriority === $priority->id ? 'selected' : '' }}>
-                                            {{ $priority->description }}</option>
+                                            {{ $priority->description }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </form>
-
-                            <div class="form-control btn-primary w-20 dropdown">
-                                <button onclick="showOptions()" class="btn btn-primary open w-100 h-100">Novo ticket</button>
-                                <div id="options" class="options w-100 h-auto">
-                                    <button id="openTicket" class=" btn btn-primary">Ticket rápido</button>
-                                    <a href="{{ route('tickets.create') }}" class="btn-primary">Ticket completo</a>
-                                </div>
-                            </div>
-
                         </div>
                     </div>
                     @if (count($tickets) === 0)
@@ -134,13 +143,12 @@
                             <tbody>
                             <tr class="filler"></tr>
                             @foreach ($tickets as $ticket)
-                                <tr class="customTableStyling" id="heading{{ $ticket->id }}">
+                                <tr class="customTableStyling {{ $ticket->ticketPriority->id == 5 ? 'critical' : '' }}" id="heading{{ $ticket->id }}">
 
                                     <td class="pl-4">#{{ $ticket->id ? $ticket->id : 'N.A.' }}</td>
                                     <td class="clickable">
                                         <div class="d-flex align-items-center">
-                                            <span class="mr-2"
-                                                style="height: 15px; width: 15px; background-color: {{ $ticket->ticketPriority->id == 1 ? 'green' : ($ticket->ticketPriority->id == 2 ? 'green' : ($ticket->ticketPriority->id == 3 ? 'yellow' : ($ticket->ticketPriority->id == 4 ? 'orange' : 'red'))) }}; border-radius: 50%; display: inline-block; opacity: 0.5;"></span>
+                                            <span class="mr-2 ticket-prio ticket-priority-{{ $ticket->ticketPriority->id }}"></span>
                                             <a href="{{ route('tickets.show', $ticket->id) }}" class="d-flex align-items-center w-auto h-100">{{ $ticket->title ? $ticket->title : 'N.A.' }}</a>
                                         </div>
                                     </td>
@@ -152,10 +160,9 @@
                                             <a href="{{ route('users.show', $user->id) }}" class="d-flex align-items-center w-auto h-100">{{ $user->name }}</a>
                                         @endforeach
                                     </td>
-                                    <td>{{ $ticket->ticketStatus->description ? $ticket->ticketStatus->description : 'N.A.' }}</td>
+                                    <td class="ticket-status-{{ $ticket->ticketStatus->id }}">{{ $ticket->ticketStatus->description ? $ticket->ticketStatus->description : 'N.A.' }}</td>
                                     <td>{{ $ticket->created_at ? $ticket->created_at->format('d-m-Y') : 'N.A.' }}</td>
-                                    <td>{{ $ticket->dueByDate ? \Carbon\Carbon::parse($ticket->dueByDate)->format('d-m-Y') : 'N.A.' }}
-                                    </td>
+                                    <td>{{ $ticket->dueByDate ? \Carbon\Carbon::parse($ticket->dueByDate)->format('d-m-Y') : 'N.A.' }}</td>
                                     <td class="editDelete">
                                         <div>
                                             <a href="{{ route('tickets.edit', $ticket->id) }}">
@@ -188,8 +195,7 @@
                             </tbody>
                         </table>
                     @endif
-                        {{ $tickets->appends(request()->input())->links() }}
-                </div>
+                    {{ $tickets->appends(['tPage' => $tickets->currentPage()])->links() }}                </div>
 
                 <div class="tab-pane fade" id="waitingQueue" role="tabpanel" aria-labelledby="waiting-queue-tab">
                     @if (count($waitingQueueTickets) === 0)
@@ -212,12 +218,11 @@
                             <tbody>
                             <tr class="filler"></tr>
                             @foreach ($waitingQueueTickets as $ticket)
-                                <tr class="customTableStyling">
+                                <tr class="customTableStyling {{ $ticket->ticketPriority->id == 5 ? 'critical' : '' }}">
                                     <td class="pl-4">#{{ $ticket->id }}</td>
                                     <td class="clickable">
                                         <div class="d-flex align-items-center">
-                                            <span class="mr-2"
-                                                style="height: 15px; width: 15px; background-color: {{ $ticket->ticketPriority->id == 1 ? 'green' : ($ticket->ticketPriority->id == 2 ? 'green' : ($ticket->ticketPriority->id == 3 ? 'yellow' : ($ticket->ticketPriority->id == 4 ? 'orange' : 'red'))) }}; border-radius: 50%; display: inline-block; opacity: 0.5;"></span>
+                                            <span class="mr-2 ticket-prio ticket-priority-{{ $ticket->ticketPriority->id }}"></span>
                                             <a href="{{ route('tickets.show', $ticket->id) }}">{{ $ticket->title ? $ticket->title : 'N.A.' }}</a>
                                         </div>
                                     </td>
@@ -229,7 +234,7 @@
                                             <a href="{{ route('users.show', $user->id) }}" class="d-flex align-items-center w-auto h-100">{{ $user->name }}</a>
                                         @endforeach
                                     </td>
-                                    <td>{{ $ticket->ticketStatus->description }}</td>
+                                    <td class="ticket-status-{{ $ticket->ticketStatus->id }}">{{ $ticket->ticketStatus->description }}</td>
                                     <td>{{ $ticket->created_at->format('d-m-Y') }}</td>
                                     <td class="editDelete">
                                         <div class="w-50">
@@ -263,7 +268,7 @@
                             </tbody>
                         </table>
                     @endif
-                        {{ $waitingQueueTickets->appends(request()->input())->links() }}
+                        {{ $waitingQueueTickets->appends(['wPage' => $waitingQueueTickets->currentPage()])->links() }}
                 </div>
 
                 <div class="tab-pane fade" id="recycling" role="tabpanel" aria-labelledby="recycling-tab">
@@ -285,11 +290,10 @@
                         </thead>
                         <tbody>
                         @foreach ($recycledTickets as $ticket)
-                            <tr class="customTableStyling">
+                            <tr class="customTableStyling {{ $ticket->ticketPriority->id == 5 ? 'critical' : '' }}">
                                 <td class="pl-4">#{{ $ticket->id }}</td>
                                 <td class="d-flex align-items-center clickable">
-                                    <span class="mr-2"
-                                        style="height: 15px; width: 15px; background-color: {{ $ticket->ticketPriority->id == 1 ? 'green' : ($ticket->ticketPriority->id == 2 ? 'green' : ($ticket->ticketPriority->id == 3 ? 'yellow' : ($ticket->ticketPriority->id == 4 ? 'orange' : 'red'))) }}; border-radius: 50%; display: inline-block; opacity: 0.5;"></span>
+                                    <span class="mr-2 ticket-prio ticket-priority-{{ $ticket->ticketPriority->id }}"></span>
                                     <a href="{{ route('tickets.show', $ticket->id) }}">{{ $ticket->title ? $ticket->title : 'N.A.' }}</a>
                                 </td>
                                 <td class="clickable">
@@ -300,7 +304,7 @@
                                         <a href="{{ route('users.show', $user->name) }}" class="d-flex align-items-center w-auto h-100">{{ $user->name }}</a>
                                     @endforeach
                                 </td>
-                                <td>{{ $ticket->ticketStatus->description }}</td>
+                                <td class="ticket-status-{{ $ticket->ticketStatus->id }}">{{ $ticket->ticketStatus->description }}</td>
                                 <td>{{ $ticket->created_at->format('d-m-Y') }}</td>
                                 <td class="pl-4">
                                     <div class="restore w-100 h-100 d-flex align-items-center">
@@ -326,19 +330,18 @@
                         </tbody>
                     </table>
                     @endif
-                    {{ $recycledTickets->appends(request()->input())->links() }}
+                        {{ $recycledTickets->appends(['rPage' => $recycledTickets->currentPage()])->links() }}
                 </div>
 
             </div>
 
-            <div id="box" class="box" style="display: none";>
-                @component('tickets.quickTicket', ['priorities' => $priorities, 'categories' => $categories])
-
-                @endcomponent
-            </div>
 
 
         </div>
+    </div>
+    @component('tickets.quickTicket', ['priorities' => $priorities, 'categories' => $categories])
+
+    @endcomponent
 
             <style>
                 .fade-in {
@@ -395,7 +398,7 @@
                 overflow: auto;
                 z-index: 1;
             }
-            .options a {
+            .options * {
                 text-decoration: none;
                 display: block;
                 padding: 12px 16px;
@@ -403,15 +406,12 @@
             .show{
                 display: block;
             }
-            .open{
-                border: none;
-                cursor: pointer;
-                padding: 0;
+            #options *{
+                width: 10rem;
+                border-radius: 0 !important;
             }
 
-            .box{
-                display: none;
-            }
+
 
             @media (max-width: 1080px) {
                 .noTicket {
@@ -483,7 +483,7 @@
                 document.getElementById("options").classList.toggle("show");
             }
             window.onclick = function(event) {
-                if (!event.target.matches('.open')) {
+                if (!event.target.matches('#open')) {
                     var dropdowns = document.getElementsByClassName("options");
                     var i;
                     for (i = 0; i < dropdowns.length; i++) {
@@ -495,9 +495,10 @@
                 }
             }
 
-            document.getElementById('openTicket').addEventListener('click', function() {
-                document.getElementById('box').style.display = 'block';
-            });
+            function showQuickTicket() {
+                document.querySelector('.quickTicket').style.display = 'block';
+                document.querySelector('.container').classList.add('w-70');
+            }
         </script>
 
 @endsection
