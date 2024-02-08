@@ -114,8 +114,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{ $partner_Training_Users->links() }}
-            </div>
+                {{ $partner_Training_Users->appends(['ptuPage' => $partner_Training_Users->currentPage()])->links() }}            </div>
 
             <div class="tab-pane fade" id="partnersTable">
                 <div class="d-flex justify-content-between mb-3">
@@ -222,7 +221,8 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{ $partners->appends(request()->input())->links() }}
+                {{ $partners->appends(['pPage' => $partners->currentPage()])->links() }}
+
             </div>
 
             <div class="tab-pane fade" id="trainingsTable">
@@ -303,8 +303,7 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{ $trainings->appends(request()->input())->links() }}
-            </div>
+                {{ $trainings->appends(['tPage' => $trainings->currentPage()])->links() }}            </div>
 
         </div>
     </div>

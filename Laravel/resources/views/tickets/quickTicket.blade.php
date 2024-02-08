@@ -48,7 +48,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary mb-3 w-100">Criar Ticket</button>
-        <button onclick="closeTicket()" class="btn btn-secondary w-100">Cancelar</a>
+        <button onclick="closeTicket()" class="btn btn-secondary w-100">Cancelar</button>
     </form>
 </div>
 
