@@ -195,12 +195,14 @@
                             </tbody>
                         </table>
                     @endif
-                    {{ $tickets->appends(['tPage' => $tickets->currentPage()])->links() }}                </div>
+                    {{ $tickets->appends(['tPage' => $tickets->currentPage()])->links() }}
+                </div>
 
                 <div class="tab-pane fade" id="waitingQueue" role="tabpanel" aria-labelledby="waiting-queue-tab">
                     @if (count($waitingQueueTickets) === 0)
                         <div>
                             <img src="{{ asset('assets/noTickets.png') }}" class="noTicket">
+                            <label class="d-flex justify-content-center mt-2 text-primary">Não existem tickets na fila de espera</label>
                         </div>
                     @else
                         <table class="table bg-white rounded-top">

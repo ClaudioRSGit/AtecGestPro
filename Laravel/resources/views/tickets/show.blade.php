@@ -1,33 +1,32 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container w-100">
-        <h2 >Ticket #{{ $ticket->id }} - {{ $ticket->title }}</h2>
+<div class="container w-100">
 
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-item" role="presentation">
-                <a class="nav-link active" id="ticket-details-tab" data-toggle="tab" href="#ticket-details" role="tab"
-                    aria-controls="ticket-details" aria-selected="true">Detalhes</a>
-            </li>
-            <li class="nav-item" role="presentation">
-                <a class="nav-link" id="ticket-history-tab" data-toggle="tab" href="#ticket-history" role="tab"
-                    aria-controls="ticket-history" aria-selected="false">Histórico</a>
-            </li>
-        </ul>
-
-        <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="ticket-details" role="tabpanel" aria-labelledby="ticket-details-tab">
-
-                <div class="row my-2">
-                    <div class="col-md-9">
-
-                        <div class="my-3">
-                            <div class="table-responsive">
-                                <img src="https://cdn-icons-png.freepik.com/512/219/219986.png" alt="" style="width: 30px">
-                                <b>{{ $requester->name }}</b>
-                                - {{ $ticket->created_at }}
-                            </div>
-                        </div>
+    <div class="row my-2">
+        <div class="col-md-9">
+            <h2 >Ticket #{{ $ticket->id }} - {{ $ticket->title }}</h2>
+            <div class="mb-3">
+                <div class="table-responsive">
+                    <img src="https://cdn-icons-png.freepik.com/512/219/219986.png" alt="" style="width: 30px">
+                    <b>{{ $requester->name }}</b>
+                    - {{ $ticket->created_at }}
+                </div>
+            </div>
+            <div class="mb-2">
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link active" id="ticket-details-tab" data-toggle="tab" href="#ticket-details" role="tab"
+                                aria-controls="ticket-details" aria-selected="true">Detalhes</a>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <a class="nav-link" id="ticket-history-tab" data-toggle="tab" href="#ticket-history" role="tab"
+                                aria-controls="ticket-history" aria-selected="false">Histórico</a>
+                        </li>
+                    </ul>
+                </div>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="ticket-details" role="tabpanel" aria-labelledby="ticket-details-tab">
 
                         <div class="card mb-3 bg-light">
                             <h5 class="card-header">Descrição</h5>
@@ -85,77 +84,77 @@
                             </div>
                         </div>
                     </div>
+                    <div class="tab-pane fade" id="ticket-history" role="tabpanel" aria-labelledby="ticket-history-tab">
+                        <div class="my-2">
+                            <div class="card ">
 
-                    <div class="col-md-3">
-
-                        <div class="mb-3">
-                            <label for="status" class="form-label">Estado:</label>
-                            <input type="text" class="form-control"
-                                value="{{ $ticket->ticketStatus->description ?? 'N/A' }}" disabled>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="technician" class="form-label">Técnico:</label>
-                            <input type="text" class="form-control" value="{{ $technician->name ?? 'N/A' }}" disabled>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="priority" class="form-label">Prioridade:</label>
-                            <input type="text" class="form-control"
-                                value="{{ $ticket->ticketPriority->description ?? 'N/A' }}" disabled>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="category" class="form-label">Categoria:</label>
-                            <input type="text" class="form-control"
-                                value="{{ $ticket->ticketCategory->description ?? 'N/A' }}" disabled>
-                        </div>
-
-                        <div class="mb-3">
-                            <label>Data Limite:</label>
-                            <input type="text" class="form-control" value="{{ $ticket->dueByDate ?? 'N/A' }}"
-                                disabled>
-                        </div>
-
-                        <div class="mb-5">
-                            <label>Histórico do Utilizador:</label>
-                            <div id="histTickets">
-                                <ul>
-                                    @foreach ($userTickets as $userTicketId)
-                                        <li>
-                                            <a href="{{ route('tickets.show', $userTicketId) }}">Ticket #{{ $userTicketId }}</a>
-                                        </li>
+                                <div class="card-body ">
+                                    @foreach ($ticketHistories as $history)
+                                        <div class="card mb-3 shadow-lg">
+                                            <div class="card-header d-flex justify-content-center align-items-center">
+                                                <h5>{{ $history->action->description }}</h5>
+                                            </div>
+                                            <div class="card-body d-flex justify-content-center align-items-center">
+                                                <p class="card-title">{{ $history->created_at }}</p>
+                                            </div>
+                                            <div class="card-body d-flex justify-content-center align-items-center">
+                                                <p>{!! nl2br(str_replace('.', ".\n", e($history->ticket_info))) !!}</p>
+                                            </div>
+                                        </div>
                                     @endforeach
-                                </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
 
+            <div class="col-md-3">
 
-            <div class="tab-pane fade" id="ticket-history" role="tabpanel" aria-labelledby="ticket-history-tab">
-                <div class="my-2">
-                    <div class="card ">
+                <div class="mb-3">
+                    <label for="status" class="form-label">Estado:</label>
+                    <input type="text" class="form-control"
+                        value="{{ $ticket->ticketStatus->description ?? 'N/A' }}" disabled>
+                </div>
 
-                        <div class="card-body ">
-                            @foreach ($ticketHistories as $history)
-                                <div class="card mb-3 shadow-lg">
-                                    <div class="card-header d-flex justify-content-center align-items-center">
-                                        <h5 class="mb-0">{{ $history->action->description }}</h5>
-                                    </div>
-                                    <div class="card-body d-flex justify-content-center align-items-center">
-                                        <p class="card-title">{{ $history->created_at }}</p>
-                                    </div>
-                                    <div class="card-body d-flex justify-content-center align-items-center">
-                                        <p>{!! nl2br(str_replace('.', ".\n", e($history->ticket_info))) !!}</p>
-                                    </div>
-                                </div>
+                <div class="mb-3">
+                    <label for="technician" class="form-label">Técnico:</label>
+                    <input type="text" class="form-control" value="{{ $technician->name ?? 'N/A' }}" disabled>
+                </div>
+
+                <div class="mb-3">
+                    <label for="priority" class="form-label">Prioridade:</label>
+                    <input type="text" class="form-control"
+                        value="{{ $ticket->ticketPriority->description ?? 'N/A' }}" disabled>
+                </div>
+
+                <div class="mb-3">
+                    <label for="category" class="form-label">Categoria:</label>
+                    <input type="text" class="form-control"
+                        value="{{ $ticket->ticketCategory->description ?? 'N/A' }}" disabled>
+                </div>
+
+                <div class="mb-3">
+                    <label>Data Limite:</label>
+                    <input type="text" class="form-control" value="{{ $ticket->dueByDate ?? 'N/A' }}"
+                        disabled>
+                </div>
+
+                <div class="mb-5">
+                    <label>Histórico do Utilizador:</label>
+                    <div id="histTickets">
+                        <ul>
+                            @foreach ($userTickets as $userTicketId)
+                                <li>
+                                    <a href="{{ route('tickets.show', $userTicketId) }}">Ticket #{{ $userTicketId }}</a>
+                                </li>
                             @endforeach
-                        </div>
+                        </ul>
                     </div>
                 </div>
             </div>
+
 
         </div>
 
