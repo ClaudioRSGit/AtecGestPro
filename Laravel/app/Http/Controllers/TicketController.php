@@ -50,15 +50,15 @@ class TicketController extends Controller
 
         if (auth()->user()->role_id == 2) {
             $query = Ticket::where('user_id', auth()->id());
-            $waitingQueueTickets = Ticket::where('user_id', auth()->id())->paginate(5);
-            $recycledTickets = Ticket::onlyTrashed()->where('user_id', auth()->id())->paginate(5);
+            $waitingQueueTickets = Ticket::where('user_id', auth()->id())->paginate(5, ['*'], 'wPage');
+            $recycledTickets = Ticket::onlyTrashed()->where('user_id', auth()->id())->paginate(5, ['*'], 'rPage');
         } else {
             $query = Ticket::with('users','requester');
             $waitingQueueTickets = Ticket::whereHas('users', function ($query) {
                 $query->where('role_id', 4)
                       ->where('name', 'Fila de Espera');
-                    })->paginate(5);
-            $recycledTickets = Ticket::onlyTrashed()->paginate(5);
+                    })->paginate(5, ['*'], 'wPage');
+            $recycledTickets = Ticket::onlyTrashed()->paginate(5, ['*'], 'rPage');
         }
 
         if ($ticketSearch) {
@@ -83,7 +83,7 @@ class TicketController extends Controller
 
         $query->orderBy($sortColumn ,  $direction);
 
-        $tickets = $query->paginate(5);
+        $tickets = $query->paginate(5, ['*'], 'tPage');
         $users = User::all();
         $categories = TicketCategory::all();
         $priorities = TicketPriority::all();

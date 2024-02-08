@@ -44,18 +44,18 @@ class MaterialUserController extends Controller
         }
 
         if($searchNonDocent){
-            $queryNonDocent = User::where('isStudent', false)->where('name', '!=', 'Fila de Espera')->where('name', 'like', '%' . $searchNonDocent . '%')->paginate(5);
+            $queryNonDocent = $queryNonDocent->where('isStudent', false)->where('name', '!=', 'Fila de Espera')->where('name', 'like', '%' . $searchNonDocent . '%');
         } else {
-            $queryNonDocent = User::all()->where('isStudent', false)->where('name', '!=', 'Fila de Espera')->where('isStudent', false);
+            $queryNonDocent = $queryNonDocent->where('isStudent', false)->where('name', '!=', 'Fila de Espera')->where('isStudent', false);
         }
 
         if ($roleFilter) {
             $queryNonDocent = $queryNonDocent->where('role_id', $roleFilter);
         }
 
-        $nonDocents = $queryNonDocent;
+        $nonDocents = $queryNonDocent->paginate(5, ['*'], 'nPage');
 
-        $courseClasses = $query->paginate(5);
+        $courseClasses = $query->paginate(5, ['*'], 'cPage');
 
         $roles = Role::Where('name', '!=', 'formando')->get();
 
