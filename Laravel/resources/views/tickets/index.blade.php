@@ -195,8 +195,7 @@
                             </tbody>
                         </table>
                     @endif
-                        {{ $tickets->appends(request()->input())->links() }}
-                </div>
+                    {{ $tickets->appends(['tPage' => $tickets->currentPage()])->links() }}                </div>
 
                 <div class="tab-pane fade" id="waitingQueue" role="tabpanel" aria-labelledby="waiting-queue-tab">
                     @if (count($waitingQueueTickets) === 0)
@@ -269,7 +268,7 @@
                             </tbody>
                         </table>
                     @endif
-                        {{ $waitingQueueTickets->appends(request()->input())->links() }}
+                        {{ $waitingQueueTickets->appends(['wPage' => $waitingQueueTickets->currentPage()])->links() }}
                 </div>
 
                 <div class="tab-pane fade" id="recycling" role="tabpanel" aria-labelledby="recycling-tab">
@@ -331,7 +330,7 @@
                         </tbody>
                     </table>
                     @endif
-                    {{ $recycledTickets->appends(request()->input())->links() }}
+                        {{ $recycledTickets->appends(['rPage' => $recycledTickets->currentPage()])->links() }}
                 </div>
 
             </div>

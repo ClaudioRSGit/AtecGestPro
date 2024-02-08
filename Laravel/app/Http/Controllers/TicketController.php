@@ -50,15 +50,15 @@ class TicketController extends Controller
 
         if (auth()->user()->role_id == 2) {
             $query = Ticket::where('user_id', auth()->id());
-            $waitingQueueTickets = Ticket::where('user_id', auth()->id())->paginate(5);
-            $recycledTickets = Ticket::onlyTrashed()->where('user_id', auth()->id())->paginate(5);
+            $waitingQueueTickets = Ticket::where('user_id', auth()->id())->paginate(5, ['*'], 'wPage');
+            $recycledTickets = Ticket::onlyTrashed()->where('user_id', auth()->id())->paginate(5, ['*'], 'rPage');
         } else {
             $query = Ticket::with('users','requester');
             $waitingQueueTickets = Ticket::whereHas('users', function ($query) {
                 $query->where('role_id', 4)
                       ->where('name', 'Fila de Espera');
-                    })->paginate(5);
-            $recycledTickets = Ticket::onlyTrashed()->paginate(5);
+                    })->paginate(5, ['*'], 'wPage');
+            $recycledTickets = Ticket::onlyTrashed()->paginate(5, ['*'], 'rPage');
         }
 
         if ($ticketSearch) {
@@ -83,7 +83,7 @@ class TicketController extends Controller
 
         $query->orderBy($sortColumn ,  $direction);
 
-        $tickets = $query->paginate(5);
+        $tickets = $query->paginate(5, ['*'], 'tPage');
         $users = User::all();
         $categories = TicketCategory::all();
         $priorities = TicketPriority::all();
@@ -351,6 +351,43 @@ class TicketController extends Controller
 // //        dd($email);
 //         Mail::to($ticket->requester->email)->send($email);
 //         return view('tickets.show', compact('ticket'));
+    }
+
+    public function storeQuickTicket(Request $request){
+        try {
+            $loggedInUserId = Auth::id();
+            $dueByDate = $this->calculateDueByDate($request->priority_id);
+            $filename = 'Sem Anexo';
+            if ($request->hasFile('attachment')) {
+                $filename = $request->file('attachment')->store('attachments', 'public');
+            }
+            $ticket = new Ticket([
+                'title' => $request->title,
+                'description' => $request->description,
+                'ticket_status_id' => 1,
+                'ticket_priority_id' => $request->priority_id,
+                'ticket_category_id' => $request->category_id,
+                'user_id' => $loggedInUserId,
+                'dueByDate' => $dueByDate,
+                'attachment' => $filename,
+            ]);
+
+            $ticket->save();
+
+            TicketUser::create([
+                'ticket_id' => $ticket->id,
+                'user_id' => $loggedInUserId,
+            ]);
+
+            $ticketInfo = 'Ticket #' . $ticket->id . ' foi criado por ' . User::find($loggedInUserId)->name . '.';
+
+            $this->logTicketHistory($ticket->id, 1, $ticketInfo);
+            $this->sendEmail($ticket->id);
+
+            return redirect()->route('tickets.index')->with('success', 'Ticket criado com sucesso!')->with('active_tab', 'allTickets');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erro ao criar o ticket. Por favor, tente novamente.');
+        }
     }
 
 }

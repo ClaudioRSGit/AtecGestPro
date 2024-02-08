@@ -2,7 +2,7 @@
     <button class="closeTicket" onclick="closeTicket()">X</button>
     <h2 class="mb-3">Ticket rápido</h2>
     <p class="mb-3">Descreva brevemente o seu problema</p>
-    <form method="post" action="{{ route('tickets.store') }}" enctype="multipart/form-data">
+    <form method="post" action="{{ route('tickets.storeQuickTicket') }}" enctype="multipart/form-data">
         @csrf
 
         <div class="mb-3">
@@ -48,7 +48,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary mb-3 w-100">Criar Ticket</button>
-        <button onclick="closeTicket()" class="btn btn-secondary w-100">Cancelar</a>
+        <button onclick="closeTicket()" class="btn btn-secondary w-100">Cancelar</button>
     </form>
 </div>
 

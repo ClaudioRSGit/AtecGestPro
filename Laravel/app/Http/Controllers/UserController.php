@@ -37,11 +37,11 @@ class UserController extends Controller
             $query->where('name', 'like', "%$searchName%");
         }
 
-        $users = $query->orderBy($sortColumn, $sortDirection)->paginate(5);
+        $users = $query->orderBy($sortColumn, $sortDirection)->paginate(5, ['*'], 'uPage');
         $courseClasses = CourseClass::all();
         $roles = Role::all();
 
-        $deletedUsers = User::onlyTrashed()->paginate(5);
+        $deletedUsers = User::onlyTrashed()->paginate(5, ['*'], 'dPage');
 
         return view('users.index', compact('users', 'courseClasses', 'roles', 'roleFilter', 'sortColumn', 'sortDirection', 'searchName', 'deletedUsers'));
     }
