@@ -2,16 +2,16 @@
 
 @section('content')
     <div class="container w-100">
-        <h1 >Ticket #{{ $ticket->id }}</h1>
+        <h2 >Ticket #{{ $ticket->id }} - {{ $ticket->title }}</h2>
 
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
                 <a class="nav-link active" id="ticket-details-tab" data-toggle="tab" href="#ticket-details" role="tab"
-                    aria-controls="ticket-details" aria-selected="true">Ticket Details</a>
+                    aria-controls="ticket-details" aria-selected="true">Detalhes</a>
             </li>
             <li class="nav-item" role="presentation">
                 <a class="nav-link" id="ticket-history-tab" data-toggle="tab" href="#ticket-history" role="tab"
-                    aria-controls="ticket-history" aria-selected="false">Ticket History</a>
+                    aria-controls="ticket-history" aria-selected="false">Histórico</a>
             </li>
         </ul>
 
@@ -20,51 +20,50 @@
 
                 <div class="row my-2">
                     <div class="col-md-9">
-                        <div class="mb-3">
-                            <label for="requester" class="form-label">Utilizador:</label>
-                            <input type="text" class="form-control" id="requester" name="requester"
-                                value="{{ $requester->name }}" disabled>
+
+                        <div class="my-3">
+                            <div class="table-responsive">
+                                <img src="https://cdn-icons-png.freepik.com/512/219/219986.png" alt="" style="width: 30px">
+                                <b>{{ $requester->name }}</b>
+                                - {{ $ticket->created_at }}
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="title" class="form-label">Título:</label>
-                            <input type="text" class="form-control" id="title" value="{{ $ticket->title }}" disabled>
+
+                        <div class="card mb-3 bg-light">
+                            <h5 class="card-header">Descrição</h5>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    {{ $ticket->description }}
+                                </div>
+                            </div>
                         </div>
 
                         <div class="mb-3">
-                            <label for="description" class="form-label">Descrição:</label>
-                            <textarea class="form-control" id="description" disabled>{{ $ticket->description }}</textarea>
-                        </div>
-
-                        <div class="mb-2">
-                            <p>Criado em: {{ $ticket->created_at }}</p>
-                        </div>
-
-                        <div class="mb-3">
+                            @if ($ticket->attachment !== 'Sem Anexo')
                             <label for="attachment" class="form-label">Anexo:</label>
-                            <input type="text" class="form-control" id="attachment" value="{{ $ticket->attachment }}"
-                                disabled style="border-radius: 5px;">
-                            @if ($ticket->attachment)
                                 <a href="{{ asset('storage/' . $ticket->attachment) }}" target="_blank">Ver Anexo</a>
                             @endif
                         </div>
 
                         <div class="mb-3">
+                            <label for="comments" class="form-label">Comentários:</label>
                             <form action="{{ route('comments.store') }}" method="post">
                                 @csrf
                                 <input type="hidden" name="ticket_id" value="{{ $ticket->id }}">
 
                                 <div class="mb-3">
-                                    <label for="new-comment" class="form-label">Adicionar Comentário:</label>
                                     <textarea class="form-control" id="new-comment" name="comment" required></textarea>
-                                    <button type="submit" class="btn btn-primary mt-2">Enviar Comentário</button>
+                                    <div class="d-flex justify-content-between" style="gap: 10px;">
+                                        <button type="submit" class="btn btn-primary mt-2 flex-grow-1">Enviar Comentário</button>
+                                        <a type="button" href="{{ url()->previous() }}" class="btn btn-secondary mt-2 flex-grow-1">Voltar</a>
+                                    </div>
                                 </div>
                             </form>
 
                             <div class="mb-3">
-                                <label for="comments" class="form-label">Comentários:</label>
                                 @if ($ticket->comments->isNotEmpty())
                                     @foreach ($ticket->comments as $comment)
-                                        <div class="card mb-2">
+                                        <div class="card mb-2 bg-light">
                                             <div class="card-body d-flex justify-content-between">
                                                 <div>
                                                     <label class="card-text font-weight-bold">
@@ -123,8 +122,9 @@
                             <div id="histTickets">
                                 <ul>
                                     @foreach ($userTickets as $userTicketId)
-                                        <li><a href="{{ route('tickets.show', $userTicketId) }}">Ticket
-                                                #{{ $userTicketId }}</a></li>
+                                        <li>
+                                            <a href="{{ route('tickets.show', $userTicketId) }}">Ticket #{{ $userTicketId }}</a>
+                                        </li>
                                     @endforeach
                                 </ul>
                             </div>
@@ -161,16 +161,4 @@
 
     </div>
 
-
-    <style>
-        #histTickets {
-            box-shadow: 1px 2px 1px 2px rgb(230, 229, 229);
-            margin: 15px;
-            overflow-y: auto;
-            overflow-x: auto;
-            height: 200px;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-    </style>
 @endsection

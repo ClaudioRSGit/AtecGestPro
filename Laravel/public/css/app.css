@@ -199,7 +199,13 @@ body {
   text-align: left;
   background-color: #f8fafc;
 }
-
+#histTickets {
+    overflow-y: auto;
+    overflow-x: auto;
+    height: 200px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
 td a{
     color: black !important;
     text-decoration: none !important;
