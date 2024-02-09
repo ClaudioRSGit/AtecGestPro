@@ -41,15 +41,21 @@ class ExcelImportController extends Controller
 
     public function importStudents(Request $request)
     {
-        $request->validate([
-            'file' => 'required|mimes:xlsx,xls',
-        ]);
+        if ($request->has('withStudents')){
 
-        // Get the uploaded file
-        $file = $request->file('file');
+            $request->validate([
+                'file' => 'required|mimes:xlsx,xls',
+            ]);
 
-        Excel::import(new StudentImportClass, $file);
+            // Get the uploaded file
+            $file = $request->file('file');
 
-        return view('excel.studentsSuccess');
+            Excel::import(new StudentImportClass, $file);
+
+            return view('excel.studentsSuccess');
+        }
+        else{
+            return redirect()->route('course-classes.index')->with('success', 'Turma criada com sucesso sem alunos!');
+        }
     }
 }
