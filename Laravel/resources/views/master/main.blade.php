@@ -40,11 +40,6 @@
 
 
         <div class="content">
-            @if (session('success'))
-                <div class="alert alert-success" id="success-alert">
-                    {{ session('success') }}
-                </div>
-            @endif
             @yield('content')
         </div>
 
@@ -114,12 +109,6 @@
                 content.classList.remove('expandElements');
             }
         });
-
-        window.setTimeout(function() {
-            $("#success-alert").fadeTo(500, 0).slideUp(500, function() {
-                $(this).remove();
-            });
-        }, 2000);
     </script>
 
 </body>
