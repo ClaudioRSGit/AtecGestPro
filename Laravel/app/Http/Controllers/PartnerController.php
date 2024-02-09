@@ -27,7 +27,7 @@ class PartnerController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(PartnerRequest $request)
     {
         try {
             $contacts = $request->input('contact_value') ?? [];
