@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container">
-        <h1>Ticket #{{ $ticket->id }}</h1>
+        <h2>Ticket #{{ $ticket->id }} - {{ $ticket->title }}</h2>
 
         <form class="mb-3" method="post" action="{{ route('tickets.update', $ticket->id) }}" enctype="multipart/form-data">
 
@@ -12,41 +12,40 @@
             <div class="row mb-3">
                 <div class="col-md-9">
                     <div class="mb-3">
-                        <label for="requester" class="form-label">Utilizador:</label>
-                        <input type="text" class="form-control" id="requester" name="requester"
-                            value="{{ $requester->name }}" disabled>
-                    </div>
-                    <div class="mb-3">
-                        <label for="title" class="form-label">Título:</label>
-                        <input type="text" class="form-control" id="title" name="title"
-                            value="{{ $ticket->title }}">
-
-                        @error('title')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
+                        <div class="table-responsive">
+                            <span class="rounded-circle bg-primary text-white" style="width: 30px; height: 30px; font-size: 13px; margin-right: 5px; display: inline-block; text-align: center; line-height: 30px; z-index: 1000;">
+                                <strong>{{ $requester->initials }}</strong>
+                            </span>
+                            <b>{{ $requester->name }}</b>
+                            - {{ $ticket->created_at }}
+                        </div>
                     </div>
 
                     <div class="mb-3">
                         <label for="description" class="form-label">Descrição:</label>
-                        <!-- Hidden input field to store Quill HTML content -->
-                        <input type="hidden" id="descriptionInput" name="description" value="{{ old('description') }}">
-                        <!-- Quill editor -->
-                        <div id="description" style="height: 200px;">{!! old('description') !!}
-                            {!! $ticket->description !!}
+                        <div class="bg-light">
+
+                            <!-- Hidden input field to store Quill HTML content -->
+                            <input type="hidden" id="descriptionInput" name="description" value="{{ old('description') }}">
+                            <!-- Quill editor -->
+                            <div id="description" style="height: 200px;">{!! old('description') !!}
+                                {!! $ticket->description !!}
+                            </div>
+                            @error('description')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
                         </div>
-                        @error('description')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
                     </div>
                     <div class="mb-2">
                         <p>Criado a {{ $ticket->created_at }}</p>
                     </div>
 
-                    <div>
-                        <label for="attachment" class="form-label">Anexo:</label>
-                        <input type="file" class="form-control" id="attachment" name="attachment">
-                        <p>Certefique-se que o arquivo tem menos de 20MB</p>
+                    <label for="attachment" class="form-label">Anexo:</label>
+                    <div class="w-100 d-flex justify-content-between">
+                        <input type="file" class="form-control w-80" id="attachment" name="attachment">
+                        <button type="submit" class="btn btn-primary w-15">Guardar</button>
                     </div>
+                    <p>Certifique-se que o arquivo tem menos de 20MB</p>
 
                     @if ($ticket->attachment)
                         <a href="{{ asset('storage/' . $ticket->attachment) }}" target="_blank">Ver Anexo</a>
@@ -102,8 +101,6 @@
                         </select>
                     </div>
 
-
-
                     <div>
                         <label>Histórico do Utilizador:</label>
                         <ul>
@@ -116,40 +113,48 @@
                 </div>
             </div>
 
-            <button type="submit" class="btn btn-primary">Guardar</button>
-            <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
-
         </form>
-        <div class="mb-3">
-            <form action="{{ route('comments.store') }}" method="post">
-                @csrf
-                <input type="hidden" name="ticket_id" value="{{ $ticket->id }}">
-
-                <div class="mb-3">
-                    <label for="comments" class="form-label">Insira uma nota ou comentário:</label>
-                    <textarea class="form-control" id="new-comment" name="comment" required></textarea>
-                    <button type="submit" class="btn btn-primary mt-2">Enviar Comentário</button>
-                </div>
-            </form>
 
             <div class="mb-3">
-                <label for="comments" class="form-label">Comentários:</label>
-                @foreach ($ticket->comments as $comment)
-                    <div class="card mb-2">
-                        <div class="card-body d-flex justify-content-between">
-                            <div>
-                                <p class="card-text">
-                                    {{ $comment->user->name }}: {{ $comment->description }}
-                                </p>
-                            </div>
-                            <div>
-                                <p class="card-text">
-                                    {{ $comment->created_at }}
-                                </p>
-                            </div>
+                <label for="comments" class="form-label">Insira uma nota ou comentário:</label>
+                <form action="{{ route('comments.store') }}" method="post">
+                    @csrf
+                    <input type="hidden" name="ticket_id" value="{{ $ticket->id }}">
+
+                    <div class="mb-3">
+                        <textarea class="form-control" id="new-comment" name="comment" required></textarea>
+                        <div class="d-flex justify-content-between" style="gap: 10px;">
+                            <button type="submit" class="btn btn-primary mt-2 flex-grow-1">Enviar Comentário</button>
+                            <a type="button" href="{{ url()->previous() }}" class="btn btn-secondary mt-2 flex-grow-1">Voltar</a>
                         </div>
                     </div>
-                @endforeach
+                </form>
+
+                <div class="mb-3">
+                    <h3 for="comments" class="form-label">Comentários:</h3>
+
+                    @if ($ticket->comments->isNotEmpty())
+                        @foreach ($ticket->comments as $comment)
+                            <div class="card mb-2 bg-light mx-4">
+                                <div class="card-body d-flex justify-content-between">
+                                    <div>
+                                        <label class="card-text font-weight-bold">
+                                            {{ $comment->user->name }}:
+                                        </label>
+                                        {{ $comment->description }}
+                                    </div>
+                                    <div>
+                                        <p class="card-text">
+                                            {{ $comment->created_at }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    @else
+                        <p>Não existem comentários para este ticket.</p>
+                    @endif
+                </div>
             </div>
         </div>
     </div>
@@ -159,7 +164,6 @@
                 theme: 'snow'
             });
 
-            // Update the hidden input field when the Quill content changes
             quill.on('text-change', function() {
                 var htmlContent = quill.root.innerHTML;
                 document.getElementById('descriptionInput').value = htmlContent;
