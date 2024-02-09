@@ -30,7 +30,7 @@ class PartnerController extends Controller
     public function store(Request $request)
     {
         try {
-            $contacts = $request->input('contact_value');
+            $contacts = $request->input('contact_value') ?? [];
             $uniqueContacts = array_unique($contacts);
 
             if (count($contacts) !== count($uniqueContacts)) {
@@ -39,11 +39,11 @@ class PartnerController extends Controller
 
             $partner = Partner::create($request->only(['name', 'description', 'address']));
 
-            $contactDescriptions = $request->input('contact_description');
+            $contactDescriptions = $request->input('contact_description') ?? [];
 
             foreach ($contactDescriptions as $key => $contactDescription) {
                 ContactPartner::create([
-                    'contact' => $contacts[$key],
+                    'contact' => $contacts[$key]  ?? null,
                     'description' => $contactDescription,
                     'partner_id' => $partner->id,
                 ]);
