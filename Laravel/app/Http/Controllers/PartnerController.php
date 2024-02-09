@@ -78,7 +78,7 @@ class PartnerController extends Controller
     }
 
 
-    public function update(Request $request, Partner $partner)
+    public function update(PartnerRequest $request, Partner $partner)
     {
         try {
             $allContactValues = array_merge(
