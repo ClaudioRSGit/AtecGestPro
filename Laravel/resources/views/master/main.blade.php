@@ -8,6 +8,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>AtecGest Pro</title>
     {{-- STYLE SECTION --}}
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
     <link rel="stylesheet" href="{!! asset('css/app.css') !!}" media="all" type="text/css" />
     <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/9/91/Gear-icon-blue-white-background.png"
@@ -40,11 +42,6 @@
 
 
         <div class="content">
-            @if (session('success'))
-                <div class="alert alert-success" id="success-alert">
-                    {{ session('success') }}
-                </div>
-            @endif
             @yield('content')
         </div>
 
@@ -114,12 +111,6 @@
                 content.classList.remove('expandElements');
             }
         });
-
-        window.setTimeout(function() {
-            $("#success-alert").fadeTo(500, 0).slideUp(500, function() {
-                $(this).remove();
-            });
-        }, 2000);
     </script>
 
 </body>

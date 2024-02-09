@@ -45,9 +45,6 @@ class TicketController extends Controller
                 $sortColumn = 'id';
         }
 
-
-
-
         if (auth()->user()->role_id == 2) {
             $query = Ticket::where('user_id', auth()->id());
             $waitingQueueTickets = Ticket::where('user_id', auth()->id())->paginate(5, ['*'], 'wPage');
@@ -384,7 +381,7 @@ class TicketController extends Controller
             $this->logTicketHistory($ticket->id, 1, $ticketInfo);
             $this->sendEmail($ticket->id);
 
-            return redirect()->route('tickets.index')->with('success', 'Ticket criado com sucesso!')->with('active_tab', 'allTickets');
+            return redirect()->route('tickets.index')->with('success', 'Ticket rápido criado com sucesso!')->with('active_tab', 'allTickets');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Erro ao criar o ticket. Por favor, tente novamente.');
         }

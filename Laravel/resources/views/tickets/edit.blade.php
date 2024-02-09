@@ -28,13 +28,16 @@
 
                     <div class="mb-3">
                         <label for="description" class="form-label">Descrição:</label>
-                        <textarea class="form-control" id="description" name="description">{{ $ticket->description }}</textarea>
-
+                        <!-- Hidden input field to store Quill HTML content -->
+                        <input type="hidden" id="descriptionInput" name="description" value="{{ old('description') }}">
+                        <!-- Quill editor -->
+                        <div id="description" style="height: 200px;">{!! old('description') !!}
+                            {!! $ticket->description !!}
+                        </div>
                         @error('description')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
-
                     <div class="mb-2">
                         <p>Criado a {{ $ticket->created_at }}</p>
                     </div>
@@ -123,7 +126,7 @@
                 <input type="hidden" name="ticket_id" value="{{ $ticket->id }}">
 
                 <div class="mb-3">
-                    <label for="new-comment" class="form-label">Adicionar Comentário:</label>
+                    <label for="comments" class="form-label">Insira uma nota ou comentário:</label>
                     <textarea class="form-control" id="new-comment" name="comment" required></textarea>
                     <button type="submit" class="btn btn-primary mt-2">Enviar Comentário</button>
                 </div>
@@ -150,6 +153,19 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var quill = new Quill('#description', {
+                theme: 'snow'
+            });
+
+            // Update the hidden input field when the Quill content changes
+            quill.on('text-change', function() {
+                var htmlContent = quill.root.innerHTML;
+                document.getElementById('descriptionInput').value = htmlContent;
+            });
+        });
+    </script>
 @endsection
 
 <style>

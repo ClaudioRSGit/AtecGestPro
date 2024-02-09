@@ -42,7 +42,7 @@
                             <h5 class="card-header">Descrição</h5>
                             <div class="card-body">
                                 <div class="table-responsive">
-                                    {{ $ticket->description }}
+                                    {!! $ticket->description !!}
                                 </div>
                             </div>
                         </div>
@@ -55,7 +55,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="comments" class="form-label">Comentários:</label>
+                            <label for="comments" class="form-label">Insira uma nota ou comentário:</label>
                             <form action="{{ route('comments.store') }}" method="post">
                                 @csrf
                                 <input type="hidden" name="ticket_id" value="{{ $ticket->id }}">
@@ -70,6 +70,8 @@
                             </form>
 
                             <div class="mb-3">
+                                <label for="comments" class="form-label">Comentários:</label>
+
                                 @if ($ticket->comments->isNotEmpty())
                                     @foreach ($ticket->comments as $comment)
                                         <div class="card mb-2 bg-light">
