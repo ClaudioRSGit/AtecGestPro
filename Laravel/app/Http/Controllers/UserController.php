@@ -171,6 +171,8 @@ class UserController extends Controller
 
             if ($user->hasRole('funcionario')) {
                 return redirect()->route('master.main')->with('success', 'Utilizador atualizado com sucesso!');
+            } elseif (auth()->user()->role_id == 1 && $request->input('role_id') == 2) {
+                return redirect()->route('master.main')->with('success', 'Utilizador atualizado com sucesso!');
             } else {
                 return redirect()->route('users.index')->with('success', 'Utilizador atualizado com sucesso!');
             }
