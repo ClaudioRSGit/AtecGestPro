@@ -15,7 +15,12 @@
             </div>
         @endif
 
-        <h1>Lista de Cursos</h1>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Lista de Cursos</h1>
+            <a href="{{ route('courses.create') }}" class="btn btn-primary">
+                <img src="{{ asset('assets/new.svg') }}"> Novo Curso
+            </a>
+        </div>
 
         <div class="d-flex justify-content-between mb-3">
 
@@ -34,15 +39,6 @@
                     </div>
                 </div>
             </form>
-
-
-
-            <div class="buttons">
-
-                <a href="{{ route('courses.create') }}" class="btn btn-primary pr-1">
-                    <img src="{{ asset('assets/new.svg') }}"> Novo Curso
-                </a>
-            </div>
         </div>
 
         <table class="table" id="courseTable">

@@ -27,7 +27,13 @@
             </script>
         @endif
 
-        <h1 class="mb-4">Utilizadores</h1>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Utilizadores</h1>
+            <a href="{{ route('users.create') }}" class="btn btn-primary">
+                <img src="{{ asset('assets/new.svg') }}">
+                Novo Utilizador
+            </a>
+        </div>
 
         <ul class="nav nav-tabs mb-3" id="userTabs">
             <li class="nav-item">
@@ -72,10 +78,6 @@
                                 </select>
                             </div>
                         </form>
-                        <a href="{{ route('users.create') }}" class="btn btn-primary">
-                            <img src="{{ asset('assets/new.svg') }}">
-                            Novo Utilizador
-                        </a>
                     </div>
                 </div>
 
