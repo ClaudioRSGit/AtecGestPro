@@ -379,6 +379,9 @@
                 }
             </style>
         <style>
+            .buttons{
+                width: 60% !important;
+            }
             thead th{
                 border-top: none!important;
             }
