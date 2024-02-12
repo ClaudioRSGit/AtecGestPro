@@ -18,7 +18,7 @@
                         <ul class="list-group list-group-flush">
                             @foreach ($userRolesCounts as $roleCount)
                                 <li class="list-group-item">
-                                  <strong>{{ $roleCount->name }} :</strong> {{ $roleCount->total }}
+                                  {{ ucfirst($roleCount->name) }} : {{ $roleCount->total }}
                                 </li>
                             @endforeach
                         </ul>
@@ -29,10 +29,10 @@
                         <h5 class="card-header"><strong>Materiais</strong></h5>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">
-                                <strong>Material interno :</strong> {{ $materialInternalCount }}
+                                Material interno : {{ $materialInternalCount }}
                             </li>
                             <li class="list-group-item">
-                                <strong>Material Externo :</strong> {{ $materialExternalCount }}
+                                Material Externo : {{ $materialExternalCount }}
                             </li>
                         </ul>
                     </div>
