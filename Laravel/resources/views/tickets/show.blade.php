@@ -18,7 +18,9 @@
 
             <div class="mb-3">
                 <div class="table-responsive">
-                    <img src="https://cdn-icons-png.freepik.com/512/219/219986.png" alt="" style="width: 30px">
+                    <span class="rounded-circle bg-primary text-white" style="width: 30px; height: 30px; font-size: 13px; margin-right: 5px; display: inline-block; text-align: center; line-height: 30px; z-index: 1000;">
+                        <strong>{{ $requester->initials }}</strong>
+                    </span>
                     <b>{{ $requester->name }}</b>
                     - {{ $ticket->created_at }}
                 </div>

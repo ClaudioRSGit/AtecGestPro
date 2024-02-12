@@ -2,7 +2,13 @@
 
 @section('content')
     <div class="container w-100">
-        <h1>Lista de Materiais</h1>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Lista de Materiais</h1>
+            <a href="{{ route('materials.create') }}" class="btn btn-primary">
+                <img src="{{ asset('assets/new.svg') }}">
+                Novo Material
+            </a>
+        </div>
 
         @if (session('success'))
             <div class="alert alert-success" id="success-alert">
@@ -47,10 +53,6 @@
                 </form>
 
 
-                <a href="{{ route('materials.create') }}" class="btn btn-primary">
-                    <img src="{{ asset('assets/new.svg') }}">
-                    Novo Material
-                </a>
             </div>
         </div>
 

@@ -51,4 +51,12 @@ class Ticket extends Model
     public function comments(){
         return $this->hasMany(Comment::class);
     }
+    public function getInitialsAttribute()
+    {
+        $nameParts = explode(' ', $this->name);
+        $firstNameInitial = $nameParts[0][0] ?? '';
+        $lastNameInitial = count($nameParts) > 1 ? $nameParts[count($nameParts) - 1][0] : '';
+
+        return strtoupper($firstNameInitial . $lastNameInitial);
+    }
 }

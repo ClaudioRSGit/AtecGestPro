@@ -9,7 +9,8 @@
             <label for="file">Excel - Importar Alunos</label><br>
             <input type="file" name="file" id="file" class="btn" text="Escolher ficheiro">
         </div>
-        <button type="submit" class="btn btn-primary">Importar</button>
+        <button type="submit" name="withStudents" class="btn btn-primary">Importar</button>
+        <button type="submit" name="withoutStudents" class="btn btn-secondary">Voltar</button>
     </form>
 </div>
 

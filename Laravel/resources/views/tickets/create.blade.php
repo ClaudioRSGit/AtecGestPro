@@ -86,7 +86,7 @@
             <div class="mb-3">
                 <label for="attachment" class="form-label">Anexo:</label>
                 <input type="file" class="form-control" id="attachment" name="attachment">
-                <p>Certefique-se que o arquivo tem menos de 20MB</p>
+                <p>Certifique-se que o arquivo tem menos de 20MB</p>
             </div>
 
             <button type="submit" class="btn btn-primary">Criar Ticket</button>

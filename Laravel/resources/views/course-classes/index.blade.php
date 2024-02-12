@@ -3,7 +3,13 @@
 
 @section('content')
     <div class="container w-100">
-        <h1>Turmas</h1>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Turmas</h1>
+            <a href="{{ route('course-classes.create') }}" class="btn btn-primary">
+                <img src="{{ asset('assets/new.svg') }}">
+                Criar Turma
+            </a>
+        </div>
         @if(session('success'))
             <div class="alert alert-success" id="success-alert">
                 {{ session('success') }}
@@ -35,7 +41,7 @@
             <div class="drop">
                 <form id="courseFilterForm" action="{{ route('course-classes.index') }}" method="GET">
                         <select class="form-control " id="courseFilter" name="courseFilter" onchange="submitForm()">
-                            <option value="all">Todas os cursos</option>
+                            <option value="all">Todos os cursos</option>
                             @foreach($courses as $course)
                                 <option
                                     value="{{ $course->id }}" {{ $courseFilter == $course->id ? 'selected' : '' }}>{{ $course->description }}</option>
@@ -45,12 +51,6 @@
             </div>
 
 
-            <div class="buttons">
-                <a href="{{ route('course-classes.create') }}" class="btn btn-primary">
-                    <img src="{{ asset('assets/new.svg') }}">
-                    Criar Turma
-                </a>
-            </div>
 
         </div>
 
