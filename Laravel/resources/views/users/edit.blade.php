@@ -181,5 +181,11 @@
                 $(this).remove();
             });
         }, 3000);
+
+         $(document).ready(function() {
+        if ('{{ Auth::user()->hasRole('tecnico') }}' && '{{ Auth::user()->id }}' === '{{ $user->id }}') {
+            $('#role_id, #isStudent, #course_class_id, #isActive, #notes').closest('.mb-3').hide();
+        }
+    });
     </script>
 @endsection

@@ -167,6 +167,15 @@ class UserController extends Controller
                 $data['password'] = $this->encryptPassword($request->input('password'));
             }
 
+            if (auth()->user()->hasRole('tecnico')) {
+                if (auth()->user()->id === $user->id) {
+                    unset($data['role_id']);
+                    unset($data['isStudent']);
+                    unset($data['course_class_id']);
+                    unset($data['isActive']);
+                }
+            }
+
             $user->update($data);
 
             if ($user->hasRole('funcionario')) {
