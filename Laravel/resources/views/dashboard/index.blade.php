@@ -14,23 +14,29 @@
                 <div class="card flex-grow-1">
 
                     <div>
-                        <ul>
+                        <h5 class="card-header"><strong>Usuários</strong></h5>
+                        <ul class="list-group list-group-flush">
                             @foreach ($userRolesCounts as $roleCount)
+                                <li class="list-group-item">
+                                  <strong>{{ $roleCount->name }} :</strong> {{ $roleCount->total }}
+                                </li>
+                            @endforeach
+                        </ul>
+                        <hr>
+                    </div>
+                    <div>
+                        <hr>
+                        <h5 class="card-header"><strong>Materiais</strong></h5>
+                        <ul class="list-group list-group-flush">
                             <li class="list-group-item">
-                                <strong>{{ $roleCount->name }} :</strong> {{ $roleCount->total }}
+                                <strong>Material interno :</strong> {{ $materialInternalCount }}
                             </li>
-                        @endforeach
+                            <li class="list-group-item">
+                                <strong>Material Externo :</strong> {{ $materialExternalCount }}
+                            </li>
                         </ul>
                     </div>
-                    <h5 class="card-header"><strong>Usuários & Materiais</strong></h5>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">
-                            <strong>Material interno :</strong> {{ $materialInternalCount }}
-                        </li>
-                        <li class="list-group-item">
-                            <strong>Material Externo :</strong> {{ $materialExternalCount }}
-                        </li>
-                    </ul>
+
                 </div>
             </div>
 
