@@ -31,7 +31,6 @@
 
             <div class="col-3 col-md-6 col-lg-3 mb-4 mb-lg-2 d-flex">
                 <div class="card flex-grow-1">
-                    <h5 class="card-header"><strong>Tickets Estados</strong></h5>
                     <div class="card-body">
                         <canvas id="pieChart"></canvas>
 
@@ -41,7 +40,7 @@
 
             <div class="col-6 col-md-6 mb-4 mb-lg-2 col-lg-6 d-flex">
                 <div class="card flex-grow-1">
-                    <h5 class="card-header"><strong>Número de Formações Externas</strong></h5>
+                    <h5 class="card-header"><strong>Total de Formações Externas</strong></h5>
                     <div class="card-body d-flex flex-column justify-content-end">
                         <div id="traffic-chart" style="width: 100%; height: 100%;"></div>
                     </div>
