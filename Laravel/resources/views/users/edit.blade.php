@@ -76,7 +76,7 @@
 
 
 
-                @if (!Auth::user()->hasRole('funcionario'))
+                @if (Auth::user()->hasRole('admin'))
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="role_id" class="form-label">Função:</label>

@@ -120,7 +120,7 @@ class UserController extends Controller
 
         $authenticatedUser = Auth::user();
 
-        if ($authenticatedUser->hasRole('funcionario')) {
+        if ($authenticatedUser->hasRole('funcionario') || $authenticatedUser->hasRole('tecnico')) {
             if ($authenticatedUser->id === $user->id) {
                 $courseClasses = CourseClass::all();
                 $courses = Course::all();
@@ -167,14 +167,14 @@ class UserController extends Controller
                 $data['password'] = $this->encryptPassword($request->input('password'));
             }
 
-            if (auth()->user()->hasRole('tecnico')) {
-                if (auth()->user()->id === $user->id) {
-                    unset($data['role_id']);
-                    unset($data['isStudent']);
-                    unset($data['course_class_id']);
-                    unset($data['isActive']);
-                }
-            }
+            // if (auth()->user()->hasRole('tecnico')) {
+            //     if (auth()->user()->id === $user->id) {
+            //         unset($data['role_id']);
+            //         unset($data['isStudent']);
+            //         unset($data['course_class_id']);
+            //         unset($data['isActive']);
+            //     }
+            // }
 
             $user->update($data);
 
