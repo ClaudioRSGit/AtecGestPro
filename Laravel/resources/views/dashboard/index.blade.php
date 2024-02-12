@@ -14,15 +14,15 @@
                 <div class="card flex-grow-1">
 
                     <div>
-                        <h5 class="card-header"><strong>Usuários</strong></h5>
+                        <h5 class="card-header"><strong>Utilizadores</strong></h5>
                         <ul class="list-group list-group-flush">
                             @foreach ($userRolesCounts as $roleCount)
                                 <li class="list-group-item">
                                   {{ ucfirst($roleCount->name) }} : {{ $roleCount->total }}
                                 </li>
                             @endforeach
+                            <hr>
                         </ul>
-                        <hr>
                     </div>
                     <div>
                         <hr>
@@ -194,7 +194,7 @@
             background-color: rgba(203, 234, 248, 0.3);
             overflow-y: auto;
             overflow-x: auto;
-            height: 355px;
+            height: 425px;
         }
 
 
