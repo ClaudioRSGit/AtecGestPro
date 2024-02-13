@@ -17,6 +17,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\TicketRequest;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+
 
 class TicketController extends Controller
 {
@@ -117,93 +119,55 @@ class TicketController extends Controller
                 return now()->addWeeks(3);
         }
     }
+
     public function store(TicketRequest $request)
     {
-        $loggedInUserId = Auth::id();
-        $dueByDate = $this->calculateDueByDate($request->priority_id);
-        $filename = 'Sem Anexo';
-        if ($request->hasFile('attachment')) {
-            $filename = $request->file('attachment')->store('attachments', 'public');
-        }
-        $ticket = new Ticket([
-            'title' => $request->title,
-            'description' => $request->description,
-            'ticket_status_id' => 1,
-            'ticket_priority_id' => $request->priority_id,
-            'ticket_category_id' => $request->category_id,
-            'dueByDate' => $dueByDate,
-            'user_id' => $loggedInUserId,
-            'attachment' => $filename,
-        ]);
+         try {
+             $loggedInUserId = Auth::id();
+             $dueByDate = $this->calculateDueByDate($request->priority_id);
+             $filename = "Sem Anexo";
 
-        $ticket->save();
+             if ($request->hasFile('attachment')) {
+                $filename = $request->file('attachment')->store('attachments', 'public');
+            }
 
-        TicketUser::create([
-            'ticket_id' => $ticket->id,
-            'user_id' => $request->technician_id,
-        ]);
+            $ticket = Ticket::create([
+                'title' => $request->title,
+                'description' => $request->description,
+                'ticket_status_id' => 1,
+                'ticket_priority_id' => $request->priority_id,
+                'ticket_category_id' => $request->category_id,
+                'dueByDate' => $dueByDate,
+                'user_id' => $loggedInUserId,
+                'attachment' => $filename,
+            ]);
 
-        $notification = Notification::create([
-            'description' => 'Novo ticket criado: #' . $ticket->id,
-            'code' => 'TICKET',
-            'object_id' => $ticket->id,
-        ]);
+            //$ticket->save();
 
-        NotificationUser::create([
-            'user_id' => $request->technician_id,
-            'notification_id' => $notification->id,
-            'isRead' => false,
-        ]);
+            TicketUser::create([
+                 'ticket_id' => $ticket->id,
+                 'user_id' => $request->technician_id,
+            ]);
 
-        $ticketInfo = 'Ticket #' . $ticket->id . ' foi criado por ' . User::find($loggedInUserId)->name . '.';
+             $ticketInfo = 'Ticket #' . $ticket->id . ' foi criado por ' . User::find($loggedInUserId)->name . '.';
 
-        $this->logTicketHistory($ticket->id, 1, $ticketInfo);
-        $this->sendEmail($ticket->id);
-        return redirect()->route('tickets.index')->with('success', 'Ticket criado com sucesso!');
-
-    }
-    // public function store(TicketRequest $request)
-    // {
-    //     try {
-    //         $loggedInUserId = Auth::id();
-    //         $dueByDate = $this->calculateDueByDate($request->priority_id);
-    //         $filename = 'Sem Anexo';
-    //         if ($request->hasFile('attachment')) {
-    //             $filename = $request->file('attachment')->store('attachments', 'public');
-    //         }
-    //         $ticket = new Ticket([
-    //             'title' => $request->title,
-    //             'description' => $request->description,
-    //             'ticket_status_id' => 1,
-    //             'ticket_priority_id' => $request->priority_id,
-    //             'ticket_category_id' => $request->category_id,
-    //             'dueByDate' => $dueByDate,
-    //             'user_id' => $loggedInUserId,
-    //             'attachment' => $filename,
-    //         ]);
-
-    //         $ticket->save();
-
-    //         TicketUser::create([
-    //             'ticket_id' => $ticket->id,
-    //             'user_id' => $request->technician_id,
-    //         ]);
-
-    //         $ticketInfo = 'Ticket #' . $ticket->id . ' foi criado por ' . User::find($loggedInUserId)->name . '.';
-
-    //         $this->logTicketHistory($ticket->id, 1, $ticketInfo);
-    //         $this->sendEmail($ticket->id);
-    //         return redirect()->route('tickets.index')->with('success', 'Ticket criado com sucesso!')->with('active_tab', 'allTickets');
-    //     } catch (\Exception $e) {
-    //         return redirect()->back()->with('error', 'Erro ao criar o ticket. Por favor, tente novamente.');
-    //     }
-    // }
+             $this->logTicketHistory($ticket->id, 1, $ticketInfo);
+             $this->sendEmail($ticket->id);
+             return redirect()->route('tickets.index')->with('success', 'Ticket criado com sucesso!')->with('active_tab', 'allTickets');
+         } catch (\Exception $e) {
+             return redirect()->back()->with('error', 'Erro ao criar o ticket. Por favor, tente novamente.');
+         }
+     }
 
     public function show(Ticket $ticket)
     {
         $ticket = Ticket::with(['users', 'requester', 'comments' => function($query) {
             $query->orderBy('created_at', 'desc');
         }, 'comments.user'])->find($ticket->id);
+
+        $ticket->attachmentUrl = $ticket->attachment ? Storage::url($ticket->attachment) : "Sem Anexo";
+        $attachmentPath = $ticket->attachment;
+        $attachmentUrl = Storage::url($attachmentPath);
 
         $id = $ticket->id;
         $ticketHistories = TicketHistory::where('ticket_id', $id)->get();
@@ -217,7 +181,7 @@ class TicketController extends Controller
         $technician = User::where('id', $ticketTechnician->user_id)->first();
         $requester = User::where('id', $ticket->user_id)->first();
 
-        return view('tickets.show', compact('ticket', 'userTickets', 'users', 'statuses', 'priorities', 'categories', 'technician', 'requester', 'ticketHistories'));
+        return view('tickets.show', compact('ticket', 'userTickets', 'users', 'statuses', 'priorities', 'categories', 'technician', 'requester', 'ticketHistories', 'attachmentUrl'));
     }
 
     public function edit(Ticket $ticket)
