@@ -94,7 +94,7 @@
                         <input type="hidden" name="isStudent" id="isStudent" value="{{ old('role_id') == 3 ? 1 : 0 }}">
 
 
-
+                        
                         <div class="mb-3" id="labelCourseClass">
                             <label for="course_class_id" class="form-label">Turma:</label>
                             <select class="form-control" id="course_class_id" name="course_class_id">
@@ -128,7 +128,7 @@
                         <a href="{{ route('users.index') }}" class="btn btn-secondary">Cancelar</a>
                         <button type="submit" form="deleteForm" class="btn btn-danger">Excluir</button>
                     </div>
-                    @else
+                @else
                     <div class="buttons d-flex justify-content-start align-items-center pt-3">
                         <button type="submit" class="btn btn-primary">Salvar Alterações</button>
                         <a href="{{ route('users.index') }}" class="btn btn-secondary">Cancelar</a>
@@ -181,11 +181,5 @@
                 $(this).remove();
             });
         }, 3000);
-
-         $(document).ready(function() {
-        if ('{{ Auth::user()->hasRole('tecnico') }}' && '{{ Auth::user()->id }}' === '{{ $user->id }}') {
-            $('#role_id, #isStudent, #course_class_id, #isActive, #notes').closest('.mb-3').hide();
-        }
-    });
     </script>
 @endsection
