@@ -56,6 +56,10 @@ class LoginController extends Controller
     {
         $credentials = $request->only('username', 'password');
 
+        if (Auth::attempt($credentials, $request->filled('remember'))) {
+            return true;
+        }
+
         session()->flash('error', 'Credenciais inválidas!');
         return false;
     }
