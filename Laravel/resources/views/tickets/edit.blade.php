@@ -36,7 +36,7 @@
                         <div class="bg-light">
 
                             <!-- Hidden input field to store Quill HTML content -->
-                            <input type="hidden" id="descriptionInput" name="description" value="{{ old('description') }}">
+                            <input type="hidden" id="descriptionInput" name="description" value="{{ $ticket->description }}">
                             <!-- Quill editor -->
                             <div id="description" style="height: 200px;">{!! old('description') !!}
                                 {!! $ticket->description !!}
