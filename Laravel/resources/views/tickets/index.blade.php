@@ -8,9 +8,6 @@
             </div>
         @endif
 
-
-
-
         <div class="d-flex justify-content-between align-items-center">
             <h1>Tickets</h1>
             <div onclick="showOptions()" class="form-control btn-primary w-20 dropdown" style="max-width: 10rem;">

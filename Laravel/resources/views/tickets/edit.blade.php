@@ -2,15 +2,25 @@
 
 @section('content')
     <div class="container">
-        <h2>Ticket #{{ $ticket->id }} - {{ $ticket->title }}</h2>
 
         <form class="mb-3" method="post" action="{{ route('tickets.update', $ticket->id) }}" enctype="multipart/form-data">
 
             @csrf
             @method('put')
 
-            <div class="row mb-3">
+            <div class="row">
                 <div class="col-md-9">
+                    <div class="d-flex justify-content-between">
+                        <div class="w-15">
+                            <h2 for="title" class="form-label">Ticket #{{ $ticket->id }} -</h2>
+                        </div>
+                        <div class="w-85">
+                            <input type="text" class="form-control" id="title" name="title" value="{{ $ticket->title }}">
+                            @error('title')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
                     <div class="mb-3">
                         <div class="table-responsive">
                             <span class="rounded-circle bg-primary text-white" style="width: 30px; height: 30px; font-size: 13px; margin-right: 5px; display: inline-block; text-align: center; line-height: 30px; z-index: 1000;">
@@ -37,14 +47,14 @@
                         </div>
                     </div>
                     <div class="mb-2">
-                        <p>Criado a {{ $ticket->created_at }}</p>
+                        <p><strong>Criado a </strong>{{ $ticket->created_at }}</p>
                     </div>
 
                     <label for="attachment" class="form-label">Anexo:</label>
-                    <div class="w-100 d-flex justify-content-between">
-                        <input type="file" class="form-control w-80" id="attachment" name="attachment">
-                        <button type="submit" class="btn btn-primary w-15">Guardar</button>
-                    </div>
+                        <div class="w-100 d-flex justify-content-between">
+                            <input type="file" class="form-control w-80" id="attachment" name="attachment">
+                            <button type="submit" class="btn btn-primary w-15">Guardar</button>
+                        </div>
                     <p>Certifique-se que o arquivo tem menos de 20MB</p>
 
                     @if ($ticket->attachment)
