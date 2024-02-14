@@ -50,12 +50,17 @@
                         <p><strong>Criado a </strong>{{ $ticket->created_at }}</p>
                     </div>
 
-                    <label for="attachment" class="form-label">Anexo:</label>
-                        <div class="w-100 d-flex justify-content-between">
-                            <input type="file" class="form-control w-75" id="attachment" name="attachment">
-                            <button type="submit" class="btn btn-primary w-10">Guardar</button>
-                            <a href="{{ route('tickets.index') }}" class="btn btn-secondary w-10">Cancelar</a>
+                    <div class="w-100 d-flex justify-content-between">
+                        <div class="w-30">
+                            <label for="attachment" class="form-label">Anexo:</label>
+                            <label for="attachment" class="btn btn-primary">Selecionar ficheiro</label><br>
+                            <input type="file" class="form-control" id="attachment" name="attachment" style="display: none;">
                         </div>
+                        <div class="w-30">
+                            <button type="submit" class="btn btn-primary w-45">Guardar</button>
+                            <a href="{{ route('tickets.index') }}" class="btn btn-secondary w-45">Cancelar</a>
+                        </div>
+                    </div>
                     <p>Certifique-se que o arquivo tem menos de 20MB</p>
 
                     @if ($ticket->attachment)
