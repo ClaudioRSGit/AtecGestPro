@@ -39,7 +39,7 @@ class CommentController extends Controller
 
             if ($technicianId && $technicianId->user_id !== auth()->id()) {
                 $notificationTechnician = Notification::create([
-                    'description' => 'Um ticket que você está atendendo (#' . $ticket->id . ') foi comentado.',
+                    'description' => 'O seu ticket #' . $ticket->id . ' foi comentado.',
                     'code' => 'TICKET_TECHNICIAN',
                     'object_id' => $ticket->id,
                 ]);
