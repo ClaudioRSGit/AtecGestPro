@@ -12,26 +12,36 @@
 
 
                 <div class="card flex-grow-1">
-                    <h5 class="card-header"><strong>Usuários & Materiais</strong></h5>
-                    <ul class="list-group list-group-flush">
-                        @foreach ($userRolesCounts as $roleCount)
+
+                    <div>
+                        <h5 class="card-header"><strong>Utilizadores</strong></h5>
+                        <ul class="list-group list-group-flush">
+                            @foreach ($userRolesCounts as $roleCount)
+                                <li class="list-group-item">
+                                  {{ ucfirst($roleCount->name) }} : {{ $roleCount->total }}
+                                </li>
+                            @endforeach
+                            <hr>
+                        </ul>
+                    </div>
+                    <div>
+                        <hr>
+                        <h5 class="card-header"><strong>Materiais</strong></h5>
+                        <ul class="list-group list-group-flush">
                             <li class="list-group-item">
-                                <strong>{{ $roleCount->name }} :</strong> {{ $roleCount->total }}
+                                Material interno : {{ $materialInternalCount }}
                             </li>
-                        @endforeach
-                        <li class="list-group-item">
-                            <strong>Material interno :</strong> {{ $materialInternalCount }}
-                        </li>
-                        <li class="list-group-item">
-                            <strong>Material Externo :</strong> {{ $materialExternalCount }}
-                        </li>
-                    </ul>
+                            <li class="list-group-item">
+                                Material Externo : {{ $materialExternalCount }}
+                            </li>
+                        </ul>
+                    </div>
+
                 </div>
             </div>
 
             <div class="col-3 col-md-6 col-lg-3 mb-4 mb-lg-2 d-flex">
                 <div class="card flex-grow-1">
-                    <h5 class="card-header"><strong>Tickets Estados</strong></h5>
                     <div class="card-body">
                         <canvas id="pieChart"></canvas>
 
@@ -41,7 +51,7 @@
 
             <div class="col-6 col-md-6 mb-4 mb-lg-2 col-lg-6 d-flex">
                 <div class="card flex-grow-1">
-                    <h5 class="card-header"><strong>Número de Formações Externas</strong></h5>
+                    <h5 class="card-header"><strong>Total de Formações Externas</strong></h5>
                     <div class="card-body d-flex flex-column justify-content-end">
                         <div id="traffic-chart" style="width: 100%; height: 100%;"></div>
                     </div>
@@ -184,7 +194,7 @@
             background-color: rgba(203, 234, 248, 0.3);
             overflow-y: auto;
             overflow-x: auto;
-            height: 355px;
+            height: 425px;
         }
 
 

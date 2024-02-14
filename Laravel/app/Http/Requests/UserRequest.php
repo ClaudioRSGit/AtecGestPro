@@ -52,7 +52,7 @@ class UserRequest extends FormRequest
         //     ];
         // } else {
         if ($this->isMethod('put')) {
-            if ($this->user && $this->user->hasRole('funcionario')) {
+            if ($this->user && $this->user->hasRole('funcionario') || $this->user->hasRole('tecnico')) {
                 $rules['isStudent'] = 'nullable';
                 $rules['isActive'] = 'nullable';
                 $rules['course_class_id'] = 'nullable';

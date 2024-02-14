@@ -76,7 +76,7 @@
 
 
 
-                @if (!Auth::user()->hasRole('funcionario'))
+                @if (Auth::user()->hasRole('admin'))
                     <div class="col-md-6">
                         <div class="mb-3">
                             <label for="role_id" class="form-label">Função:</label>
@@ -94,7 +94,7 @@
                         <input type="hidden" name="isStudent" id="isStudent" value="{{ old('role_id') == 3 ? 1 : 0 }}">
 
 
-
+                        
                         <div class="mb-3" id="labelCourseClass">
                             <label for="course_class_id" class="form-label">Turma:</label>
                             <select class="form-control" id="course_class_id" name="course_class_id">
@@ -128,7 +128,7 @@
                         <a href="{{ route('users.index') }}" class="btn btn-secondary">Cancelar</a>
                         <button type="submit" form="deleteForm" class="btn btn-danger">Excluir</button>
                     </div>
-                    @else
+                @else
                     <div class="buttons d-flex justify-content-start align-items-center pt-3">
                         <button type="submit" class="btn btn-primary">Salvar Alterações</button>
                         <a href="{{ route('users.index') }}" class="btn btn-secondary">Cancelar</a>

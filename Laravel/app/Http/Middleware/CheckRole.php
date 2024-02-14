@@ -21,7 +21,7 @@ class CheckRole
         if (Auth::check()) {
             $user = Auth::user();
 
-            if ($user->hasRole('funcionario')) {
+            if ($user->hasRole('funcionario') || $user->hasRole('tecnico')) {
                 if ($request->routeIs('users.edit', ['user' => $user->id])) {
                     return $next($request);
                 }
