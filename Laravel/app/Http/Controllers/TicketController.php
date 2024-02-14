@@ -31,11 +31,14 @@ class TicketController extends Controller
         $ticketSearch = $request->input('ticketSearch');
         $filaSearch = $request->input('filaSearch');
         $recyclingSearch = $request->input('recyclingSearch');
+        $filterFilaPriority = $request->input('filterFilaPriority');
+        $filterFilaCategory = $request->input('filterFilaCategory');
+
 
 
         $sort = $request->query('sort');
         $direction = $request->query('direction', 'asc');
-        $query = Ticket::query();
+
 
         switch ($sort) {
             case 'number':
@@ -54,9 +57,10 @@ class TicketController extends Controller
         if (auth()->user()->role_id == 2) {
             $query = Ticket::where('user_id', auth()->id());
             if ($filaSearch) {
-                $waitingQueueTickets = Ticket::where('user_id', auth()->id())->where('title', 'like', '%' . $filaSearch . '%')->paginate(5, ['*'], 'wPage');
+
+                $queryFila = Ticket::where('user_id', auth()->id())->where('title', 'like', '%' . $filaSearch . '%');
             } else {
-                $waitingQueueTickets = Ticket::where('user_id', auth()->id())->paginate(5, ['*'], 'wPage');
+                $queryFila = Ticket::where('user_id', auth()->id());
             }
             if ($recyclingSearch) {
                 $recycledTickets = Ticket::onlyTrashed()->where('user_id', auth()->id())->where('title', 'like', '%' . $recyclingSearch . '%')->paginate(5, ['*'], 'rPage');
@@ -66,15 +70,15 @@ class TicketController extends Controller
         } else {
             $query = Ticket::with('users', 'requester');
             if ($filaSearch) {
-                $waitingQueueTickets = Ticket::whereHas('users', function ($query) {
+                $queryFila = Ticket::whereHas('users', function ($query) {
                     $query->where('role_id', 4)
                         ->where('name', 'Fila de Espera');
-                })->where('title', 'like', '%' . $filaSearch . '%')->paginate(5, ['*'], 'wPage');
+                })->where('title', 'like', '%' . $filaSearch . '%');
             } else {
-                $waitingQueueTickets = Ticket::whereHas('users', function ($query) {
+                $queryFila = Ticket::whereHas('users', function ($query) {
                     $query->where('role_id', 4)
                         ->where('name', 'Fila de Espera');
-                })->paginate(5, ['*'], 'wPage');
+                });
 
             }
             if ($recyclingSearch) {
@@ -105,16 +109,25 @@ class TicketController extends Controller
             $query->where('ticket_status_id', $filterStatus);
         }
 
+        if ($filterFilaPriority) {
+            $queryFila->where('ticket_priority_id', $filterFilaPriority);
+        }
+        if ($filterFilaCategory) {
+            $queryFila->where('ticket_category_id', $filterFilaCategory);
+        }
+
 
         $query->orderBy($sortColumn, $direction);
 
+
+        $waitingQueueTickets = $queryFila->paginate(5, ['*'], 'wPage');
         $tickets = $query->paginate(5, ['*'], 'tPage');
         $users = User::all();
         $categories = TicketCategory::all();
         $priorities = TicketPriority::all();
         $statuses = TicketStatus::all();
 
-        return view('tickets.index', compact('tickets', 'users', 'ticketSearch', 'filterCategory', 'filterPriority', 'filterStatus', 'categories', 'priorities', 'statuses', 'waitingQueueTickets', 'recycledTickets', 'sort', 'direction'));
+        return view('tickets.index', compact('tickets', 'users', 'ticketSearch', 'filterCategory', 'filterPriority', 'filterStatus', 'categories', 'priorities', 'statuses', 'waitingQueueTickets', 'recycledTickets', 'sort', 'direction', 'filaSearch', 'recyclingSearch', 'filterFilaPriority', 'filterFilaCategory'));
     }
 
     public function create()
