@@ -22,11 +22,11 @@ class MaterialUserController extends Controller
      */
     public function index(Request $request)
     {
-
         $courseFilter = request()->query('courseFilter');
         $searchCourseClass = request()->query('searchCourseClass');
         $searchNonDocent = request()->query('searchNonDocent');
         $roleFilter = request()->query('roleFilter');
+
         $usersWithMaterialsDelivered = User::whereHas('materialUsers', function ($query) {
             $query->where('delivered_all', true);
         })->get();
@@ -44,14 +44,14 @@ class MaterialUserController extends Controller
         }
 
         if($searchNonDocent){
-            $queryNonDocent = $queryNonDocent->where('isStudent', false)->where('name', '!=', 'Fila de Espera')->where('name', 'like', '%' . $searchNonDocent . '%');
+            $queryNonDocent = $queryNonDocent->where('name', '!=', 'Fila de Espera')->where('name', 'like', '%' . $searchNonDocent . '%');
         } else {
-            $queryNonDocent = $queryNonDocent->where('isStudent', false)->where('name', '!=', 'Fila de Espera')->where('isStudent', false);
+            $queryNonDocent = $queryNonDocent->where('name', '!=', 'Fila de Espera')->where('isStudent', false);
         }
-
         if ($roleFilter) {
             $queryNonDocent = $queryNonDocent->where('role_id', $roleFilter);
         }
+
 
         $nonDocents = $queryNonDocent->paginate(5, ['*'], 'nPage');
 

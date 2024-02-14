@@ -187,6 +187,19 @@ class UserSeeder extends Seeder
             'course_class_id' => null,
             'role_id' => 4,
         ]);
+        // Seed 13
+        DB::table('users')->insert([
+            'name' => 'ricardo',
+            'username' => 'ricardo',
+            'email' => 'ricardo.ferreira.t01235@edu.atec.pt',
+            'contact' => '934592548',
+            'password' => bcrypt('Password*123'),
+            'notes' => '',
+            'isActive' => true,
+            'isStudent' => false,
+            'course_class_id' => null,
+            'role_id' => 1,
+        ]);
 
         $faker = Faker::create();
 

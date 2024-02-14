@@ -14,7 +14,7 @@
                 <div class="card flex-grow-1">
 
                     <div>
-                        <h5 class="card-header"><strong>Total Utilizadores : {{ $userActiveCount }} </strong></h5>
+                        <h5 class="card-header"><strong>Total de Utilizadores : {{ $userActiveCount }} </strong></h5>
                         <ul class="list-group list-group-flush">
                             @foreach ($userRolesCounts as $roleCount)
                                 <li class="list-group-item" onclick="location.href='{{ route('users.index') }}'">
@@ -85,7 +85,8 @@
                                             <td>{{ $user->email }}</td>
                                             <td class="btn btn-sm btn-primary"
                                                 onclick="location.href='{{ route('material-user.create', $user->id) }}'">
-                                                Visualizar
+                                                Atribuir
+
                                             </td>
                                         </tr>
                                     @endforeach
