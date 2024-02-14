@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <title>403 error page</title>
+    <title>403 Acesso ProibidoS</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <meta name="description" content="Ripped T-Rex/Dino game of Chromium">
@@ -2610,9 +2610,11 @@
     </script>
     <div id="main-frame-error" class="interstitial-wrapper" jstcache="0">
         <div class="text-center">
-            <div>ERROR</div>
+            <div>ERRO</div>
             <h1>403</h1>
-            <div class="mb-2">Page Not Found</div>
+            <div class="mb-2">Acesso Proibido</div>
+            <p>Desculpe, mas não tem permissão para acessar esta página.</p>
+
             <hr>
         </div>
         <div id="offline-resources" jstcache="0">
@@ -2693,7 +2695,7 @@
                             <div class="g-plusone" data-size="medium"
                                 data-href="http://apps.thecodepost.org/trex/trex.html"></div>
                         </td>
-                        <td><a href="{{ url()->previous() }}" class="btn btn-outline-secondary mb-3 ">Voltar</a>
+                        <td><a href="{{ "/" }}" class="btn btn-outline-secondary mb-3 ">Voltar</a>
                             <script>
                                 ! function(d, s, id) {
                                     var js, fjs = d.getElementsByTagName(s)[0],
