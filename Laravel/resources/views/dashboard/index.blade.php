@@ -17,7 +17,7 @@
                         <h5 class="card-header"><strong> {{$userActiveCount}}  Utilizadores</strong></h5>
                         <ul class="list-group list-group-flush">
                             @foreach ($userRolesCounts as $roleCount)
-                                <li class="list-group-item">
+                                <li class="list-group-item" onclick="location.href='{{ route('users.index') }}'">
                                   {{ ucfirst($roleCount->name) }} : {{ $roleCount->total }}
                                 </li>
                             @endforeach
@@ -26,12 +26,12 @@
                     </div>
                     <div>
                         <hr>
-                        <h5 class="card-header"><strong>Materiais</strong></h5>
+                        <h5 class="card-header"><strong> {{ $materialInternalCount +  $materialExternalCount  }} Materiais</strong></h5>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">
+                            <li class="list-group-item" onclick="location.href='{{ route('materials.index') }}'">
                                 Material interno : {{ $materialInternalCount }}
                             </li>
-                            <li class="list-group-item">
+                            <li class="list-group-item" onclick="location.href='{{ route('materials.index') }}'">
                                 Material Externo : {{ $materialExternalCount }}
                             </li>
                         </ul>
