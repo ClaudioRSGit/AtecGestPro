@@ -238,7 +238,7 @@ class TicketController extends Controller
              }
 
              $notification = Notification::create([
-                 'description' => 'Ticket atribuido: #' . $ticket->id,
+                 'description' => 'Ticket atribuído: #' . $ticket->id,
                  'code' => 'TICKET',
                  'object_id' => $ticket->id,
              ]);
