@@ -181,7 +181,7 @@ main > .content{
     width: 95% !important;
 }
 
-.sidebarContent, .navbar, .content, .toggleableElement {
+.sidebarContent, .navbar, .content, .toggleableElement, .container {
     transition: all 0.3s ease-in-out;
 }
 

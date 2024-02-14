@@ -503,7 +503,10 @@
             }
 
             function showQuickTicket() {
-                document.querySelector('.quickTicket').style.display = 'block';
+                let quickTicket = document.querySelector('.quickTicket');
+                quickTicket.style.transition = 'opacity 1s ease, visibility 1s ease';
+                quickTicket.style.opacity = '1';
+                quickTicket.style.visibility = 'visible';
                 document.querySelector('.container').classList.add('w-70');
             }
         </script>
