@@ -2613,8 +2613,8 @@
             <div>ERRO</div>
             <h1>401</h1>
             <hr>
-            <div class="mb-2">Acesso Não Autorizado</div>
-            <p>A solicitação não foi aplicada por falta de credenciais de autenticação válidas</p>
+            <div class="mb-2"><strong>Acesso Não Autorizado</strong></div>
+            <p>A solicitação não foi aplicada por falta de credenciais de autenticação válidas.</p>
             <hr>
         </div>
         <div id="offline-resources" jstcache="0">

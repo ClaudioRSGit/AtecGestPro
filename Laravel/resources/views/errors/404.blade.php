@@ -84,7 +84,8 @@ h1{
         <div>Erro</div>
         <h1>404</h1>
         <hr>
-        <div class="mb-2">Página não Encontrada</div>
+        <div class="mb-2"><strong>Página não Encontrada</strong></div>
+        <p>Desculpe, a página que tentou aceder não foi encontrada.</p>
         <a href="{{ "/" }}" class="btn btn-outline-primary mb-3 ">Voltar</a>
     </div>
 
