@@ -58,8 +58,8 @@
                         <td class="clickable" style="width: 10%">
                             <a href="{{ route('courses.show', $course->id) }}" class="d-flex align-items-center w-auto h-100">{{ $course->code }}</a>
                         </td>
-                        <td style="width: 70%">{{ $course->description }}</td>
-                        <td class="editDelete">
+                        <td style="width: 85%">{{ $course->description }}</td>
+                        <td class="editDelete" style="min-width: 7rem;">
                             <div style="width: 40%">
                                 <a href="{{ route('courses.edit', $course->id) }}" class="mx-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16"
