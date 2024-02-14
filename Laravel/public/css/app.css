@@ -270,8 +270,13 @@ thead th{
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 100%;
 }
 .editDelete div, .restore, .delete{
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     transition: all 0.3s ease-in-out;
 }
 .editDelete div:hover, .restore:hover, .delete:hover{
