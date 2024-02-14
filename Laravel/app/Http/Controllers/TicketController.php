@@ -24,7 +24,6 @@ class TicketController extends Controller
 {
     public function index(Request $request)
     {
-//        dd($request->all());
         $filterCategory = $request->input('filterCategory');
         $filterPriority = $request->input('filterPriority');
         $filterStatus = $request->input('filterStatus');
@@ -375,7 +374,11 @@ class TicketController extends Controller
         }
 
         if ($oldTicket->title != $ticket->title) {
-            $ticketInfo .= 'O titulo do ticket #' . $ticket->id . ' foi alterado de ' . $oldTicket->title . ' para ' . $ticket->title . ' por ' . User::find(Auth::id())->name . ".\n";
+            $ticketInfo .= 'O titulo do ticket #' . $ticket->id . ' foi alterado de "' . $oldTicket->title . '" para "' . $ticket->title . '" por ' . User::find(Auth::id())->name . ".\n";
+        }
+
+        if ($oldTicket->description != $ticket->description) {
+            $ticketInfo .= 'A descrição do ticket #' . $ticket->id . ' foi alterada de "' . $oldTicket->description . '" para "' . $ticket->description . '" por ' . User::find(Auth::id())->name . ".\n";
         }
 
         return $ticketInfo;
