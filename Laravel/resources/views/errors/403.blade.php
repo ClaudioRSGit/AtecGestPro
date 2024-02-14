@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <title>404 error page</title>
+    <title>403 error page</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <meta name="description" content="Ripped T-Rex/Dino game of Chromium">
@@ -2611,7 +2611,7 @@
     <div id="main-frame-error" class="interstitial-wrapper" jstcache="0">
         <div class="text-center">
             <div>ERROR</div>
-            <h1>404</h1>
+            <h1>403</h1>
             <div class="mb-2">Page Not Found</div>
             <hr>
         </div>
