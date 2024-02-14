@@ -128,7 +128,7 @@ class TicketController extends Controller
              $filename = "Sem Anexo";
 
              if ($request->hasFile('attachment')) {
-                $filename = $request->file('attachment')->store('attachments', 'public');
+                 $filename = $request->file('attachment')->store('attachments', 'public');
             }
 
             $ticket = Ticket::create([
@@ -141,7 +141,6 @@ class TicketController extends Controller
                 'user_id' => $loggedInUserId,
                 'attachment' => $filename,
             ]);
-
             //$ticket->save();
 
             TicketUser::create([
