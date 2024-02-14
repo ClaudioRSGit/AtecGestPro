@@ -13,21 +13,28 @@
         <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown">
                 <a class="nav-link" href="#" id="notificacoesDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                <img src="https://static.vecteezy.com/system/resources/previews/010/366/202/original/bell-icon-transparent-notification-free-png.png"
-                alt="Sininho" style="width: 30px; height: 30px; margin-right: 5px;">
-            </a>
+                    aria-haspopup="true" aria-expanded="false">
+                    @if (App\NotificationUser::where('user_id', auth()->id())->where('isRead', false)->exists())
+                        <img src="{{ asset('assets/headerBell.png') }}" alt="Sininho"
+                            style="width: 30px; height: 30px; margin-right: 5px;">
+                    @else
+                        <img src="{{ asset('assets/headerBell1.png') }}" alt="Sininho"
+                            style="width: 30px; height: 30px; margin-right: 5px;">
+                    @endif
+                </a>
 
-                        <div class="dropdown-menu dropdown-menu-right notification-area" aria-labelledby="notificacoesDropdown">
-                @livewire('notification-component')
-            </div>
-        </li>
-        <li class="nav-item dropdown">
-            <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="rounded-circle bg-primary text-white" style="width: 30px; height: 30px; font-size: 13px; margin-right: 5px; display: inline-block; text-align: center; line-height: 30px; z-index: 1000;">
-                    <strong>{{ Auth::user()->initials }}</strong>
-                </span>
-            </a>
+                <div class="dropdown-menu dropdown-menu-right notification-area" aria-labelledby="notificacoesDropdown">
+                    @livewire('notification-component')
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <span class="rounded-circle bg-primary text-white"
+                        style="width: 30px; height: 30px; font-size: 13px; margin-right: 5px; display: inline-block; text-align: center; line-height: 30px; z-index: 1000;">
+                        <strong>{{ Auth::user()->initials }}</strong>
+                    </span>
+                </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="{{ route('users.edit', ['user' => Auth::user()]) }}">Perfil</a>
                     <a class="dropdown-item" href="#"
