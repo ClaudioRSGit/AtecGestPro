@@ -337,7 +337,68 @@
                 </div>
 
                 <div class="tab-pane fade" id="recycling" role="tabpanel" aria-labelledby="recycling-tab">
-                    @if($recycledTickets->isEmpty())
+                    <div class="d-flex justify-content-between my-3">
+
+                        <form action="{{ route('tickets.index') }}" method="get" id="recyclingSearchForm">
+                            <div class="input-group pr-2">
+                                <div class="search-container">
+                                    <input type="text" class="form-control" id="recyclingSearch" name="recyclingSearch"
+                                           value="{{ request('recyclingSearch') }}"
+                                           placeholder="{{ request('recyclingSearch') ? request('recyclingSearch') : 'Pesquisar ticket...' }}">
+                                </div>
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-outline-secondary">
+                                        Procurar
+                                    </button>
+                                </div>
+                            </div>
+
+                        </form>
+                        <div class="buttons">
+                            <form id="filterCategoryForm" action="{{ route('tickets.index') }}" method="GET">
+                                <select class="form-control w-auto" id="filterCategory" name="filterCategory"
+                                        onchange="submitCategoryForm()">
+                                    <option value="" {{ $filterCategory === '' ? 'selected' : '' }}>
+                                        Todas as categorias
+                                    </option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}"
+                                            {{ (int) $filterCategory === $category->id ? 'selected' : '' }}>{{ $category->description }}
+                                        </option>
+                                    @endforeach
+
+                                </select>
+                            </form>
+
+                            <form id="filterStatusForm" action="{{ route('tickets.index') }}" method="GET">
+                                <select class="form-control w-auto" id="filterStatus" name="filterStatus" onchange="submitStatusForm()">
+                                    <option value="" {{ $filterStatus === '' ? 'selected' : '' }}>Todos os estados</option>
+                                    @foreach ($statuses as $status)
+                                        <option value="{{ $status->id }}"
+                                            {{ (int) $filterStatus === $status->id ? 'selected' : '' }}>{{ $status->description }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </form>
+
+                            <form id="filterPriorityForm" action="{{ route('tickets.index') }}" method="GET">
+                                <select class="form-control w-auto" id="filterPriority" name="filterPriority"
+                                        onchange="submitPriorityForm()">
+                                    <option value="" {{ $filterPriority === '' ? 'selected' : '' }}>
+                                        Todas as prioridades
+                                    </option>
+                                    @foreach ($priorities as $priority)
+                                        <option value="{{ $priority->id }}"
+                                            {{ (int) $filterPriority === $priority->id ? 'selected' : '' }}>
+                                            {{ $priority->description }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </form>
+                        </div>
+                    </div>
+
+                @if($recycledTickets->isEmpty())
                         <img src="{{ asset('assets/reciclagem_azul_extra_bold_2_sem fundo.png') }}" alt="Não existem registos" class="bin">
                     @else
                     <table class="table table-hover">
