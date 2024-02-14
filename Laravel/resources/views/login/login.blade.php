@@ -2,7 +2,7 @@
 
 <div class="container mx-auto d-flex align-items-center loginPage">
     <div class="d-flex justify-content-center w-100 ">
-        <div class="card" style="border-radius: 3rem;">
+        <div class="card" style="border-radius: 2rem;">
                 <div class="d-flex flex-column justify-content-between align-items-center h-100" style="min-height: 37rem; min-width: 35rem; padding: 5rem;">
                     <div class="d-flex flex-column align-items-center h-25">
                         <img src="{{ asset('assets/logo.png') }}" alt="Logo">
