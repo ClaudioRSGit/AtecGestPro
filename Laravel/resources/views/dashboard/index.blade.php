@@ -14,7 +14,7 @@
                 <div class="card flex-grow-1">
 
                     <div>
-                        <h5 class="card-header"><strong>Utilizadores</strong></h5>
+                        <h5 class="card-header"><strong> {{$userActiveCount}}  Utilizadores</strong></h5>
                         <ul class="list-group list-group-flush">
                             @foreach ($userRolesCounts as $roleCount)
                                 <li class="list-group-item">
@@ -41,7 +41,9 @@
             </div>
 
             <div class="col-3 col-md-6 col-lg-3 mb-4 mb-lg-2 d-flex">
+
                 <div class="card flex-grow-1">
+                    <h5 class="card-header"><strong>Total de Tickets Por Estado </strong></h5>
                     <div class="card-body">
                         <canvas id="pieChart"></canvas>
 
