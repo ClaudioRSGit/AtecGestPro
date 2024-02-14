@@ -14,11 +14,19 @@
             <li class="nav-item dropdown">
                 <a class="nav-link" href="#" id="notificacoesDropdown" role="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                    @if (App\NotificationUser::where('user_id', auth()->id())->where('isRead', false)->exists())
-                        <img src="{{ asset('assets/headerBell.png') }}" alt="Sininho"
-                            style="width: 30px; height: 30px; margin-right: 5px;">
+                    @php
+                        $unreadNotificationsCount = App\NotificationUser::where('user_id', auth()->id())->where('isRead', false)->count();
+                    @endphp
+                    @if ($unreadNotificationsCount > 0)
+                        <div style="position: relative; display: inline-block;">
+                            <img src="{{ asset('assets/headerBell.png') }}" alt="Notificações"
+                                style="width: 30px; height: 30px; margin-right: 5px;">
+                            <span class="badge badge-danger border-radious" style="position: absolute; top: 4px; right: 0; border-radius: 50%;">
+                                {{ $unreadNotificationsCount }}
+                            </span>
+                        </div>
                     @else
-                        <img src="{{ asset('assets/headerBell1.png') }}" alt="Sininho"
+                        <img src="{{ asset('assets/headerBell1.png') }}" alt="Notificações"
                             style="width: 30px; height: 30px; margin-right: 5px;">
                     @endif
                 </a>
