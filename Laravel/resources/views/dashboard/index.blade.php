@@ -14,11 +14,11 @@
                 <div class="card flex-grow-1">
 
                     <div>
-                        <h5 class="card-header"><strong>Utilizadores</strong></h5>
+                        <h5 class="card-header"><strong>Total de Utilizadores : {{ $userActiveCount }} </strong></h5>
                         <ul class="list-group list-group-flush">
                             @foreach ($userRolesCounts as $roleCount)
-                                <li class="list-group-item">
-                                  {{ ucfirst($roleCount->name) }} : {{ $roleCount->total }}
+                                <li class="list-group-item" onclick="location.href='{{ route('users.index') }}'">
+                                    {{ ucfirst($roleCount->name) }} : {{ $roleCount->total }}
                                 </li>
                             @endforeach
                             <hr>
@@ -26,12 +26,13 @@
                     </div>
                     <div>
                         <hr>
-                        <h5 class="card-header"><strong>Materiais</strong></h5>
+                        <h5 class="card-header"><strong>Total de Materiais : {{ $materialInternalCount + $materialExternalCount }}
+                                </strong></h5>
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">
+                            <li class="list-group-item" onclick="location.href='{{ route('materials.index') }}'">
                                 Material interno : {{ $materialInternalCount }}
                             </li>
-                            <li class="list-group-item">
+                            <li class="list-group-item" onclick="location.href='{{ route('materials.index') }}'">
                                 Material Externo : {{ $materialExternalCount }}
                             </li>
                         </ul>
@@ -41,7 +42,9 @@
             </div>
 
             <div class="col-3 col-md-6 col-lg-3 mb-4 mb-lg-2 d-flex">
+
                 <div class="card flex-grow-1">
+                    <h5 class="card-header"><strong>Total de Tickets por Estado </strong></h5>
                     <div class="card-body">
                         <canvas id="pieChart"></canvas>
 
@@ -82,7 +85,8 @@
                                             <td>{{ $user->email }}</td>
                                             <td class="btn btn-sm btn-primary"
                                                 onclick="location.href='{{ route('material-user.create', $user->id) }}'">
-                                                Visualizar
+                                                Atribuir
+
                                             </td>
                                         </tr>
                                     @endforeach
@@ -97,7 +101,7 @@
 
 
                 <div class="card mb-2">
-                    <h5 class="card-header"><strong>Tickets Prioridades</strong></h5>
+                    <h5 class="card-header"><strong>Total de Tickets por Prioridades</strong></h5>
                     <div class="card-body">
                         <canvas id="pieChartPri"></canvas>
 
@@ -153,7 +157,7 @@
         var chartDataStartDate = @json($chartDataStartDate);
 
 
-        var currentMonth =  new Date().getMonth() + 1;
+        var currentMonth = new Date().getMonth() + 1;
         var labels = chartDataStartDate.labels.slice(0, currentMonth);
 
         new Chartist.Line('#traffic-chart', {
@@ -168,10 +172,15 @@
     </script>
 
     <style>
-        .ct-series-a .ct-area{
+        .list-group-item:hover {
+            color: #36A2EB;
+        }
+
+        .ct-series-a .ct-area {
             fill: #36A2EB;
 
         }
+
         .ct-series-a .ct-line,
         .ct-series-a .ct-point {
 

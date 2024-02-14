@@ -18,6 +18,9 @@ class DashboardController extends Controller
      */
     public function index()
     {
+
+        $userActiveCount = User::where('isActive', true)->count();
+
         $usersWithMaterialsDelivered = User::whereDoesntHave('materialUsers', function ($query) {
             $query->where('delivered_all', true);
         })->where('username', '<>', '')->get();
@@ -80,10 +83,6 @@ class DashboardController extends Controller
             'data' => $dataTicketsPriority,
         ];
 
-        // $startDateCounts = DB::table('partner_training_users')
-        //     ->select(DB::raw('MONTH(start_date) as month'), DB::raw('count(*) as count'))
-        //     ->groupBy('month')
-        //     ->get();
 
 
         $currentYear = date('Y');
@@ -114,7 +113,7 @@ class DashboardController extends Controller
 
         return view('dashboard.index', compact('usersWithMaterialsDelivered', 'ticketStatusOpen', 'ticketStatusProgress',
          'ticketStatusPending','ticketStatusSolved', 'ticketStatusClosed', 'ticketTotal', 'ticketStatusCounts', 'userStudentsCount',
-          'userRolesCounts', 'materialInternalCount', 'materialExternalCount', 'data', 'chartData', 'chartDataStartDate'));
+          'userRolesCounts', 'materialInternalCount', 'materialExternalCount', 'data', 'chartData', 'chartDataStartDate', 'userActiveCount'));
     }
 
     /**
