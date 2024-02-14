@@ -55,7 +55,8 @@
 
 <style>
     .quickTicket{
-        display: none;
+        opacity: 0;
+        visibility: hidden;
         width: 20%;
         height: auto;
         max-height: calc(100dvh - 12rem);
@@ -86,7 +87,12 @@
 
 <script>
     function closeTicket() {
-        document.querySelector('.quickTicket').style.display = 'none';
-        document.querySelector('.container').classList.remove('w-70');
+        let quickTicket = document.querySelector('.quickTicket');
+        if (quickTicket.style.visibility === 'visible') {
+            quickTicket.style.opacity = '0';
+            quickTicket.style.visibility = 'hidden';
+            quickTicket.style.transition = 'opacity 0.1s ease, visibility 0.1s ease';
+            document.querySelector('.container').classList.remove('w-70');
+        }
     }
 </script>
