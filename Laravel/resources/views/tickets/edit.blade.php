@@ -52,8 +52,9 @@
 
                     <label for="attachment" class="form-label">Anexo:</label>
                         <div class="w-100 d-flex justify-content-between">
-                            <input type="file" class="form-control w-80" id="attachment" name="attachment">
-                            <button type="submit" class="btn btn-primary w-15">Guardar</button>
+                            <input type="file" class="form-control w-75" id="attachment" name="attachment">
+                            <button type="submit" class="btn btn-primary w-10">Guardar</button>
+                            <a href="{{ route('tickets.index') }}" class="btn btn-secondary w-10">Cancelar</a>
                         </div>
                     <p>Certifique-se que o arquivo tem menos de 20MB</p>
 
