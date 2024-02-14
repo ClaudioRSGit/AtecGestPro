@@ -139,11 +139,15 @@ main > .content{
 }
 .notification-item {
     border: 1px solid #ddd;
-    border-radius: 2px;
+    border-radius: 6px;
     background-color: white;
     display: flex;
     align-items: center;
     justify-content: space-between;
+}
+.notification-item a{
+    text-decoration: none !important;
+    line-height: 1.5;
 }
 
 .read {
@@ -151,9 +155,9 @@ main > .content{
 }
 
 .unread {
-    color: black;
+    background-color: rgba(128, 128, 128, 0.3) !important;
+    color: white !important;
     font-weight: bold;
-    background-color: #f0f0f0;
 }
 
 .delete-btn {
