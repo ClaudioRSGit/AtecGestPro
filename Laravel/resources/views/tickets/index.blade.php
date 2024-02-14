@@ -17,7 +17,7 @@
                 </div>
                 <div id="options" class="dropdown-menu w-100 h-auto">
                     <button id="openTicket" class="btn dropdown-item" onclick="showQuickTicket()">Ticket rápido</button>
-                    <button onclick="location.href='{{ route('tickets.create') }}'" class="btn dropdown-item">Ticket completo</a>
+                    <button onclick="location.href='{{ route('tickets.create') }}'" class="btn dropdown-item">Ticket completo </button>
                 </div>
             </div>
         </div>
@@ -198,7 +198,68 @@
                 </div>
 
                 <div class="tab-pane fade" id="waitingQueue" role="tabpanel" aria-labelledby="waiting-queue-tab">
-                    @if (count($waitingQueueTickets) === 0)
+                    <div class="d-flex justify-content-between my-3">
+
+                        <form action="{{ route('tickets.index') }}" method="get" id="filaSearchForm">
+                            <div class="input-group pr-2">
+                                <div class="search-container">
+                                    <input type="text" class="form-control" id="filaSearch" name="filaSearch"
+                                           value="{{ request('filaSearch') }}"
+                                           placeholder="{{ request('filaSearch') ? request('filaSearch') : 'Pesquisar ticket...' }}">
+                                </div>
+                                <div class="input-group-append">
+                                    <button type="submit" class="btn btn-outline-secondary">
+                                        Procurar
+                                    </button>
+                                </div>
+                            </div>
+
+                        </form>
+                        <div class="buttons">
+                            <form id="filterCategoryForm" action="{{ route('tickets.index') }}" method="GET">
+                                <select class="form-control w-auto" id="filterCategory" name="filterCategory"
+                                        onchange="submitCategoryForm()">
+                                    <option value="" {{ $filterCategory === '' ? 'selected' : '' }}>
+                                        Todas as categorias
+                                    </option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}"
+                                            {{ (int) $filterCategory === $category->id ? 'selected' : '' }}>{{ $category->description }}
+                                        </option>
+                                    @endforeach
+
+                                </select>
+                            </form>
+
+                            <form id="filterStatusForm" action="{{ route('tickets.index') }}" method="GET">
+                                <select class="form-control w-auto" id="filterStatus" name="filterStatus" onchange="submitStatusForm()">
+                                    <option value="" {{ $filterStatus === '' ? 'selected' : '' }}>Todos os estados</option>
+                                    @foreach ($statuses as $status)
+                                        <option value="{{ $status->id }}"
+                                            {{ (int) $filterStatus === $status->id ? 'selected' : '' }}>{{ $status->description }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </form>
+
+                            <form id="filterPriorityForm" action="{{ route('tickets.index') }}" method="GET">
+                                <select class="form-control w-auto" id="filterPriority" name="filterPriority"
+                                        onchange="submitPriorityForm()">
+                                    <option value="" {{ $filterPriority === '' ? 'selected' : '' }}>
+                                        Todas as prioridades
+                                    </option>
+                                    @foreach ($priorities as $priority)
+                                        <option value="{{ $priority->id }}"
+                                            {{ (int) $filterPriority === $priority->id ? 'selected' : '' }}>
+                                            {{ $priority->description }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </form>
+                        </div>
+                    </div>
+
+                @if (count($waitingQueueTickets) === 0)
                         <div>
                             <img src="{{ asset('assets/noTickets.png') }}" class="noTicket">
                             <label class="d-flex justify-content-center mt-2 text-primary">Não existem tickets na fila de espera</label>
