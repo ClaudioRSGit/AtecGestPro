@@ -364,43 +364,43 @@
 
                         </form>
                         <div class="buttons">
-                            <form id="filterCategoryForm" action="{{ route('tickets.index') }}" method="GET">
-                                <select class="form-control w-auto" id="filterCategory" name="filterCategory"
-                                        onchange="submitCategoryForm()">
-                                    <option value="" {{ $filterCategory === '' ? 'selected' : '' }}>
+                            <form id="filterRecyclingCategoryForm" action="{{ route('tickets.index') }}" method="GET">
+                                <select class="form-control w-auto" id="filterRecyclingCategory" name="filterRecyclingCategory"
+                                        onchange="submitRecyclingCategoryForm()">
+                                    <option value="" {{ $filterRecyclingCategory === '' ? 'selected' : '' }}>
                                         Todas as categorias
                                     </option>
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}"
-                                            {{ (int) $filterCategory === $category->id ? 'selected' : '' }}>{{ $category->description }}
+                                            {{ (int) $filterRecyclingCategory === $category->id ? 'selected' : '' }}>{{ $category->description }}
                                         </option>
                                     @endforeach
 
                                 </select>
                             </form>
 
-                            <form id="filterStatusForm" action="{{ route('tickets.index') }}" method="GET">
-                                <select class="form-control w-auto" id="filterStatus" name="filterStatus"
-                                        onchange="submitStatusForm()">
-                                    <option value="" {{ $filterStatus === '' ? 'selected' : '' }}>Todos os estados
+                            <form id="filterRecyclingStatusForm" action="{{ route('tickets.index') }}" method="GET">
+                                <select class="form-control w-auto" id="filterRecyclingStatus" name="filterRecyclingStatus"
+                                        onchange="submitRecyclingStatusForm()">
+                                    <option value="" {{ $filterRecyclingStatus === '' ? 'selected' : '' }}>Todos os estados
                                     </option>
                                     @foreach ($statuses as $status)
                                         <option value="{{ $status->id }}"
-                                            {{ (int) $filterStatus === $status->id ? 'selected' : '' }}>{{ $status->description }}
+                                            {{ (int) $filterRecyclingStatus === $status->id ? 'selected' : '' }}>{{ $status->description }}
                                         </option>
                                     @endforeach
                                 </select>
                             </form>
 
-                            <form id="filterPriorityForm" action="{{ route('tickets.index') }}" method="GET">
-                                <select class="form-control w-auto" id="filterPriority" name="filterPriority"
-                                        onchange="submitPriorityForm()">
-                                    <option value="" {{ $filterPriority === '' ? 'selected' : '' }}>
+                            <form id="filterRecyclingPriorityForm" action="{{ route('tickets.index') }}" method="GET">
+                                <select class="form-control w-auto" id="filterRecyclingPriority" name="filterRecyclingPriority"
+                                        onchange="submitRecyclingPriorityForm()">
+                                    <option value="" {{ $filterRecyclingPriority === '' ? 'selected' : '' }}>
                                         Todas as prioridades
                                     </option>
                                     @foreach ($priorities as $priority)
                                         <option value="{{ $priority->id }}"
-                                            {{ (int) $filterPriority === $priority->id ? 'selected' : '' }}>
+                                            {{ (int) $filterRecyclingPriority === $priority->id ? 'selected' : '' }}>
                                             {{ $priority->description }}
                                         </option>
                                     @endforeach
@@ -613,6 +613,11 @@
             document.getElementById("filterFilaCategoryForm").submit();
 
         }
+        function submitRecyclingCategoryForm() {
+
+            document.getElementById("filterRecyclingCategoryForm").submit();
+
+        }
 
         function submitCategoryFilaForm() {
 
@@ -625,12 +630,23 @@
             document.getElementById("filterStatusForm").submit();
 
         }
+        function submitRecyclingStatusForm() {
+
+            document.getElementById("filterRecyclingStatusForm").submit();
+
+        }
 
         function submitPriorityForm() {
 
             document.getElementById("filterPriorityForm").submit();
 
         }
+        function submitRecyclingPriorityForm() {
+
+            document.getElementById("filterRecyclingPriorityForm").submit();
+
+        }
+
 
         window.setTimeout(function () {
             $("#success-alert").fadeTo(500, 0).slideUp(500, function () {

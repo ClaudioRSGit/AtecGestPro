@@ -33,6 +33,9 @@ class TicketController extends Controller
         $recyclingSearch = $request->input('recyclingSearch');
         $filterFilaPriority = $request->input('filterFilaPriority');
         $filterFilaCategory = $request->input('filterFilaCategory');
+        $filterRecyclingCategory = $request->input('filterRecyclingCategory');
+        $filterRecyclingStatus = $request->input('filterRecyclingStatus');
+        $filterRecyclingPriority = $request->input('filterRecyclingPriority');
 
 
 
@@ -63,9 +66,9 @@ class TicketController extends Controller
                 $queryFila = Ticket::where('user_id', auth()->id());
             }
             if ($recyclingSearch) {
-                $recycledTickets = Ticket::onlyTrashed()->where('user_id', auth()->id())->where('title', 'like', '%' . $recyclingSearch . '%')->paginate(5, ['*'], 'rPage');
+                $queryRecycled = Ticket::onlyTrashed()->where('user_id', auth()->id())->where('title', 'like', '%' . $recyclingSearch . '%');
             } else {
-                $recycledTickets = Ticket::onlyTrashed()->where('user_id', auth()->id())->paginate(5, ['*'], 'rPage');
+                $queryRecycled = Ticket::onlyTrashed()->where('user_id', auth()->id());
             }
         } else {
             $query = Ticket::with('users', 'requester');
@@ -82,10 +85,10 @@ class TicketController extends Controller
 
             }
             if ($recyclingSearch) {
-                $recycledTickets = Ticket::onlyTrashed()
-                ->where('title', 'like', '%' . $recyclingSearch . '%')->paginate(5, ['*'], 'rPage');
+                $queryRecycled = Ticket::onlyTrashed()
+                ->where('title', 'like', '%' . $recyclingSearch . '%');
             } else {
-                $recycledTickets = Ticket::onlyTrashed()->paginate(5, ['*'], 'rPage');
+                $queryRecycled = Ticket::onlyTrashed();
             }
         }
 
@@ -99,6 +102,7 @@ class TicketController extends Controller
             });
         }
 
+        //filtros tickets
         if ($filterCategory) {
             $query->where('ticket_category_id', $filterCategory);
         }
@@ -109,6 +113,7 @@ class TicketController extends Controller
             $query->where('ticket_status_id', $filterStatus);
         }
 
+        //filtros fila de espera
         if ($filterFilaPriority) {
             $queryFila->where('ticket_priority_id', $filterFilaPriority);
         }
@@ -116,10 +121,21 @@ class TicketController extends Controller
             $queryFila->where('ticket_category_id', $filterFilaCategory);
         }
 
+        //filtros reciclagem
+        if ($filterRecyclingCategory) {
+            $queryRecycled->where('ticket_category_id', $filterRecyclingCategory);
+        }
+        if ($filterRecyclingStatus) {
+            $queryRecycled->where('ticket_status_id', $filterRecyclingStatus);
+        }
+        if ($filterRecyclingPriority) {
+            $queryRecycled->where('ticket_priority_id', $filterRecyclingPriority);
+        }
+
 
         $query->orderBy($sortColumn, $direction);
 
-
+        $recycledTickets = $queryRecycled->paginate(5, ['*'], 'rPage');
         $waitingQueueTickets = $queryFila->paginate(5, ['*'], 'wPage');
         $tickets = $query->paginate(5, ['*'], 'tPage');
         $users = User::all();
@@ -127,7 +143,7 @@ class TicketController extends Controller
         $priorities = TicketPriority::all();
         $statuses = TicketStatus::all();
 
-        return view('tickets.index', compact('tickets', 'users', 'ticketSearch', 'filterCategory', 'filterPriority', 'filterStatus', 'categories', 'priorities', 'statuses', 'waitingQueueTickets', 'recycledTickets', 'sort', 'direction', 'filaSearch', 'recyclingSearch', 'filterFilaPriority', 'filterFilaCategory'));
+        return view('tickets.index', compact('tickets', 'users', 'ticketSearch', 'filterCategory', 'filterPriority', 'filterStatus', 'categories', 'priorities', 'statuses', 'waitingQueueTickets', 'recycledTickets', 'sort', 'direction', 'filaSearch', 'recyclingSearch', 'filterFilaPriority', 'filterFilaCategory', 'filterRecyclingCategory', 'filterRecyclingStatus', 'filterRecyclingPriority'));
     }
 
     public function create()
