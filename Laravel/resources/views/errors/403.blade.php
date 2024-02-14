@@ -2612,6 +2612,7 @@
         <div class="text-center">
             <div>ERRO</div>
             <h1>403</h1>
+            <hr>
             <div class="mb-2">Acesso Proibido</div>
             <p>Desculpe, mas não tem permissão para acessar esta página.</p>
 
