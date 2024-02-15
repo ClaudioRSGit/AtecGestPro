@@ -172,8 +172,12 @@
     </script>
 
     <style>
+        li.list-group-item {
+            cursor: pointer;
+        }
         .list-group-item:hover {
             color: #36A2EB;
+
         }
 
         .ct-series-a .ct-area {
