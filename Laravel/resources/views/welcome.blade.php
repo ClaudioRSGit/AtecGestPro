@@ -12,7 +12,7 @@
 </style>
 
 <div class="content">
-    <h1><strong>ATEC GEST PRO</strong></h1>
+
     <br>
     <div>
         <hr>
