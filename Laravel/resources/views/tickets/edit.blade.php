@@ -10,9 +10,9 @@
 
             <div class="row">
                 <div class="col-md-9">
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between my-4">
                         <div class="w-15">
-                            <h2 for="title" class="form-label">Ticket #{{ $ticket->id }} -</h2>
+                            <h2 for="title" class="form-label">Ticket #{{ $ticket->id }}</h2>
                         </div>
                         <div class="w-85">
                             <input type="text" class="form-control" id="title" name="title" value="{{ $ticket->title }}">
@@ -45,9 +45,6 @@
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                    </div>
-                    <div class="mb-2">
-                        <p><strong>Criado a </strong>{{ $ticket->created_at }}</p>
                     </div>
 
                     <div class="w-100 d-flex justify-content-between">
@@ -132,7 +129,7 @@
         </form>
 
             <div class="mb-3">
-                <label for="comments" class="form-label">Insira uma nota ou comentário:</label>
+                <h4 for="comments" class="form-label">Insira uma nota ou comentário:</h4>
                 <form action="{{ route('comments.store') }}" method="post">
                     @csrf
                     <input type="hidden" name="ticket_id" value="{{ $ticket->id }}">
