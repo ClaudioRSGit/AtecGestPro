@@ -1,7 +1,7 @@
 <html>
 
 <head>
-    <title>401 Acesso Não Autorizado</title>
+    <title>401</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <meta name="description" content="Ripped T-Rex/Dino game of Chromium">
@@ -2614,7 +2614,7 @@
             <h1>401</h1>
             <hr>
             <div class="mb-2"><strong>Acesso Não Autorizado</strong></div>
-            <p>A solicitação não foi aplicada por falta de credenciais de autenticação válidas.</p>
+            <p>A solicitação não foi aplicada devido à falta de credenciais de autenticação válidas.</p>
             <hr>
         </div>
         <div id="offline-resources" jstcache="0">
