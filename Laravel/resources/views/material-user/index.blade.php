@@ -86,7 +86,7 @@
                                 <h2 class="mb-0">
 
 
-                                    <button class="btn btn-link {{ $allDelivered ? 'font-weight-bold' : ' ' }}"
+                                    <button class="btn btn-link {{ $allDelivered ? 'font-weight-bold text-white' : ' ' }}"
                                         type="button" data-toggle="collapse" data-target="#collapse{{ $courseClass->id }}"
                                         aria-expanded="false" aria-controls="collapse{{ $courseClass->id }}">
                                         {{ $courseClass->description }}
