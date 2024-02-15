@@ -26,7 +26,7 @@
                 <div class="mb-3">
                     <label for="supplier" class="form-label">Fornecedor:</label>
                     <input disabled type="text" class="form-control" id="supplier" name="supplier"
-                           value="{{ $material->suplier }}">
+                           value="{{ $material->supplier }}">
                 </div>
 
 
