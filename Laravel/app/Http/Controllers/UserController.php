@@ -145,18 +145,18 @@ class UserController extends Controller
     public function update(UserRequest $request, User $user)
     {
         try {
+            $data = $request->validated();
+
             if ($user->role_id == 3 && $request->input('role_id') != 3 && !$request->filled('password')) {
                 return redirect()->back()->with('error', 'Password obrigatória ao alterar de Formando para outra função.');
             }
 
-            $data = $request->validated();
+            if ($user->role_id != 3 && !$request->filled('password')) {
+                unset($data['password']);
+            }
 
             if ($user->role_id != 3 && $request->input('role_id') == 3) {
                 $data['password'] = null;
-            }
-
-            if ($user->role_id != 3 && !$request->filled('password')) {
-                unset($data['password']);
             }
 
             if ($request->input('isStudent') != 1) {
@@ -166,15 +166,6 @@ class UserController extends Controller
             if ($request->filled('password') && $request->input('role_id') != 3) {
                 $data['password'] = $this->encryptPassword($request->input('password'));
             }
-
-            // if (auth()->user()->hasRole('tecnico')) {
-            //     if (auth()->user()->id === $user->id) {
-            //         unset($data['role_id']);
-            //         unset($data['isStudent']);
-            //         unset($data['course_class_id']);
-            //         unset($data['isActive']);
-            //     }
-            // }
 
             $user->update($data);
 

@@ -38,8 +38,8 @@
             <li class="nav-item dropdown">
                 <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                    <span class="rounded-circle bg-primary text-white"
-                        style="width: 30px; height: 30px; font-size: 13px; margin-right: 5px; display: inline-block; text-align: center; line-height: 30px; z-index: 1000;">
+                    <span class="rounded-circle text-white"
+                        style="width: 30px; height: 30px; font-size: 13px; margin-right: 5px; display: inline-block; text-align: center; line-height: 30px; z-index: 1000;  background-color: #116fdc;">
                         <strong>{{ Auth::user()->initials }}</strong>
                     </span>
                 </a>
