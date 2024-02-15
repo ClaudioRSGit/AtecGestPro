@@ -15,7 +15,7 @@
     </style>
 
 
-    <div class="container w-100">
+    <div class="container  w-100 fade-in">
 
         @error('start_date')
         <div class="alert alert-danger success-alert">{{ $message }}</div>

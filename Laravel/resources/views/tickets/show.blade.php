@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-<div class="container w-100">
+<div class="container  w-100 fade-in">
 
     <div class="row my-2">
         <div class="col-md-9">

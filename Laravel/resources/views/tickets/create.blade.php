@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container">
+    <div class="container w-100 fade-in">
         <h1>Novo Ticket</h1>
 
         <div class="row my-2">

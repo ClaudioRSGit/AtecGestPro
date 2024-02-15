@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container w-100">
+    <div class="container  w-100 fade-in">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1>Vestuário</h1>
             <a href="{{ route('course-classes.create') }}" class="btn btn-primary">

@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 @section('content')
-    <div class="container w-100">
+    <div class="container  w-100 fade-in">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1>Turmas</h1>
             <a href="{{ route('course-classes.create') }}" class="btn btn-primary">

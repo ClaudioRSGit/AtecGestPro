@@ -12,7 +12,7 @@
         }
     </style>
 
-    <div class="container">
+    <div class="container w-100 fade-in">
         <h1>Editar Material</h1>
 
 

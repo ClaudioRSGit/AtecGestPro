@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container w-100">
+    <div class="container  w-100 fade-in">
         <h1>Editar Turma</h1>
         <form method="post" action="{{ route('course-classes.update', $courseClass->id) }}">
             @csrf

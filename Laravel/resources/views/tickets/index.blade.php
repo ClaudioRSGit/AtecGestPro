@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container fade-in">
+    <div class="container fade-in w-100">
         @if (session('success'))
             <div class="alert alert-success" id="success-alert">
                 {{ session('success') }}
@@ -486,59 +486,59 @@
 
     @endcomponent
 
-    <style>
-        .fade-in {
-            animation: fadeIn ease 1s;
-            -webkit-animation: fadeIn ease 1s;
-            -moz-animation: fadeIn ease 1s;
-            -o-animation: fadeIn ease 1s;
-        }
+{{--    <style>--}}
+{{--        .fade-in {--}}
+{{--            animation: fadeIn ease 1s;--}}
+{{--            -webkit-animation: fadeIn ease 1s;--}}
+{{--            -moz-animation: fadeIn ease 1s;--}}
+{{--            -o-animation: fadeIn ease 1s;--}}
+{{--        }--}}
 
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-            }
-            100% {
-                opacity: 1;
-            }
-        }
+{{--        @keyframes fadeIn {--}}
+{{--            0% {--}}
+{{--                opacity: 0;--}}
+{{--            }--}}
+{{--            100% {--}}
+{{--                opacity: 1;--}}
+{{--            }--}}
+{{--        }--}}
 
-        @-moz-keyframes fadeIn {
-            0% {
-                opacity: 0;
-            }
-            100% {
-                opacity: 1;
-            }
-        }
+{{--        @-moz-keyframes fadeIn {--}}
+{{--            0% {--}}
+{{--                opacity: 0;--}}
+{{--            }--}}
+{{--            100% {--}}
+{{--                opacity: 1;--}}
+{{--            }--}}
+{{--        }--}}
 
-        @-webkit-keyframes fadeIn {
-            0% {
-                opacity: 0;
-            }
-            100% {
-                opacity: 1;
-            }
-        }
+{{--        @-webkit-keyframes fadeIn {--}}
+{{--            0% {--}}
+{{--                opacity: 0;--}}
+{{--            }--}}
+{{--            100% {--}}
+{{--                opacity: 1;--}}
+{{--            }--}}
+{{--        }--}}
 
-        @-o-keyframes fadeIn {
-            0% {
-                opacity: 0;
-            }
-            100% {
-                opacity: 1;
-            }
-        }
+{{--        @-o-keyframes fadeIn {--}}
+{{--            0% {--}}
+{{--                opacity: 0;--}}
+{{--            }--}}
+{{--            100% {--}}
+{{--                opacity: 1;--}}
+{{--            }--}}
+{{--        }--}}
 
-        @-ms-keyframes fadeIn {
-            0% {
-                opacity: 0;
-            }
-            100% {
-                opacity: 1;
-            }
-        }
-    </style>
+{{--        @-ms-keyframes fadeIn {--}}
+{{--            0% {--}}
+{{--                opacity: 0;--}}
+{{--            }--}}
+{{--            100% {--}}
+{{--                opacity: 1;--}}
+{{--            }--}}
+{{--        }--}}
+{{--    </style>--}}
     <style>
         .buttons {
             width: 60% !important;
