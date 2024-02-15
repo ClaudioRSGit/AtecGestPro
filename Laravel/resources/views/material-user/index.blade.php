@@ -256,7 +256,7 @@
 
         <style>
             .bg-blue {
-                background-color: rgba(54, 162, 235, 0.5);
+                background-color: rgba(54, 162, 235, 0.3);
             }
 
             #accordion .card {
