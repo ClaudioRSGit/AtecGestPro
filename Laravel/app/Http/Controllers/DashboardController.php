@@ -18,7 +18,6 @@ class DashboardController extends Controller
      */
     public function index()
     {
-
         $userActiveCount = User::where('isActive', true)->count();
 
         $usersWithMaterialsDelivered = User::whereDoesntHave('materialUsers', function ($query) {
