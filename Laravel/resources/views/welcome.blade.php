@@ -4,9 +4,9 @@
 <style>
     .content {
         display: flex !important;
-        justify-content: center !important;
+        justify-content: top !important;
         align-items: center !important;
-        height: 100vh !important;
+        height: 50vh !important;
         flex-direction: column !important;
     }
 </style>
