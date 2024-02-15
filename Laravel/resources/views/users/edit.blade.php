@@ -91,7 +91,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <input type="hidden" name="isStudent" id="isStudent" value="{{ old('role_id') == 3 ? 1 : 0 }}">
+                        <input type="hidden" name="isStudent" id="isStudent" value="{{ $user->role_id == 3 ? 1 : 0 }}">
 
 
 
