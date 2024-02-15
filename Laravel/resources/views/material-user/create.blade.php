@@ -11,7 +11,7 @@
 
                 <div class="d-flex justify-content-between mb-3">
                     <div class="input-group mb-3" style="width: 60%;">
-                        <p class="mr-3 font-weight-bold">Formando: {{ $student->name }} </p>
+                        <p class="mr-3 font-weight-bold">{{ $student->role->name }} : {{ $student->name }} </p>
 
                     </div>
 
