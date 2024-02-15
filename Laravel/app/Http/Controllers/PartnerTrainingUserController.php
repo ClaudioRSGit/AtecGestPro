@@ -28,35 +28,35 @@ class PartnerTrainingUserController extends Controller
 
 
 
-                if ($searchPtu) {
-                    $partner_Training_Users = PartnerTrainingUser::with('partner', 'training', 'user')
-                        ->whereHas('partner', function ($query) use ($searchPtu) {
-                            $query->where('name', 'like', "%$searchPtu%");
-                        })
-                        ->orWhereHas('training', function ($query) use ($searchPtu) {
-                            $query->where('name', 'like', "%$searchPtu%");
-                        })
-                        ->orWhereHas('user', function ($query) use ($searchPtu) {
-                            $query->where('name', 'like', "%$searchPtu%");
-                        })->paginate(5, ['*'], 'ptuPage');
-                } else {
-                    $partner_Training_Users = PartnerTrainingUser::with('partner', 'training', 'user')->paginate(5, ['*'], 'ptuPage');
-                }
+        if ($searchPtu) {
+            $partner_Training_Users = PartnerTrainingUser::with('partner', 'training', 'user')
+                ->whereHas('partner', function ($query) use ($searchPtu) {
+                    $query->where('name', 'like', "%$searchPtu%");
+                })
+                ->orWhereHas('training', function ($query) use ($searchPtu) {
+                    $query->where('name', 'like', "%$searchPtu%");
+                })
+                ->orWhereHas('user', function ($query) use ($searchPtu) {
+                    $query->where('name', 'like', "%$searchPtu%");
+                })->paginate(5, ['*'], 'ptuPage');
+        } else {
+            $partner_Training_Users = PartnerTrainingUser::with('partner', 'training', 'user')->paginate(5, ['*'], 'ptuPage');
+        }
 
 
-                if ($searchP) {
-                    $partners = Partner::with('partnerTrainingUsers', 'contactPartner')
-                        ->where('name', 'like', "%$searchP%")
-                        ->paginate(10, ['*'], 'pPage');
-                } else {
-                    $partners = Partner::with('partnerTrainingUsers', 'contactPartner')->paginate(5, ['*'], 'pPage');
-                }
+        if ($searchP) {
+            $partners = Partner::with('partnerTrainingUsers', 'contactPartner')
+                ->where('name', 'like', "%$searchP%")
+                ->paginate(10, ['*'], 'pPage');
+        } else {
+            $partners = Partner::with('partnerTrainingUsers', 'contactPartner')->paginate(5, ['*'], 'pPage');
+        }
 
-                if ($searchT) {
-                    $trainings = Training::where('name', 'like', "%$searchT%")->paginate(5, ['*'], 'tPage');
-                } else {
-                    $trainings = Training::with('partnerTrainingUsers')->paginate(5, ['*'], 'tPage');
-                }
+        if ($searchT) {
+            $trainings = Training::where('name', 'like', "%$searchT%")->paginate(5, ['*'], 'tPage');
+        } else {
+            $trainings = Training::with('partnerTrainingUsers')->paginate(5, ['*'], 'tPage');
+        }
 
 
         return view('external.index', compact('partner_Training_Users', 'partners', 'trainings', 'searchPtu', 'searchP', 'searchT'));
@@ -93,7 +93,8 @@ class PartnerTrainingUserController extends Controller
                 'training_id' => $request->input('training_id'),
                 'user_id' => $request->input('user_id'),
                 'start_date' => $request->input('start_date'),
-                'end_date' => $request->input('end_date')]);
+                'end_date' => $request->input('end_date')
+            ]);
 
             $materials = $request->input('materials', []);
             $materialQuantities = $request->input('material_quantities', []);
@@ -165,7 +166,7 @@ class PartnerTrainingUserController extends Controller
                 }
             }
 
-            return redirect()->route('external.index')->with('success', 'Formação atualizada com sucesso');
+            return redirect()->route('external.show', $partner_Training_User->id)->with('success', 'Formação atualizada com sucesso');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Erro ao atualizar a formação. Por favor, tente novamente.');
         }
@@ -195,5 +196,4 @@ class PartnerTrainingUserController extends Controller
             return redirect()->back()->with('error', 'Erro ao eliminar a formação. Por favor, tente novamente.');
         }
     }
-
 }
