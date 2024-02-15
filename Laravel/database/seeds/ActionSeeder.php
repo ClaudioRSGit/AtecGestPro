@@ -13,21 +13,21 @@ class ActionSeeder extends Seeder
     {
         // Seed 1
         DB::table('actions')->insert([
-            'description' => 'CREATE',
+            'description' => 'Criação',
         ]);
 
         // Seed 2
         DB::table('actions')->insert([
-            'description' => 'UPDATE',
+            'description' => 'Atualização',
         ]);
 
         // Seed 3
         DB::table('actions')->insert([
-            'description' => 'DELETE',
+            'description' => 'Remoção',
         ]);
         // Seed 4
         DB::table('actions')->insert([
-            'description' => 'RESTORE',
+            'description' => 'Restauro',
         ]);
 
     }
