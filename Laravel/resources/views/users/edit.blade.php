@@ -64,7 +64,7 @@
                     </div>
 
                     <div>
-                        <label for="password" class="form-label">Password:</label>
+                        <label for="password" class="form-label" id="passwordLabel">Password:</label>
                         <input type="password" class="form-control" id="password" name="password"
                             placeholder="{{ $user->password ? 'Não altere para manter a password existente' : '' }}">
 
@@ -156,10 +156,12 @@
 
             if (selectedRole === "3") {
                 $("#labelCourseClass").show();
-                $("#password").closest(".mb-3").hide();
+                $("#password").hide();
+                $("#passwordLabel").hide();
             } else {
                 $("#labelCourseClass").hide();
-                $("#password").closest(".mb-3").show();
+                $("#password").show();
+                $("#passwordLabel").show();
             }
         }
 
