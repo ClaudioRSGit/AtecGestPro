@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container">
+    <div class="container w-100 fade-in">
 
         @if (session('error'))
             <div class="alert alert-danger error-alert">
@@ -94,7 +94,7 @@
                         <input type="hidden" name="isStudent" id="isStudent" value="{{ old('role_id') == 3 ? 1 : 0 }}">
 
 
-                        
+
                         <div class="mb-3" id="labelCourseClass">
                             <label for="course_class_id" class="form-label">Turma:</label>
                             <select class="form-control" id="course_class_id" name="course_class_id">
@@ -114,13 +114,6 @@
                                 <option value="1" {{ $user->isActive == 1 ? 'selected' : '' }}>Ativo</option>
                                 <option value="0" {{ $user->isActive == 0 ? 'selected' : '' }}>Desativado</option>
                             </select>
-                        </div>
-
-                        <div class="mb-3" id="labelCourseClass">
-                            <div class="mb-3" id="notes">
-                                <label for="notes" class="form-label">Notas:</label>
-                                <textarea class="form-control" id="notes" name="notes">{{ $user->notes }}</textarea>
-                            </div>
                         </div>
                     </div>
                     <div class="buttons d-flex justify-content-start align-items-center">

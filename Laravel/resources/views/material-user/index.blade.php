@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container w-100">
+    <div class="container  w-100 fade-in">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1>Vestuário</h1>
             <a href="{{ route('course-classes.create') }}" class="btn btn-primary">
@@ -30,6 +30,7 @@
 
 
         <div class="tab-content">
+
             <div class="tab-pane fade show active" id="formandos">
                 <div class="d-flex justify-content-between mb-3">
                     <div class="w-40 d-flex justify-content-between align-items-center h-100" style="gap: 1rem">
@@ -147,7 +148,8 @@
                         </div>
                     @endforeach
                 </div>
-                {{ $courseClasses->appends(['cPage' => $courseClasses->currentPage()])->links() }}                </div>
+                {{ $courseClasses->appends(['cPage' => $courseClasses->currentPage()])->links() }}
+            </div>
 
             <div class="tab-pane fade" id="outros">
                 <div class="w-100 d-flex justify-content-between align-items-center mb-3" style="gap: 1rem">
@@ -218,6 +220,7 @@
                 </table>
                 {{ $nonDocents->appends(['nPage' => $nonDocents->currentPage()])->links() }}
             </div>
+
         </div>
 
         <script>

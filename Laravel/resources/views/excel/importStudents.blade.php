@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="container">
+<div class="container w-100 fade-in">
     <form action="{{ route('import-excel.importStudents') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="form-group">

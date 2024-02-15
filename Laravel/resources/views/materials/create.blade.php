@@ -12,7 +12,7 @@
         width: 308px;
     }
 </style>
-    <div class="container">
+    <div class="container w-100 fade-in">
         <h1>Criar Novo Material</h1>
 
         <form method="post" action="{{ route('materials.store') }}">

@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container">
+    <div class="container w-100 fade-in">
         <h1>Detalhes do Material</h1>
         @if (session('success'))
             <div class="alert alert-success" id="success-alert">

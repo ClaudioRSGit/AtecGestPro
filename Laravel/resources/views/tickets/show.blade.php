@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-<div class="container w-100">
+<div class="container  w-100 fade-in">
 
     <div class="row my-2">
         <div class="col-md-9">
@@ -115,8 +115,7 @@
                                                 <p class="card-title">{{ $history->created_at }}</p>
                                             </div>
                                             <div class="card-body d-flex justify-content-center align-items-center">
-                                                <p>{!! nl2br(str_replace('.', ".\n", e($history->ticket_info))) !!}</p>
-                                            </div>
+                                                <p>{!! nl2br(str_replace('.', ".\n", e(strip_tags($history->ticket_info)))) !!}</p>                                            </div>
                                         </div>
                                     @endforeach
                                 </div>

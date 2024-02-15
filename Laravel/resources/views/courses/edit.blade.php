@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container">
+    <div class="container w-100 fade-in">
         <h1>Editar Curso</h1>
 
         <form method="post" action="{{ route('courses.update', $course->id) }}">

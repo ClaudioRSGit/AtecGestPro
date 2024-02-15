@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container">
+    <div class="container w-100 fade-in">
         <h1>Novo Ticket</h1>
 
         <div class="row my-2">
@@ -33,8 +33,9 @@
                 </div>
             </div>
             <div class="mb-3">
-                <label for="attachment" class="form-label">Anexo:</label>
-                <input type="file" class="form-control" id="attachment" name="attachment">
+                <label for="attachment" class="form-label">Anexo:</label><br>
+                <label for="attachment" class="btn btn-primary">Selecionar ficheiro</label>
+                <input type="file" class="form-control" id="attachment" name="attachment" style="display: none;">
                 <p>Certifique-se que o arquivo tem menos de 20MB</p>
             </div>
             <div class="w-100 d-flex justify-content-between">
