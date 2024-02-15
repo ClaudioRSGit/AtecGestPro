@@ -189,9 +189,13 @@
                                             </svg>
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="contactDropdown{{ $partner->id }}">
-                                            @foreach ($partner->contactPartner as $contact)
-                                                <a class="dropdown-item" href="#">{{ $contact->contact }}</a>
-                                            @endforeach
+                                            @if (count($partner->contactPartner) > 0)
+                                                @foreach ($partner->contactPartner as $contact)
+                                                    <p class="dropdown-item">{{ $contact->contact }}</p>
+                                                @endforeach
+                                            @else
+                                                <p class="dropdown-item">Nenhum contacto associado</p>
+                                            @endif
                                         </div>
                                     </div>
                                 </td>
