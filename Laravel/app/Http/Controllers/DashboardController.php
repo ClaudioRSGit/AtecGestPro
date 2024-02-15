@@ -18,7 +18,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        abort(403, 'Unauthorized action.');
+
         $userActiveCount = User::where('isActive', true)->count();
 
         $usersWithMaterialsDelivered = User::whereDoesntHave('materialUsers', function ($query) {
