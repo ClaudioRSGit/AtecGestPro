@@ -42,7 +42,14 @@
 
 
         <div class="content">
+
             @yield('content')
+            @if (Request::is('/'))
+            <div class="container w-100 h-100 d-flex justify-content-center align-items-center">
+                <img src="{{ asset('assets/atecLogo.png') }}" alt="">
+            </div>
+            @endif
+
         </div>
 
         <div class="push">
