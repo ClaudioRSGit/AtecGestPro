@@ -75,16 +75,16 @@
                     </div>
                     @foreach ($courseClasses as $courseClass)
                         <div class="card mb-2 mt-2">
-                            <div class="card-header bg-white" id="heading{{ $courseClass->id }}">
+                            @php
+                            $allDelivered =
+                                $courseClass->students->count() > 0 &&
+                                $courseClass->students->every(function ($student) use ($usersWithMaterialsDelivered) {
+                                    return $usersWithMaterialsDelivered->contains($student->id);
+                                });
+                        @endphp
+                            <div class="card-header {{$allDelivered ? 'bg-primary ' : 'bg-white' }}" id="heading{{ $courseClass->id }}">
                                 <h2 class="mb-0">
 
-                                    @php
-                                        $allDelivered =
-                                            $courseClass->students->count() > 0 &&
-                                            $courseClass->students->every(function ($student) use ($usersWithMaterialsDelivered) {
-                                                return $usersWithMaterialsDelivered->contains($student->id);
-                                            });
-                                    @endphp
 
                                     <button class="btn btn-link {{ $allDelivered ? 'font-weight-bold' : ' ' }}"
                                         type="button" data-toggle="collapse" data-target="#collapse{{ $courseClass->id }}"
@@ -93,7 +93,6 @@
                                     </button>
                                 </h2>
                             </div>
-
                             <div id="collapse{{ $courseClass->id }}" class="collapse"
                                 aria-labelledby="heading{{ $courseClass->id }}" data-parent="#accordion">
                                 <div class="card-body">
