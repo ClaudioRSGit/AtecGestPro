@@ -20,8 +20,8 @@ use App\Http\Controllers\TicketHistoryController;
 
 //Main Page
 Route::get('/', function () {
-    return view('master.main');
-})->name('master.main')->middleware('auth');
+    return view('welcome');
+})->name('welcome')->middleware('auth');
 
 //Login
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login')->middleware('guest');

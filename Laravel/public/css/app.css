@@ -50,6 +50,8 @@ html {
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+
+
 .content{
     margin-top: 5%;
 }
@@ -188,6 +190,8 @@ main > .content{
 .sidebarContent, .navbar, .content, .toggleableElement, .container {
     transition: all 0.3s ease-in-out;
 }
+
+
 
 footer {
     flex-shrink: 0;
@@ -1217,6 +1221,7 @@ pre code {
 .offset-11 {
   margin-left: 91.66666667%;
 }
+
 
 @media (min-width: 576px) {
   .col-sm {
@@ -11307,5 +11312,8 @@ a.text-dark:focus {
     color: inherit;
     border-color: #dee2e6;
   }
+
+
+
 }
 
