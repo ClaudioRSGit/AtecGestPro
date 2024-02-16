@@ -64,6 +64,8 @@ Route::middleware(['auth', 'checkRole:admin,tecnico'])->group(function () {
     Route::delete('partner-contact/{partner_contact}', 'PartnerController@destroyContact')->name('partner-contact.destroy');
     Route::post('partners/massDelete', 'PartnerController@massDelete')->name('partners.massDelete');
 
+    Route::match(['get', 'delete'], '/partners/remove-contact/{contactId}', 'PartnerController@removeContact')->name('partners.removeContact');
+
     Route::post('external/updateTab', 'PartnerTrainingUserController@updateTab')->name('external.updateTab');
     Route::resource('external', 'PartnerTrainingUserController');
     Route::post('external/massDelete', 'PartnerTrainingUserController@massDelete')->name('external.massDelete');

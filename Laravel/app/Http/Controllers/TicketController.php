@@ -134,9 +134,9 @@ class TicketController extends Controller
 
         $query->orderBy($sortColumn, $direction);
 
-        $recycledTickets = $queryRecycled->paginate(5, ['*'], 'rPage');
-        $waitingQueueTickets = $queryFila->paginate(5, ['*'], 'wPage');
-        $tickets = $query->paginate(5, ['*'], 'tPage');
+        $recycledTickets = $queryRecycled->paginate(5, ['*'], 'rPage')->withQueryString();
+        $waitingQueueTickets = $queryFila->paginate(5, ['*'], 'wPage')->withQueryString();
+        $tickets = $query->paginate(5, ['*'], 'tPage')->withQueryString();
         $users = User::all();
         $categories = TicketCategory::all();
         $priorities = TicketPriority::all();

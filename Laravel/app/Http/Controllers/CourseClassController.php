@@ -29,7 +29,7 @@ class CourseClassController extends Controller
             });
         }
 
-        $courseClasses = $query->paginate(5);
+        $courseClasses = $query->paginate(5)->withQueryString();
         $courses = Course::all();
 
 

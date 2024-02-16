@@ -81,11 +81,11 @@
                                 <td>{{ $material->description }}</td>
                                 <td class="pl-4">
                                     <input type="number" name="material_quantities[{{ $material->id }}]" value="1"
-                                           min="1" max="{{ $material->quantity }}"
+                                           min="0" max="{{ $material->quantity }}"
                                            @if($material->quantity == 0) disabled @endif>
                                 </td>
                                 <td class="pl-5">
-                                    <input type="checkbox" name="materials[]" value="{{ $material->id }}"
+                                    <input type="checkbox" name="materials[{{ $material->id }}]" value="{{ $material->id }}"
                                            @if($material->quantity == 0) disabled @endif>
                                 </td>
                             </tr>

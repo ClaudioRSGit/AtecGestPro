@@ -53,9 +53,9 @@ class MaterialUserController extends Controller
         }
 
 
-        $nonDocents = $queryNonDocent->paginate(5, ['*'], 'nPage');
+        $nonDocents = $queryNonDocent->paginate(5, ['*'], 'nPage')->withQueryString();
 
-        $courseClasses = $query->paginate(5, ['*'], 'cPage');
+        $courseClasses = $query->paginate(5, ['*'], 'cPage')->withQueryString();
 
         $roles = Role::Where('name', '!=', 'formando')->get();
 
