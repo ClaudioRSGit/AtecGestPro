@@ -9,6 +9,12 @@
             </div>
         @endif
 
+        @if (session('success'))
+            <div class="alert alert-success contact-alert">
+                {{ session('success') }}
+            </div>
+        @endif
+        
         <h1>Editar Parceiro</h1>
         <form method="post" action="{{ route('partners.update', $partner->id) }}">
 
