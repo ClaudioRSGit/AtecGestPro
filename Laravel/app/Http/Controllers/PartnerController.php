@@ -121,7 +121,8 @@ class PartnerController extends Controller
 
             return redirect()->route('external.index')->with('success', 'Parceiro atualizado com sucesso!');
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Erro ao atualizar parceiro!');
+            $errorMessage = $request->session()->get('error');
+            return redirect()->back()->withInput()->with('error', $errorMessage ?: 'Erro ao atualizar parceiro!');
         }
     }
 
