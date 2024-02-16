@@ -128,7 +128,9 @@
 
             </div>
         </div>
-        <a href="{{ route('materials.index') }}" class="btn btn-secondary">Voltar</a>    </div>
+        <a href="{{ route('materials.index') }}" class="btn btn-secondary">Voltar</a>
+        <a href="{{ route('materials.edit', $material->id) }}" class="btn btn-primary">Editar</a>
+    </div>
 
     <style>
 
