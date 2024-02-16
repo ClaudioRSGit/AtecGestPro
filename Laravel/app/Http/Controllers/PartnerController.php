@@ -177,4 +177,16 @@ class PartnerController extends Controller
             return redirect()->back()->with('error', 'Erro ao excluir Parceiros selecionados. Por favor, tente novamente.');
         }
     }
+
+    public function removeContact($contactId)
+    {
+        try {
+            $contact = ContactPartner::findOrFail($contactId);
+            $contact->delete();
+
+            return back()->with('success', 'Contacto excluído com sucesso!');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Erro ao excluir o contacto selecionado! Por favor, tente novamente.');
+        }
+    }
 }
