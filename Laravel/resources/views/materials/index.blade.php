@@ -266,7 +266,7 @@
                                     <input type="checkbox" name="selecteRecycledMaterials[]"
                                            value="{{ $material->id }}">
                                 </td>
-                                <td class="clickable">
+                                <td>
                                     <p>{{ isset($material->name) ? $material->name : 'N.A.' }}</p>
                                 </td>
                                 <td>

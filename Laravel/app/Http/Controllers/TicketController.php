@@ -224,8 +224,8 @@ class TicketController extends Controller
         $attachmentUrl = Storage::url($attachmentPath);
 
         $id = $ticket->id;
-        $ticketHistories = TicketHistory::where('ticket_id', $id)->get();
-
+        $ticketHistories = TicketHistory::where('ticket_id', $id)->orderBy('created_at', 'desc')->get();
+        
         $users = User::all();
         $statuses = TicketStatus::all();
         $priorities = TicketPriority::all();

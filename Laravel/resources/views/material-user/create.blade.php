@@ -4,20 +4,20 @@
     <div class="container  w-100 fade-in">
 
 
+        <div class="row">
 
+            <div class="col-3">
+                <h1>Atribuir</h1>
+                <div class="d-flex justify-content-between mb-3">
+                    <div class="mb-3">
+                        <p class="mr-3 font-weight-bold">{{ ucfirst($student->role->name) }} : {{ $student->name }} </p>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-8">
-                <h1>Atribuir</h1>
 
-                <div class="d-flex justify-content-between mb-3">
-                    <div class="input-group mb-3" style="width: 60%;">
-                        <p class="mr-3 font-weight-bold">{{ ucfirst($student->role->name) }} : {{ $student->name }} </p>
-
-                    </div>
-
-
-
-                </div>
                 <form action="{{ route('material-user.store') }}" method="post">
                     @csrf
 
@@ -141,16 +141,32 @@
 
                 </form>
             </div>
-            <div class="col-4 card badge-secondary">
+            <div class="col-4 card pl-3 shadow">
                 <h3 class="pt-2">Materiais atribuídos</h3>
-                <hr>
-                @forelse($assignedClothes as $item)
-                    <ul>
-                        <li>{{ $item->material->name}} {{$item->size->size}} - {{$item->quantity}} uni</li>
-                    </ul>
-                @empty
-                    <p>Nenhuma farda entregue ao utilizador</p>
-                @endforelse
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Tamanho</th>
+                        <th>Quantidade</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @forelse($assignedClothes as $item)
+                        <br>
+                        <tr>
+                            <td style="text-align: left;">{{ $item->material->name }}</td>
+                            <td style="text-align: left;">{{ $item->size->size }}</td>
+                            <td style="text-align: left;">{{ $item->quantity }} uni</td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="3">Nenhuma farda entregue ao utilizador</td>
+                        </tr>
+                    @endforelse
+                    </tbody>
+                </table>
+
             </div>
         </div>
 
