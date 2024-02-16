@@ -14,7 +14,7 @@
                 {{ session('success') }}
             </div>
         @endif
-        
+
         <h1>Editar Parceiro</h1>
         <form method="post" action="{{ route('partners.update', $partner->id) }}">
 

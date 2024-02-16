@@ -175,7 +175,7 @@
                         </tbody>
                     </table>
                 </div>
-                {{ $materials->appends(request()->input())->links() }}
+                {{ $materials->appends(['mPage' => $materials->currentPage()])->links() }}
             </div>
 
 
@@ -331,6 +331,7 @@
                     </table>
 
                 </div>
+                {{ $recycleMaterials->appends(['mPage' => $recycleMaterials->currentPage()])->links() }}
 
             </div>
 

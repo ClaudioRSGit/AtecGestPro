@@ -14,7 +14,6 @@ class MaterialController extends Controller
     public function index(Request $request)
     {
 
-//        dd($request->all());
         $search = $request->input('search');
         $materialFilter = $request->input('materialFilter');
         $sortColumn = $request->input('sortColumn', 'name'); // default sort by 'name'
@@ -51,8 +50,8 @@ class MaterialController extends Controller
             $queryRecycled->where('name', 'like', "%$searchRecycled%");
         }
 
-        $materials = $query->orderBy($sortColumn, $sortDirection)->paginate(5)->withQueryString();
-        $recycleMaterials = $queryRecycled->orderBy($sortColumn, $sortDirection)->paginate(5)->withQueryString();
+        $materials = $query->orderBy($sortColumn, $sortDirection)->paginate(5, ['*'], 'mPage')->withQueryString();
+        $recycleMaterials = $queryRecycled->orderBy($sortColumn, $sortDirection)->paginate(5, ['*'], 'rPage')->withQueryString();
         return view('materials.index', compact('materials', 'search', 'materialFilter', 'sortColumn', 'sortDirection', 'recycleMaterials', 'searchRecycled', 'materialRecycledFilter'));
     }
 
