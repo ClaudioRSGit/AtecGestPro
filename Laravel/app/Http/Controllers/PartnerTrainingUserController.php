@@ -47,7 +47,7 @@ class PartnerTrainingUserController extends Controller
                 if ($searchP) {
                     $partners = Partner::with('partnerTrainingUsers', 'contactPartner')
                         ->where('name', 'like', "%$searchP%")
-                        ->paginate(10, ['*'], 'pPage');
+                        ->paginate(5, ['*'], 'pPage');
                 } else {
                     $partners = Partner::with('partnerTrainingUsers', 'contactPartner')->paginate(5, ['*'], 'pPage');
                 }
@@ -78,8 +78,7 @@ class PartnerTrainingUserController extends Controller
         $users = User::all()->where('name', '!=', 'Fila de Espera');
         $trainings = Training::all();
 
-        $materials = DB::table('materials')->where('isInternal', '=', false)->get();
-
+        $materials = DB::table('materials')->where('isInternal', '=', false)->whereNull('deleted_at')->get();
 
         return view('external.create', compact('partner_Training_Users', 'partners', 'users', 'trainings', 'materials'));
     }
@@ -87,6 +86,7 @@ class PartnerTrainingUserController extends Controller
 
     public function store(PartnerTrainingUserRequest $request)
     {
+//        dd($request->all());
         try {
             $partnerTrainingUser = PartnerTrainingUser::create([
                 'partner_id' => $request->input('partner_id'),
@@ -123,13 +123,14 @@ class PartnerTrainingUserController extends Controller
         $users = User::all()->where('name', '!=', 'Fila de Espera');
 
 
-        $materials = Material::with('partnerTrainingUsers')->where('isInternal', false)->get();
+        $materials = Material::with('partnerTrainingUsers')->where('isInternal', false)->whereNull('deleted_at')->get();
         return view('external.edit', compact('partner_Training_Users', 'partners', 'trainings', 'users', 'materials'));
     }
 
 
     public function update(PartnerTrainingUserRequest $request, $id)
     {
+//        dd($request->all());
         try {
             $partner_Training_User = PartnerTrainingUser::with('partner', 'training', 'user', 'materials')->findOrFail($id);
 
@@ -145,13 +146,14 @@ class PartnerTrainingUserController extends Controller
 
             if ($selectedMaterials) {
                 foreach ($selectedMaterials as $materialId) {
-                    $quantityInserted = $materialQuantities[$materialId] ?? 1;
-                    $currentQuantity = $partner_Training_User->materials->where('id', $materialId)->first()->pivot->quantity ?? 0;
-                    $quantityDecreased = $currentQuantity > $quantityInserted;
-                    $stock = $partner_Training_User->materials->where('id', $materialId)->first()->quantity ?? 0;
-                    $stockTotal = $stock + $currentQuantity;
+                    $quantityInserted = $materialQuantities[$materialId] ?? 1; //quantidade alocada à formação + diferença
+//                    dd($quantityInserted);
+                    $currentQuantity = $partner_Training_User->materials->where('id', $materialId)->first()->pivot->quantity ?? 0;//quantidade alocada à formação
 
-                    if ($quantityInserted > 0) {
+                    $quantityDiference = ($quantityInserted - $currentQuantity);//diferença entre a quantidade alocada à formação e a quantidade inserida
+                    $stock =  Material::find($materialId)->quantity;//stock do produto
+
+                    if ($quantityInserted != 0) {
                         $partner_Training_User->materials()->syncWithoutDetaching([
                             $materialId => ['quantity' => $quantityInserted],
                         ]);
@@ -160,7 +162,7 @@ class PartnerTrainingUserController extends Controller
                     }
 
                     $material = Material::find($materialId);
-                    $material->quantity = $stockTotal - $quantityInserted;
+                    $material->quantity = $stock - $quantityDiference;
                     $material->save();
                 }
             }
