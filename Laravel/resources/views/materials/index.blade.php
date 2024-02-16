@@ -267,8 +267,7 @@
                                            value="{{ $material->id }}">
                                 </td>
                                 <td class="clickable">
-                                    <a href="{{ route('materials.show', $material->id) }}"
-                                       class="d-flex align-items-center w-auto h-100">{{ isset($material->name) ? $material->name : 'N.A.' }}</a>
+                                    <p>{{ isset($material->name) ? $material->name : 'N.A.' }}</p>
                                 </td>
                                 <td>
                                     @if($material->isClothing == 1)
