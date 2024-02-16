@@ -184,6 +184,12 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        if (auth()->user()->hasRole('tecnico')) {
+            if ($user->hasRole('admin')) {
+                return redirect()->back()->with('error', 'Não é permitido excluir um administrador!');
+            }
+        }
+
         try {
             $user->delete();
 
