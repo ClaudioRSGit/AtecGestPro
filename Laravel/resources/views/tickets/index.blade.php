@@ -139,6 +139,9 @@
                                     Técnico
 
                                 </th>
+                                <th scope="col">
+                                        Categoria
+                                </th>
                                 <th scope="col">Estado</th>
                                 <th scope="col">Data de Abertura</th>
                                 <th scope="col">Data de Vencimento</th>
@@ -170,6 +173,7 @@
                                                class="d-flex align-items-center w-auto h-100">{{ $user->name }}</a>
                                         @endforeach
                                     </td>
+                                    <td>{{ $ticket->ticketCategory->description }}</td>
                                     <td class="ticket-status-{{ $ticket->ticketStatus->id }}">{{ $ticket->ticketStatus->description ? $ticket->ticketStatus->description : 'N.A.' }}</td>
                                     <td>{{ $ticket->created_at ? $ticket->created_at->format('d-m-Y') : 'N.A.' }}</td>
                                     <td>{{ $ticket->dueByDate ? \Carbon\Carbon::parse($ticket->dueByDate)->format('d-m-Y') : 'N.A.' }}</td>
@@ -486,59 +490,7 @@
 
     @endcomponent
 
-{{--    <style>--}}
-{{--        .fade-in {--}}
-{{--            animation: fadeIn ease 1s;--}}
-{{--            -webkit-animation: fadeIn ease 1s;--}}
-{{--            -moz-animation: fadeIn ease 1s;--}}
-{{--            -o-animation: fadeIn ease 1s;--}}
-{{--        }--}}
 
-{{--        @keyframes fadeIn {--}}
-{{--            0% {--}}
-{{--                opacity: 0;--}}
-{{--            }--}}
-{{--            100% {--}}
-{{--                opacity: 1;--}}
-{{--            }--}}
-{{--        }--}}
-
-{{--        @-moz-keyframes fadeIn {--}}
-{{--            0% {--}}
-{{--                opacity: 0;--}}
-{{--            }--}}
-{{--            100% {--}}
-{{--                opacity: 1;--}}
-{{--            }--}}
-{{--        }--}}
-
-{{--        @-webkit-keyframes fadeIn {--}}
-{{--            0% {--}}
-{{--                opacity: 0;--}}
-{{--            }--}}
-{{--            100% {--}}
-{{--                opacity: 1;--}}
-{{--            }--}}
-{{--        }--}}
-
-{{--        @-o-keyframes fadeIn {--}}
-{{--            0% {--}}
-{{--                opacity: 0;--}}
-{{--            }--}}
-{{--            100% {--}}
-{{--                opacity: 1;--}}
-{{--            }--}}
-{{--        }--}}
-
-{{--        @-ms-keyframes fadeIn {--}}
-{{--            0% {--}}
-{{--                opacity: 0;--}}
-{{--            }--}}
-{{--            100% {--}}
-{{--                opacity: 1;--}}
-{{--            }--}}
-{{--        }--}}
-{{--    </style>--}}
     <style>
         .buttons {
             width: 60% !important;
