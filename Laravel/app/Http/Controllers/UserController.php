@@ -167,6 +167,12 @@ class UserController extends Controller
                 $data['password'] = $this->encryptPassword($request->input('password'));
             }
 
+            if (auth()->user()->hasRole('admin')) {
+                if ($user->hasRole('admin') && $request->input('role_id') != 1) {
+                    return redirect()->back()->with('error', 'O administrador não pode alterar a sua própria função!');
+                }
+            }
+
             $user->update($data);
 
             if ($user->hasRole('funcionario')) {
