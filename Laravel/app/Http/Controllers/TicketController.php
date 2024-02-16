@@ -225,7 +225,7 @@ class TicketController extends Controller
 
         $id = $ticket->id;
         $ticketHistories = TicketHistory::where('ticket_id', $id)->orderBy('created_at', 'desc')->get();
-        
+
         $users = User::all();
         $statuses = TicketStatus::all();
         $priorities = TicketPriority::all();
