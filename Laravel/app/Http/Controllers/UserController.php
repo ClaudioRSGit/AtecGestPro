@@ -219,6 +219,20 @@ class UserController extends Controller
         ]);
 
         try {
+            $loggedInUser = auth()->user();
+
+            foreach ($request->input('user_ids') as $userId) {
+                $user = User::findOrFail($userId);
+
+                if ($loggedInUser->hasRole('tecnico') && $user->hasRole('admin')) {
+                    return redirect()->back()->with('error', 'Não é permitido excluir um administrador!');
+                }
+
+                if ($loggedInUser->hasRole('admin') && $user->hasRole('admin') && $user->id == $loggedInUser->id) {
+                    return redirect()->back()->with('error', 'O administrador não pode apagar o próprio perfil!');
+                }
+            }
+
             User::whereIn('id', $request->input('user_ids'))->delete();
 
             return redirect()->back()->with('success', 'Utilizadores selecionados excluídos com sucesso!');
