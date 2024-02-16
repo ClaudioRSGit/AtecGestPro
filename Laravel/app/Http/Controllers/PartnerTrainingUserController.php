@@ -20,16 +20,15 @@ class PartnerTrainingUserController extends Controller
     {
 
 
-
         $searchPtu = $request->input('ptu');
         $searchP = $request->input('p');
         $searchT = $request->input('t');
 
 
-
+        $ptuQuery = PartnerTrainingUser::with('partner', 'training', 'user');
 
         if ($searchPtu) {
-            $partner_Training_Users = PartnerTrainingUser::with('partner', 'training', 'user')
+            $ptuQuery = PartnerTrainingUser::with('partner', 'training', 'user')
                 ->whereHas('partner', function ($query) use ($searchPtu) {
                     $query->where('name', 'like', "%$searchPtu%");
                 })
@@ -38,26 +37,28 @@ class PartnerTrainingUserController extends Controller
                 })
                 ->orWhereHas('user', function ($query) use ($searchPtu) {
                     $query->where('name', 'like', "%$searchPtu%");
-                })->paginate(5, ['*'], 'ptuPage');
+                });
         } else {
-            $partner_Training_Users = PartnerTrainingUser::with('partner', 'training', 'user')->paginate(5, ['*'], 'ptuPage');
+            $ptuQuery = PartnerTrainingUser::with('partner', 'training', 'user');
         }
 
 
-                if ($searchP) {
-                    $partners = Partner::with('partnerTrainingUsers', 'contactPartner')
-                        ->where('name', 'like', "%$searchP%")
-                        ->paginate(5, ['*'], 'pPage');
-                } else {
-                    $partners = Partner::with('partnerTrainingUsers', 'contactPartner')->paginate(5, ['*'], 'pPage');
-                }
+        if ($searchP) {
+            $partnersQuery = Partner::with('partnerTrainingUsers', 'contactPartner')
+                ->where('name', 'like', "%$searchP%");
+        } else {
+            $partnersQuery = Partner::with('partnerTrainingUsers', 'contactPartner');
+        }
 
         if ($searchT) {
-            $trainings = Training::where('name', 'like', "%$searchT%")->paginate(5, ['*'], 'tPage');
+            $trainingsQuery = Training::where('name', 'like', "%$searchT%");
         } else {
-            $trainings = Training::with('partnerTrainingUsers')->paginate(5, ['*'], 'tPage');
+            $trainingsQuery = Training::with('partnerTrainingUsers');
         }
 
+        $partner_Training_Users = $ptuQuery->paginate(5, ['*'], 'ptuPage')->withQueryString();
+        $partners = $partnersQuery->paginate(5, ['*'], 'pPage')->withQueryString();
+        $trainings = $trainingsQuery->paginate(5, ['*'], 'tPage')->withQueryString();
 
         return view('external.index', compact('partner_Training_Users', 'partners', 'trainings', 'searchPtu', 'searchP', 'searchT'));
     }
@@ -152,7 +153,7 @@ class PartnerTrainingUserController extends Controller
                     $currentQuantity = $partner_Training_User->materials->where('id', $materialId)->first()->pivot->quantity ?? 0;//quantidade alocada à formação
 
                     $quantityDiference = ($quantityInserted - $currentQuantity);//diferença entre a quantidade alocada à formação e a quantidade inserida
-                    $stock =  Material::find($materialId)->quantity;//stock do produto
+                    $stock = Material::find($materialId)->quantity;//stock do produto
 
                     if ($quantityInserted != 0) {
                         $partner_Training_User->materials()->syncWithoutDetaching([

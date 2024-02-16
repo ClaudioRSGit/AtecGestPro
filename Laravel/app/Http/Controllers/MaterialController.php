@@ -32,7 +32,7 @@ class MaterialController extends Controller
             $query->where('name', 'like', "%$search%");
         }
 
-        $materials = $query->orderBy($sortColumn, $sortDirection)->paginate(5);
+        $materials = $query->orderBy($sortColumn, $sortDirection)->paginate(5)->withQueryString();
 
         return view('materials.index', compact('materials', 'search', 'materialFilter', 'sortColumn', 'sortDirection'));
     }
