@@ -43,8 +43,10 @@ class NotificationComponent extends Component
     public function deleteNotification($notificationUserId)
     {
         $notificationUser = NotificationUser::findOrFail($notificationUserId);
+        $notificationUser->isRead = true;
         $notificationUser->delete();
 
         $this->mount();
+        return redirect(request()->header('Referer'));
     }
 }
