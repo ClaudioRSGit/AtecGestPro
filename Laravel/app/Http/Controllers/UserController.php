@@ -167,6 +167,12 @@ class UserController extends Controller
                 $data['password'] = $this->encryptPassword($request->input('password'));
             }
 
+            if (auth()->user()->hasRole('admin')) {
+                if ($user->hasRole('admin') && $request->input('role_id') != 1) {
+                    return redirect()->back()->with('error', 'O administrador não pode alterar a sua própria função!');
+                }
+            }
+
             $user->update($data);
 
             if ($user->hasRole('funcionario')) {
@@ -184,6 +190,18 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        if (auth()->user()->hasRole('tecnico')) {
+            if ($user->hasRole('admin')) {
+                return redirect()->back()->with('error', 'Não é permitido excluir um administrador!');
+            }
+        }
+
+        if (auth()->user()->hasRole('admin')) {
+            if ($user->hasRole('admin') && $user->id == auth()->user()->id) {
+                return redirect()->back()->with('error', 'O administrador não pode apagar o próprio perfil!');
+            }
+        }
+
         try {
             $user->delete();
 
