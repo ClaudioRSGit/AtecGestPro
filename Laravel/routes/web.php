@@ -48,6 +48,11 @@ Route::middleware(['auth', 'checkRole:admin,tecnico'])->group(function () {
 
     Route::resource('materials', 'MaterialController');
     Route::post('materials/massDelete', 'MaterialController@massDelete')->name('materials.massDelete');
+    Route::get('/materials/restore/{id}', 'MaterialController@restore')->name('materials.restore');
+    Route::delete('/materials/forceDelete/{id}', 'MaterialController@forceDelete')->name('materials.forceDelete');
+    Route::post('/materials/massRestore', 'MaterialController@massRestore')->name('materials.massRestore');
+    Route::post('/materials/massForceDelete', 'MaterialController@massForceDelete')->name('materials.massForceDelete');
+
 
     Route::resource('trainings', 'TrainingController');
     Route::post('trainings/massDelete', 'TrainingController@massDelete')->name('trainings.massDelete');
@@ -70,6 +75,7 @@ Route::middleware(['auth', 'checkRole:admin,tecnico'])->group(function () {
 
     Route::get('/material-user/create/{id}', 'MaterialUserController@create')->name('material-user.create');
     Route::post('/material-user', 'MaterialUserController@store')->name('material-user.store');
+
 
     Route::resource('course-classes', 'CourseClassController');
     Route::post('course-classes/massDelete', 'CourseClassController@massDelete')->name('course-classes.massDelete');
