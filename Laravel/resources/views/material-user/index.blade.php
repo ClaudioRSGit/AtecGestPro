@@ -82,11 +82,11 @@
                                     return $usersWithMaterialsDelivered->contains($student->id);
                                 });
                         @endphp
-                            <div class="card-header {{$allDelivered ? 'bg-primary ' : 'bg-white' }}" id="heading{{ $courseClass->id }}">
+                            <div class="card-header {{$allDelivered ? 'bg-blue ' : 'bg-white' }}" id="heading{{ $courseClass->id }}">
                                 <h2 class="mb-0">
 
 
-                                    <button class="btn btn-link {{ $allDelivered ? 'font-weight-bold text-white' : ' ' }}"
+                                    <button class="btn btn-link {{ $allDelivered ? 'font-weight-bold text-primary' : ' ' }}"
                                         type="button" data-toggle="collapse" data-target="#collapse{{ $courseClass->id }}"
                                         aria-expanded="false" aria-controls="collapse{{ $courseClass->id }}">
                                         {{ $courseClass->description }}
