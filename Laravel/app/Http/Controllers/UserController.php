@@ -190,6 +190,12 @@ class UserController extends Controller
             }
         }
 
+        if (auth()->user()->hasRole('admin')) {
+            if ($user->hasRole('admin') && $user->id == auth()->user()->id) {
+                return redirect()->back()->with('error', 'O administrador não pode apagar o próprio perfil!');
+            }
+        }
+
         try {
             $user->delete();
 
