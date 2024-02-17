@@ -13,11 +13,7 @@ use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index(Request $request)
     {
         $searchName = $request->input('searchName');
@@ -45,11 +41,7 @@ class UserController extends Controller
 
         return view('users.index', compact('users', 'courseClasses', 'roles', 'roleFilter', 'sortColumn', 'sortDirection', 'searchName', 'deletedUsers'));
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         $courseClasses = CourseClass::all();
@@ -94,8 +86,6 @@ class UserController extends Controller
         $courseClasses = CourseClass::with('Course')->get();
         $roles = Role::all();
 
-
-
         if ($user->isStudent == 1) {
             $user->load('courseClass', 'role');
             $courseDescription = $user->courseClass ? $user->courseClass->course->description : null;
@@ -111,13 +101,6 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        // $courseClasses = CourseClass::all();
-        // $courses = Course::all();
-        // $roles = Role::all();
-        // $user->load('CourseClass.Course', 'Role');
-
-        // return view('users.edit', compact('user', 'courseClasses', 'courses', 'roles'));
-
         $authenticatedUser = Auth::user();
 
         if ($authenticatedUser->hasRole('funcionario') || $authenticatedUser->hasRole('tecnico')) {
@@ -187,24 +170,33 @@ class UserController extends Controller
         }
     }
 
-
-    public function destroy(User $user)
+    private function canDeleteUser($loggedInUser, $user)
     {
-        if (auth()->user()->hasRole('tecnico')) {
-            if ($user->hasRole('admin')) {
-                return redirect()->back()->with('error', 'Não é permitido excluir um administrador!');
+        if ($loggedInUser->hasRole('tecnico')) {
+            if ($user->hasRole('admin') || $user->id == $loggedInUser->id) {
+                return false;
             }
         }
 
-        if (auth()->user()->hasRole('admin')) {
-            if ($user->hasRole('admin') && $user->id == auth()->user()->id) {
-                return redirect()->back()->with('error', 'O administrador não pode apagar o próprio perfil!');
+        if ($loggedInUser->hasRole('admin')) {
+            if ($user->hasRole('admin') && $user->id == $loggedInUser->id) {
+                return false;
             }
+        }
+
+        return true;
+    }
+
+    public function destroy(User $user)
+    {
+        $loggedInUser = auth()->user();
+
+        if (!$this->canDeleteUser($loggedInUser, $user)) {
+            return redirect()->back()->with('error', 'Não é permitido excluir este utilizador!');
         }
 
         try {
             $user->delete();
-
             return redirect()->route('users.index')->with('success', 'Utilizador excluído com sucesso!');
         } catch (\Exception $e) {
             return redirect()->route('users.index')->with('error', 'Erro ao excluir o utilizador. Por favor, tente novamente.');
@@ -215,26 +207,20 @@ class UserController extends Controller
     {
         $request->validate([
             'user_ids' => 'required|array',
-            'user_ids.*' => 'exists:users,id', //all items inside array must exist
+            'user_ids.*' => 'exists:users,id',
         ]);
+        $loggedInUser = auth()->user();
+
+        foreach ($request->input('user_ids') as $userId) {
+            $user = User::findOrFail($userId);
+
+            if (!$this->canDeleteUser($loggedInUser, $user)) {
+                return redirect()->back()->with('error', 'Não é permitido excluir um dos utilizadores selecionados!');
+            }
+        }
 
         try {
-            $loggedInUser = auth()->user();
-
-            foreach ($request->input('user_ids') as $userId) {
-                $user = User::findOrFail($userId);
-
-                if ($loggedInUser->hasRole('tecnico') && $user->hasRole('admin')) {
-                    return redirect()->back()->with('error', 'Não é permitido excluir um administrador!');
-                }
-
-                if ($loggedInUser->hasRole('admin') && $user->hasRole('admin') && $user->id == $loggedInUser->id) {
-                    return redirect()->back()->with('error', 'O administrador não pode apagar o próprio perfil!');
-                }
-            }
-
             User::whereIn('id', $request->input('user_ids'))->delete();
-
             return redirect()->back()->with('success', 'Utilizadores selecionados excluídos com sucesso!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Erro ao excluir utilizadores selecionados. Por favor, tente novamente.');
@@ -245,11 +231,6 @@ class UserController extends Controller
     {
         return bcrypt($password);
     }
-
-    //    private function setIsStudent(Request $request)
-    //    {
-    //        return $request->input('position') === 'formando' ? 1 : 0;
-    //    }
 
     public function restore($id)
     {
