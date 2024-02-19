@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use App\TicketUser;
 
 class UserController extends Controller
 {
@@ -190,6 +191,13 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $loggedInUser = auth()->user();
+        $waitingQueueUserId = 1;
+
+        $technicianTickets = TicketUser::where('user_id', $user->id)->get();
+
+        foreach ($technicianTickets as $ticket) {
+            $ticket->update(['user_id' => $waitingQueueUserId]);
+        }
 
         if (!$this->canDeleteUser($loggedInUser, $user)) {
             return redirect()->back()->with('error', 'Não é permitido excluir este utilizador!');
