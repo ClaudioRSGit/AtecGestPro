@@ -184,8 +184,8 @@
         .grid {
             display: grid;
             grid-template-areas:
-                'internal clothing'
-                'gender quantity';
+                'internal quantity'
+                'clothing gender';
         }
     </style>
 
