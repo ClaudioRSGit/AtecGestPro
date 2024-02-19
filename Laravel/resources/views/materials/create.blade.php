@@ -87,6 +87,9 @@
                             </select>
                         </div>
                     </div>
+                    <div id="warningMessage" style="display: none; text-align: center; margin-top: 10px; color: red;">
+                        Nota: Não é possível adicionar vestuário externo.
+                    </div>
 
 
 
@@ -149,9 +152,6 @@
                 </div>
             </div>
         </form>
-        <div id="warningMessage" style="display: none; text-align: center; margin-top: 10px; color: red;">
-            Nota: Não é possível adicionar vestuário externo.
-        </div>
     </div>
     <style>
         .form-control[readonly] {
