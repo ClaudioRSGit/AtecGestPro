@@ -171,7 +171,7 @@ class UserController extends Controller
                 return redirect()->route('users.index')->with('success', 'Utilizador atualizado com sucesso!');
             }
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Erro ao atualizar o utilizador.Por favor tente novamente');
+            return redirect()->back()->with('error', 'Erro ao atualizar o utilizador.Por favor tente novamente!');
         }
     }
 
