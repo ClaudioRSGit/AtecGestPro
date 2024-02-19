@@ -88,10 +88,13 @@
                                            name="quantity[{{ $clothingItem->id }}]" value="1" min="1"
                                            style="width: 60px; text-align: center;" {{ $disabled }}>
                                 </td>
-                                <td style="text-align: center;">
-                                    <input type="date" class="form-control"
+                                <td class="d-flex justify-content-left align-items-center position-relative">
+                                    <input type="date" class="form-control w-90 delivery_date"
                                            name="delivery_date[{{ $clothingItem->id }}]"
                                            value="{{ date('Y-m-d') }}" {{ $disabled }}>
+                                    <span class="warning-icon position-absolute" style="display: none; right: 0;">
+                                        <i class="fa fa-info-circle" data-toggle="tooltip" title="Atenção! A data selecionada é anterior à data de hoje"></i>
+                                    </span>
                                 </td>
                             </tr>
                         @endforeach
@@ -253,6 +256,27 @@
                     }
                 });
             });
+        });
+
+        document.querySelectorAll('.delivery_date').forEach(function(inputField) {
+            inputField.addEventListener('change', function() {
+                let inputDate = new Date(this.value);
+                let today = new Date();
+                today.setHours(0, 0, 0, 0);  // Set time to 00:00:00 to compare only the date part
+
+                // Get the warning icon related to this input
+                let warningIcon = this.parentNode.querySelector('.warning-icon');
+
+                if (inputDate < today) {
+                    warningIcon.style.display = 'inline';
+                } else {
+                    warningIcon.style.display = 'none';
+                }
+            });
+        });
+
+        $(document).ready(function(){
+            $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
 @endsection
