@@ -34,7 +34,7 @@
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="attachment" class="form-label">Anexo: </span></label><br>
+                        <label for="attachment" class="form-label">Anexo: <strong><span id="file-name"></span></strong></label><br>
                         <label for="attachment" class="btn btn-primary">Selecionar ficheiro</label>
                         <input type="file" class="form-control" id="attachment" name="attachment" style="display: none;">
                         <p>Certifique-se que o arquivo tem menos de 20MB</p>
