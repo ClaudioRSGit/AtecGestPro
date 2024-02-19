@@ -70,6 +70,15 @@ class MaterialController extends Controller
     {
 
         try {
+            if ($request->input('isClothing') == 0) {
+                $request->merge([
+                    'gender' => null,
+                    'sizes' => [],
+                    'stocks' => [],
+                    'courses' => [],
+                ]);
+            }
+            
             $quantity = $request->input('quantity');
 
             if ($request->input('isClothing')) {

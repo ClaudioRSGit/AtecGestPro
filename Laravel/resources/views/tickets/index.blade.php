@@ -453,7 +453,7 @@
                                     <td class="clickable">
                                         @showIfNotDeleted($ticket)
                                         <a href="{{ route('users.show', $ticket->user_id) }}"
-                                           class="d-flex align-items-center w-auto h-100">{{ $ticket->requester->name }}</a>
+                                            class="d-flex align-items-center w-auto h-100">{{ $ticket->requester->name ? $ticket->requester->name : 'N.A.' }}</a>
                                            @endshowIfNotDeleted
                                     </td>
                                     <td class="clickable">

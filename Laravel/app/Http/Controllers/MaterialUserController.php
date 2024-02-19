@@ -44,9 +44,9 @@ class MaterialUserController extends Controller
         }
 
         if($searchNonDocent){
-            $queryNonDocent = $queryNonDocent->where('name', '!=', 'Fila de Espera')->where('name', 'like', '%' . $searchNonDocent . '%');
+            $queryNonDocent = $queryNonDocent->where('name', '!=', 'Fila de Espera')->where('name', '!=', 'Utilizador Padrao')->where('name', 'like', '%' . $searchNonDocent . '%');
         } else {
-            $queryNonDocent = $queryNonDocent->where('name', '!=', 'Fila de Espera')->where('isStudent', false);
+            $queryNonDocent = $queryNonDocent->where('name', '!=', 'Fila de Espera')->where('name', '!=', 'Utilizador Padrao')->where('isStudent', false);
         }
         if ($roleFilter) {
             $queryNonDocent = $queryNonDocent->where('role_id', $roleFilter);

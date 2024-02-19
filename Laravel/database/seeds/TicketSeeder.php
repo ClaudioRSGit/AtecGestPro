@@ -149,7 +149,7 @@ class TicketSeeder extends Seeder
         ]);
         // Seed 10
         DB::table('tickets')->insert([
-            'user_id' => 2,
+            'user_id' => 3,
             'title' => 'PC já liga',
             'description' => 'O pc 14 da sala 15 não liga',
             'dueByDate' => now()->addDays(2),

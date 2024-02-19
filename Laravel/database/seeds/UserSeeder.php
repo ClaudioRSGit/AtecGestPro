@@ -28,7 +28,7 @@ class UserSeeder extends Seeder
         ]);
         // Seed 14
         DB::table('users')->insert([
-            'name' => 'Utilizador Padrão',
+            'name' => 'Utilizador Padrao',
             'username' => 'padrao',
             'email' => 'utilizador.padrao@edu.atec.pt',
             'contact' => '922222222',
