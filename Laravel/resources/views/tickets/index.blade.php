@@ -159,8 +159,9 @@
                                         <div class="d-flex align-items-center">
                                             <span
                                                 class="mr-2 ticket-prio ticket-priority-{{ $ticket->ticketPriority->id }}"></span>
-                                            <a href="{{ route('tickets.show', $ticket->id) }}"
-                                               class="d-flex align-items-center w-auto h-100">{{ $ticket->title ? $ticket->title : 'N.A.' }}</a>
+                                                <a href="{{ route('tickets.show', $ticket->id) }}"
+                                                    class="d-flex align-items-center w-auto h-100">{{ $ticket->title ? $ticket->title : 'N.A.' }}
+                                                </a>
                                         </div>
                                     </td>
                                     <td class="clickable">
@@ -295,7 +296,9 @@
                                         <div class="d-flex align-items-center">
                                             <span
                                                 class="mr-2 ticket-prio ticket-priority-{{ $ticket->ticketPriority->id }}"></span>
-                                            <a href="{{ route('tickets.show', $ticket->id) }}">{{ $ticket->title ? $ticket->title : 'N.A.' }}</a>
+                                                <a href="{{ route('tickets.show', $ticket->id) }}"
+                                                    class="d-flex align-items-center w-auto h-100">{{ $ticket->title ? $ticket->title : 'N.A.' }}
+                                                </a>
                                         </div>
                                     </td>
                                     <td class="clickable">
@@ -436,8 +439,13 @@
                                     <td class="pl-4">#{{ $ticket->id }}</td>
                                     <td class="d-flex align-items-center clickable">
                                         <span
-                                            class="mr-2 ticket-prio ticket-priority-{{ $ticket->ticketPriority->id }}"></span>
-                                        <a href="{{ route('tickets.show', $ticket->id) }}">{{ $ticket->title ? $ticket->title : 'N.A.' }}</a>
+                                            class="mr-2 ticket-prio ticket-priority-{{ $ticket->ticketPriority->id }}">
+                                        </span>
+                                            @showIfNotDeleted($ticket)
+                                                <a href="{{ route('tickets.show', $ticket->id) }}" class="d-flex align-items-center w-auto h-100">{{ $ticket->title ? $ticket->title : 'N.A.' }}</a>
+                                            @else
+                                                <span class="d-flex align-items-center w-auto h-100">{{ $ticket->title ? $ticket->title : 'N.A.' }}</span>
+                                            @endshowIfNotDeleted
                                     </td>
                                     <td class="clickable">
                                         <a href="{{ route('users.show', $ticket->requester->id) }}"
