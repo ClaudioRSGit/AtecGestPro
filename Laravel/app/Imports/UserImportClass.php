@@ -8,6 +8,8 @@ use App\CourseClass;
 
 class UserImportClass implements ToModel
 {
+    private $importStatus = true;
+
     public function model(array $row)
     {
         $userNames = User::pluck('name');
@@ -62,5 +64,14 @@ class UserImportClass implements ToModel
                 'role_id' => 4,
             ]);
         }
+
+        $this->importStatus = false;
+
+        return null;
+    }
+
+    public function getImportStatus()
+    {
+        return $this->importStatus;
     }
 }
