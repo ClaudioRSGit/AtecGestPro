@@ -76,7 +76,7 @@ class PartnerTrainingUserController extends Controller
     {
         $partner_Training_Users = PartnerTrainingUser::all();
         $partners = Partner::all();
-        $users = User::all()->where('name', '!=', 'Fila de Espera');
+        $users = User::all()->where('name', '!=', 'Fila de Espera')->where('name', '!=', 'Utilizador Padrao');
         $trainings = Training::all();
 
         $materials = DB::table('materials')->where('isInternal', '=', false)->whereNull('deleted_at')->get();
@@ -122,7 +122,7 @@ class PartnerTrainingUserController extends Controller
         $partner_Training_Users = PartnerTrainingUser::with('partner', 'training', 'user', 'materials')->findOrFail($id);
         $partners = Partner::all();
         $trainings = Training::all();
-        $users = User::all()->where('name', '!=', 'Fila de Espera');
+        $users = User::all()->where('name', '!=', 'Fila de Espera')->where('name', '!=', 'Utilizador Padrao');
 
 
         $materials = Material::with('partnerTrainingUsers')->where('isInternal', false)->whereNull('deleted_at')->get();
