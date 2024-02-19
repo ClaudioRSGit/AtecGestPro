@@ -79,7 +79,7 @@
 
                                 @if ($ticket->comments->isNotEmpty())
                                     @foreach ($ticket->comments as $comment)
-                                        <div class="card mb-2 bg-light">
+                                        <div class="card mb-2 bg-light mx-4">
                                             <div class="card-body d-flex justify-content-between">
                                                 <div>
                                                     <label class="card-text font-weight-bold">
