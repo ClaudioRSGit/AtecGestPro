@@ -68,8 +68,8 @@
                                 <div class="mb-3">
                                     <textarea class="form-control" id="new-comment" name="comment" required></textarea>
                                     <div class="d-flex justify-content-between" style="gap: 10px;">
-                                        <button type="submit" class="btn btn-primary mt-2 flex-grow-1">Enviar Comentário</button>
-                                        <a type="button" href="{{ url()->previous() }}" class="btn btn-secondary mt-2 flex-grow-1">Voltar</a>
+                                        <button type="submit" class="btn btn-primary mt-2 w-70">Enviar Comentário</button>
+                                        <a type="button" href="{{ url()->previous() }}" class="btn btn-secondary mt-2 w-30">Voltar</a>
                                     </div>
                                 </div>
                             </form>
