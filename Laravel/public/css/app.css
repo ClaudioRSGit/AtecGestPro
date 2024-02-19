@@ -220,6 +220,66 @@ body {
     text-align: left;
     background-color: #f8fafc;
 }
+/* ticket crud */
+.buttons {
+    width: 60% !important;
+}
+
+thead th {
+    border-top: none !important;
+}
+
+.noTicket {
+    margin-top: 100px !important;
+    width: 20%;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+    opacity: 0.5;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.options {
+    display: none;
+    position: absolute;
+    overflow: auto;
+    z-index: 1;
+}
+
+.options * {
+    text-decoration: none;
+    display: block;
+    padding: 12px 16px;
+}
+
+.show {
+    display: block;
+}
+
+#options * {
+    width: 10rem;
+    border-radius: 0 !important;
+}
+
+
+@media (max-width: 1080px) {
+    .noTicket {
+        width: 50%;
+    }
+}
+
+.bin {
+    margin-top: 100px !important;
+    width: 200px;
+    height: 200px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 #histTickets {
     overflow-y: auto;
@@ -228,7 +288,7 @@ body {
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
-
+/* ticket crud */
 td a {
     color: black !important;
     text-decoration: none !important;
