@@ -213,14 +213,21 @@ class UserController extends Controller
 
     public function massDelete(Request $request)
     {
+        $loggedInUser = auth()->user();
+        $waitingQueueUserId = 1;
+
         $request->validate([
             'user_ids' => 'required|array',
             'user_ids.*' => 'exists:users,id',
         ]);
-        $loggedInUser = auth()->user();
 
         foreach ($request->input('user_ids') as $userId) {
             $user = User::findOrFail($userId);
+
+            $technicianTickets = TicketUser::where('user_id', $user->id)->get();
+            foreach ($technicianTickets as $ticket) {
+                $ticket->update(['user_id' => $waitingQueueUserId]);
+            }
 
             if (!$this->canDeleteUser($loggedInUser, $user)) {
                 return redirect()->back()->with('error', 'Não é permitido excluir um dos utilizadores selecionados!');
