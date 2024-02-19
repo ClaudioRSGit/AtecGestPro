@@ -271,8 +271,7 @@
                     @if (count($waitingQueueTickets) === 0)
                         <div>
                             <img src="{{ asset('assets/noTickets.png') }}" class="noTicket">
-                            <label class="d-flex justify-content-center mt-2 text-primary">Não existem tickets na fila
-                                de espera</label>
+
                         </div>
                     @else
                         <table class="table bg-white rounded-top">
@@ -498,6 +497,69 @@
 
     @endcomponent
 
+
+    <style>
+        .buttons {
+            width: 60% !important;
+        }
+
+        thead th {
+            border-top: none !important;
+        }
+
+        .noTicket {
+            margin-top: 100px !important;
+            width: 20%;
+            height: auto;
+            margin: 0 auto;
+            display: block;
+
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .options {
+            display: none;
+            position: absolute;
+            overflow: auto;
+            z-index: 1;
+        }
+
+        .options * {
+            text-decoration: none;
+            display: block;
+            padding: 12px 16px;
+        }
+
+        .show {
+            display: block;
+        }
+
+        #options * {
+            width: 10rem;
+            border-radius: 0 !important;
+        }
+
+
+        @media (max-width: 1080px) {
+            .noTicket {
+                width: 50%;
+            }
+        }
+
+        .bin {
+            margin-top: 100px !important;
+            width: 200px;
+            height: 200px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+    </style>
 
     <script>
         function submitCategoryForm() {
