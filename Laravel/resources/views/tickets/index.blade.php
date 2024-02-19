@@ -165,8 +165,10 @@
                                         </div>
                                     </td>
                                     <td class="clickable">
-                                        <a href="{{ route('users.show', $ticket->requester->id) }}"
-                                           class="d-flex align-items-center w-auto h-100">{{ $ticket->requester->name ? $ticket->requester->name : 'N.A.' }}</a>
+                                        @showIfNotDeleted($ticket)
+                                        <a href="{{ route('users.show', $ticket->user_id) }}"
+                                            class="d-flex align-items-center w-auto h-100">{{ $ticket->requester->name ? $ticket->requester->name : 'N.A.' }}</a>
+                                        @endshowIfNotDeleted
                                     </td>
                                     <td class="clickable">
                                         @foreach ($ticket->users as $user)
@@ -302,8 +304,10 @@
                                         </div>
                                     </td>
                                     <td class="clickable">
-                                        <a href="{{ route('users.show', $ticket->requester->id) }}"
+                                        @showIfNotDeleted($ticket)
+                                        <a href="{{ route('users.show', $ticket->user_id) }}"
                                            class="d-flex align-items-center w-auto h-100">{{ $ticket->requester->name }}</a>
+                                        @endshowIfNotDeleted
                                     </td>
                                     <td class="clickable">
                                         @foreach ($ticket->users as $user)
@@ -448,8 +452,10 @@
                                             @endshowIfNotDeleted
                                     </td>
                                     <td class="clickable">
-                                        <a href="{{ route('users.show', $ticket->requester->id) }}"
+                                        @showIfNotDeleted($ticket)
+                                        <a href="{{ route('users.show', $ticket->user_id) }}"
                                            class="d-flex align-items-center w-auto h-100">{{ $ticket->requester->name }}</a>
+                                           @endshowIfNotDeleted
                                     </td>
                                     <td class="clickable">
                                         @foreach ($ticket->users as $user)

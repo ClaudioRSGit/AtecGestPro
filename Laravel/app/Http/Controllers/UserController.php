@@ -11,6 +11,7 @@ use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use App\TicketUser;
+use App\Ticket;
 
 class UserController extends Controller
 {
@@ -192,18 +193,24 @@ class UserController extends Controller
     {
         $loggedInUser = auth()->user();
         $waitingQueueUserId = 1;
+        $anonymousRequesterUserId = 2;
 
         $technicianTickets = TicketUser::where('user_id', $user->id)->get();
+        $userTickets = Ticket::where('user_id', $user->id)->get();
 
-        foreach ($technicianTickets as $ticket) {
-            $ticket->update(['user_id' => $waitingQueueUserId]);
-        }
 
         if (!$this->canDeleteUser($loggedInUser, $user)) {
             return redirect()->back()->with('error', 'Não é permitido excluir este utilizador!');
         }
 
         try {
+            foreach ($technicianTickets as $technician) {
+                $technician->update(['user_id' => $waitingQueueUserId]);
+            }
+            foreach($userTickets as $newRequester){
+                $newRequester->update(['user_id' => $anonymousRequesterUserId]);
+            }
+
             $user->delete();
             return redirect()->route('users.index')->with('success', 'Utilizador excluído com sucesso!');
         } catch (\Exception $e) {
@@ -215,26 +222,31 @@ class UserController extends Controller
     {
         $loggedInUser = auth()->user();
         $waitingQueueUserId = 1;
+        $anonymousRequesterUserId = 2;
 
         $request->validate([
             'user_ids' => 'required|array',
             'user_ids.*' => 'exists:users,id',
         ]);
 
-        foreach ($request->input('user_ids') as $userId) {
-            $user = User::findOrFail($userId);
-
-            $technicianTickets = TicketUser::where('user_id', $user->id)->get();
-            foreach ($technicianTickets as $ticket) {
-                $ticket->update(['user_id' => $waitingQueueUserId]);
-            }
-
-            if (!$this->canDeleteUser($loggedInUser, $user)) {
-                return redirect()->back()->with('error', 'Não é permitido excluir um dos utilizadores selecionados!');
-            }
-        }
-
         try {
+            foreach ($request->input('user_ids') as $userId) {
+                $user = User::findOrFail($userId);
+
+                $technicianTickets = TicketUser::where('user_id', $user->id)->get();
+                $userTickets = Ticket::where('user_id', $user->id)->get();
+                foreach ($technicianTickets as $ticket) {
+                    $ticket->update(['user_id' => $waitingQueueUserId]);
+                }
+                foreach($userTickets as $newRequester){
+                    $newRequester->update(['user_id' => $anonymousRequesterUserId]);
+                }
+
+                if (!$this->canDeleteUser($loggedInUser, $user)) {
+                    return redirect()->back()->with('error', 'Não é permitido excluir um dos utilizadores selecionados!');
+                }
+            }
+
             User::whereIn('id', $request->input('user_ids'))->delete();
             return redirect()->back()->with('success', 'Utilizadores selecionados excluídos com sucesso!');
         } catch (\Exception $e) {
