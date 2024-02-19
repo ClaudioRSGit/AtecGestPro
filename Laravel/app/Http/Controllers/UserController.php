@@ -158,6 +158,10 @@ class UserController extends Controller
                 }
             }
 
+            if ($user->id === auth()->user()->id && $request->input('isActive') == 0) {
+                return redirect()->back()->with('error', 'Não é possível desativar a sua própria conta!');
+            }
+
             $user->update($data);
 
             if ($user->hasRole('funcionario')) {
@@ -168,7 +172,7 @@ class UserController extends Controller
                 return redirect()->route('users.index')->with('success', 'Utilizador atualizado com sucesso!');
             }
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Erro ao atualizar o utilizador.Por favor tente novamente');
+            return redirect()->back()->with('error', 'Erro ao atualizar o utilizador.Por favor tente novamente!');
         }
     }
 
