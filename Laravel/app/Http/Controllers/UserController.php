@@ -157,6 +157,12 @@ class UserController extends Controller
                 }
             }
 
+            if (auth()->user()->hasRole('admin')) {
+                if ($user->id === auth()->user()->id && $request->input('isActive') == 0) {
+                    return redirect()->back()->with('error', 'O administrador não pode desativar a sua própria conta!');
+                }
+            }
+
             $user->update($data);
 
             if ($user->hasRole('funcionario')) {
