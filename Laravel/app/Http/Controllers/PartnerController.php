@@ -6,6 +6,7 @@ use App\Partner;
 use App\ContactPartner;
 use Illuminate\Http\Request;
 use App\Http\Requests\PartnerRequest;
+use Illuminate\Database\QueryException;
 
 class PartnerController extends Controller
 {
@@ -120,6 +121,11 @@ class PartnerController extends Controller
             }
 
             return redirect()->route('external.index')->with('success', 'Parceiro atualizado com sucesso!');
+            } catch (QueryException $e) {
+            if (str_contains($e->getMessage(), 'Integrity constraint violation')) {
+                return redirect()->back()->with('error', 'Erro ao inserir o novo contacto: já existe um contacto com o mesmo valor!');
+            }
+            return redirect()->back()->with('error', 'Erro ao atualizar parceiro!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Erro ao atualizar parceiro!');
         }
