@@ -96,7 +96,7 @@
                             </th>
                             <th scope="col">Fornecedor</th>
                             <th scope="col">Género</th>
-                            <th scope="col">Ações</th>
+                            <th scope="col"><div class="centerTd">Ações</div></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -147,7 +147,9 @@
                                             </span>
                                         @elseif ($minus5 === 0)
                                             <span class="warning-icon position-absolute" style="left: -20px;">
-                                                <i class="fa-solid fa-triangle-exclamation" data-toggle="tooltip" title="Atenção! Produto sem artigos em stock!"  style="color: #f12704;"></i>
+                                                <i class="fa-solid fa-triangle-exclamation" data-toggle="tooltip"
+                                                   title="Atenção! Produto sem artigos em stock!"
+                                                   style="color: #f12704;"></i>
                                             </span>
                                         @endif
                                     @else
@@ -159,7 +161,8 @@
                                             </span>
                                         @elseif (isset($material->quantity) && $material->quantity === 0)
                                             <span class="warning-icon position-absolute" style="left: -20px;">
-                                                <i class="fa fa-info-circle" data-toggle="tooltip" title="Atenção! Produto sem artigos em stock!"></i>
+                                                <i class="fa fa-info-circle" data-toggle="tooltip"
+                                                   title="Atenção! Produto sem artigos em stock!"></i>
                                             </span>
                                         @endif
                                     @endif
@@ -298,8 +301,11 @@
                             </th>
                             <th scope="col">Fornecedor</th>
                             <th scope="col">Género</th>
-                            <th scope="col">Restaurar</th>
-                            <th scope="col">Apagar</th>
+
+                            <th scope="col"><div class="centerTd">Restaurar</div></th>
+
+                            <th scope="col"><div class="centerTd">Apagar</div></th>
+
                         </tr>
                         </thead>
                         <tbody>
@@ -342,31 +348,34 @@
 
                                 </td>
 
-                                <td class="">
-
-                                    <form method="get" action="{{ route('materials.restore', $material->id) }}"
-                                          style="display:inline;">
-                                        @csrf
-                                        <button type="submit"
-                                                onclick="return confirm('Tem a certeza que pretende restaurar o material?')"
-                                                style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
-                                            <img src="{{ asset('assets/restore.svg') }}">
-                                        </button>
-                                    </form>
+                                <td>
+                                    <div class="centerTd">
+                                        <form method="get" action="{{ route('materials.restore', $material->id) }}"
+                                              style="display:inline;">
+                                            @csrf
+                                            <button class="centerTd" type="submit"
+                                                    onclick="return confirm('Tem a certeza que pretende restaurar o material?')"
+                                                    style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
+                                                <img src="{{ asset('assets/restore.svg') }}">
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
 
-                                <td>
-                                    <form method="post" action="{{ route('materials.forceDelete', $material->id) }}"
-                                          style="display:inline;">
-                                        @csrf
-                                        @method('delete')
-                                        <button type="submit"
-                                                onclick="return confirm('Tem certeza que deseja excluir permanentemente?')"
-                                                style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
-                                            <img src="{{ asset('assets/permaDelete.svg') }}" alt="Delete">
+                                <td >
+                                    <div class="centerTd">
+                                        <form method="post" action="{{ route('materials.forceDelete', $material->id) }}"
+                                              style="display:inline;">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit"
+                                                    onclick="return confirm('Tem certeza que deseja excluir permanentemente?')"
+                                                    style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
+                                                <img src="{{ asset('assets/permaDelete.svg') }}" alt="Delete">
 
-                                        </button>
-                                    </form>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                             <tr class="filler"></tr>
@@ -378,8 +387,10 @@
                 {{ $recycleMaterials->appends(['mPage' => $recycleMaterials->currentPage()])->links() }}
 
             </div>
-
         </div>
+
+
+
 
         <script>
             //logica tabs

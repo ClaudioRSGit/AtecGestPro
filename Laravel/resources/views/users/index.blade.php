@@ -94,7 +94,7 @@
                         <th scope="col">Email</th>
                         <th scope="col">Função</th>
                         <th scope="col">Ativo</th>
-                        <th scope="col">Ações</th>
+                        <th scope="col"><div class="centerTd">Ações</div></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -176,8 +176,8 @@
                             <th scope="col">Nome</th>
                             <th scope="col">Username</th>
                             <th scope="col">Email</th>
-                            <th scope="col">Restaurar</th>
-                            <th scope="col">Apagar</th>
+                            <th scope="col"><div class="centerTd">Restaurar</div></th>
+                            <th scope="col"><div class="centerTd">Apagar</div></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -189,8 +189,8 @@
                                 <td>{{ $deletedUser->email }}</td>
 
 
-                                <td class="editDelete">
-
+                                <td >
+                                    <div class="centerTd">
                                         <form method="post" action="{{ route('users.restore', $deletedUser->id) }}"
                                               style="display:inline;">
                                             @csrf
@@ -200,9 +200,11 @@
                                                 <img src="{{ asset('assets/restore.svg') }}">
                                             </button>
                                         </form>
+                                        </div>
                                 </td>
 
                                 <td>
+                                    <div class="centerTd">
                                         <form method="post" action="{{ route('users.forceDelete', $deletedUser->id) }}"
                                               style="display:inline;">
                                             @csrf
@@ -214,6 +216,7 @@
 
                                             </button>
                                         </form>
+                                    </div>
                                 </td>
 
                             </tr>

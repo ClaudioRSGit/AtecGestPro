@@ -125,7 +125,7 @@
         }
 
         .scrollable {
-            max-height: 300px;
+            max-height: 30rem;
             overflow-y: auto;
         }
     </style>
