@@ -106,7 +106,7 @@
                                     {{ optional($partner_Training_User->training)->name ?: 'A Formação foi apagada do sistema' }}
                                 </td>
 
-                                <td>{{ $partner_Training_User->start_date }}</td>
+                                <td>{{ \Carbon\Carbon::parse($partner_Training_User->start_date)->format('Y-m-d') }}</td>
                                 <td>
 
                                     <div class="d-flex justify-content-between editDelete">
