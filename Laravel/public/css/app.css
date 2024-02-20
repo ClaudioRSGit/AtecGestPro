@@ -11469,3 +11469,12 @@ a.text-dark:focus {
   }
 }
 
+
+ .centerTd {
+     display: flex;
+     justify-content: center;
+     align-items: center;
+
+ }
+
+
