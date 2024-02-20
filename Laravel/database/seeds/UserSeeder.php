@@ -16,15 +16,28 @@ class UserSeeder extends Seeder
         // PLEASE DONT DELETE THIS SEEDER
         DB::table('users')->insert([
             'name' => 'Fila de Espera',
-            'username' => '',
-            'email' => '',
-            'contact' => '',
-            'password' => bcrypt('password123'),
+            'username' => 'fila_de_espera',
+            'email' => 'filadeespera@edu.atec.pt',
+            'contact' => '911111111',
+            'password' => '',
             'notes' => '',
-            'isActive' => true,
+            'isActive' => false,
             'isStudent' => false,
             'course_class_id' => null,
             'role_id' => 4,
+        ]);
+        // Seed 14
+        DB::table('users')->insert([
+            'name' => 'Utilizador Padrao',
+            'username' => 'padrao',
+            'email' => 'utilizador.padrao@edu.atec.pt',
+            'contact' => '922222222',
+            'password' => '',
+            'notes' => '',
+            'isActive' => false,
+            'isStudent' => false,
+            'course_class_id' => null,
+            'role_id' => 2,
         ]);
 
 
@@ -200,6 +213,8 @@ class UserSeeder extends Seeder
             'course_class_id' => null,
             'role_id' => 1,
         ]);
+
+
 
         $faker = Faker::create();
 

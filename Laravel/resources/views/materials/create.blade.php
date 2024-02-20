@@ -3,15 +3,14 @@
 @section('styles')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/material_blue.css">
-
 @endsection
 
 @section('content')
-<style>
-    .flatpickr {
-        width: 308px;
-    }
-</style>
+    <style>
+        .flatpickr {
+            width: 308px;
+        }
+    </style>
     <div class="container w-100 fade-in">
         <h1>Criar Novo Material</h1>
 
@@ -22,7 +21,8 @@
 
                     <div class="mb-3">
                         <label for="name" class="form-label">Nome do Material:</label>
-                        <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
+                        <input type="text" class="form-control" id="name" name="name"
+                            value="{{ old('name') }}">
 
                         @error('name')
                             <div class="alert alert-danger">{{ $message }}</div>
@@ -50,8 +50,8 @@
 
                     <div class="mb-3">
                         <label for="acquisition_date" class="form-label">Data de Aquisição:</label>
-                        <input type="datetime-local" class="form-control flatpickr" id="acquisition_date" name="acquisition_date"
-                        required placeholder="Selecione a data de início">
+                        <input type="datetime-local" class="form-control flatpickr" id="acquisition_date"
+                            name="acquisition_date" required placeholder="Selecione a data de início">
                     </div>
 
 
@@ -79,7 +79,7 @@
                                 <option value="0" {{ old('isInternal') == 0 ? 'selected' : '' }}>Não</option>
                             </select>
                         </div>
-                        <div class="mx-3 clothing mb-3">
+                        <div class="mx-3 clothing mb-3" id="clothingToggle">
                             <label for="isClothing" class="form-label">É vestuário?</label>
                             <select class="form-control" id="isClothing" name="isClothing" onchange="toggleFields()">
                                 <option value="1" {{ old('isClothing') == 1 ? 'selected' : '' }}>Sim</option>
@@ -87,66 +87,71 @@
                             </select>
                         </div>
                     </div>
+                    <div id="warningMessage" style="display: none; text-align: center; margin-top: 10px; color: red;">
+                        Nota: Não é possível adicionar vestuário externo.
+                    </div>
 
 
 
-            <div id="hide">
-                <div class="d-flex flex-row">
-                    <div class="flex-column">
-                        <div class="mb-3">
-                            <p class="form-label font-weight-bold">Tamanho e stock: </p>
-                        </div>
-                        <div class="mb-3 mr-4 scrollable-column mr-5" id="size">
-                            <div class="d-flex flex-column">
-                                @foreach ($sizes as $size)
-                                <div class="d-flex justify-content-between align-items-center mb-2 px-5">
-                                    <div class="form-check">
-                                        <input onchange="toggleFieldsQuantity()" class="form-check-input size-checkbox" type="checkbox" name="sizes[]" value="{{ $size->id }}" {{ in_array($size->id, old('sizes', [])) ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="size{{ $size->id }}">
-                                                {{ $size->size }}
-                                            </label>
-                                    </div>
-
-                                    <input type="number" name="stocks[{{ $size->id }}]"
-                                    value="{{ old('stocks.' . $size->id, 0) }}"
-                                    class="form-control w-25 mx-5 quantity-input" min="0"
-                                    {{ in_array($size->id, old('sizes', [])) ? '' : 'disabled' }}>
+                    <div id="hide">
+                        <div class="d-flex flex-row">
+                            <div class="flex-column">
+                                <div class="mb-3">
+                                    <p class="form-label font-weight-bold">Tamanho e stock: </p>
                                 </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
+                                <div class="mb-3 mr-4 scrollable-column mr-5" id="size">
+                                    <div class="d-flex flex-column">
+                                        @foreach ($sizes as $size)
+                                            <div class="d-flex justify-content-between align-items-center mb-2 px-5">
+                                                <div class="form-check">
+                                                    <input onchange="toggleFieldsQuantity()"
+                                                        class="form-check-input size-checkbox" type="checkbox"
+                                                        name="sizes[]" value="{{ $size->id }}"
+                                                        {{ in_array($size->id, old('sizes', [])) ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="size{{ $size->id }}">
+                                                        {{ $size->size }}
+                                                    </label>
+                                                </div>
 
-
-                    <div class="flex-column">
-                        <div class="mb-3">
-                            <p class="form-label font-weight-bold">Cursos:</p>
-                        </div>
-                        <div class="mb-3" id="role">
-                            <div class="d-flex flex-column scrollable-column">
-                                @foreach ($courses as $course)
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="courses[]" value="{{ $course->id }}" {{ in_array($course->id, old('courses', [])) ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="course{{ $course->id }}">
-                                            {{ $course->code }}
-                                        </label>
+                                                <input type="number" name="stocks[{{ $size->id }}]"
+                                                    value="{{ old('stocks.' . $size->id, 0) }}"
+                                                    class="form-control w-25 mx-5 quantity-input" min="0"
+                                                    {{ in_array($size->id, old('sizes', [])) ? '' : 'disabled' }}>
+                                            </div>
+                                        @endforeach
                                     </div>
-                                @endforeach
+                                </div>
+                            </div>
+
+
+                            <div class="flex-column">
+                                <div class="mb-3">
+                                    <p class="form-label font-weight-bold">Cursos:</p>
+                                </div>
+                                <div class="mb-3" id="role">
+                                    <div class="d-flex flex-column scrollable-column">
+                                        @foreach ($courses as $course)
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="courses[]"
+                                                    value="{{ $course->id }}"
+                                                    {{ in_array($course->id, old('courses', [])) ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="course{{ $course->id }}">
+                                                    {{ $course->code }}
+                                                </label>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <div>
+                    <button type="submit" class="btn btn-primary">Criar Material</button>
+                    <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
                 </div>
             </div>
-            <div>
-                <button type="submit" class="btn btn-primary">Criar Material</button>
-                <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
-            </div>
-        </div>
         </form>
-        <div id="warningMessage" style="display: none; text-align: center; margin-top: 10px; color: red;">
-            Nota: Não é possível adicionar vestuário externo.
-        </div>
     </div>
     <style>
         .form-control[readonly] {
@@ -160,24 +165,27 @@
             overflow-y: auto;
         }
 
-        .gender{
+        .gender {
             grid-area: gender;
         }
-        .qty{
+
+        .qty {
             grid-area: quantity;
         }
-        .internal{
+
+        .internal {
             grid-area: internal;
         }
-        .clothing{
+
+        .clothing {
             grid-area: clothing;
         }
 
-        .grid{
+        .grid {
             display: grid;
             grid-template-areas:
-                'internal clothing'
-                'gender quantity';
+                'internal quantity'
+                'clothing gender';
         }
     </style>
 
@@ -231,14 +239,12 @@
         document.getElementById('isInternal').addEventListener('change', toggleFields);
         document.getElementById('isClothing').addEventListener('change', toggleFields);
     </script>
-
-
 @endsection
 
 @section('scripts')
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
-        jQuery(function () {
+        jQuery(function() {
             flatpickr("#acquisition_date", {
                 inline: true,
                 altInput: true,
@@ -248,6 +254,22 @@
 
 
             });
+        });
+    </script>
+
+    <script>
+        function toggleFields() {
+            var isInternalValue = $("#isInternal").val();
+
+            if (isInternalValue == 0) {
+                $("#clothingToggle").hide();
+            } else {
+                $("#clothingToggle").show();
+            }
+        }
+
+        $(document).ready(function() {
+            toggleFields();
         });
     </script>
 @endsection
