@@ -147,8 +147,7 @@
                                             </span>
                                         @elseif ($minus5 === 0)
                                             <span class="warning-icon position-absolute" style="left: -20px;">
-                                                <i class="fa fa-info-circle" data-toggle="tooltip"
-                                                   title="Atenção! Pelo menos um tamanho não tem stock"></i>
+                                                <i class="fa-solid fa-triangle-exclamation" data-toggle="tooltip" title="Atenção! Produto sem artigos em stock!"  style="color: #f12704;"></i>
                                             </span>
                                         @endif
                                     @else
@@ -160,8 +159,7 @@
                                             </span>
                                         @elseif (isset($material->quantity) && $material->quantity === 0)
                                             <span class="warning-icon position-absolute" style="left: -20px;">
-                                                <i class="fa fa-info-circle" data-toggle="tooltip"
-                                                   title="Atenção! Produto sem artigos em stock!"></i>
+                                                <i class="fa fa-info-circle" data-toggle="tooltip" title="Atenção! Produto sem artigos em stock!"></i>
                                             </span>
                                         @endif
                                     @endif
