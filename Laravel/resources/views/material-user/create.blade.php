@@ -14,10 +14,10 @@
 
         <div class="row">
             <div class="col-8 d-flex">
-                <h1>Atribuir</h1>
-                <div class="d-flex justify-content-between my-3 ">
+                <h3>Atribuir</h3>
+                <div class="d-flex justify-content-between mt-2 ">
 
-                    <p class="mr-3 font-weight-bold"> - {{ ucfirst($student->role->name) }} : {{ $student->name }} </p>
+                    <p class="ml-1 font-weight-bold"> - {{ ucfirst($student->role->name) }} : {{ $student->name }} </p>
 
                 </div>
             </div>
@@ -27,9 +27,9 @@
         </div>
         <hr>
         <div class="row">
-            <div class="col-8 ">
+            <div class="col-8 " style="height: 25rem">
 
-                <form action="{{ route('material-user.store') }}" method="post">
+                <form action="{{ route('material-user.store') }}" method="post" >
                     @csrf
 
                     <input type="hidden" name="user_id" value="{{ $student->id }}">

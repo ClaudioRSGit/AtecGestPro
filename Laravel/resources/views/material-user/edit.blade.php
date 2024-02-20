@@ -21,7 +21,9 @@
             <div class="row">
                 <div class="col-8 d-flex">
                     <h3>Editar entregas </h3>
-                    <p class="mt-2 ml-2">- {{$user->name}}</p>
+                    <p class="mt-2 ml-2 font-weight-bold"> - {{ ucfirst($user->role->name) }} : {{ $user->name }} </p>
+
+{{--                    <p class="">- {{$user->name}}</p>--}}
                 </div>
                 <div class="col-4">
                     <h3>Editar notas</h3>
@@ -247,7 +249,7 @@
     <style>
         .materials {
             align-self: start;
-            max-height: 25rem;
+            height: 25rem;
             overflow: scroll;
         }
 
