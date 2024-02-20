@@ -64,6 +64,10 @@ Route::middleware(['auth', 'checkRole:admin,tecnico'])->group(function () {
 
     Route::resource('material-user', 'MaterialUserController');
     Route::post('material-user/massDelete', 'MaterialUserController@massDelete')->name('material-user.massDelete');
+    Route::post('material-user/addNote', 'MaterialUserController@addNote')->name('material-user.addNote');
+    Route::post('material-user/addDeliveredAll', 'MaterialUserController@addDeliveredAll')->name('material-user.addDeliveredAll');
+    Route::post('material-user/addDeliveredPartial', 'MaterialUserController@addDeliveredPartial')->name('material-user.addDeliveredPartial');
+    Route::put('/material-user/{id}/edit', 'MaterialUserController@update')->name('material-user.edit');
 
     Route::resource('partners', 'PartnerController');
     Route::delete('partner-contact/{partner_contact}', 'PartnerController@destroyContact')->name('partner-contact.destroy');

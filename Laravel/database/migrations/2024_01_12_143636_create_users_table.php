@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('contact')->unique();
             $table->string('password')->nullable();
-            $table->string('notes')->nullable();
+            $table->text('notes')->nullable();
             $table->boolean('isActive')->default(false);
             $table->boolean('isStudent')->default(false);
             $table->foreignId('course_class_id')->nullable()->constrained('course_classes')->onDelete('cascade')->onUpdate('cascade');
