@@ -307,15 +307,14 @@
             inputField.addEventListener('change', function () {
                 let inputDate = new Date(this.value);
                 let today = new Date();
-                today.setHours(0, 0, 0, 0);  // Set time to 00:00:00 to compare only the date part
+                today.setHours(0, 0, 0, 0);
 
-                // Get the warning icon related to this input
-                let warningIcon = this.parentNode.querySelector('.warning-icon');
+                let parentDiv = this.parentNode.querySelector('.warning-icon');
 
                 if (inputDate < today) {
-                    warningIcon.style.display = 'inline';
+                    parentDiv.style.display = 'inline';
                 } else {
-                    warningIcon.style.display = 'none';
+                    parentDiv.style.display = 'none';
                 }
             });
         });
