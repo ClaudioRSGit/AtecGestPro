@@ -33,7 +33,6 @@ class ExcelImportController extends Controller
 
         $importedUsers = $userImport->allImportedUsers;
 
-
         // Check the import status
         if ($userImport->getImportStatus()) {
             $message = 'Utilizadores importados com sucesso!';
@@ -61,9 +60,25 @@ class ExcelImportController extends Controller
             // Get the uploaded file
             $file = $request->file('file');
 
-            Excel::import(new StudentImportClass, $file);
+            $studentImport = new StudentImportClass;
 
-            return view('excel.studentsSuccess');
+            Excel::import($studentImport, $file);
+
+            $importedStudents = $studentImport->allImportedStudents;
+
+            dd($studentImport->getImportStatus());
+
+            if ($studentImport->getImportStatus()) {
+                $message = 'Alunos importados com sucesso!';
+            } else {
+                $message = 'Ocorreu um problema ao importar os alunos. Por favor, tente novamente.';
+            }
+
+            if ($request->ajax()) {
+                return view('users.partials.index', ['users' => $users, 'message' => $message]);
+            }
+
+            return view('excel.studentsSuccess', ['importedStudents' => $importedStudents, 'message' => $message]);
         } else {
             return redirect()->route('course-classes.index')->with('success', 'Turma criada com sucesso sem alunos!');
         }

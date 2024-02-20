@@ -78,6 +78,7 @@ class UserImportClass implements ToModel
             return $importedUser;
         }
 
+        dd($row);
         $this->importStatus = false;
 
         return null;

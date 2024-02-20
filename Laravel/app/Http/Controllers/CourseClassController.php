@@ -72,8 +72,7 @@ class CourseClassController extends Controller
                 if ($request->has('selected_students')) {
                     foreach ($request->input('selected_students') as $student) {
                         $user = User::find($student);
-                        $user->course_class_id = $courseClass->id;
-                        $user->save();
+                        $user->update(['course_class_id' => $courseClass->id]);
                     }
                 }
             } else if ($request->has('import')) {
