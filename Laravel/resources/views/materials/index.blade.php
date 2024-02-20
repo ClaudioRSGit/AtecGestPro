@@ -113,22 +113,49 @@
                                        class="d-flex align-items-center w-auto h-100">{{ isset($material->name) ? $material->name : 'N.A.' }}</a>
                                 </td>
                                 <td class="position-relative">
+
                                     @if($material->isClothing == 1)
+                                        @php
+                                            $minus5 = 2;
+                                        @endphp
+
+                                        @if($material->sizes->count() > 0)
+                                            @foreach($material->sizes as $size)
+
+                                                @if($size->pivot->stock <= 5 && $size->pivot->stock > 0)
+                                                    @php
+                                                        $minus5 = 1;
+                                                    @endphp
+                                                @elseif($size->pivot->stock === 0 )
+                                                    @php
+                                                        $minus5 = 0;
+                                                    @endphp
+                                                @endif
+
+                                            @endforeach
+                                        @else
+                                            @php
+                                                $minus5 = 0;
+                                            @endphp
+                                        @endif
                                         {{ $material->sizes->sum('pivot.stock') }}
-                                        @if($material->sizes->sum('pivot.stock') <= 5 && $material->sizes->sum('pivot.stock') > 0)
+
+                                        @if($minus5 === 1)
                                             <span class="warning-icon position-absolute" style="left: -20px;">
-                                                <i class="fa fa-info-circle" data-toggle="tooltip" title="Atenção! Produto prestes a entrar em rotura de stock!"></i>
+                                                <i class="fa fa-info-circle" data-toggle="tooltip"
+                                                   title="Atenção!Pelo menos um tamanho prestes a ficar sem stock!"></i>
                                             </span>
-                                        @elseif ($material->sizes->sum('pivot.stock') === 0)
+                                        @elseif ($minus5 === 0)
                                             <span class="warning-icon position-absolute" style="left: -20px;">
-                                                <i class="fa fa-info-circle" data-toggle="tooltip" title="Atenção! Produto sem artigos em stock!"></i>
+                                                <i class="fa-solid fa-triangle-exclamation" data-toggle="tooltip" title="Atenção! Produto sem artigos em stock!"  style="color: #f12704;"></i>
                                             </span>
                                         @endif
                                     @else
                                         {{ isset($material->quantity) ? $material->quantity : 'N.A.' }}
                                         @if(isset($material->quantity) && $material->quantity <= 5 && $material->quantity > 0)
                                             <span class="warning-icon position-absolute" style="left: -20px;">
-                                                <i class="fa fa-info-circle" data-toggle="tooltip" title="Atenção! Produto prestes a entrar em rotura de stock!"></i>
+                                                <i class="fa fa-info-circle" data-toggle="tooltip"
+                                                   title="Atenção! Produto prestes a entrar em rotura de stock!"></i>
                                             </span>
                                         @elseif (isset($material->quantity) && $material->quantity === 0)
                                             <span class="warning-icon position-absolute" style="left: -20px;">
@@ -585,7 +612,7 @@
                 }
             });
 
-            $(document).ready(function(){
+            $(document).ready(function () {
                 $('[data-toggle="tooltip"]').tooltip();
             });
         </script>

@@ -3,12 +3,13 @@
 @section('content')
     <div class="container w-100 fade-in">
         <h1>Novo Ticket</h1>
-
+        <form method="post" action="{{ route('tickets.store') }}" enctype="multipart/form-data">
+            @csrf
         <div class="row my-2">
+
             <div class="col-md-9">
 
-                <form method="post" action="{{ route('tickets.store') }}" enctype="multipart/form-data">
-                    @csrf
+
 
                     <div class="mb-3">
                         <label for="title" class="form-label">Título:</label>
@@ -36,7 +37,10 @@
                     <div class="mb-3">
                         <label for="attachment" class="form-label">Anexo: <strong><span id="file-name"></span></strong></label><br>
                         <label for="attachment" class="btn btn-primary">Selecionar ficheiro</label>
-                        <input type="file" class="form-control" id="attachment" name="attachment" style="display: none;">
+                        <input type="file" class="form-control" id="attachment" name="attachment" style="display: none;" accept=".jpeg, .jpg, .png, .gif, .svg, .bmp, .raw, .pdf, .doc, .docx, .xls, .xlsm, .xlsx">>
+                        @error('attachment')
+                        <div class="alert alert-danger">{{ $message }}</div>
+                        @enderror
                         <p>Certifique-se que o arquivo tem menos de 20MB</p>
 
 
@@ -94,9 +98,12 @@
                     </select>
                 </div>
 
-                </form>
             </div>
+
+
+
         </div>
+        </form>
     </div>
     <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">

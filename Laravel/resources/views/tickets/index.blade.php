@@ -499,6 +499,7 @@
 
         </div>
     </div>
+
     @component('tickets.quickTicket', ['priorities' => $priorities, 'categories' => $categories])
 
     @endcomponent

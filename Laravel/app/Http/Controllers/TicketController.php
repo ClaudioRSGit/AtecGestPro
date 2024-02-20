@@ -438,7 +438,7 @@ class TicketController extends Controller
 //         return view('tickets.show', compact('ticket'));
     }
 
-    public function storeQuickTicket(Request $request)
+    public function storeQuickTicket(TicketRequest $request)
     {
         try {
             $loggedInUserId = Auth::id();
@@ -447,6 +447,7 @@ class TicketController extends Controller
             if ($request->hasFile('attachment')) {
                 $filename = $request->file('attachment')->store('attachments', 'public');
             }
+
             $ticket = new Ticket([
                 'title' => $request->title,
                 'description' => $request->description,
@@ -472,6 +473,7 @@ class TicketController extends Controller
 
             return redirect()->route('tickets.index')->with('success', 'Ticket rápido criado com sucesso!')->with('active_tab', 'allTickets');
         } catch (\Exception $e) {
+
             return redirect()->back()->with('error', 'Erro ao criar o ticket. Por favor, tente novamente.');
         }
     }
