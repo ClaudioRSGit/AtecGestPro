@@ -16,7 +16,7 @@
                     {{ session('success') }}
                 </div>
             @endif
-            <br>
+
 
             <div class="row">
                 <div class="col-8 d-flex">
@@ -33,8 +33,8 @@
             <div class="row">
 
 
-                <div class="col-7  p-3 shadow-lg  " style="height: 400px; overflow-y: auto; position: relative;">
-                    <table class="table ">
+                <div class="col-7 materials px-3 shadow  " >
+                    <table class="table bg-white ">
                         <thead>
                         <tr>
                             <th scope="col">
@@ -47,7 +47,7 @@
                         </tr>
                         </thead>
 
-                        <tbody>
+                        <tbody class="customTableStyling">
                         @if($materialUsers->isEmpty())
                             <tr>
                                 <td colspan="6">Não existem entregas associadas a este utilizador</td>
@@ -88,6 +88,8 @@
                                     </td>
                                 </tr>
 
+                                <tr class="filler"></tr>
+
                             @endforeach
                         @endif
                         </tbody>
@@ -113,7 +115,7 @@
                     </div>
                 </div>
                 <div class="col-1"></div>
-                <div class="col-4 p-3 shadow-lg" style="height: 400px; overflow-y: auto;">
+                <div class="col-4 p-3 shadow" style="height: 400px; overflow-y: auto;">
 
 
 
@@ -131,7 +133,7 @@
                 </div>
             </div>
 
-            <div class="row mt-2">
+            <div class="row mt-3">
                 <div class="col-7 pr-0">
                     <div>
 
@@ -242,7 +244,25 @@
 
         </div>
     </div>
+    <style>
+        .materials {
+            align-self: start;
+            max-height: 25rem;
+            overflow: scroll;
+        }
 
+        .materials::-webkit-scrollbar {
+            display: none;
+        }
+
+        .materials thead {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            opacity: 1;
+            background-color: #f8fafc;
+        }
+    </style>
 
     <script>
 

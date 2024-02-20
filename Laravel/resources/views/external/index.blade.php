@@ -85,13 +85,23 @@
                             <tr class="customTableStyling">
 
 
-                                <td class="clickable {{ optional($partner_Training_User->partner)->name ? '' : 'text-danger' }}">
+                                <td class="clickable">
                                     <a href="{{ route('external.show', $partner_Training_User->id) }}" class="d-flex align-items-center w-auto h-100">
-                                        {{ optional($partner_Training_User->partner)->name ?? 'O Parceiro foi apagado do sistema.' }}
+                                        @if(optional($partner_Training_User->partner)->name)
+                                            {{ optional($partner_Training_User->partner)->name }}
+                                        @else
+                                            <span class="text-danger">O parceiro foi apagado do sistema.</span>
+                                        @endif
                                     </a>
                                 </td>
-                                <td>{{ optional($partner_Training_User->partner)->address }}</td>
-                                <td>{{ optional($partner_Training_User->user)->name }}</td>
+
+                                <td class="{{ optional($partner_Training_User->partner)->address ? '' : 'text-danger' }}">
+                                    {{ optional($partner_Training_User->partner)->address ?? 'O parceiro foi apagado do sistema.' }}
+                                </td>
+
+                                <td class="{{ optional($partner_Training_User->user)->name ? '' : 'text-danger' }}">
+                                    {{ optional($partner_Training_User->user)->name ?? 'O utilizador foi apagado do sistema' }}
+                                </td>
                                 <td class="{{ optional($partner_Training_User->training)->name ? '' : 'text-danger' }}">
                                     {{ optional($partner_Training_User->training)->name ?: 'A Formação foi apagada do sistema' }}
                                 </td>

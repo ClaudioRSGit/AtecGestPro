@@ -6,31 +6,35 @@
 
         @if ($errors->any())
             <div class="alert alert-danger">
-                    @foreach ($errors->all() as $error)
-                        <p class="m-0">{{ $error }}</p>
-                    @endforeach
+                @foreach ($errors->all() as $error)
+                    <p class="m-0">{{ $error }}</p>
+                @endforeach
             </div>
         @endif
 
         <div class="row">
-
-            <div class="col-3">
+            <div class="col-8 d-flex">
                 <h1>Atribuir</h1>
-                <div class="d-flex justify-content-between mb-3">
-                    <div class="mb-3">
-                        <p class="mr-3 font-weight-bold">{{ ucfirst($student->role->name) }} : {{ $student->name }} </p>
-                    </div>
+                <div class="d-flex justify-content-between my-3 ">
+
+                    <p class="mr-3 font-weight-bold"> - {{ ucfirst($student->role->name) }} : {{ $student->name }} </p>
+
                 </div>
             </div>
+            <div class="col-4">
+                <h3 class="">Materiais atribuídos</h3>
+            </div>
         </div>
+        <hr>
         <div class="row">
-            <div class="col-8">
+            <div class="col-8 ">
 
                 <form action="{{ route('material-user.store') }}" method="post">
                     @csrf
 
                     <input type="hidden" name="user_id" value="{{ $student->id }}">
-                    <table class="table">
+                    <div class="materials">
+                    <table class="table bg-white ">
                         <thead>
                         <tr>
                             <th scope="col" class="h-100 d-flex justify-content-center align-items-center">
@@ -42,7 +46,7 @@
                             <th scope="col" style="text-align: center;">Data de Entrega</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="customTableStyling">
                         @foreach ($clothes as $clothingItem)
                             @php
                                 $totalStock = $clothingItem->sizes->sum('pivot.stock');
@@ -101,17 +105,20 @@
                                            name="delivery_date[{{ $clothingItem->id }}]"
                                            value="{{ date('Y-m-d') }}" {{ $disabled }}>
                                     <span class="warning-icon position-absolute" style="display: none; right: 0;">
-                                        <i class="fa fa-info-circle" data-toggle="tooltip" title="Atenção! A data selecionada é anterior à data de hoje"></i>
+                                        <i class="fa fa-info-circle" data-toggle="tooltip"
+                                           title="Atenção! A data selecionada é anterior à data de hoje"></i>
                                     </span>
                                 </td>
                             </tr>
+
+                            <tr class="filler"></tr>
                         @endforeach
 
                         </tbody>
                     </table>
 
-
-                    <div class="row mb-3 ">
+                    </div>
+                    <div class="row mt-4 ">
                         <div class="col-4">
                             <textarea placeholder="Observações" class="form-control" name="additionalNotes"
                                       id="textarea" aria-label="With textarea"></textarea>
@@ -152,9 +159,9 @@
 
                 </form>
             </div>
-            <div class="col-4 card pl-3 shadow">
-                <h3 class="pt-2">Materiais atribuídos</h3>
-                <table>
+            <div class="col-4 mb-3 pl-3 shadow bg-transparent">
+
+                <table class="table bg-white">
                     <thead>
                     <tr>
                         <th>Nome</th>
@@ -162,14 +169,15 @@
                         <th>Quantidade</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody class="customTableStyling">
                     @forelse($assignedClothes as $item)
-                        <br>
+
                         <tr>
                             <td style="text-align: left;">{{ $item->material->name }}</td>
                             <td style="text-align: left;">{{ $item->size->size }}</td>
                             <td style="text-align: left;">{{ $item->quantity }} uni</td>
                         </tr>
+                        <tr class="filler"></tr>
                     @empty
                         <tr>
                             <td colspan="3">Nenhuma farda entregue ao utilizador</td>
@@ -181,11 +189,32 @@
             </div>
         </div>
 
-
         {{$clothes->links() }}
 
 
     </div>
+
+    <style>
+        .materials {
+            grid-area: materials;
+            align-self: start;
+            display: flex;
+            max-height: 25rem;
+            overflow: scroll;
+        }
+
+        .materials::-webkit-scrollbar {
+            display: none;
+        }
+
+        .materials thead {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            opacity: 1;
+            background-color: #f8fafc;
+        }
+    </style>
 
     <script>
 
@@ -274,8 +303,8 @@
             });
         });
 
-        document.querySelectorAll('.delivery_date').forEach(function(inputField) {
-            inputField.addEventListener('change', function() {
+        document.querySelectorAll('.delivery_date').forEach(function (inputField) {
+            inputField.addEventListener('change', function () {
                 let inputDate = new Date(this.value);
                 let today = new Date();
                 today.setHours(0, 0, 0, 0);  // Set time to 00:00:00 to compare only the date part
@@ -291,7 +320,7 @@
             });
         });
 
-        $(document).ready(function(){
+        $(document).ready(function () {
             $('[data-toggle="tooltip"]').tooltip();
         });
     </script>

@@ -27,7 +27,7 @@
 
         <h1>Agendar formação de mercado</h1>
 
-        <form method="POST" action="{{ url('external') }}" style="width: 100%">
+        <form id="form" method="POST" action="{{ url('external') }}" style="width: 100%">
             @csrf
             <div class="grid">
                 <div class="training">
@@ -116,6 +116,27 @@
         </form>
     </div>
 
+    <script>
+        //warning message
+
+        document.addEventListener('DOMContentLoaded', function () {
+            let form = document.querySelector('#form');
+
+            let checkboxes = document.querySelectorAll('input[type="checkbox"][name^="materials"]');
+
+            form.addEventListener('submit', function(event) {
+                let isAnyCheckboxChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+
+                if (!isAnyCheckboxChecked) {
+                    let shouldProceed = confirm('Tem a certeza que deseja agendar a formação sem selecionar nenhum material? Poderá editar o agendamento mais tarde e adicionar/remover materiais!');
+
+                    if (!shouldProceed) {
+                        event.preventDefault();
+                    }
+                }
+            });
+        });
+    </script>
 
 
 
@@ -218,11 +239,11 @@
         });
 
         document.addEventListener('DOMContentLoaded', function () {
-            var partnerDropdown = document.getElementById('partner_id');
-            var addressField = document.getElementById('address');
+            let partnerDropdown = document.getElementById('partner_id');
+            let addressField = document.getElementById('address');
 
             function setAddress() {
-                var selectedOption = partnerDropdown.options[partnerDropdown.selectedIndex];
+                let selectedOption = partnerDropdown.options[partnerDropdown.selectedIndex];
                 addressField.value = selectedOption.getAttribute('data-address');
             }
 
