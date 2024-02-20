@@ -82,10 +82,17 @@
                                         <div class="card mb-2 bg-light mx-4">
                                             <div class="card-body d-flex justify-content-between">
                                                 <div>
-                                                    <label class="card-text font-weight-bold">
-                                                        {{ $comment->user->name }}:
-                                                    </label>
-                                                    {{ $comment->description }}
+                                                    @if(optional($comment->user)->name)
+                                                        <span class="card-text font-weight-bold">
+                                                            {{ optional($comment->user)->name }}:
+                                                        </span>
+                                                        {{ $comment->description }}
+                                                    @else
+                                                        <span class="text-danger font-weight-bold card-text">
+                                                            Utilizador desconhecido:
+                                                        </span>
+                                                        {{ $comment->description }}
+                                                    @endif
                                                 </div>
                                                 <div>
                                                     <p class="card-text">
