@@ -112,11 +112,29 @@
                                     <a href="{{ route('materials.show', $material->id) }}"
                                        class="d-flex align-items-center w-auto h-100">{{ isset($material->name) ? $material->name : 'N.A.' }}</a>
                                 </td>
-                                <td>
+                                <td class="position-relative">
                                     @if($material->isClothing == 1)
                                         {{ $material->sizes->sum('pivot.stock') }}
+                                        @if($material->sizes->sum('pivot.stock') <= 5 && $material->sizes->sum('pivot.stock') > 0)
+                                            <span class="warning-icon position-absolute" style="left: -20px;">
+                                                <i class="fa fa-info-circle" data-toggle="tooltip" title="Atenção! Produto prestes a entrar em rotura de stock!"></i>
+                                            </span>
+                                        @elseif ($material->sizes->sum('pivot.stock') === 0)
+                                            <span class="warning-icon position-absolute" style="left: -20px;">
+                                                <i class="fa fa-info-circle" data-toggle="tooltip" title="Atenção! Produto sem artigos em stock!"></i>
+                                            </span>
+                                        @endif
                                     @else
                                         {{ isset($material->quantity) ? $material->quantity : 'N.A.' }}
+                                        @if(isset($material->quantity) && $material->quantity <= 5 && $material->quantity > 0)
+                                            <span class="warning-icon position-absolute" style="left: -20px;">
+                                                <i class="fa fa-info-circle" data-toggle="tooltip" title="Atenção! Produto prestes a entrar em rotura de stock!"></i>
+                                            </span>
+                                        @elseif (isset($material->quantity) && $material->quantity === 0)
+                                            <span class="warning-icon position-absolute" style="left: -20px;">
+                                                <i class="fa fa-info-circle" data-toggle="tooltip" title="Atenção! Produto sem artigos em stock!"></i>
+                                            </span>
+                                        @endif
                                     @endif
                                 </td>
 
@@ -565,6 +583,10 @@
                     document.body.appendChild(form);
                     form.submit();
                 }
+            });
+
+            $(document).ready(function(){
+                $('[data-toggle="tooltip"]').tooltip();
             });
         </script>
 @endsection
