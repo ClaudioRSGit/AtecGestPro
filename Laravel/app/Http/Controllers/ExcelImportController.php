@@ -31,6 +31,9 @@ class ExcelImportController extends Controller
         // Process the Excel file
         Excel::import($userImport, $file);
 
+        $importedUsers = $userImport->allImportedUsers;
+
+
         // Check the import status
         if ($userImport->getImportStatus()) {
             $message = 'Utilizadores importados com sucesso!';
@@ -38,13 +41,11 @@ class ExcelImportController extends Controller
             $message = 'Ocorreu um problema ao importar os utilizadores. Por favor, tente novamente.';
         }
 
-        $users = User::paginate(5);
-
         if ($request->ajax()) {
             return view('users.partials.index', ['users' => $users, 'message' => $message]);
         }
 
-        return view('excel.excel-index', ['users' => $users, 'message' => $message]);
+        return view('excel.excel-index', ['importedUsers' => $importedUsers, 'message' => $message]);
     }
 
 

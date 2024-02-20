@@ -51,7 +51,7 @@
                         <div class="w-30">
                             <label for="attachment" class="form-label">Anexo:</label>
                             <label for="attachment" class="btn btn-primary">Selecionar ficheiro</label><br>
-                            <input type="file" class="form-control" id="attachment" name="attachment" style="display: none;" accept=".jpeg, .jpg, .png, .gif, .svg, .bmp, .raw, .pdf, .doc, .docx, .xls, .xlsm, .xlsx">>
+                            <input type="file" class="form-control" id="attachment" name="attachment" style="display: none;" accept=".jpeg, .jpg, .png, .gif, .svg, .bmp, .raw, .pdf, .doc, .docx, .xls, .xlsm, .xlsx">
                         </div>
                         <div class="w-30">
                             <button type="submit" class="btn btn-primary w-45">Guardar</button>
@@ -154,10 +154,17 @@
                             <div class="card mb-2 bg-light mx-4">
                                 <div class="card-body d-flex justify-content-between">
                                     <div>
-                                        <label class="card-text font-weight-bold">
-                                            {{ $comment->user->name }}:
-                                        </label>
-                                        {{ $comment->description }}
+                                        @if(optional($comment->user)->name)
+                                            <span class="card-text font-weight-bold">
+                                                {{ optional($comment->user)->name }}:
+                                            </span>
+                                            {{ $comment->description }}
+                                        @else
+                                            <span class="text-danger font-weight-bold card-text">
+                                                Utilizador desconhecido:
+                                            </span>
+                                            {{ $comment->description }}
+                                        @endif
                                     </div>
                                     <div>
                                         <p class="card-text">
