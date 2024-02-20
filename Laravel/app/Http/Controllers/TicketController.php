@@ -207,6 +207,7 @@ class TicketController extends Controller
 
             $this->logTicketHistory($ticket->id, 1, $ticketInfo);
             $this->sendEmail($ticket->id);
+
             return redirect()->route('tickets.index')->with('success', 'Ticket criado com sucesso!')->with('active_tab', 'allTickets');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Erro ao criar o ticket. Por favor, tente novamente.');
@@ -286,23 +287,42 @@ class TicketController extends Controller
                 'user_id' => $newUserId,
             ]);
 
+            $ticketTechnician = TicketUser::where('ticket_id', $ticket->id)->first('user_id');
+
             $ticketInfo = $this->generateTicketInfo($oldTicket, $ticket, $oldTicketTechnician->user_id, $newUserId);
 
             if (!empty($ticketInfo)) {
                 $this->logTicketHistory($ticket->id, 2, $ticketInfo);
             }
 
-             $notification = Notification::create([
-                 'description' => 'Ticket atribuído: #' . $ticket->id,
-                 'code' => 'TICKET',
-                 'object_id' => $ticket->id,
-             ]);
+            if ($oldTicketTechnician != $ticketTechnician && $ticketTechnician->name != 'Fila de Espera') {
+                $notification = Notification::create([
+                    'description' => 'Ticket atribuído: #' . $ticket->id,
+                    'code' => 'TICKET',
+                    'object_id' => $ticket->id,
+                ]);
 
-            NotificationUser::create([
-                'user_id' => $request->technician_id,
-                'notification_id' => $notification->id,
-                'isRead' => false,
-            ]);
+                NotificationUser::create([
+                    'user_id' => $request->technician_id,
+                    'notification_id' => $notification->id,
+                    'isRead' => false,
+                ]);
+            }
+
+
+            if ($oldTicket->ticketPriority()!= $ticket->ticketPriority() && $ticketTechnician->name != 'Fila de Espera') {
+                $notification = Notification::create([
+                    'description' => 'Prioridade do ticket alterada: #' . $ticket->id,
+                    'code' => 'TICKET',
+                    'object_id' => $ticket->id,
+                ]);
+
+                NotificationUser::create([
+                    'user_id' => $request->technician_id,
+                    'notification_id' => $notification->id,
+                    'isRead' => false,
+                ]);
+            }
             return redirect()->route('tickets.index')->with('success', 'Ticket atualizado com sucesso!')->with('active_tab', 'allTickets');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Não foi possivel atualizar o ticket. Por favor, tente novamente.');
