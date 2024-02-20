@@ -4,6 +4,14 @@
     <div class="container  w-100 fade-in">
 
 
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                    @foreach ($errors->all() as $error)
+                        <p class="m-0">{{ $error }}</p>
+                    @endforeach
+            </div>
+        @endif
+
         <div class="row">
 
             <div class="col-3">
@@ -179,7 +187,15 @@
 
     </div>
 
+    <script>
 
+
+        setTimeout(function () {
+            $(".alert").fadeTo(500, 0).slideUp(500, function () {
+                $(this).remove();
+            });
+        }, 2000);
+    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
