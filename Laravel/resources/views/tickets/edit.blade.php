@@ -51,13 +51,16 @@
                         <div class="w-30">
                             <label for="attachment" class="form-label">Anexo:</label>
                             <label for="attachment" class="btn btn-primary">Selecionar ficheiro</label><br>
-                            <input type="file" class="form-control" id="attachment" name="attachment" style="display: none;">
+                            <input type="file" class="form-control" id="attachment" name="attachment" style="display: none;" accept=".jpeg, .jpg, .png, .gif, .svg, .bmp, .raw, .pdf, .doc, .docx, .xls, .xlsm, .xlsx">>
                         </div>
                         <div class="w-30">
                             <button type="submit" class="btn btn-primary w-45">Guardar</button>
                             <a href="{{ route('tickets.index') }}" class="btn btn-secondary w-45">Cancelar</a>
                         </div>
                     </div>
+                    @error('attachment')
+                    <div class="alert alert-danger">{{ $message }}</div>
+                    @enderror
                     <p>Certifique-se que o arquivo tem menos de 20MB</p>
 
                     @if ($ticket->attachment)
