@@ -37,7 +37,7 @@
                     <div class="mb-3">
                         <label for="attachment" class="form-label">Anexo: <strong><span id="file-name"></span></strong></label><br>
                         <label for="attachment" class="btn btn-primary">Selecionar ficheiro</label>
-                        <input type="file" class="form-control" id="attachment" name="attachment" style="display: none;" accept=".jpeg, .jpg, .png, .gif, .svg, .bmp, .raw, .pdf, .doc, .docx, .xls, .xlsm, .xlsx">>
+                        <input type="file" class="form-control" id="attachment" name="attachment" style="display: none;" accept=".jpeg, .jpg, .png, .gif, .svg, .bmp, .raw, .pdf, .doc, .docx, .xls, .xlsm, .xlsx">
                         @error('attachment')
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
