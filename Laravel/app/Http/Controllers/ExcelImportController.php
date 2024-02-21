@@ -66,8 +66,6 @@ class ExcelImportController extends Controller
 
             $importedStudents = $studentImport->allImportedStudents;
 
-            dd($studentImport->getImportStatus());
-
             if ($studentImport->getImportStatus()) {
                 $message = 'Alunos importados com sucesso!';
             } else {
