@@ -10,6 +10,8 @@ class UserImportClass implements ToModel
 {
     private $importStatus = true;
 
+    public $allImportedUsers = [];
+
     public function model(array $row)
     {
         $userNames = User::pluck('name');
@@ -23,7 +25,8 @@ class UserImportClass implements ToModel
                 }
             }
             $courseClassId = CourseClass::where('description', $row[4])->first()->id;
-            return new User([
+
+            $importedUser = new User([
                 'name' => $row[0],
                 'username' => $row[1],
                 'email' => $row[2],
@@ -35,9 +38,13 @@ class UserImportClass implements ToModel
                 'course_class_id' => $courseClassId,
                 'role_id' => 3,
             ]);
+            array_push($this->allImportedUsers, $importedUser);
+
+            return $importedUser;
         }
         else if(strtolower($row[5]) == 'formador'){
-            return new User([
+
+            $importedUser = new User([
                 'name' => $row[0],
                 'username' => $row[1],
                 'email' => $row[2],
@@ -47,11 +54,14 @@ class UserImportClass implements ToModel
                 'isActive' => 1,
                 'isStudent' => 0,
                 'course_class_id' => null,
-                'role_id' => 2,
+                'role_id' => 1,
             ]);
+            array_push($this->allImportedUsers, $importedUser);
+
+            return $importedUser;
         }
         else if(strtolower($row[5]) == 'tecnico'){
-            return new User([
+            $importedUser = new User([
                 'name' => $row[0],
                 'username' => $row[1],
                 'email' => $row[2],
@@ -63,8 +73,12 @@ class UserImportClass implements ToModel
                 'course_class_id' => null,
                 'role_id' => 4,
             ]);
+            array_push($this->allImportedUsers, $importedUser);
+
+            return $importedUser;
         }
 
+        dd($row);
         $this->importStatus = false;
 
         return null;

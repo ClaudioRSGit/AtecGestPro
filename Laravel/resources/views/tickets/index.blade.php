@@ -145,7 +145,7 @@
                                 <th scope="col">Estado</th>
                                 <th scope="col">Data de Abertura</th>
                                 <th scope="col">Data de Vencimento</th>
-                                <th scope="col">Ações</th>
+                                <th scope="col"><div class="centerTd">Ações</div></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -432,8 +432,8 @@
                                 <th scope="col">Técnico</th>
                                 <th scope="col">Estado</th>
                                 <th scope="col">Data de Abertura</th>
-                                <th scope="col">Restaurar</th>
-                                <th scope="col">Apagar</th>
+                                <th scope="col"><div class="centerTd">Restaurar</div></th>
+                                <th scope="col"><div class="centerTd">Apagar</div></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -464,15 +464,16 @@
                                     </td>
                                     <td class="ticket-status-{{ $ticket->ticketStatus->id }}">{{ $ticket->ticketStatus->description }}</td>
                                     <td>{{ $ticket->created_at->format('d-m-Y') }}</td>
-                                    <td class="pl-4">
-                                        <div class="restore w-100 h-100 d-flex align-items-center">
+                                    <td >
+
+                                        <div class="centerTd">
                                             <a href="{{ route('tickets.restore', $ticket->id) }}">
                                                 <img src="{{ asset('assets/restore.svg') }}">
                                             </a>
                                         </div>
                                     </td>
-                                    <td class="pl-4">
-                                        <div class="delete w-100 h-100 d-flex align-items-center">
+                                    <td >
+                                        <div class="centerTd">
                                             <form action="{{ route('tickets.forceDelete', $ticket->id) }}" method="POST"
                                                   style="display: inline;">
                                                 @csrf

@@ -76,7 +76,7 @@
                             <th scope="col">Técnico</th>
                             <th scope="col">Formação</th>
                             <th scope="col">Data</th>
-                            <th scope="col">Ações</th>
+                            <th scope="col"><div class="centerTd">Ações</div></th>
                         </tr>
                     </thead>
                     <tbody class="customTableStyling">
@@ -173,7 +173,7 @@
                             <th scope="col">Morada</th>
                             <th scope="col">Contactos</th>
                             <th scope="col">Formações</th>
-                            <th scope="col">Ações</th>
+                            <th scope="col"><div class="centerTd">Ações</div></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -291,7 +291,7 @@
                             <th scope="col">Nome da formação</th>
                             <th scope="col">Descrição</th>
                             <th scope="col">Categoria</th>
-                            <th scope="col">Ações</th>
+                            <th scope="col"><div class="centerTd">Ações</div></th>
                         </tr>
                     </thead>
                     <tbody id="trainingsTable">
