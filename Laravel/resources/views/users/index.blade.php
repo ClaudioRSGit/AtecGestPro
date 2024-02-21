@@ -64,7 +64,7 @@
                     </form>
 
                     <div class="buttons">
-                        <button class="btn btn-danger" id="delete-selected">Excluir Selecionados</button>
+                        <button class="btn btn-danger" id="delete-selected" data-message="Tem a certeza que pretende enviar os utilizadores selecionados para a reciclagem?" data-no-selection-message="Selecione pelo menos um utilizador para excluir.">Excluir Selecionados</button>
                         <form action="{{ route('users.index') }}" method="GET" id="roleFilterForm">
                             <div>
                                 <select class="form-control" id="roleFilter" name="roleFilter" onchange="submitForm()">
@@ -94,7 +94,9 @@
                         <th scope="col">Email</th>
                         <th scope="col">Função</th>
                         <th scope="col">Ativo</th>
-                        <th scope="col"><div class="centerTd">Ações</div></th>
+                        <th scope="col">
+                            <div class="centerTd">Ações</div>
+                        </th>
                     </tr>
                     </thead>
                     <tbody>
@@ -107,7 +109,8 @@
                                        value="{{ $user->id }}">
                             </td>
                             <td class="clickable">
-                                <a href="{{ route('users.show', $user->id) }}" class="d-flex align-items-center w-auto h-100">{{ $user->name }}</a>
+                                <a href="{{ route('users.show', $user->id) }}"
+                                   class="d-flex align-items-center w-auto h-100">{{ $user->name }}</a>
                             </td>
                             <td>{{ $user->username }}</td>
                             <td>{{ $user->email }}</td>
@@ -127,12 +130,10 @@
                                     </a>
                                 </div>
                                 <div style="width: 40%">
-                                    <form method="post" action="{{ route('users.destroy', $user->id) }}"
-                                          style="display:inline;">
+                                    <form method="post" action="{{ route('users.destroy', $user->id) }}" style="display:inline;">
                                         @csrf
                                         @method('delete')
-                                        <button type="submit"
-                                                onclick="return confirm('Tem certeza que deseja excluir?')"
+                                        <button type="submit" data-message="Tem a certeza que pretende enviar o {{ strtolower($user->role->description) }} {{ $user->name }} para a reciclagem?"
                                                 style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
                                             <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16"
                                                  viewBox="0 0 512 512">
@@ -165,77 +166,126 @@
             <div class="tab-pane fade " id="recycleTable">
 
                 @if($deletedUsers->isEmpty())
-                    <img src="{{ asset('assets/reciclagem_azul_extra_bold_2_sem fundo.png') }}" alt="Não existem registos" class="bin">
+                    <img src="{{ asset('assets/reciclagem_azul_extra_bold_2_sem fundo.png') }}"
+                         alt="Não existem registos" class="bin">
                 @else
 
-                <div class="">
-                    <table class="table">
-                        <thead>
-                        <tr>
+                    <div class="">
+                        <table class="table">
+                            <thead>
+                            <tr>
 
-                            <th scope="col">Nome</th>
-                            <th scope="col">Username</th>
-                            <th scope="col">Email</th>
-                            <th scope="col"><div class="centerTd">Restaurar</div></th>
-                            <th scope="col"><div class="centerTd">Apagar</div></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr class="filler"></tr>
-                        @foreach($deletedUsers as $deletedUser)
-                            <tr class="user-row customTableStyling" data-position="" data-role="" onclick="">
-                                <td>{{ $deletedUser->name }}</td>
-                                <td>{{ $deletedUser->username }}</td>
-                                <td>{{ $deletedUser->email }}</td>
-
-
-                                <td >
-                                    <div class="centerTd">
-                                        <form method="post" action="{{ route('users.restore', $deletedUser->id) }}"
-                                              style="display:inline;">
-                                            @csrf
-                                            <button type="submit"
-                                                    onclick="return confirm('Tem a certeza que pretende restaurar o utilizador?')"
-                                                    style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
-                                                <img src="{{ asset('assets/restore.svg') }}">
-                                            </button>
-                                        </form>
-                                        </div>
-                                </td>
-
-                                <td>
-                                    <div class="centerTd">
-                                        <form method="post" action="{{ route('users.forceDelete', $deletedUser->id) }}"
-                                              style="display:inline;">
-                                            @csrf
-                                            @method('delete')
-                                            <button type="submit"
-                                                    onclick="return confirm('Tem certeza que deseja excluir permanentemente?')"
-                                                    style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
-                                                <img src="{{ asset('assets/permaDelete.svg') }}" alt="Delete">
-
-                                            </button>
-                                        </form>
-                                    </div>
-                                </td>
-
+                                <th scope="col">Nome</th>
+                                <th scope="col">Username</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">
+                                    <div class="centerTd">Restaurar</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="centerTd">Apagar</div>
+                                </th>
                             </tr>
-                            <tr class="filler" style="background-color: #f8fafc"></tr>
-                        @endforeach
-                        </tbody>
-                    </table>
-                    {{ $deletedUsers->appends(['dPage' => $deletedUsers->currentPage()])->links() }}
-                </div>
+                            </thead>
+                            <tbody>
+                            <tr class="filler"></tr>
+                            @foreach($deletedUsers as $deletedUser)
+                                <tr class="user-row customTableStyling" data-position="" data-role="" onclick="">
+                                    <td>{{ $deletedUser->name }}</td>
+                                    <td>{{ $deletedUser->username }}</td>
+                                    <td>{{ $deletedUser->email }}</td>
+
+
+                                    <td>
+                                        <div class="centerTd">
+                                            <form method="post" action="{{ route('users.restore', $deletedUser->id) }}"
+                                                  style="display:inline;">
+                                                @csrf
+                                                <button type="submit"
+                                                        data-message="Tem a certeza que deseja restaurar o {{strtolower($deletedUser->role->description)}} {{ $deletedUser->name }}?"
+                                                        style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
+                                                    <img src="{{ asset('assets/restore.svg') }}">
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="centerTd">
+                                            <form method="post"
+                                                  action="{{ route('users.forceDelete', $deletedUser->id) }}"
+                                                  style="display:inline;">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="submit"
+                                                        data-message="Tem a certeza que deseja apagar permanentemente o {{strtolower($deletedUser->role->description)}} {{ $deletedUser->name }}?"
+                                                        style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
+                                                    <img src="{{ asset('assets/permaDelete.svg') }}" alt="Delete">
+
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                                <tr class="filler" style="background-color: #f8fafc"></tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                        {{ $deletedUsers->appends(['dPage' => $deletedUsers->currentPage()])->links() }}
+                    </div>
                 @endif
 
             </div>
 
         </div>
+
+        {{--    confirmation modal    --}}
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">Confirmar</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="modalBody">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="deleteBtn">Confirmar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{--    confirmation modal    --}}
     </div>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let deleteButtons = document.querySelectorAll('button[type="submit"]');
+
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function (event) {
+                    event.preventDefault();
+
+                    let message = button.getAttribute('data-message');
+                    document.getElementById('modalBody').textContent = message;
+
+                    $('#deleteModal').modal('show');
+
+                    $('#deleteBtn').click(function () {
+                        button.closest('form').submit();
+                    });
+                });
+            });
+        });
+    </script>
     <style>
-        .bin{
-            margin-top: 100px!important;
+        .bin {
+            margin-top: 100px !important;
             width: 200px;
             height: 200px;
             display: block;
@@ -291,7 +341,6 @@
     <script>
         //logica filtro
         function submitForm() {
-            // let roleFilterValue = document.getElementById("roleFilter").value;
 
             document.getElementById("roleFilterForm").submit();
         }
@@ -305,7 +354,32 @@
             const selectAllCheckbox = document.getElementById('select-all');
 
             deleteSelectedButton.addEventListener('click', function (event) {
-                massDeleteUsers();
+                event.preventDefault();
+
+                let userIds = [];
+                userCheckboxes.forEach(checkbox => {
+                    if (checkbox.checked) {
+                        userIds.push(checkbox.value);
+                    }
+                });
+
+                let message;
+                if (userIds.length > 0) {
+                    message = this.getAttribute('data-message');
+                    deleteBtn.style.display = 'inline-block';
+                } else {
+                    message = this.getAttribute('data-no-selection-message');
+                    deleteBtn.style.display = 'none';
+                }
+                document.getElementById('modalBody').textContent = message;
+
+                $('#deleteModal').modal('show');
+
+                $('#deleteBtn').click(function () {
+                    if (userIds.length > 0) {
+                        massDeleteUsers();
+                    }
+                });
             });
 
             selectAllCheckbox.addEventListener('change', function () {
@@ -323,31 +397,27 @@
                 });
 
                 if (userIds.length > 0) {
-                    if (confirm('Tem certeza que deseja excluir os utilizadores selecionados?')) {
-                        let form = document.createElement('form');
-                        form.action = '{{ route('users.massDelete') }}';
-                        form.method = 'post';
-                        form.style.display = 'none';
+                    let form = document.createElement('form');
+                    form.action = '{{ route('users.massDelete') }}';
+                    form.method = 'post';
+                    form.style.display = 'none';
 
-                        let inputToken = document.createElement('input');
-                        inputToken.type = 'hidden';
-                        inputToken.name = '_token';
-                        inputToken.value = '{{ csrf_token() }}';
-                        form.appendChild(inputToken);
+                    let inputToken = document.createElement('input');
+                    inputToken.type = 'hidden';
+                    inputToken.name = '_token';
+                    inputToken.value = '{{ csrf_token() }}';
+                    form.appendChild(inputToken);
 
-                        userIds.forEach(userId => {
-                            let inputUser = document.createElement('input');
-                            inputUser.type = 'hidden';
-                            inputUser.name = 'user_ids[]';
-                            inputUser.value = userId;
-                            form.appendChild(inputUser);
-                        });
+                    userIds.forEach(userId => {
+                        let inputUser = document.createElement('input');
+                        inputUser.type = 'hidden';
+                        inputUser.name = 'user_ids[]';
+                        inputUser.value = userId;
+                        form.appendChild(inputUser);
+                    });
 
-                        document.body.appendChild(form);
-                        form.submit();
-                    }
-                } else {
-                    alert('Selecione pelo menos um utilizador para excluir.');
+                    document.body.appendChild(form);
+                    form.submit();
                 }
             }
         });

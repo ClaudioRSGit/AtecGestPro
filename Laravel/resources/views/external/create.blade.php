@@ -85,7 +85,8 @@
                                            @if($material->quantity == 0) disabled @endif>
                                 </td>
                                 <td class="pl-5">
-                                    <input type="checkbox" name="materials[{{ $material->id }}]" value="{{ $material->id }}"
+                                    <input type="checkbox" name="materials[{{ $material->id }}]"
+                                           value="{{ $material->id }}"
                                            @if($material->quantity == 0) disabled @endif>
                                 </td>
                             </tr>
@@ -114,26 +115,52 @@
 
             </div>
         </form>
-    </div>
+
+        {{--confirmation  message modal--}}
+        <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmModalLabel">Confirmação</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        Tem a certeza que deseja agendar a formação sem selecionar nenhum material? <br> Poderá editar o
+                        agendamento mais tarde e adicionar/remover materiais!
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="confirmBtn">Confirmar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{--confirmation  message modal--}}    </div>
+
 
     <script>
         //warning message
 
         document.addEventListener('DOMContentLoaded', function () {
             let form = document.querySelector('#form');
-
             let checkboxes = document.querySelectorAll('input[type="checkbox"][name^="materials"]');
 
-            form.addEventListener('submit', function(event) {
+            form.addEventListener('submit', function (event) {
                 let isAnyCheckboxChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
 
                 if (!isAnyCheckboxChecked) {
-                    let shouldProceed = confirm('Tem a certeza que deseja agendar a formação sem selecionar nenhum material? Poderá editar o agendamento mais tarde e adicionar/remover materiais!');
-
-                    if (!shouldProceed) {
-                        event.preventDefault();
-                    }
+                    event.preventDefault();
+                    $('#confirmModal').modal('show');
                 }
+            });
+
+
+            $('#confirmBtn').click(function () {
+                form.submit();
             });
         });
     </script>
