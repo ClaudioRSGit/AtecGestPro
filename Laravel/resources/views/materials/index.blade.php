@@ -206,7 +206,7 @@
                                             @csrf
                                             @method('delete')
                                             <button type="submit"
-                                                    onclick="return confirm('Tem certeza que deseja apagar?')"
+                                                    data-message="Tem a certeza que deseja eliminar o material {{ $material->name }}?"
                                                     style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
                                                 <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14"
                                                      viewBox="0 0 448 512">
@@ -354,7 +354,7 @@
                                               style="display:inline;">
                                             @csrf
                                             <button class="centerTd" type="submit"
-                                                    onclick="return confirm('Tem a certeza que pretende restaurar o material?')"
+                                                    data-message="Tem a certeza que deseja restaurar o material {{ $material->name }}?"
                                                     style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
                                                 <img src="{{ asset('assets/restore.svg') }}">
                                             </button>
@@ -369,7 +369,7 @@
                                             @csrf
                                             @method('delete')
                                             <button type="submit"
-                                                    onclick="return confirm('Tem certeza que deseja excluir permanentemente?')"
+                                                    data-message="Tem a certeza que deseja eliminar permanentemente o material {{ $material->name }}?"
                                                     style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
                                                 <img src="{{ asset('assets/permaDelete.svg') }}" alt="Delete">
 
@@ -387,8 +387,50 @@
                 {{ $recycleMaterials->appends(['mPage' => $recycleMaterials->currentPage()])->links() }}
 
             </div>
+            {{--    confirmation modal    --}}
+            <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="deleteModalLabel">Confirmar</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" id="modalBody">
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-primary" id="deleteBtn">Confirmar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{--    confirmation modal    --}}
         </div>
 
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                let deleteButtons = document.querySelectorAll('button[type="submit"]');
+
+                deleteButtons.forEach(button => {
+                    button.addEventListener('click', function (event) {
+                        event.preventDefault();
+
+                        let message = button.getAttribute('data-message');
+                        document.getElementById('modalBody').textContent = message;
+
+                        $('#deleteModal').modal('show');
+
+                        $('#deleteBtn').click(function () {
+                            button.closest('form').submit();
+                        });
+                    });
+                });
+            });
+        </script>
 
 
 
@@ -489,36 +531,7 @@
                     });
                 });
 
-                const sortDropdown = document.getElementById('sort');
 
-                sortDropdown.addEventListener('change', function () {
-                    sortMaterials();
-                });
-
-                function sortMaterials() {
-                    const sortValue = sortDropdown.value;
-                    const materialRows = Array.from(document.querySelectorAll('.material-row'));
-                    const fillerRows = Array.from(document.querySelectorAll('.filler'));
-
-                    materialRows.sort((a, b) => {
-                        const aName = a.querySelector('a').textContent.toLowerCase();
-                        const bName = b.querySelector('a').textContent.toLowerCase();
-
-                        if (sortValue === 'az') {
-                            return aName.localeCompare(bName);
-                        } else {
-                            return bName.localeCompare(aName);
-                        }
-                    });
-
-                    const tbody = document.querySelector('tbody');
-                    materialRows.forEach((row, index) => {
-                        tbody.appendChild(row);
-                        if (fillerRows[index]) {
-                            tbody.appendChild(fillerRows[index]);
-                        }
-                    });
-                }
 
 
                 recycledCheckboxes.forEach(checkbox => {
@@ -542,86 +555,120 @@
                 const selectedMaterials = Array.from(document.querySelectorAll(
                     'input[name="selecteRecycledMaterials[]"]:checked'))
                     .map(checkbox => checkbox.value);
-                if (selectedMaterials.length > 0 && confirm(
-                    'Tem certeza que deseja restaurar os materiais selecionados?')) {
-                    const form = document.createElement('form');
-                    form.method = 'POST';
-                    form.action = '{{ route('materials.massRestore') }}';
-                    form.style.display = 'none';
-                    const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
-                    selectedMaterials.forEach(materialId => {
-                        const input = document.createElement('input');
-                        input.type = 'hidden';
-                        input.name = 'material_ids[]';
-                        input.value = materialId;
-                        form.appendChild(input);
+                if (selectedMaterials.length > 0) {
+                    let message = 'Tem certeza que deseja restaurar os materiais selecionados?';
+                    document.getElementById('modalBody').textContent = message;
+                    $('#deleteModal').modal('show');
+                    document.getElementById('deleteBtn').style.display = 'block';
+
+                    document.getElementById('deleteBtn').addEventListener('click', function () {
+                        const form = document.createElement('form');
+                        form.method = 'POST';
+                        form.action = '{{ route('materials.massRestore') }}';
+                        form.style.display = 'none';
+                        const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
+                        selectedMaterials.forEach(materialId => {
+                            const input = document.createElement('input');
+                            input.type = 'hidden';
+                            input.name = 'material_ids[]';
+                            input.value = materialId;
+                            form.appendChild(input);
+                        });
+                        const csrfInput = document.createElement('input');
+                        csrfInput.type = 'hidden';
+                        csrfInput.name = '_token';
+                        csrfInput.value = csrfToken;
+                        form.appendChild(csrfInput);
+                        document.body.appendChild(form);
+                        form.submit();
                     });
-                    const csrfInput = document.createElement('input');
-                    csrfInput.type = 'hidden';
-                    csrfInput.name = '_token';
-                    csrfInput.value = csrfToken;
-                    form.appendChild(csrfInput);
-                    document.body.appendChild(form);
-                    form.submit();
+                } else {
+                    let message = 'Selecione pelo menos um material para restaurar!';
+                    document.getElementById('modalBody').textContent = message;
+                    $('#deleteModal').modal('show');
+                    document.getElementById('deleteBtn').style.display = 'none';
                 }
             });
 
+            
             forceDeleteSelectedButton.addEventListener('click', function () {
-                console.log('clicked');
                 const selectedMaterials = Array.from(document.querySelectorAll(
                     'input[name="selecteRecycledMaterials[]"]:checked'))
                     .map(checkbox => checkbox.value);
-                if (selectedMaterials.length > 0 && confirm(
-                    'Tem certeza que deseja excluir permanentemente os materiais selecionados?')) {
-                    const form = document.createElement('form');
-                    form.method = 'POST';
-                    form.action = '{{ route('materials.massForceDelete') }}';
-                    form.style.display = 'none';
-                    const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
-                    selectedMaterials.forEach(materialId => {
-                        const input = document.createElement('input');
-                        input.type = 'hidden';
-                        input.name = 'material_ids[]';
-                        input.value = materialId;
-                        form.appendChild(input);
+                if (selectedMaterials.length > 0) {
+                    let message = 'Tem certeza que deseja excluir permanentemente os materiais selecionados?';
+                    document.getElementById('modalBody').textContent = message;
+                    $('#deleteModal').modal('show');
+
+                    document.getElementById('deleteBtn').addEventListener('click', function () {
+                        const form = document.createElement('form');
+                        form.method = 'POST';
+                        form.action = '{{ route('materials.massForceDelete') }}';
+                        form.style.display = 'none';
+                        const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
+                        selectedMaterials.forEach(materialId => {
+                            const input = document.createElement('input');
+                            input.type = 'hidden';
+                            input.name = 'material_ids[]';
+                            input.value = materialId;
+                            form.appendChild(input);
+                        });
+                        const csrfInput = document.createElement('input');
+                        csrfInput.type = 'hidden';
+                        csrfInput.name = '_token';
+                        csrfInput.value = csrfToken;
+                        form.appendChild(csrfInput);
+                        document.body.appendChild(form);
+                        form.submit();
                     });
-                    const csrfInput = document.createElement('input');
-                    csrfInput.type = 'hidden';
-                    csrfInput.name = '_token';
-                    csrfInput.value = csrfToken;
-                    form.appendChild(csrfInput);
-                    document.body.appendChild(form);
-                    form.submit();
+                } else {
+                    let message = 'Selecione pelo menos um material para excluir!';
+                    document.getElementById('modalBody').textContent = message;
+                    $('#deleteModal').modal('show');
+                    document.getElementById('deleteBtn').style.display = 'none';
                 }
             });
+
 
             deleteSelectedButton.addEventListener('click', function () {
                 const selectedMaterials = Array.from(document.querySelectorAll(
                     'input[name="selectedMaterials[]"]:checked'))
                     .map(checkbox => checkbox.value);
-                if (selectedMaterials.length > 0 && confirm(
-                    'Tem certeza que deseja excluir os materiais selecionados?')) {
-                    const form = document.createElement('form');
-                    form.method = 'POST';
-                    form.action = '{{ route('materials.massDelete') }}';
-                    form.style.display = 'none';
-                    const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
-                    selectedMaterials.forEach(materialId => {
-                        const input = document.createElement('input');
-                        input.type = 'hidden';
-                        input.name = 'material_ids[]';
-                        input.value = materialId;
-                        form.appendChild(input);
+                if (selectedMaterials.length > 0) {
+                    let message = 'Tem certeza que deseja excluir os materiais selecionados?';
+                    document.getElementById('modalBody').textContent = message;
+                    $('#deleteModal').modal('show');
+                    document.getElementById('deleteBtn').style.display = 'block';
+
+                    document.getElementById('deleteBtn').addEventListener('click', function () {
+                        const form = document.createElement('form');
+                        form.method = 'POST';
+                        form.action = '{{ route('materials.massDelete') }}';
+                        form.style.display = 'none';
+                        const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
+                        selectedMaterials.forEach(materialId => {
+                            const input = document.createElement('input');
+                            input.type = 'hidden';
+                            input.name = 'material_ids[]';
+                            input.value = materialId;
+                            form.appendChild(input);
+                        });
+                        const csrfInput = document.createElement('input');
+                        csrfInput.type = 'hidden';
+                        csrfInput.name = '_token';
+                        csrfInput.value = csrfToken;
+                        form.appendChild(csrfInput);
+                        document.body.appendChild(form);
+                        form.submit();
                     });
-                    const csrfInput = document.createElement('input');
-                    csrfInput.type = 'hidden';
-                    csrfInput.name = '_token';
-                    csrfInput.value = csrfToken;
-                    form.appendChild(csrfInput);
-                    document.body.appendChild(form);
-                    form.submit();
+                } else {
+                    let message = 'Selecione pelo menos um material para excluir!';
+                    document.getElementById('modalBody').textContent = message;
+                    $('#deleteModal').modal('show');
+                    document.getElementById('deleteBtn').style.display = 'none';
                 }
             });
+
 
             $(document).ready(function () {
                 $('[data-toggle="tooltip"]').tooltip();
