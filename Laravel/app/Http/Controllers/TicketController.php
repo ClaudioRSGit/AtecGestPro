@@ -451,6 +451,4 @@ class TicketController extends Controller
          return view('tickets.show', compact('ticket'));
     }
 
-    
-
 }
