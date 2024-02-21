@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\TicketRequest;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 
 class TicketController extends Controller
@@ -35,8 +36,7 @@ class TicketController extends Controller
         $filterRecyclingCategory = $request->input('filterRecyclingCategory');
         $filterRecyclingStatus = $request->input('filterRecyclingStatus');
         $filterRecyclingPriority = $request->input('filterRecyclingPriority');
-
-
+        $now = Carbon::now();
 
         $sort = $request->query('sort');
         $direction = $request->query('direction', 'asc');
@@ -142,7 +142,7 @@ class TicketController extends Controller
         $priorities = TicketPriority::all();
         $statuses = TicketStatus::all();
 
-        return view('tickets.index', compact('tickets', 'users', 'ticketSearch', 'filterCategory', 'filterPriority', 'filterStatus', 'categories', 'priorities', 'statuses', 'waitingQueueTickets', 'recycledTickets', 'sort', 'direction', 'filaSearch', 'recyclingSearch', 'filterFilaPriority', 'filterFilaCategory', 'filterRecyclingCategory', 'filterRecyclingStatus', 'filterRecyclingPriority'));
+        return view('tickets.index', compact('tickets', 'users', 'ticketSearch', 'filterCategory', 'filterPriority', 'filterStatus', 'categories', 'priorities', 'statuses', 'waitingQueueTickets', 'recycledTickets', 'sort', 'direction', 'filaSearch', 'recyclingSearch', 'filterFilaPriority', 'filterFilaCategory', 'filterRecyclingCategory', 'filterRecyclingStatus', 'filterRecyclingPriority', 'now'));
     }
 
     public function create()
@@ -171,7 +171,7 @@ class TicketController extends Controller
                 return now()->addHours(4);
             default:
 
-                return now()->addWeeks(3);
+            return now()->addWeeks(3);
         }
     }
 
@@ -227,6 +227,10 @@ class TicketController extends Controller
         $id = $ticket->id;
         $ticketHistories = TicketHistory::where('ticket_id', $id)->orderBy('created_at', 'desc')->get();
 
+        $creationDate = Carbon::parse($ticket->created_at);
+        $now = Carbon::now();
+        $openedSince = $creationDate->diffInDays($now);
+
         $users = User::all();
         $statuses = TicketStatus::all();
         $priorities = TicketPriority::all();
@@ -236,7 +240,7 @@ class TicketController extends Controller
         $technician = User::where('id', $ticketTechnician->user_id)->first();
         $requester = User::where('id', $ticket->user_id)->first();
 
-        return view('tickets.show', compact('ticket', 'userTickets', 'users', 'statuses', 'priorities', 'categories', 'technician', 'requester', 'ticketHistories', 'attachmentUrl'));
+        return view('tickets.show', compact('ticket', 'userTickets', 'users', 'statuses', 'priorities', 'categories', 'technician', 'requester', 'ticketHistories', 'attachmentUrl', 'openedSince'));
     }
 
     public function edit(Ticket $ticket)
@@ -428,14 +432,12 @@ class TicketController extends Controller
 
     public function sendEmail($id)
     {
-// // dd($id);
-//         $ticket = Ticket::with('requester')->find($id);
-// //        dd($ticket->requester->email);
+         $ticket = Ticket::with('requester')->find($id);
+         $email = new TicketEmail($ticket);
 
-//         $email = new TicketEmail($ticket);
-// //        dd($email);
-//         Mail::to($ticket->requester->email)->send($email);
-//         return view('tickets.show', compact('ticket'));
+         Mail::to($ticket->requester->email)->send($email);
+
+         return view('tickets.show', compact('ticket'));
     }
 
     public function storeQuickTicket(TicketRequest $request)

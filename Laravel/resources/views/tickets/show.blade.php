@@ -23,6 +23,9 @@
                     </span>
                     <b>{{ $requester->name }}</b>
                     - {{ $ticket->created_at }}
+                    @if ($ticket->ticketStatus->description === 'Aberto')
+                    <span class="text-danger">(Aberto há {{ $openedSince }} dias)</span>
+                    @endif
                 </div>
             </div>
             <div class="mb-2">
