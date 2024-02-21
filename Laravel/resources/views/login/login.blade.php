@@ -1,5 +1,20 @@
 <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 <script src="https://kit.fontawesome.com/5931b49df2.js" crossorigin="anonymous"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const passwordInput = document.getElementById('password');
+        const togglePasswordBtn = document.getElementById('togglePassword');
+        const eyeIcon = togglePasswordBtn.querySelector('i');
+
+        togglePasswordBtn.addEventListener('click', function () {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+
+            eyeIcon.classList.toggle('fa-eye', type === 'password');
+            eyeIcon.classList.toggle('fa-eye-slash', type === 'text');
+        });
+    });
+</script>
 
 <div class="container mx-auto d-flex align-items-center loginPage w-100 fade-in">
     <div class="d-flex justify-content-center align-items-center w-100 h-100">
@@ -33,8 +48,8 @@
                                     <input id="password" type="password"
                                     class="form-control w-85 @error('password') is-invalid @enderror" name="password"
                                     required autocomplete="current-password">
-                                    <div class="rounded d-flex justify-content-center align-items-center btn-primary w-10">
-                                        <i class="fa-solid fa-lock" style="color: #ffffff;"></i>
+                                    <div class="rounded d-flex justify-content-center align-items-center btn-primary w-10" id="togglePassword" style="cursor: pointer;">
+                                        <i class="fas fa-eye" style="color: #ffffff;"></i>
                                     </div>
                                 </div>
                             </div>
