@@ -78,7 +78,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit"
-                                                    onclick="return confirm('Tem certeza que deseja excluir? O stock não vai ser atualizado!')"
+                                                    data-message="Tem a certeza que deseja excluir a entrega de {{$entrega->material->name}}? O stock não vai ser atualizado!"
                                                     style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
                                                 <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14"
                                                      viewBox="0 0 448 512">
@@ -149,13 +149,13 @@
                                       style="display:inline">
                                     @csrf
                                     <input type="hidden" name="user_id" value="{{$user->id}}">
-                                    <button type="submit" form="allDelivered" class="btn btn-primary">Finalizar entrega</button>
+                                    <button type="submit" form="allDelivered" class="btn btn-primary" data-message="Deseja marcar a entrega de fardamento como entregue na totalidade?">Finalizar entrega</button>
                                 </form>
                                 <form id="partialDelivered" action="{{ route('material-user.addDeliveredPartial') }}" method="POST"
                                       style="display:inline">
                                     @csrf
                                     <input type="hidden" name="user_id" value="{{$user->id}}">
-                                    <button type="submit" form="partialDelivered" class="btn btn-primary ">Entrega parcial</button>
+                                    <button type="submit" form="partialDelivered" class="btn btn-primary " data-message="Deseja marcar a entrega de fardamento como entregue parcialmente?">Entrega parcial</button>
                                 </form>
                             </div>
                         </div>
@@ -201,7 +201,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar
                                         </button>
-                                        <button type="submit" class="btn btn-primary">Gravar</button>
+                                        <button type="submit" class="btn btn-primary" data-message="Tem a certeza que pretende atualizar a(s) nota(s)?">Gravar</button>
                                     </div>
                                 </form>
                             </div>
@@ -231,7 +231,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar
                                         </button>
-                                        <button type="submit" class="btn btn-primary">Gravar</button>
+                                        <button type="submit" class="btn btn-primary" data-message="Tem a certeza que pretende guardar a nota?">Gravar</button>
                                     </div>
                                 </form>
                             </div>
@@ -245,7 +245,52 @@
 
 
         </div>
+        {{--    confirmation modal    --}}
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">Confirmar</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="modalBody">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="deleteBtn">Confirmar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{--    confirmation modal    --}}
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let deleteButtons = document.querySelectorAll('button[type="submit"]');
+
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function (event) {
+                    event.preventDefault();
+
+                    let message = button.getAttribute('data-message');
+                    document.getElementById('modalBody').textContent = message;
+
+                    $('#deleteModal').modal('show');
+
+                    $('#deleteBtn').click(function () {
+                        button.closest('form').submit();
+                    });
+                });
+            });
+        });
+    </script>
+
+
     <style>
         .materials {
             align-self: start;
@@ -312,30 +357,40 @@
             const selectedMaterials = Array.from(document.querySelectorAll(
                 'input[name="selectedMaterials[]"]:checked'))
                 .map(checkbox => checkbox.value);
-            if (selectedMaterials.length > 0 && confirm(
-                'Tem certeza que deseja excluir os materiais selecionados? O stock não vai ser atualizado!')) {
-                const form = document.createElement('form');
-                form.method = 'POST';
-                form.action = '{{ route('material-user.massDelete') }}';
-                form.style.display = 'none';
-                const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
-                selectedMaterials.forEach(materialId => {
-                    const input = document.createElement('input');
-                    input.type = 'hidden';
-                    input.name = 'material_ids[]';
-                    input.value = materialId;
-                    form.appendChild(input);
+            if (selectedMaterials.length > 0) {
+                let message = 'Tem certeza que deseja excluir os materiais selecionados? O stock não vai ser atualizado!';
+                document.getElementById('modalBody').textContent = message;
+                $('#deleteModal').modal('show');
+                document.getElementById('deleteBtn').style.display = 'block';
+
+                document.getElementById('deleteBtn').addEventListener('click', function () {
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = '{{ route('material-user.massDelete') }}';
+                    form.style.display = 'none';
+                    const csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
+                    selectedMaterials.forEach(materialId => {
+                        const input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = 'material_ids[]';
+                        input.value = materialId;
+                        form.appendChild(input);
+                    });
+                    const csrfInput = document.createElement('input');
+                    csrfInput.type = 'hidden';
+                    csrfInput.name = '_token';
+                    csrfInput.value = csrfToken;
+                    form.appendChild(csrfInput);
+                    document.body.appendChild(form);
+                    form.submit();
                 });
-                const csrfInput = document.createElement('input');
-                csrfInput.type = 'hidden';
-                csrfInput.name = '_token';
-                csrfInput.value = csrfToken;
-                form.appendChild(csrfInput);
-                document.body.appendChild(form);
-                form.submit();
+            } else {
+                let message = 'Selecione pelo menos um material para excluir!';
+                document.getElementById('modalBody').textContent = message;
+                $('#deleteModal').modal('show');
+                document.getElementById('deleteBtn').style.display = 'none';
             }
         });
-
 
     </script>
 

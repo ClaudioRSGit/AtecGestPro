@@ -141,12 +141,14 @@
 
                                 </th>
                                 <th scope="col">
-                                        Categoria
+                                    Categoria
                                 </th>
                                 <th scope="col">Estado</th>
                                 <th scope="col">Data de Abertura</th>
                                 <th scope="col">Data de Vencimento</th>
-                                <th scope="col"><div class="centerTd">Ações</div></th>
+                                <th scope="col">
+                                    <div class="centerTd">Ações</div>
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -159,7 +161,8 @@
                                         <div class="position-relative">
                                             <span>#{{ $ticket->id ? $ticket->id : 'N.A.' }}</span>
                                             @if($ticket->created_at->diffInDays($now) < 5)
-                                            <span class="badge badge-success position-absolute top-50 translate-middle-y ml-3 mt-1">Novo!</span>
+                                                <span
+                                                    class="badge badge-success position-absolute top-50 translate-middle-y ml-3 mt-1">Novo!</span>
                                             @endif
                                         </div>
                                     </td>
@@ -167,15 +170,15 @@
                                         <div class="d-flex align-items-center">
                                             <span
                                                 class="mr-2 ticket-prio ticket-priority-{{ $ticket->ticketPriority->id }}"></span>
-                                                <a href="{{ route('tickets.show', $ticket->id) }}"
-                                                    class="d-flex align-items-center w-auto h-100">{{ $ticket->title ? $ticket->title : 'N.A.' }}
-                                                </a>
+                                            <a href="{{ route('tickets.show', $ticket->id) }}"
+                                               class="d-flex align-items-center w-auto h-100">{{ $ticket->title ? $ticket->title : 'N.A.' }}
+                                            </a>
                                         </div>
                                     </td>
                                     <td class="clickable">
                                         @showIfNotDeleted($ticket)
                                         <a href="{{ route('users.show', $ticket->user_id) }}"
-                                            class="d-flex align-items-center w-auto h-100">{{ $ticket->requester->name ? $ticket->requester->name : 'N.A.' }}</a>
+                                           class="d-flex align-items-center w-auto h-100">{{ $ticket->requester->name ? $ticket->requester->name : 'N.A.' }}</a>
                                         @endshowIfNotDeleted
                                     </td>
                                     <td class="clickable">
@@ -205,7 +208,7 @@
                                                     @csrf
                                                     @method('delete')
                                                     <button type="submit"
-                                                            onclick="return confirm('Tem certeza que deseja apagar?')"
+                                                            data-message="Tem certeza que deseja apagar o ticket {{$ticket->title}}?"
                                                             style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
                                                         <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16"
                                                              viewBox="0 0 512 512">
@@ -305,9 +308,9 @@
                                         <div class="d-flex align-items-center">
                                             <span
                                                 class="mr-2 ticket-prio ticket-priority-{{ $ticket->ticketPriority->id }}"></span>
-                                                <a href="{{ route('tickets.show', $ticket->id) }}"
-                                                    class="d-flex align-items-center w-auto h-100">{{ $ticket->title ? $ticket->title : 'N.A.' }}
-                                                </a>
+                                            <a href="{{ route('tickets.show', $ticket->id) }}"
+                                               class="d-flex align-items-center w-auto h-100">{{ $ticket->title ? $ticket->title : 'N.A.' }}
+                                            </a>
                                         </div>
                                     </td>
                                     <td class="clickable">
@@ -342,7 +345,7 @@
                                                     @csrf
                                                     @method('delete')
                                                     <button type="submit"
-                                                            onclick="return confirm('Tem certeza que deseja apagar?')"
+                                                            data-message="Tem certeza que deseja apagar o ticket {{$ticket->title}}?"
                                                             style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
                                                         <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14"
                                                              viewBox="0 0 448 512">
@@ -383,7 +386,8 @@
                         </form>
                         <div class="buttons">
                             <form id="filterRecyclingCategoryForm" action="{{ route('tickets.index') }}" method="GET">
-                                <select class="form-control w-auto" id="filterRecyclingCategory" name="filterRecyclingCategory"
+                                <select class="form-control w-auto" id="filterRecyclingCategory"
+                                        name="filterRecyclingCategory"
                                         onchange="submitRecyclingCategoryForm()">
                                     <option value="" {{ $filterRecyclingCategory === '' ? 'selected' : '' }}>
                                         Todas as categorias
@@ -398,9 +402,11 @@
                             </form>
 
                             <form id="filterRecyclingStatusForm" action="{{ route('tickets.index') }}" method="GET">
-                                <select class="form-control w-auto" id="filterRecyclingStatus" name="filterRecyclingStatus"
+                                <select class="form-control w-auto" id="filterRecyclingStatus"
+                                        name="filterRecyclingStatus"
                                         onchange="submitRecyclingStatusForm()">
-                                    <option value="" {{ $filterRecyclingStatus === '' ? 'selected' : '' }}>Todos os estados
+                                    <option value="" {{ $filterRecyclingStatus === '' ? 'selected' : '' }}>Todos os
+                                        estados
                                     </option>
                                     @foreach ($statuses as $status)
                                         <option value="{{ $status->id }}"
@@ -411,7 +417,8 @@
                             </form>
 
                             <form id="filterRecyclingPriorityForm" action="{{ route('tickets.index') }}" method="GET">
-                                <select class="form-control w-auto" id="filterRecyclingPriority" name="filterRecyclingPriority"
+                                <select class="form-control w-auto" id="filterRecyclingPriority"
+                                        name="filterRecyclingPriority"
                                         onchange="submitRecyclingPriorityForm()">
                                     <option value="" {{ $filterRecyclingPriority === '' ? 'selected' : '' }}>
                                         Todas as prioridades
@@ -440,8 +447,12 @@
                                 <th scope="col">Técnico</th>
                                 <th scope="col">Estado</th>
                                 <th scope="col">Data de Abertura</th>
-                                <th scope="col"><div class="centerTd">Restaurar</div></th>
-                                <th scope="col"><div class="centerTd">Apagar</div></th>
+                                <th scope="col">
+                                    <div class="centerTd">Restaurar</div>
+                                </th>
+                                <th scope="col">
+                                    <div class="centerTd">Apagar</div>
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -452,17 +463,19 @@
                                         <span
                                             class="mr-2 ticket-prio ticket-priority-{{ $ticket->ticketPriority->id }}">
                                         </span>
-                                            @showIfNotDeleted($ticket)
-                                                <a href="{{ route('tickets.show', $ticket->id) }}" class="d-flex align-items-center w-auto h-100">{{ $ticket->title ? $ticket->title : 'N.A.' }}</a>
-                                            @else
-                                                <span class="d-flex align-items-center w-auto h-100">{{ $ticket->title ? $ticket->title : 'N.A.' }}</span>
+                                        @showIfNotDeleted($ticket)
+                                        <a href="{{ route('tickets.show', $ticket->id) }}"
+                                           class="d-flex align-items-center w-auto h-100">{{ $ticket->title ? $ticket->title : 'N.A.' }}</a>
+                                        @else
+                                            <span
+                                                class="d-flex align-items-center w-auto h-100">{{ $ticket->title ? $ticket->title : 'N.A.' }}</span>
                                             @endshowIfNotDeleted
                                     </td>
                                     <td class="clickable">
                                         @showIfNotDeleted($ticket)
                                         <a href="{{ route('users.show', $ticket->user_id) }}"
-                                            class="d-flex align-items-center w-auto h-100">{{ $ticket->requester->name ? $ticket->requester->name : 'N.A.' }}</a>
-                                           @endshowIfNotDeleted
+                                           class="d-flex align-items-center w-auto h-100">{{ $ticket->requester->name ? $ticket->requester->name : 'N.A.' }}</a>
+                                        @endshowIfNotDeleted
                                     </td>
                                     <td class="clickable">
                                         @foreach ($ticket->users as $user)
@@ -472,22 +485,29 @@
                                     </td>
                                     <td class="ticket-status-{{ $ticket->ticketStatus->id }}">{{ $ticket->ticketStatus->description }}</td>
                                     <td>{{ $ticket->created_at->format('d-m-Y') }}</td>
-                                    <td >
+                                    <td>
 
                                         <div class="centerTd">
-                                            <a href="{{ route('tickets.restore', $ticket->id) }}">
-                                                <img src="{{ asset('assets/restore.svg') }}">
-                                            </a>
+                                            <form method="POST" action="{{ route('tickets.restore', $ticket->id) }}">
+                                                @csrf
+                                                @method('GET')
+                                                <button type="submit"
+                                                        style="border: none; background: none; padding: 0;"
+                                                        data-message="Tem certeza que deseja restaurar o ticket {{$ticket->title}}?">
+                                                    <img src="{{ asset('assets/restore.svg') }}">
+                                                </button>
+                                            </form>
                                         </div>
+
                                     </td>
-                                    <td >
+                                    <td>
                                         <div class="centerTd">
                                             <form action="{{ route('tickets.forceDelete', $ticket->id) }}" method="POST"
                                                   style="display: inline;">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"
-                                                        onclick="return confirm('Tem a certeza que deseja apagar permanentemente?')"
+                                                        data-message="Tem certeza que deseja apagar permanentemente o ticket {{$ticket->title}}?"
                                                         style="border: none; background: none; padding: 0;">
                                                     <img src="{{ asset('assets/permaDelete.svg') }}" alt="Delete">
                                                 </button>
@@ -508,10 +528,54 @@
 
         </div>
     </div>
+    {{--    confirmation modal    --}}
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Confirmar</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modalBody">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="deleteBtn">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{--    confirmation modal    --}}
+    </div>
 
     @component('tickets.quickTicket', ['priorities' => $priorities, 'categories' => $categories])
 
     @endcomponent
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let deleteButtons = document.querySelectorAll('button[type="submit"]');
+
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function (event) {
+                    event.preventDefault();
+
+                    let message = button.getAttribute('data-message');
+                    document.getElementById('modalBody').textContent = message;
+
+                    $('#deleteModal').modal('show');
+
+                    $('#deleteBtn').click(function () {
+                        button.closest('form').submit();
+                    });
+                });
+            });
+        });
+    </script>
 
     <script>
         function submitCategoryForm() {
@@ -519,11 +583,13 @@
             document.getElementById("filterCategoryForm").submit();
 
         }
+
         function submitFilaCategoryForm() {
 
             document.getElementById("filterFilaCategoryForm").submit();
 
         }
+
         function submitRecyclingCategoryForm() {
 
             document.getElementById("filterRecyclingCategoryForm").submit();
@@ -541,6 +607,7 @@
             document.getElementById("filterStatusForm").submit();
 
         }
+
         function submitRecyclingStatusForm() {
 
             document.getElementById("filterRecyclingStatusForm").submit();
@@ -552,6 +619,7 @@
             document.getElementById("filterPriorityForm").submit();
 
         }
+
         function submitRecyclingPriorityForm() {
 
             document.getElementById("filterRecyclingPriorityForm").submit();
