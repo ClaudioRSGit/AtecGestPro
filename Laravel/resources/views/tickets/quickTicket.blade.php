@@ -33,7 +33,7 @@
         </div>
 
         <div class="mb-3">
-            <label for="">Anexo:</label><br>
+            <label for="">Anexo: <strong><span id="file-name"></span></strong></label><br>
             <label for="attachment" class="btn btn-primary">Selecionar ficheiro</label>
             <input type="file" class="btn" id="attachment" name="attachment" style="display: none;" accept=".jpeg, .jpg, .png, .gif, .svg, .bmp, .raw, .pdf, .doc, .docx, .xls, .xlsm, .xlsx">
             @error('attachment')
