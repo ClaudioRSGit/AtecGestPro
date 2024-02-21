@@ -36,8 +36,7 @@ class TicketController extends Controller
         $filterRecyclingCategory = $request->input('filterRecyclingCategory');
         $filterRecyclingStatus = $request->input('filterRecyclingStatus');
         $filterRecyclingPriority = $request->input('filterRecyclingPriority');
-
-
+        $now = Carbon::now();
 
         $sort = $request->query('sort');
         $direction = $request->query('direction', 'asc');
@@ -143,7 +142,7 @@ class TicketController extends Controller
         $priorities = TicketPriority::all();
         $statuses = TicketStatus::all();
 
-        return view('tickets.index', compact('tickets', 'users', 'ticketSearch', 'filterCategory', 'filterPriority', 'filterStatus', 'categories', 'priorities', 'statuses', 'waitingQueueTickets', 'recycledTickets', 'sort', 'direction', 'filaSearch', 'recyclingSearch', 'filterFilaPriority', 'filterFilaCategory', 'filterRecyclingCategory', 'filterRecyclingStatus', 'filterRecyclingPriority'));
+        return view('tickets.index', compact('tickets', 'users', 'ticketSearch', 'filterCategory', 'filterPriority', 'filterStatus', 'categories', 'priorities', 'statuses', 'waitingQueueTickets', 'recycledTickets', 'sort', 'direction', 'filaSearch', 'recyclingSearch', 'filterFilaPriority', 'filterFilaCategory', 'filterRecyclingCategory', 'filterRecyclingStatus', 'filterRecyclingPriority', 'now'));
     }
 
     public function create()
@@ -231,7 +230,7 @@ class TicketController extends Controller
         $creationDate = Carbon::parse($ticket->created_at);
         $now = Carbon::now();
         $openedSince = $creationDate->diffInDays($now);
-        
+
         $users = User::all();
         $statuses = TicketStatus::all();
         $priorities = TicketPriority::all();
