@@ -78,7 +78,7 @@
                                   style="display:inline;">
                                 @csrf
                                 @method('delete')
-                                <button type="submit"
+                                <button type="submit" id="modal"
                                         data-message="Tem a certeza que deseja eliminar o curso {{ $course->description }}?"
                                         style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
                                     <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14"
@@ -123,20 +123,18 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            let deleteButtons = document.querySelectorAll('button[type="submit"]');
+            let deleteButton = document.getElementById('modal');
 
-            deleteButtons.forEach(button => {
-                button.addEventListener('click', function (event) {
-                    event.preventDefault();
+            deleteButton.addEventListener('click', function (event) {
+                event.preventDefault();
 
-                    let message = button.getAttribute('data-message');
-                    document.getElementById('modalBody').textContent = message;
+                let message = deleteButton.getAttribute('data-message');
+                document.getElementById('modalBody').textContent = message;
 
-                    $('#deleteModal').modal('show');
+                $('#deleteModal').modal('show');
 
-                    $('#deleteBtn').click(function () {
-                        button.closest('form').submit();
-                    });
+                $('#deleteBtn').click(function () {
+                    deleteButton.closest('form').submit();
                 });
             });
         });

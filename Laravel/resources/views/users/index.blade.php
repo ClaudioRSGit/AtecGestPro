@@ -64,7 +64,7 @@
                     </form>
 
                     <div class="buttons">
-                        <button class="btn btn-danger" id="delete-selected" data-message="Tem a certeza que pretende enviar os utilizadores selecionados para a reciclagem?" data-no-selection-message="Selecione pelo menos um utilizador para excluir.">Excluir Selecionados</button>
+                        <button class="btn btn-danger modalBtn" id="delete-selected" data-message="Tem a certeza que pretende enviar os utilizadores selecionados para a reciclagem?" data-no-selection-message="Selecione pelo menos um utilizador para excluir.">Excluir Selecionados</button>
                         <form action="{{ route('users.index') }}" method="GET" id="roleFilterForm">
                             <div>
                                 <select class="form-control" id="roleFilter" name="roleFilter" onchange="submitForm()">
@@ -133,7 +133,7 @@
                                     <form method="post" action="{{ route('users.destroy', $user->id) }}" style="display:inline;">
                                         @csrf
                                         @method('delete')
-                                        <button type="submit" data-message="Tem a certeza que pretende enviar o {{ strtolower($user->role->description) }} {{ $user->name }} para a reciclagem?"
+                                        <button type="submit" class="modalBtn" data-message="Tem a certeza que pretende enviar o {{ strtolower($user->role->description) }} {{ $user->name }} para a reciclagem?"
                                                 style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
                                             <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16"
                                                  viewBox="0 0 512 512">
@@ -205,7 +205,7 @@
                                             <form method="post" action="{{ route('users.restore', $deletedUser->id) }}"
                                                   style="display:inline;">
                                                 @csrf
-                                                <button type="submit"
+                                                <button type="submit" class="modalBtn"
                                                         data-message="Tem a certeza que deseja restaurar o {{strtolower($deletedUser->role->description)}} {{ $deletedUser->name }}?"
                                                         style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
                                                     <img src="{{ asset('assets/restore.svg') }}">
@@ -221,7 +221,7 @@
                                                   style="display:inline;">
                                                 @csrf
                                                 @method('delete')
-                                                <button type="submit"
+                                                <button type="submit" class="modalBtn"
                                                         data-message="Tem a certeza que deseja apagar permanentemente o {{strtolower($deletedUser->role->description)}} {{ $deletedUser->name }}?"
                                                         style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
                                                     <img src="{{ asset('assets/permaDelete.svg') }}" alt="Delete">
@@ -270,7 +270,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            let deleteButtons = document.querySelectorAll('button[type="submit"]');
+            let deleteButtons = document.querySelectorAll('button[class="modalBtn"]');
 
             deleteButtons.forEach(button => {
                 button.addEventListener('click', function (event) {

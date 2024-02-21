@@ -207,7 +207,7 @@
                                                       style="display:inline;">
                                                     @csrf
                                                     @method('delete')
-                                                    <button type="submit"
+                                                    <button type="submit" class="modalBtn"
                                                             data-message="Tem certeza que deseja apagar o ticket {{$ticket->title}}?"
                                                             style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
                                                         <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16"
@@ -344,7 +344,7 @@
                                                       style="display:inline;">
                                                     @csrf
                                                     @method('delete')
-                                                    <button type="submit"
+                                                    <button type="submit" class="modalBtn"
                                                             data-message="Tem certeza que deseja apagar o ticket {{$ticket->title}}?"
                                                             style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
                                                         <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14"
@@ -491,7 +491,7 @@
                                             <form method="POST" action="{{ route('tickets.restore', $ticket->id) }}">
                                                 @csrf
                                                 @method('GET')
-                                                <button type="submit"
+                                                <button type="submit" class="modalBtn"
                                                         style="border: none; background: none; padding: 0;"
                                                         data-message="Tem certeza que deseja restaurar o ticket {{$ticket->title}}?">
                                                     <img src="{{ asset('assets/restore.svg') }}">
@@ -506,7 +506,7 @@
                                                   style="display: inline;">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit"
+                                                <button type="submit" class="modalBtn"
                                                         data-message="Tem certeza que deseja apagar permanentemente o ticket {{$ticket->title}}?"
                                                         style="border: none; background: none; padding: 0;">
                                                     <img src="{{ asset('assets/permaDelete.svg') }}" alt="Delete">
@@ -558,7 +558,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            let deleteButtons = document.querySelectorAll('button[type="submit"]');
+            let deleteButtons = document.querySelectorAll('button[class="modalBtn"]');
 
             deleteButtons.forEach(button => {
                 button.addEventListener('click', function (event) {

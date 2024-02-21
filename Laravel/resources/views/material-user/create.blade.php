@@ -189,7 +189,7 @@
             </div>
         </div>
 
-        {{$clothes->links() }}
+
 
 
     </div>
