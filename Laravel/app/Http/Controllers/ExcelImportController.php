@@ -17,10 +17,15 @@ class ExcelImportController extends Controller
 
     public function importUsers(Request $request)
     {
-        // Validate the uploaded file
-        $request->validate([
-            'file' => 'required|mimes:xlsx,xls',
-        ]);
+        try{
+
+            // Validate the uploaded file
+            $request->validate([
+                'file' => 'required|mimes:xlsx,xls',
+            ]);
+        }catch(\Exception $e){
+            return redirect()->back()->with('error', 'Erro ao inserir utilizadores. Por favor, tente novamente.');
+        }
 
         // Get the uploaded file
         $file = $request->file('file');
@@ -32,6 +37,7 @@ class ExcelImportController extends Controller
         Excel::import($userImport, $file);
 
         $importedUsers = $userImport->allImportedUsers;
+
 
         // Check the import status
         if ($userImport->getImportStatus()) {

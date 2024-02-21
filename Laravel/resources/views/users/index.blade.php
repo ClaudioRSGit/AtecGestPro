@@ -155,9 +155,14 @@
                 <div class="container">
                     <form action="{{ route('import-excel.importUsers') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <div class="form-group">
-                            <label for="file">Excel - Importar Utilizadores</label><br>
-                            <input type="file" name="file" id="file" class="btn" text="Escolher ficheiro">
+                        <div class="form-group mb-3">
+                            <label for="">Excel - Importar Utilizadores</label><br>
+                            <label for="file" class="btn btn-primary">Selecionar ficheiro</label>
+                            <input type="file" name="file" id="file" class="btn" style="display: none;">
+                            @error('attachment')
+                            <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                            <p>Certifique-se que o arquivo tem menos de 20MB</p>
                         </div>
                         <button type="submit" class="btn btn-primary">Importar</button>
                     </form>

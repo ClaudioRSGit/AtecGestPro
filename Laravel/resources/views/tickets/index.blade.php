@@ -126,6 +126,7 @@
                                     </a>
                                 </th>
                                 <th scope="col">
+
                                     <a href="{{ route('tickets.index', ['sort' => 'title', 'direction' => $currentSort === 'title' ? $newDirection : 'asc']) }}">
                                         Título
                                     </a>
@@ -154,7 +155,14 @@
                                 <tr class="customTableStyling {{ $ticket->ticketPriority->id == 5 ? 'critical' : '' }}"
                                     id="heading{{ $ticket->id }}">
 
-                                    <td class="pl-4">#{{ $ticket->id ? $ticket->id : 'N.A.' }}</td>
+                                    <td>
+                                        <div class="position-relative">
+                                            <span>#{{ $ticket->id ? $ticket->id : 'N.A.' }}</span>
+                                            @if($ticket->created_at->diffInDays($now) < 5)
+                                            <span class="badge badge-success position-absolute top-50 translate-middle-y ml-3 mt-1">Novo!</span>
+                                            @endif
+                                        </div>
+                                    </td>
                                     <td class="clickable">
                                         <div class="d-flex align-items-center">
                                             <span
