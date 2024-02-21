@@ -15,6 +15,14 @@
             </div>
         @endif
 
+        @foreach ($errors->get('new_contact_descriptions.*') as $error)
+            <div class="alert alert-danger contact-alert">{{ $error[0] }}</div>
+        @endforeach
+
+        @foreach ($errors->get('new_contact_values.*') as $error)
+            <div class="alert alert-danger contact-alert">{{ $error[0] }}</div>
+        @endforeach
+
         <h1>Editar Parceiro</h1>
         <form method="post" action="{{ route('partners.update', $partner->id) }}">
 
