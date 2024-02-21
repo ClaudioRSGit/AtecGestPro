@@ -338,7 +338,7 @@ class TicketController extends Controller
                     'isRead' => false,
                 ]);
             }
-            return redirect()->route('tickets.show', $ticket->id)->with('success', 'Ticket criado com sucesso!');
+            return redirect()->route('tickets.show', $ticket->id)->with('success', 'Ticket atualizado com sucesso!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Não foi possivel atualizar o ticket. Por favor, tente novamente.');
         }
@@ -451,6 +451,6 @@ class TicketController extends Controller
          return view('tickets.show', compact('ticket'));
     }
 
-    
+
 
 }
