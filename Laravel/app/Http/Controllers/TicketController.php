@@ -266,6 +266,11 @@ class TicketController extends Controller
     public function update(TicketRequest $request, Ticket $ticket)
     {
         try {
+            $authenticatedUser = Auth::user();
+
+            if ($authenticatedUser->hasRole('funcionario') && $ticket->user_id !== $authenticatedUser->id) {
+                return abort(403, 'Acesso não autorizado!');
+            }
             $oldTicket = clone $ticket;
             $oldTicketTechnician = clone TicketUser::where('ticket_id', $ticket->id)->first('user_id');
             $newUserId = $request->technician_id;
