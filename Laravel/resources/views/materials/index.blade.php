@@ -590,7 +590,7 @@
                 }
             });
 
-            
+
             forceDeleteSelectedButton.addEventListener('click', function () {
                 const selectedMaterials = Array.from(document.querySelectorAll(
                     'input[name="selecteRecycledMaterials[]"]:checked'))

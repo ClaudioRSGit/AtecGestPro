@@ -93,7 +93,7 @@
                                       style="display: inline; margin: 0 !important">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" onclick="return confirm('Tem certeza que deseja excluir?')"
+                                    <button type="submit" data-message="Tem a certeza que deseja eliminar a turma {{ $courseClass->description }}?"
                                             style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14"
                                              viewBox="0 0 448 512">
@@ -124,7 +124,52 @@
             @endforeach
         </div>
         {{ $courseClasses->links() }}
+
+        {{--    confirmation modal    --}}
+        <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="deleteModalLabel">Confirmar</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body" id="modalBody">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" id="deleteBtn">Confirmar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{--    confirmation modal    --}}
+
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            let deleteButtons = document.querySelectorAll('button[type="submit"]');
+
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function (event) {
+                    event.preventDefault();
+
+                    let message = button.getAttribute('data-message');
+                    document.getElementById('modalBody').textContent = message;
+
+                    $('#deleteModal').modal('show');
+
+                    $('#deleteBtn').click(function () {
+                        button.closest('form').submit();
+                    });
+                });
+            });
+        });
+    </script>
 
 
     <script>
