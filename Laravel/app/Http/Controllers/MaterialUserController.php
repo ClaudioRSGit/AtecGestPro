@@ -83,14 +83,14 @@ class MaterialUserController extends Controller
                 ->whereHas('courses', function ($query) use ($studentCourseId) {
                     $query->where('courses.id', $studentCourseId);
                 })
-                ->paginate(5);
+                ->get();
         } else {
             $student = $user;
 
             $clothes = Material::with('sizes', 'courses')
                 ->where('isClothing', 1)
                 ->doesntHave('courses')
-                ->paginate(5);
+                ->get();
         }
 
 

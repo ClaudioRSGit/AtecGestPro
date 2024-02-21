@@ -205,7 +205,7 @@
                                               style="display:inline;">
                                             @csrf
                                             @method('delete')
-                                            <button type="submit"
+                                            <button type="submit" class="modalBtn"
                                                     data-message="Tem a certeza que deseja eliminar o material {{ $material->name }}?"
                                                     style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
                                                 <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14"
@@ -353,7 +353,7 @@
                                         <form method="get" action="{{ route('materials.restore', $material->id) }}"
                                               style="display:inline;">
                                             @csrf
-                                            <button class="centerTd" type="submit"
+                                            <button class="centerTd modalBtn" type="submit"
                                                     data-message="Tem a certeza que deseja restaurar o material {{ $material->name }}?"
                                                     style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
                                                 <img src="{{ asset('assets/restore.svg') }}">
@@ -368,7 +368,7 @@
                                               style="display:inline;">
                                             @csrf
                                             @method('delete')
-                                            <button type="submit"
+                                            <button type="submit" class="modalBtn"
                                                     data-message="Tem a certeza que deseja eliminar permanentemente o material {{ $material->name }}?"
                                                     style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
                                                 <img src="{{ asset('assets/permaDelete.svg') }}" alt="Delete">
@@ -413,7 +413,7 @@
 
         <script>
             document.addEventListener('DOMContentLoaded', function () {
-                let deleteButtons = document.querySelectorAll('button[type="submit"]');
+                let deleteButtons = document.querySelectorAll('button[class="modalBtn"]');
 
                 deleteButtons.forEach(button => {
                     button.addEventListener('click', function (event) {

@@ -121,12 +121,11 @@
                                         </div>
 
                                         <div style="width: 40%">
-                                            <form method="post"
-                                                action="{{ route('external.destroy', $partner_Training_User->id) }}"
+                                            <form method="post" action="{{ route('external.destroy', $partner_Training_User->id) }}"
                                                 style="display:inline;">
                                                 @csrf
                                                 @method('delete')
-                                                <button type="submit"
+                                                <button type="submit" class="modalBtn"
                                                     data-message="Tem a certeza que deseja apagar a formação externa do dia {{ \Carbon\Carbon::parse($partner_Training_User->start_date)->format('Y-m-d') }}?"
                                                     style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
                                                     <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14"
@@ -238,7 +237,7 @@
                                             style="display:inline;">
                                             @csrf
                                             @method('delete')
-                                            <button type="submit"
+                                            <button type="submit" class="modalBtn"
                                                 data-message="Tem a certeza que deseja apagar o parceiro {{ $partner->name }}?"
                                                 style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
                                                 <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14"
@@ -321,7 +320,7 @@
                                                 style="display:inline;">
                                                 @csrf
                                                 @method('delete')
-                                                <button type="submit"
+                                                <button type="submit" class="modalBtn"
                                                     data-message="Tem a certeza que deseja apagar a formação {{ $training->name }}?"
                                                     style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
                                                     <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14"
@@ -370,7 +369,7 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            let deleteButtons = document.querySelectorAll('button[type="submit"]');
+            let deleteButtons = document.querySelectorAll('button[class="modalBtn"]');
 
             deleteButtons.forEach(button => {
                 button.addEventListener('click', function (event) {
