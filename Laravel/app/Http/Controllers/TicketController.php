@@ -208,7 +208,7 @@ class TicketController extends Controller
             $this->logTicketHistory($ticket->id, 1, $ticketInfo);
             $this->sendEmail($ticket->id);
 
-            return redirect()->route('tickets.index')->with('success', 'Ticket criado com sucesso!')->with('active_tab', 'allTickets');
+            return redirect()->route('tickets.show', $ticket->id)->with('success', 'Ticket criado com sucesso!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Erro ao criar o ticket. Por favor, tente novamente.');
         }
@@ -338,7 +338,7 @@ class TicketController extends Controller
                     'isRead' => false,
                 ]);
             }
-            return redirect()->route('tickets.index')->with('success', 'Ticket atualizado com sucesso!')->with('active_tab', 'allTickets');
+            return redirect()->route('tickets.show', $ticket->id)->with('success', 'Ticket criado com sucesso!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Não foi possivel atualizar o ticket. Por favor, tente novamente.');
         }
