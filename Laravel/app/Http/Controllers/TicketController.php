@@ -432,14 +432,12 @@ class TicketController extends Controller
 
     public function sendEmail($id)
     {
-// // dd($id);
-//         $ticket = Ticket::with('requester')->find($id);
-// //        dd($ticket->requester->email);
+         $ticket = Ticket::with('requester')->find($id);
+         $email = new TicketEmail($ticket);
 
-//         $email = new TicketEmail($ticket);
-// //        dd($email);
-//         Mail::to($ticket->requester->email)->send($email);
-//         return view('tickets.show', compact('ticket'));
+         Mail::to($ticket->requester->email)->send($email);
+
+         return view('tickets.show', compact('ticket'));
     }
 
     public function storeQuickTicket(TicketRequest $request)
