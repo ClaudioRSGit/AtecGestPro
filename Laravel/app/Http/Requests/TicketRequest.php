@@ -39,7 +39,7 @@ class TicketRequest extends FormRequest
                 'title' => 'required|string|min:2|max:50',
                 'description' => 'required|string|min:5|max:2000',
                 'technician_id' => 'required|exists:users,id',
-                'attachment' => 'sometimes|file||mimes:jpeg,jpg,png,gif,svg,bmp,raw,pdf,doc,docx,xls,xlsm,xlsx|xmax:20480', // 20MB
+                'attachment' => 'sometimes|file|mimes:jpeg,jpg,png,gif,svg,bmp,raw,pdf,doc,docx,xls,xlsm,xlsx|max:20480', // 20MB
                 'ticket_status_id' => 'required|integer|exists:ticket_statuses,id',
                 'ticket_priority_id' => 'required|integer|exists:ticket_priorities,id',
                 'ticket_category_id' => 'required|integer|exists:ticket_categories,id',
