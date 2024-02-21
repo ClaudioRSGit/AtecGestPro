@@ -2,7 +2,7 @@
     <button class="closeTicket" onclick="closeTicket()">X</button>
     <h2 class="mb-3">Ticket rápido</h2>
     <p class="mb-3">Descreva brevemente o seu problema</p>
-    <form method="post" action="{{ route('tickets.storeQuickTicket') }}" enctype="multipart/form-data">
+    <form method="post" action="{{ route('tickets.store') }}" enctype="multipart/form-data">
         @csrf
 
         <div class="mb-3">
@@ -12,6 +12,7 @@
             @error('title')
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
+
         </div>
 
         <div class="mb-3">
@@ -41,6 +42,9 @@
             @enderror
             <p>Certifique-se que o arquivo tem menos de 20MB</p>
         </div>
+
+
+           <input type="hidden" class="form-control" id="technician" name="technician_id" value="1">
 
         <div class="mb-3">
             <label for="description" class="form-label">Descrição:</label>
@@ -104,4 +108,6 @@
             var filename = this.value.split('\\').pop();
             document.getElementById('file-name').textContent = filename;
         });
+
+
 </script>
