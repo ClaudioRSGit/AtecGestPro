@@ -115,12 +115,14 @@ class UserController extends Controller
                 return view('users.edit', compact('user', 'courseClasses', 'courses', 'roles'));
             }
         } else {
-            $courseClasses = CourseClass::all();
-            $courses = Course::all();
-            $roles = Role::all();
-            $user->load('CourseClass.Course', 'Role');
+            if ($user->id !== 1 && $user->id !== 2) {
+                $courseClasses = CourseClass::all();
+                $courses = Course::all();
+                $roles = Role::all();
+                $user->load('CourseClass.Course', 'Role');
 
-            return view('users.edit', compact('user', 'courseClasses', 'courses', 'roles'));
+                return view('users.edit', compact('user', 'courseClasses', 'courses', 'roles'));
+            }
         }
 
         return abort(403, 'Acesso não autorizado!');
@@ -211,7 +213,7 @@ class UserController extends Controller
             foreach ($technicianTickets as $technician) {
                 $technician->update(['user_id' => $waitingQueueUserId]);
             }
-            foreach($userTickets as $newRequester){
+            foreach ($userTickets as $newRequester) {
                 $newRequester->update(['user_id' => $anonymousRequesterUserId]);
             }
 
@@ -242,7 +244,7 @@ class UserController extends Controller
                 foreach ($technicianTickets as $ticket) {
                     $ticket->update(['user_id' => $waitingQueueUserId]);
                 }
-                foreach($userTickets as $newRequester){
+                foreach ($userTickets as $newRequester) {
                     $newRequester->update(['user_id' => $anonymousRequesterUserId]);
                 }
 
