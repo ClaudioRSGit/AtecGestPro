@@ -99,4 +99,9 @@
             document.querySelector('.container').classList.remove('w-70');
         }
     }
+
+    document.getElementById('attachment').addEventListener('change', function() {
+            var filename = this.value.split('\\').pop();
+            document.getElementById('file-name').textContent = filename;
+        });
 </script>
