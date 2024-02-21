@@ -70,7 +70,7 @@ class TicketSeeder extends Seeder
 
         // Seed 5
         DB::table('tickets')->insert([
-            'user_id' => 5,
+            'user_id' => 6,
             'title' => 'PC não liga',
             'description' => 'O pc 14 da sala 15 não liga',
             'dueByDate' => now()->addDays(2),
@@ -83,7 +83,7 @@ class TicketSeeder extends Seeder
         ]);
         // Seed 6
         DB::table('tickets')->insert([
-            'user_id' => 5,
+            'user_id' => 6,
             'title' => 'PC não liga',
             'description' => 'O pc 14 da sala 15 não liga',
             'dueByDate' => now()->addDays(2),
