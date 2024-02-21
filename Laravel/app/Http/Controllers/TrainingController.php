@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use App\Training;
 use Illuminate\Http\Request;
 use App\Http\Requests\TrainingRequest;
+use Illuminate\Support\Facades\Redirect;
 
 class TrainingController extends Controller
 {
 
     public function index()
     {
-      
+        return Redirect::to('external#trainingsTable');
     }
 
     /**
