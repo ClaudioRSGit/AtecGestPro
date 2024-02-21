@@ -216,6 +216,12 @@ class TicketController extends Controller
 
     public function show(Ticket $ticket)
     {
+        $authenticatedUser = Auth::user();
+
+        if ($authenticatedUser->hasRole('funcionario') && $ticket->user_id !== $authenticatedUser->id) {
+            return abort(403, 'Acesso não autorizado!');
+        }
+
         $ticket = Ticket::with(['users', 'requester', 'comments' => function ($query) {
             $query->orderBy('created_at', 'desc');
         }, 'comments.user'])->find($ticket->id);
