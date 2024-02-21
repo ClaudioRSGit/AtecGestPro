@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\TicketRequest;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 
 class TicketController extends Controller
@@ -171,7 +172,7 @@ class TicketController extends Controller
                 return now()->addHours(4);
             default:
 
-                return now()->addWeeks(3);
+            return now()->addWeeks(3);
         }
     }
 
@@ -227,6 +228,10 @@ class TicketController extends Controller
         $id = $ticket->id;
         $ticketHistories = TicketHistory::where('ticket_id', $id)->orderBy('created_at', 'desc')->get();
 
+        $creationDate = Carbon::parse($ticket->created_at);
+        $now = Carbon::now();
+        $openedSince = $creationDate->diffInDays($now);
+        
         $users = User::all();
         $statuses = TicketStatus::all();
         $priorities = TicketPriority::all();
@@ -236,7 +241,7 @@ class TicketController extends Controller
         $technician = User::where('id', $ticketTechnician->user_id)->first();
         $requester = User::where('id', $ticket->user_id)->first();
 
-        return view('tickets.show', compact('ticket', 'userTickets', 'users', 'statuses', 'priorities', 'categories', 'technician', 'requester', 'ticketHistories', 'attachmentUrl'));
+        return view('tickets.show', compact('ticket', 'userTickets', 'users', 'statuses', 'priorities', 'categories', 'technician', 'requester', 'ticketHistories', 'attachmentUrl', 'openedSince'));
     }
 
     public function edit(Ticket $ticket)
