@@ -177,17 +177,26 @@
                                     </td>
                                     <td class="clickable">
                                         @showIfNotDeleted($ticket)
-                                        <a href="{{ route('users.show', $ticket->user_id) }}"
-                                           class="d-flex align-items-center w-auto h-100">{{ $ticket->requester ? $ticket->requester->name : 'N.A.' }}
-                                        </a>
-                                        @else
-                                        {{ $ticket->requester ? $ticket->requester->name : 'N.A.' }}
+                                            @if($ticket->requester->name !== 'Utilizador Padrao')
+                                                <a href="{{ route('users.show', $ticket->user_id) }}"
+                                                class="d-flex align-items-center w-auto h-100">
+                                                {{ $ticket->requester ? $ticket->requester->name : 'N.A.' }}
+                                            </a>
+                                            @else
+                                            {{ $ticket->requester ? $ticket->requester->name : 'N.A.' }}
+                                            @endif
                                         @endshowIfNotDeleted
                                     </td>
                                     <td class="clickable">
                                         @foreach ($ticket->users as $user)
+                                            @if($user->name !== 'Fila de Espera')
                                             <a href="{{ route('users.show', $user->id) }}"
-                                               class="d-flex align-items-center w-auto h-100">{{ $user ? $user->name : 'N.A.'}}</a>
+                                               class="d-flex align-items-center w-auto h-100">
+                                               {{ $user ? $user->name : 'N.A.'}}
+                                            </a>
+                                            @else
+                                            {{ $user ? $user->name : 'N.A.'}}
+                                            @endif
                                         @endforeach
                                     </td>
                                     <td>{{ $ticket->ticketCategory->description }}</td>
@@ -318,17 +327,26 @@
                                     </td>
                                     <td class="clickable">
                                         @showIfNotDeleted($ticket)
-                                        <a href="{{ route('users.show', $ticket->user_id) }}"
-                                           class="d-flex align-items-center w-auto h-100">{{ $ticket->requester ? $ticket->requester->name : 'N.A.' }}
-                                        </a>
-                                        @else
-                                        {{ $ticket->requester ? $ticket->requester->name : 'N.A.' }}
+                                            @if($ticket->requester->name !== 'Utilizador Padrao')
+                                                <a href="{{ route('users.show', $ticket->user_id) }}"
+                                                class="d-flex align-items-center w-auto h-100">
+                                                {{ $ticket->requester ? $ticket->requester->name : 'N.A.' }}
+                                            </a>
+                                            @else
+                                            {{ $ticket->requester ? $ticket->requester->name : 'N.A.' }}
+                                            @endif
                                         @endshowIfNotDeleted
                                     </td>
                                     <td class="clickable">
                                         @foreach ($ticket->users as $user)
+                                            @if($user->name !== 'Fila de Espera')
                                             <a href="{{ route('users.show', $user->id) }}"
-                                               class="d-flex align-items-center w-auto h-100">{{ $user ? $user->name : 'N.A.'}}</a>
+                                               class="d-flex align-items-center w-auto h-100">
+                                               {{ $user ? $user->name : 'N.A.'}}
+                                            </a>
+                                            @else
+                                            {{ $user ? $user->name : 'N.A.'}}
+                                            @endif
                                         @endforeach
                                     </td>
                                     <td class="ticket-status-{{ $ticket->ticketStatus->id }}">{{ $ticket->ticketStatus->description }}</td>
@@ -483,7 +501,14 @@
                                     </td>
                                     <td class="clickable">
                                         @foreach ($ticket->users as $user)
-                                            <span class="d-flex align-items-center w-auto h-100">{{ $user->name ? $user->name : 'N.A.'}}</span>
+                                            @if($user->name !== 'Fila de Espera')
+                                            <a href="{{ route('users.show', $user->id) }}"
+                                               class="d-flex align-items-center w-auto h-100">
+                                               {{ $user ? $user->name : 'N.A.'}}
+                                            </a>
+                                            @else
+                                            {{ $user ? $user->name : 'N.A.'}}
+                                            @endif
                                         @endforeach
                                     </td>
                                     <td class="ticket-status-{{ $ticket->ticketStatus->id }}">{{ $ticket->ticketStatus->description }}</td>
