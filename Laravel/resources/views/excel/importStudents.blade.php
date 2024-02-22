@@ -7,7 +7,7 @@
         @csrf
         <div class="form-group">
             <label for="file">Excel - Importar Alunos</label><br>
-            <label for="file" class="btn btn-primary">Excel - Importar Alunos</label><br>
+            <label for="file" class="btn btn-primary">Selecionar ficheiro</label><br>
             <input type="file" name="file" id="file" class="btn" style="display: none;">
             @error('attachment')
             <div class="alert alert-danger">{{ $message }}</div>
