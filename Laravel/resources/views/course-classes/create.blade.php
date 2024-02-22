@@ -7,7 +7,7 @@
         <form method="post" action="{{ route('course-classes.store') }}" id="createCourseClassForm" class=" mb-3">
             @csrf
 
-            <div class="row mb-3">
+            <div class="row mb-1">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="description">Descrição:</label>
@@ -50,7 +50,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="scrollable w-100">
+                <div class=" row scrollable w-100">
                     <table class="table" id="studentsTable">
                         <thead>
                         <tr>
@@ -74,33 +74,53 @@
                 </div>
             </div>
 
-
-            <button type="submit" class="btn btn-primary" name="noImport" id="criarTurmaBtn">Criar Turma</button>
-            <button type="submit" class="btn btn-primary" name="import">Criar Turma e importar alunos a partir de
+<div class="row mt-3 ">
+            <button type="submit" class="btn btn-primary mr-2" name="noImport" id="criarTurmaBtn">Criar Turma</button>
+            <button type="submit" class="btn btn-primary mr-2" name="import">Criar Turma e importar alunos a partir de
                 Excel
             </button>
             <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
+</div>
         </form>
+
+        <div class="modal" tabindex="-1" role="dialog" id="confirmationModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirmação</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Tem a certeza que pretende criar turma sem alunos?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="continueBtn">Continuar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 
     <style>
 
         .scrollable {
-            height: 300px;
+            height: 17rem;
             overflow-y: scroll;
         }
     </style>
 
     <script>
         $(document).ready(function () {
+
             $("#select-all").click(function () {
                 $("input[name='selected_students[]']").prop('checked', $(this).prop('checked'));
             });
 
-            $("#criarTurmaBtn").click(function () {
-                document.getElementById('createCourseClassForm').submit();
-            });
+
 
             $("#search").on("keyup", function () {
                 let value = $(this).val().toLowerCase();
@@ -108,6 +128,21 @@
                     $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
                 });
             });
+
+
+            $("#createCourseClassForm").submit(function (event) {
+                var selectedStudents = $("input[name='selected_students[]']:checked").length;
+
+                if (selectedStudents === 0) {
+                    event.preventDefault();
+                    $("#confirmationModal").modal('show');
+                }
+            });
+
+            $("#continueBtn").click(function () {
+                $("#createCourseClassForm").off('submit').submit();
+            });
+
         });
     </script>
 @endsection
