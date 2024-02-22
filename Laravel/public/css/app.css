@@ -5924,7 +5924,9 @@ a.badge-light:focus {
     color: #212529;
     background-color: #dae0e5;
 }
-
+.custom-scrollbar::-webkit-scrollbar {
+    display: none;
+}
 a.badge-light:focus,
 a.badge-light.focus {
     outline: 0;
