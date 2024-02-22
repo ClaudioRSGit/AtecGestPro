@@ -35,7 +35,6 @@ class TicketRequest extends FormRequest
 
         if ($this->isMethod('put')) {
             $rules = [
-                // 'dueByDate' => 'required|date',
                 'title' => 'required|string|min:2|max:50',
                 'description' => 'required|string|min:5|max:2000',
                 'technician_id' => 'required|exists:users,id',

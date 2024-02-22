@@ -87,7 +87,6 @@ class PartnerTrainingUserController extends Controller
 
     public function store(PartnerTrainingUserRequest $request)
     {
-//        dd($request->all());
         try {
             $partnerTrainingUser = PartnerTrainingUser::create([
                 'partner_id' => $request->input('partner_id'),
@@ -132,7 +131,6 @@ class PartnerTrainingUserController extends Controller
 
     public function update(PartnerTrainingUserRequest $request, $id)
     {
-//        dd($request->all());
         try {
             $partner_Training_User = PartnerTrainingUser::with('partner', 'training', 'user', 'materials')->findOrFail($id);
 
@@ -148,12 +146,12 @@ class PartnerTrainingUserController extends Controller
 
             if ($selectedMaterials) {
                 foreach ($selectedMaterials as $materialId) {
-                    $quantityInserted = $materialQuantities[$materialId] ?? 1; //quantidade alocada à formação + diferença
-//                    dd($quantityInserted);
-                    $currentQuantity = $partner_Training_User->materials->where('id', $materialId)->first()->pivot->quantity ?? 0;//quantidade alocada à formação
+                    $quantityInserted = $materialQuantities[$materialId] ?? 1; //allocated training amount + difference
 
-                    $quantityDiference = ($quantityInserted - $currentQuantity);//diferença entre a quantidade alocada à formação e a quantidade inserida
-                    $stock = Material::find($materialId)->quantity;//stock do produto
+                    $currentQuantity = $partner_Training_User->materials->where('id', $materialId)->first()->pivot->quantity ?? 0;//allocated training amount
+
+                    $quantityDiference = ($quantityInserted - $currentQuantity);//"difference between the allocated training amount and the entered amount
+                    $stock = Material::find($materialId)->quantity;//product stock
 
                     if ($quantityInserted != 0) {
                         $partner_Training_User->materials()->syncWithoutDetaching([
