@@ -309,7 +309,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="filler"></
+                        <tr class="filler">
                         @foreach ($recycleMaterials as $material)
                             <tr class="material-row customTableStyling" data-internal="{{ $material->isInternal }}"
                                 data-clothing="{{ $material->isClothing }}">
