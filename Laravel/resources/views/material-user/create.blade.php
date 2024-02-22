@@ -81,7 +81,7 @@
                                                 @php
                                                     $hasStock = false;
                                                 @endphp
-                                                @if($clothingItem->isempty())
+                                                @if($clothingItem->sizes->isEmpty())
                                                     <p>Não existe vestuario em stock</p>
                                                 @else
                                                 @foreach($clothingItem->sizes as $size)
