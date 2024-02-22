@@ -27,6 +27,8 @@ Route::get('/', function () {
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/change-password', 'PasswordChangeController@index')->name('password.change');
+
 
 //Route::middleware('throttle:5,1')->group(function () {
 //    Route::post('users.create', 'UserController@create')->name('users.create');
