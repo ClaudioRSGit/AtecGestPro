@@ -123,17 +123,32 @@
                                 <th scope="col">
                                     <a href="{{ route('tickets.index', ['sort' => 'number', 'direction' => $currentSort === 'number' ? $newDirection : 'asc']) }}">
                                         Número
+                                        @if ($newDirection === 'asc' && $currentSort === 'number')
+                                        <i class="fa-solid fa-arrow-up-z-a" style="color: #116fdc;"></i>
+                                        @else
+                                        <i class="fa-solid fa-arrow-down-a-z" style="color: #116fdc;"></i>
+                                        @endif
                                     </a>
                                 </th>
                                 <th scope="col">
 
                                     <a href="{{ route('tickets.index', ['sort' => 'title', 'direction' => $currentSort === 'title' ? $newDirection : 'asc']) }}">
                                         Título
+                                        @if ($newDirection === 'asc' && $currentSort === 'title')
+                                        <i class="fa-solid fa-arrow-up-z-a" style="color: #116fdc;"></i>
+                                        @else
+                                        <i class="fa-solid fa-arrow-down-a-z" style="color: #116fdc;"></i>
+                                        @endif
                                     </a>
                                 </th>
                                 <th scope="col">
                                     <a href="{{ route('tickets.index', ['sort' => 'user', 'direction' => $currentSort === 'user' ? $newDirection : 'asc']) }}">
                                         Utilizador
+                                        @if ($newDirection === 'desc' && $currentSort === 'user')
+                                        <i class="fa-solid fa-arrow-up-z-a" style="color: #116fdc;"></i>
+                                        @else
+                                        <i class="fa-solid fa-arrow-down-a-z" style="color: #116fdc;"></i>
+                                        @endif
                                     </a>
                                 </th>
                                 <th scope="col">

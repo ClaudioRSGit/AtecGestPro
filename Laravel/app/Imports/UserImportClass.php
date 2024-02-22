@@ -49,7 +49,7 @@ class UserImportClass implements ToModel
                 'username' => $row[1],
                 'email' => $row[2],
                 'contact' => $row[3],
-                'password' => 'temporary',
+                'password' => bcrypt('temporary'),
                 'notes' => '',
                 'isActive' => 1,
                 'isStudent' => 0,
@@ -66,7 +66,7 @@ class UserImportClass implements ToModel
                 'username' => $row[1],
                 'email' => $row[2],
                 'contact' => $row[3],
-                'password' => 'temporary',
+                'password' => bcrypt('temporary'),
                 'notes' => '',
                 'isActive' => 1,
                 'isStudent' => 0,
@@ -78,7 +78,6 @@ class UserImportClass implements ToModel
             return $importedUser;
         }
 
-        dd($row);
         $this->importStatus = false;
 
         return null;

@@ -65,6 +65,10 @@ class UserController extends Controller
 
         try {
 
+            if (auth()->user()->hasRole('tecnico') && $request->input('role_id') == 1) {
+                return redirect()->back()->with('error', 'Não é possível criar um novo administrador!');
+            }
+
             $password = $request->input('password');
             $userData = $request->only(['name', 'username', 'email', 'contact', 'isStudent', 'isActive', 'course_class_id', 'role_id']);
 

@@ -87,10 +87,28 @@
                         <th scope="col">
                             <input type="checkbox" id="select-all">
                         </th>
-                        <th><a href="{{ route('users.index', ['sortColumn' => 'name', 'sortDirection' => $sortColumn === 'name' ?
-                ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">Nome</a></th>
-                        <th><a href="{{ route('users.index', ['sortColumn' => 'username', 'sortDirection' => $sortColumn === 'username' ?
-                ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">Username</a></th>
+                        <th>
+                            <a href="{{ route('users.index', ['sortColumn' => 'name', 'sortDirection' => $sortColumn === 'name' ?
+                ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">
+                                Nome
+                                @if ($sortDirection === 'desc' && $sortColumn === 'name')
+                                <i class="fa-solid fa-arrow-up-z-a" style="color: #116fdc;"></i>
+                                @else
+                                <i class="fa-solid fa-arrow-down-a-z" style="color: #116fdc;"></i>
+                                @endif
+                            </a>
+                        </th>
+                        <th>
+                            <a href="{{ route('users.index', ['sortColumn' => 'username', 'sortDirection' => $sortColumn === 'username' ?
+                ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">
+                                Username
+                                @if ($sortDirection === 'desc' && $sortColumn === 'username')
+                                <i class="fa-solid fa-arrow-up-z-a" style="color: #116fdc;"></i>
+                                @else
+                                <i class="fa-solid fa-arrow-down-a-z" style="color: #116fdc;"></i>
+                                @endif
+                            </a>
+                        </th>
                         <th scope="col">Email</th>
                         <th scope="col">Função</th>
                         <th scope="col">Ativo</th>
