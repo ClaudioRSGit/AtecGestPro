@@ -112,7 +112,7 @@
                                     <div class="d-flex justify-content-between editDelete">
                                         <div style="width: 40%">
                                             <a href="{{ route('external.edit', $partner_Training_User->id) }}">
-                                                <i class="fa-solid fa-pen-to-square fa-xl" style="color: #116fdc;"></i>
+                                                <i class="fa-solid fa-pen-to-square fa-lg" style="color: #116fdc;"></i>
                                             </a>
                                         </div>
 
@@ -124,7 +124,7 @@
                                                 <button type="submit" class="modalBtn"
                                                     data-message="Tem a certeza que deseja apagar a formação externa do dia {{ \Carbon\Carbon::parse($partner_Training_User->start_date)->format('Y-m-d') }}?"
                                                     style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
-                                                    <i class="fa-solid fa-trash-can fa-xl" style="color: #116fdc;"></i>
+                                                    <i class="fa-solid fa-trash-can fa-lg" style="color: #116fdc;"></i>
                                                 </button>
                                             </form>
                                         </div>
@@ -181,7 +181,7 @@
                                     <div class="dropdown">
                                         <button class="btn btn-secondary dropdown-toggle" type="button"
                                             id="contactDropdown{{ $partner->id }}" data-toggle="dropdown">
-                                            <i class="fa-regular fa-eye fa-xl" style="color: #fff;"></i>
+                                            <i class="fa-regular fa-eye fa-lg" style="color: #fff;"></i>
                                         </button>
                                         <div class="dropdown-menu" aria-labelledby="contactDropdown{{ $partner->id }}">
                                             @if (count($partner->contactPartner) > 0)
@@ -210,7 +210,7 @@
                                 <td class="editDelete">
                                     <div style="width: 40%">
                                         <a href="{{ route('partners.edit', $partner->id) }}">
-                                            <i class="fa-solid fa-pen-to-square fa-xl" style="color: #116fdc;"></i>
+                                            <i class="fa-solid fa-pen-to-square fa-lg" style="color: #116fdc;"></i>
                                         </a>
                                     </div>
 
@@ -222,7 +222,7 @@
                                             <button type="submit" class="modalBtn"
                                                 data-message="Tem a certeza que deseja apagar o parceiro {{ $partner->name }}?"
                                                 style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
-                                                <i class="fa-solid fa-trash-can fa-xl" style="color: #116fdc;"></i>
+                                                <i class="fa-solid fa-trash-can fa-lg" style="color: #116fdc;"></i>
                                             </button>
                                         </form>
                                     </div>
@@ -285,7 +285,7 @@
                                     <div class="d-flex justify-content-between editDelete">
                                         <div style="width: 40%">
                                             <a href="{{ route('trainings.edit', $training->id) }}">
-                                                <i class="fa-solid fa-pen-to-square fa-xl" style="color: #116fdc;"></i>
+                                                <i class="fa-solid fa-pen-to-square fa-lg" style="color: #116fdc;"></i>
                                             </a>
                                         </div>
 
@@ -297,7 +297,7 @@
                                                 <button type="submit" class="modalBtn"
                                                     data-message="Tem a certeza que deseja apagar a formação {{ $training->name }}?"
                                                     style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
-                                                    <i class="fa-solid fa-trash-can fa-xl" style="color: #116fdc;"></i>
+                                                    <i class="fa-solid fa-trash-can fa-lg" style="color: #116fdc;"></i>
                                                 </button>
                                             </form>
                                         </div>

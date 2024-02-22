@@ -203,7 +203,7 @@
                                 <td class="editDelete" style="padding: 0.25rem">
                                     <div style="width: 40%;">
                                         <a href="{{ route('materials.edit', $material->id) }}" class="mx-2">
-                                            <i class="fa-solid fa-pen-to-square fa-xl" style="color: #116fdc;"></i>
+                                            <i class="fa-solid fa-pen-to-square fa-lg" style="color: #116fdc;"></i>
                                         </a>
                                     </div>
                                     <div style="width: 40%">
@@ -214,7 +214,7 @@
                                             <button type="submit" class="modalBtn"
                                                     data-message="Tem a certeza que deseja eliminar o material {{ $material->name }}?"
                                                     style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
-                                                    <i class="fa-solid fa-trash-can fa-xl" style="color: #116fdc;"></i>
+                                                    <i class="fa-solid fa-trash-can fa-lg" style="color: #116fdc;"></i>
                                             </button>
                                         </form>
                                     </div>

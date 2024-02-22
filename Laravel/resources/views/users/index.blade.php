@@ -140,7 +140,7 @@
                             <td class="editDelete">
                                 <div style="width: 40%">
                                     <a href="{{ route('users.edit', $user->id) }}">
-                                        <i class="fa-solid fa-pen-to-square fa-xl" style="color: #116fdc;"></i>
+                                        <i class="fa-solid fa-pen-to-square fa-lg" style="color: #116fdc;"></i>
                                     </a>
                                 </div>
                                 <div style="width: 40%">
@@ -149,7 +149,7 @@
                                         @method('delete')
                                         <button type="submit" class="modalBtn" data-message="Tem a certeza que pretende enviar o {{ strtolower($user->role->description) }} {{ $user->name }} para a reciclagem?"
                                                 style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
-                                                <i class="fa-solid fa-trash-can fa-xl" style="color: #116fdc;"></i>
+                                                <i class="fa-solid fa-trash-can fa-lg" style="color: #116fdc;"></i>
                                         </button>
                                     </form>
                                 </div>

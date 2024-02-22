@@ -222,7 +222,7 @@
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div style="width: 40%">
                                                 <a href="{{ route('tickets.edit', $ticket->id) }}">
-                                                    <i class="fa-solid fa-pen-to-square fa-xl" style="color: #116fdc;"></i>
+                                                    <i class="fa-solid fa-pen-to-square fa-lg" style="color: #116fdc;"></i>
                                                 </a>
                                             </div>
                                             <div style="width: 40%">
@@ -233,7 +233,7 @@
                                                     <button type="submit" class="modalBtn"
                                                             data-message="Tem certeza que deseja apagar o ticket {{$ticket->title}}?"
                                                             style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
-                                                            <i class="fa-solid fa-trash-can fa-xl" style="color: #116fdc;"></i>
+                                                            <i class="fa-solid fa-trash-can fa-lg" style="color: #116fdc;"></i>
                                                     </button>
                                                 </form>
                                             </div>
@@ -363,7 +363,7 @@
 
                                             <div class="w-50">
                                                 <a href="{{ route('tickets.edit', $ticket->id) }}">
-                                                    <i class="fa-solid fa-pen-to-square fa-xl" style="color: #116fdc;"></i>
+                                                    <i class="fa-solid fa-pen-to-square fa-lg" style="color: #116fdc;"></i>
                                                 </a>
                                             </div>
                                             <div class="w-50">
@@ -374,7 +374,7 @@
                                                     <button type="submit" class="modalBtn"
                                                             data-message="Tem certeza que deseja apagar o ticket {{$ticket->title}}?"
                                                             style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
-                                                            <i class="fa-solid fa-trash-can fa-xl" style="color: #116fdc;"></i>
+                                                            <i class="fa-solid fa-trash-can fa-lg" style="color: #116fdc;"></i>
                                                     </button>
                                                 </form>
                                             </div>
