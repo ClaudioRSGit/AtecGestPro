@@ -159,7 +159,7 @@
                                         <tr>
                                             <td>{{ $user->name }}</td>
                                             <td>{{ $user->username }}</td>
-                                            <td
+                                            <td class="pl-4"
                                                 onclick="location.href='{{ route('material-user.create', $user->id) }}'">
                                                 <svg xmlns="http://www.w3.org/2000/svg" height="16" width="20" viewBox="0 0 640 512">
                                                     <path fill="#116fdc"
