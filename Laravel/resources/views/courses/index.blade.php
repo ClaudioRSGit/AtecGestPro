@@ -42,7 +42,7 @@
 
         <table class="table" id="courseTable">
             <thead style="width: 100%">
-            <tr class="no-hover">
+            <tr>
 
                 <th>
                     <a href="{{ route('courses.index', ['sortColumn' => 'code', 'sortDirection' => $sortColumn === 'code' ? ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">Código</a>
@@ -62,7 +62,10 @@
                         <a href="{{ route('courses.show', $course->id) }}"
                            class="d-flex align-items-center w-auto h-100">{{ $course->code }}</a>
                     </td>
-                    <td style="width: 85%">{{ $course->description }}</td>
+                    <td class="clickable" style="width: 85%">
+                        <a href="{{ route('courses.show', $course->id) }}"
+                            class="d-flex align-items-center w-auto h-100">{{ $course->description }}</a>
+                    </td>
                     <td class="editDelete" style="min-width: 7rem;">
                         <div style="width: 40%">
                             <a href="{{ route('courses.edit', $course->id) }}" class="mx-2">

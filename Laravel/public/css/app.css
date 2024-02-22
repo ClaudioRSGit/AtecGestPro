@@ -326,10 +326,11 @@ thead th {
 
 .customTableStyling {
     background-color: #fff;
+    max-height: 5rem !important;
 }
 
 .customTableStyling td {
-    height: 5rem;
+    height: 5rem !important;
     border-top: 1px solid #dee2e6;
     border-bottom: 1px solid #dee2e6;
 }
@@ -9087,6 +9088,126 @@ button.bg-dark:focus {
 .ml-5,
 .mx-5 {
     margin-left: 3rem !important;
+}
+
+.m-6 {
+    margin: 4rem !important;
+}
+
+.mt-6,
+.my-6 {
+    margin-top: 4rem !important;
+}
+
+.mr-6,
+.mx-6 {
+    margin-right: 4rem !important;
+}
+
+.mb-6,
+.my-6 {
+    margin-bottom: 4rem !important;
+}
+
+.ml-6,
+.mx-6 {
+    margin-left: 4rem !important;
+}
+
+.m-7 {
+    margin: 5rem !important;
+}
+
+.mt-7,
+.my-7 {
+    margin-top: 5rem !important;
+}
+
+.mr-7,
+.mx-7 {
+    margin-right: 5rem !important;
+}
+
+.mb-7,
+.my-7 {
+    margin-bottom: 5rem !important;
+}
+
+.ml-7,
+.mx-7 {
+    margin-left: 5rem !important;
+}
+
+.m-8 {
+    margin: 6rem !important;
+}
+
+.mt-8,
+.my-8 {
+    margin-top: 6rem !important;
+}
+
+.mr-8,
+.mx-8 {
+    margin-right: 6rem !important;
+}
+
+.mb-8,
+.my-8 {
+    margin-bottom: 6rem !important;
+}
+
+.ml-8,
+.mx-8 {
+    margin-left: 6rem !important;
+}
+
+.m-9 {
+    margin: 8rem !important;
+}
+
+.mt-9,
+.my-9 {
+    margin-top: 8rem !important;
+}
+
+.mr-9,
+.mx-9 {
+    margin-right: 8rem !important;
+}
+
+.mb-9,
+.my-9 {
+    margin-bottom: 8rem !important;
+}
+
+.ml-9,
+.mx-9 {
+    margin-left: 8rem !important;
+}
+
+.m-10 {
+    margin: 10rem !important;
+}
+
+.mt-10,
+.my-10 {
+    margin-top: 10rem !important;
+}
+
+.mr-10,
+.mx-10 {
+    margin-right: 10rem !important;
+}
+
+.mb-10,
+.my-10 {
+    margin-bottom: 10rem !important;
+}
+
+.ml-10,
+.mx-10 {
+    margin-left: 10rem !important;
 }
 
 .p-0 {
