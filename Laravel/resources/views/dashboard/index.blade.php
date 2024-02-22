@@ -192,6 +192,7 @@
     <style>
         .dashboardCard:hover {
     background-color: #116FDC!important;
+    cursor: pointer;
 }
 
 .dashboardCard:hover h4, .dashboardCard:hover h3 {
