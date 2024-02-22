@@ -152,7 +152,6 @@
                                     <tr>
                                         <th>Nome</th>
                                         <th>Username</th>
-                                        <th>Email</th>
                                         <th>Concluir</th>
                                     </tr>
                                 </thead>
@@ -161,7 +160,6 @@
                                         <tr>
                                             <td>{{ $user->name }}</td>
                                             <td>{{ $user->username }}</td>
-                                            <td>{{ $user->email }}</td>
                                             <td
                                                 onclick="location.href='{{ route('material-user.create', $user->id) }}'">
                                                 <svg xmlns="http://www.w3.org/2000/svg" height="16" width="20" viewBox="0 0 640 512">
