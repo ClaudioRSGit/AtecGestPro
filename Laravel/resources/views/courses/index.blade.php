@@ -45,10 +45,22 @@
             <tr>
 
                 <th>
-                    <a href="{{ route('courses.index', ['sortColumn' => 'code', 'sortDirection' => $sortColumn === 'code' ? ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">Código</a>
+                    <a href="{{ route('courses.index', ['sortColumn' => 'code', 'sortDirection' => $sortColumn === 'code' ? ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">Código
+                        @if ($sortDirection === 'desc' && $sortColumn === 'code')
+                        <i class="fa-solid fa-arrow-up-z-a" style="color: #116fdc;"></i>
+                        @else
+                        <i class="fa-solid fa-arrow-down-a-z" style="color: #116fdc;"></i>
+                        @endif
+                    </a>
                 </th>
                 <th>
-                    <a href="{{ route('courses.index', ['sortColumn' => 'description', 'sortDirection' => $sortColumn === 'description' ? ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">Descrição</a>
+                    <a href="{{ route('courses.index', ['sortColumn' => 'description', 'sortDirection' => $sortColumn === 'description' ? ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">Descrição
+                        @if ($sortDirection === 'desc' && $sortColumn === 'description')
+                        <i class="fa-solid fa-arrow-up-z-a" style="color: #116fdc;"></i>
+                        @else
+                        <i class="fa-solid fa-arrow-down-a-z" style="color: #116fdc;"></i>
+                        @endif
+                    </a>
                 </th>
                 <th class="fill"></th>
             </tr>

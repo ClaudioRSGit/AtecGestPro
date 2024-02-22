@@ -84,6 +84,11 @@
                             <th scope="col">
                                 <a href="{{ route('materials.index', ['sortColumn' => 'name', 'sortDirection' => $sortColumn === 'name' ? ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">
                                     Nome
+                                    @if ($sortDirection === 'desc' && $sortColumn === 'name')
+                                    <i class="fa-solid fa-arrow-up-z-a" style="color: #116fdc;"></i>
+                                    @else
+                                    <i class="fa-solid fa-arrow-down-a-z" style="color: #116fdc;"></i>
+                                    @endif
                                 </a>
                             </th>
                             <th scope="col">
@@ -92,6 +97,11 @@
                             <th scope="col">
                                 <a href="{{ route('materials.index', ['sortColumn' => 'acquisition_date', 'sortDirection' => $sortColumn === 'acquisition_date' ? ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">
                                     Data de Aquisição
+                                    @if ($sortDirection === 'desc' && $sortColumn === 'acquisition_date')
+                                    <i class="fa-solid fa-arrow-down-wide-short" style="color: #116fdc;"></i>
+                                    @else
+                                    <i class="fa-solid fa-arrow-up-short-wide" style="color: #116fdc;"></i>
+                                    @endif
                                 </a>
                             </th>
                             <th scope="col">Fornecedor</th>
@@ -289,6 +299,11 @@
                             <th scope="col">
                                 <a href="{{ route('materials.index', ['sortColumn' => 'name', 'sortDirection' => $sortColumn === 'name' ? ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">
                                     Nome
+                                    @if ($sortDirection === 'desc' && $sortColumn === 'name')
+                                    <i class="fa-solid fa-arrow-up-z-a" style="color: #116fdc;"></i>
+                                    @else
+                                    <i class="fa-solid fa-arrow-down-a-z" style="color: #116fdc;"></i>
+                                    @endif
                                 </a>
                             </th>
                             <th scope="col">
@@ -297,6 +312,11 @@
                             <th scope="col">
                                 <a href="{{ route('materials.index', ['sortColumn' => 'acquisition_date', 'sortDirection' => $sortColumn === 'acquisition_date' ? ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">
                                     Data de Aquisição
+                                    @if ($sortDirection === 'desc' && $sortColumn === 'acquisition_date')
+                                    <i class="fa-solid fa-arrow-down-wide-short" style="color: #116fdc;"></i>
+                                    @else
+                                    <i class="fa-solid fa-arrow-up-short-wide" style="color: #116fdc;"></i>
+                                    @endif
                                 </a>
                             </th>
                             <th scope="col">Fornecedor</th>
