@@ -137,5 +137,11 @@
         $(document).ready(function() {
             toggleCourseClassDiv();
         });
+
+        window.setTimeout(function() {
+            $(".alert-danger").fadeTo(500, 0).slideUp(500, function() {
+                $(this).remove();
+            });
+        }, 3000);
     </script>
 @endsection
