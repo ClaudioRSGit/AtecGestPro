@@ -6,91 +6,90 @@
             <div class="col-3">
                 <div class="card bg-light dashboardCard" onclick="location.href='{{ route('users.index') }}'">
                     <div class="card-body d-flex align-items-center">
-                        <div>
-                            <h4 class="mb-1" style="font-family: 'Muli', sans-serif;">Administradores:</h4>
-                            <h3 class="mb-0 py-2 font-weight-bold text-primary">{{$adminCount}}</h3>
+                        <div class="dashboardCardContent">
+                            <h4 class="dashboardCardTitle">Administradores:</h4>
+                            <h3 class="dashboardCardSubtitle">{{$adminCount}}</h3>
                         </div>
-                        <img src="https://cdn-icons-png.flaticon.com/512/2942/2942813.png" alt="" style="height: 50px; margin-left: auto; margin-right: 20px;">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2942/2942813.png" alt="" class="dashboardCardImage">
                     </div>
                 </div>
             </div>
             <div class="col-3">
                 <div class="card bg-light dashboardCard" onclick="location.href='{{ route('users.index') }}'">
                     <div class="card-body d-flex align-items-center">
-                        <div>
-                            <h4 class="mb-1" style="font-family: 'Muli', sans-serif;">Técnicos:</h4>
-                            <h3 class="mb-0 py-2 font-weight-bold text-primary">{{$technicianCount}}</h3>
+                        <div class="dashboardCardContent">
+                            <h4 class="dashboardCardTitle">Técnicos:</h4>
+                            <h3 class="dashboardCardSubtitle">{{$technicianCount}}</h3>
                         </div>
-                        <img src="https://cdn-icons-png.flaticon.com/512/554/554795.png" alt="" style="height: 50px; margin-left: auto; margin-right: 20px;">
+                        <img src="https://cdn-icons-png.flaticon.com/512/554/554795.png" alt="" class="dashboardCardImage">
                     </div>
                 </div>
             </div>
             <div class="col-3">
                 <div class="card bg-light dashboardCard" onclick="location.href='{{ route('users.index') }}'">
                     <div class="card-body d-flex align-items-center">
-                        <div>
-                            <h4 class="mb-1" style="font-family: 'Muli', sans-serif;">Funcionários:</h4>
-                            <h3 class="mb-0 py-2 font-weight-bold text-primary">{{$technicianCount}}</h3>
+                        <div class="dashboardCardContent">
+                            <h4 class="dashboardCardTitle">Funcionários:</h4>
+                            <h3 class="dashboardCardSubtitle">{{$technicianCount}}</h3>
                         </div>
-                        <img src="https://cdn-icons-png.flaticon.com/512/554/554795.png" alt="" style="height: 50px; margin-left: auto; margin-right: 20px;">
+                        <img src="https://cdn-icons-png.flaticon.com/512/554/554795.png" alt="" class="dashboardCardImage">
                     </div>
                 </div>
             </div>
             <div class="col-3">
                 <div class="card bg-light dashboardCard" onclick="location.href='{{ route('users.index') }}'">
                     <div class="card-body d-flex align-items-center">
-                        <div>
-                            <h4 class="mb-1" style="font-family: 'Muli', sans-serif;">Formandos:</h4>
-                            <h3 class="mb-0 py-2 font-weight-bold text-primary">{{$traineeCount}}</h3>
+                        <div class="dashboardCardContent">
+                            <h4 class="dashboardCardTitle">Formandos:</h4>
+                            <h3 class="dashboardCardSubtitle">{{$traineeCount}}</h3>
                         </div>
-                        <img src="https://cdn-icons-png.flaticon.com/512/2941/2941658.png" alt="" style="height: 50px; margin-left: auto; margin-right: 20px;">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2941/2941658.png" alt="" class="dashboardCardImage">
                     </div>
                 </div>
             </div>
-
         </div>
         <div class="row col-12 mb-4">
             <div class="col-3">
                 <div class="card bg-light dashboardCard">
                     <div class="card-body d-flex align-items-center" onclick="location.href='{{ route('course-classes.index') }}'">
-                        <div>
-                            <h4 class="mb-0" style="font-family: 'Muli', sans-serif;">Turmas:</h4>
-                            <h3 class="mb-0 py-2 font-weight-bold text-primary">{{$traningsCount}}</h3>
+                        <div class="dashboardCardContent">
+                            <h4 class="dashboardCardTitle">Turmas:</h4>
+                            <h3 class="dashboardCardSubtitle">{{$traningsCount}}</h3>
                         </div>
-                        <img src="https://cdn-icons-png.flaticon.com/512/2941/2941658.png" alt="" style="height: 50px; margin-left: auto; margin-right: 20px;">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2941/2941658.png" alt="" class="dashboardCardImage">
                     </div>
                 </div>
             </div>
             <div class="col-3">
                 <div class="card bg-light dashboardCard" onclick="location.href='{{ route('courses.index') }}'">
                     <div class="card-body d-flex align-items-center">
-                        <div>
-                            <h4 class="mb-0" style="font-family: 'Muli', sans-serif;">Cursos:</h4>
-                            <h3 class="mb-0 py-2 font-weight-bold text-primary">{{$coursesCount}}</h3>
+                        <div class="dashboardCardContent">
+                            <h4 class="dashboardCardTitle">Cursos:</h4>
+                            <h3 class="dashboardCardSubtitle">{{$coursesCount}}</h3>
                         </div>
-                        <img src="https://cdn-icons-png.flaticon.com/512/3197/3197967.png" alt="" style="height: 50px; margin-left: auto; margin-right: 20px;">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3197/3197967.png" alt="" class="dashboardCardImage">
                     </div>
                 </div>
             </div>
             <div class="col-3">
                 <div class="card bg-light dashboardCard" onclick="location.href='{{ route('materials.index') }}'">
                     <div class="card-body d-flex align-items-center">
-                        <div>
-                            <h4 class="mb-0" style="font-family: 'Muli', sans-serif;">Material Interno:</h4>
-                            <h3 class="mb-0 py-2 font-weight-bold text-primary">{{$internalMaterialCount}}</h3>
+                        <div class="dashboardCardContent">
+                            <h4 class="dashboardCardTitle">Material Interno:</h4>
+                            <h3 class="dashboardCardSubtitle">{{$internalMaterialCount}}</h3>
                         </div>
-                        <img src="https://cdn-icons-png.flaticon.com/512/3082/3082008.png" alt="" style="height: 50px; margin-left: auto; margin-right: 20px;">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3082/3082008.png" alt="" class="dashboardCardImage">
                     </div>
                 </div>
             </div>
             <div class="col-3">
                 <div class="card bg-light dashboardCard" onclick="location.href='{{ route('materials.index') }}'">
                     <div class="card-body d-flex align-items-center">
-                        <div>
-                            <h4 class="mb-0" style="font-family: 'Muli', sans-serif;">Material Externo:</h4>
-                            <h3 class="mb-0 py-2 font-weight-bold text-primary">{{$externalMaterialCount}}</h3>
+                        <div class="dashboardCardContent">
+                            <h4 class="dashboardCardTitle">Material Externo:</h4>
+                            <h3 class="dashboardCardSubtitle">{{$externalMaterialCount}}</h3>
                         </div>
-                        <img src="https://cdn-icons-png.flaticon.com/512/3616/3616470.png" alt="" style="height: 50px; margin-left: auto; margin-right: 20px;">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3616/3616470.png" alt="" class="dashboardCardImage">
                     </div>
                 </div>
             </div>
@@ -99,44 +98,44 @@
             <div class="col-3">
                 <div class="card bg-light dashboardCard" onclick="location.href='{{ route('users.index') }}'">
                         <div class="card-body d-flex align-items-center">
-                            <div>
-                                <h4 class="mb-0" style="font-family: 'Muli', sans-serif;">Utilizadores Ativos:</h4>
-                                <h3 class="mb-0 py-2 font-weight-bold text-primary">{{$activeUserCount}}</h3>
+                            <div class="dashboardCardContent">
+                                <h4 class="dashboardCardTitle">Utilizadores Ativos:</h4>
+                                <h3 class="dashboardCardSubtitle">{{$activeUserCount}}</h3>
                             </div>
-                        <img src="https://cdn-icons-png.freepik.com/256/2919/2919931.png" alt="" style="height: 50px; margin-left: auto; margin-right: 20px;"">
+                        <img src="https://cdn-icons-png.freepik.com/256/2919/2919931.png" alt="" class="dashboardCardImage">
                     </div>
                 </div>
             </div>
             <div class="col-3">
                 <div class="card bg-light dashboardCard" onclick="location.href='{{ route('users.index') }}'">
                     <div class="card-body d-flex align-items-center">
-                        <div>
-                            <h4 class="mb-0" style="font-family: 'Muli', sans-serif;">Utilizadores Inativos:</h4>
-                            <h3 class="mb-0 py-2 font-weight-bold text-primary">{{$inactiveUserCount}}</h3>
+                        <div class="dashboardCardContent">
+                            <h4 class="dashboardCardTitle">Utilizadores Inativos:</h4>
+                            <h3 class="dashboardCardSubtitle">{{$inactiveUserCount}}</h3>
                         </div>
-                        <img src="https://cdn-icons-png.freepik.com/512/5671/5671947.png" alt="" style="height: 50px; margin-left: auto; margin-right: 20px;"">
+                        <img src="https://cdn-icons-png.freepik.com/512/5671/5671947.png" alt="" class="dashboardCardImage">
                     </div>
                 </div>
             </div>
             <div class="col-3">
                 <div class="card bg-light dashboardCard" onclick="location.href='{{ route('external.index') }}'">
                     <div class="card-body d-flex align-items-center">
-                        <div>
-                            <h4 class="mb-0" style="font-family: 'Muli', sans-serif;">Parceiros:</h4>
-                            <h3 class="mb-0 py-2 font-weight-bold text-primary">{{$partnerCount}}</h3>
+                        <div class="dashboardCardContent">
+                            <h4 class="dashboardCardTitle">Parceiros:</h4>
+                            <h3 class="dashboardCardSubtitle">{{$partnerCount}}</h3>
                         </div>
-                        <img src="https://cdn-icons-png.freepik.com/512/4214/4214107.png" alt="" style="height: 50px; margin-left: auto; margin-right: 20px;"">
+                        <img src="https://cdn-icons-png.freepik.com/512/4214/4214107.png" alt="" class="dashboardCardImage">
                     </div>
                 </div>
             </div>
             <div class="col-3">
                 <div class="card bg-light dashboardCard" onclick="location.href='{{ route('external.index') }}'">
                     <div class="card-body d-flex align-items-center">
-                        <div>
-                            <h4 class="mb-0" style="font-family: 'Muli', sans-serif;">Formações Externas:</h4>
-                            <h3 class="mb-0 py-2 font-weight-bold text-primary">{{$externalTrainingsCount}}</h3>
+                        <div class="dashboardCardContent">
+                            <h4 class="dashboardCardTitle">Formações Externas:</h4>
+                            <h3 class="dashboardCardSubtitle">{{$externalTrainingsCount}}</h3>
                         </div>
-                        <img src="https://cdn-icons-png.flaticon.com/512/5663/5663343.png" alt="" style="height: 50px; margin-left: auto; margin-right: 20px;"">
+                        <img src="https://cdn-icons-png.flaticon.com/512/5663/5663343.png" alt="" class="dashboardCardImage">
                     </div>
                 </div>
             </div>
@@ -186,65 +185,83 @@
             </div>
         </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        var ctx = document.getElementById('ticketChart').getContext('2d');
+        var ticketChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Abertos', 'Em Progresso', 'Pendentes', 'Resolvidos', 'Fechados'],
+                datasets: [{
+                    label: 'Número de Tickets',
+                    data: [
+                        <?php echo $openedTicketsCount; ?>,
+                        <?php echo $inProgressTicketsCount; ?>,
+                        <?php echo $pendingTicketsCount; ?>,
+                        <?php echo $solvedTicketsCount; ?>,
+                        <?php echo $closedTicketsCount; ?>
+                    ],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
 
+@endsection
     <style>
-        .dashboardCard:hover {
-    background-color: #116FDC!important;
-    cursor: pointer;
-}
-
-.dashboardCard:hover h4, .dashboardCard:hover h3 {
-    color: #ffffff!important;
-}
-
-.dashboardCard {
+ .dashboardCard {
     position: relative;
     height: 120px;
     overflow: hidden;
 }
 
+.dashboardCard:hover {
+    background-color: #116FDC!important;
+    cursor: pointer;
+}
+
+.dashboardCard:hover .dashboardCardTitle,
+.dashboardCard:hover .dashboardCardSubtitle {
+    color: #ffffff!important;
+}
+
+.dashboardCardContent {
+    font-family: 'Muli', sans-serif;
+}
+
+.dashboardCardTitle {
+    margin-bottom: 5px;
+}
+
+.dashboardCardSubtitle {
+    margin-bottom: 0;
+}
+
+.dashboardCardImage {
+    height: 50px;
+    margin-left: auto;
+    margin-right: 20px;
+}
         </style>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    var ctx = document.getElementById('ticketChart').getContext('2d');
-    var ticketChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: ['Abertos', 'Em Progresso', 'Pendentes', 'Resolvidos', 'Fechados'],
-            datasets: [{
-                label: 'Número de Tickets',
-                data: [
-                    <?php echo $openedTicketsCount; ?>,
-                    <?php echo $inProgressTicketsCount; ?>,
-                    <?php echo $pendingTicketsCount; ?>,
-                    <?php echo $solvedTicketsCount; ?>,
-                    <?php echo $closedTicketsCount; ?>
-                ],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)'
-                ],
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-</script>
-@endsection
