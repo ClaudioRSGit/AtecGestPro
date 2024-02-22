@@ -75,8 +75,8 @@
             </div>
 
 <div class="row mt-3 ">
-            <button type="submit" class="btn btn-primary mr-2" name="noImport" id="criarTurmaBtn">Criar Turma</button>
-            <button type="submit" class="btn btn-primary mr-2" name="import">Criar Turma e importar alunos a partir de
+            <button type="submit" class="btn btn-primary mr-2 modalBtn" data-message="Tem a certeza que pretende criar turma sem alunos?" name="noImport" id="criarTurmaBtn">Criar Turma</button>
+            <button type="submit" class="btn btn-primary mr-2 " name="import">Criar Turma e importar alunos a partir de
                 Excel
             </button>
             <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
@@ -93,7 +93,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <p>Tem a certeza que pretende criar turma sem alunos?</p>
+
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" id="continueBtn">Continuar</button>
@@ -113,6 +113,8 @@
         }
     </style>
 
+
+
     <script>
         $(document).ready(function () {
 
@@ -130,12 +132,17 @@
             });
 
 
-            $("#createCourseClassForm").submit(function (event) {
+            $(".modalBtn").click(function (event) {
+                event.preventDefault();
+
                 var selectedStudents = $("input[name='selected_students[]']:checked").length;
 
                 if (selectedStudents === 0) {
-                    event.preventDefault();
+                    var message = $(this).data('message');
+                    $(".modal-body").text(message);
                     $("#confirmationModal").modal('show');
+                } else {
+                    $("#createCourseClassForm").submit();
                 }
             });
 
