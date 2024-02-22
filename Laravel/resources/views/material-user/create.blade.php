@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container  w-100 fade-in">
+    <div class="container  w-100 fade-in" >
 
 
         @if ($errors->any())
@@ -26,11 +26,12 @@
             </div>
         </div>
         <hr>
+            <form action="{{ route('material-user.store') }}" method="post" >
+                @csrf
         <div class="row">
             <div class="col-8 " style="height: 25rem">
 
-                <form action="{{ route('material-user.store') }}" method="post" >
-                    @csrf
+
 
                     <input type="hidden" name="user_id" value="{{ $student->id }}">
                     <div class="materials">
@@ -118,47 +119,11 @@
                     </table>
 
                     </div>
-                    <div class="row mt-4 ">
-                        <div class="col-4">
-                            <textarea placeholder="Observações" class="form-control" name="additionalNotes"
-                                      id="textarea" aria-label="With textarea"></textarea>
-                        </div>
-                        <div class="col-2 d-flex ">
-                            <label for="delivered" style="margin: auto;" class=" ">Entrega Completa</label>
-                            <input type="hidden" name="delivered_all" value="0">
-                            <input type="checkbox" class="form-control" id="delivered" name="delivered_all" value="1"
-                                   style="width: 15px;text-align: left;margin: auto "
-                                {{ old('delivered_all', $student->materialUsers()->where('delivered_all', 1)->exists()) ? 'checked' : '' }}>
-                        </div>
 
-                        <div class="col-6 d-flex justify-content-end" style="margin: auto">
-                            <button class="btn btn-primary mx-3" type="submit">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="25" fill="currentColor"
-                                     class="bi bi-floppy" viewBox="0 0 16 16">
-                                    <path d="M11 2H9v3h2z"/>
-                                    <path
-                                        d="M1.5 0h11.586a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13A1.5 1.5 0 0 1 1.5 0M1 1.5v13a.5.5 0 0 0 .5.5H2v-4.5A1.5 1.5 0 0 1 3.5 9h9a1.5 1.5 0 0 1 1.5 1.5V15h.5a.5.5 0 0 0 .5-.5V2.914a.5.5 0 0 0-.146-.353l-1.415-1.415A.5.5 0 0 0 13.086 1H13v4.5A1.5 1.5 0 0 1 11.5 7h-7A1.5 1.5 0 0 1 3 5.5V1H1.5a.5.5 0 0 0-.5.5m3 4a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V1H4zM3 15h10v-4.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5z"/>
-                                    <path
-                                        d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
-                                </svg>
-                                Guardar
-                            </button>
-                            <button class="btn btn-danger" type="button"
-                                    onclick="window.location.href='{{ url()->previous() }}'">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="25" fill="currentColor"
-                                     class="bi bi-x-square" viewBox="0 0 16 16">
-                                    <path
-                                        d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
-                                    <path
-                                        d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
-                                </svg>
-                                Fechar
-                            </button>
-                        </div>
-                    </div>
 
-                </form>
+
             </div>
+
             <div class="col-4 mb-3 pl-3 shadow bg-transparent">
 
                 <table class="table bg-white">
@@ -188,6 +153,45 @@
 
             </div>
         </div>
+                <div class="row mt-3 ">
+                    <div class="col-5">
+                            <textarea placeholder="Observações" class="form-control" name="additionalNotes"
+                                      id="textarea" aria-label="With textarea"></textarea>
+                    </div>
+                    <div class="col-3 d-flex ">
+                        <label for="delivered" style="margin: auto;" class=" ">Entrega Completa</label>
+                        <input type="hidden" name="delivered_all" value="0">
+                        <input type="checkbox" class="form-control" id="delivered" name="delivered_all" value="1"
+                               style="width: 15px;text-align: left;margin: auto "
+                            {{ old('delivered_all', $student->materialUsers()->where('delivered_all', 1)->exists()) ? 'checked' : '' }}>
+                    </div>
+
+                    <div class="col-4 d-flex justify-content-end" style="margin: auto">
+                        <button class="btn btn-primary mx-3" type="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="25" fill="currentColor"
+                                 class="bi bi-floppy" viewBox="0 0 16 16">
+                                <path d="M11 2H9v3h2z"/>
+                                <path
+                                    d="M1.5 0h11.586a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13A1.5 1.5 0 0 1 1.5 0M1 1.5v13a.5.5 0 0 0 .5.5H2v-4.5A1.5 1.5 0 0 1 3.5 9h9a1.5 1.5 0 0 1 1.5 1.5V15h.5a.5.5 0 0 0 .5-.5V2.914a.5.5 0 0 0-.146-.353l-1.415-1.415A.5.5 0 0 0 13.086 1H13v4.5A1.5 1.5 0 0 1 11.5 7h-7A1.5 1.5 0 0 1 3 5.5V1H1.5a.5.5 0 0 0-.5.5m3 4a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V1H4zM3 15h10v-4.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5z"/>
+                                <path
+                                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                            </svg>
+                            Guardar
+                        </button>
+                        <button class="btn btn-danger" type="button"
+                                onclick="window.location.href='{{ url()->previous() }}'">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="25" fill="currentColor"
+                                 class="bi bi-x-square" viewBox="0 0 16 16">
+                                <path
+                                    d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                                <path
+                                    d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                            </svg>
+                            Fechar
+                        </button>
+                    </div>
+                </div>
+            </form>
 
 
 
