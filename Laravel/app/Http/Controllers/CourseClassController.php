@@ -127,6 +127,13 @@ class CourseClassController extends Controller
     public function destroy(CourseClass $courseClass)
     {
         try {
+            $students = User::where('course_class_id', $courseClass->id)->get();
+
+            foreach ($students as $student) {
+                $student->course_class_id = null;
+                $student->save();
+            }
+
             $courseClass->delete();
             return redirect()->route('course-classes.index')->with('success', 'Turma apagada com sucesso!');
         } catch (\Exception $e) {
