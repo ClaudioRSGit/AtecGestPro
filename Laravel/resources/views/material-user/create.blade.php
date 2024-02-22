@@ -47,75 +47,86 @@
                             </tr>
                             </thead>
                             <tbody class="customTableStyling">
-                            @foreach ($clothes as $clothingItem)
-                                @php
-                                    $totalStock = $clothingItem->sizes->sum('pivot.stock');
-                                    $disabled = $totalStock > 0 ? '' : 'disabled';
-                                @endphp
-                                <tr class="material-row">
-                                    <td>
-                                        <div class="form-check d-flex justify-content-center align-items-center">
-                                            <input class="form-check-input"
-                                                   name="selectedClothing[{{ $clothingItem->id }}]"
-                                                   type="checkbox" value="{{ $clothingItem->id }}"
-                                                   data-size-select="#filter{{ $loop->index }}"
-                                                   id="flexCheckDefault{{ $loop->index }}" {{ $disabled }}>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="{{ route('materials.show', $clothingItem->id) }}">{{ isset($clothingItem->name) ? $clothingItem->name : 'N.A.' }}</a>
-                                    </td>
-                                    <td style="text-align: center;">
-                                        <input type="hidden" name="material_size_id[]" class="material-size-id-input"
-                                               value="" {{ $disabled }}>
-                                        <select class="form-control size-select" id="filter{{ $loop->index }}"
-                                                name="material_size_id[{{ $clothingItem->id }}]"
-                                                data-clothing-id="{{ $clothingItem->id }}" {{ $disabled }}>
+                            @if ($clothes->isEmpty())
+                                <tr>
+                                    <td colspan="5">Não existem fardas disponíveis para {{ ucfirst($course) }}</td>
+                                </tr>
+                            @else
+                                @foreach ($clothes as $clothingItem)
+                                    @php
+                                        $totalStock = $clothingItem->sizes->sum('pivot.stock');
+                                        $disabled = $totalStock > 0 ? '' : 'disabled';
+                                    @endphp
+                                    <tr class="material-row">
+                                        <td>
+                                            <div class="form-check d-flex justify-content-center align-items-center">
+                                                <input class="form-check-input"
+                                                       name="selectedClothing[{{ $clothingItem->id }}]"
+                                                       type="checkbox" value="{{ $clothingItem->id }}"
+                                                       data-size-select="#filter{{ $loop->index }}"
+                                                       id="flexCheckDefault{{ $loop->index }}" {{ $disabled }}>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('materials.show', $clothingItem->id) }}">{{ isset($clothingItem->name) ? $clothingItem->name : 'N.A.' }}</a>
+                                        </td>
+                                        <td style="text-align: center;">
+                                            <input type="hidden" name="material_size_id[]"
+                                                   class="material-size-id-input"
+                                                   value="" {{ $disabled }}>
+                                            <select class="form-control size-select" id="filter{{ $loop->index }}"
+                                                    name="material_size_id[{{ $clothingItem->id }}]"
+                                                    data-clothing-id="{{ $clothingItem->id }}" {{ $disabled }}>
 
-                                            @php
-                                                $hasStock = false;
-                                            @endphp
-
-                                            @foreach($clothingItem->sizes as $size)
-                                                @if($size->pivot->stock > 0)
-                                                    @php
-                                                        $hasStock = true;
-                                                    @endphp
-                                                    <option value="{{ $size->id }}"
-                                                            data-stock="{{ $size->pivot->stock }}">
-                                                        {{ $size->size }} ({{ $size->pivot->stock }})
-                                                    </option>
+                                                @php
+                                                    $hasStock = false;
+                                                @endphp
+                                                @if($clothingItem->isempty())
+                                                    <p>Não existe vestuario em stock</p>
                                                 @else
-                                                    <option disabled>{{ $size->size }} (Não existe stock)</option>
+                                                @foreach($clothingItem->sizes as $size)
+                                                    @if($size->pivot->stock > 0)
+                                                        @php
+                                                            $hasStock = true;
+                                                        @endphp
+                                                        <option value="{{ $size->id }}"
+                                                                data-stock="{{ $size->pivot->stock }}">
+                                                            {{ $size->size }} ({{ $size->pivot->stock }})
+                                                        </option>
+                                                    @else
+                                                        <option disabled>{{ $size->size }} (Não existe stock)</option>
+                                                    @endif
+                                                @endforeach
                                                 @endif
-                                            @endforeach
 
-                                            @if(!$hasStock)
-                                                <option disabled selected>Não existe nenhum tamanho com stock</option>
-                                            @endif
+                                                @if(!$hasStock)
+                                                    <option disabled selected>Não existe nenhum tamanho com stock
+                                                    </option>
+                                                @endif
 
-                                        </select>
-                                    </td>
-                                    <td class="pl-4">
-                                        <input type="number" class="form-control quantity-input"
-                                               id="quantity{{ $loop->index }}"
-                                               name="quantity[{{ $clothingItem->id }}]" value="1" min="1"
-                                               style="width: 60px; text-align: center;" {{ $disabled }}>
-                                    </td>
-                                    <td class="d-flex justify-content-left align-items-center position-relative">
-                                        <input type="date" class="form-control w-90 delivery_date"
-                                               name="delivery_date[{{ $clothingItem->id }}]"
-                                               value="{{ date('Y-m-d') }}" {{ $disabled }}>
-                                        <span class="warning-icon position-absolute" style="display: none; right: 0;">
+                                            </select>
+                                        </td>
+                                        <td class="pl-4">
+                                            <input type="number" class="form-control quantity-input"
+                                                   id="quantity{{ $loop->index }}"
+                                                   name="quantity[{{ $clothingItem->id }}]" value="1" min="1"
+                                                   style="width: 60px; text-align: center;" {{ $disabled }}>
+                                        </td>
+                                        <td class="d-flex justify-content-left align-items-center position-relative">
+                                            <input type="date" class="form-control w-90 delivery_date"
+                                                   name="delivery_date[{{ $clothingItem->id }}]"
+                                                   value="{{ date('Y-m-d') }}" {{ $disabled }}>
+                                            <span class="warning-icon position-absolute"
+                                                  style="display: none; right: 0;">
                                         <i class="fa fa-info-circle" data-toggle="tooltip"
                                            title="Atenção! A data selecionada é anterior à data de hoje"></i>
                                     </span>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
 
-                                <tr class="filler"></tr>
-                            @endforeach
-
+                                    <tr class="filler"></tr>
+                                @endforeach
+                            @endif
                             </tbody>
                         </table>
 
@@ -135,6 +146,8 @@
                         </tr>
                         </thead>
                         <tbody class="customTableStyling">
+
+                        @if($assignedClothes->isEmpty())
                         @forelse($assignedClothes as $item)
 
                             <tr>
@@ -148,6 +161,12 @@
                                 <td colspan="3">Nenhuma farda entregue ao utilizador</td>
                             </tr>
                         @endforelse
+                        @else
+                            <tr>
+                                <td colspan="3">O fardamento entregue ao utilizador foi apagado do sistema</td>
+                            </tr>
+                        @endif
+
                         </tbody>
                     </table>
 
@@ -163,7 +182,7 @@
                     <input type="hidden" name="delivered_all" value="0">
                     <input type="checkbox" class="form-control" id="delivered" name="delivered_all" value="1"
                            style="width: 15px;text-align: left;margin: auto "
-                        {{ old('delivered_all', $student->materialUsers()->where('delivered_all', 1)->exists()) ? 'checked' : '' }}>
+                            {{ old('delivered_all', $student->materialUsers()->where('delivered_all', 1)->exists()) ? 'checked' : '' }}>
                 </div>
 
                 <div class="col-4 d-flex justify-content-end" style="margin: auto">

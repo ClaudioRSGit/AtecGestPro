@@ -77,6 +77,7 @@ class MaterialUserController extends Controller
         if ($user->isStudent == 1 && $user->courseClass) {
             $student = $user;
             $studentCourseId = $student->courseClass->course_id;
+            $course = $student->courseClass->course->description;
 
             $clothes = Material::with('sizes', 'courses')
                 ->where('isClothing', 1)
@@ -86,7 +87,7 @@ class MaterialUserController extends Controller
                 ->get();
         } else {
             $student = $user;
-
+            $course = "Funcionário";
             $clothes = Material::with('sizes', 'courses')
                 ->where('isClothing', 1)
                 ->doesntHave('courses')
@@ -94,7 +95,7 @@ class MaterialUserController extends Controller
         }
 
 
-        return view('material-user.create', compact('clothes', 'student', 'assignedClothes'));
+        return view('material-user.create', compact('clothes', 'student', 'assignedClothes', 'course'));
     }
 
     /**
