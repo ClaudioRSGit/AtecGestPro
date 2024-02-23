@@ -7,7 +7,6 @@
                 {{ session('success') }}
             </div>
         @endif
-
         <div class="row my-2">
             <div class="col-md-9">
                 <h2>
@@ -16,7 +15,6 @@
                         <i class="fa-solid fa-pen-to-square fa-lg" style="color: #116fdc;"></i>
                     </a>
                 </h2>
-
                 <div class="mb-3">
                     <div class="table-responsive">
                         <span class="rounded-circle bg-primary text-white"
@@ -25,7 +23,6 @@
                         </span>
                         <b>{{ $requester->name }}</b>
                         - {{ $ticket->created_at }}
-
                         @if ($ticket->ticketStatus->description === 'Aberto')
                             @if ($openedSince === 0)
                                 <span class="text-danger">(Aberto hoje)</span>
@@ -35,7 +32,6 @@
                                 <span class="text-danger">(Aberto há {{ $openedSince }} dias)</span>
                             @endif
                         @endif
-
                     </div>
                 </div>
                 <div class="mb-2">
@@ -62,7 +58,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="mb-3">
                             @if ($ticket->attachment !== 'Sem Anexo')
                                 <label for="attachment" class="form-label">Anexo:</label>
@@ -71,7 +66,6 @@
                                 <p>Não existe anexo.</p>
                             @endif
                         </div>
-
                         <div class="mb-3">
                             <label for="comments" class="form-label">Insira uma nota ou comentário:</label>
                             <form action="{{ route('comments.store') }}" method="post">
@@ -87,7 +81,6 @@
                                     </div>
                                 </div>
                             </form>
-
                             <div class="mb-3">
                                 <label for="comments" class="form-label">Comentários:</label>
 
@@ -125,7 +118,6 @@
                     <div class="tab-pane fade" id="ticket-history" role="tabpanel" aria-labelledby="ticket-history-tab">
                         <div class="my-2">
                             <div class="card ">
-
                                 <div class="card-body ">
                                     @foreach ($ticketHistories as $history)
                                         <div class="card mb-3 shadow-lg">
@@ -147,37 +139,30 @@
 
                 </div>
             </div>
-
             <div class="col-md-3">
-
                 <div class="mb-3">
                     <label for="status" class="form-label">Estado:</label>
                     <input type="text" class="form-control" value="{{ $ticket->ticketStatus->description ?? 'N/A' }}"
                         disabled>
                 </div>
-
                 <div class="mb-3">
                     <label for="technician" class="form-label">Técnico:</label>
                     <input type="text" class="form-control" value="{{ $technician->name ?? 'N/A' }}" disabled>
                 </div>
-
                 <div class="mb-3">
                     <label for="priority" class="form-label">Prioridade:</label>
                     <input type="text" class="form-control"
                         value="{{ $ticket->ticketPriority->description ?? 'N/A' }}" disabled>
                 </div>
-
                 <div class="mb-3">
                     <label for="category" class="form-label">Categoria:</label>
                     <input type="text" class="form-control"
                         value="{{ $ticket->ticketCategory->description ?? 'N/A' }}" disabled>
                 </div>
-
                 <div class="mb-3">
                     <label>Data Limite:</label>
                     <input type="text" class="form-control" value="{{ $ticket->dueByDate ?? 'N/A' }}" disabled>
                 </div>
-
                 <div class="mb-5">
                     <label>Histórico do Utilizador:</label>
                     <div id="histTickets">
@@ -193,12 +178,7 @@
             </div>
         </div>
     </div>
-
-    <script>
-        setTimeout(function() {
-            $("#success-alert").fadeTo(500, 0).slideUp(500, function() {
-                $(this).remove();
-            });
-        }, 2000);
-    </script>
 @endsection
+@push('scripts')
+    <script src="{{ asset('js/tickets/show.js') }}"></script>
+@endpush
