@@ -84,6 +84,10 @@
                 </div>
 
                 <div class="materials">
+                    @if ($materials->isEmpty())
+                    <img src="{{ asset('assets/tool.png') }}"
+                        alt="Não existem materiais" class="bin" draggable="false">
+                @else
                     <table class="table bg-white">
                         <thead>
                             <tr>
@@ -125,10 +129,8 @@
                                 @endunless
                             @endforeach
                         </tbody>
-
-
-
                     </table>
+                @endif
                 </div>
 
                 <div class="btns">
