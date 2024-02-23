@@ -62,6 +62,7 @@ class CourseClassController extends Controller
 
     public function store(CourseClassRequest $request)
     {
+        dd($request->all());
         try {
             $courseClass = CourseClass::create([
                 'description' => $request->input('description'),

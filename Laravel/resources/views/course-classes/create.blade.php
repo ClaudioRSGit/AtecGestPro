@@ -3,7 +3,16 @@
 @section('content')
     <div class="container  w-100 fade-in">
         <h1>Criar Turma</h1>
-
+        @if ($errors->has('file'))
+            <div class="alert alert-danger">
+                {{ $errors->first('file') }}
+            </div>
+        @endif
+        @if ($errors->has('description2'))
+            <div class="alert alert-danger">
+                {{ $errors->first('description2') }}
+            </div>
+        @endif
         <form method="post" action="{{ route('course-classes.store') }}" id="createCourseClassForm" class=" mb-3">
             @csrf
 
@@ -79,7 +88,8 @@
                         data-message="Tem a certeza que pretende criar turma sem alunos?" name="noImport"
                         id="criarTurmaBtn">Criar Turma
                 </button>
-                <button id="confirmButton" class="btn btn-primary mr-2 " name="import">Criar Turma e importar alunos a partir de
+                <button id="confirmButton" class="btn btn-primary mr-2 " name="import">Criar Turma e importar alunos a
+                    partir de
                     Excel
                 </button>
                 <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
@@ -120,22 +130,19 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('import-excel.importStudents') }}" method="POST"
-                              enctype="multipart/form-data">
+                        <form id="importStudentsForm" action="{{ route('import-excel.importStudents') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group p-3">
                                 <label for="file">Excel - Importar Alunos</label><br>
                                 <label for="file" class="btn btn-primary">Selecionar ficheiro</label><br>
-                                <input type="file" name="file" id="file" class="btn" style="display: none;">
-                                <input type="hidden" >
-                                @error('attachment')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                                @enderror
-                                <p>Certifique-se que o arquivo tem menos de 20MB</p>
+                                <input type="file" name="file" id="file" class="btn" style="display: none;" accept=".xls,.xlsx">                                <input type="hidden">
+                                <p>Selecione um ficheiro Excel para importar alunos</p>
                             </div>
 
+                            <input type="hidden" name="description2">
+                            <input type="hidden" name="course_id2">
                             <div class="modal-footer">
-                                <button  type="submit" name="withStudents" class="btn btn-primary">Importar</button>
+                                <button type="submit" name="withStudents" class="btn btn-primary">Importar</button>
                                 <a href="{{ route('course-classes.create') }}" class="btn btn-secondary">Cancelar</a>
                             </div>
                         </form>
@@ -160,49 +167,20 @@
     </style>
 
     <script>
+        $(document).ready(function() {
+            $('#description').on('input', function() {
 
-        var description;
-        var courseId;
-
-        $('#confirmButton').click(function(e) {
-            e.preventDefault();
-
-            // Get the courseclass description and the course_id from the form
-            description = $('#description').val();
-            courseId = $('#course_id').val();
-
-
-            // Open the importStudentsModal
-            $('#importStudentsModal').modal('show');
-        });
-
-        // Handle the form submit event
-        $('form[action="{{ route('import-excel.importStudents') }}"]').submit(function(e) {
-            // Get the form data
-            var formData = new FormData(this);
-            formData.append('description', description);
-            formData.append('course_id', courseId);
-
-            // Submit the form with the new data
-            $.ajax({
-                type: $(this).attr('method'),
-                url: $(this).attr('action'),
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(data) {
-                    // Handle the success response
-                    console.log(data);
-                },
-                error: function(data) {
-                    // Handle the error response
-                    console.log(data);
-                }
+                $('input[name="description2"]').val($(this).val());
             });
+            var initialCourseId = $('#course_id').val();
+            $('input[name="course_id2"]').val(initialCourseId);
 
-            // Prevent the form from being submitted normally
-            e.preventDefault();
+            $('#course_id').on('change', function() {
+                $('input[name="course_id2"]').val($(this).val());
+            });
         });
+
+
     </script>
 
     <script>

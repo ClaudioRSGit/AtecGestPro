@@ -63,14 +63,18 @@ class ExcelImportController extends Controller
     public function importStudents(Request $request)
     {
 
-//        dd($request->all());
         if ($request->has('withStudents')) {
-
+//dd($request->all());
+            $description = $request->input('description2');
+            $course_id = $request->input('course_id2');
             $request->validate([
-                'file' => 'required|mimes:xlsx,xls',
+                'file' => 'required|file|mimes:xls,xlsx',
+                'description2' => 'required',
+            ], [
+                'file.required' => 'Não inseriu um ficheiro.',
+                'file.mimes' => 'O ficheiro tem de ser do tipo: xls, xlsx.',
+                'description2.required' => 'Não inseriu uma descrição para a turma.',
             ]);
-
-            // Get the uploaded file
             $file = $request->file('file');
 
             $studentImport = new StudentImportClass;
@@ -85,8 +89,20 @@ class ExcelImportController extends Controller
                 $message = 'Não foram encontrados alunos para importar!';
                 $emptyStudents = true;
             } else {
-                $message = 'Alunos importados com sucesso!';
+
                 $emptyStudents = false;
+                $courseClass = new \App\CourseClass;
+                $courseClass->description = $description;
+                $courseClass->course_id = $course_id;
+                $courseClass->save();
+
+                $courseClassId = $courseClass->id;
+
+                foreach ($importedStudents as $student) {
+                    $student->course_class_id = $courseClassId;
+                    $student->save();
+                }
+                $message = 'Alunos importados com sucesso e adicionados à turma ' . $description . '!';
             }
 
 
@@ -98,9 +114,9 @@ class ExcelImportController extends Controller
 
 
             if (empty($importedStudents)){
-                return view('excel.studentsSuccess', ['users' => $users, 'message' => $message], compact('courses', 'students', 'emptyStudents', 'importedStudents'));
+                return view('excel.studentsSuccess', ['users' => $users, 'message' => $message], compact('courses', 'students', 'emptyStudents', 'importedStudents', 'description', 'course_id'));
            } else {
-                return view('excel.studentsSuccess', ['importedStudents' => $importedStudents, 'message' => $message, 'emptyStudents' => $emptyStudents]);
+                return view('excel.studentsSuccess', ['importedStudents' => $importedStudents, 'message' => $message, 'emptyStudents' => $emptyStudents], compact('courses', 'students',  'importedStudents', 'description', 'course_id'));
               }
 
         } else {

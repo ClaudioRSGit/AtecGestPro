@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container w-100 fade-in">
-    <h1>{{ $message }}</h1>
+    <h3>{{ $message }}</h3>
 
     <div class="table">
         <table class="table">
@@ -55,7 +55,7 @@
 
     <a href="{{ route('course-classes.index') }}" class="btn btn-primary">Voltar à página de turmas</a>
 
-    {{--                    modal confirmação turma sem alunos encontrados no excel--}}
+    {{--modal confirmação turma sem alunos encontrados no excel--}}
     <div id="confirmModalExcel" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -66,17 +66,24 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Não foram encontrados alunos. Pretende criar a turma sem alunos?</p>
+                    <p>Não foram encontrados alunos. Ou os alunos já existem na base de dados.<br>
+                        Pretende criar a turma sem alunos?</p>
                 </div>
+                <form method="post" action="{{ route('course-classes.store') }}">
+                    @csrf
+                    <input type="hidden" name="description" value="{{ $description }}">
+                    <input type="hidden" name="course_id" value="{{ $course_id }}">
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="confirmButton">Sim</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
-                </div>
+                    <button type="submit" class="btn btn-primary" id="confirmButton">Sim</button>
+                    <button type="button" class="btn btn-secondary" onclick="window.location.href='{{ route('course-classes.index') }}'">Não</button>                </div>
+                </form>
             </div>
         </div>
     </div>
     {{----}}
 </div>
+
+
 
 <script>
     //modal confirmação de turma sem alunos
@@ -87,11 +94,10 @@
             $('#confirmModalExcel').modal('show');
         }
 
-        $('#confirmButton').click(function(e) {
-            e.preventDefault();
-            $('#createCourseClassForm').submit();
-        });
+
     };
+
+
 </script>
 
 @endsection
