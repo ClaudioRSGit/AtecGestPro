@@ -5,9 +5,9 @@
 
         <div class="d-flex justify-content-between align-items-center notification-item mx-2 mb-1 {{ $notificationUser->isRead ? 'read' : 'unread' }}">
             @if($notificationUser->isRead)
-            <img class="btn px-1" src="{{ asset('assets/bell.svg') }}" alt="Read Notification">
+                <img class="px-1" src="{{ asset('assets/bell.svg') }}" alt="Read Notification">
                 @else
-                    <img class="btn px-1" src="{{ asset('assets/bell2.svg') }}" alt="Unread Notification">
+                    <img class="px-1" src="{{ asset('assets/bell2.svg') }}" alt="Unread Notification">
                     @endif
                     <a href="{{ route('tickets.show', $notificationUser->notification->object_id) }}" class="w-100 pl-2 pr-2"
                     wire:click.prevent="markAsRead({{ $notificationUser->id }}, {{ $notificationUser->notification->object_id }})">
