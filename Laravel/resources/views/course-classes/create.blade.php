@@ -74,15 +74,21 @@
                 </div>
             </div>
 
-<div class="row mt-3 ">
-            <button type="submit" class="btn btn-primary mr-2 modalBtn" data-message="Tem a certeza que pretende criar turma sem alunos?" name="noImport" id="criarTurmaBtn">Criar Turma</button>
-            <button type="submit" class="btn btn-primary mr-2 " name="import">Criar Turma e importar alunos a partir de
-                Excel
-            </button>
-            <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
-</div>
+            <div class="row mt-3 ">
+                <button type="submit" class="btn btn-primary mr-2 modalBtn"
+                        data-message="Tem a certeza que pretende criar turma sem alunos?" name="noImport"
+                        id="criarTurmaBtn">Criar Turma
+                </button>
+                <button id="confirmButton" class="btn btn-primary mr-2 " name="import">Criar Turma e importar alunos a partir de
+                    Excel
+                </button>
+                <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
+            </div>
+
+
         </form>
 
+        {{--confirmation modal--}}
         <div class="modal" tabindex="-1" role="dialog" id="confirmationModal">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -102,6 +108,46 @@
                 </div>
             </div>
         </div>
+        {{----}}
+        <!-- The Import Students Modal -->
+        <div class="modal" tabindex="-1" role="dialog" id="importStudentsModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Importar alunos</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ route('import-excel.importStudents') }}" method="POST"
+                              enctype="multipart/form-data">
+                            @csrf
+                            <div class="form-group p-3">
+                                <label for="file">Excel - Importar Alunos</label><br>
+                                <label for="file" class="btn btn-primary">Selecionar ficheiro</label><br>
+                                <input type="file" name="file" id="file" class="btn" style="display: none;">
+                                <input type="hidden" >
+                                @error('attachment')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                                @enderror
+                                <p>Certifique-se que o arquivo tem menos de 20MB</p>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button  type="submit" name="withStudents" class="btn btn-primary">Importar</button>
+                                <a href="{{ route('course-classes.create') }}" class="btn btn-secondary">Cancelar</a>
+                            </div>
+                        </form>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+        {{----}}
 
     </div>
 
@@ -113,7 +159,51 @@
         }
     </style>
 
+    <script>
 
+        var description;
+        var courseId;
+
+        $('#confirmButton').click(function(e) {
+            e.preventDefault();
+
+            // Get the courseclass description and the course_id from the form
+            description = $('#description').val();
+            courseId = $('#course_id').val();
+
+
+            // Open the importStudentsModal
+            $('#importStudentsModal').modal('show');
+        });
+
+        // Handle the form submit event
+        $('form[action="{{ route('import-excel.importStudents') }}"]').submit(function(e) {
+            // Get the form data
+            var formData = new FormData(this);
+            formData.append('description', description);
+            formData.append('course_id', courseId);
+
+            // Submit the form with the new data
+            $.ajax({
+                type: $(this).attr('method'),
+                url: $(this).attr('action'),
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(data) {
+                    // Handle the success response
+                    console.log(data);
+                },
+                error: function(data) {
+                    // Handle the error response
+                    console.log(data);
+                }
+            });
+
+            // Prevent the form from being submitted normally
+            e.preventDefault();
+        });
+    </script>
 
     <script>
         $(document).ready(function () {
@@ -121,7 +211,6 @@
             $("#select-all").click(function () {
                 $("input[name='selected_students[]']").prop('checked', $(this).prop('checked'));
             });
-
 
 
             $("#search").on("keyup", function () {
@@ -148,6 +237,11 @@
 
             $("#continueBtn").click(function () {
                 $("#createCourseClassForm").off('submit').submit();
+            });
+
+            $('button[name="import"]').on('click', function (e) {
+                e.preventDefault();
+                $('#importStudentsModal').modal('show');
             });
 
         });

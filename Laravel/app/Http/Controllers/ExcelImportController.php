@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Course;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\UserImportClass;
@@ -23,6 +24,8 @@ class ExcelImportController extends Controller
             $request->validate([
                 'file' => 'required|mimes:xlsx,xls',
             ]);
+
+
         }catch(\Exception $e){
             return redirect()->back()->with('error', 'Erro ao inserir utilizadores. Por favor, tente novamente.');
         }
@@ -46,6 +49,8 @@ class ExcelImportController extends Controller
             $message = 'Ocorreu um problema ao importar os utilizadores. Por favor, tente novamente.';
         }
 
+        $users= $importedUsers;
+
         if ($request->ajax()) {
             return view('users.partials.index', ['users' => $users, 'message' => $message]);
         }
@@ -57,6 +62,8 @@ class ExcelImportController extends Controller
 
     public function importStudents(Request $request)
     {
+
+//        dd($request->all());
         if ($request->has('withStudents')) {
 
             $request->validate([
@@ -72,17 +79,30 @@ class ExcelImportController extends Controller
 
             $importedStudents = $studentImport->allImportedStudents;
 
-            if ($studentImport->getImportStatus()) {
-                $message = 'Alunos importados com sucesso!';
+
+
+            if (empty($importedStudents)) {
+                $message = 'Não foram encontrados alunos para importar!';
+                $emptyStudents = true;
             } else {
-                $message = 'Ocorreu um problema ao importar os alunos. Por favor, tente novamente.';
+                $message = 'Alunos importados com sucesso!';
+                $emptyStudents = false;
             }
 
-            if ($request->ajax()) {
-                return view('users.partials.index', ['users' => $users, 'message' => $message]);
-            }
 
-            return view('excel.studentsSuccess', ['importedStudents' => $importedStudents, 'message' => $message]);
+            $users= $importedStudents;
+            $courses = Course::all();
+
+            $students = User::where('isStudent', 1)->whereNull('course_class_id')->get();
+
+
+
+            if (empty($importedStudents)){
+                return view('excel.studentsSuccess', ['users' => $users, 'message' => $message], compact('courses', 'students', 'emptyStudents', 'importedStudents'));
+           } else {
+                return view('excel.studentsSuccess', ['importedStudents' => $importedStudents, 'message' => $message, 'emptyStudents' => $emptyStudents]);
+              }
+
         } else {
             return redirect()->route('course-classes.index')->with('success', 'Turma criada com sucesso sem alunos!');
         }

@@ -20,22 +20,25 @@ class StudentImportClass implements ToModel
         else if(strtolower($row[0]) != '' && strtolower($row[0]) != null && strtolower($row[1]) != '' && strtolower($row[1]) != null && strtolower($row[2]) != '' && strtolower($row[2]) != null && strtolower($row[3]) != '' && strtolower($row[3]) != null){
             try{
 
-                $courseClasses = CourseClass::all();
-                $courseClassId = $courseClasses->count();
 
-                $importedStudent = new User([
-                    'name' => $row[0],
-                    'username' => $row[1],
-                    'email' => $row[2],
-                    'contact' => $row[3],
-                    'password' => null,
-                    'notes' => '',
-                    'isActive' => 1,
-                    'isStudent' => 1,
-                    'course_class_id' => $courseClassId,
-                    'role_id' => 3,
-                ]);
-                array_push($this->allImportedStudents, $importedStudent);
+                $importedStudent = User::firstOrCreate(
+                    ['username' => $row[1], 'email' => $row[2], 'contact' => $row[3]],
+                    [
+                        'name' => $row[0],
+                        'password' => null,
+                        'notes' => '',
+                        'isActive' => 1,
+                        'isStudent' => 1,
+                        'course_class_id' => null,
+                        'role_id' => 3,
+                    ]
+                );
+
+                if ($importedStudent->wasRecentlyCreated) {
+                    array_push($this->allImportedStudents, $importedStudent);
+                }
+
+
 
                 return $importedStudent;
             }
@@ -45,7 +48,6 @@ class StudentImportClass implements ToModel
             }
         }
     }
-
     public function getImportStatus()
     {
         return $this->importStatus;

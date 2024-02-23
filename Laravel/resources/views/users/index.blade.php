@@ -349,6 +349,19 @@
                 const fragment = getFragment();
                 setActiveTab(fragment);
             });
+
+
+
+            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                var tabId = $(e.target).attr('href');
+                history.pushState(null, null, tabId);
+            });
+
+            window.addEventListener('beforeunload', function () {
+                history.pushState("", document.title, window.location.pathname + window.location.search);
+                localStorage.removeItem('activeTabInfo'); // Add this line
+
+            });
         });
     </script>
 

@@ -53,11 +53,11 @@ class CourseClassController extends Controller
     public function create()
     {
         $courses = Course::all();
-
+        $emptyStudents = false;
 
         $students = User::where('isStudent', 1)->whereNull('course_class_id')->get();
 
-        return view('course-classes.create', compact('courses', 'students'))->with('success', 'Turma criada com sucesso!');
+        return view('course-classes.create', compact('courses', 'students', 'emptyStudents'))->with('success', 'Turma criada com sucesso!');
     }
 
     public function store(CourseClassRequest $request)
