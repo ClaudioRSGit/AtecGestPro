@@ -74,7 +74,7 @@ class LoginController extends Controller
 
         if (Hash::check('temporary', $user->password)) {
             Auth::logout();
-            return redirect()->route('password.change')->with('username', $user->username);
+            return redirect()->route('password.change', ['username' => $user->username]);
         }
 
         return redirect()->intended($this->redirectPath());
