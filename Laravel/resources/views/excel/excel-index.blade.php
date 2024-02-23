@@ -52,47 +52,12 @@
             </tbody>
         </table>
 
-        {{--                    modal confirmação turma sem alunos encontrados no excel--}}
-        <div id="confirmModalExcel" class="modal" tabindex="-1" role="dialog">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Confirmação</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Não foram encontrados alunos. Pretende criar a turma sem alunos?</p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" id="confirmButton">Sim</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Não</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        {{----}}
-    </div>
+
 
     <a href="{{ route('users.index') }}" class="btn btn-primary">Voltar à página de utilizadores</a>
 </div>
 
 
-<script>
-    //modal confirmação de turma sem alunos
-    window.onload = function () {
-        var emptyStudents = @json($emptyStudents);
 
-        if (emptyStudents) {
-            $('#confirmModalExcel').modal('show');
-        }
-
-        $('#confirmButton').click(function(e) {
-            e.preventDefault();
-            $('#createCourseClassForm').submit();
-        });
-    };
-</script>
 
 @endsection
