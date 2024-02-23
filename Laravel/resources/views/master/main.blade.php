@@ -49,7 +49,7 @@
             @yield('content')
             @if (Request::is('/'))
             <div class="container w-100 h-100 d-flex justify-content-center align-items-center">
-                <img src="{{ asset('assets/atecLogo.png') }}" alt="" style="opacity: 0.6;">
+                <img draggable="false" src="{{ asset('assets/atecLogo.png') }}" alt="" style="opacity: 0.6;">
             </div>
             @endif
 

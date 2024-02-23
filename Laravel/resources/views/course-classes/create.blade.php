@@ -45,7 +45,7 @@
                     </div>
                     <div class="form-group w-25">
                         <a href="{{ route('users.create') }}" class="btn btn-primary w-100">
-                            <img src="{{ asset('assets/new.svg') }}">
+                            <i class="fa-solid fa-pen mr-1" style="color: #ffffff;"></i>
                             Novo Aluno
                         </a>
                     </div>
