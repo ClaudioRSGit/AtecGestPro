@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\User;
+use App\Http\Requests\PasswordChangeRequest;
 
 class PasswordChangeController extends Controller
 {
@@ -17,20 +18,16 @@ class PasswordChangeController extends Controller
             abort(403, 'Ação nao autorizada!');
         }
 
-        return view('login.passwordChange', ['username' => $username]);
+        return view('login.passwordChange', ['username' => $username, 'user' => $user]);
     }
 
-    public function updatePassword(Request $request, $username)
+    public function updatePassword(PasswordChangeRequest $request, $username)
     {
         $user = User::where('username', $username)->first();
 
         if (!$user || !Hash::check('temporary', $user->password)) {
             abort(403, 'Ação nao autorizada!');
         }
-
-        $request->validate([
-            'password' => 'required|string|min:8|confirmed',
-        ]);
 
         $user->password = Hash::make($request->input('password'));
         $user->save();
