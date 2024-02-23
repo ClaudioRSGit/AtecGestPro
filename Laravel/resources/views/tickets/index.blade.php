@@ -555,7 +555,6 @@
         </div>
     </div>
     {{--    confirmation modal    --}}
-    </div>
 
     @component('tickets.quickTicket', ['priorities' => $priorities, 'categories' => $categories])
     @endcomponent
