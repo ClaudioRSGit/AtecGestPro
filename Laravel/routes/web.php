@@ -17,6 +17,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExcelImportController;
 use App\Http\Controllers\NotificationUserController;
 use App\Http\Controllers\TicketHistoryController;
+use App\Http\Controllers\PasswordChangeController;
 
 //Main Page
 Route::get('/', function () {
@@ -27,7 +28,9 @@ Route::get('/', function () {
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-Route::get('/change-password', 'PasswordChangeController@index')->name('password.change');
+Route::get('/change-password/{username}', [PasswordChangeController::class, 'showChangeForm'])->name('password.change');
+Route::post('/change-password/{username}', [PasswordChangeController::class, 'updatePassword']);
+
 
 
 //Route::middleware('throttle:5,1')->group(function () {
