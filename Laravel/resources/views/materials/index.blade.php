@@ -75,162 +75,170 @@
 
 
                 <div>
-                    <table class="table bg-white rounded-top">
-                        <thead>
-                            <tr>
-                                <th scope="col">
-                                    <input type="checkbox" id="select-all">
-                                </th>
-                                <th scope="col">
-                                    <a
-                                        href="{{ route('materials.index', ['sortColumn' => 'name', 'sortDirection' => $sortColumn === 'name' ? ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">
-                                        Nome
-                                        @if ($sortDirection === 'desc' && $sortColumn === 'name')
-                                            <i class="fa-solid fa-arrow-up-z-a" style="color: #116fdc;"></i>
-                                        @else
-                                            <i class="fa-solid fa-arrow-down-a-z" style="color: #116fdc;"></i>
-                                        @endif
-                                    </a>
-                                </th>
-                                <th scope="col">
-                                    Quantidade
-                                </th>
-                                <th scope="col">
-                                    <a
-                                        href="{{ route('materials.index', ['sortColumn' => 'acquisition_date', 'sortDirection' => $sortColumn === 'acquisition_date' ? ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">
-                                        Data de Aquisição
-                                        @if ($sortDirection === 'desc' && $sortColumn === 'acquisition_date')
-                                            <i class="fa-solid fa-arrow-down-wide-short" style="color: #116fdc;"></i>
-                                        @else
-                                            <i class="fa-solid fa-arrow-up-short-wide" style="color: #116fdc;"></i>
-                                        @endif
-                                    </a>
-                                </th>
-                                <th scope="col">Fornecedor</th>
-                                <th scope="col">Género</th>
-                                <th scope="col">
-                                    <div class="centerTd">Ações</div>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="filler"></tr>
-                            @foreach ($materials as $material)
-                                <tr class="material-row customTableStyling" data-internal="{{ $material->isInternal }}"
-                                    data-clothing="{{ $material->isClothing }}">
-                                    <td>
-                                        <input type="checkbox" name="selectedMaterials[]" value="{{ $material->id }}">
-                                    </td>
-                                    <td class="clickable">
-                                        <a href="{{ route('materials.show', $material->id) }}"
-                                            class="d-flex align-items-center w-auto h-100">{{ isset($material->name) ? $material->name : 'N.A.' }}</a>
-                                    </td>
-                                    <td class="position-relative">
-
-                                        @if ($material->isClothing == 1)
-                                            @php
-                                                $minus5 = 2;
-                                            @endphp
-
-                                            @if ($material->sizes->count() > 0)
-                                                @foreach ($material->sizes as $size)
-                                                    @if ($size->pivot->stock <= 5 && $size->pivot->stock > 0)
-                                                        @php
-                                                            $minus5 = 1;
-                                                        @endphp
-                                                    @elseif($size->pivot->stock === 0)
-                                                        @php
-                                                            $minus5 = 0;
-                                                        @endphp
-                                                    @endif
-                                                @endforeach
+                    @if ($materials->isEmpty())
+                        <img src="{{ asset('assets/tool.png') }}"
+                            alt="Não existem materiais" class="bin" draggable="false">
+                    @else
+                        <table class="table bg-white rounded-top">
+                            <thead>
+                                <tr>
+                                    <th scope="col">
+                                        <input type="checkbox" id="select-all">
+                                    </th>
+                                    <th scope="col">
+                                        <a
+                                            href="{{ route('materials.index', ['sortColumn' => 'name', 'sortDirection' => $sortColumn === 'name' ? ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">
+                                            Nome
+                                            @if ($sortDirection === 'desc' && $sortColumn === 'name')
+                                                <i class="fa-solid fa-arrow-up-z-a" style="color: #116fdc;"></i>
                                             @else
+                                                <i class="fa-solid fa-arrow-down-a-z" style="color: #116fdc;"></i>
+                                            @endif
+                                        </a>
+                                    </th>
+                                    <th scope="col">
+                                        Quantidade
+                                    </th>
+                                    <th scope="col">
+                                        <a
+                                            href="{{ route('materials.index', ['sortColumn' => 'acquisition_date', 'sortDirection' => $sortColumn === 'acquisition_date' ? ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">
+                                            Data de Aquisição
+                                            @if ($sortDirection === 'desc' && $sortColumn === 'acquisition_date')
+                                                <i class="fa-solid fa-arrow-down-wide-short" style="color: #116fdc;"></i>
+                                            @else
+                                                <i class="fa-solid fa-arrow-up-short-wide" style="color: #116fdc;"></i>
+                                            @endif
+                                        </a>
+                                    </th>
+                                    <th scope="col">Fornecedor</th>
+                                    <th scope="col">Género</th>
+                                    <th scope="col">
+                                        <div class="centerTd">Ações</div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="filler"></tr>
+                                @foreach ($materials as $material)
+                                    <tr class="material-row customTableStyling" data-internal="{{ $material->isInternal }}"
+                                        data-clothing="{{ $material->isClothing }}">
+                                        <td>
+                                            <input type="checkbox" name="selectedMaterials[]" value="{{ $material->id }}">
+                                        </td>
+                                        <td class="clickable">
+                                            <a href="{{ route('materials.show', $material->id) }}"
+                                                class="d-flex align-items-center w-auto h-100">{{ isset($material->name) ? $material->name : 'N.A.' }}</a>
+                                        </td>
+                                        <td class="position-relative">
+
+                                            @if ($material->isClothing == 1)
                                                 @php
-                                                    $minus5 = 0;
+                                                    $minus5 = 2;
                                                 @endphp
+
+                                                @if ($material->sizes->count() > 0)
+                                                    @foreach ($material->sizes as $size)
+                                                        @if ($size->pivot->stock <= 5 && $size->pivot->stock > 0)
+                                                            @php
+                                                                $minus5 = 1;
+                                                            @endphp
+                                                        @elseif($size->pivot->stock === 0)
+                                                            @php
+                                                                $minus5 = 0;
+                                                            @endphp
+                                                        @endif
+                                                    @endforeach
+                                                @else
+                                                    @php
+                                                        $minus5 = 0;
+                                                    @endphp
+                                                @endif
+                                                {{ $material->sizes->sum('pivot.stock') }}
+
+                                                @if ($minus5 === 1)
+                                                    <span class="warning-icon position-absolute" style="left: -20px;">
+                                                        <i class="fa fa-info-circle" data-toggle="tooltip"
+                                                            title="Atenção!Pelo menos um tamanho prestes a ficar sem stock!"></i>
+                                                    </span>
+                                                @elseif ($minus5 === 0)
+                                                    <span class="warning-icon position-absolute" style="left: -20px;">
+                                                        <i class="fa-solid fa-triangle-exclamation" data-toggle="tooltip"
+                                                            title="Atenção! Produto sem artigos em stock!"
+                                                            style="color: #f12704;"></i>
+                                                    </span>
+                                                @endif
+                                            @else
+                                                {{ isset($material->quantity) ? $material->quantity : 'N.A.' }}
+                                                @if (isset($material->quantity) && $material->quantity <= 5 && $material->quantity > 0)
+                                                    <span class="warning-icon position-absolute" style="left: -20px;">
+                                                        <i class="fa fa-info-circle" data-toggle="tooltip"
+                                                            title="Atenção! Produto prestes a entrar em rotura de stock!"></i>
+                                                    </span>
+                                                @elseif (isset($material->quantity) && $material->quantity === 0)
+                                                    <span class="warning-icon position-absolute" style="left: -20px;">
+                                                        <i class="fa fa-info-circle" data-toggle="tooltip"
+                                                            title="Atenção! Produto sem artigos em stock!"></i>
+                                                    </span>
+                                                @endif
                                             @endif
-                                            {{ $material->sizes->sum('pivot.stock') }}
+                                        </td>
 
-                                            @if ($minus5 === 1)
-                                                <span class="warning-icon position-absolute" style="left: -20px;">
-                                                    <i class="fa fa-info-circle" data-toggle="tooltip"
-                                                        title="Atenção!Pelo menos um tamanho prestes a ficar sem stock!"></i>
-                                                </span>
-                                            @elseif ($minus5 === 0)
-                                                <span class="warning-icon position-absolute" style="left: -20px;">
-                                                    <i class="fa-solid fa-triangle-exclamation" data-toggle="tooltip"
-                                                        title="Atenção! Produto sem artigos em stock!"
-                                                        style="color: #f12704;"></i>
-                                                </span>
-                                            @endif
-                                        @else
-                                            {{ isset($material->quantity) ? $material->quantity : 'N.A.' }}
-                                            @if (isset($material->quantity) && $material->quantity <= 5 && $material->quantity > 0)
-                                                <span class="warning-icon position-absolute" style="left: -20px;">
-                                                    <i class="fa fa-info-circle" data-toggle="tooltip"
-                                                        title="Atenção! Produto prestes a entrar em rotura de stock!"></i>
-                                                </span>
-                                            @elseif (isset($material->quantity) && $material->quantity === 0)
-                                                <span class="warning-icon position-absolute" style="left: -20px;">
-                                                    <i class="fa fa-info-circle" data-toggle="tooltip"
-                                                        title="Atenção! Produto sem artigos em stock!"></i>
-                                                </span>
-                                            @endif
-                                        @endif
-                                    </td>
-
-                                    <td>
-                                        {{ isset($material->acquisition_date) ? \Carbon\Carbon::parse($material->acquisition_date)->format('Y-m-d') : 'N.A.' }}
-                                    </td>
+                                        <td>
+                                            {{ isset($material->acquisition_date) ? \Carbon\Carbon::parse($material->acquisition_date)->format('Y-m-d') : 'N.A.' }}
+                                        </td>
 
 
-                                    <td>
-                                        @if ($material->supplier !== '' && $material->supplier !== null)
-                                            {{ $material->supplier }}
-                                        @else
-                                            N.A.
-                                        @endif
-                                    </td>
-
-                                    <td>
-                                        @if ($material->isClothing === 0)
-                                            N.A.
-                                        @else
-                                            @if ($material->gender === 1)
-                                                Masculino
-                                            @elseif($material->gender === 0)
-                                                Feminino
+                                        <td>
+                                            @if ($material->supplier !== '' && $material->supplier !== null)
+                                                {{ $material->supplier }}
                                             @else
                                                 N.A.
                                             @endif
-                                        @endif
+                                        </td>
 
-                                    </td>
+                                        <td>
+                                            @if ($material->isClothing === 0)
+                                                N.A.
+                                            @else
+                                                @if ($material->gender === 1)
+                                                    Masculino
+                                                @elseif($material->gender === 0)
+                                                    Feminino
+                                                @else
+                                                    N.A.
+                                                @endif
+                                            @endif
 
-                                    <td class="editDelete" style="padding: 0.25rem">
-                                        <div style="width: 40%;">
-                                            <a href="{{ route('materials.edit', $material->id) }}" class="mx-2">
-                                                <i class="fa-solid fa-pen-to-square fa-lg" style="color: #116fdc;"></i>
-                                            </a>
-                                        </div>
-                                        <div style="width: 40%">
-                                            <form method="post" action="{{ route('materials.destroy', $material->id) }}"
-                                                style="display:inline;">
-                                                @csrf
-                                                @method('delete')
-                                                <button type="submit" class="modalBtn"
-                                                    data-message="Tem a certeza que deseja eliminar o material {{ $material->name }}?"
-                                                    style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
-                                                    <i class="fa-solid fa-trash-can fa-lg" style="color: #116fdc;"></i>
-                                                </button>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr class="filler"></tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                        </td>
+
+                                        <td class="editDelete" style="padding: 0.25rem">
+                                            <div style="width: 40%;">
+                                                <a href="{{ route('materials.edit', $material->id) }}" class="mx-2">
+                                                    <i class="fa-solid fa-pen-to-square fa-lg"
+                                                        style="color: #116fdc;"></i>
+                                                </a>
+                                            </div>
+                                            <div style="width: 40%">
+                                                <form method="post"
+                                                    action="{{ route('materials.destroy', $material->id) }}"
+                                                    style="display:inline;">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button type="submit" class="modalBtn"
+                                                        data-message="Tem a certeza que deseja eliminar o material {{ $material->name }}?"
+                                                        style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
+                                                        <i class="fa-solid fa-trash-can fa-lg"
+                                                            style="color: #116fdc;"></i>
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr class="filler"></tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    @endif
                 </div>
                 {{ $materials->appends(['mPage' => $materials->currentPage()])->links() }}
             </div>
