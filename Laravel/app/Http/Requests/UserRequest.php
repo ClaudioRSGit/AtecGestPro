@@ -94,7 +94,7 @@ class UserRequest extends FormRequest
             'password.required' => 'A password é obrigatória!',
             'password.regex' => 'A password deve ter pelo menos uma letra maiúscula, um caracter especial e sete caracteres!',
             'password.min' => 'A password deve ter pelo menos uma letra maiúscula, um caracter especial e sete caracteres!',
-            'password.max' => 'A password deve no máximo vinte caracteres!',
+            'password.max' => 'A password deve ter no máximo vinte caracteres!',
         ];
     }
 }

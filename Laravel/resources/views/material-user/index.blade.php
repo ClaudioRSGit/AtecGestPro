@@ -74,7 +74,7 @@
                 <div id="accordion">
                     <div class="ms-auto">
 
-                        <span>&nbsp; &nbsp;Turma</span>
+                        <span>Turma</span>
                     </div>
                     @foreach ($courseClasses as $courseClass)
                         <div class="card mb-2 mt-2">

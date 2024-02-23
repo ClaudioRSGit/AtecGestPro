@@ -7,7 +7,6 @@
                 {{ session('success') }}
             </div>
         @endif
-
         <div class="d-flex justify-content-between align-items-center">
             <h1>Tickets</h1>
             <div onclick="showOptions()" class="form-control btn-primary w-20 dropdown" style="max-width: 10rem;">
@@ -23,7 +22,6 @@
                 </div>
             </div>
         </div>
-
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
                 <a class="nav-link active" id="all-tickets-tab" data-toggle="tab" href="#allTickets" role="tab"
@@ -38,7 +36,6 @@
                    aria-controls="recycling" aria-selected="false">Reciclagem</a>
             </li>
         </ul>
-
         <div>
             <div class="tab-content" id="myTabContent">
 
@@ -60,7 +57,6 @@
                                     </button>
                                 </div>
                             </div>
-
                         </form>
                         <div class="buttons">
                             <form id="filterCategoryForm" action="{{ route('tickets.index') }}" method="GET">
@@ -77,7 +73,6 @@
 
                                 </select>
                             </form>
-
                             <form id="filterStatusForm" action="{{ route('tickets.index') }}" method="GET">
                                 <select class="form-control w-auto" id="filterStatus" name="filterStatus"
                                         onchange="submitStatusForm()">
@@ -90,7 +85,6 @@
                                     @endforeach
                                 </select>
                             </form>
-
                             <form id="filterPriorityForm" action="{{ route('tickets.index') }}" method="GET">
                                 <select class="form-control w-auto" id="filterPriority" name="filterPriority"
                                         onchange="submitPriorityForm()">
@@ -247,7 +241,6 @@
                     @endif
                     {{ $tickets->appends(['tPage' => $tickets->currentPage()])->links() }}
                 </div>
-
                 <div class="tab-pane fade" id="waitingQueue" role="tabpanel" aria-labelledby="waiting-queue-tab">
                     <div class="d-flex justify-content-between my-3">
 
@@ -264,7 +257,6 @@
                                     </button>
                                 </div>
                             </div>
-
                         </form>
                         <div class="buttons">
                             <form id="filterFilaCategoryForm" action="{{ route('tickets.index') }}" method="GET">
@@ -278,11 +270,8 @@
                                             {{ (int) $filterFilaCategory === $category->id ? 'selected' : '' }}>{{ $category->description }}
                                         </option>
                                     @endforeach
-
                                 </select>
                             </form>
-
-
                             <form id="filterCategoryFilaForm" action="{{ route('tickets.index') }}" method="GET">
                                 <select class="form-control w-auto" id="filterFilaPriority" name="filterFilaPriority"
                                         onchange="submitCategoryFilaForm()">
@@ -360,7 +349,6 @@
                                     <td>{{ $ticket->created_at->format('d-m-Y') }}</td>
                                     <td>
                                         <div class="d-flex justify-content-between align-items-center">
-
                                             <div class="w-50">
                                                 <a href="{{ route('tickets.edit', $ticket->id) }}">
                                                     <i class="fa-solid fa-pen-to-square fa-lg" style="color: #116fdc;"></i>
@@ -388,7 +376,6 @@
                     @endif
                     {{ $waitingQueueTickets->appends(['wPage' => $waitingQueueTickets->currentPage()])->links() }}
                 </div>
-
                 <div class="tab-pane fade" id="recycling" role="tabpanel" aria-labelledby="recycling-tab">
                     <div class="d-flex justify-content-between my-3">
 
@@ -405,7 +392,6 @@
                                     </button>
                                 </div>
                             </div>
-
                         </form>
                         <div class="buttons">
                             <form id="filterRecyclingCategoryForm" action="{{ route('tickets.index') }}" method="GET">
@@ -420,10 +406,8 @@
                                             {{ (int) $filterRecyclingCategory === $category->id ? 'selected' : '' }}>{{ $category->description }}
                                         </option>
                                     @endforeach
-
                                 </select>
                             </form>
-
                             <form id="filterRecyclingStatusForm" action="{{ route('tickets.index') }}" method="GET">
                                 <select class="form-control w-auto" id="filterRecyclingStatus"
                                         name="filterRecyclingStatus"
@@ -438,7 +422,6 @@
                                     @endforeach
                                 </select>
                             </form>
-
                             <form id="filterRecyclingPriorityForm" action="{{ route('tickets.index') }}" method="GET">
                                 <select class="form-control w-auto" id="filterRecyclingPriority"
                                         name="filterRecyclingPriority"
@@ -456,7 +439,6 @@
                             </form>
                         </div>
                     </div>
-
                     @if($recycledTickets->isEmpty())
                         <img src="{{ asset('assets/reciclagem_azul_extra_bold_2_sem fundo.png') }}"
                              alt="Não existem registos" class="bin">
@@ -525,7 +507,6 @@
                                                 </button>
                                             </form>
                                         </div>
-
                                     </td>
                                     <td>
                                         <div class="centerTd">
@@ -549,10 +530,7 @@
                     @endif
                     {{ $recycledTickets->appends(['rPage' => $recycledTickets->currentPage()])->links() }}
                 </div>
-
             </div>
-
-
         </div>
     </div>
     {{--    confirmation modal    --}}
@@ -577,171 +555,11 @@
         </div>
     </div>
     {{--    confirmation modal    --}}
-    </div>
 
     @component('tickets.quickTicket', ['priorities' => $priorities, 'categories' => $categories])
-
     @endcomponent
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            let deleteButtons = document.querySelectorAll('button[class="modalBtn"]');
-
-            deleteButtons.forEach(button => {
-                button.addEventListener('click', function (event) {
-                    event.preventDefault();
-
-                    let message = button.getAttribute('data-message');
-                    document.getElementById('modalBody').textContent = message;
-
-                    $('#deleteModal').modal('show');
-
-                    $('#deleteBtn').click(function () {
-                        button.closest('form').submit();
-                    });
-                });
-            });
-        });
-    </script>
-
-    <script>
-        function submitCategoryForm() {
-
-            document.getElementById("filterCategoryForm").submit();
-
-        }
-
-        function submitFilaCategoryForm() {
-
-            document.getElementById("filterFilaCategoryForm").submit();
-
-        }
-
-        function submitRecyclingCategoryForm() {
-
-            document.getElementById("filterRecyclingCategoryForm").submit();
-
-        }
-
-        function submitCategoryFilaForm() {
-
-            document.getElementById("filterCategoryFilaForm").submit();
-
-        }
-
-        function submitStatusForm() {
-
-            document.getElementById("filterStatusForm").submit();
-
-        }
-
-        function submitRecyclingStatusForm() {
-
-            document.getElementById("filterRecyclingStatusForm").submit();
-
-        }
-
-        function submitPriorityForm() {
-
-            document.getElementById("filterPriorityForm").submit();
-
-        }
-
-        function submitRecyclingPriorityForm() {
-
-            document.getElementById("filterRecyclingPriorityForm").submit();
-
-        }
-
-
-        window.setTimeout(function () {
-            $("#success-alert").fadeTo(500, 0).slideUp(500, function () {
-                $(this).remove();
-            });
-        }, 2000);
-    </script>
-
-    <script>
-        $(document).ready(function () {
-            function determineContext() {
-                return 'pagination';
-            }
-
-            function getFragment() {
-                return window.location.hash.substring(1);
-            }
-
-            function setFragment(fragment) {
-                history.pushState(null, null, '#' + fragment);
-            }
-
-            function setActiveTab(tabId) {
-                $(`#myTab a[href="#${tabId}"]`).tab('show');
-            }
-
-            const activeTabInfo = localStorage.getItem('activeTabInfo');
-
-            if (activeTabInfo) {
-                const {tabId, context} = JSON.parse(activeTabInfo);
-                setActiveTab(tabId);
-                setFragment(tabId);
-            }
-
-            $('#myTab a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-                const tabId = $(e.target).attr('href').substring(1);
-                const context = determineContext();
-
-                const activeTabInfo = JSON.stringify({tabId, context});
-                localStorage.setItem('activeTabInfo', activeTabInfo);
-
-                setFragment(tabId);
-            });
-
-            window.addEventListener('hashchange', function () {
-                const fragment = getFragment();
-                setActiveTab(fragment);
-            });
-
-
-
-            $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-                var tabId = $(e.target).attr('href');
-                history.pushState(null, null, tabId);
-            });
-
-            window.addEventListener('beforeunload', function () {
-                history.pushState("", document.title, window.location.pathname + window.location.search);
-                localStorage.removeItem('activeTabInfo'); // Add this line
-
-            });
-        });
-    </script>
-
-    <script>
-        function showOptions() {
-            document.getElementById("options").classList.toggle("show");
-        }
-
-        window.onclick = function (event) {
-            if (!event.target.matches('#open')) {
-                var dropdowns = document.getElementsByClassName("options");
-                var i;
-                for (i = 0; i < dropdowns.length; i++) {
-                    var openDropdown = dropdowns[i];
-                    if (openDropdown.classList.contains('show')) {
-                        openDropdown.classList.remove('show');
-                    }
-                }
-            }
-        }
-
-        function showQuickTicket() {
-            let quickTicket = document.querySelector('.quickTicket');
-            quickTicket.style.transition = 'opacity 1s ease, visibility 1s ease';
-            quickTicket.style.opacity = '1';
-            quickTicket.style.visibility = 'visible';
-            document.querySelector('.container').classList.add('w-70');
-        }
-    </script>
-
 @endsection
+@push('scripts')
+<script src="{{ asset('js/tickets/index.js') }}"></script>
+@endpush
+

@@ -3040,7 +3040,6 @@ textarea.form-control.is-invalid {
 
 .btn {
 
-    min-width: 90px;
     display: inline-block;
     font-weight: 400;
     color: #212529;

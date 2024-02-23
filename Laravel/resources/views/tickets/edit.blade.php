@@ -2,12 +2,9 @@
 
 @section('content')
     <div class="container w-100 fade-in">
-
         <form class="mb-3" method="post" action="{{ route('tickets.update', $ticket->id) }}" enctype="multipart/form-data">
-
             @csrf
             @method('put')
-
             <div class="row">
                 <div class="col-md-9">
                     <div class="d-flex justify-content-between my-4">
@@ -30,7 +27,6 @@
                             - {{ $ticket->created_at }}
                         </div>
                     </div>
-
                     <div class="mb-3">
                         <label for="description" class="form-label">Descrição:</label>
                         <div class="bg-light">
@@ -67,7 +63,6 @@
                         <a href="{{ asset('storage/' . $ticket->attachment) }}" target="_blank">Ver Anexo</a>
                     @endif
                 </div>
-
                 <div class="col-md-3">
                     <div class="mb-3">
                         <label for="status" class="form-label">Estado:</label>
@@ -80,7 +75,6 @@
                             @endforeach
                         </select>
                     </div>
-
                     <div class="mb-3">
                         <label for="priority" class="form-label">Prioridade:</label>
                         <select class="form-control" id="priority" name="ticket_priority_id">
@@ -116,7 +110,6 @@
                             @endforeach
                         </select>
                     </div>
-
                     <div>
                         <label>Histórico do Utilizador:</label>
                         <ul>
@@ -128,9 +121,7 @@
                     </div>
                 </div>
             </div>
-
         </form>
-
             <div class="mb-3">
                 <h4 for="comments" class="form-label">Insira uma nota ou comentário:</h4>
                 <form action="{{ route('comments.store') }}" method="post">
@@ -181,20 +172,10 @@
             </div>
         </div>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var quill = new Quill('#description', {
-                theme: 'snow'
-            });
-
-            quill.on('text-change', function() {
-                var htmlContent = quill.root.innerHTML;
-                document.getElementById('descriptionInput').value = htmlContent;
-            });
-        });
-    </script>
 @endsection
-
+@push('scripts')
+    <script src="{{ asset('js/tickets/edit.js') }}"></script>
+@endpush
 <style>
     .col-md-9 {
         padding-left: 0 !important;

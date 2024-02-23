@@ -58,7 +58,7 @@
         <div id="accordion">
             <div class="ms-auto">
 
-                <span>&nbsp; &nbsp;Turma</span>
+                <span>Turma</span>
             </div>
             @foreach ($courseClasses as $courseClass)
                 <div class="card mb-2 mt-2">
@@ -142,43 +142,6 @@
 
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            let deleteButtons = document.querySelectorAll('button[class="modalBtn"]');
-
-            deleteButtons.forEach(button => {
-                button.addEventListener('click', function (event) {
-                    event.preventDefault();
-
-                    let message = button.getAttribute('data-message');
-                    document.getElementById('modalBody').textContent = message;
-
-                    $('#deleteModal').modal('show');
-
-                    $('#deleteBtn').click(function () {
-                        button.closest('form').submit();
-                    });
-                });
-            });
-        });
-    </script>
-
-
-    <script>
-        //logica filtro
-        function submitForm() {
-            document.getElementById("courseFilterForm").submit();
-        }
-    </script>
-
-    <script>
-
-        window.setTimeout(function () {
-            $("#success-alert").fadeTo(500, 0).slideUp(500, function () {
-                $(this).remove();
-            });
-        }, 2000);
-    </script>
     <style>
 
         #accordion .card {
@@ -219,3 +182,6 @@
         }
     </style>
 @endsection
+@push('scripts')
+    <script src="{{ asset('js/course-classes/index.js') }}"></script>
+@endpush

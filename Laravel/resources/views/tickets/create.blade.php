@@ -8,9 +8,6 @@
         <div class="row my-2">
 
             <div class="col-md-9">
-
-
-
                     <div class="mb-3">
                         <label for="title" class="form-label">Título:</label>
                         <input type="text" class="form-control" id="title" name="title" value="{{ old('title') }}"
@@ -99,31 +96,10 @@
                 </div>
 
             </div>
-
-
-
         </div>
         </form>
     </div>
-    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
-    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var quill = new Quill('#description', {
-                theme: 'snow'
-            });
-
-            quill.on('text-change', function() {
-                var htmlContent = quill.root.innerHTML;
-                document.getElementById('descriptionInput').value = htmlContent;
-            });
-        });
-
-        // Update file name when file is selected
-        document.getElementById('attachment').addEventListener('change', function() {
-            var filename = this.value.split('\\').pop();
-            document.getElementById('file-name').textContent = filename;
-        });
-    </script>
 @endsection
+@push('scripts')
+    <script src="{{ asset('js/tickets/create.js') }}"></script>
+@endpush
