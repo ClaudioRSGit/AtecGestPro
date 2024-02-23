@@ -13,7 +13,7 @@ class PasswordChangeRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,25 @@ class PasswordChangeRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'password' => [
+                'required',
+                'confirmed',
+                'string',
+                'min:7',
+                'max:20',
+                'regex:/^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).*$/'
+            ],
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'password.required' => 'A password é obrigatória!',
+            'password.confirmed' => 'As passwords não coincidem!',
+            'password.regex' => 'A password deve ter pelo menos uma letra maiúscula, um caracter especial e sete caracteres!',
+            'password.min' => 'A password deve ter pelo menos uma letra maiúscula, um caracter especial e sete caracteres!',
+            'password.max' => 'A password deve no máximo vinte caracteres!',
         ];
     }
 }
