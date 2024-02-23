@@ -87,5 +87,5 @@
 
 @endsection
 @push('scripts')
-    <script src="{{ asset('js/users/show.js') }}"></script>
+    <script src="{{ asset('js/users/show.js') }}"></script>
 @endpush

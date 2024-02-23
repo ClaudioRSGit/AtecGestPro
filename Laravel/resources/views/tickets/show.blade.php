@@ -180,5 +180,6 @@
     </div>
 @endsection
 @push('scripts')
-    <script src="{{ asset('js/tickets/show.js') }}"></script>
+    <script src="{{ asset('js/tickets/show.js') }}"></script>
 @endpush
+

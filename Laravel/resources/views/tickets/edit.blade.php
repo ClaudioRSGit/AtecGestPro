@@ -174,7 +174,7 @@
     </div>
 @endsection
 @push('scripts')
-    <script src="{{ asset('js/tickets/edit.js') }}"></script>
+    <script src="{{ asset('js/tickets/edit.js') }}"></script>
 @endpush
 <style>
     .col-md-9 {

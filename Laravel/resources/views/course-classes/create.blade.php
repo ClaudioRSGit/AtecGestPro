@@ -207,5 +207,5 @@
 
 @endsection
 @push('scripts')
-    <script src="{{ asset('js/course-classes/create.js') }}"></script>
+    <script src="{{ asset('js/course-classes/create.js') }}"></script>
 @endpush

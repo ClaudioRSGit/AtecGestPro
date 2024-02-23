@@ -58,7 +58,7 @@
         <div id="accordion">
             <div class="ms-auto">
 
-                <span>&nbsp; &nbsp;Turma</span>
+                <span>Turma</span>
             </div>
             @foreach ($courseClasses as $courseClass)
                 <div class="card mb-2 mt-2">
@@ -183,5 +183,5 @@
     </style>
 @endsection
 @push('scripts')
-    <script src="{{ asset('js/course-classes/index.js') }}"></script>
+    <script src="{{ asset('js/course-classes/index.js') }}"></script>
 @endpush

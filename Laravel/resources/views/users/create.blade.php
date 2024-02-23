@@ -119,6 +119,6 @@
     </div>
 @endsection
 @push('scripts')
-    <script src="{{ asset('js/users/create.js') }}"></script>
+    <script src="{{ asset('js/users/create.js') }}"></script>
 @endpush
 

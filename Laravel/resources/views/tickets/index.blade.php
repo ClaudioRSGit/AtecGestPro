@@ -560,5 +560,6 @@
     @endcomponent
 @endsection
 @push('scripts')
-    <script src="{{ asset('js/tickets/index.js') }}"></script>
+<script src="{{ asset('js/tickets/index.js') }}"></script>
 @endpush
+

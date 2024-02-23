@@ -130,5 +130,5 @@
 
 @endsection
 @push('scripts')
-    <script src="{{ asset('js/courses/index.js') }}"></script>
+    <script src="{{ asset('js/courses/index.js') }}"></script>
 @endpush

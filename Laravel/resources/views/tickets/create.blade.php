@@ -101,5 +101,5 @@
     </div>
 @endsection
 @push('scripts')
-    <script src="{{ asset('js/tickets/create.js') }}"></script>
+    <script src="{{ asset('js/tickets/create.js') }}"></script>
 @endpush

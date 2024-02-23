@@ -146,5 +146,5 @@
     </style>
 @endsection
 @push('scripts')
-    <script src="{{ asset('js/users/edit.js') }}"></script>
+    <script src="{{ asset('js/users/edit.js') }}"></script>
 @endpush

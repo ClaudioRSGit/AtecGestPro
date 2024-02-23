@@ -338,5 +338,5 @@
 
 @endsection
 @push('scripts')
-    <script src="{{ asset('js/external/index.js') }}"></script>
+    <script src="{{ asset('js/external/index.js') }}"></script>
 @endpush

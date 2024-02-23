@@ -50,6 +50,6 @@
     </div>
 @endsection
 @push('scripts')
-    <script src="{{ asset('js/courses/show.js') }}"></script>
+    <script src="{{ asset('js/courses/show.js') }}"></script>
 @endpush
 
