@@ -67,7 +67,7 @@
                     </div>
 
                     @if (session('error'))
-                        <div>
+                        <div class="mb-3">
                             <div>
                                 <span class="text-danger font-weight-bold">{{ session('error') }}</span>
                             </div>
@@ -75,7 +75,7 @@
                     @endif
 
                     @if ($errors->has('password'))
-                        <div>
+                        <div class="mb-3">
                             <div>
                                 <span class="text-danger font-weight-bold">{{ $errors->first('password') }}</span>
                             </div>
