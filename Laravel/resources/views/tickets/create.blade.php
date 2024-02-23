@@ -93,9 +93,9 @@
 
             </div>
         </div>
-        <div class="createTicket d-flex justify-content-between align-items-center">
-            <button type="submit" class="btn btn-primary w-45">Criar Ticket</button>
-            <a href="{{ route('tickets.index') }}" class="btn btn-secondary w-45">Cancelar</a>
+        <div class="createTicket">
+            <button type="submit" class="btn btn-primary">Criar Ticket</button>
+            <a href="{{ route('tickets.index') }}" class="btn btn-secondary">Cancelar</a>
         </div>
         </form>
     </div>
