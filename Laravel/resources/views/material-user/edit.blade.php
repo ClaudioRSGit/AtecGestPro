@@ -80,7 +80,7 @@
                                             <button type="submit"
                                                     data-message="Tem a certeza que deseja excluir a entrega de {{$entrega->material->name}}? O stock não vai ser atualizado!"
                                                     style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
-                                                    <i class="fa-solid fa-trash-can fa-xl" style="color: #116fdc;"></i>
+                                                    <i class="fa-solid fa-trash-can fa-lg" style="color: #116fdc;"></i>
                                             </button>
                                         </form>
                                     </td>

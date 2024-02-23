@@ -120,7 +120,7 @@
                                                         <div style="width: 40%">
                                                             <a href="{{ route('material-user.edit', $student->id) }}"
                                                                class="mx-2 ">
-                                                               <i class="fa-solid fa-pen-to-square fa-xl" style="color: #116fdc;"></i>
+                                                               <i class="fa-solid fa-pen-to-square fa-lg" style="color: #116fdc;"></i>
                                                             </a>
                                                         </div>
                                                         <div style="width: 40%">
@@ -197,7 +197,7 @@
                             <td class="{{ $myVariable }}">{{ $nonDocent->email }}</td>
                             <td>
                                 <a href="{{ route('material-user.edit', $nonDocent->id) }}" class="mx-2">
-                                    <i class="fa-solid fa-pen-to-square fa-xl" style="color: #116fdc;"></i>
+                                    <i class="fa-solid fa-pen-to-square fa-lg" style="color: #116fdc;"></i>
                                 </a>
                             </td>
                         </tr>

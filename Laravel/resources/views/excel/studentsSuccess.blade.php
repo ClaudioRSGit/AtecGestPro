@@ -30,7 +30,7 @@
                     <td class="editDelete">
                         <div style="width: 40%">
                             <a href="{{ route('users.edit', $student->id) }}">
-                                <i class="fa-solid fa-pen-to-square fa-xl" style="color: #116fdc;"></i>
+                                <i class="fa-solid fa-pen-to-square fa-lg" style="color: #116fdc;"></i>
                             </a>
                         </div>
                         <div style="width: 40%">
@@ -41,7 +41,7 @@
                                 <button type="submit"
                                         onclick="return confirm('Tem certeza que deseja excluir?')"
                                         style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
-                                        <i class="fa-solid fa-trash-can fa-xl" style="color: #116fdc;"></i>
+                                        <i class="fa-solid fa-trash-can fa-lg" style="color: #116fdc;"></i>
                                 </button>
                             </form>
                         </div>
