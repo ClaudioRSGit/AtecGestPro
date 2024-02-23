@@ -90,7 +90,7 @@
                         </div>
                         <div class="mt-3">
                             <span class="text-info font-weight-bold">
-                                <i class="fas fa-info-circle"></i> Bem-vindo, {{ $user->name }}! Para prosseguir para a aplicação, é necessário alterar a sua password.
+                                <i class="fas fa-info-circle"></i> Bem-vindo {{ $user->name }}! Para prosseguir para a aplicação, é necessário alterar a sua password.
                             </span>
                         </div>
                     </div>

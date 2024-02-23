@@ -36,7 +36,7 @@
                             <div class="input-group pr-2">
                                 <div class="search-container">
                                     <input type="text" name="search" class="form-control"
-                                           placeholder="{{ request('search') ? request('search') : 'Procurar...' }}">
+                                        placeholder="{{ request('search') ? request('search') : 'Procurar...' }}">
                                 </div>
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-outline-secondary">
@@ -54,7 +54,7 @@
                         <form id="materialFilterForm" action="{{ route('materials.index') }}" method="GET">
                             <div>
                                 <select class="form-control" id="materialFilter" name="materialFilter"
-                                        onchange="submitForm()">
+                                    onchange="submitForm()">
                                     <option value="all" {{ $materialFilter === 'all' ? 'selected' : '' }}>Todos</option>
                                     <option value="internal" {{ $materialFilter === 'internal' ? 'selected' : '' }}>
                                         Interno
@@ -77,151 +77,158 @@
                 <div>
                     <table class="table bg-white rounded-top">
                         <thead>
-                        <tr>
-                            <th scope="col">
-                                <input type="checkbox" id="select-all">
-                            </th>
-                            <th scope="col">
-                                <a href="{{ route('materials.index', ['sortColumn' => 'name', 'sortDirection' => $sortColumn === 'name' ? ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">
-                                    Nome
-                                    @if ($sortDirection === 'desc' && $sortColumn === 'name')
-                                    <i class="fa-solid fa-arrow-up-z-a" style="color: #116fdc;"></i>
-                                    @else
-                                    <i class="fa-solid fa-arrow-down-a-z" style="color: #116fdc;"></i>
-                                    @endif
-                                </a>
-                            </th>
-                            <th scope="col">
-                                Quantidade
-                            </th>
-                            <th scope="col">
-                                <a href="{{ route('materials.index', ['sortColumn' => 'acquisition_date', 'sortDirection' => $sortColumn === 'acquisition_date' ? ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">
-                                    Data de Aquisição
-                                    @if ($sortDirection === 'desc' && $sortColumn === 'acquisition_date')
-                                    <i class="fa-solid fa-arrow-down-wide-short" style="color: #116fdc;"></i>
-                                    @else
-                                    <i class="fa-solid fa-arrow-up-short-wide" style="color: #116fdc;"></i>
-                                    @endif
-                                </a>
-                            </th>
-                            <th scope="col">Fornecedor</th>
-                            <th scope="col">Género</th>
-                            <th scope="col"><div class="centerTd">Ações</div></th>
-                        </tr>
+                            <tr>
+                                <th scope="col">
+                                    <input type="checkbox" id="select-all">
+                                </th>
+                                <th scope="col">
+                                    <a
+                                        href="{{ route('materials.index', ['sortColumn' => 'name', 'sortDirection' => $sortColumn === 'name' ? ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">
+                                        Nome
+                                        @if ($sortDirection === 'desc' && $sortColumn === 'name')
+                                            <i class="fa-solid fa-arrow-up-z-a" style="color: #116fdc;"></i>
+                                        @else
+                                            <i class="fa-solid fa-arrow-down-a-z" style="color: #116fdc;"></i>
+                                        @endif
+                                    </a>
+                                </th>
+                                <th scope="col">
+                                    Quantidade
+                                </th>
+                                <th scope="col">
+                                    <a
+                                        href="{{ route('materials.index', ['sortColumn' => 'acquisition_date', 'sortDirection' => $sortColumn === 'acquisition_date' ? ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">
+                                        Data de Aquisição
+                                        @if ($sortDirection === 'desc' && $sortColumn === 'acquisition_date')
+                                            <i class="fa-solid fa-arrow-down-wide-short" style="color: #116fdc;"></i>
+                                        @else
+                                            <i class="fa-solid fa-arrow-up-short-wide" style="color: #116fdc;"></i>
+                                        @endif
+                                    </a>
+                                </th>
+                                <th scope="col">Fornecedor</th>
+                                <th scope="col">Género</th>
+                                <th scope="col">
+                                    <div class="centerTd">Ações</div>
+                                </th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr class="filler"></tr>
-                        @foreach ($materials as $material)
-                            <tr class="material-row customTableStyling" data-internal="{{ $material->isInternal }}"
-                                data-clothing="{{ $material->isClothing }}">
-                                <td>
-                                    <input type="checkbox" name="selectedMaterials[]"
-                                           value="{{ $material->id }}">
-                                </td>
-                                <td class="clickable">
-                                    <a href="{{ route('materials.show', $material->id) }}"
-                                       class="d-flex align-items-center w-auto h-100">{{ isset($material->name) ? $material->name : 'N.A.' }}</a>
-                                </td>
-                                <td class="position-relative">
+                            <tr class="filler"></tr>
+                            @foreach ($materials as $material)
+                                <tr class="material-row customTableStyling" data-internal="{{ $material->isInternal }}"
+                                    data-clothing="{{ $material->isClothing }}">
+                                    <td>
+                                        <input type="checkbox" name="selectedMaterials[]" value="{{ $material->id }}">
+                                    </td>
+                                    <td class="clickable">
+                                        <a href="{{ route('materials.show', $material->id) }}"
+                                            class="d-flex align-items-center w-auto h-100">{{ isset($material->name) ? $material->name : 'N.A.' }}</a>
+                                    </td>
+                                    <td class="position-relative">
 
-                                    @if($material->isClothing == 1)
-                                        @php
-                                            $minus5 = 2;
-                                        @endphp
-
-                                        @if($material->sizes->count() > 0)
-                                            @foreach($material->sizes as $size)
-
-                                                @if($size->pivot->stock <= 5 && $size->pivot->stock > 0)
-                                                    @php
-                                                        $minus5 = 1;
-                                                    @endphp
-                                                @elseif($size->pivot->stock === 0 )
-                                                    @php
-                                                        $minus5 = 0;
-                                                    @endphp
-                                                @endif
-
-                                            @endforeach
-                                        @else
+                                        @if ($material->isClothing == 1)
                                             @php
-                                                $minus5 = 0;
+                                                $minus5 = 2;
                                             @endphp
+
+                                            @if ($material->sizes->count() > 0)
+                                                @foreach ($material->sizes as $size)
+                                                    @if ($size->pivot->stock <= 5 && $size->pivot->stock > 0)
+                                                        @php
+                                                            $minus5 = 1;
+                                                        @endphp
+                                                    @elseif($size->pivot->stock === 0)
+                                                        @php
+                                                            $minus5 = 0;
+                                                        @endphp
+                                                    @endif
+                                                @endforeach
+                                            @else
+                                                @php
+                                                    $minus5 = 0;
+                                                @endphp
+                                            @endif
+                                            {{ $material->sizes->sum('pivot.stock') }}
+
+                                            @if ($minus5 === 1)
+                                                <span class="warning-icon position-absolute" style="left: -20px;">
+                                                    <i class="fa fa-info-circle" data-toggle="tooltip"
+                                                        title="Atenção!Pelo menos um tamanho prestes a ficar sem stock!"></i>
+                                                </span>
+                                            @elseif ($minus5 === 0)
+                                                <span class="warning-icon position-absolute" style="left: -20px;">
+                                                    <i class="fa-solid fa-triangle-exclamation" data-toggle="tooltip"
+                                                        title="Atenção! Produto sem artigos em stock!"
+                                                        style="color: #f12704;"></i>
+                                                </span>
+                                            @endif
+                                        @else
+                                            {{ isset($material->quantity) ? $material->quantity : 'N.A.' }}
+                                            @if (isset($material->quantity) && $material->quantity <= 5 && $material->quantity > 0)
+                                                <span class="warning-icon position-absolute" style="left: -20px;">
+                                                    <i class="fa fa-info-circle" data-toggle="tooltip"
+                                                        title="Atenção! Produto prestes a entrar em rotura de stock!"></i>
+                                                </span>
+                                            @elseif (isset($material->quantity) && $material->quantity === 0)
+                                                <span class="warning-icon position-absolute" style="left: -20px;">
+                                                    <i class="fa fa-info-circle" data-toggle="tooltip"
+                                                        title="Atenção! Produto sem artigos em stock!"></i>
+                                                </span>
+                                            @endif
                                         @endif
-                                        {{ $material->sizes->sum('pivot.stock') }}
+                                    </td>
 
-                                        @if($minus5 === 1)
-                                            <span class="warning-icon position-absolute" style="left: -20px;">
-                                                <i class="fa fa-info-circle" data-toggle="tooltip"
-                                                   title="Atenção!Pelo menos um tamanho prestes a ficar sem stock!"></i>
-                                            </span>
-                                        @elseif ($minus5 === 0)
-                                            <span class="warning-icon position-absolute" style="left: -20px;">
-                                                <i class="fa-solid fa-triangle-exclamation" data-toggle="tooltip"
-                                                   title="Atenção! Produto sem artigos em stock!"
-                                                   style="color: #f12704;"></i>
-                                            </span>
-                                        @endif
-                                    @else
-                                        {{ isset($material->quantity) ? $material->quantity : 'N.A.' }}
-                                        @if(isset($material->quantity) && $material->quantity <= 5 && $material->quantity > 0)
-                                            <span class="warning-icon position-absolute" style="left: -20px;">
-                                                <i class="fa fa-info-circle" data-toggle="tooltip"
-                                                   title="Atenção! Produto prestes a entrar em rotura de stock!"></i>
-                                            </span>
-                                        @elseif (isset($material->quantity) && $material->quantity === 0)
-                                            <span class="warning-icon position-absolute" style="left: -20px;">
-                                                <i class="fa fa-info-circle" data-toggle="tooltip"
-                                                   title="Atenção! Produto sem artigos em stock!"></i>
-                                            </span>
-                                        @endif
-                                    @endif
-                                </td>
-
-                                <td>
-                                    {{ isset($material->acquisition_date) ? \Carbon\Carbon::parse($material->acquisition_date)->format('Y-m-d') : 'N.A.' }}
-                                </td>
+                                    <td>
+                                        {{ isset($material->acquisition_date) ? \Carbon\Carbon::parse($material->acquisition_date)->format('Y-m-d') : 'N.A.' }}
+                                    </td>
 
 
-                                <td>{{ $material->supplier !== null ? $material->supplier : 'N.A.' }}</td>
-
-                                <td>
-                                    @if($material->isClothing === 0)
-                                        N.A.
-                                    @else
-                                        @if($material->gender === 1)
-                                            Masculino
-                                        @elseif($material->gender === 0)
-                                            Feminino
+                                    <td>
+                                        @if ($material->supplier !== '' && $material->supplier !== null)
+                                            {{ $material->supplier }}
                                         @else
                                             N.A.
                                         @endif
-                                    @endif
+                                    </td>
 
-                                </td>
+                                    <td>
+                                        @if ($material->isClothing === 0)
+                                            N.A.
+                                        @else
+                                            @if ($material->gender === 1)
+                                                Masculino
+                                            @elseif($material->gender === 0)
+                                                Feminino
+                                            @else
+                                                N.A.
+                                            @endif
+                                        @endif
 
-                                <td class="editDelete" style="padding: 0.25rem">
-                                    <div style="width: 40%;">
-                                        <a href="{{ route('materials.edit', $material->id) }}" class="mx-2">
-                                            <i class="fa-solid fa-pen-to-square fa-lg" style="color: #116fdc;"></i>
-                                        </a>
-                                    </div>
-                                    <div style="width: 40%">
-                                        <form method="post" action="{{ route('materials.destroy', $material->id) }}"
-                                              style="display:inline;">
-                                            @csrf
-                                            @method('delete')
-                                            <button type="submit" class="modalBtn"
+                                    </td>
+
+                                    <td class="editDelete" style="padding: 0.25rem">
+                                        <div style="width: 40%;">
+                                            <a href="{{ route('materials.edit', $material->id) }}" class="mx-2">
+                                                <i class="fa-solid fa-pen-to-square fa-lg" style="color: #116fdc;"></i>
+                                            </a>
+                                        </div>
+                                        <div style="width: 40%">
+                                            <form method="post" action="{{ route('materials.destroy', $material->id) }}"
+                                                style="display:inline;">
+                                                @csrf
+                                                @method('delete')
+                                                <button type="submit" class="modalBtn"
                                                     data-message="Tem a certeza que deseja eliminar o material {{ $material->name }}?"
                                                     style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
                                                     <i class="fa-solid fa-trash-can fa-lg" style="color: #116fdc;"></i>
-                                            </button>
-                                        </form>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr class="filler"></tr>
-                        @endforeach
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="filler"></tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -237,7 +244,7 @@
                             <div class="input-group pr-2">
                                 <div class="search-container">
                                     <input type="text" name="searchRecycled" class="form-control"
-                                           placeholder="{{ request('search') ? request('search') : 'Procurar...' }}">
+                                        placeholder="{{ request('search') ? request('search') : 'Procurar...' }}">
                                 </div>
                                 <div class="input-group-append">
                                     <button type="submit" class="btn btn-outline-secondary">
@@ -258,20 +265,20 @@
                         <form id="materialRecycledFilterForm" action="{{ route('materials.index') }}" method="GET">
                             <div>
                                 <select class="form-control" id="materialRecycledFilter" name="materialRecycledFilter"
-                                        onchange="submitFormRecycled()">
+                                    onchange="submitFormRecycled()">
                                     <option value="all" {{ $materialRecycledFilter === 'all' ? 'selected' : '' }}>
                                         Todos
                                     </option>
-                                    <option
-                                        value="internal" {{ $materialRecycledFilter === 'internal' ? 'selected' : '' }}>
+                                    <option value="internal"
+                                        {{ $materialRecycledFilter === 'internal' ? 'selected' : '' }}>
                                         Interno
                                     </option>
-                                    <option
-                                        value="clothing" {{ $materialRecycledFilter === 'clothing' ? 'selected' : '' }}>
+                                    <option value="clothing"
+                                        {{ $materialRecycledFilter === 'clothing' ? 'selected' : '' }}>
                                         Fardamento
                                     </option>
-                                    <option
-                                        value="external" {{ $materialRecycledFilter === 'external' ? 'selected' : '' }}>
+                                    <option value="external"
+                                        {{ $materialRecycledFilter === 'external' ? 'selected' : '' }}>
                                         Externo
                                     </option>
                                 </select>
@@ -284,56 +291,62 @@
                 <div>
                     <table class="table bg-white rounded-top">
                         <thead>
-                        <tr>
-                            <th scope="col">
-                                <input type="checkbox" id="recycledSelect-all">
-                            </th>
-                            <th scope="col">
-                                <a href="{{ route('materials.index', ['sortColumn' => 'name', 'sortDirection' => $sortColumn === 'name' ? ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">
-                                    Nome
-                                    @if ($sortDirection === 'desc' && $sortColumn === 'name')
-                                    <i class="fa-solid fa-arrow-up-z-a" style="color: #116fdc;"></i>
-                                    @else
-                                    <i class="fa-solid fa-arrow-down-a-z" style="color: #116fdc;"></i>
-                                    @endif
-                                </a>
-                            </th>
-                            <th scope="col">
-                                Quantidade
-                            </th>
-                            <th scope="col">
-                                <a href="{{ route('materials.index', ['sortColumn' => 'acquisition_date', 'sortDirection' => $sortColumn === 'acquisition_date' ? ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">
-                                    Data de Aquisição
-                                    @if ($sortDirection === 'desc' && $sortColumn === 'acquisition_date')
-                                    <i class="fa-solid fa-arrow-down-wide-short" style="color: #116fdc;"></i>
-                                    @else
-                                    <i class="fa-solid fa-arrow-up-short-wide" style="color: #116fdc;"></i>
-                                    @endif
-                                </a>
-                            </th>
-                            <th scope="col">Fornecedor</th>
-                            <th scope="col">Género</th>
+                            <tr>
+                                <th scope="col">
+                                    <input type="checkbox" id="recycledSelect-all">
+                                </th>
+                                <th scope="col">
+                                    <a
+                                        href="{{ route('materials.index', ['sortColumn' => 'name', 'sortDirection' => $sortColumn === 'name' ? ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">
+                                        Nome
+                                        @if ($sortDirection === 'desc' && $sortColumn === 'name')
+                                            <i class="fa-solid fa-arrow-up-z-a" style="color: #116fdc;"></i>
+                                        @else
+                                            <i class="fa-solid fa-arrow-down-a-z" style="color: #116fdc;"></i>
+                                        @endif
+                                    </a>
+                                </th>
+                                <th scope="col">
+                                    Quantidade
+                                </th>
+                                <th scope="col">
+                                    <a
+                                        href="{{ route('materials.index', ['sortColumn' => 'acquisition_date', 'sortDirection' => $sortColumn === 'acquisition_date' ? ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">
+                                        Data de Aquisição
+                                        @if ($sortDirection === 'desc' && $sortColumn === 'acquisition_date')
+                                            <i class="fa-solid fa-arrow-down-wide-short" style="color: #116fdc;"></i>
+                                        @else
+                                            <i class="fa-solid fa-arrow-up-short-wide" style="color: #116fdc;"></i>
+                                        @endif
+                                    </a>
+                                </th>
+                                <th scope="col">Fornecedor</th>
+                                <th scope="col">Género</th>
 
-                            <th scope="col"><div class="centerTd">Restaurar</div></th>
+                                <th scope="col">
+                                    <div class="centerTd">Restaurar</div>
+                                </th>
 
-                            <th scope="col"><div class="centerTd">Apagar</div></th>
+                                <th scope="col">
+                                    <div class="centerTd">Apagar</div>
+                                </th>
 
-                        </tr>
+                            </tr>
                         </thead>
                         <tbody>
-                        <tr class="filler">
-                        @foreach ($recycleMaterials as $material)
+                            <tr class="filler">
+                                @foreach ($recycleMaterials as $material)
                             <tr class="material-row customTableStyling" data-internal="{{ $material->isInternal }}"
                                 data-clothing="{{ $material->isClothing }}">
                                 <td>
                                     <input type="checkbox" name="selecteRecycledMaterials[]"
-                                           value="{{ $material->id }}">
+                                        value="{{ $material->id }}">
                                 </td>
                                 <td>
                                     <p>{{ isset($material->name) ? $material->name : 'N.A.' }}</p>
                                 </td>
                                 <td>
-                                    @if($material->isClothing == 1)
+                                    @if ($material->isClothing == 1)
                                         {{ $material->sizes->sum('pivot.stock') }}
                                     @else
                                         {{ isset($material->quantity) ? $material->quantity : 'N.A.' }}
@@ -346,10 +359,10 @@
                                 <td>{{ $material->supplier !== null ? $material->supplier : 'N.A.' }}</td>
 
                                 <td>
-                                    @if($material->isClothing === 0)
+                                    @if ($material->isClothing === 0)
                                         N.A.
                                     @else
-                                        @if($material->gender === 1)
+                                        @if ($material->gender === 1)
                                             Masculino
                                         @elseif($material->gender === 0)
                                             Feminino
@@ -363,26 +376,26 @@
                                 <td>
                                     <div class="centerTd">
                                         <form method="get" action="{{ route('materials.restore', $material->id) }}"
-                                              style="display:inline;">
+                                            style="display:inline;">
                                             @csrf
                                             <button class="centerTd modalBtn" type="submit"
-                                                    data-message="Tem a certeza que deseja restaurar o material {{ $material->name }}?"
-                                                    style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
+                                                data-message="Tem a certeza que deseja restaurar o material {{ $material->name }}?"
+                                                style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
                                                 <img src="{{ asset('assets/restore.svg') }}">
                                             </button>
                                         </form>
                                     </div>
                                 </td>
 
-                                <td >
+                                <td>
                                     <div class="centerTd">
                                         <form method="post" action="{{ route('materials.forceDelete', $material->id) }}"
-                                              style="display:inline;">
+                                            style="display:inline;">
                                             @csrf
                                             @method('delete')
                                             <button type="submit" class="modalBtn"
-                                                    data-message="Tem a certeza que deseja eliminar permanentemente o material {{ $material->name }}?"
-                                                    style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
+                                                data-message="Tem a certeza que deseja eliminar permanentemente o material {{ $material->name }}?"
+                                                style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
                                                 <img src="{{ asset('assets/permaDelete.svg') }}" alt="Delete">
 
                                             </button>
@@ -391,7 +404,7 @@
                                 </td>
                             </tr>
                             <tr class="filler"></tr>
-                        @endforeach
+                            @endforeach
                         </tbody>
                     </table>
 
@@ -401,7 +414,7 @@
             </div>
             {{--    confirmation modal    --}}
             <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
-                 aria-hidden="true">
+                aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -424,11 +437,11 @@
         </div>
 
         <script>
-            document.addEventListener('DOMContentLoaded', function () {
+            document.addEventListener('DOMContentLoaded', function() {
                 let deleteButtons = document.querySelectorAll('button[class="modalBtn"]');
 
                 deleteButtons.forEach(button => {
-                    button.addEventListener('click', function (event) {
+                    button.addEventListener('click', function(event) {
                         event.preventDefault();
 
                         let message = button.getAttribute('data-message');
@@ -436,7 +449,7 @@
 
                         $('#deleteModal').modal('show');
 
-                        $('#deleteBtn').click(function () {
+                        $('#deleteBtn').click(function() {
                             button.closest('form').submit();
                         });
                     });
@@ -448,7 +461,7 @@
 
         <script>
             //logica tabs
-            $(document).ready(function () {
+            $(document).ready(function() {
                 function determineContext() {
                     return 'pagination';
                 }
@@ -468,27 +481,33 @@
                 const activeTabInfo = localStorage.getItem('activeTabInfo');
 
                 if (activeTabInfo) {
-                    const {tabId, context} = JSON.parse(activeTabInfo);
+                    const {
+                        tabId,
+                        context
+                    } = JSON.parse(activeTabInfo);
                     setActiveTab(tabId);
                     setFragment(tabId);
                 }
 
-                $('#userTabs a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                $('#userTabs a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
                     const tabId = $(e.target).attr('href').substring(1);
                     const context = determineContext();
 
-                    const activeTabInfo = JSON.stringify({tabId, context});
+                    const activeTabInfo = JSON.stringify({
+                        tabId,
+                        context
+                    });
                     localStorage.setItem('activeTabInfo', activeTabInfo);
 
                     setFragment(tabId);
                 });
 
-                window.addEventListener('hashchange', function () {
+                window.addEventListener('hashchange', function() {
                     const fragment = getFragment();
                     setActiveTab(fragment);
                 });
 
-                window.addEventListener('beforeunload', function () {
+                window.addEventListener('beforeunload', function() {
                     history.pushState("", document.title, window.location.pathname + window.location.search);
                     localStorage.removeItem('activeTabInfo'); // Add this line
 
@@ -496,8 +515,8 @@
             });
         </script>
         <script>
-            window.setTimeout(function () {
-                $("#success-alert").fadeTo(500, 0).slideUp(500, function () {
+            window.setTimeout(function() {
+                $("#success-alert").fadeTo(500, 0).slideUp(500, function() {
                     $(this).remove();
                 });
             }, 2000);
@@ -530,20 +549,20 @@
             const restoreSelectedButton = document.getElementById('restore-selected');
             const forceDeleteSelectedButton = document.getElementById('forceDelete-selected');
 
-            document.addEventListener('DOMContentLoaded', function () {
+            document.addEventListener('DOMContentLoaded', function() {
                 const selectAllCheckbox = document.getElementById('select-all');
                 const checkboxes = document.querySelectorAll('input[name="selectedMaterials[]"]');
 
                 const recycledSelectAllCheckbox = document.getElementById('recycledSelect-all');
                 const recycledCheckboxes = document.querySelectorAll('input[name="selecteRecycledMaterials[]"]');
 
-                selectAllCheckbox.addEventListener('change', function () {
+                selectAllCheckbox.addEventListener('change', function() {
                     checkboxes.forEach(checkbox => {
                         checkbox.checked = selectAllCheckbox.checked;
                     });
                 });
 
-                recycledSelectAllCheckbox.addEventListener('change', function () {
+                recycledSelectAllCheckbox.addEventListener('change', function() {
                     recycledCheckboxes.forEach(checkbox => {
                         checkbox.checked = recycledSelectAllCheckbox.checked;
                     });
@@ -553,14 +572,15 @@
 
 
                 recycledCheckboxes.forEach(checkbox => {
-                    checkbox.addEventListener('change', function () {
-                        recycledSelectAllCheckbox.checked = recycledCheckboxes.length === document.querySelectorAll(
-                            'input[name="selecteRecycledMaterials[]"]:checked').length;
+                    checkbox.addEventListener('change', function() {
+                        recycledSelectAllCheckbox.checked = recycledCheckboxes.length === document
+                            .querySelectorAll(
+                                'input[name="selecteRecycledMaterials[]"]:checked').length;
                     });
                 });
 
                 checkboxes.forEach(checkbox => {
-                    checkbox.addEventListener('change', function () {
+                    checkbox.addEventListener('change', function() {
                         selectAllCheckbox.checked = checkboxes.length === document.querySelectorAll(
                             'input[name="selectedMaterials[]"]:checked').length;
                     });
@@ -569,9 +589,9 @@
 
             });
 
-            restoreSelectedButton.addEventListener('click', function () {
+            restoreSelectedButton.addEventListener('click', function() {
                 const selectedMaterials = Array.from(document.querySelectorAll(
-                    'input[name="selecteRecycledMaterials[]"]:checked'))
+                        'input[name="selecteRecycledMaterials[]"]:checked'))
                     .map(checkbox => checkbox.value);
                 if (selectedMaterials.length > 0) {
                     let message = 'Tem certeza que deseja restaurar os materiais selecionados?';
@@ -579,7 +599,7 @@
                     $('#deleteModal').modal('show');
                     document.getElementById('deleteBtn').style.display = 'block';
 
-                    document.getElementById('deleteBtn').addEventListener('click', function () {
+                    document.getElementById('deleteBtn').addEventListener('click', function() {
                         const form = document.createElement('form');
                         form.method = 'POST';
                         form.action = '{{ route('materials.massRestore') }}';
@@ -609,16 +629,16 @@
             });
 
 
-            forceDeleteSelectedButton.addEventListener('click', function () {
+            forceDeleteSelectedButton.addEventListener('click', function() {
                 const selectedMaterials = Array.from(document.querySelectorAll(
-                    'input[name="selecteRecycledMaterials[]"]:checked'))
+                        'input[name="selecteRecycledMaterials[]"]:checked'))
                     .map(checkbox => checkbox.value);
                 if (selectedMaterials.length > 0) {
                     let message = 'Tem certeza que deseja excluir permanentemente os materiais selecionados?';
                     document.getElementById('modalBody').textContent = message;
                     $('#deleteModal').modal('show');
 
-                    document.getElementById('deleteBtn').addEventListener('click', function () {
+                    document.getElementById('deleteBtn').addEventListener('click', function() {
                         const form = document.createElement('form');
                         form.method = 'POST';
                         form.action = '{{ route('materials.massForceDelete') }}';
@@ -648,9 +668,9 @@
             });
 
 
-            deleteSelectedButton.addEventListener('click', function () {
+            deleteSelectedButton.addEventListener('click', function() {
                 const selectedMaterials = Array.from(document.querySelectorAll(
-                    'input[name="selectedMaterials[]"]:checked'))
+                        'input[name="selectedMaterials[]"]:checked'))
                     .map(checkbox => checkbox.value);
                 if (selectedMaterials.length > 0) {
                     let message = 'Tem certeza que deseja excluir os materiais selecionados?';
@@ -658,7 +678,7 @@
                     $('#deleteModal').modal('show');
                     document.getElementById('deleteBtn').style.display = 'block';
 
-                    document.getElementById('deleteBtn').addEventListener('click', function () {
+                    document.getElementById('deleteBtn').addEventListener('click', function() {
                         const form = document.createElement('form');
                         form.method = 'POST';
                         form.action = '{{ route('materials.massDelete') }}';
@@ -688,8 +708,8 @@
             });
 
 
-            $(document).ready(function () {
+            $(document).ready(function() {
                 $('[data-toggle="tooltip"]').tooltip();
             });
         </script>
-@endsection
+    @endsection
