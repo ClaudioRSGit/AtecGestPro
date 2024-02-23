@@ -42,20 +42,16 @@
 
 
                     </div>
-                    <div class="w-100 d-flex justify-content-between">
-                        <button type="submit" class="btn btn-primary w-45">Criar Ticket</button>
-                        <a href="{{ route('tickets.index') }}" class="btn btn-secondary w-45">Cancelar</a>
-                    </div>
-            </div>
-            <div class="col-md-3">
-                <div class="mb-3">
-                    <label for="status" class="form-label">Estado:</label>
-                    <select class="form-control" id="status" name="status_id">
-                        @foreach ($statuses as $status)
+                </div>
+                <div class="col-md-3">
+                    <div class="mb-3">
+                        <label for="status" class="form-label">Estado:</label>
+                        <select class="form-control" id="status" name="status_id">
+                            @foreach ($statuses as $status)
                             <option value="{{ $status->id }}" {{ old('status_id') == $status->id ? 'selected' : '' }}>
                                 {{ $status->description }}
                             </option>
-                        @endforeach
+                            @endforeach
                     </select>
                 </div>
 
@@ -63,10 +59,10 @@
                     <label for="technician" class="form-label">Técnico Responsável:</label>
                     <select class="form-control" id="technician" name="technician_id">
                         @foreach ($technicians as $technician)
-                            <option value="{{ $technician->id }}"
-                                {{ old('technician_id') == $technician->id ? 'selected' : '' }}>
-                                {{ $technician->name }}
-                            </option>
+                        <option value="{{ $technician->id }}"
+                            {{ old('technician_id') == $technician->id ? 'selected' : '' }}>
+                            {{ $technician->name }}
+                        </option>
                         @endforeach
                     </select>
                 </div>
@@ -75,10 +71,10 @@
                     <label for="priority" class="form-label">Prioridade:</label>
                     <select class="form-control" id="priority" name="priority_id" required>
                         @foreach ($priorities as $priority)
-                            <option value="{{ $priority->id }}"
-                                {{ old('priority_id') == $priority->id ? 'selected' : '' }}>
-                                {{ $priority->description }}
-                            </option>
+                        <option value="{{ $priority->id }}"
+                            {{ old('priority_id') == $priority->id ? 'selected' : '' }}>
+                            {{ $priority->description }}
+                        </option>
                         @endforeach
                     </select>
                 </div>
@@ -87,15 +83,19 @@
                     <label for="category" class="form-label">Categoria:</label>
                     <select class="form-control" id="category" name="category_id" required>
                         @foreach ($categories as $category)
-                            <option value="{{ $category->id }}"
-                                {{ old('category_id') == $category->id ? 'selected' : '' }}>
-                                {{ $category->description }}
-                            </option>
+                        <option value="{{ $category->id }}"
+                            {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                            {{ $category->description }}
+                        </option>
                         @endforeach
                     </select>
                 </div>
 
             </div>
+        </div>
+        <div class="createTicket d-flex justify-content-between align-items-center">
+            <button type="submit" class="btn btn-primary w-45">Criar Ticket</button>
+            <a href="{{ route('tickets.index') }}" class="btn btn-secondary w-45">Cancelar</a>
         </div>
         </form>
     </div>

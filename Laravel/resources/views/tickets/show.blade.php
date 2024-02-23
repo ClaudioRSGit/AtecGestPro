@@ -139,7 +139,7 @@
 
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 sideInfo">
                 <div class="mb-3">
                     <label for="status" class="form-label">Estado:</label>
                     <input type="text" class="form-control" value="{{ $ticket->ticketStatus->description ?? 'N/A' }}"

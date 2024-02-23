@@ -7,12 +7,12 @@
             @method('put')
             <div class="row">
                 <div class="col-md-9">
-                    <div class="d-flex justify-content-between my-4">
-                        <div class="w-15">
-                            <h2 for="title" class="form-label">Ticket #{{ $ticket->id }}</h2>
+                    <div class="d-flex justify-content-between my-4 ticketTitle">
+                        <div>
+                            <h2 for="title" class="form-label w-100">Ticket #{{ $ticket->id }}</h2>
                         </div>
-                        <div class="w-85">
-                            <input type="text" class="form-control" id="title" name="title" value="{{ $ticket->title }}">
+                        <div>
+                            <input type="text" class="form-control w-100" id="title" name="title" value="{{ $ticket->title }}">
                             @error('title')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
@@ -49,9 +49,9 @@
                             <label for="attachment" class="btn btn-primary">Selecionar ficheiro</label><br>
                             <input type="file" class="form-control" id="attachment" name="attachment" style="display: none;" accept=".jpeg, .jpg, .png, .gif, .svg, .bmp, .raw, .pdf, .doc, .docx, .xls, .xlsm, .xlsx">
                         </div>
-                        <div class="w-30">
-                            <button type="submit" class="btn btn-primary w-45">Guardar</button>
-                            <a href="{{ route('tickets.index') }}" class="btn btn-secondary w-45">Cancelar</a>
+                        <div class="w-30 submitReturn d-flex justify-content-between align-items-center">
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                            <a href="{{ route('tickets.index') }}" class="btn btn-secondary">Cancelar</a>
                         </div>
                     </div>
                     @error('attachment')
@@ -122,7 +122,7 @@
                 </div>
             </div>
         </form>
-            <div class="mb-3">
+            <div class="mb-3 w-95">
                 <h4 for="comments" class="form-label">Insira uma nota ou comentário:</h4>
                 <form action="{{ route('comments.store') }}" method="post">
                     @csrf
