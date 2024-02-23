@@ -71,9 +71,9 @@ class ExcelImportController extends Controller
                 'file' => 'required|file|mimes:xls,xlsx',
                 'description2' => 'required',
             ], [
-                'file.required' => 'Não inseriu um ficheiro.',
+                'file.required' => 'Não selecionou um ficheiro.',
                 'file.mimes' => 'O ficheiro tem de ser do tipo: xls, xlsx.',
-                'description2.required' => 'Não inseriu uma descrição para a turma.',
+                'description2.required' => 'A descrição é obrigatória!',
             ]);
             $file = $request->file('file');
 

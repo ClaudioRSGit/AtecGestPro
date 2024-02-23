@@ -8,11 +8,7 @@
                 {{ $errors->first('file') }}
             </div>
         @endif
-        @if ($errors->has('description2'))
-            <div class="alert alert-danger">
-                {{ $errors->first('description2') }}
-            </div>
-        @endif
+
         <form method="post" action="{{ route('course-classes.store') }}" id="createCourseClassForm" class=" mb-3">
             @csrf
 
@@ -21,7 +17,11 @@
                     <div class="form-group">
                         <label for="description">Descrição:</label>
                         <input type="text" class="form-control" id="description" name="description">
-
+                        @if ($errors->has('description2'))
+                            <div class="alert alert-danger">
+                                {{ $errors->first('description2') }}
+                            </div>
+                        @endif
                         @error('description')
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
@@ -130,12 +130,14 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form id="importStudentsForm" action="{{ route('import-excel.importStudents') }}" method="POST" enctype="multipart/form-data">
+                        <form id="importStudentsForm" action="{{ route('import-excel.importStudents') }}" method="POST"
+                              enctype="multipart/form-data">
                             @csrf
                             <div class="form-group p-3">
                                 <label for="file">Excel - Importar Alunos</label><br>
                                 <label for="file" class="btn btn-primary">Selecionar ficheiro</label><br>
-                                <input type="file" name="file" id="file" class="btn" style="display: none;" accept=".xls,.xlsx">                                <input type="hidden">
+                                <input type="file" name="file" id="file" class="btn" style="display: none;"
+                                       accept=".xls,.xlsx"> <input type="hidden">
                                 <p>Selecione um ficheiro Excel para importar alunos</p>
                             </div>
 
@@ -167,15 +169,15 @@
     </style>
 
     <script>
-        $(document).ready(function() {
-            $('#description').on('input', function() {
+        $(document).ready(function () {
+            $('#description').on('input', function () {
 
                 $('input[name="description2"]').val($(this).val());
             });
             var initialCourseId = $('#course_id').val();
             $('input[name="course_id2"]').val(initialCourseId);
 
-            $('#course_id').on('change', function() {
+            $('#course_id').on('change', function () {
                 $('input[name="course_id2"]').val($(this).val());
             });
         });

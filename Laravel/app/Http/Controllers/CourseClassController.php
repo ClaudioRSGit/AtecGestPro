@@ -62,23 +62,20 @@ class CourseClassController extends Controller
 
     public function store(CourseClassRequest $request)
     {
-        dd($request->all());
+//        dd($request->all());
         try {
             $courseClass = CourseClass::create([
                 'description' => $request->input('description'),
                 'course_id' => $request->input('course_id'),
             ]);
 
-            if ($request->has('noImport')) {
                 if ($request->has('selected_students')) {
                     foreach ($request->input('selected_students') as $student) {
                         $user = User::find($student);
                         $user->update(['course_class_id' => $courseClass->id]);
                     }
                 }
-            } else if ($request->has('import')) {
-                return redirect()->route('import-excel.importStudents');
-            }
+
             return redirect()->route('course-classes.index')->with('success', 'Turma criada com sucesso!');
         } catch (\Exception $e) {
 
