@@ -16,6 +16,10 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        if (auth()->user()->hasRole('tecnico')) {
+            abort(403, 'Acesso não autorizado.'); 
+        }
+
         //User
         $adminCount = User::where('role_id', 1)->count();
         $technicianCount = User::where('role_id', 2)->count();
