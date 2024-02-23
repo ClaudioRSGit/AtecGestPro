@@ -128,39 +128,7 @@
         {{--    confirmation modal    --}}
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            let deleteButton = document.getElementById('modal');
-
-            deleteButton.addEventListener('click', function (event) {
-                event.preventDefault();
-
-                let message = deleteButton.getAttribute('data-message');
-                document.getElementById('modalBody').textContent = message;
-
-                $('#deleteModal').modal('show');
-
-                $('#deleteBtn').click(function () {
-                    deleteButton.closest('form').submit();
-                });
-            });
-        });
-    </script>
-
-    <script>
-        function submitSortCode() {
-            document.getElementById("filterForm").submit();
-        }
-    </script>
-    <script>
-
-        setTimeout(function () {
-            $("#success-alert").fadeTo(500, 0).slideUp(500, function () {
-                $(this).remove();
-            });
-        }, 2000);
-    </script>
-    <style>
-
-    </style>
 @endsection
+@push('scripts')
+    <script src="{{ asset('js/courses/index.js') }}"></script>
+@endpush
