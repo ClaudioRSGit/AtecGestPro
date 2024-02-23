@@ -91,27 +91,32 @@
                             <a href="{{ route('users.index', ['sortColumn' => 'name', 'sortDirection' => $sortColumn === 'name' ?
                 ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">
                                 Nome
-                                @if ($sortDirection === 'desc' && $sortColumn === 'name')
-                                <i class="fa-solid fa-arrow-up-z-a" style="color: #116fdc;"></i>
-                                @else
-                                <i class="fa-solid fa-arrow-down-a-z" style="color: #116fdc;"></i>
-                                @endif
+                                <div class="mobileHidden">
+                                    @if ($sortDirection === 'desc' && $sortColumn === 'name')
+                                    <i class="fa-solid fa-arrow-up-z-a" style="color: #116fdc;"></i>
+                                    @else
+                                    <i class="fa-solid fa-arrow-down-a-z" style="color: #116fdc;"></i>
+                                    @endif
+                                </div>
                             </a>
                         </th>
                         <th>
                             <a href="{{ route('users.index', ['sortColumn' => 'username', 'sortDirection' => $sortColumn === 'username' ?
                 ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">
                                 Username
-                                @if ($sortDirection === 'desc' && $sortColumn === 'username')
-                                <i class="fa-solid fa-arrow-up-z-a" style="color: #116fdc;"></i>
-                                @else
-                                <i class="fa-solid fa-arrow-down-a-z" style="color: #116fdc;"></i>
-                                @endif
+                                <div class="mobileHidden">
+
+                                    @if ($sortDirection === 'desc' && $sortColumn === 'username')
+                                    <i class="fa-solid fa-arrow-up-z-a" style="color: #116fdc;"></i>
+                                    @else
+                                    <i class="fa-solid fa-arrow-down-a-z" style="color: #116fdc;"></i>
+                                    @endif
+                                </div>
                             </a>
                         </th>
-                        <th scope="col">Email</th>
+                        <th scope="col" class="mobileHidden">Email</th>
                         <th scope="col">Função</th>
-                        <th scope="col">Ativo</th>
+                        <th scope="col" class="mobileHidden">Ativo</th>
                         <th scope="col">
                             <div class="centerTd">Ações</div>
                         </th>
@@ -131,12 +136,12 @@
                                    class="d-flex align-items-center w-auto h-100">{{ $user->name }}</a>
                             </td>
                             <td>{{ $user->username }}</td>
-                            <td>{{ $user->email }}</td>
+                            <td class="mobileHidden">{{ $user->email }}</td>
                             <td>
                                 {{ $user->role->description }}
                             </td>
 
-                            <td>{{ $user->isActive == 1 ? 'Sim' : 'Não' }}</td>
+                            <td class="mobileHidden">{{ $user->isActive == 1 ? 'Sim' : 'Não' }}</td>
                             <td class="editDelete">
                                 <div style="width: 40%">
                                     <a href="{{ route('users.edit', $user->id) }}">

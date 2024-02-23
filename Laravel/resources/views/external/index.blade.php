@@ -72,7 +72,7 @@
                         <tr>
 
                             <th scope="col">Parceiro</th>
-                            <th scope="col">Morada</th>
+                            <th scope="col" class="mobileHidden">Morada</th>
                             <th scope="col">Técnico</th>
                             <th scope="col">Formação</th>
                             <th scope="col">Data</th>
@@ -95,7 +95,7 @@
                                     </a>
                                 </td>
 
-                                <td class="{{ optional($partner_Training_User->partner)->address ? '' : 'text-danger' }}">
+                                <td class="{{ optional($partner_Training_User->partner)->address ? '' : 'text-danger' }} mobileHidden">
                                     {{ optional($partner_Training_User->partner)->address ?? 'O parceiro foi apagado do sistema.' }}
                                 </td>
 

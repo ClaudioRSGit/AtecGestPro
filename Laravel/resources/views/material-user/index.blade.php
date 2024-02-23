@@ -36,7 +36,7 @@
 
             <div class="tab-pane fade show active" id="formandos">
                 <div class="d-flex justify-content-between mb-3">
-                    <div class="w-40 d-flex justify-content-between align-items-center h-100" style="gap: 1rem">
+                    <div class="d-flex justify-content-between align-items-center h-100" style="gap: 1rem">
 
 
                         <div class="search-container ">
@@ -58,7 +58,7 @@
                     </div>
 
 
-                    <form id="courseFilterForm" action="{{ route('material-user.index') }}" method="GET">
+                    <form id="courseFilterForm" action="{{ route('material-user.index') }}" method="GET" class="mobileHidden">
                         <select class="form-control" id="courseFilter" name="courseFilter" onchange="submitForm()">
                             <option value="" {{ request('courseFilter') === '' ? 'selected' : '' }}>Todos
                             </option>
@@ -99,7 +99,7 @@
                                             <tr >
                                                 <th>Nome</th>
                                                 <th>Username</th>
-                                                <th>Email</th>
+                                                <th class="mobileHidden">Email</th>
                                                 <th>Editar</th>
                                             </tr>
                                             </thead>
@@ -115,7 +115,7 @@
                                                            class="d-flex align-items-center w-auto h-100">{{ $student->name }}</a>
                                                     </td>
                                                     <td class="{{ $myVariable }}">{{ $student->username }}</td>
-                                                    <td class="{{ $myVariable }}">{{ $student->email }}</td>
+                                                    <td class="{{ $myVariable }} mobileHidden">{{ $student->email }}</td>
                                                     <td class="editDelete {{ $myVariable }}">
                                                         <div style="width: 40%">
                                                             <a href="{{ route('material-user.edit', $student->id) }}"

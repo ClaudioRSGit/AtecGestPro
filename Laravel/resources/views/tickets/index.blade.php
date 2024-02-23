@@ -8,13 +8,13 @@
             </div>
         @endif
 
-        <div class="d-flex justify-content-between align-items-center">
+        <div class="d-flex justify-content-between align-items-center mb-4">
             <h1>Tickets</h1>
-            <div onclick="showOptions()" class="form-control btn-primary w-20 dropdown" style="max-width: 10rem;">
-                <div class="d-flex align-items-center w-100 h-100">
-                    <i class="fa-solid fa-pen mr-1" style="color: #ffffff;"></i>
-                    <p id="open" class="btn text-white">Novo ticket</p>
-                </div>
+            <a href="{{ route('tickets.create') }}" class="btn btn-primary">
+                <i class="fa-solid fa-pen mr-1" style="color: #ffffff;"></i>
+                Novo ticket
+            </a>
+            <div onclick="showOptions()" class="btn btn-primary mobileHidden">
                 <div id="options" class="dropdown-menu w-100 h-auto">
                     <button id="openTicket" class="btn dropdown-item" onclick="showQuickTicket()">Ticket rápido</button>
                     <button onclick="location.href='{{ route('tickets.create') }}'" class="btn dropdown-item">Ticket
@@ -23,6 +23,7 @@
                 </div>
             </div>
         </div>
+
 
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
@@ -123,25 +124,29 @@
                                 <th scope="col">
                                     <a href="{{ route('tickets.index', ['sort' => 'number', 'direction' => $currentSort === 'number' ? $newDirection : 'asc']) }}">
                                         Número
-                                        @if ($newDirection === 'asc' && $currentSort === 'number')
-                                        <i class="fa-solid fa-arrow-up-z-a" style="color: #116fdc;"></i>
-                                        @else
-                                        <i class="fa-solid fa-arrow-down-a-z" style="color: #116fdc;"></i>
-                                        @endif
+                                        <div class="mobileHidden">
+                                            @if ($newDirection === 'asc' && $currentSort === 'number')
+                                            <i class="fa-solid fa-arrow-up-z-a" style="color: #116fdc;"></i>
+                                            @else
+                                            <i class="fa-solid fa-arrow-down-a-z" style="color: #116fdc;"></i>
+                                            @endif
+                                        </div>
                                     </a>
                                 </th>
                                 <th scope="col">
 
                                     <a href="{{ route('tickets.index', ['sort' => 'title', 'direction' => $currentSort === 'title' ? $newDirection : 'asc']) }}">
                                         Título
+                                        <div class="mobileHidden">
                                         @if ($newDirection === 'asc' && $currentSort === 'title')
                                         <i class="fa-solid fa-arrow-up-z-a" style="color: #116fdc;"></i>
                                         @else
                                         <i class="fa-solid fa-arrow-down-a-z" style="color: #116fdc;"></i>
                                         @endif
+                                        </div>
                                     </a>
                                 </th>
-                                <th scope="col">
+                                <th scope="col" class="mobileHidden">
                                     <a href="{{ route('tickets.index', ['sort' => 'user', 'direction' => $currentSort === 'user' ? $newDirection : 'asc']) }}">
                                         Utilizador
                                         @if ($newDirection === 'desc' && $currentSort === 'user')
@@ -151,16 +156,16 @@
                                         @endif
                                     </a>
                                 </th>
-                                <th scope="col">
+                                <th scope="col" class="mobileHidden">
                                     Técnico
 
                                 </th>
-                                <th scope="col">
+                                <th scope="col" class="mobileHidden">
                                     Categoria
                                 </th>
                                 <th scope="col">Estado</th>
-                                <th scope="col">Data de Abertura</th>
-                                <th scope="col">Data de Vencimento</th>
+                                <th scope="col" class="mobileHidden">Data de Abertura</th>
+                                <th scope="col" class="mobileHidden">Data de Vencimento</th>
                                 <th scope="col">
                                     <div class="centerTd">Ações</div>
                                 </th>
@@ -190,7 +195,7 @@
                                             </a>
                                         </div>
                                     </td>
-                                    <td class="clickable">
+                                    <td class="clickable mobileHidden">
                                         @showIfNotDeleted($ticket)
                                             @if($ticket->requester->name !== 'Utilizador Padrao')
                                                 <a href="{{ route('users.show', $ticket->user_id) }}"
@@ -202,7 +207,7 @@
                                             @endif
                                         @endshowIfNotDeleted
                                     </td>
-                                    <td class="clickable">
+                                    <td class="clickable mobileHidden">
                                         @foreach ($ticket->users as $user)
                                             @if($user->name !== 'Fila de Espera')
                                             <a href="{{ route('users.show', $user->id) }}"
@@ -214,10 +219,10 @@
                                             @endif
                                         @endforeach
                                     </td>
-                                    <td>{{ $ticket->ticketCategory->description }}</td>
+                                    <td class="mobileHidden">{{ $ticket->ticketCategory->description }}</td>
                                     <td class="ticket-status-{{ $ticket->ticketStatus->id }}">{{ $ticket->ticketStatus->description ? $ticket->ticketStatus->description : 'N.A.' }}</td>
-                                    <td>{{ $ticket->created_at ? $ticket->created_at->format('d-m-Y') : 'N.A.' }}</td>
-                                    <td>{{ $ticket->dueByDate ? \Carbon\Carbon::parse($ticket->dueByDate)->format('d-m-Y') : 'N.A.' }}</td>
+                                    <td class="mobileHidden">{{ $ticket->created_at ? $ticket->created_at->format('d-m-Y') : 'N.A.' }}</td>
+                                    <td class="mobileHidden">{{ $ticket->dueByDate ? \Carbon\Carbon::parse($ticket->dueByDate)->format('d-m-Y') : 'N.A.' }}</td>
                                     <td>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div style="width: 40%">
@@ -311,10 +316,10 @@
                             <tr>
                                 <th scope="col">Número</th>
                                 <th scope="col">Título</th>
-                                <th scope="col">Utilizador</th>
-                                <th scope="col">Técnico</th>
+                                <th scope="col" class="mobileHidden">Utilizador</th>
+                                <th scope="col" class="mobileHidden">Técnico</th>
                                 <th scope="col">Estado</th>
-                                <th scope="col">Data de Abertura</th>
+                                <th scope="col" class="mobileHidden">Data de Abertura</th>
                                 <th scope="col">Ações</th>
                             </tr>
                             </thead>
@@ -332,7 +337,7 @@
                                             </a>
                                         </div>
                                     </td>
-                                    <td class="clickable">
+                                    <td class="clickable mobileHidden">
                                         @showIfNotDeleted($ticket)
                                             @if($ticket->requester->name !== 'Utilizador Padrao')
                                                 <a href="{{ route('users.show', $ticket->user_id) }}"
@@ -344,7 +349,7 @@
                                             @endif
                                         @endshowIfNotDeleted
                                     </td>
-                                    <td class="clickable">
+                                    <td class="clickable mobileHidden">
                                         @foreach ($ticket->users as $user)
                                             @if($user->name !== 'Fila de Espera')
                                             <a href="{{ route('users.show', $user->id) }}"
@@ -357,7 +362,7 @@
                                         @endforeach
                                     </td>
                                     <td class="ticket-status-{{ $ticket->ticketStatus->id }}">{{ $ticket->ticketStatus->description }}</td>
-                                    <td>{{ $ticket->created_at->format('d-m-Y') }}</td>
+                                    <td class="mobileHidden">{{ $ticket->created_at->format('d-m-Y') }}</td>
                                     <td>
                                         <div class="d-flex justify-content-between align-items-center">
 
@@ -709,5 +714,24 @@
             document.querySelector('.container').classList.add('w-70');
         }
     </script>
+    <style>
+        @media only screen and (max-width: 475px) {
+            /* Esconder filtros */
+            #filterCategoryForm,
+            #filterPriorityForm,
+            #filterFilaCategoryForm,
+            #filterRecyclingCategoryForm,
+            #filterStatusForm,
+            #filterFilaPriorityForm,
+            #filterRecyclingPriorityForm,
+            .buttons,
+            .mobileHidden {
+                display: none;
+            }
+            
+
+
+        }
+    </style>
 
 @endsection

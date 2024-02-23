@@ -1,11 +1,11 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container w-100 fade-in">
-        <div class="row col-12 mb-4">
-            <div class="col-3">
+    <div class="container-fluid fade-in">
+        <div class="row row-cols-1 row-cols-lg-2 mb-4">
+            <div class="col mb-4">
                 <div class="card bg-light dashboardCard" onclick="location.href='{{ route('users.index') }}'">
-                    <div class="card-body d-flex align-items-center">
+                    <div class="card-body d-flex align-items-center mb-4">
                         <div class="dashboardCardContent">
                             <h4 class="dashboardCardTitle">Administradores:</h4>
                             <h3 class="dashboardCardSubtitle">{{$adminCount}}</h3>
@@ -14,7 +14,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-3">
+            <div class="col mb-4">
                 <div class="card bg-light dashboardCard" onclick="location.href='{{ route('users.index') }}'">
                     <div class="card-body d-flex align-items-center">
                         <div class="dashboardCardContent">
@@ -25,7 +25,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-3">
+            <div class="col mb-4">
                 <div class="card bg-light dashboardCard" onclick="location.href='{{ route('users.index') }}'">
                     <div class="card-body d-flex align-items-center">
                         <div class="dashboardCardContent">
@@ -36,7 +36,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-3">
+            <div class="col mb-4">
                 <div class="card bg-light dashboardCard" onclick="location.href='{{ route('users.index') }}'">
                     <div class="card-body d-flex align-items-center">
                         <div class="dashboardCardContent">
@@ -48,8 +48,8 @@
                 </div>
             </div>
         </div>
-        <div class="row col-12 mb-4">
-            <div class="col-3">
+        <div class="row row-cols-1 row-cols-lg-2 mb-4">
+            <div class="col mb-4">
                 <div class="card bg-light dashboardCard">
                     <div class="card-body d-flex align-items-center" onclick="location.href='{{ route('course-classes.index') }}'">
                         <div class="dashboardCardContent">
@@ -60,7 +60,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-3">
+            <div class="col mb-4">
                 <div class="card bg-light dashboardCard" onclick="location.href='{{ route('courses.index') }}'">
                     <div class="card-body d-flex align-items-center">
                         <div class="dashboardCardContent">
@@ -71,7 +71,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-3">
+            <div class="col mb-4">
                 <div class="card bg-light dashboardCard" onclick="location.href='{{ route('materials.index') }}'">
                     <div class="card-body d-flex align-items-center">
                         <div class="dashboardCardContent">
@@ -82,7 +82,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-3">
+            <div class="col mb-4">
                 <div class="card bg-light dashboardCard" onclick="location.href='{{ route('materials.index') }}'">
                     <div class="card-body d-flex align-items-center">
                         <div class="dashboardCardContent">
@@ -94,8 +94,8 @@
                 </div>
             </div>
         </div>
-        <div class="row col-12 mb-4">
-            <div class="col-3">
+        <div class="row row-cols-1 row-cols-lg-2 mb-4">
+            <div class="col mb-4">
                 <div class="card bg-light dashboardCard" onclick="location.href='{{ route('users.index') }}'">
                         <div class="card-body d-flex align-items-center">
                             <div class="dashboardCardContent">
@@ -106,7 +106,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-3">
+            <div class="col mb-4">
                 <div class="card bg-light dashboardCard" onclick="location.href='{{ route('users.index') }}'">
                     <div class="card-body d-flex align-items-center">
                         <div class="dashboardCardContent">
@@ -117,7 +117,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-3">
+            <div class="col mb-4">
                 <div class="card bg-light dashboardCard" onclick="location.href='{{ route('external.index') }}'">
                     <div class="card-body d-flex align-items-center">
                         <div class="dashboardCardContent">
@@ -128,7 +128,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-3">
+            <div class="col mb-4">
                 <div class="card bg-light dashboardCard" onclick="location.href='{{ route('external.index') }}'">
                     <div class="card-body d-flex align-items-center">
                         <div class="dashboardCardContent">
@@ -140,8 +140,8 @@
                 </div>
             </div>
         </div>
-        <div class="row my-4 col-12">
-            <div class="col-6 custom-scrollbar" style="height: 350px; overflow-y: auto;">
+        <div class="row">
+            <div class="col-12 card mt-4 custom-scrollbar mb-4" style="height: 350px; overflow-y: auto;">
                 <div class="card">
                     <h5 class="card-header"><strong>Entregas Incompletas</strong></h5>
                     <div class="card-body">
@@ -193,7 +193,11 @@
             </div>
         </div>
     </div>
-
+    <style>
+        .container-fluid {
+            max-width: 400px;
+        }
+        </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         var ctx = document.getElementById('ticketChart').getContext('2d');

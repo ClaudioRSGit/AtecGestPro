@@ -264,11 +264,11 @@ thead th {
 }
 
 
-@media (max-width: 1080px) {
+/* @media (max-width: 1080px) {
     .noTicket {
         width: 50%;
     }
-}
+} */
 
 .bin {
     margin-top: 100px !important;
@@ -473,8 +473,33 @@ input[type="number"] {
 textarea {
     resize: none !important;
 }
+@media only screen and (max-width: 475px) {
 
-@media (max-width: 1082px) {
+    .container, table{
+        max-width: 400px;
+    }
+    footer{
+        display: none;
+    }
+}
+@media only screen and (max-width: 475px) {
+    /* Esconder filtros */
+    #filterCategoryForm,
+    #filterPriorityForm,
+    #filterFilaCategoryForm,
+    #filterRecyclingCategoryForm,
+    #filterStatusForm,
+    #filterFilaPriorityForm,
+    #filterRecyclingPriorityForm,
+    .buttons,
+    .mobileHidden {
+        display: none;
+    }
+
+
+}
+
+/* @media (max-width: 1082px) {
     .links > div {
         padding: 0;
         margin: 0;
@@ -485,7 +510,7 @@ textarea {
         margin: 0;
         width: 0;
     }
-}
+} */
 
 
 [tabindex="-1"]:focus:not(:focus-visible) {

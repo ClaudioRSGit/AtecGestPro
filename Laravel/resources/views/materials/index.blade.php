@@ -30,7 +30,7 @@
             <div id="allMaterialsTable" class="tab-pane fade show active">
 
                 <div class="d-flex justify-content-between mb-3 w-100">
-                    <div class="d-flex justify-content-between w-40">
+                    <div class="d-flex justify-content-between">
 
                         <form action="{{ route('materials.index') }}" method="GET">
                             <div class="input-group pr-2">
@@ -94,7 +94,7 @@
                             <th scope="col">
                                 Quantidade
                             </th>
-                            <th scope="col">
+                            <th scope="col" class="mobileHidden">
                                 <a href="{{ route('materials.index', ['sortColumn' => 'acquisition_date', 'sortDirection' => $sortColumn === 'acquisition_date' ? ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">
                                     Data de Aquisição
                                     @if ($sortDirection === 'desc' && $sortColumn === 'acquisition_date')
@@ -105,7 +105,7 @@
                                 </a>
                             </th>
                             <th scope="col">Fornecedor</th>
-                            <th scope="col">Género</th>
+                            <th scope="col" class="mobileHidden">Género</th>
                             <th scope="col"><div class="centerTd">Ações</div></th>
                         </tr>
                         </thead>
@@ -178,14 +178,14 @@
                                     @endif
                                 </td>
 
-                                <td>
+                                <td class="mobileHidden">
                                     {{ isset($material->acquisition_date) ? \Carbon\Carbon::parse($material->acquisition_date)->format('Y-m-d') : 'N.A.' }}
                                 </td>
 
 
                                 <td>{{ $material->supplier !== null ? $material->supplier : 'N.A.' }}</td>
 
-                                <td>
+                                <td class="mobileHidden">
                                     @if($material->isClothing === 0)
                                         N.A.
                                     @else
@@ -231,7 +231,7 @@
 
             <div id="recycleMaterialsTable" class="tab-pane fade">
                 <div class="d-flex justify-content-between mb-3 w-100">
-                    <div class="d-flex justify-content-between w-40">
+                    <div class="d-flex justify-content-between ">
 
                         <form action="{{ route('materials.index') }}" method="GET">
                             <div class="input-group pr-2">
