@@ -176,7 +176,7 @@
                 </div>
             </div>
             <div class="col-6">
-                <div class="card">
+                <div class="card h-100">
                     <h5 class="card-header"><strong>Número Total de Tickets: {{$totalTicketsCount}}</strong></h5>
                     <div class="card-body">
                         <canvas id="ticketChart" width="400" height="150"></canvas>
@@ -184,7 +184,16 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col-12 card mt-4">
+                <h5 class="card-header"><strong>Formações Externas por mês</strong></h5>
+                <div class="card-body">
+                    <div id="traffic-chart"></div>
+                </div>
+            </div>
+        </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         var ctx = document.getElementById('ticketChart').getContext('2d');
@@ -226,42 +235,23 @@
                 }
             }
         });
+        var chartDataStartDate = @json($chartDataStartDate);
+
+
+        var currentMonth =  new Date().getMonth() + 1;
+        var labels = chartDataStartDate.labels.slice(0, currentMonth);
+
+        new Chartist.Line('#traffic-chart', {
+            labels: labels,
+            series: [
+                chartDataStartDate.data.slice(0, currentMonth)
+            ]
+        }, {
+            low: 0,
+            showArea: true
+        });
     </script>
 
+
 @endsection
-    <style>
- .dashboardCard {
-    position: relative;
-    height: 120px;
-    overflow: hidden;
-}
-
-.dashboardCard:hover {
-    background-color: #116FDC!important;
-    cursor: pointer;
-}
-
-.dashboardCard:hover .dashboardCardTitle,
-.dashboardCard:hover .dashboardCardSubtitle {
-    color: #ffffff!important;
-}
-
-.dashboardCardContent {
-    font-family: 'Muli', sans-serif;
-}
-
-.dashboardCardTitle {
-    margin-bottom: 5px;
-}
-
-.dashboardCardSubtitle {
-    margin-bottom: 0;
-}
-
-.dashboardCardImage {
-    height: 50px;
-    margin-left: auto;
-    margin-right: 20px;
-}
-        </style>
 

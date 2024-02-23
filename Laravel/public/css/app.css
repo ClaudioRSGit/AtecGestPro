@@ -5792,7 +5792,41 @@ input[type=button].btn-block {
         transition: none;
     }
 }
+/* dashboard */
+.dashboardCard {
+    position: relative;
+    height: 120px;
+    overflow: hidden;
+}
 
+.dashboardCard:hover {
+    background-color: #116FDC!important;
+    cursor: pointer;
+}
+
+.dashboardCard:hover .dashboardCardTitle,
+.dashboardCard:hover .dashboardCardSubtitle {
+    color: #ffffff!important;
+}
+
+.dashboardCardContent {
+    font-family: 'Muli', sans-serif;
+}
+
+.dashboardCardTitle {
+    margin-bottom: 5px;
+}
+
+.dashboardCardSubtitle {
+    margin-bottom: 0;
+}
+
+.dashboardCardImage {
+    height: 50px;
+    margin-left: auto;
+    margin-right: 20px;
+}
+/* dashboard */
 a.badge:hover,
 a.badge:focus {
     text-decoration: none;
