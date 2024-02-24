@@ -219,10 +219,6 @@ body {
     background-color: #f8fafc;
 }
 
-/* ticket crud */
-.buttons {
-    width: 60% !important;
-}
 
 thead th {
     border-top: none !important;
@@ -263,10 +259,85 @@ thead th {
     border-radius: 0 !important;
 }
 
+.ticketTitle :nth-child(1){
+    width: 15%;
+}
+.ticketTitle :nth-child(2){
+    width: 85%;
+}
+
+.submitReturn *{
+    width: 45% !important;
+}
+
 
 @media (max-width: 1080px) {
     .noTicket {
         width: 50%;
+    }
+}
+
+@media (max-width: 475px) {
+    .container, table {
+        max-width: 400px;
+    }
+
+    .mobileHidden,
+    footer{
+        display: none;
+    }
+
+    #ticketSearchForm {
+        width: 100% !important;
+    }
+
+    .buttons{
+        display: none !important;
+        width: 0 !important;
+    }
+
+    .sideInfo{
+        display: none !important;
+        width: 0 !important;
+    }
+
+    thead i{
+        display: none !important;
+    }
+
+    .ticket-prio{
+        min-width: 15px !important;
+    }
+
+    .newTicket i{
+        display: none !important;
+    }
+    .newTicket p{
+        line-height: 1;
+    }
+
+    .ticketTitle, .submitReturn{
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .ticketTitle *{
+        width: 100% !important;
+    }
+    .submitReturn *{
+        width: 100% !important;
+    }
+
+    .createTicket{
+        width: 95% !important;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .createTicket *{
+        width: 45% !important;
     }
 }
 
@@ -11730,10 +11801,6 @@ a.text-dark:focus {
 
 }
 
-/* ticket crud */
-.buttons {
-    width: 60% !important;
-}
 
 thead th {
     border-top: none !important;
