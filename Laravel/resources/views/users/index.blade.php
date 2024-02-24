@@ -64,7 +64,15 @@
                     </form>
 
                     <div class="buttons">
-                        <button class="btn btn-danger modalBtn" id="delete-selected" data-message="Tem a certeza que pretende enviar os utilizadores selecionados para a reciclagem?" data-no-selection-message="Selecione pelo menos um utilizador para excluir.">Excluir Selecionados</button>
+                        <button id="importUsersModalBtn" class="btn btn-primary mr-2 " data-toggle="modal" name="importUsersModal"
+                                data-target="#importUsersModal">Importar utilizadores
+                        </button>
+
+                        <button class="btn btn-danger modalBtn" id="delete-selected"
+                                data-message="Tem a certeza que pretende enviar os utilizadores selecionados para a reciclagem?"
+                                data-no-selection-message="Selecione pelo menos um utilizador para excluir.">Excluir
+                            Selecionados
+                        </button>
                         <form action="{{ route('users.index') }}" method="GET" id="roleFilterForm">
                             <div>
                                 <select class="form-control" id="roleFilter" name="roleFilter" onchange="submitForm()">
@@ -92,9 +100,9 @@
                 ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">
                                 Nome
                                 @if ($sortDirection === 'desc' && $sortColumn === 'name')
-                                <i class="fa-solid fa-arrow-up-z-a" style="color: #116fdc;"></i>
+                                    <i class="fa-solid fa-arrow-up-z-a" style="color: #116fdc;"></i>
                                 @else
-                                <i class="fa-solid fa-arrow-down-a-z" style="color: #116fdc;"></i>
+                                    <i class="fa-solid fa-arrow-down-a-z" style="color: #116fdc;"></i>
                                 @endif
                             </a>
                         </th>
@@ -103,9 +111,9 @@
                 ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">
                                 Username
                                 @if ($sortDirection === 'desc' && $sortColumn === 'username')
-                                <i class="fa-solid fa-arrow-up-z-a" style="color: #116fdc;"></i>
+                                    <i class="fa-solid fa-arrow-up-z-a" style="color: #116fdc;"></i>
                                 @else
-                                <i class="fa-solid fa-arrow-down-a-z" style="color: #116fdc;"></i>
+                                    <i class="fa-solid fa-arrow-down-a-z" style="color: #116fdc;"></i>
                                 @endif
                             </a>
                         </th>
@@ -144,12 +152,14 @@
                                     </a>
                                 </div>
                                 <div style="width: 40%">
-                                    <form method="post" action="{{ route('users.destroy', $user->id) }}" style="display:inline;">
+                                    <form method="post" action="{{ route('users.destroy', $user->id) }}"
+                                          style="display:inline;">
                                         @csrf
                                         @method('delete')
-                                        <button type="submit" class="modalBtn" data-message="Tem a certeza que pretende enviar o {{ strtolower($user->role->description) }} {{ $user->name }} para a reciclagem?"
+                                        <button type="submit" class="modalBtn"
+                                                data-message="Tem a certeza que pretende enviar o {{ strtolower($user->role->description) }} {{ $user->name }} para a reciclagem?"
                                                 style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
-                                                <i class="fa-solid fa-trash-can fa-lg" style="color: #116fdc;"></i>
+                                            <i class="fa-solid fa-trash-can fa-lg" style="color: #116fdc;"></i>
                                         </button>
                                     </form>
                                 </div>
@@ -162,21 +172,22 @@
 
                 {{ $users->appends(['uPage' => $users->currentPage()])->links() }}
 
-                <div class="container">
-                    <form action="{{ route('import-excel.importUsers') }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <div class="form-group mb-3">
-                            <label for="">Excel - Importar Utilizadores</label><br>
-                            <label for="file" class="btn btn-primary">Selecionar ficheiro</label>
-                            <input type="file" name="file" id="file" class="btn" style="display: none;">
-                            @error('attachment')
-                            <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                            <p>Certifique-se que o arquivo tem menos de 20MB</p>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Importar</button>
-                    </form>
-                </div>
+{{--                <div class="container">--}}
+{{--                    <form action="{{ route('import-excel.importUsers') }}" method="POST" enctype="multipart/form-data">--}}
+{{--                        @csrf--}}
+{{--                        <div class="form-group mb-3">--}}
+{{--                            <label for="">Excel - Importar Utilizadores</label><br>--}}
+{{--                            <label for="file" class="btn btn-primary">Selecionar ficheiro</label>--}}
+{{--                            <input type="file" name="file" id="file" class="btn" style="display: none;">--}}
+{{--                            @error('attachment')--}}
+{{--                            <div class="alert alert-danger">{{ $message }}</div>--}}
+{{--                            @enderror--}}
+{{--                            <p>Certifique-se que o arquivo tem menos de 20MB</p>--}}
+{{--                        </div>--}}
+{{--                        <button type="submit" class="btn btn-primary">Importar</button>--}}
+{{--                    </form>--}}
+{{--                </div>--}}
+
             </div>
             <div class="tab-pane fade " id="recycleTable">
 
@@ -253,6 +264,43 @@
             </div>
 
         </div>
+
+        <!-- The Import Users Modal -->
+        <div class="modal" id="importUsersModal" tabindex="-1" role="dialog" aria-labelledby="importUsersModal"
+             aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Importar utilizadores</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container">
+                            <form action="{{ route('import-excel.importUsers') }}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <div class="form-group mb-3">
+                                    <label for="">Excel - Importar Utilizadores</label><br>
+                                    <label for="file" class="btn btn-primary">Selecionar ficheiro</label>
+                                    <input type="file" name="file" id="file" class="btn" style="display: none;">
+                                    @error('attachment')
+                                    <div class="alert alert-danger">{{ $message }}</div>
+                                    @enderror
+                                    <p>Certifique-se que o arquivo tem menos de 20MB</p>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Importar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        {{----}}
+
+
 
         {{--    confirmation modal    --}}
         <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel"
