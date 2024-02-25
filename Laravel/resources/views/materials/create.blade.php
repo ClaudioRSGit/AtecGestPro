@@ -243,6 +243,7 @@
 
 @section('scripts')
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/pt.js"></script>
     <script>
         jQuery(function() {
             flatpickr("#acquisition_date", {
@@ -251,6 +252,7 @@
                 altFormat: "F j, Y",
                 dateFormat: "Y-m-d",
                 minDate: "today",
+                locale: "pt"
 
 
             });

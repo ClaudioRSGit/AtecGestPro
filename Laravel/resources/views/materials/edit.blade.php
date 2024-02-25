@@ -251,6 +251,8 @@
 
 @section('scripts')
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/pt.js"></script>
+
     <script>
         flatpickr(".flatpickr", {
             inline: true,
@@ -258,6 +260,7 @@
             altFormat: "F j, Y H:i",
             dateFormat: "Y-m-d\TH:i:s",
             maxDate: "today",
+            locale: "pt"
         });
     </script>
 @endsection

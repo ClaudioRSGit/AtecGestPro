@@ -108,15 +108,15 @@
                                             @foreach ($courseClass->students as $student)
                                                 <tr class="customTableStyling {{ $usersWithMaterialsDelivered->contains($student->id) ? 'bg-blue' : '' }}">
                                                     @php
-                                                        $myVariable = $usersWithMaterialsDelivered->contains($student->id) ? 'bg-blue' : '';
+                                                        $allDelivered = $usersWithMaterialsDelivered->contains($student->id) ? 'bg-blue' : '';
                                                     @endphp
-                                                    <td class="clickable {{ $myVariable }}">
+                                                    <td class="clickable {{ $allDelivered }}">
                                                         <a href="{{ route('material-user.create', $student->id) }}"
                                                            class="d-flex align-items-center w-auto h-100">{{ $student->name }}</a>
                                                     </td>
-                                                    <td class="{{ $myVariable }}">{{ $student->username }}</td>
-                                                    <td class="{{ $myVariable }}">{{ $student->email }}</td>
-                                                    <td class="editDelete {{ $myVariable }}">
+                                                    <td class="{{ $allDelivered }}">{{ $student->username }}</td>
+                                                    <td class="{{ $allDelivered }}">{{ $student->email }}</td>
+                                                    <td class="editDelete {{ $allDelivered }}">
                                                         <div style="width: 40%">
                                                             <a href="{{ route('material-user.edit', $student->id) }}"
                                                                class="mx-2 ">
@@ -193,8 +193,11 @@
                                 <a href="{{ route('material-user.create', $nonDocent->id) }}"
                                    class="d-flex align-items-center w-auto h-100">{{ $nonDocent->name }}</a>
                             </td>
-                            <td class="{{ $myVariable }}">{{ $nonDocent->username }}</td>
-                            <td class="{{ $myVariable }}">{{ $nonDocent->email }}</td>
+                            @php
+                                $allDelivered = $usersWithMaterialsDelivered->contains($nonDocent->id) ? 'bg-blue' : '';
+                            @endphp
+                            <td class="{{ $allDelivered }}">{{ $nonDocent->username }}</td>
+                            <td class="{{ $allDelivered }}">{{ $nonDocent->email }}</td>
                             <td>
                                 <a href="{{ route('material-user.edit', $nonDocent->id) }}" class="mx-2">
                                     <i class="fa-solid fa-pen-to-square fa-lg" style="color: #116fdc;"></i>
