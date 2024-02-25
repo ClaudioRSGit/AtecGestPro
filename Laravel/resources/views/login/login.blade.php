@@ -24,13 +24,18 @@
     });
 </script>
 
+<style>
+    .logo-login {
+        width: 100px;  /* Change to the width you want */
+        height: 100px; /* Change to the height you want */
+    }
+</style>
 <div class="container mx-auto d-flex align-items-center loginPage w-100 fade-in">
     <div class="d-flex justify-content-center align-items-center w-100 h-100">
         <div class="card" style="border-radius: 2rem; width: 30rem">
             <div class="d-flex flex-column justify-content-between align-items-center w-100 h-60" style="padding: 5rem;">
                 <div class="d-flex flex-column align-items-center h-25 w-100">
-                    <img src="{{ asset('assets/logo.png') }}" alt="Logo">
-                    <h5 class="mt-3"><strong> ATEC GEST PRO </strong></h5>
+                    <img class="logo-login" src="{{ asset('assets/logo.png') }}" alt="Logo">                    <h5 class="mt-3"><strong> ATEC GEST PRO </strong></h5>
                 </div>
                 <form method="POST" action="{{ route('login') }}"
                     class="d-flex flex-column justify-content-between h-65 w-100 m-0">

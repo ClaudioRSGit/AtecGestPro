@@ -21,64 +21,64 @@
             @method('put')
 
             <div class="row">
-
                 <div class="col-md-6 mb-3">
 
                     <div class="mb-3">
                         <label for="name" class="form-label">Nome do Material:</label>
-                        <input type="text" class="form-control" id="name" name="name"
-                            value="{{ $material->name }}">
+                        <input type="text" class="form-control" id="name" name="name" value="{{ $material->name }}">
 
                         @error('name')
-                            <div class="alert alert-danger">{{ $message }}</div>
+                        <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
 
                     <div class="mb-3">
                         <label for="description" class="form-label">Descrição:</label>
-                        <textarea class="form-control" id="description" name="description">{{ $material->description }}</textarea>
+                        <textarea class="form-control" id="description"
+                                  name="description">{{ $material->description }}</textarea>
 
                         @error('description')
-                            <div class="alert alert-danger">{{ $message }}</div>
+                        <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
 
                     <div class="mb-3">
                         <label for="supplier" class="form-label">Fornecedor:</label>
                         <input type="text" class="form-control" id="supplier" name="supplier"
-                            value="{{ $material->suplier }}">
+                               value="{{ $material->suplier }}">
 
                         @error('supplier')
-                            <div class="alert alert-danger">{{ $message }}</div>
+                        <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
 
-
-
-                    <div class="form-group">
-                        <label for="acquisition_date">Data de Aquisição:</label>
-                        <input type="datetime-local" class="form-control flatpickr" id="acquisition_date" name="acquisition_date"
-                            value="{{ !empty($material->acquisition_date) ? \Carbon\Carbon::parse($material->acquisition_date)->format('Y-m-d') : 'Não disponível' }}" required>
-
+                    <div class="mb-3">
+                        <label for="acquisition_date" class="form-label">Data de Aquisição:</label>
+                        <input type="datetime-local" class="form-control flatpickr" id="acquisition_date"
+                               name="acquisition_date"
+                               value="{{ !empty($material->acquisition_date) ? \Carbon\Carbon::parse($material->acquisition_date)->format('Y-m-d\TH:i:s') : '' }}"
+                               required>
                     </div>
 
-
-
                 </div>
+
                 <div class="col-md-6">
+
                     <div class="row grid mb-3">
                         <div class="mx-3 gender mb-3" id="gender">
-                            <label for="gender">Género:</label>
+                            <label for="gender" class="form-label">Género:</label>
                             <select class="form-control" id="gender" name="gender">
                                 <option value="1" {{ $material->gender == 1 ? 'selected' : '' }}>Masculino</option>
                                 <option value="0" {{ $material->gender == 0 ? 'selected' : '' }}>Feminino</option>
                             </select>
                         </div>
+
                         <div class="mx-3 qty mb-3" id="quantity">
-                            <label for="quantity">Quantidade:</label>
+                            <label for="quantity" class="form-label">Quantidade:</label>
                             <input type="number" class="form-control text-left" id="quantity" name="quantity"
-                            value="{{ $material->quantity }}">
+                                   value="{{ $material->quantity }}">
                         </div>
+
                         <div class="mx-3 internal mb-3">
                             <label for="isInternal">Material interno?</label>
                             <select class="form-control" id="isInternal" name="isInternal">
@@ -86,9 +86,9 @@
                                 <option value="0" {{ !$material->isInternal ? 'selected' : '' }}>Não</option>
                             </select>
                         </div>
-                        <div class="mx-3 clothing mb-3">
-                            <label for="isClothing">É vestuário?</label>
-                            <select class="form-control" id="isClothing" name="isClothing">
+                        <div class="mx-3 clothing mb-3" id="clothingToggle">
+                            <label for="isClothing" class="form-label">É vestuário?</label>
+                            <select class="form-control" id="isClothing" name="isClothing" onchange="toggleFields()">
                                 <option value="1" {{ $material->isClothing ? 'selected' : '' }}>Sim</option>
                                 <option value="0" {{ !$material->isClothing ? 'selected' : '' }}>Não</option>
                             </select>
@@ -100,9 +100,6 @@
                     </div>
 
                     <div id="hide">
-
-
-
                         <div class="d-flex flex-row">
                             <div class="flex-column w-75">
                                 <div class="mb-3">
@@ -111,11 +108,11 @@
                                 <div class="mb-3 mr-4 scrollable-column mr-5" id="size">
                                     <div class="d-flex flex-column">
                                         @foreach ($sizesAll as $sizeAll)
-                                        <div class="d-flex justify-content-between align-items-center mb-2 px-5">
-                                            <div class="form-check">
-                                                <input onchange="toggleFieldsQuantity()"
-                                                class="form-check-input size-checkbox" type="checkbox"
-                                                name="sizes[]" value="{{ $sizeAll->id }}"
+                                            <div class="d-flex justify-content-between align-items-center mb-2 px-5">
+                                                <div class="form-check">
+                                                    <input onchange="toggleFieldsQuantity()"
+                                                           class="form-check-input size-checkbox" type="checkbox"
+                                                           name="sizes[]" value="{{ $sizeAll->id }}"
                                                         {{ in_array($sizeAll->id, $material->sizes->pluck('id')->toArray()) ? 'checked' : '' }}>
                                                     <label class="form-check-label" for="size{{ $sizeAll->id }}">
                                                         {{ $sizeAll->size }}
@@ -123,40 +120,41 @@
                                                 </div>
 
                                                 <input type="number" name="stocks[{{ $sizeAll->id }}]"
-                                                value="{{ old('stocks.' . $sizeAll->id, $material->sizes->where('id', $sizeAll->id)->first()->pivot->stock ?? 0) }}"
-                                                class="form-control w-25 mx-5 quantity-input" min="0"
-                                                {{ in_array($sizeAll->id, $material->sizes->pluck('id')->toArray()) ? '' : 'disabled' }}>
+                                                       value="{{ old('stocks.' . $sizeAll->id, $material->sizes->where('id', $sizeAll->id)->first()->pivot->stock ?? 0) }}"
+                                                       class="form-control w-25 mx-5 quantity-input" min="0"
+                                                    {{ in_array($sizeAll->id, $material->sizes->pluck('id')->toArray()) ? '' : 'disabled' }}>
                                             </div>
-                                            @endforeach
+                                        @endforeach
 
 
-                                        </div>
                                     </div>
                                 </div>
+                            </div>
 
 
-                                <div class="flex-column">
-                                    <div class="mb-3">
-                                        <p class="form-label font-weight-bold">Cursos:</p>
-                                    </div>
-                                    <div class="mb-3" id="role">
-                                        <div class="d-flex flex-column scrollable-column">
-                                            @foreach ($coursesAll as $courseAll)
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" name="courses[]"
-                                                        value="{{ $courseAll->id }}"
-                                                        {{ in_array($courseAll->id, $material->courses->pluck('id')->toArray()) ? 'checked' : '' }}>
-                                                    <label class="form-check-label" for="course{{ $courseAll->id }}">
-                                                        {{ $courseAll->code }}
-                                                    </label>
-                                                </div>
-                                            @endforeach
+                            <div class="flex-column">
+                                <div class="mb-3">
+                                    <p class="form-label font-weight-bold">Cursos:</p>
+                                </div>
+                                <div class="mb-3" id="role">
+                                    <div class="d-flex flex-column scrollable-column">
+                                        @foreach ($coursesAll as $courseAll)
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="courses[]"
+                                                       value="{{ $courseAll->id }}"
+                                                    {{ in_array($courseAll->id, $material->courses->pluck('id')->toArray()) ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="course{{ $courseAll->id }}">
+                                                    {{ $courseAll->code }}
+                                                </label>
+                                            </div>
+                                        @endforeach
 
-                                        </div>
                                     </div>
                                 </div>
+                            </div>
                         </div>
                     </div>
+
                 </div>
                 <div>
                     <button type="submit" class="btn btn-primary">Guardar Material</button>
@@ -177,20 +175,23 @@
             overflow-y: auto;
         }
 
-        .gender{
+        .gender {
             grid-area: gender;
         }
-        .qty{
+
+        .qty {
             grid-area: quantity;
         }
-        .internal{
+
+        .internal {
             grid-area: internal;
         }
-        .clothing{
+
+        .clothing {
             grid-area: clothing;
         }
 
-        .grid{
+        .grid {
             display: grid;
             grid-template-areas:
                 'internal clothing'
@@ -216,17 +217,18 @@
             let isInternalElement = document.getElementById('isInternal');
             let isClothingElement = document.getElementById('isClothing');
             let gender = document.getElementById('gender');
-            // let size = document.getElementById('size');
-            // let role = document.getElementById('role');
             let quantity = document.getElementById('quantity');
-            // let labels = document.getElementById('labels');
             let hide = document.getElementById('hide');
 
-            if (isInternalElement.value == 0) {
+            let isInternalValue = $("#isInternal").val();
+
+            if (isInternalElement.value == 0 || isInternalValue == 0) {
                 isClothingElement.value = 0;
                 warningMessage.style.display = 'block';
+                $("#clothingToggle").hide();
             } else {
                 warningMessage.style.display = 'none';
+                $("#clothingToggle").show();
             }
 
             if (isClothingElement.value == 1) {
@@ -234,15 +236,11 @@
             }
 
             gender.style.display = (isInternalElement.value == 1 && isClothingElement.value == 1) ? 'block' : 'none';
-            // size.style.display = (isInternalElement.value == 1 && isClothingElement.value == 1) ? 'block' : 'none';
-            // role.style.display = (isInternalElement.value == 1 && isClothingElement.value == 1) ? 'block' : 'none';
-            // labels.style.display = (isInternalElement.value == 1 && isClothingElement.value == 1) ? 'block' : 'none';
             quantity.style.display = (isInternalElement.value == 1 && isClothingElement.value == 1) ? 'none' : 'block';
             hide.style.display = (isInternalElement.value == 1 && isClothingElement.value == 1) ? 'block' : 'none';
         }
 
         document.addEventListener('DOMContentLoaded', toggleFields);
-
         document.getElementById('isInternal').addEventListener('change', toggleFields);
         document.getElementById('isClothing').addEventListener('change', toggleFields);
     </script>
