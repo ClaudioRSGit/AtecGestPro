@@ -89,7 +89,7 @@
                     </div>
                 </div>
 
-                <table class="table" id="userTable">
+                <table class="table usersTable" id="userTable">
                     <thead>
                     <tr>
                         <th scope="col">
