@@ -7,6 +7,7 @@
                 {{ session('success') }}
             </div>
         @endif
+
         <div class="d-flex justify-content-between align-items-center">
             <h1>Tickets</h1>
             <div onclick="showOptions()" class="form-control btn-primary w-20 dropdown newTicket" style="max-width: 10rem;">
@@ -111,7 +112,7 @@
                             $currentDirection = request('direction', 'asc');
                             $newDirection = $currentDirection == 'asc' ? 'desc' : 'asc';
                         @endphp
-                        <table class="table bg-white rounded-top">
+                        <table class="table bg-white rounded-top ticketsTable">
                             <thead>
                             <tr>
                                 <th scope="col">
@@ -561,5 +562,6 @@
 @endsection
 @push('scripts')
 <script src="{{ asset('js/tickets/index.js') }}"></script>
+<script src="{{ asset('js/intro.js') }}"></script>
 @endpush
 
