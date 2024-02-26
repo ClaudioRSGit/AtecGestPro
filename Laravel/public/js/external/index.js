@@ -44,7 +44,7 @@ $(document).ready(function () {
 
     window.addEventListener('beforeunload', function () {
         history.pushState("", document.title, window.location.pathname + window.location.search);
-        localStorage.removeItem('activeTabInfo'); // Add this line
+        // localStorage.removeItem('activeTabInfo'); // Add this line
 
     });
 });
