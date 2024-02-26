@@ -10,7 +10,9 @@
                             <h4 class="dashboardCardTitle">Administradores:</h4>
                             <h3 class="dashboardCardSubtitle">{{$adminCount}}</h3>
                         </div>
-                        <img src="https://cdn-icons-png.flaticon.com/512/2942/2942813.png" alt="" class="dashboardCardImage">
+                        <div class="w-100 h-100 d-flex justify-content-end align-items-center">
+                            <i class="fa-solid fa-user-gear fa-2xl" style="color: #116fdc;"></i>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -21,7 +23,9 @@
                             <h4 class="dashboardCardTitle">Técnicos:</h4>
                             <h3 class="dashboardCardSubtitle">{{$technicianCount}}</h3>
                         </div>
-                        <img src="https://cdn-icons-png.flaticon.com/512/554/554795.png" alt="" class="dashboardCardImage">
+                        <div class="w-100 h-100 d-flex justify-content-end align-items-center">
+                            <i class="fa-solid fa-helmet-safety fa-2xl" style="color: #116fdc;"></i>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -32,7 +36,9 @@
                             <h4 class="dashboardCardTitle">Funcionários:</h4>
                             <h3 class="dashboardCardSubtitle">{{$technicianCount}}</h3>
                         </div>
-                        <img src="https://cdn-icons-png.flaticon.com/512/554/554795.png" alt="" class="dashboardCardImage">
+                        <div class="w-100 h-100 d-flex justify-content-end align-items-center">
+                            <i class="fa-solid fa-people-carry-box fa-2xl" style="color: #116fdc;"></i>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -43,7 +49,9 @@
                             <h4 class="dashboardCardTitle">Formandos:</h4>
                             <h3 class="dashboardCardSubtitle">{{$traineeCount}}</h3>
                         </div>
-                        <img src="https://cdn-icons-png.flaticon.com/512/2941/2941658.png" alt="" class="dashboardCardImage">
+                        <div class="w-100 h-100 d-flex justify-content-end align-items-center">
+                            <i class="fa-solid fa-user-graduate fa-2xl" style="color: #116fdc;"></i>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -56,7 +64,9 @@
                             <h4 class="dashboardCardTitle">Turmas:</h4>
                             <h3 class="dashboardCardSubtitle">{{$traningsCount}}</h3>
                         </div>
-                        <img src="https://cdn-icons-png.flaticon.com/512/2941/2941658.png" alt="" class="dashboardCardImage">
+                        <div class="w-100 h-100 d-flex justify-content-end align-items-center">
+                            <i class="fa-solid fa-users fa-2xl" style="color: #116fdc;"></i>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -67,7 +77,9 @@
                             <h4 class="dashboardCardTitle">Cursos:</h4>
                             <h3 class="dashboardCardSubtitle">{{$coursesCount}}</h3>
                         </div>
-                        <img src="https://cdn-icons-png.flaticon.com/512/3197/3197967.png" alt="" class="dashboardCardImage">
+                        <div class="w-100 h-100 d-flex justify-content-end align-items-center">
+                            <i class="fa-solid fa-book fa-2xl" style="color: #116fdc;"></i>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -78,7 +90,9 @@
                             <h4 class="dashboardCardTitle">Material Interno:</h4>
                             <h3 class="dashboardCardSubtitle">{{$internalMaterialCount}}</h3>
                         </div>
-                        <img src="https://cdn-icons-png.flaticon.com/512/3082/3082008.png" alt="" class="dashboardCardImage">
+                        <div class="w-100 h-100 d-flex justify-content-end align-items-center">
+                            <i class="fa-regular fa-lightbulb fa-2xl" style="color: #116fdc;"></i>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -89,7 +103,9 @@
                             <h4 class="dashboardCardTitle">Material Externo:</h4>
                             <h3 class="dashboardCardSubtitle">{{$externalMaterialCount}}</h3>
                         </div>
-                        <img src="https://cdn-icons-png.flaticon.com/512/3616/3616470.png" alt="" class="dashboardCardImage">
+                        <div class="w-100 h-100 d-flex justify-content-end align-items-center">
+                            <i class="fa-solid fa-box-open fa-2xl" style="color: #116fdc;"></i>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -102,7 +118,9 @@
                                 <h4 class="dashboardCardTitle">Utilizadores Ativos:</h4>
                                 <h3 class="dashboardCardSubtitle">{{$activeUserCount}}</h3>
                             </div>
-                        <img src="https://cdn-icons-png.freepik.com/256/2919/2919931.png" alt="" class="dashboardCardImage">
+                            <div class="w-100 h-100 d-flex justify-content-end align-items-center">
+                                <i class="fa-solid fa-user fa-2xl" style="color: #116fdc;"></i>
+                            </div>
                     </div>
                 </div>
             </div>
@@ -113,7 +131,9 @@
                             <h4 class="dashboardCardTitle">Utilizadores Inativos:</h4>
                             <h3 class="dashboardCardSubtitle">{{$inactiveUserCount}}</h3>
                         </div>
-                        <img src="https://cdn-icons-png.freepik.com/512/5671/5671947.png" alt="" class="dashboardCardImage">
+                        <div class="w-100 h-100 d-flex justify-content-end align-items-center">
+                            <i class="fa-solid fa-user-large-slash fa-2xl" style="color: #116fdc;"></i>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -124,7 +144,9 @@
                             <h4 class="dashboardCardTitle">Parceiros:</h4>
                             <h3 class="dashboardCardSubtitle">{{$partnerCount}}</h3>
                         </div>
-                        <img src="https://cdn-icons-png.freepik.com/512/4214/4214107.png" alt="" class="dashboardCardImage">
+                        <div class="w-100 h-100 d-flex justify-content-end align-items-center">
+                            <i class="fa-solid fa-handshake fa-2xl" style="color: #116fdc;"></i>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -135,7 +157,9 @@
                             <h4 class="dashboardCardTitle">Formações Externas:</h4>
                             <h3 class="dashboardCardSubtitle">{{$externalTrainingsCount}}</h3>
                         </div>
-                        <img src="https://cdn-icons-png.flaticon.com/512/5663/5663343.png" alt="" class="dashboardCardImage">
+                        <div class="w-100 h-100 d-flex justify-content-end align-items-center">
+                            <i class="fa-solid fa-graduation-cap fa-2xl" style="color: #116fdc;"></i>
+                        </div>
                     </div>
                 </div>
             </div>
