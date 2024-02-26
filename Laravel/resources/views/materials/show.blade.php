@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container">
+    <div class="container w-100 fade-in">
         <h1>Detalhes do Material</h1>
         @if (session('success'))
             <div class="alert alert-success" id="success-alert">
@@ -26,7 +26,7 @@
                 <div class="mb-3">
                     <label for="supplier" class="form-label">Fornecedor:</label>
                     <input disabled type="text" class="form-control" id="supplier" name="supplier"
-                           value="{{ $material->suplier }}">
+                           value="{{ $material->supplier }}">
                 </div>
 
 
@@ -128,7 +128,9 @@
 
             </div>
         </div>
-        <a href="{{ route('materials.index') }}" class="btn btn-secondary">Voltar</a>    </div>
+        <a href="{{ route('materials.index') }}" class="btn btn-secondary">Voltar</a>
+        <a href="{{ route('materials.edit', $material->id) }}" class="btn btn-primary">Editar</a>
+    </div>
 
     <style>
 

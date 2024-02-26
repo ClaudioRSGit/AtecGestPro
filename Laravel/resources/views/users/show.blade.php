@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container">
+    <div class="container w-100 fade-in">
         <h1>Detalhes do Utilizador</h1>
         @if (session('success'))
             <div class="alert alert-success" id="success-alert">
@@ -85,24 +85,7 @@
         </div>
     </div>
 
-    <style>
-        .col-md-6 {
-            padding-left: 0;
-        }
-    </style>
-
-    <script>
-          window.setTimeout(function() {
-                $("#success-alert").fadeTo(500, 0).slideUp(500, function() {
-                    $(this).remove();
-                });
-            }, 2000);
-
-        function updateCourseDescription(selectElement) {
-            var selectedOption = selectElement.options[selectElement.selectedIndex];
-            var courseDescription = selectedOption.getAttribute('data-course-description');
-            document.getElementById('courseDescription').value = courseDescription;
-        }
-        document.getElementById('course_class_id').dispatchEvent(new Event('change'));
-    </script>
 @endsection
+@push('scripts')
+    <script src="{{ asset('js/users/show.js') }}"></script>
+@endpush

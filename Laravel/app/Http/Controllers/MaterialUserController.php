@@ -44,24 +44,24 @@ class MaterialUserController extends Controller
         }
 
         if($searchNonDocent){
-            $queryNonDocent = $queryNonDocent->where('name', '!=', 'Fila de Espera')->where('name', 'like', '%' . $searchNonDocent . '%');
+            $queryNonDocent = $queryNonDocent->where('name', '!=', 'Fila de Espera')->where('name', '!=', 'Utilizador Padrao')->where('name', 'like', '%' . $searchNonDocent . '%');
         } else {
-            $queryNonDocent = $queryNonDocent->where('name', '!=', 'Fila de Espera')->where('isStudent', false);
+            $queryNonDocent = $queryNonDocent->where('name', '!=', 'Fila de Espera')->where('name', '!=', 'Utilizador Padrao')->where('isStudent', false);
         }
         if ($roleFilter) {
             $queryNonDocent = $queryNonDocent->where('role_id', $roleFilter);
         }
 
 
-        $nonDocents = $queryNonDocent->paginate(5, ['*'], 'nPage');
+        $nonDocents = $queryNonDocent->paginate(5, ['*'], 'nPage')->withQueryString();
 
-        $courseClasses = $query->paginate(5, ['*'], 'cPage');
+        $courseClasses = $query->paginate(5, ['*'], 'cPage')->withQueryString();
 
         $roles = Role::Where('name', '!=', 'formando')->get();
 
         $courses = Course::all();
 
-        return view('material-user.index', compact('courseClasses', 'courses', 'roles', 'nonDocents', 'courseFilter', 'searchCourseClass','usersWithMaterialsDelivered'));
+        return view('material-user.index', compact('courseClasses', 'courses', 'roles', 'nonDocents', 'courseFilter', 'searchCourseClass', 'usersWithMaterialsDelivered'));
     }
 
     /**
@@ -74,41 +74,42 @@ class MaterialUserController extends Controller
         $user = User::find($id);
         $assignedClothes = MaterialUser::with('material', 'user')->where('user_id', $id)->get();
 
-        if($user->isStudent==1 && $user->courseClass){
+        if ($user->isStudent == 1 && $user->courseClass) {
             $student = $user;
             $studentCourseId = $student->courseClass->course_id;
+            $course = $student->courseClass->course->description;
 
             $clothes = Material::with('sizes', 'courses')
                 ->where('isClothing', 1)
                 ->whereHas('courses', function ($query) use ($studentCourseId) {
                     $query->where('courses.id', $studentCourseId);
                 })
-                ->paginate(5);
-        } else
-        {
+                ->get();
+        } else {
             $student = $user;
-
+            $course = "Funcionário";
             $clothes = Material::with('sizes', 'courses')
                 ->where('isClothing', 1)
                 ->doesntHave('courses')
-                ->paginate(5);
+                ->get();
         }
 
 
-
-        return view('material-user.create', compact('clothes', 'student', 'assignedClothes'));
+        return view('material-user.create', compact('clothes', 'student', 'assignedClothes', 'course'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(MaterialUserRequest $request)
     {
         try {
             $selectedClothingitems = $request->get('selectedClothing');
+
+
             $note = $request->get('additionalNotes');
 
             foreach ($selectedClothingitems as $index => $selectedClothingitem) {
@@ -158,6 +159,7 @@ class MaterialUserController extends Controller
             }
 
             return redirect()->route('material-user.index')->with('success', 'Material entregue com sucesso!');
+
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Erro ao entregar o material. Por favor, tente novamente.');
         }
@@ -166,7 +168,7 @@ class MaterialUserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\MaterialUser  $materialUser
+     * @param \App\MaterialUser $materialUser
      * @return \Illuminate\Http\Response
      */
     public function show(MaterialUser $materialUser)
@@ -177,14 +179,14 @@ class MaterialUserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\MaterialUser  $materialUser
+     * @param \App\MaterialUser $materialUser
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
     {
+
         $materialUsers = MaterialUser::with('material', 'user')->where('user_id', $id)->get();
         $user = User::find($id);
-
 
 
         return view('material-user.edit', compact('materialUsers', 'user'));
@@ -193,19 +195,31 @@ class MaterialUserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\MaterialUser  $materialUser
+     * @param \Illuminate\Http\Request $request
+     * @param \App\MaterialUser $materialUser
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, MaterialUser $materialUser)
     {
-        //
+
+        try {
+            $user_id = $request->get('user_id');
+            $user = User::find($user_id);
+            $note = $request->get('note');
+
+            $user->notes = $note;
+            $user->save();
+
+            return redirect()->route('material-user.edit', $user_id)->with('success', 'Notas do utilizador gravada com sucesso');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erro ao gravar a nota. Por favor, tente novamente.');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\MaterialUser  $materialUser
+     * @param \App\MaterialUser $materialUser
      * @return \Illuminate\Http\Response
      */
     public function destroy(MaterialUser $materialUser)
@@ -233,5 +247,56 @@ class MaterialUserController extends Controller
 
         return back()->with('error', 'Nenhum material selecionado para exclusão.');
     }
+
+    public function addNote(Request $request)
+    {
+        $user_id = $request->get('user_id');
+        $note = $request->get('note');
+        $user = User::find($user_id);
+        $existingNotes = $user->notes;
+        $newNote = $note;
+        $timestamp = now()->toDateTimeString();
+        $user->notes = $existingNotes . "\n" . $timestamp . ": " . $newNote;
+        $user->save();
+
+
+//        return view('material-user.edit', compact()->with('success', 'Nota adicionada com sucesso!');
+        return redirect()->route('material-user.edit', $user_id)->with('success', 'Nota adicionada com sucesso!');
+//        return redirect()->back()->with('success', 'Nota adicionada com sucesso!');
+    }
+
+    public function addDeliveredAll(Request $request)
+    {
+
+        $user_id = $request->get('user_id');
+
+        $allDeliveries = MaterialUser::where('user_id', $user_id)->get();
+
+
+            foreach ($allDeliveries as $delivery) {
+                $delivery->delivered_all = 1;
+                $delivery->save();
+            }
+
+        return redirect()->route('material-user.edit', $user_id)->with('success', 'Entrega marcada como comleta com sucesso!');
+    }
+
+    public function addDeliveredPartial(Request $request)
+    {
+
+        $user_id = $request->get('user_id');
+
+        $allDeliveries = MaterialUser::where('user_id', $user_id)->get();
+
+        foreach ($allDeliveries as $delivery) {
+            $delivery->delivered_all = 0;
+            $delivery->save();
+        }
+
+
+        return redirect()->route('material-user.edit', $user_id)->with('success', 'Entrega marcada como parcial marcada com sucesso!');
+    }
+
+
 
 }

@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container">
+    <div class="container w-100 fade-in">
         <h1>Detalhes da formação</h1>
 
         <div class="w-50 mb-3">

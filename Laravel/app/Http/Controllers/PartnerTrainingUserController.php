@@ -20,44 +20,45 @@ class PartnerTrainingUserController extends Controller
     {
 
 
-
         $searchPtu = $request->input('ptu');
         $searchP = $request->input('p');
         $searchT = $request->input('t');
 
 
+        $ptuQuery = PartnerTrainingUser::with('partner', 'training', 'user');
+
+        if ($searchPtu) {
+            $ptuQuery = PartnerTrainingUser::with('partner', 'training', 'user')
+                ->whereHas('partner', function ($query) use ($searchPtu) {
+                    $query->where('name', 'like', "%$searchPtu%");
+                })
+                ->orWhereHas('training', function ($query) use ($searchPtu) {
+                    $query->where('name', 'like', "%$searchPtu%");
+                })
+                ->orWhereHas('user', function ($query) use ($searchPtu) {
+                    $query->where('name', 'like', "%$searchPtu%");
+                });
+        } else {
+            $ptuQuery = PartnerTrainingUser::with('partner', 'training', 'user');
+        }
 
 
-                if ($searchPtu) {
-                    $partner_Training_Users = PartnerTrainingUser::with('partner', 'training', 'user')
-                        ->whereHas('partner', function ($query) use ($searchPtu) {
-                            $query->where('name', 'like', "%$searchPtu%");
-                        })
-                        ->orWhereHas('training', function ($query) use ($searchPtu) {
-                            $query->where('name', 'like', "%$searchPtu%");
-                        })
-                        ->orWhereHas('user', function ($query) use ($searchPtu) {
-                            $query->where('name', 'like', "%$searchPtu%");
-                        })->paginate(5, ['*'], 'ptuPage');
-                } else {
-                    $partner_Training_Users = PartnerTrainingUser::with('partner', 'training', 'user')->paginate(5, ['*'], 'ptuPage');
-                }
+        if ($searchP) {
+            $partnersQuery = Partner::with('partnerTrainingUsers', 'contactPartner')
+                ->where('name', 'like', "%$searchP%");
+        } else {
+            $partnersQuery = Partner::with('partnerTrainingUsers', 'contactPartner');
+        }
 
+        if ($searchT) {
+            $trainingsQuery = Training::where('name', 'like', "%$searchT%");
+        } else {
+            $trainingsQuery = Training::with('partnerTrainingUsers');
+        }
 
-                if ($searchP) {
-                    $partners = Partner::with('partnerTrainingUsers', 'contactPartner')
-                        ->where('name', 'like', "%$searchP%")
-                        ->paginate(10, ['*'], 'pPage');
-                } else {
-                    $partners = Partner::with('partnerTrainingUsers', 'contactPartner')->paginate(5, ['*'], 'pPage');
-                }
-
-                if ($searchT) {
-                    $trainings = Training::where('name', 'like', "%$searchT%")->paginate(5, ['*'], 'tPage');
-                } else {
-                    $trainings = Training::with('partnerTrainingUsers')->paginate(5, ['*'], 'tPage');
-                }
-
+        $partner_Training_Users = $ptuQuery->paginate(5, ['*'], 'ptuPage')->withQueryString();
+        $partners = $partnersQuery->paginate(5, ['*'], 'pPage')->withQueryString();
+        $trainings = $trainingsQuery->paginate(5, ['*'], 'tPage')->withQueryString();
 
         return view('external.index', compact('partner_Training_Users', 'partners', 'trainings', 'searchPtu', 'searchP', 'searchT'));
     }
@@ -75,11 +76,10 @@ class PartnerTrainingUserController extends Controller
     {
         $partner_Training_Users = PartnerTrainingUser::all();
         $partners = Partner::all();
-        $users = User::all()->where('name', '!=', 'Fila de Espera');
+        $users = User::all()->where('name', '!=', 'Fila de Espera')->where('name', '!=', 'Utilizador Padrao');
         $trainings = Training::all();
 
-        $materials = DB::table('materials')->where('isInternal', '=', false)->get();
-
+        $materials = DB::table('materials')->where('isInternal', '=', false)->whereNull('deleted_at')->get();
 
         return view('external.create', compact('partner_Training_Users', 'partners', 'users', 'trainings', 'materials'));
     }
@@ -93,7 +93,8 @@ class PartnerTrainingUserController extends Controller
                 'training_id' => $request->input('training_id'),
                 'user_id' => $request->input('user_id'),
                 'start_date' => $request->input('start_date'),
-                'end_date' => $request->input('end_date')]);
+                'end_date' => $request->input('end_date')
+            ]);
 
             $materials = $request->input('materials', []);
             $materialQuantities = $request->input('material_quantities', []);
@@ -120,10 +121,10 @@ class PartnerTrainingUserController extends Controller
         $partner_Training_Users = PartnerTrainingUser::with('partner', 'training', 'user', 'materials')->findOrFail($id);
         $partners = Partner::all();
         $trainings = Training::all();
-        $users = User::all()->where('name', '!=', 'Fila de Espera');
+        $users = User::all()->where('name', '!=', 'Fila de Espera')->where('name', '!=', 'Utilizador Padrao');
 
 
-        $materials = Material::with('partnerTrainingUsers')->where('isInternal', false)->get();
+        $materials = Material::with('partnerTrainingUsers')->where('isInternal', false)->whereNull('deleted_at')->get();
         return view('external.edit', compact('partner_Training_Users', 'partners', 'trainings', 'users', 'materials'));
     }
 
@@ -145,13 +146,14 @@ class PartnerTrainingUserController extends Controller
 
             if ($selectedMaterials) {
                 foreach ($selectedMaterials as $materialId) {
-                    $quantityInserted = $materialQuantities[$materialId] ?? 1;
-                    $currentQuantity = $partner_Training_User->materials->where('id', $materialId)->first()->pivot->quantity ?? 0;
-                    $quantityDecreased = $currentQuantity > $quantityInserted;
-                    $stock = $partner_Training_User->materials->where('id', $materialId)->first()->quantity ?? 0;
-                    $stockTotal = $stock + $currentQuantity;
+                    $quantityInserted = $materialQuantities[$materialId] ?? 1; //allocated training amount + difference
 
-                    if ($quantityInserted > 0) {
+                    $currentQuantity = $partner_Training_User->materials->where('id', $materialId)->first()->pivot->quantity ?? 0;//allocated training amount
+
+                    $quantityDiference = ($quantityInserted - $currentQuantity);//"difference between the allocated training amount and the entered amount
+                    $stock = Material::find($materialId)->quantity;//product stock
+
+                    if ($quantityInserted != 0) {
                         $partner_Training_User->materials()->syncWithoutDetaching([
                             $materialId => ['quantity' => $quantityInserted],
                         ]);
@@ -160,12 +162,12 @@ class PartnerTrainingUserController extends Controller
                     }
 
                     $material = Material::find($materialId);
-                    $material->quantity = $stockTotal - $quantityInserted;
+                    $material->quantity = $stock - $quantityDiference;
                     $material->save();
                 }
             }
 
-            return redirect()->route('external.index')->with('success', 'Formação atualizada com sucesso');
+            return redirect()->route('external.show', $partner_Training_User->id)->with('success', 'Formação atualizada com sucesso');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Erro ao atualizar a formação. Por favor, tente novamente.');
         }
@@ -195,5 +197,4 @@ class PartnerTrainingUserController extends Controller
             return redirect()->back()->with('error', 'Erro ao eliminar a formação. Por favor, tente novamente.');
         }
     }
-
 }

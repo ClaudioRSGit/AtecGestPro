@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container">
+    <div class="container w-100 fade-in">
 
         @if (session('error'))
             <div class="alert alert-danger error-alert">
@@ -64,7 +64,7 @@
                     </div>
 
                     <div>
-                        <label for="password" class="form-label">Password:</label>
+                        <label for="password" class="form-label" id="passwordLabel">Password:</label>
                         <input type="password" class="form-control" id="password" name="password"
                             placeholder="{{ $user->password ? 'Não altere para manter a password existente' : '' }}">
 
@@ -91,7 +91,7 @@
                                 @endforeach
                             </select>
                         </div>
-                        <input type="hidden" name="isStudent" id="isStudent" value="{{ old('role_id') == 3 ? 1 : 0 }}">
+                        <input type="hidden" name="isStudent" id="isStudent" value="{{ $user->role_id == 3 ? 1 : 0 }}">
 
 
 
@@ -112,7 +112,7 @@
                             <label for="isActive" class="form-label">Estado:</label>
                             <select class="form-control" id="isActive" name="isActive">
                                 <option value="1" {{ $user->isActive == 1 ? 'selected' : '' }}>Ativo</option>
-                                <option value="0" {{ $user->isActive == 0 ? 'selected' : '' }}>Desativado</option>
+                                <option value="0" {{ $user->isActive == 0 ? 'selected' : '' }}>Inativo</option>
                             </select>
                         </div>
                     </div>
@@ -144,35 +144,7 @@
             gap: 1rem;
         }
     </style>
-
-
-
-    <script>
-        function toggleCourseClassDiv() {
-            const selectedRole = $("#role_id").val();
-            const isStudentValue = selectedRole === "3" ? 1 : 0;
-
-            $("#isStudent").val(isStudentValue);
-
-            if (selectedRole === "3") {
-                $("#labelCourseClass").show();
-                $("#password").closest(".mb-3").hide();
-            } else {
-                $("#labelCourseClass").hide();
-                $("#password").closest(".mb-3").show();
-            }
-        }
-
-        function updateCourseDescription(select) {}
-
-        $(document).ready(function() {
-            toggleCourseClassDiv();
-        });
-
-        window.setTimeout(function() {
-            $(".error-alert").fadeTo(500, 0).slideUp(500, function() {
-                $(this).remove();
-            });
-        }, 3000);
-    </script>
 @endsection
+@push('scripts')
+    <script src="{{ asset('js/users/edit.js') }}"></script>
+@endpush

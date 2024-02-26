@@ -17,6 +17,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExcelImportController;
 use App\Http\Controllers\NotificationUserController;
 use App\Http\Controllers\TicketHistoryController;
+use App\Http\Controllers\PasswordChangeController;
 
 //Main Page
 Route::get('/', function () {
@@ -27,6 +28,10 @@ Route::get('/', function () {
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login')->middleware('guest');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+Route::get('/change-password/{username}', [PasswordChangeController::class, 'showChangeForm'])->name('password.change');
+Route::post('/change-password/{username}', [PasswordChangeController::class, 'updatePassword']);
+
+
 
 //Route::middleware('throttle:5,1')->group(function () {
 //    Route::post('users.create', 'UserController@create')->name('users.create');
@@ -48,6 +53,11 @@ Route::middleware(['auth', 'checkRole:admin,tecnico'])->group(function () {
 
     Route::resource('materials', 'MaterialController');
     Route::post('materials/massDelete', 'MaterialController@massDelete')->name('materials.massDelete');
+    Route::get('/materials/restore/{id}', 'MaterialController@restore')->name('materials.restore');
+    Route::delete('/materials/forceDelete/{id}', 'MaterialController@forceDelete')->name('materials.forceDelete');
+    Route::post('/materials/massRestore', 'MaterialController@massRestore')->name('materials.massRestore');
+    Route::post('/materials/massForceDelete', 'MaterialController@massForceDelete')->name('materials.massForceDelete');
+
 
     Route::resource('trainings', 'TrainingController');
     Route::post('trainings/massDelete', 'TrainingController@massDelete')->name('trainings.massDelete');
@@ -59,10 +69,16 @@ Route::middleware(['auth', 'checkRole:admin,tecnico'])->group(function () {
 
     Route::resource('material-user', 'MaterialUserController');
     Route::post('material-user/massDelete', 'MaterialUserController@massDelete')->name('material-user.massDelete');
+    Route::post('material-user/addNote', 'MaterialUserController@addNote')->name('material-user.addNote');
+    Route::post('material-user/addDeliveredAll', 'MaterialUserController@addDeliveredAll')->name('material-user.addDeliveredAll');
+    Route::post('material-user/addDeliveredPartial', 'MaterialUserController@addDeliveredPartial')->name('material-user.addDeliveredPartial');
+    Route::put('/material-user/{id}/edit', 'MaterialUserController@update')->name('material-user.edit');
 
     Route::resource('partners', 'PartnerController');
     Route::delete('partner-contact/{partner_contact}', 'PartnerController@destroyContact')->name('partner-contact.destroy');
     Route::post('partners/massDelete', 'PartnerController@massDelete')->name('partners.massDelete');
+
+    Route::match(['get', 'delete'], '/partners/remove-contact/{contactId}', 'PartnerController@removeContact')->name('partners.removeContact');
 
     Route::post('external/updateTab', 'PartnerTrainingUserController@updateTab')->name('external.updateTab');
     Route::resource('external', 'PartnerTrainingUserController');
@@ -70,6 +86,7 @@ Route::middleware(['auth', 'checkRole:admin,tecnico'])->group(function () {
 
     Route::get('/material-user/create/{id}', 'MaterialUserController@create')->name('material-user.create');
     Route::post('/material-user', 'MaterialUserController@store')->name('material-user.store');
+
 
     Route::resource('course-classes', 'CourseClassController');
     Route::post('course-classes/massDelete', 'CourseClassController@massDelete')->name('course-classes.massDelete');
@@ -102,6 +119,7 @@ Route::middleware(['auth', 'checkRole:admin,tecnico,funcionario'])->group(functi
     Route::get('ticket-histories', 'TicketHistoryController@index');
     Route::get('ticket-histories/{id}', 'TicketHistoryController@show');
     Route::get('/notifications/readAll', [NotificationUserController::class, 'readAll'])->name('notifications.readAll');
+    Route::get('/notifications/delete/{notificationId}', [NotificationUserController::class, 'deleteNotification'])->name('notifications.delete');
 
     Route::post('/comments', 'CommentController@store')->name('comments.store');
     Route::get('users/{user}/edit', 'UserController@edit')->name('users.edit');

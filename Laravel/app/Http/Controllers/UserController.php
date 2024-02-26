@@ -10,14 +10,12 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use App\TicketUser;
+use App\Ticket;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index(Request $request)
     {
         $searchName = $request->input('searchName');
@@ -25,7 +23,7 @@ class UserController extends Controller
         $sortColumn = $request->input('sortColumn', 'name');
         $sortDirection = $request->input('sortDirection', 'asc');
 
-        $query = User::with('courseClass', 'role')->where('name', '!=', 'Fila de Espera');
+        $query = User::with('courseClass', 'role')->where('name', '!=', 'Fila de Espera')->where('name', '!=', 'Utilizador Padrao');
 
         if ($roleFilter && $roleFilter !== 'all') {
             $query->whereHas('role', function ($roleQuery) use ($roleFilter) {
@@ -37,19 +35,15 @@ class UserController extends Controller
             $query->where('name', 'like', "%$searchName%");
         }
 
-        $users = $query->orderBy($sortColumn, $sortDirection)->paginate(5, ['*'], 'uPage');
+        $users = $query->orderBy($sortColumn, $sortDirection)->paginate(5, ['*'], 'uPage')->withQueryString();
+        $deletedUsers = User::onlyTrashed()->paginate(5, ['*'], 'dPage')->withQueryString();
+
         $courseClasses = CourseClass::all();
         $roles = Role::all();
 
-        $deletedUsers = User::onlyTrashed()->paginate(5, ['*'], 'dPage');
-
         return view('users.index', compact('users', 'courseClasses', 'roles', 'roleFilter', 'sortColumn', 'sortDirection', 'searchName', 'deletedUsers'));
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
         $courseClasses = CourseClass::all();
@@ -70,6 +64,10 @@ class UserController extends Controller
         }
 
         try {
+
+            if (auth()->user()->hasRole('tecnico') && $request->input('role_id') == 1) {
+                return redirect()->back()->with('error', 'Não é possível criar um novo administrador!');
+            }
 
             $password = $request->input('password');
             $userData = $request->only(['name', 'username', 'email', 'contact', 'isStudent', 'isActive', 'course_class_id', 'role_id']);
@@ -94,8 +92,6 @@ class UserController extends Controller
         $courseClasses = CourseClass::with('Course')->get();
         $roles = Role::all();
 
-
-
         if ($user->isStudent == 1) {
             $user->load('courseClass', 'role');
             $courseDescription = $user->courseClass ? $user->courseClass->course->description : null;
@@ -111,13 +107,6 @@ class UserController extends Controller
 
     public function edit(User $user)
     {
-        // $courseClasses = CourseClass::all();
-        // $courses = Course::all();
-        // $roles = Role::all();
-        // $user->load('CourseClass.Course', 'Role');
-
-        // return view('users.edit', compact('user', 'courseClasses', 'courses', 'roles'));
-
         $authenticatedUser = Auth::user();
 
         if ($authenticatedUser->hasRole('funcionario') || $authenticatedUser->hasRole('tecnico')) {
@@ -130,12 +119,14 @@ class UserController extends Controller
                 return view('users.edit', compact('user', 'courseClasses', 'courses', 'roles'));
             }
         } else {
-            $courseClasses = CourseClass::all();
-            $courses = Course::all();
-            $roles = Role::all();
-            $user->load('CourseClass.Course', 'Role');
+            if ($user->id !== 1 && $user->id !== 2) {
+                $courseClasses = CourseClass::all();
+                $courses = Course::all();
+                $roles = Role::all();
+                $user->load('CourseClass.Course', 'Role');
 
-            return view('users.edit', compact('user', 'courseClasses', 'courses', 'roles'));
+                return view('users.edit', compact('user', 'courseClasses', 'courses', 'roles'));
+            }
         }
 
         return abort(403, 'Acesso não autorizado!');
@@ -145,36 +136,36 @@ class UserController extends Controller
     public function update(UserRequest $request, User $user)
     {
         try {
-            if ($user->role_id == 3 && $request->input('role_id') != 3 && !$request->filled('password')) {
+            $data = $request->validated();
+
+            if ($user->role_id === 3 && $request->input('role_id') !== 3 && !$request->filled('password')) {
                 return redirect()->back()->with('error', 'Password obrigatória ao alterar de Formando para outra função.');
             }
 
-            $data = $request->validated();
-
-            if ($user->role_id != 3 && $request->input('role_id') == 3) {
-                $data['password'] = null;
-            }
-
-            if ($user->role_id != 3 && !$request->filled('password')) {
+            if ($user->role_id !== 3 && !$request->filled('password')) {
                 unset($data['password']);
             }
 
-            if ($request->input('isStudent') != 1) {
+            if ($user->role_id !== 3 && $request->input('role_id') === 3) {
+                $data['password'] = null;
+            }
+
+            if ($request->input('isStudent') !== 1) {
                 $data['course_class_id'] = null;
             }
 
-            if ($request->filled('password') && $request->input('role_id') != 3) {
+            if ($request->filled('password') && $request->input('role_id') !== 3) {
                 $data['password'] = $this->encryptPassword($request->input('password'));
             }
 
-            // if (auth()->user()->hasRole('tecnico')) {
-            //     if (auth()->user()->id === $user->id) {
-            //         unset($data['role_id']);
-            //         unset($data['isStudent']);
-            //         unset($data['course_class_id']);
-            //         unset($data['isActive']);
-            //     }
-            // }
+            if (auth()->user()->hasRole('admin')) {
+                if ($user->hasRole('admin') && $request->input('role_id') !== 1) {
+                    return redirect()->back()->with('error', 'O administrador não pode alterar a sua própria função!');
+                }
+            }
+            if ($user->id === auth()->user()->id && $request->input('isActive') === 0) {
+                return redirect()->back()->with('error', 'Não é possível desativar a sua própria conta!');
+            }
 
             $user->update($data);
 
@@ -186,16 +177,50 @@ class UserController extends Controller
                 return redirect()->route('users.index')->with('success', 'Utilizador atualizado com sucesso!');
             }
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Erro ao atualizar o utilizador.Por favor tente novamente');
+            return redirect()->back()->with('error', 'Erro ao atualizar o utilizador.Por favor tente novamente!');
         }
     }
 
+    private function canDeleteUser($loggedInUser, $user)
+    {
+        if ($loggedInUser->hasRole('tecnico')) {
+            if ($user->hasRole('admin') || $user->id == $loggedInUser->id) {
+                return false;
+            }
+        }
+
+        if ($loggedInUser->hasRole('admin')) {
+            if ($user->hasRole('admin') && $user->id == $loggedInUser->id) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
     public function destroy(User $user)
     {
-        try {
-            $user->delete();
+        $loggedInUser = auth()->user();
+        $waitingQueueUserId = 1;
+        $anonymousRequesterUserId = 2;
 
+        $technicianTickets = TicketUser::where('user_id', $user->id)->get();
+        $userTickets = Ticket::where('user_id', $user->id)->get();
+
+
+        if (!$this->canDeleteUser($loggedInUser, $user)) {
+            return redirect()->back()->with('error', 'Não é permitido excluir este utilizador!');
+        }
+
+        try {
+            foreach ($technicianTickets as $technician) {
+                $technician->update(['user_id' => $waitingQueueUserId]);
+            }
+            foreach ($userTickets as $newRequester) {
+                $newRequester->update(['user_id' => $anonymousRequesterUserId]);
+            }
+
+            $user->delete();
             return redirect()->route('users.index')->with('success', 'Utilizador excluído com sucesso!');
         } catch (\Exception $e) {
             return redirect()->route('users.index')->with('error', 'Erro ao excluir o utilizador. Por favor, tente novamente.');
@@ -204,14 +229,34 @@ class UserController extends Controller
 
     public function massDelete(Request $request)
     {
+        $loggedInUser = auth()->user();
+        $waitingQueueUserId = 1;
+        $anonymousRequesterUserId = 2;
+
         $request->validate([
             'user_ids' => 'required|array',
-            'user_ids.*' => 'exists:users,id', //all items inside array must exist
+            'user_ids.*' => 'exists:users,id',
         ]);
 
         try {
-            User::whereIn('id', $request->input('user_ids'))->delete();
+            foreach ($request->input('user_ids') as $userId) {
+                $user = User::findOrFail($userId);
 
+                $technicianTickets = TicketUser::where('user_id', $user->id)->get();
+                $userTickets = Ticket::where('user_id', $user->id)->get();
+                foreach ($technicianTickets as $ticket) {
+                    $ticket->update(['user_id' => $waitingQueueUserId]);
+                }
+                foreach ($userTickets as $newRequester) {
+                    $newRequester->update(['user_id' => $anonymousRequesterUserId]);
+                }
+
+                if (!$this->canDeleteUser($loggedInUser, $user)) {
+                    return redirect()->back()->with('error', 'Não é permitido excluir um dos utilizadores selecionados!');
+                }
+            }
+
+            User::whereIn('id', $request->input('user_ids'))->delete();
             return redirect()->back()->with('success', 'Utilizadores selecionados excluídos com sucesso!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Erro ao excluir utilizadores selecionados. Por favor, tente novamente.');
@@ -222,11 +267,6 @@ class UserController extends Controller
     {
         return bcrypt($password);
     }
-
-    //    private function setIsStudent(Request $request)
-    //    {
-    //        return $request->input('position') === 'formando' ? 1 : 0;
-    //    }
 
     public function restore($id)
     {

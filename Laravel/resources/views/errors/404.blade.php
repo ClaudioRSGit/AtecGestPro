@@ -1,119 +1,91 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>404 Página não Encontrada</title>
-		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-		 integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Erro 404</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <style>
-       body{
-  margin:0;
-  padding:0;
-  font-family: 'Tomorrow', sans-serif;
-  height:100vh;
-background-image: linear-gradient(to top, #ffffff, #f2f2f2, #e6e6e6, #55a1d4, #0886da);
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  overflow:hidden;
-}
-.text{
-  position:absolute;
-  top:10%;
-  color:#fff;
-  text-align:center;
-}
-h1{
-  font-size:50px;
-}
-.star{
-  position:absolute;
-  width:2px;
-  height:2px;
-  background:#fff;
-  right:0;
-  animation:starTwinkle 3s infinite linear;
-}
-.astronaut img{
-  width:100px;
-  position:absolute;
-  top:55%;
-  animation:astronautFly 6s infinite linear;
-}
-@keyframes astronautFly{
-  0%{
-    left:-100px;
-  }
-  25%{
-    top:50%;
-    transform:rotate(30deg);
-  }
-  50%{
-    transform:rotate(45deg);
-    top:55%;
-  }
-  75%{
-    top:60%;
-    transform:rotate(30deg);
-  }
-  100%{
-    left:110%;
-    transform:rotate(45deg);
-  }
-}
-@keyframes starTwinkle{
-  0%{
-     background:rgba(255,255,255,0.4);
-  }
-  25%{
-    background:rgba(255,255,255,0.8);
-  }
-  50%{
-   background:rgba(255,255,255,1);
-  }
-  75%{
-    background:rgba(255,255,255,0.8);
-  }
-  100%{
-    background:rgba(255,255,255,0.4);
-  }
-}
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 60%;
+            text-align: center;
+        }
+
+        .error-text {
+            color: #333;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .error-code {
+            color: #555;
+            font-size: 100px;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .error-description {
+            color: #555;
+            font-size: 18px;
+        }
+
+        .error-image {
+            width: 40%;
+            text-align: center;
+        }
+
+        .error-image img {
+            max-width: 80%;
+            height: auto;
+            margin-right: 30%;
+        }
     </style>
 </head>
 <body>
-    <div class="text">
-        <div>Erro</div>
-        <h1>404</h1>
-        <hr>
-        <div class="mb-2"><strong>Página não Encontrada</strong></div>
-        <p>Desculpe, a página que tentou aceder não foi encontrada.</p>
-        <a href="{{ "/" }}" class="btn btn-outline-primary mb-3 ">Voltar</a>
+<div class="container">
+    <div class="error-text">
+        <h2>Oops! Parece que alguém se perdeu...</h2>
+    </div>
+    <h1 class="error-code">404</h1>
+
+    <div class="error-description">
+        <h2><strong>Página não encontrada</strong></h2>
     </div>
 
-      <div class="astronaut">
-        <img src="https://images.vexels.com/media/users/3/152639/isolated/preview/506b575739e90613428cdb399175e2c8-space-astronaut-cartoon-by-vexels.png" alt="" class="src">
-      </div>
-</body>
-<script>
-    document.addEventListener("DOMContentLoaded",function(){
+    <div id="redirect-counter">Será redirecionado em <span id="countdown">5</span> segundos.</div>
+</div>
+<div class="error-image">
+    <img src="{{ asset('assets/404.png') }}">
+</div>
 
-  var body=document.body;
-   setInterval(createStar,100);
-   function createStar(){
-     var right=Math.random()*500;
-     var top=Math.random()*screen.height;
-     var star=document.createElement("div");
-  star.classList.add("star")
-   body.appendChild(star);
-   setInterval(runStar,10);
-     star.style.top=top+"px";
-   function runStar(){
-     if(right>=screen.width){
-       star.remove();
-     }
-     right+=3;
-     star.style.right=right+"px";
-   }
-   }
- })
+<script>
+    function countdownRedirect() {
+        var seconds = 5;
+        var countdownElement = document.getElementById("countdown");
+        var countdownInterval = setInterval(function() {
+            seconds--;
+            countdownElement.textContent = seconds;
+            if (seconds <= 0) {
+                clearInterval(countdownInterval);
+                window.location.href = "/";
+            }
+        }, 1000);
+    }
+
+    countdownRedirect();
 </script>
+</body>
 </html>

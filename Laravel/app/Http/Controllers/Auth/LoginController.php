@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -69,6 +70,11 @@ class LoginController extends Controller
         if (!$user->isActive) {
             Auth::logout();
             return redirect()->route('login')->with('error', 'Utilizador inativo!');
+        }
+
+        if (Hash::check('temporary', $user->password)) {
+            Auth::logout();
+            return redirect()->route('password.change', ['username' => $user->username]);
         }
 
         return redirect()->intended($this->redirectPath());

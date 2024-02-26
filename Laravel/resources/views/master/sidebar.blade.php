@@ -1,6 +1,6 @@
 <div class="sidebarContent">
     <a href="/" style="text-decoration: none; color: black">
-        <div class="logo">
+        <div class="logo pl-1">
             <img src="{{ asset('assets/logo.png') }}" alt="logo">
             <h5 class="toggleableElement ml-3"><strong> ATEC GEST PRO </strong></h5>
         </div>

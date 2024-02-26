@@ -1,13 +1,27 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container">
+    <div class="container w-100 fade-in">
 
         @if (session('error'))
             <div class="alert alert-danger contact-alert">
                 {{ session('error') }}
             </div>
         @endif
+
+        @if (session('success'))
+            <div class="alert alert-success contact-alert">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @foreach ($errors->get('new_contact_descriptions.*') as $error)
+            <div class="alert alert-danger contact-alert">{{ $error[0] }}</div>
+        @endforeach
+
+        @foreach ($errors->get('new_contact_values.*') as $error)
+            <div class="alert alert-danger contact-alert">{{ $error[0] }}</div>
+        @endforeach
 
         <h1>Editar Parceiro</h1>
         <form method="post" action="{{ route('partners.update', $partner->id) }}">
@@ -64,14 +78,15 @@
                                     <input type="text" class="form-control" name="existing_contact_values[]"
                                         value="{{ old('existing_contact_values.' . $index, $contact->contact) }}"
                                         placeholder="Contacto">
-                                    <button type="button" class="btn"
-                                        onclick="removeContact({{ $contact->id }}, this)">
+                                    <a href="/partners/remove-contact/{{ $contact->id }}" class="btn"
+                                        onclick="return confirm('Tem certeza de que deseja excluir este contacto?');">
                                         <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14"
                                             viewBox="0 0 448 512">
                                             <path fill="#116fdc"
                                                 d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z" />
                                         </svg>
-                                    </button>
+                                    </a>
+
 
                                     @error("existing_contact_descriptions.$index")
                                         <div class="alert alert-danger contact-alert">{{ $message }}</div>
@@ -146,27 +161,28 @@
         }
 
         function addContactFields() {
-        const contactGroups = document.querySelectorAll('.contact-group');
-        const maxContacts = 3;
+            const contactGroups = document.querySelectorAll('.contact-group');
+            const maxContacts = 3;
 
-        if (contactGroups.length < maxContacts) {
-            if (contactGroups.length === 0) {
-                addNewContactGroup();
-            } else {
-                const lastContactGroup = contactGroups[contactGroups.length - 1];
-                const lastDescriptionInput = lastContactGroup.querySelector('[name^="new_contact_descriptions"]');
-                const lastValueInput = lastContactGroup.querySelector('[name^="new_contact_values"]');
-
-                if (lastDescriptionInput && lastValueInput && (lastDescriptionInput.value.trim() === '' || lastValueInput.value.trim() === '')) {
-                    alert('Preencha todos os campos dos contactos anteriores!');
-                } else {
+            if (contactGroups.length < maxContacts) {
+                if (contactGroups.length === 0) {
                     addNewContactGroup();
+                } else {
+                    const lastContactGroup = contactGroups[contactGroups.length - 1];
+                    const lastDescriptionInput = lastContactGroup.querySelector('[name^="new_contact_descriptions"]');
+                    const lastValueInput = lastContactGroup.querySelector('[name^="new_contact_values"]');
+
+                    if (lastDescriptionInput && lastValueInput && (lastDescriptionInput.value.trim() === '' ||
+                            lastValueInput.value.trim() === '')) {
+                        alert('Preencha todos os campos dos contactos anteriores!');
+                    } else {
+                        addNewContactGroup();
+                    }
                 }
+            } else {
+                alert('Número máximo de contactos atingido!');
             }
-        } else {
-            alert('Número máximo de contactos atingido!');
         }
-    }
 
         function addNewContactGroup() {
             const contactsContainer = document.getElementById('contacts-container');
@@ -221,41 +237,27 @@
 
         function updateRemoveButtonState() {
             const contactGroups = document.querySelectorAll('.contact-group');
-            const removeButtons = document.querySelectorAll('.contact-group button');
 
-            if (contactGroups.length === 1 && (contactGroups[0].querySelector('[name^="new_contact_descriptions"]').value
-                    .trim() === '' || contactGroups[0].querySelector('[name^="new_contact_values"]').value.trim() === '')) {
-                removeButtons.forEach(function(button) {
-                    button.disabled = true;
-                });
-            } else {
-                removeButtons.forEach(function(button) {
-                    button.disabled = false;
-                });
-            }
-        }
+            contactGroups.forEach(function(contactGroup) {
+                const descriptionInput = contactGroup.querySelector(
+                    '[name^="existing_contact_descriptions"], [name^="new_contact_descriptions"]');
+                const valueInput = contactGroup.querySelector(
+                    '[name^="existing_contact_values"], [name^="new_contact_values"]');
 
-        function removeContact(contactId, contactElement) {
-            const csrfToken = $('meta[name="csrf-token"]').attr('content');
+                if (descriptionInput && valueInput) {
+                    const isDescriptionEmpty = descriptionInput.value.trim() === '';
+                    const isValueEmpty = valueInput.value.trim() === '';
 
-            $.ajax({
-                url: '/partner-contact/' + contactId,
-                type: 'DELETE',
-                dataType: 'json',
-                headers: {
-                    'X-CSRF-TOKEN': csrfToken
-                },
-                success: function(response) {
-                    if (response.success) {
-                        $(contactElement).closest('.contact-group').remove();
-                        addNewContactGroupIfNeeded();
-                        updateRemoveButtonState();
-                    } else {
-                        alert(response.error);
+                    const isGroupEmpty = isDescriptionEmpty && isValueEmpty;
+
+                    const removeButton = contactGroup.querySelector('button');
+                    if (removeButton) {
+                        removeButton.disabled = isGroupEmpty && contactGroups.length === 1;
                     }
                 }
             });
         }
+
         window.setTimeout(function() {
             $(".contact-alert").fadeTo(500, 0).slideUp(500, function() {
                 $(this).remove();

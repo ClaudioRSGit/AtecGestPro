@@ -13,9 +13,17 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
     <link rel="stylesheet" href="{!! asset('css/app.css') !!}" media="all" type="text/css" />
     <link rel="icon" href="https://upload.wikimedia.org/wikipedia/commons/9/91/Gear-icon-blue-white-background.png"
-        type="image/x-icon">
+    type="image/x-icon">
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css">
+    <script src="https://kit.fontawesome.com/5931b49df2.js" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
     @yield('styles')
+    @stack('scripts')
     {{-- .STYLE SECTION --}}
 </head>
 
@@ -42,7 +50,14 @@
 
 
         <div class="content">
+
             @yield('content')
+            @if (Request::is('/'))
+            <div class="container w-100 h-100 d-flex justify-content-center align-items-center">
+                <img draggable="false" src="{{ asset('assets/atecLogo.png') }}" alt="" style="opacity: 0.6;">
+            </div>
+            @endif
+
         </div>
 
         <div class="push">
@@ -112,7 +127,7 @@
             }
         });
     </script>
-
 </body>
+
 
 </html>

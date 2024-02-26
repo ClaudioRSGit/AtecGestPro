@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Course;
+use App\CourseClass;
 use Illuminate\Http\Request;
 use App\Http\Requests\CourseRequest;
 
@@ -31,7 +32,7 @@ class CourseController extends Controller
             });
         }
 
-        $courses = $query->paginate(5);
+        $courses = $query->paginate(5)->withQueryString();
 
 
 
@@ -55,7 +56,8 @@ class CourseController extends Controller
 
     public function show(Course $course)
     {
-        return view('courses.show', compact('course'));
+        $courseClasses = CourseClass::where('course_id', $course->id)->get();
+        return view('courses.show', compact('course', 'courseClasses'));
     }
 
     public function edit(Course $course)

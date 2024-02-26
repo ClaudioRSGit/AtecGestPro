@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container">
+    <div class="container w-100 fade-in">
 
         @if (session('error'))
             <div class="alert alert-danger">
@@ -104,7 +104,7 @@
                         <label for="isActive" class="form-label">Estado:</label>
                         <select class="form-control" id="isActive" name="isActive">
                             <option value="1" {{ old('isActive') == '1' ? 'selected' : '' }}>Ativo</option>
-                            <option value="0" {{ old('isActive') == '0' ? 'selected' : '' }}>Desativado</option>
+                            <option value="0" {{ old('isActive') == '0' ? 'selected' : '' }}>Inativo</option>
                         </select>
                     </div>
                 </div>
@@ -117,25 +117,8 @@
             </div>
         </form>
     </div>
-
-    <script>
-        function toggleCourseClassDiv() {
-            const selectedRole = $("#role_id").val();
-            const isStudentValue = selectedRole === "3" ? 1 : 0;
-
-            $("#isStudent").val(isStudentValue);
-
-            if (selectedRole === "3") {
-                $("#labelCourseClass").show();
-                $("#password").closest(".mb-3").hide();
-            } else {
-                $("#labelCourseClass").hide();
-                $("#password").closest(".mb-3").show();
-            }
-        }
-
-        $(document).ready(function() {
-            toggleCourseClassDiv();
-        });
-    </script>
 @endsection
+@push('scripts')
+    <script src="{{ asset('js/users/create.js') }}"></script>
+@endpush
+

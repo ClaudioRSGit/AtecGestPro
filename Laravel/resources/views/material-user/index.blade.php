@@ -1,17 +1,20 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container w-100">
+    <div class="container  w-100 fade-in">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1>Vestuário</h1>
             <a href="{{ route('course-classes.create') }}" class="btn btn-primary">
-                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512">
-                    <path fill="#fff"
-                          d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z"/>
-                </svg>
+                <i class="fa-solid fa-pen mr-1" style="color: #ffffff;"></i>
                 Criar Turma
             </a>
         </div>
+
+        @if (session('message'))
+            <div class="alert alert-success">
+                {{ session('message') }}
+            </div>
+        @endif
 
         @if (session('success'))
             <div class="alert alert-success" id="success-alert">
@@ -71,37 +74,29 @@
                 <div id="accordion">
                     <div class="ms-auto">
 
-                        <span>&nbsp; &nbsp;Turma</span>
+                        <span>Turma</span>
                     </div>
                     @foreach ($courseClasses as $courseClass)
                         <div class="card mb-2 mt-2">
-                            <div class="card-header bg-white" id="heading{{ $courseClass->id }}">
+
+                            <div class="card-header ">
                                 <h2 class="mb-0">
 
-                                    @php
-                                        $allDelivered =
-                                            $courseClass->students->count() > 0 &&
-                                            $courseClass->students->every(function ($student) use ($usersWithMaterialsDelivered) {
-                                                return $usersWithMaterialsDelivered->contains($student->id);
-                                            });
-                                    @endphp
 
-                                    <button class="btn btn-link {{ $allDelivered ? 'font-weight-bold' : ' ' }}"
-                                            type="button" data-toggle="collapse"
-                                            data-target="#collapse{{ $courseClass->id }}"
+                                    <button class="btn btn-link "
+                                            type="button" data-toggle="collapse" data-target="#collapse{{ $courseClass->id }}"
                                             aria-expanded="false" aria-controls="collapse{{ $courseClass->id }}">
                                         {{ $courseClass->description }}
                                     </button>
                                 </h2>
                             </div>
-
                             <div id="collapse{{ $courseClass->id }}" class="collapse"
                                  aria-labelledby="heading{{ $courseClass->id }}" data-parent="#accordion">
                                 <div class="card-body">
                                     @if ($courseClass->students->count() > 0)
                                         <table class="table">
                                             <thead>
-                                            <tr>
+                                            <tr >
                                                 <th>Nome</th>
                                                 <th>Username</th>
                                                 <th>Email</th>
@@ -111,25 +106,21 @@
                                             <tbody>
                                             <tr class="filler"></tr>
                                             @foreach ($courseClass->students as $student)
-                                                <tr class="customTableStyling">
+                                                <tr class="customTableStyling {{ $usersWithMaterialsDelivered->contains($student->id) ? 'bg-blue' : '' }}">
                                                     @php
-                                                        $myVariable = $usersWithMaterialsDelivered->contains($student->id) ? 'text-primary' : '';
+                                                        $allDelivered = $usersWithMaterialsDelivered->contains($student->id) ? 'bg-blue' : '';
                                                     @endphp
-                                                    <td class="clickable {{ $myVariable }}">
+                                                    <td class="clickable {{ $allDelivered }}">
                                                         <a href="{{ route('material-user.create', $student->id) }}"
                                                            class="d-flex align-items-center w-auto h-100">{{ $student->name }}</a>
                                                     </td>
-                                                    <td class="{{ $myVariable }}">{{ $student->username }}</td>
-                                                    <td class="{{ $myVariable }}">{{ $student->email }}</td>
-                                                    <td class="editDelete">
+                                                    <td class="{{ $allDelivered }}">{{ $student->username }}</td>
+                                                    <td class="{{ $allDelivered }}">{{ $student->email }}</td>
+                                                    <td class="editDelete {{ $allDelivered }}">
                                                         <div style="width: 40%">
                                                             <a href="{{ route('material-user.edit', $student->id) }}"
-                                                               class="mx-2">
-                                                                <svg xmlns="http://www.w3.org/2000/svg" height="16"
-                                                                     width="16" viewBox="0 0 512 512">
-                                                                    <path fill="#116fdc"
-                                                                          d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z"/>
-                                                                </svg>
+                                                               class="mx-2 ">
+                                                               <i class="fa-solid fa-pen-to-square fa-lg" style="color: #116fdc;"></i>
                                                             </a>
                                                         </div>
                                                         <div style="width: 40%">
@@ -150,6 +141,7 @@
                 </div>
                 {{ $courseClasses->appends(['cPage' => $courseClasses->currentPage()])->links() }}
             </div>
+
 
             <div class="tab-pane fade" id="outros">
                 <div class="w-100 d-flex justify-content-between align-items-center mb-3" style="gap: 1rem">
@@ -194,23 +186,21 @@
                     </thead>
                     <tbody class="customTableStyling">
                     @foreach ($nonDocents as $nonDocent)
-                        <tr class="filler">
-                            @php
-                                $myVariable = $usersWithMaterialsDelivered->contains($nonDocent->id) ? 'text-primary' : '';
-                            @endphp
-                            <td class="clickable {{ $myVariable }}">
+
+                        <tr class="{{ $usersWithMaterialsDelivered->contains($nonDocent->id) ? 'bg-blue' : '' }}">
+
+                            <td class="clickable ">
                                 <a href="{{ route('material-user.create', $nonDocent->id) }}"
                                    class="d-flex align-items-center w-auto h-100">{{ $nonDocent->name }}</a>
                             </td>
-                            <td class="{{ $myVariable }}">{{ $nonDocent->username }}</td>
-                            <td class="{{ $myVariable }}">{{ $nonDocent->email }}</td>
+                            @php
+                                $allDelivered = $usersWithMaterialsDelivered->contains($nonDocent->id) ? 'bg-blue' : '';
+                            @endphp
+                            <td class="{{ $allDelivered }}">{{ $nonDocent->username }}</td>
+                            <td class="{{ $allDelivered }}">{{ $nonDocent->email }}</td>
                             <td>
                                 <a href="{{ route('material-user.edit', $nonDocent->id) }}" class="mx-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16"
-                                         viewBox="0 0 512 512">
-                                        <path fill="#116fdc"
-                                              d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z"/>
-                                    </svg>
+                                    <i class="fa-solid fa-pen-to-square fa-lg" style="color: #116fdc;"></i>
                                 </a>
                             </td>
                         </tr>
@@ -223,49 +213,65 @@
 
         </div>
 
-        <script>
-            //logica filtro roles
-            function submitFormRoles() {
-                let roleFilterValue = document.getElementById("roleFilter").value;
-                document.getElementById("roleFilterForm").submit();
-            }
-        </script>
+    </div>
 
-        <script>
-            //logica filtro curso
-            function submitForm() {
-                let courseFilterValue = document.getElementById("courseFilter").value;
-
-                document.getElementById("courseFilterForm").submit();
-            }
-        </script>
-
-        <script>
-            //save tab in localstorage
-            $(document).ready(function () {
-                let activeTab = localStorage.getItem('activeTab');
-                if (activeTab) {
-                    $('#myTabs a[href="' + activeTab + '"]').tab('show');
-                }
-
-                $('a[data-toggle="tab"]').on('click', function (e) {
-                    localStorage.setItem('activeTab', $(this).attr('href'));
-                });
+    <script>
+        //fade out alert
+        setTimeout(function () {
+            $(".alert").fadeTo(500, 0).slideUp(500, function () {
+                $(this).remove();
             });
-        </script>
+        }, 2000);
+    </script>
 
 
-        <style>
-            #accordion .card {
-                border: none;
+    <script>
+        //logica filtro roles
+        function submitFormRoles() {
+            let roleFilterValue = document.getElementById("roleFilter").value;
+            document.getElementById("roleFilterForm").submit();
+        }
+    </script>
+
+    <script>
+        //logica filtro curso
+        function submitForm() {
+            let courseFilterValue = document.getElementById("courseFilter").value;
+
+            document.getElementById("courseFilterForm").submit();
+        }
+    </script>
+
+    <script>
+        //save tab in localstorage
+        $(document).ready(function () {
+            let activeTab = localStorage.getItem('activeTab');
+            if (activeTab) {
+                $('#myTabs a[href="' + activeTab + '"]').tab('show');
             }
 
-            #accordion .card-header {
-                border-bottom: none;
-            }
+            $('a[data-toggle="tab"]').on('click', function (e) {
+                localStorage.setItem('activeTab', $(this).attr('href'));
+            });
+        });
+    </script>
 
-            #accordion .card-body {
-                background-color: #f8fafc;
-            }
-        </style>
+
+    <style>
+        .bg-blue {
+            background-color: rgba(54, 162, 235, 0.3);
+        }
+
+        #accordion .card {
+            border: none;
+        }
+
+        #accordion .card-header {
+            border-bottom: none;
+        }
+
+        #accordion .card-body {
+            background-color: #f8fafc;
+        }
+    </style>
 @endsection

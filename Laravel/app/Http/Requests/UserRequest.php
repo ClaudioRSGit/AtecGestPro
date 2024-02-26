@@ -42,15 +42,6 @@ class UserRequest extends FormRequest
             'role_id' => 'required',
         ];
 
-        // if ($this->isMethod('put')) {
-        //     $rules['password'] = [
-        //         'nullable',
-        //         'string',
-        //         'min:7',
-        //         'max:20',
-        //         'regex:/^(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>]).*$/',
-        //     ];
-        // } else {
         if ($this->isMethod('put')) {
             if ($this->user && $this->user->hasRole('funcionario') || $this->user->hasRole('tecnico')) {
                 $rules['isStudent'] = 'nullable';
@@ -91,22 +82,19 @@ class UserRequest extends FormRequest
             'username.required' => 'O username é obrigatório!',
             'username.min' => 'O username deve ter pelo menos 5 caracteres!',
             'username.max' => 'O username deve ter no máximo 20 caracteres!',
-            //            'username.unique' => 'O username já existe!',
 
             'email.required' => 'O email é obrigatório!',
             'email.email' => 'Formato de email inválido!',
-            //            'email.unique' => 'O email já existe!',
 
             'contact.required' => 'O contato é obrigatório!',
             'contact.min' => 'O contato deve ter pelo menos 9 caracteres!',
             'contact.max' => 'O contato deve ter no máximo 20 caracteres!',
             'contact.regex' => 'Formato de contacto inválido!',
-            //            'contact.unique' => 'O contacto já existe!',
 
             'password.required' => 'A password é obrigatória!',
             'password.regex' => 'A password deve ter pelo menos uma letra maiúscula, um caracter especial e sete caracteres!',
             'password.min' => 'A password deve ter pelo menos uma letra maiúscula, um caracter especial e sete caracteres!',
-            'password.max' => 'A password deve no máximo vinte caracteres!',
+            'password.max' => 'A password deve ter no máximo vinte caracteres!',
         ];
     }
 }

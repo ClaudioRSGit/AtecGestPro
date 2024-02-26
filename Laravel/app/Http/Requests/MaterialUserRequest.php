@@ -32,4 +32,17 @@ class MaterialUserRequest extends FormRequest
             'delivered_all' => 'required',
         ];
     }
+
+    public function messages()
+    {
+        return [
+            'selectedClothing.required' => 'É necessário selecionar pelo menos um item!',
+            'quantity.required' => 'É necessário informar a quantidade de cada item!',
+            'material_size_id.required' => 'É necessário informar o tamanho de cada item!',
+            'delivery_date.required' => 'É necessário informar a data de entrega de cada item!',
+
+        ];
+    }
+
+
 }

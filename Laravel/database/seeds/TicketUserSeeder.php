@@ -69,5 +69,17 @@ class TicketUserSeeder extends Seeder
             'ticket_id' => 9,
             'user_id' => 12,
         ]);
+        // Seed 10
+        DB::table('ticket_users')->insert([
+            'id' => 10,
+            'ticket_id' => 10,
+            'user_id' => 12,
+        ]);
+        // Seed 11
+        DB::table('ticket_users')->insert([
+            'id' => 11,
+            'ticket_id' => 11,
+            'user_id' => 12,
+        ]);
     }
 }

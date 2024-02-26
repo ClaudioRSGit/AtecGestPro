@@ -1,12 +1,8 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <ul class="navbar-nav">
-        <li class="nav-item">
-            <a class="nav-link mb-2 btn btn-light" onclick="toggleSidebar()">
-                <img src="https://cdn.icon-icons.com/icons2/2518/PNG/512/menu_icon_151204.png" alt="Menu"
-                    style="width: 25px; height: 25px;">
-            </a>
-        </li>
-    </ul>
+        <a class="nav-link mb-2 btn btn-light" onclick="toggleSidebar()">
+            <img src="https://cdn.icon-icons.com/icons2/2518/PNG/512/menu_icon_151204.png" alt="Menu"
+                style="width: 25px; height: 25px;">
+        </a>
     <h5 class="ml-2">Bem vindo, {{ Auth::user()->name }}!</h5>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
@@ -38,8 +34,8 @@
             <li class="nav-item dropdown">
                 <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
-                    <span class="rounded-circle bg-primary text-white"
-                        style="width: 30px; height: 30px; font-size: 13px; margin-right: 5px; display: inline-block; text-align: center; line-height: 30px; z-index: 1000;">
+                    <span class="rounded-circle text-white"
+                        style="width: 30px; height: 30px; font-size: 13px; margin-right: 5px; display: inline-block; text-align: center; line-height: 30px; z-index: 1000;  background-color: #116fdc;">
                         <strong>{{ Auth::user()->initials }}</strong>
                     </span>
                 </a>
@@ -56,9 +52,3 @@
 
     </form>
 </nav>
-@livewireScripts
-<script>
-    window.livewire.on('redirectToTicket', ticketId => {
-        window.location.href = '/tickets/' + ticketId;
-    });
-</script>

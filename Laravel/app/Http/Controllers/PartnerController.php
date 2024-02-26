@@ -6,6 +6,7 @@ use App\Partner;
 use App\ContactPartner;
 use Illuminate\Http\Request;
 use App\Http\Requests\PartnerRequest;
+use Illuminate\Database\QueryException;
 
 class PartnerController extends Controller
 {
@@ -175,6 +176,18 @@ class PartnerController extends Controller
         } catch (\Exception $e) {
 
             return redirect()->back()->with('error', 'Erro ao excluir Parceiros selecionados. Por favor, tente novamente.');
+        }
+    }
+
+    public function removeContact($contactId)
+    {
+        try {
+            $contact = ContactPartner::findOrFail($contactId);
+            $contact->delete();
+
+            return back()->with('success', 'Contacto excluído com sucesso!');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Erro ao excluir o contacto selecionado! Por favor, tente novamente.');
         }
     }
 }

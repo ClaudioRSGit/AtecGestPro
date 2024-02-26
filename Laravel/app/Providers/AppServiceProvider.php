@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-
+use Illuminate\Support\Facades\Blade;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -23,6 +23,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Blade::directive('showIfNotDeleted', function ($expression) {
+            return "<?php if (! isset({$expression}->deleted_at)) : ?>";
+        });
+
+        Blade::directive('endshowIfNotDeleted', function () {
+            return '<?php endif; ?>';
+        });
     }
 }

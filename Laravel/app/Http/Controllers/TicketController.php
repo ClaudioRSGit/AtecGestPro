@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\TicketRequest;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 
 class TicketController extends Controller
@@ -35,8 +36,7 @@ class TicketController extends Controller
         $filterRecyclingCategory = $request->input('filterRecyclingCategory');
         $filterRecyclingStatus = $request->input('filterRecyclingStatus');
         $filterRecyclingPriority = $request->input('filterRecyclingPriority');
-
-
+        $now = Carbon::now();
 
         $sort = $request->query('sort');
         $direction = $request->query('direction', 'asc');
@@ -134,15 +134,15 @@ class TicketController extends Controller
 
         $query->orderBy($sortColumn, $direction);
 
-        $recycledTickets = $queryRecycled->paginate(5, ['*'], 'rPage');
-        $waitingQueueTickets = $queryFila->paginate(5, ['*'], 'wPage');
-        $tickets = $query->paginate(5, ['*'], 'tPage');
+        $recycledTickets = $queryRecycled->paginate(5, ['*'], 'rPage')->withQueryString();
+        $waitingQueueTickets = $queryFila->paginate(5, ['*'], 'wPage')->withQueryString();
+        $tickets = $query->paginate(5, ['*'], 'tPage')->withQueryString();
         $users = User::all();
         $categories = TicketCategory::all();
         $priorities = TicketPriority::all();
         $statuses = TicketStatus::all();
 
-        return view('tickets.index', compact('tickets', 'users', 'ticketSearch', 'filterCategory', 'filterPriority', 'filterStatus', 'categories', 'priorities', 'statuses', 'waitingQueueTickets', 'recycledTickets', 'sort', 'direction', 'filaSearch', 'recyclingSearch', 'filterFilaPriority', 'filterFilaCategory', 'filterRecyclingCategory', 'filterRecyclingStatus', 'filterRecyclingPriority'));
+        return view('tickets.index', compact('tickets', 'users', 'ticketSearch', 'filterCategory', 'filterPriority', 'filterStatus', 'categories', 'priorities', 'statuses', 'waitingQueueTickets', 'recycledTickets', 'sort', 'direction', 'filaSearch', 'recyclingSearch', 'filterFilaPriority', 'filterFilaCategory', 'filterRecyclingCategory', 'filterRecyclingStatus', 'filterRecyclingPriority', 'now'));
     }
 
     public function create()
@@ -171,7 +171,7 @@ class TicketController extends Controller
                 return now()->addHours(4);
             default:
 
-                return now()->addWeeks(3);
+            return now()->addWeeks(3);
         }
     }
 
@@ -207,7 +207,8 @@ class TicketController extends Controller
 
             $this->logTicketHistory($ticket->id, 1, $ticketInfo);
             $this->sendEmail($ticket->id);
-            return redirect()->route('tickets.index')->with('success', 'Ticket criado com sucesso!')->with('active_tab', 'allTickets');
+
+            return redirect()->route('tickets.show', $ticket->id)->with('success', 'Ticket criado com sucesso!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Erro ao criar o ticket. Por favor, tente novamente.');
         }
@@ -215,6 +216,12 @@ class TicketController extends Controller
 
     public function show(Ticket $ticket)
     {
+        $authenticatedUser = Auth::user();
+
+        if ($authenticatedUser->hasRole('funcionario') && $ticket->user_id !== $authenticatedUser->id) {
+             return abort(403, 'Acesso não autorizado!');
+        }
+
         $ticket = Ticket::with(['users', 'requester', 'comments' => function ($query) {
             $query->orderBy('created_at', 'desc');
         }, 'comments.user'])->find($ticket->id);
@@ -224,7 +231,11 @@ class TicketController extends Controller
         $attachmentUrl = Storage::url($attachmentPath);
 
         $id = $ticket->id;
-        $ticketHistories = TicketHistory::where('ticket_id', $id)->get();
+        $ticketHistories = TicketHistory::where('ticket_id', $id)->orderBy('created_at', 'desc')->get();
+
+        $creationDate = Carbon::parse($ticket->created_at);
+        $now = Carbon::now();
+        $openedSince = $creationDate->diffInDays($now);
 
         $users = User::all();
         $statuses = TicketStatus::all();
@@ -235,7 +246,7 @@ class TicketController extends Controller
         $technician = User::where('id', $ticketTechnician->user_id)->first();
         $requester = User::where('id', $ticket->user_id)->first();
 
-        return view('tickets.show', compact('ticket', 'userTickets', 'users', 'statuses', 'priorities', 'categories', 'technician', 'requester', 'ticketHistories', 'attachmentUrl'));
+        return view('tickets.show', compact('ticket', 'userTickets', 'users', 'statuses', 'priorities', 'categories', 'technician', 'requester', 'ticketHistories', 'attachmentUrl', 'openedSince'));
     }
 
     public function edit(Ticket $ticket)
@@ -255,6 +266,11 @@ class TicketController extends Controller
     public function update(TicketRequest $request, Ticket $ticket)
     {
         try {
+            $authenticatedUser = Auth::user();
+
+            if ($authenticatedUser->hasRole('funcionario') && $ticket->user_id !== $authenticatedUser->id) {
+                return abort(403, 'Acesso não autorizado!');
+            }
             $oldTicket = clone $ticket;
             $oldTicketTechnician = clone TicketUser::where('ticket_id', $ticket->id)->first('user_id');
             $newUserId = $request->technician_id;
@@ -286,24 +302,43 @@ class TicketController extends Controller
                 'user_id' => $newUserId,
             ]);
 
+            $ticketTechnician = TicketUser::where('ticket_id', $ticket->id)->first('user_id');
+
             $ticketInfo = $this->generateTicketInfo($oldTicket, $ticket, $oldTicketTechnician->user_id, $newUserId);
 
             if (!empty($ticketInfo)) {
                 $this->logTicketHistory($ticket->id, 2, $ticketInfo);
             }
 
-             $notification = Notification::create([
-                 'description' => 'Ticket atribuído: #' . $ticket->id,
-                 'code' => 'TICKET',
-                 'object_id' => $ticket->id,
-             ]);
+            if ($oldTicketTechnician != $ticketTechnician && $ticketTechnician->name != 'Fila de Espera') {
+                $notification = Notification::create([
+                    'description' => 'Ticket atribuído: #' . $ticket->id,
+                    'code' => 'TICKET',
+                    'object_id' => $ticket->id,
+                ]);
 
-            NotificationUser::create([
-                'user_id' => $request->technician_id,
-                'notification_id' => $notification->id,
-                'isRead' => false,
-            ]);
-            return redirect()->route('tickets.index')->with('success', 'Ticket atualizado com sucesso!')->with('active_tab', 'allTickets');
+                NotificationUser::create([
+                    'user_id' => $request->technician_id,
+                    'notification_id' => $notification->id,
+                    'isRead' => false,
+                ]);
+            }
+
+
+            if ($oldTicket->ticketPriority()!= $ticket->ticketPriority() && $ticketTechnician->name != 'Fila de Espera') {
+                $notification = Notification::create([
+                    'description' => 'Prioridade do ticket alterada: #' . $ticket->id,
+                    'code' => 'TICKET',
+                    'object_id' => $ticket->id,
+                ]);
+
+                NotificationUser::create([
+                    'user_id' => $request->technician_id,
+                    'notification_id' => $notification->id,
+                    'isRead' => false,
+                ]);
+            }
+            return redirect()->route('tickets.show', $ticket->id)->with('success', 'Ticket atualizado com sucesso!');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Não foi possivel atualizar o ticket. Por favor, tente novamente.');
         }
@@ -408,52 +443,14 @@ class TicketController extends Controller
 
     public function sendEmail($id)
     {
-// // dd($id);
-//         $ticket = Ticket::with('requester')->find($id);
-// //        dd($ticket->requester->email);
+         $ticket = Ticket::with('requester')->find($id);
+         $email = new TicketEmail($ticket);
 
-//         $email = new TicketEmail($ticket);
-// //        dd($email);
-//         Mail::to($ticket->requester->email)->send($email);
-//         return view('tickets.show', compact('ticket'));
+         Mail::to($ticket->requester->email)->send($email);
+
+         return view('tickets.show', compact('ticket'));
     }
 
-    public function storeQuickTicket(Request $request)
-    {
-        try {
-            $loggedInUserId = Auth::id();
-            $dueByDate = $this->calculateDueByDate($request->priority_id);
-            $filename = 'Sem Anexo';
-            if ($request->hasFile('attachment')) {
-                $filename = $request->file('attachment')->store('attachments', 'public');
-            }
-            $ticket = new Ticket([
-                'title' => $request->title,
-                'description' => $request->description,
-                'ticket_status_id' => 1,
-                'ticket_priority_id' => $request->priority_id,
-                'ticket_category_id' => $request->category_id,
-                'user_id' => $loggedInUserId,
-                'dueByDate' => $dueByDate,
-                'attachment' => $filename,
-            ]);
 
-            $ticket->save();
-
-            TicketUser::create([
-                'ticket_id' => $ticket->id,
-                'user_id' => $loggedInUserId,
-            ]);
-
-            $ticketInfo = 'Ticket #' . $ticket->id . ' foi criado por ' . User::find($loggedInUserId)->name . '.';
-
-            $this->logTicketHistory($ticket->id, 1, $ticketInfo);
-            $this->sendEmail($ticket->id);
-
-            return redirect()->route('tickets.index')->with('success', 'Ticket rápido criado com sucesso!')->with('active_tab', 'allTickets');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Erro ao criar o ticket. Por favor, tente novamente.');
-        }
-    }
 
 }

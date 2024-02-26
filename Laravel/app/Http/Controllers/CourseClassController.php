@@ -29,7 +29,7 @@ class CourseClassController extends Controller
             });
         }
 
-        $courseClasses = $query->paginate(5);
+        $courseClasses = $query->paginate(5)->withQueryString();
         $courses = Course::all();
 
 
@@ -53,32 +53,29 @@ class CourseClassController extends Controller
     public function create()
     {
         $courses = Course::all();
-
+        $emptyStudents = false;
 
         $students = User::where('isStudent', 1)->whereNull('course_class_id')->get();
 
-        return view('course-classes.create', compact('courses', 'students'))->with('success', 'Turma criada com sucesso!');
+        return view('course-classes.create', compact('courses', 'students', 'emptyStudents'))->with('success', 'Turma criada com sucesso!');
     }
 
     public function store(CourseClassRequest $request)
     {
+//        dd($request->all());
         try {
             $courseClass = CourseClass::create([
                 'description' => $request->input('description'),
                 'course_id' => $request->input('course_id'),
             ]);
 
-            if ($request->has('noImport')) {
                 if ($request->has('selected_students')) {
                     foreach ($request->input('selected_students') as $student) {
                         $user = User::find($student);
-                        $user->course_class_id = $courseClass->id;
-                        $user->save();
+                        $user->update(['course_class_id' => $courseClass->id]);
                     }
                 }
-            } else if ($request->has('import')) {
-                return redirect()->route('import-excel.importStudents');
-            }
+
             return redirect()->route('course-classes.index')->with('success', 'Turma criada com sucesso!');
         } catch (\Exception $e) {
 
@@ -128,6 +125,13 @@ class CourseClassController extends Controller
     public function destroy(CourseClass $courseClass)
     {
         try {
+            $students = User::where('course_class_id', $courseClass->id)->get();
+
+            foreach ($students as $student) {
+                $student->course_class_id = null;
+                $student->save();
+            }
+
             $courseClass->delete();
             return redirect()->route('course-classes.index')->with('success', 'Turma apagada com sucesso!');
         } catch (\Exception $e) {

@@ -13,11 +13,17 @@ class MaterialController extends Controller
 {
     public function index(Request $request)
     {
+
         $search = $request->input('search');
         $materialFilter = $request->input('materialFilter');
         $sortColumn = $request->input('sortColumn', 'name'); // default sort by 'name'
         $sortDirection = $request->input('sortDirection', 'asc'); // default sort direction 'asc'
+        $searchRecycled = $request->input('searchRecycled');
+        $materialRecycledFilter = $request->input('materialRecycledFilter');
 
+
+
+        $queryRecycled = Material::onlyTrashed();
         $query = Material::with('sizes', 'courses');
 
         if ($materialFilter === "internal") {
@@ -28,13 +34,25 @@ class MaterialController extends Controller
             $query->where('isClothing', 1);
         }
 
+        if ($materialRecycledFilter === "internal") {
+            $queryRecycled->where('isInternal', 1)->where('isClothing', 0);
+        } elseif ($materialRecycledFilter === "external") {
+            $queryRecycled->where('isInternal', 0);
+        } elseif ($materialRecycledFilter === "clothing") {
+            $queryRecycled->where('isClothing', 1);
+        }
+
         if ($search) {
             $query->where('name', 'like', "%$search%");
         }
 
-        $materials = $query->orderBy($sortColumn, $sortDirection)->paginate(5);
+        if ($searchRecycled) {
+            $queryRecycled->where('name', 'like', "%$searchRecycled%");
+        }
 
-        return view('materials.index', compact('materials', 'search', 'materialFilter', 'sortColumn', 'sortDirection'));
+        $materials = $query->orderBy($sortColumn, $sortDirection)->paginate(5, ['*'], 'mPage')->withQueryString();
+        $recycleMaterials = $queryRecycled->orderBy($sortColumn, $sortDirection)->paginate(5, ['*'], 'rPage')->withQueryString();
+        return view('materials.index', compact('materials', 'search', 'materialFilter', 'sortColumn', 'sortDirection', 'recycleMaterials', 'searchRecycled', 'materialRecycledFilter'));
     }
 
 
@@ -52,6 +70,15 @@ class MaterialController extends Controller
     {
 
         try {
+            if ($request->input('isClothing') == 0) {
+                $request->merge([
+                    'gender' => null,
+                    'sizes' => [],
+                    'stocks' => [],
+                    'courses' => [],
+                ]);
+            }
+            
             $quantity = $request->input('quantity');
 
             if ($request->input('isClothing')) {
@@ -165,5 +192,57 @@ class MaterialController extends Controller
         }
     }
 
+    public function restore($id)
+    {
+        try {
+            $material = Material::withTrashed()->findOrFail($id);
+            $material->restore();
+            return redirect()->route('materials.index')->with('success', 'Material restaurado com sucesso!');
+        } catch (\Exception $e) {
+            return redirect()->route('materials.index')->with('error', 'Erro ao restaurar o material. Por favor, tente novamente.');
+        }
+    }
+
+    public function massRestore(Request $request)
+    {
+
+        $request->validate([
+            'material_ids' => 'required|array',
+            'material_ids.*' => 'exists:materials,id',
+        ]);
+
+        try {
+            Material::withTrashed()->whereIn('id', $request->input('material_ids'))->restore();
+            return redirect()->back()->with('success', 'Materiais selecionados restaurados com sucesso!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erro ao restaurar os materiais selecionados. Por favor, tente novamente.');
+        }
+    }
+
+    public function forceDelete($id)
+    {
+        try {
+            $material = Material::withTrashed()->findOrFail($id);
+            $material->forceDelete();
+            return redirect()->route('materials.index')->with('success', 'Material excluído permanentemente!');
+        } catch (\Exception $e) {
+            return redirect()->route('materials.index')->with('error', 'Erro ao excluir permanentemente o material. Por favor, tente novamente.');
+        }
+    }
+
+    public function massForceDelete(Request $request)
+    {
+        $request->validate([
+            'material_ids' => 'required|array',
+            'material_ids.*' => 'exists:materials,id',
+        ]);
+
+        try {
+            Material::withTrashed()->whereIn('id', $request->input('material_ids'))->forceDelete();
+            return redirect()->back()->with('success', 'Materiais selecionados excluídos permanentemente!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Erro ao excluir permanentemente os materiais selecionados. Por favor, tente novamente.');
+        }
+    }
 
 }

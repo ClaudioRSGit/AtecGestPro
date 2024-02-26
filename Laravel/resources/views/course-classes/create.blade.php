@@ -1,18 +1,27 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container w-100">
+    <div class="container  w-100 fade-in">
         <h1>Criar Turma</h1>
+        @if ($errors->has('file'))
+            <div class="alert alert-danger">
+                {{ $errors->first('file') }}
+            </div>
+        @endif
 
         <form method="post" action="{{ route('course-classes.store') }}" id="createCourseClassForm" class=" mb-3">
             @csrf
 
-            <div class="row mb-3">
+            <div class="row mb-1">
                 <div class="col-md-6">
                     <div class="form-group">
                         <label for="description">Descrição:</label>
                         <input type="text" class="form-control" id="description" name="description">
-
+                        @if ($errors->has('description2'))
+                            <div class="alert alert-danger">
+                                {{ $errors->first('description2') }}
+                            </div>
+                        @endif
                         @error('description')
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
@@ -45,12 +54,12 @@
                     </div>
                     <div class="form-group w-25">
                         <a href="{{ route('users.create') }}" class="btn btn-primary w-100">
-                            <img src="{{ asset('assets/new.svg') }}">
+                            <i class="fa-solid fa-pen mr-1" style="color: #ffffff;"></i>
                             Novo Aluno
                         </a>
                     </div>
                 </div>
-                <div class="scrollable w-100">
+                <div class=" row scrollable w-100">
                     <table class="table" id="studentsTable">
                         <thead>
                         <tr>
@@ -74,40 +83,109 @@
                 </div>
             </div>
 
+            <div class="row mt-3 ">
+                <button type="submit" class="btn btn-primary mr-2 modalBtn"
+                        data-message="Tem a certeza que pretende criar turma sem alunos?" name="noImport"
+                        id="criarTurmaBtn">Criar Turma
+                </button>
+                <button id="confirmButton" class="btn btn-primary mr-2 " name="import">Criar Turma e importar alunos a
+                    partir de
+                    Excel
+                </button>
+                <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
+            </div>
 
-            <button type="submit" class="btn btn-primary" name="noImport" id="criarTurmaBtn">Criar Turma</button>
-            <button type="submit" class="btn btn-primary" name="import">Criar Turma e importar alunos a partir de
-                Excel
-            </button>
-            <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
+
         </form>
+
+        {{--confirmation modal--}}
+        <div class="modal" tabindex="-1" role="dialog" id="confirmationModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirmação</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="continueBtn">Continuar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{----}}
+        <!-- The Import Students Modal -->
+        <div class="modal" tabindex="-1" role="dialog" id="importStudentsModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Importar alunos</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="importStudentsForm" action="{{ route('import-excel.importStudents') }}" method="POST"
+                              enctype="multipart/form-data">
+                            @csrf
+                            <div class="form-group p-3">
+                                <label for="file">Excel - Importar Alunos</label><br>
+                                <label for="file" class="btn btn-primary">Selecionar ficheiro</label><br>
+                                <input type="file" name="file" id="file" class="btn" style="display: none;"
+                                       accept=".xls,.xlsx"> <input type="hidden">
+                                <p>Selecione um ficheiro Excel para importar alunos</p>
+                            </div>
+
+                            <input type="hidden" name="description2">
+                            <input type="hidden" name="course_id2">
+                            <div class="modal-footer">
+                                <button type="submit" name="withStudents" class="btn btn-primary">Importar</button>
+                                <a href="{{ route('course-classes.create') }}" class="btn btn-secondary">Cancelar</a>
+                            </div>
+                        </form>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+        {{----}}
 
     </div>
 
     <style>
 
         .scrollable {
-            height: 300px;
+            height: 17rem;
             overflow-y: scroll;
         }
     </style>
 
     <script>
         $(document).ready(function () {
-            $("#select-all").click(function () {
-                $("input[name='selected_students[]']").prop('checked', $(this).prop('checked'));
-            });
+            $('#description').on('input', function () {
 
-            $("#criarTurmaBtn").click(function () {
-                document.getElementById('createCourseClassForm').submit();
+                $('input[name="description2"]').val($(this).val());
             });
+            var initialCourseId = $('#course_id').val();
+            $('input[name="course_id2"]').val(initialCourseId);
 
-            $("#search").on("keyup", function () {
-                let value = $(this).val().toLowerCase();
-                $("#studentsTable tbody tr").filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
-                });
+            $('#course_id').on('change', function () {
+                $('input[name="course_id2"]').val($(this).val());
             });
         });
+
+
     </script>
+
 @endsection
+@push('scripts')
+    <script src="{{ asset('js/course-classes/create.js') }}"></script>
+@endpush
