@@ -12,7 +12,7 @@
                 <h2>
                     Ticket #{{ $ticket->id }} - {{ $ticket->title }}
                     <a href="{{ route('tickets.edit', $ticket->id) }}">
-                        <i class="fa-solid fa-pen-to-square fa-lg" style="color: #116fdc;"></i>
+                        <i class="fa-solid fa-pen-to-square fa-sm" style="color: #116fdc;"></i>
                     </a>
                 </h2>
                 <div class="mb-3">
