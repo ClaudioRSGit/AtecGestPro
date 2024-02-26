@@ -1,7 +1,7 @@
 # 🔧  AtecGest Pro  🔨
 
 <div align="center">
-    <img src="Laravel/public/assets/readMeLogo.png" style="max-width: 100%; height: 30%; width: 30%;" alt="Logo">
+    <img src="Laravel/public/assets/readMeLogo.png" style="max-width: 100%; height: 50%; width: 50%;" alt="Logo">
 </div>
 
 # Project Overview 💻 👀 🚨
