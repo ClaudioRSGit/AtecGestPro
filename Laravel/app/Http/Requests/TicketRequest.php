@@ -54,7 +54,7 @@ class TicketRequest extends FormRequest
         return [
             'title.required' => 'O título é obrigatório!',
             'title.min' => 'O título deve conter no mínimo 2 caracteres!',
-            'title.max' => 'O título deve conter no máximo 2000 caracteres!',
+            'title.max' => 'O título deve conter no máximo 50 caracteres!',
             'description.required' => 'A descrição é obrigatória!',
             'description.min' => 'A descrição deve conter no mínimo 5 caracteres!',
             'description.max' => 'Atingiu o limite de caracteres!',
