@@ -277,7 +277,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="container">
+                        <div class="container w-100">
                             <form action="{{ route('import-excel.importUsers') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group mb-3">
@@ -289,7 +289,7 @@
                                     @enderror
                                     <p>Certifique-se que o arquivo tem menos de 20MB</p>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Importar</button>
+                                <button type="submit" class="btn btn-primary w-100">Importar</button>
                             </form>
                         </div>
                     </div>
