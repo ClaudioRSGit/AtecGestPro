@@ -35,7 +35,7 @@
                     <img src="{{ asset('assets/logo.png') }}" alt="Logo">
                     <h5 class="mt-3"><strong> ATEC GEST PRO </strong></h5>
                 </div>
-                <form method="POST" action="{{ route('password.change', ['username' => $username]) }}"
+                <form method="POST" action="{{ route('password.change', ['username' => $user->username]) }}"
                     class="d-flex flex-column justify-content-between h-65 w-100 m-0">
                     @csrf
                     <div>
