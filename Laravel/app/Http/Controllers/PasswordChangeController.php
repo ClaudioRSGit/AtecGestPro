@@ -18,7 +18,7 @@ class PasswordChangeController extends Controller
             abort(403, 'Ação nao autorizada!');
         }
 
-        return view('login.passwordChange', ['username' => $username, 'user' => $user]);
+        return view('login.passwordChange', ['user' => $user]);
     }
 
     public function updatePassword(PasswordChangeRequest $request, $username)
