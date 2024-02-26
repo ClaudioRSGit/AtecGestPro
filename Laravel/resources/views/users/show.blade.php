@@ -52,17 +52,24 @@
 
 
                 @if ($user->isStudent == 1)
+
+                    @php
+                        $showCourse = $user->course_class_id !== null;
+                    @endphp
+
                 <div class="mb-3">
                     <label for="course_class_id" class="form-label">Turma:</label>
-                    <select class="form-control" id="course_class_id" name="course_class_id" disabled>
-                        @foreach($courseClasses as $class)
-                        <option value="{{ $class->id }}" {{ $user->course_class_id == $class->id ? 'selected' : '' }}>
-                            {{ $class->description }}
-                        </option>
-
-
-                    @endforeach
-                    </select>
+                    @if($showCourse)
+                        <select class="form-control" id="course_class_id" name="course_class_id" disabled>
+                            @foreach($courseClasses as $class)
+                                <option value="{{ $class->id }}" {{ $user->course_class_id == $class->id ? 'selected' : '' }}>
+                                    {{ $class->description }}
+                                </option>
+                            @endforeach
+                        </select>
+                    @else
+                        <select class="form-control" id="course_class_id" name="course_class_id" disabled></select>
+                    @endif
                 </div>
 
                     <div class="mb-3" id="labelCourseDescription">
