@@ -43,10 +43,10 @@ class ExcelImportController extends Controller
 
 
         // Check the import status
-        if ($userImport->getImportStatus()) {
-            $message = 'Utilizadores importados com sucesso!';
+        if (empty($importedUsers)) {
+            $message = 'Não foram encontrados utilizadores para importar, ou os utilizadores já existem na base de dados!';
         } else {
-            $message = 'Ocorreu um problema ao importar os utilizadores. Por favor, tente novamente.';
+            $message = 'Utilizadores importados com sucesso!';
         }
 
         $users= $importedUsers;

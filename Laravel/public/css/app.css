@@ -11904,4 +11904,9 @@ body {
     overflow: auto;
 }
 
+.logo-login {
+    width: 100px;
+    height: 100px; 
+}
+
 

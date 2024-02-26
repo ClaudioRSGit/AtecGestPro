@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container w-100 fade-in">
-    <h1>{{ $message }}</h1>
+    <h3>{{ $message }}</h3>
 
     <div class="table">
         <table class="table">
