@@ -26,55 +26,63 @@ class UserImportClass implements ToModel
             }
             $courseClassId = CourseClass::where('description', $row[4])->first()->id;
 
-            $importedUser = new User([
-                'name' => $row[0],
-                'username' => $row[1],
-                'email' => $row[2],
-                'contact' => $row[3],
-                'password' => null,
-                'notes' => '',
-                'isActive' => 1,
-                'isStudent' => 1,
-                'course_class_id' => $courseClassId,
-                'role_id' => 3,
-            ]);
-            array_push($this->allImportedUsers, $importedUser);
+            $importedUser = User::firstOrCreate(
+                ['username' => $row[1], 'email' => $row[2], 'contact' => $row[3]],
+                [
+                    'name' => $row[0],
+                    'password' => null,
+                    'notes' => '',
+                    'isActive' => 1,
+                    'isStudent' => 1,
+                    'course_class_id' => $courseClassId,
+                    'role_id' => 3,
+                ]
+            );
+
+            if ($importedUser->wasRecentlyCreated) {
+                array_push($this->allImportedUsers, $importedUser);
+            }
 
             return $importedUser;
         }
         else if(strtolower($row[5]) == 'formador'){
 
-            $importedUser = new User([
-                'name' => $row[0],
-                'username' => $row[1],
-                'email' => $row[2],
-                'contact' => $row[3],
-                'password' => bcrypt('temporary'),
-                'notes' => '',
-                'isActive' => 1,
-                'isStudent' => 0,
-                'course_class_id' => null,
-                'role_id' => 1,
-            ]);
-            array_push($this->allImportedUsers, $importedUser);
+            $importedUser = User::firstOrCreate(
+                ['username' => $row[1], 'email' => $row[2], 'contact' => $row[3]],
+                [
+                    'name' => $row[0],
+                    'password' => bcrypt('temporary'),
+                    'notes' => '',
+                    'isActive' => 1,
+                    'isStudent' => 0,
+                    'course_class_id' => null,
+                    'role_id' => 1,
+                ]
+            );
+
+            if ($importedUser->wasRecentlyCreated) {
+                array_push($this->allImportedUsers, $importedUser);
+            }
 
             return $importedUser;
         }
         else if(strtolower($row[5]) == 'tecnico'){
-            $importedUser = new User([
-                'name' => $row[0],
-                'username' => $row[1],
-                'email' => $row[2],
-                'contact' => $row[3],
-                'password' => bcrypt('temporary'),
-                'notes' => '',
-                'isActive' => 1,
-                'isStudent' => 0,
-                'course_class_id' => null,
-                'role_id' => 4,
-            ]);
-            array_push($this->allImportedUsers, $importedUser);
+            $importedUser = User::firstOrCreate(
+                ['username' => $row[1], 'email' => $row[2], 'contact' => $row[3]],
+                [
+                    'name' => $row[0],
+                    'password' => bcrypt('temporary'),
+                    'notes' => '',
+                    'isActive' => 1,
+                    'isStudent' => 0,
+                    'course_class_id' => null,
+                    'role_id' => 4,
+                ]
+            );
 
+            if ($importedUser->wasRecentlyCreated) {
+                array_push($this->allImportedUsers, $importedUser);
+            }
             return $importedUser;
         }
 
