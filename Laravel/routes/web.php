@@ -119,6 +119,7 @@ Route::middleware(['auth', 'checkRole:admin,tecnico,funcionario'])->group(functi
     Route::get('ticket-histories', 'TicketHistoryController@index');
     Route::get('ticket-histories/{id}', 'TicketHistoryController@show');
     Route::get('/notifications/readAll', [NotificationUserController::class, 'readAll'])->name('notifications.readAll');
+    Route::get('/notifications/delete/{notificationId}', [NotificationUserController::class, 'deleteNotification'])->name('notifications.delete');
 
     Route::post('/comments', 'CommentController@store')->name('comments.store');
     Route::get('users/{user}/edit', 'UserController@edit')->name('users.edit');

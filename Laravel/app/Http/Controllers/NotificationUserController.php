@@ -7,6 +7,15 @@ use Illuminate\Http\Request;
 
 class NotificationUserController extends Controller
 {
+    public function deleteNotification($notificationId)
+    {
+        try {
+            NotificationUser::where('id', $notificationId)->delete();
+            return back();
+        } catch (\Exception $e) {
+            return back();
+        }
+    }
     public function readAll()
     {
         try {
