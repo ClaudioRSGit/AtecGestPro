@@ -8,7 +8,7 @@
                     <div class="card-body d-flex align-items-center">
                         <div class="dashboardCardContent">
                             <h4 class="dashboardCardTitle">Administradores:</h4>
-                            <h3 class="dashboardCardSubtitle">{{$adminCount}}</h3>
+                            <h3 class="dashboardCardSubtitle dashboardCount dashboardCount">{{$adminCount}}</h3>
                         </div>
                         <div class="w-100 h-100 d-flex justify-content-end align-items-center">
                             <i class="fa-solid fa-user-gear fa-2xl" style="color: #116fdc;"></i>
@@ -21,7 +21,7 @@
                     <div class="card-body d-flex align-items-center">
                         <div class="dashboardCardContent">
                             <h4 class="dashboardCardTitle">Técnicos:</h4>
-                            <h3 class="dashboardCardSubtitle">{{$technicianCount}}</h3>
+                            <h3 class="dashboardCardSubtitle dashboardCount dashboardCount">{{$technicianCount}}</h3>
                         </div>
                         <div class="w-100 h-100 d-flex justify-content-end align-items-center">
                             <i class="fa-solid fa-helmet-safety fa-2xl" style="color: #116fdc;"></i>
@@ -34,7 +34,7 @@
                     <div class="card-body d-flex align-items-center">
                         <div class="dashboardCardContent">
                             <h4 class="dashboardCardTitle">Funcionários:</h4>
-                            <h3 class="dashboardCardSubtitle">{{$technicianCount}}</h3>
+                            <h3 class="dashboardCardSubtitle dashboardCount">{{$technicianCount}}</h3>
                         </div>
                         <div class="w-100 h-100 d-flex justify-content-end align-items-center">
                             <i class="fa-solid fa-people-carry-box fa-2xl" style="color: #116fdc;"></i>
@@ -47,7 +47,7 @@
                     <div class="card-body d-flex align-items-center">
                         <div class="dashboardCardContent">
                             <h4 class="dashboardCardTitle">Formandos:</h4>
-                            <h3 class="dashboardCardSubtitle">{{$traineeCount}}</h3>
+                            <h3 class="dashboardCardSubtitle dashboardCount">{{$traineeCount}}</h3>
                         </div>
                         <div class="w-100 h-100 d-flex justify-content-end align-items-center">
                             <i class="fa-solid fa-user-graduate fa-2xl" style="color: #116fdc;"></i>
@@ -62,7 +62,7 @@
                     <div class="card-body d-flex align-items-center" onclick="location.href='{{ route('course-classes.index') }}'">
                         <div class="dashboardCardContent">
                             <h4 class="dashboardCardTitle">Turmas:</h4>
-                            <h3 class="dashboardCardSubtitle">{{$traningsCount}}</h3>
+                            <h3 class="dashboardCardSubtitle dashboardCount">{{$traningsCount}}</h3>
                         </div>
                         <div class="w-100 h-100 d-flex justify-content-end align-items-center">
                             <i class="fa-solid fa-users fa-2xl" style="color: #116fdc;"></i>
@@ -75,7 +75,7 @@
                     <div class="card-body d-flex align-items-center">
                         <div class="dashboardCardContent">
                             <h4 class="dashboardCardTitle">Cursos:</h4>
-                            <h3 class="dashboardCardSubtitle">{{$coursesCount}}</h3>
+                            <h3 class="dashboardCardSubtitle dashboardCount">{{$coursesCount}}</h3>
                         </div>
                         <div class="w-100 h-100 d-flex justify-content-end align-items-center">
                             <i class="fa-solid fa-book fa-2xl" style="color: #116fdc;"></i>
@@ -88,7 +88,7 @@
                     <div class="card-body d-flex align-items-center">
                         <div class="dashboardCardContent">
                             <h4 class="dashboardCardTitle">Material Interno:</h4>
-                            <h3 class="dashboardCardSubtitle">{{$internalMaterialCount}}</h3>
+                            <h3 class="dashboardCardSubtitle dashboardCount">{{$internalMaterialCount}}</h3>
                         </div>
                         <div class="w-100 h-100 d-flex justify-content-end align-items-center">
                             <i class="fa-regular fa-lightbulb fa-2xl" style="color: #116fdc;"></i>
@@ -101,7 +101,7 @@
                     <div class="card-body d-flex align-items-center">
                         <div class="dashboardCardContent">
                             <h4 class="dashboardCardTitle">Material Externo:</h4>
-                            <h3 class="dashboardCardSubtitle">{{$externalMaterialCount}}</h3>
+                            <h3 class="dashboardCardSubtitle dashboardCount">{{$externalMaterialCount}}</h3>
                         </div>
                         <div class="w-100 h-100 d-flex justify-content-end align-items-center">
                             <i class="fa-solid fa-box-open fa-2xl" style="color: #116fdc;"></i>
@@ -116,7 +116,7 @@
                         <div class="card-body d-flex align-items-center">
                             <div class="dashboardCardContent">
                                 <h4 class="dashboardCardTitle">Utilizadores Ativos:</h4>
-                                <h3 class="dashboardCardSubtitle">{{$activeUserCount}}</h3>
+                                <h3 class="dashboardCardSubtitle dashboardCount">{{$activeUserCount}}</h3>
                             </div>
                             <div class="w-100 h-100 d-flex justify-content-end align-items-center">
                                 <i class="fa-solid fa-user fa-2xl" style="color: #116fdc;"></i>
@@ -129,7 +129,7 @@
                     <div class="card-body d-flex align-items-center">
                         <div class="dashboardCardContent">
                             <h4 class="dashboardCardTitle">Utilizadores Inativos:</h4>
-                            <h3 class="dashboardCardSubtitle">{{$inactiveUserCount}}</h3>
+                            <h3 class="dashboardCardSubtitle dashboardCount">{{$inactiveUserCount}}</h3>
                         </div>
                         <div class="w-100 h-100 d-flex justify-content-end align-items-center">
                             <i class="fa-solid fa-user-large-slash fa-2xl" style="color: #116fdc;"></i>
@@ -142,7 +142,7 @@
                     <div class="card-body d-flex align-items-center">
                         <div class="dashboardCardContent">
                             <h4 class="dashboardCardTitle">Parceiros:</h4>
-                            <h3 class="dashboardCardSubtitle">{{$partnerCount}}</h3>
+                            <h3 class="dashboardCardSubtitle dashboardCount">{{$partnerCount}}</h3>
                         </div>
                         <div class="w-100 h-100 d-flex justify-content-end align-items-center">
                             <i class="fa-solid fa-handshake fa-2xl" style="color: #116fdc;"></i>
@@ -155,7 +155,7 @@
                     <div class="card-body d-flex align-items-center">
                         <div class="dashboardCardContent">
                             <h4 class="dashboardCardTitle">Formações Externas:</h4>
-                            <h3 class="dashboardCardSubtitle">{{$externalTrainingsCount}}</h3>
+                            <h3 class="dashboardCardSubtitle dashboardCount">{{$externalTrainingsCount}}</h3>
                         </div>
                         <div class="w-100 h-100 d-flex justify-content-end align-items-center">
                             <i class="fa-solid fa-graduation-cap fa-2xl" style="color: #116fdc;"></i>

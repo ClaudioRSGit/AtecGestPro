@@ -5902,6 +5902,9 @@ input[type=button].btn-block {
     margin-left: auto;
     margin-right: 20px;
 }
+.dashboardCount{
+    color: #116FDC;
+}
 /* dashboard */
 a.badge:hover,
 a.badge:focus {
@@ -11906,7 +11909,7 @@ body {
 
 .logo-login {
     width: 100px;
-    height: 100px; 
+    height: 100px;
 }
 
 
