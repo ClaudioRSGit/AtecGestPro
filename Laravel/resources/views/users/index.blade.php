@@ -287,6 +287,7 @@
                                     @error('attachment')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
+                                    <p id="fileName"></p>
                                     <p>Certifique-se que o arquivo tem menos de 20MB</p>
                                 </div>
                                 <button type="submit" class="btn btn-primary">Importar</button>
@@ -400,6 +401,11 @@
                     form.submit();
                 }
             }
+        });
+
+        document.getElementById('file').addEventListener('change', function() {
+            var fileName = this.files[0].name;
+            document.getElementById('fileName').textContent = "Nome do ficheiro: " + fileName;
         });
 
     </script>
