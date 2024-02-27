@@ -138,6 +138,7 @@
                                 <label for="file" class="btn btn-primary">Selecionar ficheiro</label><br>
                                 <input type="file" name="file" id="file" class="btn" style="display: none;"
                                        accept=".xls,.xlsx"> <input type="hidden">
+                                <p id="fileName"></p>
                                 <p>Selecione um ficheiro Excel para importar alunos</p>
                             </div>
 
@@ -180,6 +181,11 @@
             $('#course_id').on('change', function () {
                 $('input[name="course_id2"]').val($(this).val());
             });
+        });
+
+        document.getElementById('file').addEventListener('change', function() {
+            var fileName = this.files[0].name;
+            document.getElementById('fileName').textContent = "Nome do ficheiro: " + fileName;
         });
 
 

@@ -32,7 +32,7 @@
         <div class="card" style="border-radius: 2rem; width: 30rem">
             <div class="d-flex flex-column justify-content-between align-items-center w-100 h-60" style="padding: 5rem;">
                 <div class="d-flex flex-column align-items-center h-25 w-100">
-                    <img src="{{ asset('assets/logo.png') }}" alt="Logo">
+                    <img src="{{ asset('assets/logo.png') }}" alt="Logo" class="logo-login">
                     <h5 class="mt-3"><strong> ATEC GEST PRO </strong></h5>
                 </div>
                 <form method="POST" action="{{ route('password.change', ['username' => $user->username]) }}"
@@ -90,7 +90,8 @@
                         </div>
                         <div class="mt-3">
                             <span class="text-info font-weight-bold">
-                                <i class="fas fa-info-circle"></i> Bem-vindo {{ $user->name }}! Para prosseguir para a aplicação, é necessário alterar a sua password.
+                                <i class="fas fa-info-circle"></i> Bem-vindo {{ $user->name }}! Para prosseguir para a
+                                aplicação, é necessário alterar a sua password.
                             </span>
                         </div>
                     </div>

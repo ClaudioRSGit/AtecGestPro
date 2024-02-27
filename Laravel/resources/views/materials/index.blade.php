@@ -19,15 +19,15 @@
 
         <ul class="nav nav-tabs mb-3" id="userTabs">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#allMaterialsTable">Todos</a>
+                <a class="nav-link active" data-toggle="tab" href="#materiais">Todos</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#recycleMaterialsTable">Reciclagem</a>
+                <a class="nav-link" data-toggle="tab" href="#reciclagem_materiais">Reciclagem</a>
             </li>
         </ul>
 
         <div class="tab-content">
-            <div id="allMaterialsTable" class="tab-pane fade show active">
+            <div id="materiais" class="tab-pane fade show active">
 
                 <div class="d-flex justify-content-between mb-3 w-100">
                     <div class="d-flex justify-content-between w-40">
@@ -244,7 +244,7 @@
             </div>
 
 
-            <div id="recycleMaterialsTable" class="tab-pane fade">
+            <div id="reciclagem_materiais" class="tab-pane fade">
                 <div class="d-flex justify-content-between mb-3 w-100">
                     <div class="d-flex justify-content-between w-40">
 
@@ -492,13 +492,11 @@
                     $(`#userTabs a[href="#${tabId}"]`).tab('show');
                 }
 
-                const activeTabInfo = localStorage.getItem('activeTabInfo');
+                const pageName = window.location.pathname.split('/').pop();
+                const activeTabInfo = localStorage.getItem(`activeTabInfo_${pageName}`);
 
                 if (activeTabInfo) {
-                    const {
-                        tabId,
-                        context
-                    } = JSON.parse(activeTabInfo);
+                    const {tabId, context} = JSON.parse(activeTabInfo);
                     setActiveTab(tabId);
                     setFragment(tabId);
                 }
@@ -507,11 +505,8 @@
                     const tabId = $(e.target).attr('href').substring(1);
                     const context = determineContext();
 
-                    const activeTabInfo = JSON.stringify({
-                        tabId,
-                        context
-                    });
-                    localStorage.setItem('activeTabInfo', activeTabInfo);
+                    const activeTabInfo = JSON.stringify({tabId, context});
+                    localStorage.setItem(`activeTabInfo_${pageName}`, activeTabInfo);
 
                     setFragment(tabId);
                 });
@@ -523,10 +518,9 @@
 
                 window.addEventListener('beforeunload', function() {
                     history.pushState("", document.title, window.location.pathname + window.location.search);
-                    localStorage.removeItem('activeTabInfo'); // Add this line
-
                 });
             });
+
         </script>
         <script>
             window.setTimeout(function() {

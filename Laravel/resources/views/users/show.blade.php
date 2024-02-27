@@ -57,26 +57,28 @@
 
 
                 @if ($user->isStudent == 1)
+
+                    @php
+                        $showCourse = $user->course_class_id !== null;
+                    @endphp
                     <div class="mb-3">
                         <label for="course_class_id" class="form-label">Turma:</label>
                         <select class="form-control" id="course_class_id" name="course_class_id" disabled>
-                            @foreach ($courseClasses as $class)
-                                {{-- <option value="{{ $class->id }}" {{ $user->course_class_id == $class->id ? 'selected' : '' }}>
-                                    {{ $class->description }}
-                                </option> --}}
-
-                                @if ($user->course_class_id != null && $user->course_class_id == $class->id)
-                                    {{ $class->description }}
-                                @endif
-
-                            @endforeach
+                            @if($showCourse)
+                                @foreach($courseClasses as $class)
+                                    <option value="{{ $class->id }}" {{ $user->course_class_id == $class->id ? 'selected' : '' }}>
+                                        {{ $class->description }}
+                                    </option>
+                                @endforeach
+                            @else
+                                <option>Este aluno não tem turma!</option>
+                            @endif
                         </select>
                     </div>
 
                     <div class="mb-3" id="labelCourseDescription">
                         <label for="courseDescription" class="form-label">Curso:</label>
-                        <input class="form-control" id="courseDescription" name="courseDescription" readonly
-                            value="{{ $courseDescription }}">
+                        <input class="form-control" id="courseDescription" name="courseDescription" readonly value="{{ $courseDescription ?? 'Este aluno não está associado a um curso!' }}">
                     </div>
 
                     <div>

@@ -37,16 +37,16 @@
 
         <ul class="nav nav-tabs mb-3" id="userTabs">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#allTable">Todos</a>
+                <a class="nav-link active" data-toggle="tab" href="#utilizadores">Todos</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#recycleTable">Reciclagem</a>
+                <a class="nav-link" data-toggle="tab" href="#reciclagem_utilizadores">Reciclagem</a>
             </li>
         </ul>
 
         <div class="tab-content">
 
-            <div class="tab-pane fade show active" id="allTable">
+            <div class="tab-pane fade show active" id="utilizadores">
                 <div class="d-flex justify-content-between mb-3">
 
                     <form action="{{ route('users.index') }}" method="GET">
@@ -89,7 +89,7 @@
                     </div>
                 </div>
 
-                <table class="table" id="userTable">
+                <table class="table usersTable" id="userTable">
                     <thead>
                     <tr>
                         <th scope="col">
@@ -189,7 +189,7 @@
 {{--                </div>--}}
 
             </div>
-            <div class="tab-pane fade " id="recycleTable">
+            <div class="tab-pane fade " id="reciclagem_utilizadores">
 
                 @if($deletedUsers->isEmpty())
                     <img src="{{ asset('assets/reciclagem_azul_extra_bold_2_sem fundo.png') }}"
@@ -277,7 +277,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="container">
+                        <div class="container w-100">
                             <form action="{{ route('import-excel.importUsers') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group mb-3">
@@ -287,9 +287,10 @@
                                     @error('attachment')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
+                                    <p id="fileName"></p>
                                     <p>Certifique-se que o arquivo tem menos de 20MB</p>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Importar</button>
+                                <button type="submit" class="btn btn-primary w-100">Importar</button>
                             </form>
                         </div>
                     </div>
@@ -400,6 +401,11 @@
                     form.submit();
                 }
             }
+        });
+
+        document.getElementById('file').addEventListener('change', function() {
+            var fileName = this.files[0].name;
+            document.getElementById('fileName').textContent = "Nome do ficheiro: " + fileName;
         });
 
     </script>

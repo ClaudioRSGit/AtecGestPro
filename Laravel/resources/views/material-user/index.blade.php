@@ -27,7 +27,7 @@
                 <a class="nav-link active" data-toggle="tab" href="#formandos">Formandos</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#outros">Outros</a>
+                <a class="nav-link" data-toggle="tab" href="#funcionarios">funcionarios</a>
             </li>
         </ul>
 
@@ -143,7 +143,7 @@
             </div>
 
 
-            <div class="tab-pane fade" id="outros">
+            <div class="tab-pane fade" id="funcionarios">
                 <div class="w-100 d-flex justify-content-between align-items-center mb-3" style="gap: 1rem">
 
                     <form action="{{ route('material-user.index') }}" method="GET">
@@ -245,15 +245,51 @@
     <script>
         //save tab in localstorage
         $(document).ready(function () {
-            let activeTab = localStorage.getItem('activeTab');
-            if (activeTab) {
-                $('#myTabs a[href="' + activeTab + '"]').tab('show');
+            function determineContext() {
+                return 'pagination';
             }
 
-            $('a[data-toggle="tab"]').on('click', function (e) {
-                localStorage.setItem('activeTab', $(this).attr('href'));
+            function getFragment() {
+                return window.location.hash.substring(1);
+            }
+
+            function setFragment(fragment) {
+                history.pushState(null, null, '#' + fragment);
+            }
+
+            function setActiveTab(tabId) {
+                $(`#myTabs a[href="#${tabId}"]`).tab('show');
+            }
+
+            const pageName = window.location.pathname.split('/').pop();
+            const activeTabInfo = localStorage.getItem(`activeTabInfo_${pageName}`);
+
+            if (activeTabInfo) {
+                const {tabId, context} = JSON.parse(activeTabInfo);
+                setActiveTab(tabId);
+                setFragment(tabId);
+            }
+
+            $('#myTabs a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                const tabId = $(e.target).attr('href').substring(1);
+                const context = determineContext();
+
+                const activeTabInfo = JSON.stringify({tabId, context});
+                localStorage.setItem(`activeTabInfo_${pageName}`, activeTabInfo);
+
+                setFragment(tabId);
+            });
+
+            window.addEventListener('hashchange', function () {
+                const fragment = getFragment();
+                setActiveTab(fragment);
+            });
+
+            window.addEventListener('beforeunload', function () {
+                history.pushState("", document.title, window.location.pathname + window.location.search);
             });
         });
+
     </script>
 
 
