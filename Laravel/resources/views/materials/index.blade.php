@@ -9,7 +9,7 @@
                 <i class="fa-solid fa-pen mr-1" style="color: #ffffff;"></i>
                 Novo Material
             </a>
-            <img src="{{ asset('assets/questionMark.png') }}" onclick="event.stopPropagation(); triggerMaterialIntro();" class="questionMarkBtn">
+            <img src="{{ asset('assets/questionMark.png') }}" onclick="event.stopPropagation(); changeUserTab(); triggerMaterialIntro();" class="questionMarkBtn">
         </div>
 
         @if (session('success'))
@@ -33,7 +33,7 @@
                 <div class="d-flex justify-content-between mb-3 w-100">
                     <div class="d-flex justify-content-between w-40">
 
-                        <form action="{{ route('materials.index') }}" method="GET">
+                        <form action="{{ route('materials.index') }}" method="GET" class="materials-searchBar">
                             <div class="input-group pr-2">
                                 <div class="search-container">
                                     <input type="text" name="search" class="form-control"
@@ -126,7 +126,7 @@
                                         <td>
                                             <input type="checkbox" name="selectedMaterials[]" value="{{ $material->id }}">
                                         </td>
-                                        <td class="clickable">
+                                        <td class="clickable material-name">
                                             <a href="{{ route('materials.show', $material->id) }}"
                                                 class="d-flex align-items-center w-auto h-100">{{ isset($material->name) ? $material->name : 'N.A.' }}</a>
                                         </td>

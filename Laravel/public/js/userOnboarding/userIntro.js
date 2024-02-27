@@ -13,18 +13,29 @@ function triggerUserIntro() {
                 intro: 'Os separadores de utilizadores permitem-nos navegar entre a lista de todos os utilizadores e a lista de utilizadores na reciclagem',
             },
             {
+                title: 'Botão de criação de utilizadores',
+                element: document.querySelector('.users-newUserBtn'),
+                intro: 'Crie um novo ticket ao clicar neste botão',
+            },
+            {
                 title: 'Botões de Ação',
-                intro: 'Aqui pode encontrar botões para criar um novo utilizador, importar utilizadores, excluir utilizadores selecionados e filtrar utilizadores por função',
+                element: document.querySelector('.buttons'),
+                intro: 'Aqui pode encontrar botões para importar utilizadores, apagar utilizadores selecionados e filtrar utilizadores por função',
             },
             {
                 title: 'Barra de Pesquisa',
-                element: document.querySelector('.search-container'),
+                element: document.querySelector('.users-searchBar'),
                 intro: 'Pesquise utilizadores por nome de utilizador',
             },
             {
                 title: 'Tabela de Utilizadores',
                 element: document.querySelector('.usersTable'),
                 intro: 'Aqui pode encontrar todos os utilizadores disponíveis',
+            },
+            {
+                title: 'Nome do utilizador',
+                element: document.querySelector('.users-name'),
+                intro: 'Clique no nome do utilizador para ver os detalhes do mesmo',
             },
             {
                 title: 'Ações de Utilizador',
@@ -34,4 +45,9 @@ function triggerUserIntro() {
         ]
     });
     intro.start();
+}
+function changeUserTab(){
+    $(document).ready(function() {
+            $('#userTabs a[href="#utilizadores"]').tab('show');
+    });
 }

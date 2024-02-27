@@ -30,11 +30,11 @@
         <div class="d-flex justify-content-between align-items-center mb-4 position-relative">
             <h1>Utilizadores</h1>
 
-            <a href="{{ route('users.create') }}" class="btn btn-primary">
+            <a href="{{ route('users.create') }}" class="btn btn-primary users-newUserBtn">
                 <i class="fa-solid fa-pen mr-1" style="color: #ffffff;"></i>
                 Novo Utilizador
             </a>
-            <img src="{{ asset('assets/questionMark.png') }}" onclick="event.stopPropagation(); triggerUserIntro();" class="questionMarkBtn">
+            <img src="{{ asset('assets/questionMark.png') }}" onclick="event.stopPropagation(); changeUserTab(); triggerUserIntro();" class="questionMarkBtn">
         </div>
 
         <ul class="nav nav-tabs mb-3" id="userTabs">
@@ -51,7 +51,7 @@
             <div class="tab-pane fade show active" id="utilizadores">
                 <div class="d-flex justify-content-between mb-3">
 
-                    <form action="{{ route('users.index') }}" method="GET">
+                    <form action="{{ route('users.index') }}" method="GET" class="users-searchBar">
                         <div class="input-group pr-2">
                             <div class="search-container">
                                 <input type="text" name="searchName" class="form-control"
@@ -136,7 +136,7 @@
                                 <input type="checkbox" name="selectedUsers[]"
                                        value="{{ $user->id }}">
                             </td>
-                            <td class="clickable">
+                            <td class="clickable users-name">
                                 <a href="{{ route('users.show', $user->id) }}"
                                    class="d-flex align-items-center w-auto h-100">{{ $user->name }}</a>
                             </td>

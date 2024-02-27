@@ -17,7 +17,7 @@
 
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1>Lista de Cursos</h1>
-            <a href="{{ route('courses.create') }}" class="btn btn-primary">
+            <a href="{{ route('courses.create') }}" class="btn btn-primary newCourse">
                 <i class="fa-solid fa-pen mr-1" style="color: #ffffff;"></i> Novo Curso
             </a>
         </div>
@@ -74,7 +74,7 @@
                         <a href="{{ route('courses.show', $course->id) }}"
                            class="d-flex align-items-center w-auto h-100">{{ $course->code }}</a>
                     </td>
-                    <td class="clickable" style="width: 85%">
+                    <td class="clickable mobileOverflow" style="width: 85%">
                         <a href="{{ route('courses.show', $course->id) }}"
                             class="d-flex align-items-center w-auto h-100">{{ $course->description }}</a>
                     </td>
