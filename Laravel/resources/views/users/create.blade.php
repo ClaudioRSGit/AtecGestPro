@@ -57,15 +57,25 @@
                         @enderror
                     </div>
 
-                    <div class="mb-3">
+                    <div class="mb-3 input-group">
                         <label for="password" class="form-label">Password:</label>
-                        <input type="password" class="form-control" id="password" name="password"
-                            value="{{ old('password') }}">
+
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="password" name="password"
+                                value="{{ old('password') }}">
+
+                            <div class="input-group-append">
+                                <span class="input-group-text" id="togglePassword" style="cursor: pointer;">
+                                    <i class="fas fa-eye" style="color: #116fdc;"></i>
+                                </span>
+                            </div>
+                        </div>
 
                         @error('password')
                             <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </div>
+
                 </div>
 
                 <div class="col-md-6 d-flex flex-column">
@@ -73,9 +83,9 @@
                         <label for="role_id" class="form-label">Função:</label>
                         <select class="form-control" id="role_id" name="role_id" onchange="toggleCourseClassDiv()">
                             @foreach ($roles as $role)
-                            <option value="{{ $role->id }}" {{ old('role_id') == $role->id ? 'selected' : '' }}>
-                                {{ $role->description }}
-                            </option>
+                                <option value="{{ $role->id }}" {{ old('role_id') == $role->id ? 'selected' : '' }}>
+                                    {{ $role->description }}
+                                </option>
                             @endforeach
                         </select>
                     </div>
@@ -121,4 +131,3 @@
 @push('scripts')
     <script src="{{ asset('js/users/create.js') }}"></script>
 @endpush
-
