@@ -144,7 +144,7 @@ class TicketSeeder extends Seeder
             'deleted_at' => '2023-01-19 14:38:00',
         ]);
 
-        // Seed 10
+        // Seed 11
         DB::table('tickets')->insert([
             'user_id' => 3,
             'title' => 'Teclado com as teclas trocadas',

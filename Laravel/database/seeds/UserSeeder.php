@@ -13,12 +13,12 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        // PLEASE DONT DELETE THIS SEEDER
+        // Seed 1
         DB::table('users')->insert([
             'name' => 'Fila de Espera',
             'username' => 'fila_de_espera',
             'email' => 'filadeespera@edu.atec.pt',
-            'contact' => '911111111',
+            'contact' => '00000000',
             'password' => '',
             'notes' => '',
             'isActive' => false,
@@ -26,12 +26,13 @@ class UserSeeder extends Seeder
             'course_class_id' => null,
             'role_id' => 4,
         ]);
-        // Seed 14
+
+        // Seed 2
         DB::table('users')->insert([
             'name' => 'Utilizador Padrao',
             'username' => 'padrao',
             'email' => 'utilizador.padrao@edu.atec.pt',
-            'contact' => '922222222',
+            'contact' => '',
             'password' => '',
             'notes' => '',
             'isActive' => false,
@@ -40,67 +41,197 @@ class UserSeeder extends Seeder
             'role_id' => 2,
         ]);
 
-
-        // Seed 1
+        // Seed 3
         DB::table('users')->insert([
-            'name' => 'Vasco Trindade',
-            'username' => 'T3698521',
-            'email' => 'claudio.silva.t0123173@edu.atec.pt',
-            'contact' => '912345678',
-            'password' => bcrypt('password123'),
+            'name' => 'Fernando Almeida',
+            'username' => 'T5050505',
+            'email' => 'fernando.almeida.t5050505@edu.atec.pt',
+            'contact' => '912123111',
+            'password' => bcrypt('Atec123!'),
             'notes' => '',
             'isActive' => true,
             'isStudent' => false,
             'course_class_id' => null,
             'role_id' => 1,
         ]);
-        // Seed 2
-        DB::table('users')->insert([
-            'name' => 'Antonio Carro',
-            'username' => 'T0123388',
-            'email' => 'antonio.carro.t3698521@edu.atec.pt',
-            'contact' => '912345699',
-            'password' => null,
-            'notes' => '',
-            'isActive' => true,
-            'isStudent' => true,
-            'course_class_id' => null,
-            'role_id' => 3,
-        ]);
-        // Seed 3
-        DB::table('users')->insert([
-            'name' => 'Francisco Silva',
-            'username' => 'T2365478',
-            'email' => 'fancisco.silva.t2365478@edu.atec.pt',
-            'contact' => '912345679',
-            'password' => null,
-            'notes' => '',
-            'isActive' => true,
-            'isStudent' => true,
-            'course_class_id' => null,
-            'role_id' => 3,
-        ]);
 
         // Seed 4
         DB::table('users')->insert([
-            'name' => 'Antonio Vaz',
-            'username' => 'T0254456',
-            'email' => 'antonio_vaz.t0254456@edu.atec.pt',
-            'contact' => '934895657',
-            'password' => null,
+            'name' => 'Cláudio Silva',
+            'username' => 'T0123173',
+            'email' => 'claudio.silva.t0123173@edu.atec.pt',
+            'contact' => '912123670',
+            'password' => bcrypt('Atec123!'),
             'notes' => '',
             'isActive' => true,
-            'isStudent' => true,
-            'course_class_id' => 3,
-            'role_id' => 3,
+            'isStudent' => false,
+            'course_class_id' => null,
+            'role_id' => 1,
         ]);
 
         // Seed 5
         DB::table('users')->insert([
-            'name' => 'Alice Cunha',
-            'username' => 'T0254496',
-            'email' => 'alice.cunha.t0254496@edu.atec.pt',
-            'contact' => '934895757',
+            'name' => 'Fábio Silva',
+            'username' => 'T0111864',
+            'email' => 'fabio.silva.t0111864@edu.atec.pt',
+            'contact' => '912123671',
+            'password' => bcrypt('Atec123!'),
+            'notes' => '',
+            'isActive' => true,
+            'isStudent' => false,
+            'course_class_id' => null,
+            'role_id' => 1,
+        ]);
+
+        // Seed 6
+        DB::table('users')->insert([
+            'name' => 'Bernardo Teixeira',
+            'username' => 'T0123172',
+            'email' => 'bernardo.teixeira.t0123172@edu.atec.pt',
+            'contact' => '912123672',
+            'password' => bcrypt('Atec123!'),
+            'notes' => '',
+            'isActive' => true,
+            'isStudent' => false,
+            'course_class_id' => null,
+            'role_id' => 1,
+        ]);
+
+         // Seed 7
+         DB::table('users')->insert([
+            'name' => 'Ricardo Ferreira',
+            'username' => 'T0123185',
+            'email' => 'ricardo.ferreira.t0123185@edu.atec.pt',
+            'contact' => '912123673',
+            'password' => bcrypt('Atec123!'),
+            'notes' => '',
+            'isActive' => true,
+            'isStudent' => false,
+            'course_class_id' => null,
+            'role_id' => 1,
+        ]);
+
+        // Seed 8
+        DB::table('users')->insert([
+            'name' => 'Wilson Miranda',
+            'username' => 'T0123188',
+            'email' => 'wilson.miranda.t0123188@edu.atec.pt',
+            'contact' => '912123674',
+            'password' => bcrypt('Atec123!'),
+            'notes' => '',
+            'isActive' => true,
+            'isStudent' => false,
+            'course_class_id' => null,
+            'role_id' => 1,
+        ]);
+
+        // Seed 9
+        DB::table('users')->insert([
+            'name' => 'Antonio Carro',
+            'username' => 'T0000001',
+            'email' => 'antonio.carro.t3698521@edu.atec.pt',
+            'contact' => '9121236785',
+            'password' => bcrypt('Atec123!'),
+            'notes' => '',
+            'isActive' => true,
+            'isStudent' => false,
+            'course_class_id' => null,
+            'role_id' => 2,
+        ]);
+
+         // Seed 10
+         DB::table('users')->insert([
+            'name' => 'Ricardo Batista',
+            'username' => 'T0000002',
+            'email' => 'ricardo.batista.t00000123@edu.atec.pt',
+            'contact' => '912123676',
+            'password' => bcrypt('Atec123!'),
+            'notes' => '',
+            'isActive' => true,
+            'isStudent' => false,
+            'course_class_id' => null,
+            'role_id' => 4,
+        ]);
+
+         // Seed 11
+         DB::table('users')->insert([
+            'name' => 'Ana Mesquita',
+            'username' => 'T0000020',
+            'email' => 'ana.mesquita.t0000020@edu.atec.pt',
+            'contact' => '912123677',
+            'password' => bcrypt('Atec123!'),
+            'notes' => '',
+            'isActive' => true,
+            'isStudent' => false,
+            'course_class_id' => null,
+            'role_id' => 4,
+        ]);
+
+        //Inactive User
+        // Seed 12
+        DB::table('users')->insert([
+            'name' => 'Ruben Canelas',
+            'username' => 'T0000021',
+            'email' => 'ruben.canelas.t0000020@edu.atec.pt',
+            'contact' => '9121236788',
+            'password' => bcrypt('Atec123!'),
+            'notes' => '',
+            'isActive' => false,
+            'isStudent' => false,
+            'course_class_id' => null,
+            'role_id' => 4,
+        ]);
+
+        //Students
+        // Seed 13
+        DB::table('users')->insert([
+            'name' => 'Henrique Varela',
+            'username' => 'T0000003',
+            'email' => 'henrique.varela.t0000003@edu.atec.pt',
+            'contact' => '912123679',
+            'password' => null,
+            'notes' => '',
+            'isActive' => true,
+            'isStudent' => true,
+            'course_class_id' => 5,
+            'role_id' => 3,
+        ]);
+
+        // Seed 14
+        DB::table('users')->insert([
+            'name' => 'Fabio Teixeira',
+            'username' => 'T0000004',
+            'email' => 'henrique.varela.t0000004@edu.atec.pt',
+            'contact' => '912123610',
+            'password' => null,
+            'notes' => '',
+            'isActive' => true,
+            'isStudent' => true,
+            'course_class_id' => 5,
+            'role_id' => 3,
+        ]);
+
+        // Seed 15
+        DB::table('users')->insert([
+            'name' => 'Daniel Pereira',
+            'username' => 'T0000005',
+            'email' => 'daniel.pereira.t0000005@edu.atec.pt',
+            'contact' => '912123611',
+            'password' => null,
+            'notes' => '',
+            'isActive' => true,
+            'isStudent' => true,
+            'course_class_id' => 5,
+            'role_id' => 3,
+        ]);
+
+
+        // Seed 16
+        DB::table('users')->insert([
+            'name' => 'Jose Almeida',
+            'username' => 'T0000006',
+            'email' => 'jose.almeida.t0000006@edu.atec.pt',
+            'contact' => '912123612',
             'password' => null,
             'notes' => '',
             'isActive' => true,
@@ -109,165 +240,159 @@ class UserSeeder extends Seeder
             'role_id' => 3,
         ]);
 
-        // Seed 6
+        // Seed 17
         DB::table('users')->insert([
-            'name' => 'José Silva',
-            'username' => 'T0123186',
-            'email' => 'jose.silva.t0123186@edu.atec.pt',
-            'contact' => '934092936',
+            'name' => 'Pedro Fernandes',
+            'username' => 'T0000007',
+            'email' => 'pedro.fernandes.t0000007@edu.atec.pt',
+            'contact' => '912123613',
             'password' => null,
             'notes' => '',
             'isActive' => true,
             'isStudent' => true,
-            'course_class_id' => 5,
+            'course_class_id' => 4,
             'role_id' => 3,
-                    ]);
-        // Seed 7
+        ]);
+
+        // Seed 18
         DB::table('users')->insert([
-            'name' => 'José Silva2',
-            'username' => 'T0123187',
-            'email' => 'jose.silva.t0123187@edu.atec.pt',
-            'contact' => '934092937',
+            'name' => 'Vasco Silva',
+            'username' => 'T0000008',
+            'email' => 'vasco.silva.t0000008@edu.atec.pt',
+            'contact' => '912123614',
             'password' => null,
             'notes' => '',
             'isActive' => true,
             'isStudent' => true,
-            'course_class_id' => 5,
+            'course_class_id' => 4,
             'role_id' => 3,
         ]);
-        // Seed 8
+
+
+        // Seed 19
         DB::table('users')->insert([
-            'name' => 'José Silva8',
-            'username' => 'T0123188',
-            'email' => 'jose.silva.t0123158@edu.atec.pt',
-            'contact' => '934092938',
+            'name' => 'Gonçalo Moreira',
+            'username' => 'T0000009',
+            'email' => 'goncalo.moreira.t0000009@edu.atec.pt',
+            'contact' => '912123615',
             'password' => null,
             'notes' => '',
             'isActive' => true,
             'isStudent' => true,
-            'course_class_id' => 5,
+            'course_class_id' => 3,
             'role_id' => 3,
         ]);
-        // Seed 9
+
+        // Seed 20
         DB::table('users')->insert([
-            'name' => 'José Silva4',
-            'username' => 'T0123189',
-            'email' => 'jose.silva.t0123189@edu.atec.pt',
-            'contact' => '934092939',
+            'name' => 'Hugo Serafim',
+            'username' => 'T0000010',
+            'email' => 'hugo.serafim.t0000010@edu.atec.pt',
+            'contact' => '912123616',
             'password' => null,
             'notes' => '',
             'isActive' => true,
             'isStudent' => true,
-            'course_class_id' => 5,
+            'course_class_id' => 3,
             'role_id' => 3,
         ]);
-        // Seed 10
+
+        // Seed 21
         DB::table('users')->insert([
-            'name' => 'José tecnico',
-            'username' => 'T0123111',
-            'email' => 'jose.silva.t01231c89@edu.atec.pt',
-            'contact' => '933592939',
-            'password' => bcrypt('passwordxyz'),
+            'name' => 'André Cardoso',
+            'username' => 'T0000011',
+            'email' => 'andre.cardoso.t0000011@edu.atec.pt',
+            'contact' => '912123617',
+            'password' => null,
             'notes' => '',
             'isActive' => true,
-            'isStudent' => false,
-            'course_class_id' => null,
-            'role_id' => 4,
+            'isStudent' => true,
+            'course_class_id' => 3,
+            'role_id' => 3,
         ]);
-        // Seed 11
-        DB::table('users')->insert([
-            'name' => 'admin',
-            'username' => 'admin',
-            'email' => 'jose.silva.t0121c89@edu.atec.pt',
-            'contact' => '934562939',
-            'password' => bcrypt('Password*123'),
+
+          // Seed 22
+          DB::table('users')->insert([
+            'name' => 'Gaspar Junior',
+            'username' => 'T0000012',
+            'email' => 'gaspar.junior.t0000012@edu.atec.pt',
+            'contact' => '912123618',
+            'password' => null,
             'notes' => '',
             'isActive' => true,
-            'isStudent' => false,
-            'course_class_id' => null,
-            'role_id' => 1,
+            'isStudent' => true,
+            'course_class_id' => 2,
+            'role_id' => 3,
         ]);
-        // Seed 12
+
+        // Seed 23
         DB::table('users')->insert([
-            'name' => 'tecnico',
-            'username' => 'tecnico',
-            'email' => 'ricardo.ferreira.t0123185@edu.atec.pt',
-            'contact' => '934592939',
-            'password' => bcrypt('Password*123'),
+            'name' => 'Walter Amorim',
+            'username' => 'T0000013',
+            'email' => 'walter.amorim.t0000013@edu.atec.pt',
+            'contact' => '912123619',
+            'password' => null,
             'notes' => '',
             'isActive' => true,
-            'isStudent' => false,
-            'course_class_id' => null,
-            'role_id' => 4,
+            'isStudent' => true,
+            'course_class_id' => 2,
+            'role_id' => 3,
         ]);
-        // Seed 13
+
+        // Seed 24
         DB::table('users')->insert([
-            'name' => 'ricardo',
-            'username' => 'ricardo',
-            'email' => 'ricardo.ferreira.t01235@edu.atec.pt',
-            'contact' => '934592548',
-            'password' => bcrypt('Password*123'),
+            'name' => 'Tiago Bonifácio',
+            'username' => 'T0000014',
+            'email' => 'andre.cardoso.t0000014@edu.atec.pt',
+            'contact' => '912123620',
+            'password' => null,
             'notes' => '',
             'isActive' => true,
-            'isStudent' => false,
-            'course_class_id' => null,
-            'role_id' => 1,
+            'isStudent' => true,
+            'course_class_id' => 2,
+            'role_id' => 3,
         ]);
 
+        // Seed 25
+        DB::table('users')->insert([
+            'name' => 'André Manuel',
+            'username' => 'T0000015',
+            'email' => 'andre.manuel.t0000015@edu.atec.pt',
+            'contact' => '912123621',
+            'password' => null,
+            'notes' => '',
+            'isActive' => true,
+            'isStudent' => true,
+            'course_class_id' => 1,
+            'role_id' => 3,
+        ]);
 
+        // Seed 26
+        DB::table('users')->insert([
+            'name' => 'Manuel Andrade',
+            'username' => 'T0000016',
+            'email' => 'manuel.andrade.t0000016@edu.atec.pt',
+            'contact' => '912123622',
+            'password' => null,
+            'notes' => '',
+            'isActive' => true,
+            'isStudent' => true,
+            'course_class_id' => 1,
+            'role_id' => 3,
+        ]);
 
-        $faker = Faker::create();
-
-        for ($i = 0; $i < 50; $i++) {
-            $firstName = $faker->firstName;
-            $lastName = $faker->lastName;
-            $username = 'T' . $faker->unique()->randomNumber(7);
-            $email = strtolower($firstName . '.' . $lastName . '.' . $username . '@edu.atec.pt');
-            $contact = $faker->numerify('#########');
-            $courseClassId = ($i % 5) + 1;
-            $password = null;
-            $isStudent = true;
-            $roleId = 3;
-
-            DB::table('users')->insert([
-                'name' => $firstName . ' ' . $lastName,
-                'username' => $username,
-                'email' => $email,
-                'contact' => $contact,
-                'password' => $password,
-                'notes' => '',
-                'isActive' => true,
-                'isStudent' => $isStudent,
-                'course_class_id' => $courseClassId,
-                'role_id' => $roleId,
-            ]);
-        }
-
-        for ($i = 0; $i < 30; $i++) {
-            $firstName = $faker->firstName;
-            $lastName = $faker->lastName;
-            $username = 'T' . $faker->unique()->randomNumber(7);
-            $email = strtolower($firstName . '.' . $lastName . '.' . $username . '@edu.atec.pt');
-            $contact = $faker->numerify('#########');
-            $password = null;
-            $isStudent = true;
-            $roleId = 3;
-
-            DB::table('users')->insert([
-                'name' => $firstName . ' ' . $lastName,
-                'username' => $username,
-                'email' => $email,
-                'contact' => $contact,
-                'password' => $password,
-                'notes' => '',
-                'isActive' => true,
-                'isStudent' => $isStudent,
-                'course_class_id' => null,
-                'role_id' => $roleId,
-            ]);
-        }
-
-
-
+        // Seed 27
+        DB::table('users')->insert([
+            'name' => 'Bruno Lovato',
+            'username' => 'T0000017',
+            'email' => 'bruno.lovato.t0000017@edu.atec.pt',
+            'contact' => '912123623',
+            'password' => null,
+            'notes' => '',
+            'isActive' => true,
+            'isStudent' => true,
+            'course_class_id' => 1,
+            'role_id' => 3,
+        ]);
     }
 }
