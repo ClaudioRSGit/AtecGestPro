@@ -11,7 +11,7 @@
         <div class="d-flex justify-content-between align-items-center position-relative">
             <h1>Tickets</h1>
 
-            <img src="{{ asset('assets/questionMark.png') }}" onclick="event.stopPropagation(); changeTab(); triggerTicketIntro();" class="questionMarkBtn">
+            <img src="{{ asset('assets/questionMark.png') }}" onclick="event.stopPropagation(); changeTicketTab(); triggerTicketIntro();" class="questionMarkBtn">
             <div onclick="showOptions()" class="form-control btn-primary w-20 dropdown newTicket tickets-newTicketBtn" style="max-width: 10rem;">
                 <div class="d-flex justify-content-center align-items-center w-100 h-100">
 
