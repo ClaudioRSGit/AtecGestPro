@@ -11,8 +11,8 @@
 
         <h1>Detalhes do Curso</h1>
 
-        <div class="w-100 d-flex justify-content-between">
-            <div class="w-50">
+        <div class="courseInfo w-100 d-flex justify-content-between">
+            <div>
                 <div class="mb-3">
                     <label for="code" class="form-label">Nome do Curso:</label>
                     <input type="text" class="form-control" id="code" name="code" value="{{ $course->code }}"
@@ -31,7 +31,7 @@
                 </div>
             </div>
 
-            <div class="w-25 mr-10">
+            <div class="mr-10">
                 @if($courseClasses->isEmpty())
                     <p class="pl-2 pb-2 font-weight-bold text-danger" style="text-align: center">Não existem
                         turmas neste curso</p>

@@ -57,41 +57,6 @@ html {
     margin-top: 5%;
 }
 
-.content::before {
-    content: '';
-    position: absolute;
-    top: 1%;
-    right: 0%;
-    bottom: 0%;
-    left: 50%;
-    position: fixed;
-    background-image: radial-gradient(circle, rgba(17, 111, 220, 0.1), rgba(120, 143, 228, 0.2), rgba(173, 177, 237, 0.1), rgba(217, 215, 246, 0), rgba(255, 255, 255, 0.1));
-    z-index: -1;
-}
-
-.loginPage::before {
-    content: '';
-    position: absolute;
-    top: 1%;
-    right: 0%;
-    bottom: 0%;
-    left: 50%;
-    position: fixed;
-    background-image: radial-gradient(circle, rgba(17, 111, 220, 0.1), rgba(120, 143, 228, 0.3), rgba(173, 177, 237, 0.2), rgba(217, 215, 246, 0), rgba(255, 255, 255, 0.2));
-    z-index: -1;
-}
-
-.loginPage::after {
-    content: '';
-    position: absolute;
-    top: 1%;
-    right: 10%;
-    bottom: 0%;
-    left: 0%;
-    position: fixed;
-    background-image: radial-gradient(circle, rgba(17, 111, 220, 0.1), rgba(120, 143, 228, 0.2), rgba(173, 177, 237, 0.1), rgba(217, 215, 246, 0), rgba(255, 255, 255, 0.1));
-    z-index: -1;
-}
 
 article,
 aside,
@@ -287,18 +252,26 @@ thead th {
         justify-content: flex-start;
         align-items: center;
     }
-    html, body, main, .content, .container, .navbar, .modal, .sidebarContent{
+    html, body, main, .content, .container, .navbar, .modal, .sidebarContent, .loginPage{
         max-height: 100dvh !important;
         max-width: 100dvw !important;
     }
     .content{
         width: 90% !important;
         padding: 0 !important;
-        margin-top: 4rem !important;
+        margin-top: 6rem !important;
+    }
+    body::before{
+        content: none !important;
     }
     .content::before{
-        display: none !important;
-        width: 0 !important;
+        content: none !important;
+    }
+    .loginPage::before{
+        content: none !important;
+    }
+    .loginPage::after{
+        content: none !important;
     }
 
     .navbar{
@@ -358,6 +331,14 @@ thead th {
         width: 50% !important;
     }
 
+
+    .loginCard{
+        width: 90% !important;
+    }
+    .loginInnerCard{
+        padding: 3rem !important;
+    }
+
     .newTicket{
         min-width: 7rem;
         padding: 0.375rem 0 !important;
@@ -403,7 +384,7 @@ thead th {
         min-width: 15px !important;
     }
 
-    .newTicket i{
+    .newTicket i, .newCourse i{
         display: none !important;
     }
     .newTicket p{
@@ -432,6 +413,18 @@ thead th {
 
     .createTicket *{
         width: 45% !important;
+    }
+
+    #courseForm{
+        width: 100% !important;
+    }
+    .courseInfo{
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 1rem !important;
+    }
+    .courseInfo > *{
+        width: 100% !important;
     }
 }
 /*mobile screen*/
@@ -641,6 +634,7 @@ textarea {
 }
 
 @media (min-width: 476px) and (max-width: 1082px) {
+
     .links > div {
         padding: 0;
         margin: 0;
@@ -1174,11 +1168,58 @@ pre code {
 }
 
 @media (min-width: 1200px) {
+
+    .content::before {
+        content: '';
+        position: absolute;
+        top: 1%;
+        right: 0%;
+        bottom: 0%;
+        left: 50%;
+        position: fixed;
+        background-image: radial-gradient(circle, rgba(17, 111, 220, 0.1), rgba(120, 143, 228, 0.2), rgba(173, 177, 237, 0.1), rgba(217, 215, 246, 0), rgba(255, 255, 255, 0.1));
+        z-index: -1;
+    }
+
+    .loginPage::before {
+        content: '';
+        position: absolute;
+        top: 1%;
+        right: 0%;
+        bottom: 0%;
+        left: 50%;
+        position: fixed;
+        background-image: radial-gradient(circle, rgba(17, 111, 220, 0.1), rgba(120, 143, 228, 0.3), rgba(173, 177, 237, 0.2), rgba(217, 215, 246, 0), rgba(255, 255, 255, 0.2));
+        z-index: -1;
+    }
+
+    .loginPage::after {
+        content: '';
+        position: absolute;
+        top: 1%;
+        right: 10%;
+        bottom: 0%;
+        left: 0%;
+        position: fixed;
+        background-image: radial-gradient(circle, rgba(17, 111, 220, 0.1), rgba(120, 143, 228, 0.2), rgba(173, 177, 237, 0.1), rgba(217, 215, 246, 0), rgba(255, 255, 255, 0.1));
+        z-index: -1;
+    }
+
     .container-xl,
     .container-lg,
     .container-md,
     .container-sm {
         max-width: 1140px;
+    }
+
+    .courseInfo{
+        width: 100% !important;
+    }
+    .courseInfo > :nth-child(1){
+        width: 50%;
+    }
+    .courseInfo > :nth-child(2){
+        width: 25%;
     }
 }
 

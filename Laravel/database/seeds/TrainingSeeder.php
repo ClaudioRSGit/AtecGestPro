@@ -41,9 +41,9 @@ class TrainingSeeder extends Seeder
 
         // Seed 5
         DB::table('trainings')->insert([
-            'name' => 'Higiene e Segurança - Mecânica',
-            'description' => 'Higiene e Segurança - Mecânica',
-            'category' => 'Higiene e Segurança',
+            'name' => 'Pneumática',
+            'description' => 'Sistemas Pneumáticos',
+            'category' => 'Sistemas Pneumáticos',
         ]);
     }
 }
