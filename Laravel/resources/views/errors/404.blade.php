@@ -6,53 +6,8 @@
     <title>Erro 404</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
          integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            height: 100vh;
-            background-color: #f8f9fa;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
 
-        .container {
-            width: 60%;
-            text-align: center;
-        }
-
-        .error-text {
-            color: #333;
-            font-size: 24px;
-            font-weight: bold;
-        }
-
-        .error-code {
-            color: #555;
-            font-size: 100px;
-            font-weight: bold;
-            margin: 0;
-        }
-
-        .error-description {
-            color: #555;
-            font-size: 18px;
-        }
-
-        .error-image {
-            width: 40%;
-            text-align: center;
-        }
-
-        .error-image img {
-            max-width: 80%;
-            height: auto;
-            margin-right: 30%;
-        }
-    </style>
+         <link href="{{ asset('css/errorstyles.css') }}" rel="stylesheet">
 </head>
 <body>
 <div class="container">
