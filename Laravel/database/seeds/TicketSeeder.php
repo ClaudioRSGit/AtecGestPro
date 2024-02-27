@@ -151,7 +151,7 @@ class TicketSeeder extends Seeder
         DB::table('tickets')->insert([
             'user_id' => 3,
             'title' => 'PC já liga',
-            'description' => 'O pc 14 da sala 15 não liga',
+            'description' => 'O pc 14 da sala 15 já liga',
             'dueByDate' => now()->addDays(2),
             'attachment' => 'password_reset_request_attachment.pdf',
             'ticket_status_id' => 5,
