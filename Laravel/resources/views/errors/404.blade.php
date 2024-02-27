@@ -26,21 +26,6 @@
     <img src="{{ asset('assets/404.png') }}">
 </div>
 
-<script>
-    function countdownRedirect() {
-        var seconds = 5;
-        var countdownElement = document.getElementById("countdown");
-        var countdownInterval = setInterval(function() {
-            seconds--;
-            countdownElement.textContent = seconds;
-            if (seconds <= 0) {
-                clearInterval(countdownInterval);
-                window.location.href = "/";
-            }
-        }, 1000);
-    }
-
-    countdownRedirect();
-</script>
+<script src="{{ asset('js/error.js') }}"></script>
 </body>
 </html>
