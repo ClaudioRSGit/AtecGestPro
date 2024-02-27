@@ -42,7 +42,7 @@ class TicketSeeder extends Seeder
 
         // Seed 3
         DB::table('tickets')->insert([
-            'user_id' => 5,
+            'user_id' =>  3,
             'title' => 'Lampada fundida',
             'description' => 'Lampada fundida na sala 19',
             'dueByDate' => now()->addDays(7),
@@ -56,7 +56,7 @@ class TicketSeeder extends Seeder
 
         // Seed 4
         DB::table('tickets')->insert([
-            'user_id' => 5,
+            'user_id' =>  3,
             'title' => 'Preparação de feira de emprego',
             'description' => 'Por favor preparar a sala 19 para a feira de emprego',
             'dueByDate' => now()->addDays(10),
@@ -70,7 +70,7 @@ class TicketSeeder extends Seeder
 
         // Seed 5
         DB::table('tickets')->insert([
-            'user_id' => 6,
+            'user_id' => 14,
             'title' => 'PC não liga',
             'description' => 'O pc 14 da sala 15 não liga',
             'dueByDate' => now()->addDays(2),
@@ -83,7 +83,7 @@ class TicketSeeder extends Seeder
         ]);
         // Seed 6
         DB::table('tickets')->insert([
-            'user_id' => 6,
+            'user_id' => 14,
             'title' => 'PC não liga',
             'description' => 'O pc 14 da sala 15 não liga',
             'dueByDate' => now()->addDays(2),
@@ -96,7 +96,7 @@ class TicketSeeder extends Seeder
         ]);
         // Seed 7
         DB::table('tickets')->insert([
-            'user_id' => 5,
+            'user_id' =>  3,
             'title' => 'PC não liga',
             'description' => 'O pc 14 da sala 15 não liga',
             'dueByDate' => now()->addDays(2),
@@ -109,7 +109,7 @@ class TicketSeeder extends Seeder
         ]);
         // Seed 8
         DB::table('tickets')->insert([
-            'user_id' => 5,
+            'user_id' =>  3,
             'title' => 'PC não liga',
             'description' => 'O pc 14 da sala 15 não liga',
             'dueByDate' => now()->addDays(2),
@@ -122,7 +122,7 @@ class TicketSeeder extends Seeder
         ]);
         // Seed 9
         DB::table('tickets')->insert([
-            'user_id' => 5,
+            'user_id' =>  3,
             'title' => 'PC não liga',
             'description' => 'O pc 14 da sala 15 não liga',
             'dueByDate' => now()->addDays(2),
@@ -135,7 +135,7 @@ class TicketSeeder extends Seeder
         ]);
         // Seed 10
         DB::table('tickets')->insert([
-            'user_id' => 5,
+            'user_id' => 3,
             'title' => 'PC não liga',
             'description' => 'O pc 14 da sala 15 não liga',
             'dueByDate' => now()->addDays(2),
