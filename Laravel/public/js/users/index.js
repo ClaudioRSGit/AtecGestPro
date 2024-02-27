@@ -15,7 +15,8 @@ $(document).ready(function () {
         $(`#userTabs a[href="#${tabId}"]`).tab('show');
     }
 
-    const activeTabInfo = localStorage.getItem('activeTabInfo');
+    const pageName = window.location.pathname.split('/').pop();
+    const activeTabInfo = localStorage.getItem(`activeTabInfo_${pageName}`);
 
     if (activeTabInfo) {
         const {tabId, context} = JSON.parse(activeTabInfo);
@@ -28,7 +29,7 @@ $(document).ready(function () {
         const context = determineContext();
 
         const activeTabInfo = JSON.stringify({tabId, context});
-        localStorage.setItem('activeTabInfo', activeTabInfo);
+        localStorage.setItem(`activeTabInfo_${pageName}`, activeTabInfo);
 
         setFragment(tabId);
     });
@@ -38,17 +39,8 @@ $(document).ready(function () {
         setActiveTab(fragment);
     });
 
-
-
-    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-        var tabId = $(e.target).attr('href');
-        history.pushState(null, null, tabId);
-    });
-
     window.addEventListener('beforeunload', function () {
         history.pushState("", document.title, window.location.pathname + window.location.search);
-        // localStorage.removeItem('activeTabInfo'); // Add this line
-
     });
 });
 

@@ -37,16 +37,16 @@
 
         <ul class="nav nav-tabs mb-3" id="userTabs">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#allTable">Todos</a>
+                <a class="nav-link active" data-toggle="tab" href="#utilizadores">Todos</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#recycleTable">Reciclagem</a>
+                <a class="nav-link" data-toggle="tab" href="#reciclagem_utilizadores">Reciclagem</a>
             </li>
         </ul>
 
         <div class="tab-content">
 
-            <div class="tab-pane fade show active" id="allTable">
+            <div class="tab-pane fade show active" id="utilizadores">
                 <div class="d-flex justify-content-between mb-3">
 
                     <form action="{{ route('users.index') }}" method="GET">
@@ -189,7 +189,7 @@
 {{--                </div>--}}
 
             </div>
-            <div class="tab-pane fade " id="recycleTable">
+            <div class="tab-pane fade " id="reciclagem_utilizadores">
 
                 @if($deletedUsers->isEmpty())
                     <img src="{{ asset('assets/reciclagem_azul_extra_bold_2_sem fundo.png') }}"

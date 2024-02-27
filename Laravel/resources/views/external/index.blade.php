@@ -31,20 +31,20 @@
 
         <ul class="nav nav-tabs mb-3" id="myTabs">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#externalTable">Gestão de F. Mercado</a>
+                <a class="nav-link active" data-toggle="tab" href="#formacoes_externas">Gestão de F. Mercado</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#partnersTable">Gestão de Parceiros</a>
+                <a class="nav-link" data-toggle="tab" href="#parceiros">Gestão de Parceiros</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#trainingsTable">Gestão de Formação</a>
+                <a class="nav-link" data-toggle="tab" href="#formacoes">Gestão de Formação</a>
             </li>
         </ul>
 
 
         <div class="tab-content">
 
-            <div class="tab-pane fade show active" id="externalTable">
+            <div class="tab-pane fade show active" id="formacoes_externas">
 
                 <div class="d-flex justify-content-between mb-3">
                     <form action="{{ route('external.index') }}" method="GET">
@@ -137,7 +137,7 @@
                 </table>
                 {{ $partner_Training_Users->appends(['ptuPage' => $partner_Training_Users->currentPage()])->links() }}            </div>
 
-            <div class="tab-pane fade" id="partnersTable">
+            <div class="tab-pane fade" id="parceiros">
                 <div class="d-flex justify-content-between mb-3">
                     <form action="{{ route('external.index') }}" method="GET">
                         <div class="input-group pr-2">
@@ -236,7 +236,7 @@
 
             </div>
 
-            <div class="tab-pane fade" id="trainingsTable">
+            <div class="tab-pane fade" id="formacoes">
 
 
 

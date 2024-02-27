@@ -25,15 +25,15 @@
         </div>
         <ul class="nav nav-tabs" id="myTab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" id="all-tickets-tab" data-toggle="tab" href="#allTickets" role="tab"
+                <a class="nav-link active" id="all-tickets-tab" data-toggle="tab" href="#tickets" role="tab"
                    aria-controls="allTickets" aria-selected="true">Todos os tickets</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="waiting-queue-tab" data-toggle="tab" href="#waitingQueue" role="tab"
+                <a class="nav-link" id="waiting-queue-tab" data-toggle="tab" href="#fila_de_espera" role="tab"
                    aria-controls="waitingQueue" aria-selected="false">Fila de Espera</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="recycling-tab" data-toggle="tab" href="#recycling" role="tab"
+                <a class="nav-link" id="recycling-tab" data-toggle="tab" href="#reciclagem_tickets" role="tab"
                    aria-controls="recycling" aria-selected="false">Reciclagem</a>
             </li>
         </ul>
@@ -41,7 +41,7 @@
             <div class="tab-content" id="myTabContent">
 
 
-                <div class="tab-pane fade show active" id="allTickets" role="tabpanel"
+                <div class="tab-pane fade show active" id="tickets" role="tabpanel"
                      aria-labelledby="all-tickets-tab">
                     <div class="d-flex justify-content-between my-3">
 
@@ -242,7 +242,7 @@
                     @endif
                     {{ $tickets->appends(['tPage' => $tickets->currentPage()])->links() }}
                 </div>
-                <div class="tab-pane fade" id="waitingQueue" role="tabpanel" aria-labelledby="waiting-queue-tab">
+                <div class="tab-pane fade" id="fila_de_espera" role="tabpanel" aria-labelledby="waiting-queue-tab">
                     <div class="d-flex justify-content-between my-3">
 
                         <form action="{{ route('tickets.index') }}" method="get" id="filaSearchForm">
@@ -377,7 +377,7 @@
                     @endif
                     {{ $waitingQueueTickets->appends(['wPage' => $waitingQueueTickets->currentPage()])->links() }}
                 </div>
-                <div class="tab-pane fade" id="recycling" role="tabpanel" aria-labelledby="recycling-tab">
+                <div class="tab-pane fade" id="reciclagem_tickets" role="tabpanel" aria-labelledby="recycling-tab">
                     <div class="d-flex justify-content-between my-3">
 
                         <form action="{{ route('tickets.index') }}" method="get" id="recyclingSearchForm">
