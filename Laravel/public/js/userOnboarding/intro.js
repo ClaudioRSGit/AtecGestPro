@@ -1,4 +1,4 @@
-function iniciarIntro() {
+function triggerIntro() {
     const intro = introJs();
     intro.setOptions({
         steps: [
