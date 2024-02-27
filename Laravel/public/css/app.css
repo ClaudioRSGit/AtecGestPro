@@ -57,41 +57,6 @@ html {
     margin-top: 5%;
 }
 
-.content::before {
-    content: '';
-    position: absolute;
-    top: 1%;
-    right: 0%;
-    bottom: 0%;
-    left: 50%;
-    position: fixed;
-    background-image: radial-gradient(circle, rgba(17, 111, 220, 0.1), rgba(120, 143, 228, 0.2), rgba(173, 177, 237, 0.1), rgba(217, 215, 246, 0), rgba(255, 255, 255, 0.1));
-    z-index: -1;
-}
-
-.loginPage::before {
-    content: '';
-    position: absolute;
-    top: 1%;
-    right: 0%;
-    bottom: 0%;
-    left: 50%;
-    position: fixed;
-    background-image: radial-gradient(circle, rgba(17, 111, 220, 0.1), rgba(120, 143, 228, 0.3), rgba(173, 177, 237, 0.2), rgba(217, 215, 246, 0), rgba(255, 255, 255, 0.2));
-    z-index: -1;
-}
-
-.loginPage::after {
-    content: '';
-    position: absolute;
-    top: 1%;
-    right: 10%;
-    bottom: 0%;
-    left: 0%;
-    position: fixed;
-    background-image: radial-gradient(circle, rgba(17, 111, 220, 0.1), rgba(120, 143, 228, 0.2), rgba(173, 177, 237, 0.1), rgba(217, 215, 246, 0), rgba(255, 255, 255, 0.1));
-    z-index: -1;
-}
 
 article,
 aside,
@@ -287,18 +252,26 @@ thead th {
         justify-content: flex-start;
         align-items: center;
     }
-    html, body, main, .content, .container, .navbar, .modal, .sidebarContent{
+    html, body, main, .content, .container, .navbar, .modal, .sidebarContent, .loginPage{
         max-height: 100dvh !important;
         max-width: 100dvw !important;
     }
     .content{
         width: 90% !important;
         padding: 0 !important;
-        margin-top: 4rem !important;
+        margin-top: 6rem !important;
+    }
+    body::before{
+        content: none !important;
     }
     .content::before{
-        display: none !important;
-        width: 0 !important;
+        content: none !important;
+    }
+    .loginPage::before{
+        content: none !important;
+    }
+    .loginPage::after{
+        content: none !important;
     }
 
     .navbar{
@@ -356,6 +329,14 @@ thead th {
     }
     .link p{
         width: 50% !important;
+    }
+
+
+    .loginCard{
+        width: 90% !important;
+    }
+    .loginInnerCard{
+        padding: 3rem !important;
     }
 
     .newTicket{
@@ -641,6 +622,7 @@ textarea {
 }
 
 @media (min-width: 476px) and (max-width: 1082px) {
+
     .links > div {
         padding: 0;
         margin: 0;
@@ -1174,6 +1156,43 @@ pre code {
 }
 
 @media (min-width: 1200px) {
+
+    .content::before {
+        content: '';
+        position: absolute;
+        top: 1%;
+        right: 0%;
+        bottom: 0%;
+        left: 50%;
+        position: fixed;
+        background-image: radial-gradient(circle, rgba(17, 111, 220, 0.1), rgba(120, 143, 228, 0.2), rgba(173, 177, 237, 0.1), rgba(217, 215, 246, 0), rgba(255, 255, 255, 0.1));
+        z-index: -1;
+    }
+
+    .loginPage::before {
+        content: '';
+        position: absolute;
+        top: 1%;
+        right: 0%;
+        bottom: 0%;
+        left: 50%;
+        position: fixed;
+        background-image: radial-gradient(circle, rgba(17, 111, 220, 0.1), rgba(120, 143, 228, 0.3), rgba(173, 177, 237, 0.2), rgba(217, 215, 246, 0), rgba(255, 255, 255, 0.2));
+        z-index: -1;
+    }
+
+    .loginPage::after {
+        content: '';
+        position: absolute;
+        top: 1%;
+        right: 10%;
+        bottom: 0%;
+        left: 0%;
+        position: fixed;
+        background-image: radial-gradient(circle, rgba(17, 111, 220, 0.1), rgba(120, 143, 228, 0.2), rgba(173, 177, 237, 0.1), rgba(217, 215, 246, 0), rgba(255, 255, 255, 0.1));
+        z-index: -1;
+    }
+
     .container-xl,
     .container-lg,
     .container-md,
