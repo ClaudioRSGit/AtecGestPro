@@ -28,7 +28,7 @@
 
             @csrf
             @method('put')
-
+git p
             <div class="row">
                 <div class="col-md-6">
                     <div class="my-3">

@@ -208,11 +208,13 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-12 card mt-4">
-                <h5 class="card-header"><strong>Formações Externas por mês</strong></h5>
-                <div class="card-body">
-                    <div id="traffic-chart"></div>
+        <div class="row col-12 mr-3">
+            <div class="col-12">
+                <div class="card">
+                    <h5 class="card-header" ><strong>Formações Externas por mês</strong></h5>
+                    <div class="card-body">
+                        <div id="traffic-chart"></div>
+                    </div>
                 </div>
             </div>
         </div>

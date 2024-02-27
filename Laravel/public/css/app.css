@@ -5884,7 +5884,9 @@ input[type=button].btn-block {
 .dashboardCard:hover .dashboardCardSubtitle {
     color: #ffffff!important;
 }
-
+.dashboardCard:hover i {
+    color: #ffffff !important;
+}
 .dashboardCardContent {
     font-family: 'Muli', sans-serif;
 }
