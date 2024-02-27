@@ -6,7 +6,7 @@
     </div>
 </footer>
 @push('scripts')
-<script src="{{ asset('js/intro.js') }}"></script>
+<script src="{{ asset('js/userOnboarding/intro.js') }}"></script>
 @endpush
 
 
