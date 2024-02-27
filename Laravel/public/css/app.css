@@ -384,7 +384,7 @@ thead th {
         min-width: 15px !important;
     }
 
-    .newTicket i{
+    .newTicket i, .newCourse i{
         display: none !important;
     }
     .newTicket p{
@@ -413,6 +413,18 @@ thead th {
 
     .createTicket *{
         width: 45% !important;
+    }
+
+    #courseForm{
+        width: 100% !important;
+    }
+    .courseInfo{
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 1rem !important;
+    }
+    .courseInfo > *{
+        width: 100% !important;
     }
 }
 /*mobile screen*/
@@ -1198,6 +1210,16 @@ pre code {
     .container-md,
     .container-sm {
         max-width: 1140px;
+    }
+
+    .courseInfo{
+        width: 100% !important;
+    }
+    .courseInfo > :nth-child(1){
+        width: 50%;
+    }
+    .courseInfo > :nth-child(2){
+        width: 25%;
     }
 }
 
