@@ -27,7 +27,7 @@
                 <a class="nav-link active" data-toggle="tab" href="#formandos">Formandos</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#funcionarios">funcionarios</a>
+                <a class="nav-link" data-toggle="tab" href="#funcionarios">Funcionários</a>
             </li>
         </ul>
 
