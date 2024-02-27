@@ -2,12 +2,14 @@
 
 @section('content')
     <div class="container  w-100 fade-in">
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-4 position-relative">
             <h1>Lista de Materiais</h1>
+
             <a href="{{ route('materials.create') }}" class="btn btn-primary">
                 <i class="fa-solid fa-pen mr-1" style="color: #ffffff;"></i>
                 Novo Material
             </a>
+            <img src="{{ asset('assets/questionMark.png') }}" onclick="event.stopPropagation(); triggerMaterialIntro();" class="questionMarkBtn">
         </div>
 
         @if (session('success'))
@@ -15,7 +17,6 @@
                 {{ session('success') }}
             </div>
         @endif
-
 
         <ul class="nav nav-tabs mb-3" id="userTabs">
             <li class="nav-item">
@@ -721,3 +722,7 @@
             });
         </script>
     @endsection
+    @push('scripts')
+    <script src="{{ asset('js/userOnboarding/intro.js') }}"></script>
+    <script src="{{ asset('js/userOnboarding/materialIntro.js') }}"></script>
+    @endpush

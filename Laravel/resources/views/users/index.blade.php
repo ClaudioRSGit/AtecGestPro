@@ -27,12 +27,14 @@
             </script>
         @endif
 
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-4 position-relative">
             <h1>Utilizadores</h1>
+
             <a href="{{ route('users.create') }}" class="btn btn-primary">
                 <i class="fa-solid fa-pen mr-1" style="color: #ffffff;"></i>
                 Novo Utilizador
             </a>
+            <img src="{{ asset('assets/questionMark.png') }}" onclick="event.stopPropagation(); triggerUserIntro();" class="questionMarkBtn">
         </div>
 
         <ul class="nav nav-tabs mb-3" id="userTabs">
@@ -411,5 +413,7 @@
     </script>
 @endsection
 @push('scripts')
-    <script src="{{ asset('js/users/index.js') }}"></script>
+<script src="{{ asset('js/tickets/index.js') }}"></script>
+<script src="{{ asset('js/userOnboarding/intro.js') }}"></script>
+<script src="{{ asset('js/userOnboarding/userIntro.js') }}"></script>
 @endpush
