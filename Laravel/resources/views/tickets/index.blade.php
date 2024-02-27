@@ -562,6 +562,6 @@
 @endsection
 @push('scripts')
 <script src="{{ asset('js/tickets/index.js') }}"></script>
-<script src="{{ asset('js/intro.js') }}"></script>
+<script src="{{ asset('js/userOnboarding/intro.js') }}"></script>
 @endpush
 

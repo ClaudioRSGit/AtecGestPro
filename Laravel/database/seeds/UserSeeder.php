@@ -60,10 +60,10 @@ class UserSeeder extends Seeder
             'username' => 'T0123388',
             'email' => 'antonio.carro.t3698521@edu.atec.pt',
             'contact' => '912345699',
-            'password' => bcrypt('password123'),
+            'password' => null,
             'notes' => '',
             'isActive' => true,
-            'isStudent' => false,
+            'isStudent' => true,
             'course_class_id' => null,
             'role_id' => 3,
         ]);

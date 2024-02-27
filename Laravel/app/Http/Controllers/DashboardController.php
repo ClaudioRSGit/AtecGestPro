@@ -16,8 +16,9 @@ class DashboardController extends Controller
 {
     public function index()
     {
+
         if (auth()->user()->hasRole('tecnico')) {
-            abort(403, 'Acesso não autorizado.'); 
+            abort(403, 'Acesso não autorizado.');
         }
 
         //User

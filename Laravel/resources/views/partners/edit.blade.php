@@ -28,10 +28,10 @@
 
             @csrf
             @method('put')
-
+git p
             <div class="row">
                 <div class="col-md-6">
-                    <div class="mb-3">
+                    <div class="my-3">
                         <label for="name" class="form-label">Parceiro:</label>
                         <input type="text" class="form-control" id="name" name="name"
                             value="{{ $partner->name }}">
@@ -63,10 +63,9 @@
 
                 <div class="col-md-6 pl-4">
                     <div class="mb-3">
-                        <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
                             <label for="contacts" class="form-label">Contactos:</label>
-                            <button type="button" class="btn btn-primary" onclick="addContactFields()">Novo
-                                Contacto</button>
+                            <button type="button" class="btn btn-primary" onclick="addContactFields()">Novo Contacto</button>
                         </div>
                         <div id="contacts-container">
                             @foreach ($partner->contactPartner as $index => $contact)

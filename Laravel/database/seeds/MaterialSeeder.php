@@ -104,20 +104,8 @@ class MaterialSeeder extends Seeder
             'gender' => null,
 
         ]);
+
         // Seed 6
-
-
-
-
-
-
-
-
-
-
-
-
-
         DB::table('materials')->insert([
             'name' => 'Tshirt',
             'description' => 'Tshirt homem',
@@ -131,7 +119,7 @@ class MaterialSeeder extends Seeder
         ]);
 
 
-
+        // Seed 7
         DB::table('materials')->insert([
             'name' => 'Tshirt',
             'description' => 'Tshirt mulher',
@@ -145,7 +133,7 @@ class MaterialSeeder extends Seeder
         ]);
 
 
-
+        // Seed 8
         DB::table('materials')->insert([
             'name' => 'Sweat azul',
             'description' => 'Sweat azul homem',
@@ -159,7 +147,7 @@ class MaterialSeeder extends Seeder
         ]);
 
 
-
+        // Seed 9
         DB::table('materials')->insert([
             'name' => 'Polar',
             'description' => 'Polar homem',
@@ -173,7 +161,7 @@ class MaterialSeeder extends Seeder
         ]);
 
 
-
+        // Seed 10
         DB::table('materials')->insert([
             'name' => 'Camisa soldador',
             'description' => 'Camisa soldador homem',
@@ -187,7 +175,7 @@ class MaterialSeeder extends Seeder
         ]);
 
 
-
+        // Seed 11
         DB::table('materials')->insert([
             'name' => 'Calças castanhas mécatrónica',
             'description' => 'Calças castanhas mécatrónica homem',
@@ -201,7 +189,7 @@ class MaterialSeeder extends Seeder
         ]);
 
 
-
+        // Seed 12
         DB::table('materials')->insert([
             'name' => 'Sapato de segurança',
             'description' => 'Sapato de segurança',
@@ -214,7 +202,7 @@ class MaterialSeeder extends Seeder
 
         ]);
 
-
+        // Seed 13
         DB::table('materials')->insert([
             'name' => 'Avental soldadura',
             'description' => 'Avental soldadura',
@@ -227,6 +215,7 @@ class MaterialSeeder extends Seeder
 
         ]);
 
+        // Seed 14
         DB::table('materials')->insert([
             'name' => 'Capuz soldadura',
             'description' => 'Capuz soldadura',
@@ -240,7 +229,7 @@ class MaterialSeeder extends Seeder
         ]);
 
 
-
+        // Seed 15
         DB::table('materials')->insert([
             'name' => 'Luvas soldadura',
             'description' => 'Luvas soldadura',
@@ -253,7 +242,7 @@ class MaterialSeeder extends Seeder
 
         ]);
 
-
+        // Seed 16
         DB::table('materials')->insert([
             'name' => 'Calças cinzas de soldador',
             'description' => 'Calças cinzas de soldador homem',
@@ -267,7 +256,7 @@ class MaterialSeeder extends Seeder
         ]);
 
 
-
+        // Seed 17
         DB::table('materials')->insert([
             'name' => 'Botas de soldador',
             'description' => 'Botas de soldador',
@@ -280,6 +269,7 @@ class MaterialSeeder extends Seeder
 
         ]);
 
+        // Seed 18
         DB::table('materials')->insert([
             'name' => 'Casaco de croute',
             'description' => 'Casaco de croute homem',
@@ -292,6 +282,7 @@ class MaterialSeeder extends Seeder
 
         ]);
 
+        // Seed 19
         DB::table('materials')->insert([
             'name' => 'Bata beje',
             'description' => 'Bata beje homem',
@@ -304,7 +295,7 @@ class MaterialSeeder extends Seeder
 
         ]);
 
-
+        // Seed 20
         DB::table('materials')->insert([
             'name' => 'Bata beje',
             'description' => 'Bata beje mulher',

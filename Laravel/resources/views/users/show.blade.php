@@ -13,22 +13,26 @@
             <div class="col-md-6">
                 <div class="mb-3">
                     <label for="name" class="form-label">Nome do Utilizador:</label>
-                    <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}" disabled>
+                    <input type="text" class="form-control" id="name" name="name" value="{{ $user->name }}"
+                        disabled>
                 </div>
 
                 <div class="mb-3">
                     <label for="username" class="form-label">Username:</label>
-                    <input type="text" class="form-control" id="username" name="username" value="{{ $user->username }}" disabled>
+                    <input type="text" class="form-control" id="username" name="username" value="{{ $user->username }}"
+                        disabled>
                 </div>
 
                 <div class="mb-3">
                     <label for="email" class="form-label">Email:</label>
-                    <input type="text" class="form-control" id="email" name="email" value="{{ $user->email }}" disabled>
+                    <input type="text" class="form-control" id="email" name="email" value="{{ $user->email }}"
+                        disabled>
                 </div>
 
                 <div class="mb-3">
                     <label for="contact" class="form-label">Contacto:</label>
-                    <input type="text" class="form-control" id="contact" name="contact" value="{{ $user->contact }}" disabled>
+                    <input type="text" class="form-control" id="contact" name="contact" value="{{ $user->contact }}"
+                        disabled>
                 </div>
 
                 <div class="mb-3">
@@ -44,10 +48,11 @@
 
 
 
-                    <div class="mb-3" id="role">
-                        <label for="role" class="form-label">Função:</label>
-                        <input class="form-control" id="role" name="role" disabled value="{{$user->role->description}}">
-                    </div>
+                <div class="mb-3" id="role">
+                    <label for="role" class="form-label">Função:</label>
+                    <input class="form-control" id="role" name="role" disabled
+                        value="{{ $user->role->description }}">
+                </div>
 
 
 

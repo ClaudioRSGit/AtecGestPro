@@ -19,7 +19,7 @@ class CommentSeeder extends Seeder
             'isPublic' => true,
         ]);
         DB::table('comments')->insert([
-            'description' => 'teste comment teste comment teste comment',
+            'description' => 'testar comentários',
             'ticket_id' => 1,
             'user_id' => 2,
             'isPublic' => true,
@@ -36,7 +36,7 @@ class CommentSeeder extends Seeder
 
         // Seed 3
         DB::table('comments')->insert([
-            'description' => 'Hardware replacement completed successfully.',
+            'description' => 'Substituição de hardware concluída com êxito.',
             'ticket_id' => 3,
             'user_id' => 3,
             'isPublic' => true,
