@@ -3,9 +3,33 @@ function triggerUserIntro() {
     intro.setOptions({
         steps: [
             {
-                title: 'User!!',
-                intro: '<div style="text-align: center;"><div class="introjs-tooltiptext">Este é um guia rápido para ajudá-lo a conhecer a nossa aplicação<img src="https://atecgestpro.atec-porto.eu/assets/logo.png" style="width: 50%; margin-top: 10px;"></div></div>',
+                title: 'Secção de Utilizadores',
+                intro: 'Este é um guia rápido para ajudá-lo a conhecer a nossa secção de utilizadores',
                 position: 'center'
+            },
+            {
+                title: 'Separadores de Utilizadores',
+                element: document.querySelector('#userTabs'),
+                intro: 'Os separadores de utilizadores permitem-nos navegar entre a lista de todos os utilizadores e a lista de utilizadores na reciclagem',
+            },
+            {
+                title: 'Botões de Ação',
+                intro: 'Aqui pode encontrar botões para criar um novo utilizador, importar utilizadores, excluir utilizadores selecionados e filtrar utilizadores por função',
+            },
+            {
+                title: 'Barra de Pesquisa',
+                element: document.querySelector('.search-container'),
+                intro: 'Pesquise utilizadores por nome de utilizador',
+            },
+            {
+                title: 'Tabela de Utilizadores',
+                element: document.querySelector('.usersTable'),
+                intro: 'Aqui pode encontrar todos os utilizadores disponíveis',
+            },
+            {
+                title: 'Ações de Utilizador',
+                element: document.querySelector('.editDelete'),
+                intro: 'Aqui pode editar ou excluir um utilizador',
             },
         ]
     });

@@ -56,3 +56,6 @@ function triggerTicketIntro() {
     });
     intro.start();
 }
+function changeTab(){
+    window.location.href = '/tickets#tickets';
+}

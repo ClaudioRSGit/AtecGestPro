@@ -11,7 +11,7 @@
         <div class="d-flex justify-content-between align-items-center position-relative">
             <h1>Tickets</h1>
 
-            <img src="{{ asset('assets/questionMark.png') }}" onclick="event.stopPropagation(); triggerTicketIntro();" class="questionMarkBtn">
+            <img src="{{ asset('assets/questionMark.png') }}" onclick="event.stopPropagation(); changeTab(); triggerTicketIntro();" class="questionMarkBtn">
             <div onclick="showOptions()" class="form-control btn-primary w-20 dropdown newTicket tickets-newTicketBtn" style="max-width: 10rem;">
                 <div class="d-flex justify-content-center align-items-center w-100 h-100">
 
@@ -249,7 +249,7 @@
                 <div class="tab-pane fade" id="fila_de_espera" role="tabpanel" aria-labelledby="waiting-queue-tab">
                     <div class="d-flex justify-content-between my-3">
 
-                        <form action="{{ route('tickets.index') }}" method="get" id="filaSearchForm">
+                        <form action="{{ route('tickets.index') }}" method="get" id="filaSearchForm" class="tickets-searchBar">
                             <div class="input-group pr-2">
                                 <div class="search-container">
                                     <input type="text" class="form-control" id="filaSearch" name="filaSearch"
@@ -384,7 +384,7 @@
                 <div class="tab-pane fade" id="reciclagem_tickets" role="tabpanel" aria-labelledby="recycling-tab">
                     <div class="d-flex justify-content-between my-3">
 
-                        <form action="{{ route('tickets.index') }}" method="get" id="recyclingSearchForm">
+                        <form action="{{ route('tickets.index') }}" method="get" id="recyclingSearchForm" class="tickets-searchBar">
                             <div class="input-group pr-2">
                                 <div class="search-container">
                                     <input type="text" class="form-control" id="recyclingSearch" name="recyclingSearch"
