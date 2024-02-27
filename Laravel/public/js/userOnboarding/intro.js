@@ -4,13 +4,13 @@ function iniciarIntro() {
         steps: [
             {
                 title: 'Bem-vindo ao AtecGest Pro!',
-                intro: 'Este é um guia rápido para ajudá-lo a conhecer a nossa aplicação.',
+                intro: '<div style="text-align: center;"><div class="introjs-tooltiptext">Este é um guia rápido para ajudá-lo a conhecer a nossa aplicação<img src="https://atecgestpro.atec-porto.eu/assets/logo.png" style="width: 50%; margin-top: 10px;"></div></div>',
                 position: 'center'
             },
             {
                 title: 'Secção de Navegação',
                 element: document.querySelector('.sidebarContent'),
-                intro: 'Aqui está a barra lateral de navegação da sua aplicação. Você pode navegar entre todas as funcionalidades disponíveis.',
+                intro: 'Aqui está a barra lateral de navegação. Aqui pode navegar entre todas as funcionalidades disponíveis.',
                 position: 'right'
             },
             {
@@ -40,7 +40,7 @@ function iniciarIntro() {
             {
                 title: 'Gestão de Material',
                 element: document.querySelector('.material'),
-                intro: 'Na secção de material, pode criar, visualizar, editar ou apagar materiais disponíveis.',
+                intro: 'Na secção de material, pode criar, visualizar, editar ou apagar materiais.',
                 position: 'right'
             },
             {
@@ -52,7 +52,7 @@ function iniciarIntro() {
             {
                 title: 'Gestão de Turmas',
                 element: document.querySelector('.classes'),
-                intro: 'Aqui pode gerir todas as turmas. Crie, edite, atribua ou remova turmas conforme necessário.',
+                intro: 'Aqui pode gerir todas as turmas. Crie, edite, visualize ou remova turmas conforme necessário.',
                 position: 'right'
             },
             {
@@ -64,19 +64,19 @@ function iniciarIntro() {
             {
                 title: 'Gestão de Cursos',
                 element: document.querySelector('.courses'),
-                intro: 'Aqui pode gerir todos os cursos. Crie, edite, atribua ou remova cursos conforme necessário.',
+                intro: 'Aqui pode gerir todos os cursos. Crie, edite, visualize ou remova cursos conforme necessário.',
                 position: 'right'
             },
             {
                 title: 'Notificações',
                 element: document.querySelector('#notificacoesDropdown'),
-                intro: 'Aqui pode visualizar todas as notificações relevantes da sua aplicação.',
+                intro: 'Aqui pode visualizar as notificações',
                 position: 'right'
             },
             {
                 title: 'Perfil',
                 element: document.querySelector('#navbarDropdown'),
-                intro: 'Gira o seu perfil aqui. Edite suas informações pessoais, configure suas preferências e muito mais.',
+                intro: 'Na area de perfil, pode visualizar e editar o seu perfil. Pode também fazer logout da aplicação.',
                 position: 'right'
             },
         ]
