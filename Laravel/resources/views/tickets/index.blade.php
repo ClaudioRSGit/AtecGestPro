@@ -10,10 +10,11 @@
 
         <div class="d-flex justify-content-between align-items-center position-relative">
             <h1>Tickets</h1>
-            <img src="{{ asset('assets/questionMark.png') }}" onclick="event.stopPropagation(); triggerTicketIntro();" class="questionMarkBtn">
 
+            <img src="{{ asset('assets/questionMark.png') }}" onclick="event.stopPropagation(); triggerTicketIntro();" class="questionMarkBtn">
             <div onclick="showOptions()" class="form-control btn-primary w-20 dropdown newTicket tickets-newTicketBtn" style="max-width: 10rem;">
-                <div class="d-flex align-items-center w-100 h-100">
+                <div class="d-flex justify-content-center align-items-center w-100 h-100">
+
                     <i class="fa-solid fa-pen mr-1" style="color: #ffffff;"></i>
                     <p id="open" class="btn text-white">Novo ticket</p>
                 </div>
@@ -178,7 +179,8 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <td class="clickable tickets-title">
+
+                                    <td class="clickable mobileOverflow tickets-title">
                                         <div class="d-flex align-items-center">
                                             <span
                                                 class="mr-2 ticket-prio ticket-priority-{{ $ticket->ticketPriority->id }}"></span>
