@@ -195,7 +195,7 @@
                         Guardar
                     </button>
                     <button class="btn btn-danger" type="button"
-                            onclick="window.location.href='{{ url()->previous() }}'">
+                        onclick="window.location.href='{{ route('material-user.index') }}'">
 
                         Fechar
                     </button>
