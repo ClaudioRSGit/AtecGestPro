@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendTicketEmail;
 use App\Mail\TicketEmail;
 use App\Ticket;
 use App\TicketHistory;
@@ -206,7 +207,9 @@ class TicketController extends Controller
             $ticketInfo = 'Ticket #' . $ticket->id . ' foi criado por ' . User::find($loggedInUserId)->name . '.';
 
             $this->logTicketHistory($ticket->id, 1, $ticketInfo);
-            $this->sendEmail($ticket->id);
+//            $this->sendEmail($ticket->id);
+            SendTicketEmail::dispatch($ticket->id);
+
 
             return redirect()->route('tickets.show', $ticket->id)->with('success', 'Ticket criado com sucesso!');
         } catch (\Exception $e) {

@@ -24,7 +24,7 @@ class HardDeleteOldRecords extends Command
      *
      * @var string
      */
-    protected $description = 'Apaga permanentemente os registos apagados há mais de 6 meses.';
+    protected $description = 'Apaga permanentemente os registos apagados ha mais de 6 meses.';
 
     /**
      * Create a new command instance.
@@ -59,7 +59,7 @@ class HardDeleteOldRecords extends Command
 
 
 
-        $this->info('Os registos apagados à mais de 6 meses foram apagados permanentemente.');
+        $this->info('Os registos apagados ha mais de 6 meses foram apagados permanentemente.');
 
         return true;
     }
