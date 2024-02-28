@@ -9,14 +9,14 @@
             </div>
         @endif
 
-        <h1>Criar Novo Parceiro</h1>
+        <h1>Criar Empresa</h1>
 
         <form method="post" action="{{ route('partners.store') }}">
             @csrf
             <div class="row">
                 <div class="col-md-6">
                     <div class="mb-3">
-                        <label for="name" class="form-label">Parceiro:</label>
+                        <label for="name" class="form-label">Empresa:</label>
                         <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
 
                         @error('name')
