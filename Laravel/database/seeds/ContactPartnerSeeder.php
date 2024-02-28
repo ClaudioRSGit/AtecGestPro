@@ -20,21 +20,21 @@ class ContactPartnerSeeder extends Seeder
 
         // Seed 2
         DB::table('contact_partners')->insert([
-            'description' => 'Geral',
+            'description' => 'Portaria',
             'contact' => '+334 72 18 16 00',
             'partner_id' => 2,
         ]);
 
         // Seed 3
         DB::table('contact_partners')->insert([
-            'description' => 'Geral',
+            'description' => 'Sr.Adélio',
             'contact' => '+330 239 792 100',
             'partner_id' => 3,
         ]);
 
         // Seed 4
         DB::table('contact_partners')->insert([
-            'description' => 'Geral',
+            'description' => 'D.Isilda',
             'contact' => '+351 256 200 200',
             'partner_id' => 4,
         ]);
@@ -48,7 +48,7 @@ class ContactPartnerSeeder extends Seeder
 
         // Seed 6
         DB::table('contact_partners')->insert([
-            'description' => 'Geral',
+            'description' => 'Secretaria',
             'contact' => '+441 223 744 000',
             'partner_id' => 1,
         ]);

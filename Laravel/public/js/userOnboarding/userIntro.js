@@ -13,7 +13,7 @@ function triggerUserIntro() {
                 intro: 'Os separadores de utilizadores permitem-nos navegar entre a lista de todos os utilizadores e a lista de utilizadores na reciclagem',
             },
             {
-                title: 'Botão de criação de utilizadores',
+                title: 'Botão de criação de Utilizadores',
                 element: document.querySelector('.users-newUserBtn'),
                 intro: 'Crie um novo ticket ao clicar neste botão',
             },
@@ -33,7 +33,7 @@ function triggerUserIntro() {
                 intro: 'Aqui pode encontrar todos os utilizadores disponíveis',
             },
             {
-                title: 'Nome do utilizador',
+                title: 'Nome do Utilizador',
                 element: document.querySelector('.users-name'),
                 intro: 'Clique no nome do utilizador para ver os detalhes do mesmo',
             },
@@ -42,7 +42,10 @@ function triggerUserIntro() {
                 element: document.querySelector('.editDelete'),
                 intro: 'Aqui pode editar ou excluir um utilizador',
             },
-        ]
+        ],
+        prevLabel: 'Anterior',
+        nextLabel: 'Próximo',
+        doneLabel: 'Concluir'
     });
     intro.start();
 }

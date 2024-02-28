@@ -42,7 +42,10 @@ function triggerMaterialIntro() {
                 element: document.querySelector('.editDelete'),
                 intro: 'Aqui pode editar ou apagar um material',
             },
-        ]
+        ],
+        prevLabel: 'Anterior',
+        nextLabel: 'Próximo',
+        doneLabel: 'Concluir'
     });
     intro.start();
 }

@@ -2,12 +2,13 @@
 
 @section('content')
     <div class="container  w-100 fade-in">
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-4 position-relative">
             <h1>Vestuário</h1>
             <a href="{{ route('course-classes.create') }}" class="btn btn-primary">
                 <i class="fa-solid fa-pen mr-1" style="color: #ffffff;"></i>
                 Criar Turma
             </a>
+            <img src="{{ asset('assets/questionMark.png') }}" onclick="event.stopPropagation(); triggerIntroducaoVestuario();" class="questionMarkBtn">
         </div>
 
         @if (session('message'))
@@ -36,10 +37,10 @@
 
             <div class="tab-pane fade show active" id="formandos">
                 <div class="d-flex justify-content-between mb-3">
-                    <div class="w-40 d-flex justify-content-between align-items-center h-100" style="gap: 1rem">
+                    <div class="w-100 d-flex justify-content-between align-items-center h-100" style="gap: 1rem">
 
 
-                        <div class="search-container ">
+                        <div class="search-container">
                             <form action="{{ route('material-user.index') }}" method="GET">
                                 <div class="input-group pr-2">
                                     <div class="search-container">
@@ -58,7 +59,7 @@
                     </div>
 
 
-                    <form id="courseFilterForm" action="{{ route('material-user.index') }}" method="GET">
+                    <form id="courseFilterForm" action="{{ route('material-user.index') }}" method="GET" class="mobileHidden">
                         <select class="form-control" id="courseFilter" name="courseFilter" onchange="submitForm()">
                             <option value="" {{ request('courseFilter') === '' ? 'selected' : '' }}>Todos
                             </option>
@@ -74,7 +75,7 @@
                 <div id="accordion">
                     <div class="ms-auto">
 
-                        <span>Turma</span>
+                        <span>Turmas</span>
                     </div>
                     @foreach ($courseClasses as $courseClass)
                         <div class="card mb-2 mt-2">
@@ -99,7 +100,6 @@
                                             <tr >
                                                 <th>Nome</th>
                                                 <th>Username</th>
-                                                <th>Email</th>
                                                 <th>Editar</th>
                                             </tr>
                                             </thead>
@@ -115,7 +115,7 @@
                                                            class="d-flex align-items-center w-auto h-100">{{ $student->name }}</a>
                                                     </td>
                                                     <td class="{{ $allDelivered }}">{{ $student->username }}</td>
-                                                    <td class="{{ $allDelivered }}">{{ $student->email }}</td>
+                                                    <td class="{{ $allDelivered }} mobileHidden">{{ $student->email }}</td>
                                                     <td class="editDelete {{ $allDelivered }}">
                                                         <div style="width: 40%">
                                                             <a href="{{ route('material-user.edit', $student->id) }}"
@@ -161,7 +161,7 @@
                     </form>
 
 
-                    <form id="roleFilterForm" action="{{ route('material-user.index') }}" method="GET">
+                    <form id="roleFilterForm" action="{{ route('material-user.index') }}" method="GET" class="mobileHidden">
                         <div>
                             <select class="form-control" id="roleFilter" name="roleFilter" onchange="submitFormRoles()">
                                 <option value="">Todos</option>
@@ -180,7 +180,6 @@
                     <tr>
                         <th>Nome</th>
                         <th>Username</th>
-                        <th>Email</th>
                         <th>Editar</th>
                     </tr>
                     </thead>
@@ -197,7 +196,7 @@
                                 $allDelivered = $usersWithMaterialsDelivered->contains($nonDocent->id) ? 'bg-blue' : '';
                             @endphp
                             <td class="{{ $allDelivered }}">{{ $nonDocent->username }}</td>
-                            <td class="{{ $allDelivered }}">{{ $nonDocent->email }}</td>
+                            <td class="{{ $allDelivered }} mobileHidden">{{ $nonDocent->email }}</td>
                             <td>
                                 <a href="{{ route('material-user.edit', $nonDocent->id) }}" class="mx-2">
                                     <i class="fa-solid fa-pen-to-square fa-lg" style="color: #116fdc;"></i>
@@ -311,3 +310,8 @@
         }
     </style>
 @endsection
+@push('scripts')
+    <script src="{{ asset('js/courses/index.js') }}"></script>
+    <script src="{{ asset('js/userOnboarding/intro.js') }}"></script>
+    <script src="{{ asset('js/userOnboarding/material-user.js') }}"></script>
+@endpush

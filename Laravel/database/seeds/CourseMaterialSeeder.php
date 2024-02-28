@@ -11,27 +11,27 @@ class CourseMaterialSeeder extends Seeder
      */
     public function run()
     {
-        //seed 1 e 5 tpsi grsi
+        //TPSI
+        DB::table('course_materials')->insert([
+            'course_id' => 1,
+            'material_id' => 22,
+        ]);
 
         DB::table('course_materials')->insert([
             'course_id' => 1,
-            'material_id' => 18,
+            'material_id' => 23,
+        ]);
+
+
+        //GRSI
+        DB::table('course_materials')->insert([
+            'course_id' => 1,
+            'material_id' => 22,
         ]);
 
         DB::table('course_materials')->insert([
             'course_id' => 1,
-            'material_id' => 19,
-        ]);
-
-
-        //grsi
-        DB::table('course_materials')->insert([
-            'course_id' => 5,
-            'material_id' => 18,
-        ]);
-        DB::table('course_materials')->insert([
-            'course_id' => 5,
-            'material_id' => 19,
+            'material_id' => 23,
         ]);
 
 
@@ -42,19 +42,7 @@ class CourseMaterialSeeder extends Seeder
         ]);
         DB::table('course_materials')->insert([
             'course_id' => 4,
-            'material_id' => 12,
-        ]);
-        DB::table('course_materials')->insert([
-            'course_id' => 4,
             'material_id' => 13,
-        ]);
-        DB::table('course_materials')->insert([
-            'course_id' => 4,
-            'material_id' => 14,
-        ]);
-        DB::table('course_materials')->insert([
-            'course_id' => 4,
-            'material_id' => 15,
         ]);
         DB::table('course_materials')->insert([
             'course_id' => 4,
@@ -64,20 +52,32 @@ class CourseMaterialSeeder extends Seeder
             'course_id' => 4,
             'material_id' => 17,
         ]);
+        DB::table('course_materials')->insert([
+            'course_id' => 4,
+            'material_id' => 18,
+        ]);
+        DB::table('course_materials')->insert([
+            'course_id' => 4,
+            'material_id' => 19,
+        ]);
+        DB::table('course_materials')->insert([
+            'course_id' => 4,
+            'material_id' => 21,
+        ]);
 
 
-        //Mecatronica
+        //TM
         DB::table('course_materials')->insert([
             'course_id' => 3,
-            'material_id' => 5,
+            'material_id' => 12,
         ]);
         DB::table('course_materials')->insert([
             'course_id' => 3,
-            'material_id' => 6,
+            'material_id' => 15,
         ]);
         DB::table('course_materials')->insert([
             'course_id' => 3,
-            'material_id' => 8,
+            'material_id' => 9,
         ]);
         DB::table('course_materials')->insert([
             'course_id' => 3,
@@ -89,18 +89,10 @@ class CourseMaterialSeeder extends Seeder
         ]);
 
 
-        //Mecatronica automovel
+        //MA
         DB::table('course_materials')->insert([
             'course_id' => 2,
-            'material_id' => 5,
-        ]);
-        DB::table('course_materials')->insert([
-            'course_id' => 2,
-            'material_id' => 6,
-        ]);
-        DB::table('course_materials')->insert([
-            'course_id' => 2,
-            'material_id' => 8,
+            'material_id' => 9,
         ]);
         DB::table('course_materials')->insert([
             'course_id' => 2,
@@ -109,6 +101,14 @@ class CourseMaterialSeeder extends Seeder
         DB::table('course_materials')->insert([
             'course_id' => 2,
             'material_id' => 11,
+        ]);
+        DB::table('course_materials')->insert([
+            'course_id' => 2,
+            'material_id' => 12,
+        ]);
+        DB::table('course_materials')->insert([
+            'course_id' => 2,
+            'material_id' => 14,
         ]);
     }
 }
