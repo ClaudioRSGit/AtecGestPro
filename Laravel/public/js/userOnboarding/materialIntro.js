@@ -4,13 +4,13 @@ function triggerMaterialIntro() {
         steps: [
             {
                 title: 'Lista de Materiais',
-                intro: 'Esta é a lista de materiais. Aqui pode visualizar todos os materiais disponíveis',
+                intro: 'Esta é a lista de materiais. Aqui poderá visualizar todos os materiais disponíveis',
                 position: 'center'
             },
             {
                 title: 'Separadores de Materiais',
                 element: document.querySelector('#userTabs'),
-                intro: 'Os separadores de materiais permitem-nos navegar entre todos os materiais e materiais na reciclagem',
+                intro: 'Os separadores de materiais permitem a navegação entre todos os materiais reciclagem',
             },
             {
                 title: 'Botão de Novo Material',
@@ -26,12 +26,12 @@ function triggerMaterialIntro() {
             {
                 title: 'Botões de Ação',
                 element: document.querySelector('.buttons'),
-                intro: 'Os botões de ação servem para apagar os materiais selecionados e filtrar materiais por tipo',
+                intro: 'Os botões de ação servem para apagar os materiais selecionados e filtrar por tipo',
             },
             {
                 title: 'Tabela de Materiais',
                 element: document.querySelector('.table'),
-                intro: 'Aqui pode encontrar todos os materiais disponíveis',
+                intro: 'Aqui encontrará todos os materiais disponíveis',
             },
             {
                 title: 'Nome do Material',
@@ -41,7 +41,7 @@ function triggerMaterialIntro() {
             {
                 title: 'Ações do Material',
                 element: document.querySelector('.editDelete'),
-                intro: 'Aqui pode editar ou apagar um material',
+                intro: 'Aqui poderá editar ou apagar um material',
                 position: 'left'
             },
         ],
