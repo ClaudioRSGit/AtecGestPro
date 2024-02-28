@@ -196,6 +196,8 @@
 <script>
     function closeSidebar(){
         const sidebar = document.querySelector('.sidebarContent');
+        const navbar = document.querySelector('.navbar');
+        const content = document.querySelector('.content');
 
         let collapseElements = document.querySelectorAll('.toggleableElement');
 
@@ -217,8 +219,10 @@
     }
 
     function toggleSidebarMobile(){
-        const sidebar = document.querySelector('.sidebarContent');
-        sidebar.classList.remove('collapsedSidebar');
-        localStorage.setItem('sidebarState', 'expanded');
+        if (window.innerWidth < 475){
+            const sidebar = document.querySelector('.sidebarContent');
+            sidebar.classList.remove('collapsedSidebar');
+            localStorage.setItem('sidebarState', 'expanded');
+        }
     }
 </script>

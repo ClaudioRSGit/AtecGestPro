@@ -28,7 +28,7 @@
 
             @csrf
             @method('put')
-git p
+
             <div class="row">
                 <div class="col-md-6">
                     <div class="my-3">
@@ -61,7 +61,7 @@ git p
                     </div>
                 </div>
 
-                <div class="col-md-6 pl-4">
+                <div class="col-md-6">
                     <div class="mb-3">
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <label for="contacts" class="form-label">Contactos:</label>

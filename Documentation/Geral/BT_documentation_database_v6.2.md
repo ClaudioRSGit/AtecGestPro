@@ -26,6 +26,7 @@
   - [**Tabela `User`:**](#tabela-user)
   - [**Tabela `PartnerContacts`:**](#tabela-partnercontacts)
   - [**Tabela `Email`:**](#tabela-email)
+  - [**Tabela `Jobs`:**](#tabela-jobs)
 
 
 ## **Tabela `Actions`:**
@@ -606,3 +607,17 @@ Exemplo de dados:
   | 2  |     5     | maria@email.com   | Ticket 011 deleted  | [PLACEHOLDER] | 7 | 2023-11-25 16:00:00 |
   | 3  |     12    | johndoe@email.com | Ticket 005 closed   | [PLACEHOLDER] | 1 | 2023-11-25 17:00:00 |
   | 4  |     7     | janedoe@gmail.com | Ticket 007 resolved | [PLACEHOLDER] | 3 | 2023-11-25 17:00:00 |
+
+## **Tabela `Jobs`:**
+
+Descrição: Contém as informações sobre os emails a enviar de forma a existir envio assíncrono.
+
+  Colunas 
+
+- **Id:** (Primary Key): Id do job
+- **Queue:** Indica a fila (queue) à qual o job está associado
+- **Payload:** Armazena os dados necessários para executar a tarefa
+- **Attempts:** Regista o número de vezes que o job foi tentado antes de ser concluído
+- **Reserved_at:** Indica o momento em que o job foi reservado para execução
+- **Available_at:** Indica o momento em que o job ficou disponível para execução
+- **Created_at:** Regista o momento em que o job foi criado na tabela

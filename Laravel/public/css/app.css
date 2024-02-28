@@ -273,6 +273,10 @@ thead th {
     .loginPage::after{
         content: none !important;
     }
+
+    tbody{
+        min-width: 96% !important;
+    }
     .navbar{
         width: 100% !important;
         display: flex;
@@ -356,7 +360,8 @@ thead th {
 
     .mobileHidden,
     footer{
-        display: none;
+        display: none !important;
+        width: 0 !important;
     }
     .mobileOverflow{
         overflow-x: hidden !important;
@@ -414,6 +419,108 @@ thead th {
     .createTicket *{
         width: 45% !important;
     }
+
+    .materialsTitle{
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 1rem !important;
+    }
+    .materialTableRow > :nth-child(2){
+        border-left: 1px solid #dee2e6;
+        border-top-left-radius: 6px !important;
+        border-bottom-left-radius: 6px !important;
+    }
+    .sizesQuantitiesCourses{
+        flex-direction: column !important;
+    }
+    .sizesQuantities input[type="number"]{
+        min-width: 25% !important;
+    }
+
+
+    .externalBtns{
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 1rem !important;
+    }
+    .partnerRow > .editDelete{
+        height: 6rem !important;
+    }
+    .externalCreateView .grid, .externalEditView .grid, .externalShowView .grid{
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 1rem !important;
+    }
+    .trainingInfo > div, .trainingEdit > div, .trainingCreate > div{
+        width: 100% !important;
+    }
+
+    .courseClassRow .editDelete{
+        width: 25% !important;
+    }
+    .courseClassInfo, .courseClassEditInfo{
+        display: flex !important;
+        flex-direction: column !important;
+    }
+    .courseClassInfo *, .courseClassEditInfo *, .courseClassEditStudents *, .courseClassStudentsBtns > *{
+        width: 100% !important;
+        max-width: none !important;
+    }
+    .courseClassEditStudents{
+        flex-direction: column !important;
+    }
+    .courseClassCreateSubmit, .courseClassStudentsBtns{
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 1rem !important;
+    }
+
+    .materialUserCreateContent, .materialUserEditContent{
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+    }
+    .materialUserCreateContent > *:not(.mobileHidden), .materialUserSubmit > *:not(.mobileHidden), .materialUserEditContent > *:not(.mobileHidden), .materialUserCreateContentTables > *:not(.mobileHidden){
+        width: 100% !important;
+        max-width: none !important;
+        padding: 0 !important;
+    }
+    .materialUserCreateTitle{
+        flex: 0 0 auto !important;
+        max-width: none !important;
+    }
+    .materialUserCreateContentTables{
+        display: flex !important;
+        flex-direction: column !important;
+        max-width: 96% !important;
+    }
+    .material-row :nth-child(4){
+        border-right: 1px solid #dee2e6;
+        border-top-right-radius: 6px !important;
+        border-bottom-right-radius: 6px !important;
+    }
+    .material-edit-row :nth-child(6){
+        padding: 1rem !important;
+    }
+    .materialUserSubmit{
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 1rem !important;
+    }
+    .materialsAssigned{
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 1rem !important;
+    }
+    .materialsAssigned > table{
+        width: 96% !important;
+    }
+    .notes{
+        height: 20rem !important;
+    }
+
 
     #courseForm{
         width: 100% !important;
@@ -1212,6 +1319,19 @@ pre code {
         max-width: 1140px;
     }
 
+    .materialsTitle{
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+    }
+    .materialsTableFilters > :nth-child(1){
+        width: 40% !important;
+    }
+
+    .trainingInfo > div, .trainingEdit > div, .trainingCreate > div{
+        width: 50% !important;
+    }
+
     .courseInfo{
         width: 100% !important;
     }
@@ -1220,6 +1340,10 @@ pre code {
     }
     .courseInfo > :nth-child(2){
         width: 25%;
+    }
+
+    .courseClassStudentsBtns > *{
+        width: 25% !important;
     }
 }
 

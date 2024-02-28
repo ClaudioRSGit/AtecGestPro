@@ -64,7 +64,7 @@
             </div>
             @foreach ($courseClasses as $courseClass)
                 <div class="card mb-2 mt-2">
-                    <div class="card-header bg-white d-flex justify-content-between align-items-center"
+                    <div class="card-header bg-white d-flex justify-content-between align-items-center courseClassRow"
                          id="heading{{ $courseClass->id }}">
                         <h2 class="mb-0">
 
