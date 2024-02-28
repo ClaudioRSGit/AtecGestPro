@@ -11,7 +11,7 @@
                 <tr>
                     <th>Nome</th>
                     <th scope="col">Username</th>
-                    <th scope="col">Email</th>
+                    <th scope="col" class="mobileHidden">Email</th>
                     <th scope="col">Função</th>
                     <th scope="col">Ações</th>
                 </tr>
@@ -19,13 +19,13 @@
             <tbody>
                 <tr class="filler"></tr>
                 @foreach($importedUsers as $user)
-                <tr class="user-row customTableStyling" data-position="{{ strtolower($user) }}"
+                <tr class="customTableStyling" data-position="{{ strtolower($user) }}"
                 data-role="{{ $user->role_id }}">
                     <td class="clickable">
                         <a href="{{ route('users.show', $user->id) }}" class="d-flex align-items-center w-auto h-100">{{ $user->name }}</a>
                     </td>
                     <td>{{ $user->username }}</td>
-                    <td>{{ $user->email }}</td>
+                    <td class="mobileHidden">{{ $user->email }}</td>
                     <td>{{ $user->role->description }}</td>
                     <td class="editDelete">
                         <div style="width: 40%">
