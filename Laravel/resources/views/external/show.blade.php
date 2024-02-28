@@ -29,7 +29,7 @@
             width: 308px;
         }
     </style>
-    <div class="container  w-100 fade-in">
+    <div class="container  w-100 fade-in externalShowView">
 
 
         @if (session('success'))

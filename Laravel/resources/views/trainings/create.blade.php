@@ -4,7 +4,7 @@
     <div class="container w-100 fade-in">
         <h1>Criar Nova formação</h1>
 
-        <form method="POST" action="{{ url('trainings') }}" class="w-50">
+        <form method="POST" action="{{ url('trainings') }}" class="w-100 trainingCreate">
             @csrf
 
             <div class="mb-3">

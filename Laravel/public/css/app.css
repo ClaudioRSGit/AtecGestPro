@@ -421,6 +421,24 @@ thead th {
     }
 
 
+
+    .externalBtns{
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 1rem !important;
+    }
+    .partnerRow > .editDelete{
+        height: 6rem !important;
+    }
+    .externalCreateView .grid, .externalEditView .grid, .externalShowView .grid{
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 1rem !important;
+    }
+    .trainingInfo > div, .trainingEdit > div, .trainingCreate > div{
+        width: 100% !important;
+    }
+
     .courseClassRow .editDelete{
         width: 25% !important;
     }
@@ -1282,6 +1300,10 @@ pre code {
     .container-md,
     .container-sm {
         max-width: 1140px;
+    }
+
+    .trainingInfo > div, .trainingEdit > div, .trainingCreate > div{
+        width: 50% !important;
     }
 
     .courseInfo{

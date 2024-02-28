@@ -4,7 +4,7 @@
     <div class="container w-100 fade-in">
         <h1>Editar Training</h1>
 
-        <form method="post" action="{{ route('trainings.update', $training->id) }}" class="w-70">
+        <form method="post" action="{{ route('trainings.update', $training->id) }}" class="w-100 trainingEdit">
             @csrf
             @method('put')
 
