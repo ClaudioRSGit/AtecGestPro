@@ -21,9 +21,8 @@
             <div class="row">
                 <div class="col-8 d-flex justify-content-between materialUserCreateTitle">
                     <h3>Editar entregas </h3>
-                    <p class="mt-2 ml-2 font-weight-bold"> - {{ ucfirst($user->role->name) }} : {{ $user->name }} </p>
+                    <p class="mt-2 ml-2 font-weight-bold"> {{ ucfirst($user->role->name) }} : {{ $user->name }} </p>
 
-{{--                    <p class="">- {{$user->name}}</p>--}}
                 </div>
                 <div class="col-4 mobileHidden">
                     <h3>Editar notas</h3>
@@ -42,6 +41,7 @@
                             <th scope="col">
                                 <input type="checkbox" id="select-all">
                             <th scope="col">Material</th>
+                            <th scope="col">Género</th>
                             <th scope="col">Tamanho</th>
                             <th scope="col">Quantidade</th>
                             <th scope="col" class="mobileHidden">Data de entrega</th>
@@ -63,6 +63,11 @@
 
                                     <td>
                                         {{$entrega->material->name}}
+                                    </td>
+                                    <td class="mobileOverflow">
+                                        <a>
+                                            {{ isset($entrega->material->gender) ? ($entrega->material->gender == 1 ? 'Masculino' : 'Feminino') : 'N.A.' }}
+                                        </a>
                                     </td>
                                     <td>
                                         {{$entrega->size->size}}
@@ -137,7 +142,7 @@
                         Editar nota
                     </button>
 
-                    
+
                 </div>
 
 
