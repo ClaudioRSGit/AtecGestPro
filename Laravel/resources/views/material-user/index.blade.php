@@ -80,7 +80,8 @@
                     @foreach ($courseClasses as $courseClass)
                         <div class="card mb-2 mt-2">
 
-                            <div class="card-header">
+
+                            <div class="card-header ">
                                 <h2 class="mb-0">
 
 
@@ -106,9 +107,9 @@
                                             <tbody>
                                             <tr class="filler"></tr>
                                             @foreach ($courseClass->students as $student)
-                                                <tr class="customTableStyling {{ $usersWithMaterialsDelivered->contains($student->id) ? 'bg-blue' : '' }}">
+                                                <tr class="customTableStyling {{ $usersWithMaterialsDelivered->contains($student->id) ? 'bg-green' : '' }}">
                                                     @php
-                                                        $allDelivered = $usersWithMaterialsDelivered->contains($student->id) ? 'bg-blue' : '';
+                                                        $allDelivered = $usersWithMaterialsDelivered->contains($student->id) ? 'bg-green' : '';
                                                     @endphp
                                                     <td class="clickable {{ $allDelivered }} mobileOverflow">
                                                         <a href="{{ route('material-user.create', $student->id) }}"
@@ -186,14 +187,14 @@
                     <tbody class="customTableStyling">
                     @foreach ($nonDocents as $nonDocent)
 
-                        <tr class="{{ $usersWithMaterialsDelivered->contains($nonDocent->id) ? 'bg-blue' : '' }}">
+                        <tr class="{{ $usersWithMaterialsDelivered->contains($nonDocent->id) ? 'bg-green' : '' }}">
 
                             <td class="clickable mobileOverflow">
                                 <a href="{{ route('material-user.create', $nonDocent->id) }}"
                                    class="d-flex align-items-center w-auto h-100">{{ $nonDocent->name }}</a>
                             </td>
                             @php
-                                $allDelivered = $usersWithMaterialsDelivered->contains($nonDocent->id) ? 'bg-blue' : '';
+                                $allDelivered = $usersWithMaterialsDelivered->contains($nonDocent->id) ? 'bg-green' : '';
                             @endphp
                             <td class="{{ $allDelivered }}">{{ $nonDocent->username }}</td>
                             <td class="{{ $allDelivered }} mobileHidden">{{ $nonDocent->email }}</td>
@@ -293,8 +294,8 @@
 
 
     <style>
-        .bg-blue {
-            background-color: rgba(54, 162, 235, 0.3);
+        .bg-green {
+            background-color: rgba(119, 229, 141, 0.2);
         }
 
         #accordion .card {
