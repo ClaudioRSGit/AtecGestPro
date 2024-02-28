@@ -82,14 +82,19 @@
 
 
                             <div class="card-header ">
-                                <h2 class="mb-0">
+                                <h2 class="mb-0"> @php
+                                    $allDelivered =
+                                        $courseClass->students->count() > 0 &&
+                                        $courseClass->students->every(function ($student) use ($usersWithMaterialsDelivered) {
+                                            return $usersWithMaterialsDelivered->contains($student->id);
+                                        });
+                                @endphp
 
-
-                                    <button class="btn btn-link tabOpeningBtn"
-                                            type="button" data-toggle="collapse" data-target="#collapse{{ $courseClass->id }}"
-                                            aria-expanded="false" aria-controls="collapse{{ $courseClass->id }}">
-                                        {{ $courseClass->description }}
-                                    </button>
+                                <button class="btn btn-link {{ $allDelivered ? 'bg-green' : ' ' }}"
+                                        type="button" data-toggle="collapse" data-target="#collapse{{ $courseClass->id }}"
+                                        aria-expanded="false" aria-controls="collapse{{ $courseClass->id }}">
+                                    {{ $courseClass->description }}
+                                </button>
                                 </h2>
                             </div>
                             <div id="collapse{{ $courseClass->id }}" class="collapse"
