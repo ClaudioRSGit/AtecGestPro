@@ -16,6 +16,7 @@ function triggerUserIntro() {
                 title: 'Botão de criação de Utilizadores',
                 element: document.querySelector('.users-newUserBtn'),
                 intro: 'Crie um novo ticket ao clicar neste botão',
+                position: 'left'
             },
             {
                 title: 'Botões de Ação',
@@ -31,6 +32,7 @@ function triggerUserIntro() {
                 title: 'Tabela de Utilizadores',
                 element: document.querySelector('.usersTable'),
                 intro: 'Aqui pode encontrar todos os utilizadores disponíveis',
+                position: 'center'
             },
             {
                 title: 'Nome do Utilizador',
@@ -41,6 +43,7 @@ function triggerUserIntro() {
                 title: 'Ações de Utilizador',
                 element: document.querySelector('.editDelete'),
                 intro: 'Aqui pode editar ou excluir um utilizador',
+                position: 'left'
             },
         ],
         prevLabel: 'Anterior',

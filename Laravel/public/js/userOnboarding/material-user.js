@@ -1,5 +1,6 @@
 function triggerIntroducaoVestuario() {
     const intro = introJs();
+
     intro.setOptions({
         steps: [
             {
@@ -25,6 +26,18 @@ function triggerIntroducaoVestuario() {
                 intro: 'Esta secção apresenta a lista de formandos, selecione uma turma e pode atribuir vestuário a cada formando',
                 position: 'center'
             },
+            {
+                title: 'Nome do Formando',
+                element: document.querySelector('.studentName'),
+                intro: 'Clique no nome do formando para visualizar e gerir as informações relacionadas ao vestuário do mesmo',
+                position: 'right'
+            },
+            {
+                title: 'Botão Editar',
+                element: document.querySelector('.editBtn'),
+                intro: 'Clique no botão de editar para alterar a entrega do vestuário do formando',
+                position: 'right'
+            },
 
         ],
         prevLabel: 'Anterior',
@@ -32,4 +45,8 @@ function triggerIntroducaoVestuario() {
         doneLabel: 'Concluir'
     });
     intro.start();
+}
+function openTab(){
+    const firstTab = document.querySelector('.tabOpeningBtn');
+    firstTab.click();
 }

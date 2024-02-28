@@ -16,6 +16,7 @@ function triggerMaterialIntro() {
                 title: 'Botão de Novo Material',
                 element: document.querySelector('.btn-primary'),
                 intro: 'Crie um novo material clicando neste botão',
+                position: 'left'
             },
             {
                 title: 'Barra de Pesquisa',
@@ -41,6 +42,7 @@ function triggerMaterialIntro() {
                 title: 'Ações do Material',
                 element: document.querySelector('.editDelete'),
                 intro: 'Aqui pode editar ou apagar um material',
+                position: 'left'
             },
         ],
         prevLabel: 'Anterior',

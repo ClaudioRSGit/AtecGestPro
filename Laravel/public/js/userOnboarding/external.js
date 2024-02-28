@@ -1,4 +1,4 @@
-function triggerCourseClassIntro() {
+function triggerExternalIntro() {
     const intro = introJs();
     intro.setOptions({
         steps: [
@@ -9,34 +9,38 @@ function triggerCourseClassIntro() {
             },
             {
                 title: 'Botão de Criar Turma',
-                element: document.querySelector('.classes-createBtn'),
+                element: document.querySelector('.buttons .btn-primary'),
                 intro: 'Crie uma nova turma ao clicar neste botão.',
                 position: 'left'
             },
             {
                 title: 'Barra de Pesquisa',
                 element: document.querySelector('.search-container input'),
-                intro: 'Use este campo de pesquisa para encontrar turmas específicas',
+                intro: 'Utilize este campo de pesquisa para encontrar turmas específicas.',
+                position: 'right'
             },
             {
                 title: 'Filtrar por Curso',
-                element: document.querySelector('#courseFilter'),
-                intro: 'Filtre as turmas por curso selecionando uma opção na lista',
+                element: document.querySelector('#myTabs'),
+                intro: 'Filtre as turmas por curso selecionando uma opção na lista de abas.',
+                position: 'bottom'
             },
             {
                 title: 'Lista de Turmas',
-                element: document.querySelector('#accordion'),
-                intro: 'Mostra todas as turmas, organizadas em um formato de acordeão',
+                element: document.querySelector('#externalTable'),
+                intro: 'Mostra todas as turmas, organizadas em uma tabela.',
+                position: 'top'
             },
             {
                 title: 'Detalhes da Turma',
-                element: document.querySelector('.card-header'),
-                intro: 'Clique numa turma para expandir e ver os detalhes, incluindo os formandos',
+                element: document.querySelector('.customTableStyling .clickable'),
+                intro: 'Clique em uma turma para expandir e ver os detalhes, incluindo os formandos.',
+                position: 'top'
             },
             {
                 title: 'Ações da Turma',
                 element: document.querySelector('.editDelete'),
-                intro: 'Podemos editar ou apagar uma turma',
+                intro: 'Podemos editar ou apagar uma turma.',
                 position: 'left'
             },
         ],
@@ -45,4 +49,8 @@ function triggerCourseClassIntro() {
         doneLabel: 'Concluir'
     });
     intro.start();
+}
+function openFirstTab(){
+    const firstTab = document.querySelector('.firstTab');
+    firstTab.click();
 }

@@ -14,7 +14,7 @@ class MaterialSizeSeeder extends Seeder
         $sizes = DB::table('sizes')->get();
 
 
-        //materiais 5 a 9
+        //materiais 5 a 8
         foreach ($sizes as $size) {
             if (!is_numeric($size->size)) {
                 for ($material_id = 5; $material_id < 10; $material_id++) {
@@ -71,7 +71,7 @@ class MaterialSizeSeeder extends Seeder
         //materiais 10 e 15
         foreach ($sizes as $size) {
             if (is_numeric($size->size) && $size->size >= 34 && $size->size <= 66 && $size->size % 2 === 0) {
-                foreach ([10, 15] as $material_id) {
+                foreach ([ 15] as $material_id) {
                     DB::table('material_sizes')->insert([
                         'material_id' => $material_id,
                         'size_id' => $size->id,
@@ -101,7 +101,7 @@ class MaterialSizeSeeder extends Seeder
 
         foreach ($sizes as $size) {
             if (!is_numeric($size->size) && $size->size != "Tamanho único") {
-                foreach ([21] as $material_id) {
+                foreach ([21,9,10] as $material_id) {
                     DB::table('material_sizes')->insert([
                         'material_id' => $material_id,
                         'size_id' => $size->id,
