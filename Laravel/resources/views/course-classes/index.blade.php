@@ -3,12 +3,14 @@
 
 @section('content')
     <div class="container  w-100 fade-in">
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-4 position-relative">
             <h1>Turmas</h1>
-            <a href="{{ route('course-classes.create') }}" class="btn btn-primary">
+            <a href="{{ route('course-classes.create') }}" class="btn btn-primary classes-createBtn">
                 <i class="fa-solid fa-pen mr-1" style="color: #ffffff;"></i>
                 Criar Turma
             </a>
+            <img src="{{ asset('assets/questionMark.png') }}" onclick="event.stopPropagation(); triggerCourseClassIntro();" class="questionMarkBtn">
+
         </div>
         @if(session('success'))
             <div class="alert alert-success" id="success-alert">
@@ -184,4 +186,6 @@
 @endsection
 @push('scripts')
     <script src="{{ asset('js/course-classes/index.js') }}"></script>
+    <script src="{{ asset('js/userOnboarding/intro.js') }}"></script>
+    <script src="{{ asset('js/userOnboarding/course-class.js') }}"></script>
 @endpush

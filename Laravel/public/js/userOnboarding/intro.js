@@ -79,7 +79,10 @@ function triggerIntro() {
                 intro: 'Na area de perfil, pode visualizar e editar o seu perfil. Pode também fazer logout da aplicação.',
                 position: 'right'
             },
-        ]
+        ],
+        prevLabel: 'Anterior',
+        nextLabel: 'Próximo',
+        doneLabel: 'Concluir'
     });
     intro.start();
 }

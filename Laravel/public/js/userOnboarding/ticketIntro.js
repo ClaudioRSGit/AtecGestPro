@@ -52,7 +52,10 @@ function triggerTicketIntro() {
                 element: document.querySelector('.tickets-actions'),
                 intro: 'Aqui pode editar ou apagar um ticket',
             },
-        ]
+        ],
+        prevLabel: 'Anterior',
+        nextLabel: 'Próximo',
+        doneLabel: 'Concluir'
     });
     intro.start();
 }
