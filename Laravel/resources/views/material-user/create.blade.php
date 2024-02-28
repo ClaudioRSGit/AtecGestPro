@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div class="col-4 mobileHidden">
-                <h3 class="">Materiais atribuídos</h3>
+                <h3 class="mt-1">Materiais atribuídos</h3>
             </div>
         </div>
         <hr>
@@ -33,8 +33,8 @@
 
                     <input type="hidden" name="user_id" value="{{ $student->id }}">
                     <div class="materials">
-                        <table class="table bg-white rounded-top">
-                            <thead>
+                        <table class="table rounded-top">
+                            <thead style="background-color: transparent;">
                             <tr>
                                 <th scope="col" class="h-100">
                                     <input type="checkbox" id="select-all" class="h-100">

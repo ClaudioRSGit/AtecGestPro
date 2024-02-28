@@ -23,7 +23,7 @@ function triggerIntroducaoVestuario() {
             {
                 title: 'Lista de Formandos',
                 element: document.querySelector('.tab-content #formandos'),
-                intro: 'Esta secção apresenta a lista de formandos, selecione uma turma e pode atribuir vestuário a cada formando',
+                intro: 'Esta secção apresenta a lista de formandos.Selecione uma turma para atribuir vestuário a um formando especifico',
                 position: 'center'
             },
             {
@@ -35,7 +35,7 @@ function triggerIntroducaoVestuario() {
             {
                 title: 'Botão Editar',
                 element: document.querySelector('.editBtn'),
-                intro: 'Clique no botão de editar para alterar a entrega do vestuário do formando',
+                intro: 'Clique no botão "editar" para alterar a entrega do vestuário do formando',
                 position: 'right'
             },
 

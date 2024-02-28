@@ -4,7 +4,7 @@ function triggerCourseClassIntro() {
         steps: [
             {
                 title: 'Turmas',
-                intro: 'Bem-vindo à página de turmas. Aqui você pode visualizar e gerenciar todas as turmas disponíveis.',
+                intro: 'Bem-vindo à página de turmas. Aqui poderá visualizar e gerir todas as turmas disponíveis.',
                 position: 'center'
             },
             {
@@ -21,12 +21,12 @@ function triggerCourseClassIntro() {
             {
                 title: 'Filtrar por Curso',
                 element: document.querySelector('#courseFilter'),
-                intro: 'Filtre as turmas por curso selecionando uma opção na lista',
+                intro: 'Filtre as turmas por curso selecionando na lista',
             },
             {
                 title: 'Lista de Turmas',
                 element: document.querySelector('#accordion'),
-                intro: 'Mostra todas as turmas, organizadas em um formato de acordeão',
+                intro: 'Mostra todas as turmas, organizadas em formato de acordeão',
             },
             {
                 title: 'Detalhes da Turma',
@@ -36,7 +36,7 @@ function triggerCourseClassIntro() {
             {
                 title: 'Ações da Turma',
                 element: document.querySelector('.editDelete'),
-                intro: 'Podemos editar ou apagar uma turma',
+                intro: 'É possivel editar ou apagar uma turma',
                 position: 'left'
             },
         ],

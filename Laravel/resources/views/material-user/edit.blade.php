@@ -85,7 +85,7 @@
                                             <button type="submit"
                                                     data-message="Tem a certeza que deseja excluir a entrega de {{$entrega->material->name}}? O stock não vai ser atualizado!"
                                                     style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
-                                                    <i class="fa-solid fa-trash-can fa-lg" style="color: #116fdc;"></i>
+                                                <i class="fa-solid fa-trash-can fa-lg" style="color: #116fdc;"></i>
                                             </button>
                                         </form>
                                     </td>
@@ -124,75 +124,71 @@
 
                         <div class=" p-2 mb-4" >
                             @if($user->notes)
-                            <p>{!! nl2br(e($user->notes)) !!}</p>
+                                <p>{!! nl2br(e($user->notes)) !!}</p>
                             @else
-                            <p class="pb-5">Não existe nenhuma nota</p>
+                                <p class="pb-5">Não existe nenhuma nota</p>
                             @endif
                         </div>
 
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNoteModal">
-                            Adicionar nota
-                        </button>
 
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editNoteModal">
-                            Editar nota
-                        </button>
                     </div>
-
-
-
-                </div>
-
-
-
-            </div>
-
-            <div class="row mt-3 materialUserSubmit">
-                <div class="col-7 pr-0">
                     <div>
-
-                        <div class="row">
-                            <div class="col-6 ">
-                                <a href="{{ route('material-user.index') }}" class="btn btn-secondary mr-2 mb-3">Voltar</a>
-                              <button id="delete-selected" class="btn btn-danger mb-3">Excluir selecionados</button>
+                        <div class="w-100 d-flex justify-content-between mb-5">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-primary w-100" data-toggle="modal" data-target="#addNoteModal">
+                                    Adicionar nota
+                                </button>
                             </div>
-                            <div class="col-6 align-content-end text-right pr-0">
-                                <form id="allDelivered" action="{{ route('material-user.addDeliveredAll') }}" method="POST"
-                                      style="display:inline">
-                                    @csrf
-                                    <input type="hidden" name="user_id" value="{{$user->id}}">
-                                    <button type="submit" form="allDelivered" class="btn btn-primary mb-3" data-message="Deseja marcar a entrega de fardamento como entregue na totalidade?">Finalizar entrega</button>
-                                </form>
-                                <form id="partialDelivered" action="{{ route('material-user.addDeliveredPartial') }}" method="POST"
-                                      style="display:inline">
-                                    @csrf
-                                    <input type="hidden" name="user_id" value="{{$user->id}}">
-                                    <button type="submit" form="partialDelivered" class="btn btn-primary mb-3" data-message="Deseja marcar a entrega de fardamento como entregue parcialmente?">Entrega parcial</button>
-                                </form>
+
+                            <div class="col-6 pr-0">
+                                <button type="button" class="btn btn-primary w-100" data-toggle="modal" data-target="#editNoteModal">
+                                    Editar nota
+                                </button>
                             </div>
                         </div>
 
 
-
-
+                    <div class="modal fade" id="editNoteModal" tabindex="-1" role="dialog"
+                         aria-labelledby="editNoteModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editNoteModalLabel">Editar notas</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form action="{{ route('material-user.edit', $user->id) }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <input type="hidden" name="user_id" value="{{$user->id}}">
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="note">Nota</label>
+                                            <textarea class="form-control" id="note" name="note"
+                                            rows="5">{{$user->notes}}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar
+                                        </button>
+                                        <button type="submit" class="btn btn-primary" data-message="Tem a certeza que pretende atualizar a(s) nota(s)?">Gravar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
-
-                </div>
-                <div class="col-1"></div>
-                <div class="col-4">
-
-
 
 
 
                     <div class="modal fade" id="addNoteModal" tabindex="-1" role="dialog"
                          aria-labelledby="addNoteModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="addNoteModalLabel">Adicionar nota</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
+                         <div class="modal-dialog" role="document">
+                             <div class="modal-content">
+                                 <div class="modal-header">
+                                     <h5 class="modal-title" id="addNoteModalLabel">Adicionar nota</h5>
+                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <form action="{{ route('material-user.addNote') }}" method="POST">
@@ -215,6 +211,46 @@
                     </div>
 
                 </div>
+
+
+                </div>
+
+
+
+            </div>
+
+            <div class="row mt-3 materialUserSubmit">
+                <div class="col-7 pr-0">
+                    <div>
+
+                        <div class="row">
+                            <div class="col-6 d-flex flex-column">
+                                <a href="{{ route('material-user.index') }}" class="btn btn-secondary w-100 mr-2 mb-3">Voltar</a>
+                                <button id="delete-selected" class="btn btn-danger w-100 mb-3">Excluir selecionados</button>
+                            </div>
+                            <div class="col-6 align-content-end text-right pr-0">
+                                <form id="allDelivered" class="w-50" action="{{ route('material-user.addDeliveredAll') }}" method="POST"
+                                      style="display:inline">
+                                    @csrf
+                                    <input type="hidden" name="user_id" value="{{$user->id}}">
+                                    <button type="submit" form="allDelivered" class="btn btn-primary mb-3 w-100" data-message="Deseja marcar a entrega de fardamento como entregue na totalidade?">Finalizar entrega</button>
+                                </form>
+                                <form id="partialDelivered" class="w-50" action="{{ route('material-user.addDeliveredPartial') }}" method="POST"
+                                      style="display:inline">
+                                    @csrf
+                                    <input type="hidden" name="user_id" value="{{$user->id}}">
+                                    <button type="submit" form="partialDelivered" class="btn btn-primary w-100 mb-3" data-message="Deseja marcar a entrega de fardamento como entregue parcialmente?">Entrega parcial</button>
+                                </form>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+
+                </div>
+                <div class="col-1"></div>
 
 
             </div>

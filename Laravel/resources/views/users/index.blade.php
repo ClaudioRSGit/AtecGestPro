@@ -34,7 +34,8 @@
                 <i class="fa-solid fa-pen mr-1" style="color: #ffffff;"></i>
                 Novo Utilizador
             </a>
-            <img src="{{ asset('assets/questionMark.png') }}" onclick="event.stopPropagation(); changeUserTab(); triggerUserIntro();" class="questionMarkBtn">
+            <img src="{{ asset('assets/questionMark.png') }}"
+                 onclick="event.stopPropagation(); changeUserTab(); triggerUserIntro();" class="questionMarkBtn">
         </div>
 
         <ul class="nav nav-tabs mb-3" id="userTabs">
@@ -66,7 +67,8 @@
                     </form>
 
                     <div class="buttons">
-                        <button id="importUsersModalBtn" class="btn btn-primary mr-2 " data-toggle="modal" name="importUsersModal"
+                        <button id="importUsersModalBtn" class="btn btn-primary mr-2 " data-toggle="modal"
+                                name="importUsersModal"
                                 data-target="#importUsersModal">Importar utilizadores
                         </button>
 
@@ -173,22 +175,7 @@
                 </table>
 
                 {{ $users->appends(['uPage' => $users->currentPage()])->links() }}
-
-{{--                <div class="container">--}}
-{{--                    <form action="{{ route('import-excel.importUsers') }}" method="POST" enctype="multipart/form-data">--}}
-{{--                        @csrf--}}
-{{--                        <div class="form-group mb-3">--}}
-{{--                            <label for="">Excel - Importar Utilizadores</label><br>--}}
-{{--                            <label for="file" class="btn btn-primary">Selecionar ficheiro</label>--}}
-{{--                            <input type="file" name="file" id="file" class="btn" style="display: none;">--}}
-{{--                            @error('attachment')--}}
-{{--                            <div class="alert alert-danger">{{ $message }}</div>--}}
-{{--                            @enderror--}}
-{{--                            <p>Certifique-se que o arquivo tem menos de 20MB</p>--}}
-{{--                        </div>--}}
-{{--                        <button type="submit" class="btn btn-primary">Importar</button>--}}
-{{--                    </form>--}}
-{{--                </div>--}}
+                
 
             </div>
             <div class="tab-pane fade " id="reciclagem_utilizadores">
@@ -197,12 +184,10 @@
                     <img src="{{ asset('assets/reciclagem_azul_extra_bold_2_sem fundo.png') }}"
                          alt="Não existem registos" class="bin">
                 @else
-
                     <div class="">
                         <table class="table">
                             <thead>
                             <tr>
-
                                 <th scope="col">Nome</th>
                                 <th scope="col">Username</th>
                                 <th scope="col" class="mobileHidden">Email</th>
@@ -236,7 +221,6 @@
                                             </form>
                                         </div>
                                     </td>
-
                                     <td>
                                         <div class="centerTd">
                                             <form method="post"
@@ -248,12 +232,10 @@
                                                         data-message="Tem a certeza que deseja apagar permanentemente o {{strtolower($deletedUser->role->description)}} {{ $deletedUser->name }}?"
                                                         style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
                                                     <img src="{{ asset('assets/permaDelete.svg') }}" alt="Delete">
-
                                                 </button>
                                             </form>
                                         </div>
                                     </td>
-
                                 </tr>
                                 <tr class="filler" style="background-color: #f8fafc"></tr>
                             @endforeach
@@ -262,9 +244,7 @@
                         {{ $deletedUsers->appends(['dPage' => $deletedUsers->currentPage()])->links() }}
                     </div>
                 @endif
-
             </div>
-
         </div>
 
         <!-- The Import Users Modal -->
@@ -280,12 +260,14 @@
                     </div>
                     <div class="modal-body">
                         <div class="container w-100">
-                            <form action="{{ route('import-excel.importUsers') }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('import-excel.importUsers') }}" method="POST"
+                                  enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group mb-3">
                                     <label for="">Excel - Importar Utilizadores</label><br>
                                     <label for="file" class="btn btn-primary">Selecionar ficheiro</label>
-                                    <input type="file" name="file" id="file" class="btn" style="display: none;">
+                                    <input type="file" name="file" id="file" class="btn" style="display: none;"
+                                           accept=".xls,.xlsx"> <input type="hidden">
                                     @error('attachment')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
@@ -297,9 +279,7 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
         {{----}}
 
@@ -405,7 +385,7 @@
             }
         });
 
-        document.getElementById('file').addEventListener('change', function() {
+        document.getElementById('file').addEventListener('change', function () {
             var fileName = this.files[0].name;
             document.getElementById('fileName').textContent = "Nome do ficheiro: " + fileName;
         });
@@ -413,7 +393,7 @@
     </script>
 @endsection
 @push('scripts')
-<script src="{{ asset('js/tickets/index.js') }}"></script>
-<script src="{{ asset('js/userOnboarding/intro.js') }}"></script>
-<script src="{{ asset('js/userOnboarding/userIntro.js') }}"></script>
+    <script src="{{ asset('js/tickets/index.js') }}"></script>
+    <script src="{{ asset('js/userOnboarding/intro.js') }}"></script>
+    <script src="{{ asset('js/userOnboarding/userIntro.js') }}"></script>
 @endpush
