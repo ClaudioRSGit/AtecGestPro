@@ -4,7 +4,7 @@ function triggerTicketIntro() {
         steps: [
             {
                 title: 'Secção de Tickets',
-                intro: 'Este é um guia rápido para ajudá-lo a conhecer a nossa secção de tickets',
+                intro: 'Este é um guia rápido para ajudá-lo a conhecer a secção de tickets',
                 position: 'center'
             },
             {
@@ -25,12 +25,12 @@ function triggerTicketIntro() {
             {
                 title: 'Filtros de tickets',
                 element: document.querySelector('.tickets-filters'),
-                intro: 'Filtre tickets por categoria, estado e prioridade',
+                intro: 'Filtre tickets por categoria, estado ou prioridade',
             },
             {
                 title: 'Tabela de Tickets',
                 element: document.querySelector('.ticketsTable'),
-                intro: 'Aqui pode encontrar todos os tickets disponíveis',
+                intro: 'Aqui poderá encontrar todos os tickets disponíveis',
             },
             {
                 title: 'Título de Ticket',
@@ -50,7 +50,7 @@ function triggerTicketIntro() {
             {
                 title: 'Ações de Ticket',
                 element: document.querySelector('.tickets-actions'),
-                intro: 'Aqui pode editar ou apagar um ticket',
+                intro: 'Aqui poderá editar ou apagar um ticket',
             },
         ],
         prevLabel: 'Anterior',
