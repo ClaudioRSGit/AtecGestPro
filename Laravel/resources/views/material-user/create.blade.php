@@ -1,5 +1,9 @@
 @extends('master.main')
 
+@section('styles')
+    <link rel="stylesheet" href="{{ asset('css/material-user.css') }}">
+@endsection
+
 @section('content')
     <div class="container w-100 fade-in materialUserCreateContent">
 
@@ -206,27 +210,7 @@
 
     </div>
 
-    <style>
-        .materials {
-            grid-area: materials;
-            align-self: start;
-            display: flex;
-            max-height: 25rem;
-            overflow: scroll;
-        }
 
-        .materials::-webkit-scrollbar {
-            display: none;
-        }
-
-        .materials thead {
-            position: sticky;
-            top: 0;
-            z-index: 1;
-            opacity: 1;
-            background-color: #f8fafc;
-        }
-    </style>
 
     <script>
 
