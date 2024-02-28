@@ -385,6 +385,10 @@ thead th {
         display: none !important;
     }
 
+    .imageContainer, .imageContainer *{
+        max-width: 400px !important;
+    }
+
     .ticket-prio{
         min-width: 15px !important;
     }
