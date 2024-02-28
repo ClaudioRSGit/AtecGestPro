@@ -105,7 +105,7 @@
                                             <thead>
                                             <tr >
                                                 <th>Nome</th>
-                                                <th>Username</th>
+                                                <th>Número Interno</th>
                                                 <th>Editar</th>
                                             </tr>
                                             </thead>
