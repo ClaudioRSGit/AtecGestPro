@@ -46,7 +46,7 @@ function triggerIntroducaoVestuario() {
     });
     intro.start();
 }
-function openTab(){
+function openFirstTab(){
     const firstTab = document.querySelector('.tabOpeningBtn');
     firstTab.click();
 }

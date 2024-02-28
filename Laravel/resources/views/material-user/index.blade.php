@@ -8,7 +8,7 @@
                 <i class="fa-solid fa-pen mr-1" style="color: #ffffff;"></i>
                 Criar Turma
             </a>
-            <img src="{{ asset('assets/questionMark.png') }}" onclick="event.stopPropagation(); openTab(); triggerIntroducaoVestuario();" class="questionMarkBtn">
+            <img src="{{ asset('assets/questionMark.png') }}" onclick="event.stopPropagation(); openFirstTab(); triggerIntroducaoVestuario();" class="questionMarkBtn">
         </div>
 
         @if (session('message'))
@@ -25,7 +25,7 @@
 
         <ul class="nav nav-tabs mb-2" id="myTabs">
             <li class="nav-item">
-                <a class="nav-link active tabOpeningBtn" data-toggle="tab" href="#formandos">Formandos</a>
+                <a class="nav-link active" data-toggle="tab" href="#formandos">Formandos</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#funcionarios">Funcionários</a>
@@ -90,7 +90,7 @@
                             <div class="card-header {{ $allDelivered ? 'bg-green' : ' ' }}">
                                 <h2 class="mb-0">
 
-                                <button class="btn btn-link "
+                                <button class="btn btn-link tabOpeningBtn"
                                         type="button" data-toggle="collapse" data-target="#collapse{{ $courseClass->id }}"
                                         aria-expanded="false" aria-controls="collapse{{ $courseClass->id }}">
                                     {{ $courseClass->description }}
@@ -203,7 +203,7 @@
                             @endphp
                             <td class="{{ $allDelivered }}">{{ $nonDocent->username }}</td>
                             <td class="{{ $allDelivered }} mobileHidden">{{ $nonDocent->email }}</td>
-                            <td>
+                            <td class="editBtn">
                                 <a href="{{ route('material-user.edit', $nonDocent->id) }}" class="mx-2">
                                     <i class="fa-solid fa-pen-to-square fa-lg" style="color: #116fdc;"></i>
                                 </a>
