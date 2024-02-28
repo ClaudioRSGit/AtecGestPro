@@ -48,5 +48,7 @@ function triggerIntroducaoVestuario() {
 }
 function openFirstTab(){
     const firstTab = document.querySelector('.tabOpeningBtn');
+    const clickFormandos = document.querySelector('.clickFormandos');
     firstTab.click();
+    clickFormandos.click();
 }
