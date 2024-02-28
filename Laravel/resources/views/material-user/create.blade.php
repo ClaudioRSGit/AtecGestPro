@@ -40,7 +40,7 @@
                                     <input type="checkbox" id="select-all" class="h-100">
                                 </th>
                                 <th scope="col">Material</th>
-                                <th scope="col">Género</th>
+                                <th scope="col" class="mobileHidden">Género</th>
                                 <th scope="col" style="text-align: center;">Tamanho</th>
                                 <th scope="col" style="text-align: center;">Quantidade</th>
                                 <th class="mobileHidden" scope="col" style="text-align: center;">Data de Entrega</th>
@@ -71,7 +71,7 @@
                                         <td class="mobileOverflow">
                                             <a href="{{ route('materials.show', $clothingItem->id) }}">{{ isset($clothingItem->name) ? $clothingItem->name : 'N.A.' }}</a>
                                         </td>
-                                        <td class="mobileOverflow">
+                                        <td class="mobileHidden">
                                             <a href="{{ route('materials.show', $clothingItem->id) }}">
                                                 {{ isset($clothingItem->gender) ? ($clothingItem->gender == 1 ? 'Masculino' : 'Feminino') : 'N.A.' }}
                                             </a>

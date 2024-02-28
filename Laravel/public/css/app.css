@@ -495,7 +495,7 @@ thead th {
         flex-direction: column !important;
         max-width: 96% !important;
     }
-    .material-row :nth-child(4){
+    .material-row :nth-child(5){
         border-right: 1px solid #dee2e6;
         border-top-right-radius: 6px !important;
         border-bottom-right-radius: 6px !important;

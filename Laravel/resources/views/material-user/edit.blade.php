@@ -41,7 +41,7 @@
                             <th scope="col">
                                 <input type="checkbox" id="select-all">
                             <th scope="col">Material</th>
-                            <th scope="col">Género</th>
+                            <th scope="col" class="mobileHidden">Género</th>
                             <th scope="col">Tamanho</th>
                             <th scope="col">Quantidade</th>
                             <th scope="col" class="mobileHidden">Data de entrega</th>
@@ -64,7 +64,7 @@
                                     <td>
                                         {{$entrega->material->name}}
                                     </td>
-                                    <td class="mobileOverflow">
+                                    <td class="mobileHidden">
                                         <a>
                                             {{ isset($entrega->material->gender) ? ($entrega->material->gender == 1 ? 'Masculino' : 'Feminino') : 'N.A.' }}
                                         </a>
@@ -122,8 +122,6 @@
 
                     <div class="p-3 shadow mb-3 notes" style="height: 28rem; overflow-y: auto;">
 
-
-
                         <div class=" p-2 mb-4" >
                             @if($user->notes)
                             <p>{!! nl2br(e($user->notes)) !!}</p>
@@ -132,15 +130,15 @@
                             @endif
                         </div>
 
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNoteModal">
+                            Adicionar nota
+                        </button>
+
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editNoteModal">
+                            Editar nota
+                        </button>
                     </div>
 
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNoteModal">
-                        Adicionar nota
-                    </button>
-
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editNoteModal">
-                        Editar nota
-                    </button>
 
 
                 </div>
