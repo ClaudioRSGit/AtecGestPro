@@ -94,7 +94,7 @@
                 <table class="table usersTable" id="userTable">
                     <thead>
                     <tr>
-                        <th scope="col">
+                        <th scope="col" class="mobileHidden">
                             <input type="checkbox" id="select-all">
                         </th>
                         <th>
@@ -119,9 +119,9 @@
                                 @endif
                             </a>
                         </th>
-                        <th scope="col">Email</th>
+                        <th scope="col" class="mobileHidden">Email</th>
                         <th scope="col">Função</th>
-                        <th scope="col">Ativo</th>
+                        <th scope="col" class="mobileHidden">Ativo</th>
                         <th scope="col">
                             <div class="centerTd">Ações</div>
                         </th>
@@ -132,7 +132,7 @@
                     @foreach ($users as $user)
                         <tr class="user-row customTableStyling" data-position="{{ strtolower($user) }}"
                             data-role="{{ $user->role_id }}">
-                            <td>
+                            <td class="mobileHidden">
                                 <input type="checkbox" name="selectedUsers[]"
                                        value="{{ $user->id }}">
                             </td>
@@ -141,12 +141,12 @@
                                    class="d-flex align-items-center w-auto h-100">{{ $user->name }}</a>
                             </td>
                             <td>{{ $user->username }}</td>
-                            <td>{{ $user->email }}</td>
+                            <td class="mobileHidden">{{ $user->email }}</td>
                             <td>
                                 {{ $user->role->description }}
                             </td>
 
-                            <td>{{ $user->isActive == 1 ? 'Sim' : 'Não' }}</td>
+                            <td class="mobileHidden">{{ $user->isActive == 1 ? 'Sim' : 'Não' }}</td>
                             <td class="editDelete">
                                 <div style="width: 40%">
                                     <a href="{{ route('users.edit', $user->id) }}">
@@ -205,7 +205,7 @@
 
                                 <th scope="col">Nome</th>
                                 <th scope="col">Username</th>
-                                <th scope="col">Email</th>
+                                <th scope="col" class="mobileHidden">Email</th>
                                 <th scope="col">
                                     <div class="centerTd">Restaurar</div>
                                 </th>
@@ -217,10 +217,10 @@
                             <tbody>
                             <tr class="filler"></tr>
                             @foreach($deletedUsers as $deletedUser)
-                                <tr class="user-row customTableStyling" data-position="" data-role="" onclick="">
+                                <tr class="customTableStyling" data-position="" data-role="" onclick="">
                                     <td>{{ $deletedUser->name }}</td>
                                     <td>{{ $deletedUser->username }}</td>
-                                    <td>{{ $deletedUser->email }}</td>
+                                    <td class="mobileHidden">{{ $deletedUser->email }}</td>
 
 
                                     <td>
