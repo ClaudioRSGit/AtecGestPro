@@ -50,7 +50,7 @@
                         disabled>
                 </div>
                 <div class="partner">
-                    <label scope="row">Parceiro</label><br>
+                    <label scope="row">Empresa</label><br>
                     <input class="form-control {{ optional($partner_Training_Users->partner)->name ? '' : 'text-danger' }}"
                         value="{{ optional($partner_Training_Users->partner)->name ?? 'O parceiro foi eliminado.' }}"
                         disabled>
