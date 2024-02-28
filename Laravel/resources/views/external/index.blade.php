@@ -74,7 +74,7 @@
                     <thead>
                         <tr>
 
-                            <th scope="col">Parceiro</th>
+                            <th scope="col">Empresa</th>
                             <th scope="col" class="mobileHidden">Morada</th>
                             <th scope="col">Técnico</th>
                             <th scope="col">Formação</th>
@@ -93,13 +93,13 @@
                                         @if(optional($partner_Training_User->partner)->name)
                                             {{ optional($partner_Training_User->partner)->name }}
                                         @else
-                                            <span class="text-danger">O parceiro foi apagado do sistema.</span>
+                                            <span class="text-danger">A Empresa foi apagada do sistema.</span>
                                         @endif
                                     </a>
                                 </td>
 
                                 <td class="mobileHidden {{ optional($partner_Training_User->partner)->address ? '' : 'text-danger' }}">
-                                    {{ optional($partner_Training_User->partner)->address ?? 'O parceiro foi apagado do sistema.' }}
+                                    {{ optional($partner_Training_User->partner)->address ?? 'A Empresa foi apagada do sistema.' }}
                                 </td>
 
                                 <td class="{{ optional($partner_Training_User->user)->name ? '' : 'text-danger' }}">
@@ -154,13 +154,13 @@
                             </div>
                         </div>
                     </form>
-                    <a href="{{ route('partners.create') }}" class="btn btn-primary">Novo Parceiro</a>
+                    <a href="{{ route('partners.create') }}" class="btn btn-primary">Nova Empresa</a>
                 </div>
                 <table class="table bg-white">
                     <thead>
                         <tr>
 
-                            <th scope="col">Parceiro</th>
+                            <th scope="col">Empresa</th>
                             <th scope="col" class="mobileHidden">Descrição</th>
                             <th scope="col" class="mobileHidden">Morada</th>
                             <th scope="col">Contactos</th>
@@ -221,7 +221,7 @@
                                             @csrf
                                             @method('delete')
                                             <button type="submit" class="modalBtn"
-                                                data-message="Tem a certeza que deseja apagar o parceiro {{ $partner->name }}?"
+                                                data-message="Tem a certeza que deseja apagar a empresa {{ $partner->name }}?"
                                                 style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
                                                 <i class="fa-solid fa-trash-can fa-lg" style="color: #116fdc;"></i>
                                             </button>
