@@ -23,7 +23,7 @@
                     <h3>Editar entregas </h3>
                     <p class="mt-2 ml-2 font-weight-bold"> - {{ ucfirst($user->role->name) }} : {{ $user->name }} </p>
 
-{{--                    <p class="">- {{$user->name}}</p>--}}
+                    {{--                    <p class="">- {{$user->name}}</p>--}}
                 </div>
                 <div class="col-4 mobileHidden">
                     <h3>Editar notas</h3>
@@ -80,7 +80,7 @@
                                             <button type="submit"
                                                     data-message="Tem a certeza que deseja excluir a entrega de {{$entrega->material->name}}? O stock não vai ser atualizado!"
                                                     style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
-                                                    <i class="fa-solid fa-trash-can fa-lg" style="color: #116fdc;"></i>
+                                                <i class="fa-solid fa-trash-can fa-lg" style="color: #116fdc;"></i>
                                             </button>
                                         </form>
                                     </td>
@@ -121,9 +121,9 @@
 
                         <div class=" p-2 mb-4" >
                             @if($user->notes)
-                            <p>{!! nl2br(e($user->notes)) !!}</p>
+                                <p>{!! nl2br(e($user->notes)) !!}</p>
                             @else
-                            <p class="pb-5">Não existe nenhuma nota</p>
+                                <p class="pb-5">Não existe nenhuma nota</p>
                             @endif
                         </div>
 
@@ -137,7 +137,7 @@
                         Editar nota
                     </button>
 
-                    
+
                 </div>
 
 
@@ -151,7 +151,7 @@
                         <div class="row">
                             <div class="col-6 ">
                                 <a href="{{ route('material-user.index') }}" class="btn btn-secondary mr-2 mb-3">Voltar</a>
-                              <button id="delete-selected" class="btn btn-danger mb-3">Excluir selecionados</button>
+                                <button id="delete-selected" class="btn btn-danger mb-3">Excluir selecionados</button>
                             </div>
                             <div class="col-6 align-content-end text-right pr-0">
                                 <form id="allDelivered" action="{{ route('material-user.addDeliveredAll') }}" method="POST"
@@ -179,6 +179,45 @@
                 <div class="col-4">
 
 
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNoteModal">
+                        Adicionar nota
+                    </button>
+
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editNoteModal">
+                        Editar nota
+                    </button>
+
+
+                    <div class="modal fade" id="editNoteModal" tabindex="-1" role="dialog"
+                         aria-labelledby="editNoteModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="editNoteModalLabel">Editar notas</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <form action="{{ route('material-user.edit', $user->id) }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    <input type="hidden" name="user_id" value="{{$user->id}}">
+                                    <div class="modal-body">
+                                        <div class="form-group">
+                                            <label for="note">Nota</label>
+                                            <textarea class="form-control" id="note" name="note"
+                                                      rows="5">{{$user->notes}}</textarea>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar
+                                        </button>
+                                        <button type="submit" class="btn btn-primary" data-message="Tem a certeza que pretende atualizar a(s) nota(s)?">Gravar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
 
 
 
