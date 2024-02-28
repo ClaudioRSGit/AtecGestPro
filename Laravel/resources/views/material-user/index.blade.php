@@ -25,7 +25,7 @@
 
         <ul class="nav nav-tabs mb-2" id="myTabs">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#formandos">Formandos</a>
+                <a class="nav-link active tabOpeningBtn" data-toggle="tab" href="#formandos">Formandos</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#funcionarios">Funcionários</a>
@@ -79,17 +79,22 @@
                     </div>
                     @foreach ($courseClasses as $courseClass)
                         <div class="card mb-2 mt-2">
+                            @php
+                                    $allDelivered =
+                                        $courseClass->students->count() > 0 &&
+                                        $courseClass->students->every(function ($student) use ($usersWithMaterialsDelivered) {
+                                            return $usersWithMaterialsDelivered->contains($student->id);
+                                        });
+                            @endphp
 
-
-                            <div class="card-header ">
+                            <div class="card-header {{ $allDelivered ? 'bg-green' : ' ' }}">
                                 <h2 class="mb-0">
 
-
-                                    <button class="btn btn-link tabOpeningBtn"
-                                            type="button" data-toggle="collapse" data-target="#collapse{{ $courseClass->id }}"
-                                            aria-expanded="false" aria-controls="collapse{{ $courseClass->id }}">
-                                        {{ $courseClass->description }}
-                                    </button>
+                                <button class="btn btn-link "
+                                        type="button" data-toggle="collapse" data-target="#collapse{{ $courseClass->id }}"
+                                        aria-expanded="false" aria-controls="collapse{{ $courseClass->id }}">
+                                    {{ $courseClass->description }}
+                                </button>
                                 </h2>
                             </div>
                             <div id="collapse{{ $courseClass->id }}" class="collapse"

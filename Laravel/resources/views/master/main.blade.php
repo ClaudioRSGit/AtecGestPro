@@ -77,6 +77,8 @@
 
     {{-- SCRIPTS SECTION --}}
     <script src="{!! asset('js/app.js') !!}" type="text/javascript"></script>
+        <script src="{{ asset('js/userOnboarding/intro.js') }}"></script>
+
 
 
     @yield('scripts')
