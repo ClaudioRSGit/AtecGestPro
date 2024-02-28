@@ -28,7 +28,7 @@ function triggerExternalIntro() {
             {
                 title: 'Tabela de Formações',
                 element: document.querySelector('#externalTable'),
-                intro: 'Mostra todas as formações, organizadas numa tabela.',
+                intro: 'Mostra todas as formações organizadas numa tabela.',
                 position: 'top'
             },
             {
