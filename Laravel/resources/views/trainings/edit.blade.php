@@ -38,7 +38,7 @@
 
             <div class="buttons d-flex justify-content-start align-items-center">
                 <button type="submit" class="btn btn-primary">Salvar Alterações</button>
-                <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
+                <a href="{{ route('trainings.index') }}" class="btn btn-secondary">Cancelar</a>
             </div>
         </form>
 

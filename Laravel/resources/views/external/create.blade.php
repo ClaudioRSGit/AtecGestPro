@@ -39,7 +39,7 @@
                     </select>
                 </div>
                 <div class="partner">
-                    <label for="partner_id">Parceiro:</label>
+                    <label for="partner_id">Empresa:</label>
                     <select class="form-control" id="partner_id" name="partner_id" required>
                         @foreach($partners as $partner)
                             <option value="{{ $partner->id }}"

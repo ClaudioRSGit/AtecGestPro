@@ -158,7 +158,7 @@
                 </div>
                 <div>
                     <button type="submit" class="btn btn-primary">Guardar Material</button>
-                    <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
+                    <a href="{{ route('materials.index') }}" class="btn btn-secondary">Cancelar</a>
                 </div>
             </div>
         </form>
