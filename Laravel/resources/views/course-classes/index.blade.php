@@ -24,7 +24,7 @@
 
         <div class="d-flex justify-content-between mb-3">
 
-            <div class="w-100 search-container">
+            <div class="w-50 search-container">
                 <form action="{{ route('course-classes.index') }}" method="GET">
                     <div class="input-group pr-2">
                         <div class="search-container">
@@ -46,7 +46,7 @@
                             <option value="all">Todos os cursos</option>
                             @foreach($courses as $course)
                                 <option
-                                    value="{{ $course->id }}" {{ $courseFilter == $course->id ? 'selected' : '' }}>{{ $course->description }}</option>
+                                    value="{{ $course->id }}" {{ $courseFilter == $course->id ? 'selected' : '' }}>{{ $course->code }}</option>
                             @endforeach
                         </select>
                 </form>

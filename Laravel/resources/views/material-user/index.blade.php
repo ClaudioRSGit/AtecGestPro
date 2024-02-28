@@ -25,7 +25,7 @@
 
         <ul class="nav nav-tabs mb-2" id="myTabs">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#formandos">Formandos</a>
+                <a class="nav-link active tabOpeningBtn" data-toggle="tab" href="#formandos">Formandos</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#funcionarios">Funcionários</a>
