@@ -18,7 +18,7 @@
             <tbody>
                 <tr class="filler"></tr>
                 @foreach($importedStudents as $student)
-                <tr class="user-row customTableStyling" data-position="{{ strtolower($student) }}"
+                <tr class="customTableStyling" data-position="{{ strtolower($student) }}"
                 data-role="{{ $student->role_id }}">
                     <td class="clickable">
                         <a href="{{ route('users.show', $student->id) }}" class="d-flex align-items-center w-auto h-100">{{ $student->name }}</a>

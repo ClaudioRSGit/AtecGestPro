@@ -426,7 +426,7 @@ thead th {
         align-items: flex-start !important;
         gap: 1rem !important;
     }
-    .materialTableRow > :nth-child(2){
+    .materialTableRow > :nth-child(2), .user-row > :nth-child(2){
         border-left: 1px solid #dee2e6;
         border-top-left-radius: 6px !important;
         border-bottom-left-radius: 6px !important;
@@ -495,7 +495,7 @@ thead th {
         flex-direction: column !important;
         max-width: 96% !important;
     }
-    .material-row :nth-child(4){
+    .material-row :nth-child(5){
         border-right: 1px solid #dee2e6;
         border-top-right-radius: 6px !important;
         border-bottom-right-radius: 6px !important;

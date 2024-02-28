@@ -68,7 +68,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-6 d-flex flex-column">
+                <div class="col-md-6 d-flex flex-column mb-3">
                     <div class="mb-3">
                         <label for="role_id" class="form-label">Função:</label>
                         <select class="form-control" id="role_id" name="role_id" onchange="toggleCourseClassDiv()">
@@ -108,7 +108,7 @@
                         </select>
                     </div>
                 </div>
-                <div class="buttons d-flex justify-content-start align-items-center">
+                <div class="d-flex justify-content-start align-items-center mb-3" style="gap: 1rem;">
                     <button type="submit" class="btn btn-primary">Criar Utilizador</button>
                     <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
                 </div>

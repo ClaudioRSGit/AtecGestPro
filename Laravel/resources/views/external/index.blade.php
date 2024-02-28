@@ -66,7 +66,7 @@
                     </form>
 
 
-                    <a href="{{ route('external.create') }}" class="btn btn-primary">Nova F. mercado</a>
+                    <a href="{{ route('external.create') }}" class="btn btn-primary newTrainingBtn">Nova F. mercado</a>
 
                 </div>
 
