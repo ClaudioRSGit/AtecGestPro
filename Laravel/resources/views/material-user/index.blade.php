@@ -2,12 +2,13 @@
 
 @section('content')
     <div class="container  w-100 fade-in">
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-4 position-relative">
             <h1>Vestuário</h1>
             <a href="{{ route('course-classes.create') }}" class="btn btn-primary">
                 <i class="fa-solid fa-pen mr-1" style="color: #ffffff;"></i>
                 Criar Turma
             </a>
+            <img src="{{ asset('assets/questionMark.png') }}" onclick="event.stopPropagation(); triggerIntroducaoVestuario();" class="questionMarkBtn">
         </div>
 
         @if (session('message'))
@@ -39,7 +40,7 @@
                     <div class="w-100 d-flex justify-content-between align-items-center h-100" style="gap: 1rem">
 
 
-                        <div class="search-container ">
+                        <div class="search-container">
                             <form action="{{ route('material-user.index') }}" method="GET">
                                 <div class="input-group pr-2">
                                     <div class="search-container">
@@ -74,7 +75,7 @@
                 <div id="accordion">
                     <div class="ms-auto">
 
-                        <span>Turma</span>
+                        <span>Turmas</span>
                     </div>
                     @foreach ($courseClasses as $courseClass)
                         <div class="card mb-2 mt-2">
@@ -309,3 +310,8 @@
         }
     </style>
 @endsection
+@push('scripts')
+    <script src="{{ asset('js/courses/index.js') }}"></script>
+    <script src="{{ asset('js/userOnboarding/intro.js') }}"></script>
+    <script src="{{ asset('js/userOnboarding/material-user.js') }}"></script>
+@endpush

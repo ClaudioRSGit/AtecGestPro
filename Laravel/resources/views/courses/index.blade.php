@@ -20,8 +20,7 @@
             <a href="{{ route('courses.create') }}" class="btn btn-primary newCourse">
                 <i class="fa-solid fa-pen mr-1" style="color: #ffffff;"></i> Novo Curso
             </a>
-            <img src="{{ asset('assets/questionMark.png') }}" onclick="event.stopPropagation(); triggerCoursesIntro();"
-                 class="questionMarkBtn">
+            <img src="{{ asset('assets/questionMark.png') }}" onclick="event.stopPropagation(); triggerCoursesIntro();" class="questionMarkBtn">
         </div>
 
         <div class="d-flex justify-content-between mb-3">
