@@ -273,7 +273,6 @@ thead th {
     .loginPage::after{
         content: none !important;
     }
-
     .navbar{
         width: 100% !important;
         display: flex;
@@ -295,7 +294,8 @@ thead th {
         left: auto !important;
     }
 
-    .sidebarContent{
+    .sidebarContent,
+    .questionMarkBtn{
         display: none !important;
         width: 0 !important;
     }

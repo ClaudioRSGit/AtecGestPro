@@ -22,7 +22,7 @@
 
         <div class="d-flex justify-content-between mb-3">
 
-            <div class="search-container">
+            <div class="w-100 search-container">
                 <form action="{{ route('course-classes.index') }}" method="GET">
                     <div class="input-group pr-2">
                         <div class="search-container">
@@ -39,7 +39,7 @@
             </div>
 
             <div class="drop">
-                <form id="courseFilterForm" action="{{ route('course-classes.index') }}" method="GET">
+                <form id="courseFilterForm" action="{{ route('course-classes.index') }}" method="GET" class="mobileHidden">
                         <select class="form-control " id="courseFilter" name="courseFilter" onchange="submitForm()">
                             <option value="all">Todos os cursos</option>
                             @foreach($courses as $course)
