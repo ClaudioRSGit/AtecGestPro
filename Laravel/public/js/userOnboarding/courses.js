@@ -22,7 +22,7 @@ function triggerCoursesIntro() {
             {
                 title: 'Tabela de Cursos',
                 element: document.querySelector('#courseTable'),
-                intro: 'Esta tabela apresenta todos os cursos disponíveis, organizados por código e descrição.',
+                intro: 'Esta tabela apresenta todos os cursos disponíveis organizados por código e descrição.',
                 position: 'center'
             },
             {
