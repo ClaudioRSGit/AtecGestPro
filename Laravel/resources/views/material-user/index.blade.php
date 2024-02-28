@@ -8,7 +8,7 @@
                 <i class="fa-solid fa-pen mr-1" style="color: #ffffff;"></i>
                 Criar Turma
             </a>
-            <img src="{{ asset('assets/questionMark.png') }}" onclick="event.stopPropagation(); triggerIntroducaoVestuario();" class="questionMarkBtn">
+            <img src="{{ asset('assets/questionMark.png') }}" onclick="event.stopPropagation(); openTab(); triggerIntroducaoVestuario();" class="questionMarkBtn">
         </div>
 
         @if (session('message'))
@@ -80,11 +80,11 @@
                     @foreach ($courseClasses as $courseClass)
                         <div class="card mb-2 mt-2">
 
-                            <div class="card-header ">
+                            <div class="card-header">
                                 <h2 class="mb-0">
 
 
-                                    <button class="btn btn-link "
+                                    <button class="btn btn-link tabOpeningBtn"
                                             type="button" data-toggle="collapse" data-target="#collapse{{ $courseClass->id }}"
                                             aria-expanded="false" aria-controls="collapse{{ $courseClass->id }}">
                                         {{ $courseClass->description }}
@@ -112,12 +112,12 @@
                                                     @endphp
                                                     <td class="clickable {{ $allDelivered }} mobileOverflow">
                                                         <a href="{{ route('material-user.create', $student->id) }}"
-                                                           class="d-flex align-items-center w-auto h-100">{{ $student->name }}</a>
+                                                           class="d-flex align-items-center w-auto h-100 studentName">{{ $student->name }}</a>
                                                     </td>
                                                     <td class="{{ $allDelivered }}">{{ $student->username }}</td>
                                                     <td class="{{ $allDelivered }} mobileHidden">{{ $student->email }}</td>
                                                     <td class="editDelete {{ $allDelivered }}">
-                                                        <div style="width: 40%">
+                                                        <div style="width: 40%" class="editBtn">
                                                             <a href="{{ route('material-user.edit', $student->id) }}"
                                                                class="mx-2 ">
                                                                <i class="fa-solid fa-pen-to-square fa-lg" style="color: #116fdc;"></i>
