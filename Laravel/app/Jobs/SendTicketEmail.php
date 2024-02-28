@@ -41,16 +41,12 @@ class SendTicketEmail implements ShouldQueue
 
         $email = new TicketEmail($ticket);
 
-//        dd($email);
 
-//        dd($ticket->requester->email);
         Mail::to($ticket->requester->email)->send($email);
     }
 
     public function failed(Exception $exception)
     {
-        dd($exception->getMessage());
-        // Perform action on job failure...
         Log::error("Job has failed due to: {$exception->getMessage()}");
     }
 }
