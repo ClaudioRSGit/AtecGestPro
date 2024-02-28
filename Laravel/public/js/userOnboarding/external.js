@@ -3,44 +3,44 @@ function triggerExternalIntro() {
     intro.setOptions({
         steps: [
             {
-                title: 'Turmas',
-                intro: 'Bem-vindo à página de turmas. Aqui você pode visualizar e gerenciar todas as turmas disponíveis.',
+                title: 'Formações Externas de Mercado',
+                intro: 'Bem-vindo à página de formações externas de mercado. Aqui pode visualizar e gerir todas as formações externas.',
                 position: 'center'
             },
             {
-                title: 'Botão de Criar Turma',
-                element: document.querySelector('.buttons .btn-primary'),
-                intro: 'Crie uma nova turma ao clicar neste botão.',
+                title: 'Botão de Criar Formação Externa',
+                element: document.querySelector('.newTrainingBtn'),
+                intro: 'Clique neste botão para criar uma nova formação externa.',
                 position: 'left'
             },
             {
                 title: 'Barra de Pesquisa',
                 element: document.querySelector('.search-container input'),
-                intro: 'Utilize este campo de pesquisa para encontrar turmas específicas.',
+                intro: 'Utilize este campo de pesquisa para encontrar formações externas específicas.',
                 position: 'right'
             },
             {
-                title: 'Filtrar por Curso',
+                title: 'Separador de Formações',
                 element: document.querySelector('#myTabs'),
-                intro: 'Filtre as turmas por curso selecionando uma opção na lista de abas.',
+                intro: 'Clique num separador para visualizar parceiros ou formações externas.',
                 position: 'bottom'
             },
             {
-                title: 'Lista de Turmas',
+                title: 'Tabela de Formações',
                 element: document.querySelector('#externalTable'),
-                intro: 'Mostra todas as turmas, organizadas em uma tabela.',
+                intro: 'Mostra todas as formações, organizadas numa tabela.',
                 position: 'top'
             },
             {
-                title: 'Detalhes da Turma',
+                title: 'Detalhes da Formação',
                 element: document.querySelector('.customTableStyling .clickable'),
-                intro: 'Clique em uma turma para expandir e ver os detalhes, incluindo os formandos.',
+                intro: 'Clique numa formação para ver os detalhes.',
                 position: 'top'
             },
             {
-                title: 'Ações da Turma',
+                title: 'Botões de Ação',
                 element: document.querySelector('.editDelete'),
-                intro: 'Podemos editar ou apagar uma turma.',
+                intro: 'Utilize estes botões para editar ou apagar uma formação.',
                 position: 'left'
             },
         ],
