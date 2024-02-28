@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container  w-100 fade-in">
-        <div class="d-flex justify-content-between align-items-center mb-4 position-relative">
+        <div class="mb-4 position-relative materialsTitle">
             <h1>Lista de Materiais</h1>
 
             <a href="{{ route('materials.create') }}" class="btn btn-primary">
@@ -30,8 +30,8 @@
         <div class="tab-content">
             <div id="materiais" class="tab-pane fade show active">
 
-                <div class="d-flex justify-content-between mb-3 w-100">
-                    <div class="d-flex justify-content-between w-40">
+                <div class="d-flex justify-content-between mb-3 w-100 materialsTableFilters">
+                    <div class="d-flex justify-content-between">
 
                         <form action="{{ route('materials.index') }}" method="GET" class="materials-searchBar">
                             <div class="input-group pr-2">
@@ -83,7 +83,7 @@
                         <table class="table bg-white rounded-top">
                             <thead>
                                 <tr>
-                                    <th scope="col">
+                                    <th scope="col" class="mobileHidden">
                                         <input type="checkbox" id="select-all">
                                     </th>
                                     <th scope="col">
@@ -100,7 +100,7 @@
                                     <th scope="col">
                                         Quantidade
                                     </th>
-                                    <th scope="col">
+                                    <th scope="col" class="mobileHidden">
                                         <a
                                             href="{{ route('materials.index', ['sortColumn' => 'acquisition_date', 'sortDirection' => $sortColumn === 'acquisition_date' ? ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">
                                             Data de Aquisição
@@ -111,7 +111,7 @@
                                             @endif
                                         </a>
                                     </th>
-                                    <th scope="col">Fornecedor</th>
+                                    <th scope="col" class="mobileHidden">Fornecedor</th>
                                     <th scope="col">Género</th>
                                     <th scope="col">
                                         <div class="centerTd">Ações</div>
@@ -121,9 +121,9 @@
                             <tbody>
                                 <tr class="filler"></tr>
                                 @foreach ($materials as $material)
-                                    <tr class="material-row customTableStyling" data-internal="{{ $material->isInternal }}"
+                                    <tr class="customTableStyling materialTableRow" data-internal="{{ $material->isInternal }}"
                                         data-clothing="{{ $material->isClothing }}">
-                                        <td>
+                                        <td class="mobileHidden">
                                             <input type="checkbox" name="selectedMaterials[]" value="{{ $material->id }}">
                                         </td>
                                         <td class="clickable material-name">
@@ -184,12 +184,12 @@
                                             @endif
                                         </td>
 
-                                        <td>
+                                        <td class="mobileHidden">
                                             {{ isset($material->acquisition_date) ? \Carbon\Carbon::parse($material->acquisition_date)->format('Y-m-d') : 'N.A.' }}
                                         </td>
 
 
-                                        <td>
+                                        <td class="mobileHidden">
                                             @if ($material->supplier !== '' && $material->supplier !== null)
                                                 {{ $material->supplier }}
                                             @else
@@ -246,8 +246,8 @@
 
 
             <div id="reciclagem_materiais" class="tab-pane fade">
-                <div class="d-flex justify-content-between mb-3 w-100">
-                    <div class="d-flex justify-content-between w-40">
+                <div class="d-flex justify-content-between mb-3 w-100 materialsTableFilters">
+                    <div class="d-flex justify-content-between">
 
                         <form action="{{ route('materials.index') }}" method="GET">
                             <div class="input-group pr-2">
@@ -305,7 +305,7 @@
                         <table class="table bg-white rounded-top">
                             <thead>
                                 <tr>
-                                    <th scope="col">
+                                    <th scope="col" class="mobileHidden">
                                         <input type="checkbox" id="recycledSelect-all">
                                     </th>
                                     <th scope="col">
@@ -319,10 +319,10 @@
                                             @endif
                                         </a>
                                     </th>
-                                    <th scope="col">
+                                    <th scope="col" class="mobileHidden">
                                         Quantidade
                                     </th>
-                                    <th scope="col">
+                                    <th scope="col" class="mobileHidden">
                                         <a
                                             href="{{ route('materials.index', ['sortColumn' => 'acquisition_date', 'sortDirection' => $sortColumn === 'acquisition_date' ? ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">
                                             Data de Aquisição
@@ -333,7 +333,7 @@
                                             @endif
                                         </a>
                                     </th>
-                                    <th scope="col">Fornecedor</th>
+                                    <th scope="col" class="mobileHidden">Fornecedor</th>
                                     <th scope="col">Género</th>
 
                                     <th scope="col">
@@ -349,16 +349,16 @@
                             <tbody>
                                 <tr class="filler">
                                     @foreach ($recycleMaterials as $material)
-                                <tr class="material-row customTableStyling" data-internal="{{ $material->isInternal }}"
+                                <tr class="customTableStyling materialTableRow" data-internal="{{ $material->isInternal }}"
                                     data-clothing="{{ $material->isClothing }}">
-                                    <td>
+                                    <td class="mobileHidden">
                                         <input type="checkbox" name="selecteRecycledMaterials[]"
                                             value="{{ $material->id }}">
                                     </td>
                                     <td>
                                         <p>{{ isset($material->name) ? $material->name : 'N.A.' }}</p>
                                     </td>
-                                    <td>
+                                    <td class="mobileHidden">
                                         @if ($material->isClothing == 1)
                                             {{ $material->sizes->sum('pivot.stock') }}
                                         @else
@@ -366,10 +366,10 @@
                                         @endif
                                     </td>
 
-                                    <td>
+                                    <td class="mobileHidden">
                                         {{ isset($material->acquisition_date) ? \Carbon\Carbon::parse($material->acquisition_date)->format('Y-m-d') : 'N.A.' }}
                                     </td>
-                                    <td>{{ $material->supplier !== null ? $material->supplier : 'N.A.' }}</td>
+                                    <td class="mobileHidden">{{ $material->supplier !== null ? $material->supplier : 'N.A.' }}</td>
 
                                     <td>
                                         @if ($material->isClothing === 0)

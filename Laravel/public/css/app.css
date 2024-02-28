@@ -420,6 +420,23 @@ thead th {
         width: 45% !important;
     }
 
+    .materialsTitle{
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 1rem !important;
+    }
+    .materialTableRow > :nth-child(2){
+        border-left: 1px solid #dee2e6;
+        border-top-left-radius: 6px !important;
+        border-bottom-left-radius: 6px !important;
+    }
+    .sizesQuantitiesCourses{
+        flex-direction: column !important;
+    }
+    .sizesQuantities input[type="number"]{
+        min-width: 25% !important;
+    }
 
 
     .externalBtns{
@@ -1300,6 +1317,15 @@ pre code {
     .container-md,
     .container-sm {
         max-width: 1140px;
+    }
+
+    .materialsTitle{
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: center !important;
+    }
+    .materialsTableFilters > :nth-child(1){
+        width: 40% !important;
     }
 
     .trainingInfo > div, .trainingEdit > div, .trainingCreate > div{
