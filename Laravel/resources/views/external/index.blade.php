@@ -29,9 +29,9 @@
 
         <h1>Formações de mercado</h1>
 
-        <ul class="nav nav-tabs mb-3" id="myTabs">
+        <ul class="nav nav-tabs mb-3 position-relative" id="myTabs">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#formacoes_externas">Gestão de F. Mercado</a>
+                <a class="nav-link active firstTab" data-toggle="tab" href="#formacoes_externas">Gestão de F. Mercado</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#parceiros">Gestão de Parceiros</a>
@@ -39,6 +39,11 @@
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#formacoes">Gestão de Formação</a>
             </li>
+            <img
+            src="{{ asset('assets/questionMark.png') }}"
+            onclick="event.stopPropagation(); openFirstTab(); triggerExternalIntro();"
+            class="questionMarkBtn" style="margin-top: 3.3rem;"
+            >
         </ul>
 
 
@@ -333,4 +338,6 @@
 @endsection
 @push('scripts')
     <script src="{{ asset('js/external/index.js') }}"></script>
+    <script src="{{ asset('js/userOnboarding/intro.js') }}"></script>
+    <script src="{{ asset('js/userOnboarding/external.js') }}"></script>
 @endpush

@@ -13,12 +13,11 @@
         @endif
 
         <div class="row">
+
             <div class="col-8 w-100 d-flex justify-content-between materialUserCreateTitle">
-                <h3>Atribuir</h3>
+                <h3>Atribuir Vestuário: </h3>
                 <div class="d-flex mt-2 ">
-
-                    <p class="ml-1 font-weight-bold"> - {{ ucfirst($student->role->name) }} : {{ $student->name }} </p>
-
+                    <h4 class="ml-1 font-weight-bold"> {{ ucfirst($student->role->name) }} {{ $student->name }} </h4>
                 </div>
             </div>
             <div class="col-4 mobileHidden">
@@ -34,7 +33,7 @@
 
                     <input type="hidden" name="user_id" value="{{ $student->id }}">
                     <div class="materials">
-                        <table class="table bg-white ">
+                        <table class="table bg-white rounded-top">
                             <thead>
                             <tr>
                                 <th scope="col" class="h-100">
@@ -57,7 +56,7 @@
                                         $totalStock = $clothingItem->sizes->sum('pivot.stock');
                                         $disabled = $totalStock > 0 ? '' : 'disabled';
                                     @endphp
-                                    <tr class="material-row">
+                                    <tr class="material-row customTableStyling">
                                         <td>
                                             <div class="form-check d-flex justify-content-center align-items-center">
                                                 <input class="form-check-input"
@@ -147,25 +146,23 @@
                         </thead>
                         <tbody class="customTableStyling">
 
-                        @if($assignedClothes->isEmpty())
-                        @forelse($assignedClothes as $item)
-
-                            <tr>
-                                <td style="text-align: left;">{{ $item->material->name }}</td>
-                                <td style="text-align: left;">{{ $item->size->size }}</td>
-                                <td style="text-align: left;">{{ $item->quantity }} uni</td>
-                            </tr>
-                            <tr class="filler"></tr>
-                        @empty
-                            <tr>
-                                <td colspan="3">Nenhuma farda entregue ao utilizador</td>
-                            </tr>
-                        @endforelse
-                        @else
-                            <tr>
-                                <td colspan="3">O fardamento entregue ao utilizador foi apagado do sistema</td>
-                            </tr>
-                        @endif
+                            @if(!$assignedClothes->isEmpty())
+                                @foreach($assignedClothes as $item)
+                                    <tr class="filler"></tr>
+                                    <tr>
+                                        @if($item->material && $item->material->name)
+                                            <td style="text-align: left;">{{ $item->material->name ?? 'N.A.'}}</td>
+                                            <td style="text-align: left;">{{ $item->size->size ?? 'N.A.' }}</td>
+                                            <td style="text-align: left;">{{ $item->quantity ?? 'N.A.' }} uni</td>
+                                        @else
+                                            <td colspan="3">Material apagado do sistema</td>
+                                        @endif
+                                    </tr>
+                                    <tr class="filler"></tr>
+                                @endforeach
+                            @else
+                                <tr><td colspan="3">Nenhuma farda entregue ao utilizador</td></tr>
+                            @endif
 
                         </tbody>
                     </table>
@@ -174,7 +171,7 @@
             </div>
             <div class="row mt-3 materialUserSubmit">
                 <div class="col-5">
-                            <textarea placeholder="Observações" class="form-control" name="additionalNotes"
+                            <textarea placeholder="Notas (Exemplo: Aluno tem cacifo x): ..." class="form-control" name="additionalNotes"
                                       id="textarea" aria-label="With textarea"></textarea>
                 </div>
                 <div class="col-3 d-flex delivery" style="max-width: 75% !important;">
