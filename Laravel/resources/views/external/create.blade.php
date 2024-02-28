@@ -15,7 +15,7 @@
     </style>
 
 
-    <div class="container  w-100 fade-in">
+    <div class="container w-100 fade-in externalCreateView">
 
         @error('start_date')
         <div class="alert alert-danger success-alert">{{ $message }}</div>
@@ -68,7 +68,7 @@
                         <thead>
                         <tr>
                             <th>Nome</th>
-                            <th>Descrição</th>
+                            <th class="mobileHidden">Descrição</th>
                             <th>Quantidade</th>
                             <th>Selecionar</th>
                         </tr>
@@ -78,7 +78,7 @@
                         @foreach($materials as $material)
                             <tr>
                                 <td>{{ $material->name }}</td>
-                                <td>{{ $material->description }}</td>
+                                <td class="mobileHidden">{{ $material->description }}</td>
                                 <td class="pl-4">
                                     <input type="number" name="material_quantities[{{ $material->id }}]" value="1"
                                            min="0" max="{{ $material->quantity }}"

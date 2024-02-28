@@ -1,7 +1,7 @@
 @extends('master.main')
 
 @section('content')
-    <div class="container  w-100 fade-in">
+    <div class="container w-100 fade-in materialUserCreateContent">
 
 
         @if ($errors->any())
@@ -13,21 +13,22 @@
         @endif
 
         <div class="row">
-            <div class="col-8 d-flex">
+
+            <div class="col-8 w-100 d-flex justify-content-between materialUserCreateTitle">
                 <h3>Atribuir Vestuário: </h3>
-                <div class="d-flex justify-content-between mt-1">
+                <div class="d-flex mt-2 ">
                     <h4 class="ml-1 font-weight-bold"> {{ ucfirst($student->role->name) }} {{ $student->name }} </h4>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-4 mobileHidden">
                 <h3 class="">Materiais atribuídos</h3>
             </div>
         </div>
         <hr>
         <form action="{{ route('material-user.store') }}" method="post">
             @csrf
-            <div class="row">
-                <div class="col-8 " style="height: 25rem">
+            <div class="row materialUserCreateContentTables">
+                <div class="col-8 w-100" style="height: 25rem">
 
 
                     <input type="hidden" name="user_id" value="{{ $student->id }}">
@@ -35,13 +36,13 @@
                         <table class="table bg-white rounded-top">
                             <thead>
                             <tr>
-                                <th scope="col" class="h-100 d-flex justify-content-center align-items-center">
+                                <th scope="col" class="h-100">
                                     <input type="checkbox" id="select-all" class="h-100">
                                 </th>
-                                <th scope="col">Nome</th>
+                                <th scope="col">Material</th>
                                 <th scope="col" style="text-align: center;">Tamanho</th>
                                 <th scope="col" style="text-align: center;">Quantidade</th>
-                                <th scope="col" style="text-align: center;">Data de Entrega</th>
+                                <th class="mobileHidden" scope="col" style="text-align: center;">Data de Entrega</th>
                             </tr>
                             </thead>
                             <tbody class="customTableStyling">
@@ -65,7 +66,7 @@
                                                        id="flexCheckDefault{{ $loop->index }}" {{ $disabled }}>
                                             </div>
                                         </td>
-                                        <td>
+                                        <td class="mobileOverflow">
                                             <a href="{{ route('materials.show', $clothingItem->id) }}">{{ isset($clothingItem->name) ? $clothingItem->name : 'N.A.' }}</a>
                                         </td>
                                         <td style="text-align: center;">
@@ -110,7 +111,7 @@
                                                    name="quantity[{{ $clothingItem->id }}]" value="1" min="1"
                                                    style="width: 60px; text-align: center;" {{ $disabled }}>
                                         </td>
-                                        <td class="d-flex justify-content-left align-items-center position-relative">
+                                        <td class="mobileHidden position-relative">
                                             <input type="date" class="form-control w-90 delivery_date"
                                                    name="delivery_date[{{ $clothingItem->id }}]"
                                                    value="{{ date('Y-m-d') }}" {{ $disabled }}>
@@ -133,12 +134,12 @@
 
                 </div>
 
-                <div class="col-4 mb-3 pl-3 shadow bg-transparent">
+                <div class="col-4 mb-3 pl-3 shadow bg-transparent materialsAssigned">
 
                     <table class="table bg-white">
                         <thead>
                         <tr>
-                            <th>Nome</th>
+                            <th>Material</th>
                             <th>Tamanho</th>
                             <th>Quantidade</th>
                         </tr>
@@ -168,12 +169,12 @@
 
                 </div>
             </div>
-            <div class="row mt-3 ">
+            <div class="row mt-3 materialUserSubmit">
                 <div class="col-5">
                             <textarea placeholder="Notas (Exemplo: Aluno tem cacifo x): ..." class="form-control" name="additionalNotes"
                                       id="textarea" aria-label="With textarea"></textarea>
                 </div>
-                <div class="col-3 d-flex ">
+                <div class="col-3 d-flex delivery" style="max-width: 75% !important;">
                     <label for="delivered" style="margin: auto;" class=" ">Entrega Completa</label>
                     <input type="hidden" name="delivered_all" value="0">
                     <input type="checkbox" class="form-control" id="delivered" name="delivered_all" value="1"

@@ -4,7 +4,7 @@
     <div class="container w-100 fade-in">
         <h1>Detalhes da formação</h1>
 
-        <div class="w-50 mb-3">
+        <div class="w-100 mb-3 trainingInfo">
             <div>
                 <label>ID:</label>
                 <input class="form-control" value="{{ $training->id }}" disabled>

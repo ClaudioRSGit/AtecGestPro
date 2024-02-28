@@ -51,7 +51,7 @@
 
             <div class="tab-pane fade show active" id="formacoes_externas">
 
-                <div class="d-flex justify-content-between mb-3">
+                <div class="d-flex justify-content-between mb-3 externalBtns">
                     <form action="{{ route('external.index') }}" method="GET">
                         <div class="input-group pr-2">
                             <div class="search-container">
@@ -66,9 +66,7 @@
                     </form>
 
 
-                    <div class="buttons">
-                        <a href="{{ route('external.create') }}" class="btn btn-primary">Nova F. mercado</a>
-                    </div>
+                    <a href="{{ route('external.create') }}" class="btn btn-primary">Nova F. mercado</a>
 
                 </div>
 
@@ -77,10 +75,10 @@
                         <tr>
 
                             <th scope="col">Parceiro</th>
-                            <th scope="col">Morada</th>
+                            <th scope="col" class="mobileHidden">Morada</th>
                             <th scope="col">Técnico</th>
                             <th scope="col">Formação</th>
-                            <th scope="col">Data</th>
+                            <th scope="col" class="mobileHidden">Data</th>
                             <th scope="col"><div class="centerTd">Ações</div></th>
                         </tr>
                     </thead>
@@ -100,7 +98,7 @@
                                     </a>
                                 </td>
 
-                                <td class="{{ optional($partner_Training_User->partner)->address ? '' : 'text-danger' }}">
+                                <td class="mobileHidden {{ optional($partner_Training_User->partner)->address ? '' : 'text-danger' }}">
                                     {{ optional($partner_Training_User->partner)->address ?? 'O parceiro foi apagado do sistema.' }}
                                 </td>
 
@@ -111,7 +109,7 @@
                                     {{ optional($partner_Training_User->training)->name ?: 'A Formação foi apagada do sistema' }}
                                 </td>
 
-                                <td>{{ \Carbon\Carbon::parse($partner_Training_User->start_date)->format('Y-m-d') }}</td>
+                                <td class="mobileHidden">{{ \Carbon\Carbon::parse($partner_Training_User->start_date)->format('Y-m-d') }}</td>
                                 <td>
 
                                     <div class="d-flex justify-content-between editDelete">
@@ -143,7 +141,7 @@
                 {{ $partner_Training_Users->appends(['ptuPage' => $partner_Training_Users->currentPage()])->links() }}            </div>
 
             <div class="tab-pane fade" id="parceiros">
-                <div class="d-flex justify-content-between mb-3">
+                <div class="d-flex justify-content-between mb-3 externalBtns">
                     <form action="{{ route('external.index') }}" method="GET">
                         <div class="input-group pr-2">
                             <div class="search-container">
@@ -156,17 +154,15 @@
                             </div>
                         </div>
                     </form>
-                    <div class="buttons">
-                        <a href="{{ route('partners.create') }}" class="btn btn-primary">Novo Parceiro</a>
-                    </div>
+                    <a href="{{ route('partners.create') }}" class="btn btn-primary">Novo Parceiro</a>
                 </div>
                 <table class="table bg-white">
                     <thead>
                         <tr>
 
                             <th scope="col">Parceiro</th>
-                            <th scope="col">Descrição</th>
-                            <th scope="col">Morada</th>
+                            <th scope="col" class="mobileHidden">Descrição</th>
+                            <th scope="col" class="mobileHidden">Morada</th>
                             <th scope="col">Contactos</th>
                             <th scope="col">Formações</th>
                             <th scope="col"><div class="centerTd">Ações</div></th>
@@ -175,13 +171,13 @@
                     <tbody>
                         <tr class="filler"></tr>
                         @foreach ($partners as $partner)
-                            <tr class="customTableStyling">
+                            <tr class="customTableStyling partnerRow">
 
                                 <td class="clickable">
                                     <a href="{{ route('partners.show', $partner->id) }}" class="d-flex align-items-center h-100">{{ $partner->name }}</a>
                                 </td>
-                                <td>{{ $partner->description }}</td>
-                                <td>{{ $partner->address }}</td>
+                                <td class="mobileHidden">{{ $partner->description }}</td>
+                                <td class="mobileHidden">{{ $partner->address }}</td>
                                 <td>
                                     <div class="dropdown">
                                         <button class="btn btn-secondary dropdown-toggle" type="button"
@@ -246,7 +242,7 @@
 
 
 
-                <div class="d-flex justify-content-between mb-3">
+                <div class="d-flex justify-content-between mb-3 externalBtns">
                     <form action="{{ route('external.index') }}" method="GET">
                         <div class="input-group pr-2">
                             <div class="search-container">
@@ -260,9 +256,7 @@
                         </div>
                     </form>
 
-                    <div class="buttons">
-                        <a href="{{ route('trainings.create') }}" class="btn btn-primary">Nova Formação</a>
-                    </div>
+                    <a href="{{ route('trainings.create') }}" class="btn btn-primary">Nova Formação</a>
 
                 </div>
 
@@ -271,7 +265,7 @@
                         <tr >
 
                             <th scope="col">Nome da formação</th>
-                            <th scope="col">Descrição</th>
+                            <th scope="col" class="mobileHidden">Descrição</th>
                             <th scope="col">Categoria</th>
                             <th scope="col"><div class="centerTd">Ações</div></th>
                         </tr>
@@ -284,7 +278,7 @@
                                 <td class="clickable">
                                     <a href="{{ route('trainings.show', $training->id) }}" class="d-flex align-items-center w-auto h-100">{{ $training->name }}</a>
                                 </td>
-                                <td>{{ $training->description }}</td>
+                                <td class="mobileHidden">{{ $training->description }}</td>
                                 <td>{{ $training->category }}</td>
                                 <td>
                                     <div class="d-flex justify-content-between editDelete">

@@ -48,12 +48,12 @@
 
             <div class="row">
                 <h3 class="my-3">Atribuir alunos à turma</h3>
-                <div class="d-flex justify-content-between w-100">
-                    <div class="form-group mr-3 w-25 search-container">
+                <div class="d-flex justify-content-between w-100 courseClassStudentsBtns">
+                    <div class="form-group mr-3 search-container">
                         <input type="text" id="search" class="form-control w-100" placeholder="Pesquisar Aluno">
                     </div>
-                    <div class="form-group w-25">
-                        <a href="{{ route('users.create') }}" class="btn btn-primary w-100">
+                    <div class="form-group">
+                        <a href="{{ route('users.create') }}" class="btn btn-primary w-100 d-flex justify-content-center align-items-center">
                             <i class="fa-solid fa-pen mr-1" style="color: #ffffff;"></i>
                             Novo Aluno
                         </a>
@@ -83,7 +83,7 @@
                 </div>
             </div>
 
-            <div class="row mt-3 ">
+            <div class="row mt-3 courseClassCreateSubmit">
                 <button type="submit" class="btn btn-primary mr-2 modalBtn"
                         data-message="Tem a certeza que pretende criar turma sem alunos?" name="noImport"
                         id="criarTurmaBtn">Criar Turma
