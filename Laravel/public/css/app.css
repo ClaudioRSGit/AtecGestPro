@@ -273,6 +273,10 @@ thead th {
     .loginPage::after{
         content: none !important;
     }
+
+    tbody{
+        min-width: 96% !important;
+    }
     .navbar{
         width: 100% !important;
         display: flex;
@@ -356,7 +360,8 @@ thead th {
 
     .mobileHidden,
     footer{
-        display: none;
+        display: none !important;
+        width: 0 !important;
     }
     .mobileOverflow{
         overflow-x: hidden !important;
@@ -414,6 +419,52 @@ thead th {
     .createTicket *{
         width: 45% !important;
     }
+
+    .materialUserCreateContent, .materialUserEditContent{
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+    }
+    .materialUserCreateContent > *:not(.mobileHidden), .materialUserSubmit > *:not(.mobileHidden), .materialUserEditContent > *:not(.mobileHidden), .materialUserCreateContentTables > *:not(.mobileHidden){
+        width: 100% !important;
+        max-width: none !important;
+        padding: 0 !important;
+    }
+    .materialUserCreateTitle{
+        flex: 0 0 auto !important;
+        max-width: none !important;
+    }
+    .materialUserCreateContentTables{
+        display: flex !important;
+        flex-direction: column !important;
+        max-width: 96% !important;
+    }
+    .material-row :nth-child(4){
+        border-right: 1px solid #dee2e6;
+        border-top-right-radius: 6px !important;
+        border-bottom-right-radius: 6px !important;
+    }
+    .material-edit-row :nth-child(6){
+        padding: 1rem !important;
+    }
+    .materialUserSubmit{
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 1rem !important;
+    }
+    .materialsAssigned{
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 1rem !important;
+    }
+    .materialsAssigned > table{
+        width: 96% !important;
+    }
+    .notes{
+        height: 20rem !important;
+    }
+
 
     #courseForm{
         width: 100% !important;

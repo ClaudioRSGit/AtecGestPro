@@ -11,7 +11,6 @@
                 <tr>
                     <th>Nome</th>
                     <th scope="col">Username</th>
-                    <th scope="col">Email</th>
                     <th scope="col">Função</th>
                     <th scope="col" class="ml-7" style="text-align: center !important;">Ações</th>
                 </tr>
@@ -25,7 +24,7 @@
                         <a href="{{ route('users.show', $student->id) }}" class="d-flex align-items-center w-auto h-100">{{ $student->name }}</a>
                     </td>
                     <td>{{ $student->username }}</td>
-                    <td>{{ $student->email }}</td>
+                    <td class="mobileHidden">{{ $student->email }}</td>
                     <td>{{ $student->role->description }}</td>
                     <td class="editDelete">
                         <div style="width: 40%">
