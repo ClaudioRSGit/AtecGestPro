@@ -163,7 +163,7 @@ class UserController extends Controller
                     return redirect()->back()->with('error', 'O administrador não pode alterar a sua própria função!');
                 }
             }
-            if ($user->id == auth()->user()->id && $request->input('isActive') == 0) {
+            if ($user->id == auth()->user()->id && $request->input('isActive') === 0) {
                 return redirect()->back()->with('error', 'Não é possível desativar a sua própria conta!');
             }
 
