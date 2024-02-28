@@ -79,18 +79,18 @@
                     </div>
                     @foreach ($courseClasses as $courseClass)
                         <div class="card mb-2 mt-2">
-
-
-                            <div class="card-header ">
-                                <h2 class="mb-0"> @php
+                            @php
                                     $allDelivered =
                                         $courseClass->students->count() > 0 &&
                                         $courseClass->students->every(function ($student) use ($usersWithMaterialsDelivered) {
                                             return $usersWithMaterialsDelivered->contains($student->id);
                                         });
-                                @endphp
+                            @endphp
 
-                                <button class="btn btn-link {{ $allDelivered ? 'bg-green' : ' ' }}"
+                            <div class="card-header {{ $allDelivered ? 'bg-green' : ' ' }}">
+                                <h2 class="mb-0">
+
+                                <button class="btn btn-link "
                                         type="button" data-toggle="collapse" data-target="#collapse{{ $courseClass->id }}"
                                         aria-expanded="false" aria-controls="collapse{{ $courseClass->id }}">
                                     {{ $courseClass->description }}
