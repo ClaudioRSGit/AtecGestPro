@@ -102,17 +102,28 @@
                             </div>
                             <div class="mb-3 ml-4" id="role">
                                 <div class="d-flex flex-column scrollable-column">
+                                    @php
+                                        $hasCourses = false;
+                                    @endphp
+
                                     @foreach($coursesAll as $courseAll)
                                         @if(in_array($courseAll->id, $material->courses->pluck('id')->toArray()))
+                                            @php
+                                                $hasCourses = true;
+                                            @endphp
                                             <div class="form-check">
                                                 <input disabled class="form-check-input" type="checkbox" name="courses[]"
-                                                       value="{{ $courseAll->id }}" checked>
+                                                    value="{{ $courseAll->id }}" checked>
                                                 <label class="form-check-label" for="course{{ $courseAll->id }}">
                                                     {{ $courseAll->code }}
                                                 </label>
                                             </div>
                                         @endif
                                     @endforeach
+
+                                    @if(!$hasCourses)
+                                        <p>Sem curso</p>
+                                    @endif
                                 </div>
                             </div>
                         </div>
