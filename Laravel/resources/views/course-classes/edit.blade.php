@@ -52,7 +52,7 @@
                                     <thead>
                                     <tr>
                                         <th>Nome</th>
-                                        <th>Username</th>
+                                        <th>Número Interno</th>
                                         <th class="center-checkbox">Remover</th>
                                     </tr>
                                     </thead>
@@ -86,7 +86,7 @@
                                     <thead>
                                     <tr>
                                         <th>Nome</th>
-                                        <th>Username</th>
+                                        <th>Número Interno</th>
                                         <th class="center-checkbox">Adicionar</th>
                                     </tr>
                                     </thead>

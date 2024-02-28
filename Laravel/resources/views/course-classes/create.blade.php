@@ -65,7 +65,7 @@
                         <tr>
                             <th><input type="checkbox" id="select-all"></th>
                             <th>Nome</th>
-                            <th>Username</th>
+                            <th>Número Interno</th>
                             <th>Email</th>
                         </tr>
                         </thead>
