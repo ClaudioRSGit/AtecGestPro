@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="container w-100 fade-in">
-        <div class="row col-12 mb-4">
+        <div class="row col-12 mb-4 dashboardRow">
             <div class="col-3">
                 <div class="card bg-light dashboardCard" onclick="location.href='{{ route('users.index') }}'">
                     <div class="card-body d-flex align-items-center">
@@ -56,7 +56,7 @@
                 </div>
             </div>
         </div>
-        <div class="row col-12 mb-4">
+        <div class="row col-12 mb-4 dashboardRow">
             <div class="col-3">
                 <div class="card bg-light dashboardCard">
                     <div class="card-body d-flex align-items-center" onclick="location.href='{{ route('course-classes.index') }}'">
@@ -110,7 +110,7 @@
                 </div>
             </div>
         </div>
-        <div class="row col-12 mb-4">
+        <div class="row col-12 mb-4 dashboardRow">
             <div class="col-3">
                 <div class="card bg-light dashboardCard" onclick="location.href='{{ route('users.index') }}'">
                         <div class="card-body d-flex align-items-center">
@@ -164,7 +164,7 @@
                 </div>
             </div>
         </div>
-        <div class="row my-4 col-12">
+        <div class="row my-4 col-12 dashboardGraphsFirst">
             <div class="col-6 custom-scrollbar" style="height: 350px; overflow-y: auto;">
                 <div class="card">
                     <h5 class="card-header"><strong>Entregas Incompletas</strong></h5>
@@ -208,7 +208,7 @@
                 </div>
             </div>
         </div>
-        <div class="row col-12 mr-3">
+        <div class="row col-12 mr-3 dashboardGraphsSecond">
             <div class="col-12">
                 <div class="card">
                     <h5 class="card-header" ><strong>Formações Externas por mês</strong></h5>
