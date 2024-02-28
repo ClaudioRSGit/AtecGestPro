@@ -113,7 +113,7 @@
                         <th>
                             <a href="{{ route('users.index', ['sortColumn' => 'username', 'sortDirection' => $sortColumn === 'username' ?
                 ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">
-                                Username
+                                Número Interno
                                 @if ($sortDirection === 'desc' && $sortColumn === 'username')
                                     <i class="fa-solid fa-arrow-up-z-a" style="color: #116fdc;"></i>
                                 @else
@@ -175,7 +175,7 @@
                 </table>
 
                 {{ $users->appends(['uPage' => $users->currentPage()])->links() }}
-                
+
 
             </div>
             <div class="tab-pane fade " id="reciclagem_utilizadores">
