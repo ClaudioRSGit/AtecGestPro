@@ -316,7 +316,15 @@
                             <tr class="filler"></tr>
                             @foreach ($waitingQueueTickets as $ticket)
                                 <tr class="customTableStyling {{ $ticket->ticketPriority->id == 5 ? 'critical' : '' }}">
-                                    <td class="pl-4">#{{ $ticket->id }}</td>
+                                    <td>
+                                        <div class="position-relative">
+                                            <span>#{{ $ticket ? $ticket->id : 'N.A.' }}</span>
+                                            @if($ticket->created_at->diffInDays($now) < 5)
+                                                <span
+                                                    class="badge badge-success position-absolute top-50 translate-middle-y ml-3 mt-1">Novo!</span>
+                                            @endif
+                                        </div>
+                                    </td>
                                     <td class="clickable">
                                         <div class="d-flex align-items-center">
                                             <span
