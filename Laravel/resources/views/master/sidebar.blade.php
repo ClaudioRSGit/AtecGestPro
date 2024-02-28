@@ -217,8 +217,10 @@
     }
 
     function toggleSidebarMobile(){
-        const sidebar = document.querySelector('.sidebarContent');
-        sidebar.classList.remove('collapsedSidebar');
-        localStorage.setItem('sidebarState', 'expanded');
+        if (window.innerWidth < 475){
+            const sidebar = document.querySelector('.sidebarContent');
+            sidebar.classList.remove('collapsedSidebar');
+            localStorage.setItem('sidebarState', 'expanded');
+        }
     }
 </script>
