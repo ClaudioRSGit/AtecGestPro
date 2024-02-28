@@ -110,7 +110,7 @@
                                                     @php
                                                         $allDelivered = $usersWithMaterialsDelivered->contains($student->id) ? 'bg-blue' : '';
                                                     @endphp
-                                                    <td class="clickable {{ $allDelivered }}">
+                                                    <td class="clickable {{ $allDelivered }} mobileOverflow">
                                                         <a href="{{ route('material-user.create', $student->id) }}"
                                                            class="d-flex align-items-center w-auto h-100">{{ $student->name }}</a>
                                                     </td>
@@ -188,7 +188,7 @@
 
                         <tr class="{{ $usersWithMaterialsDelivered->contains($nonDocent->id) ? 'bg-blue' : '' }}">
 
-                            <td class="clickable ">
+                            <td class="clickable mobileOverflow">
                                 <a href="{{ route('material-user.create', $nonDocent->id) }}"
                                    class="d-flex align-items-center w-auto h-100">{{ $nonDocent->name }}</a>
                             </td>

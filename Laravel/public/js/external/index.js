@@ -61,7 +61,6 @@ $('.viewPartnersForm').on('submit', function(e) {
 });
 document.addEventListener('DOMContentLoaded', function () {
     let deleteButtons = document.querySelectorAll('button[class="modalBtn"]');
-    console.log('asd');
     deleteButtons.forEach(button => {
         button.addEventListener('click', function (event) {
             event.preventDefault();

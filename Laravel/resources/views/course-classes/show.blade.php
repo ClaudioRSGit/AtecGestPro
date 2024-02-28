@@ -4,7 +4,7 @@
     <div class="container w-100 fade-in">
         <h1>Detalhes da Turma</h1>
 
-        <div class="row">
+        <div class="row courseClassInfo">
 
             <div class="col-6">
                 <div class="form-group">
