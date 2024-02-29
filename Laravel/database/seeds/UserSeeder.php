@@ -405,7 +405,7 @@ class UserSeeder extends Seeder
             'notes' => '',
             'isActive' => true,
             'isStudent' => true,
-            'course_class_id' => 1,
+            'course_class_id' => null,
             'role_id' => 3,
         ]);
 
@@ -419,7 +419,7 @@ class UserSeeder extends Seeder
             'notes' => '',
             'isActive' => true,
             'isStudent' => true,
-            'course_class_id' => 1,
+            'course_class_id' => null,
             'role_id' => 3,
         ]);
 
@@ -433,7 +433,7 @@ class UserSeeder extends Seeder
             'notes' => '',
             'isActive' => true,
             'isStudent' => true,
-            'course_class_id' => 1,
+            'course_class_id' => null,
             'role_id' => 3,
         ]);
 
