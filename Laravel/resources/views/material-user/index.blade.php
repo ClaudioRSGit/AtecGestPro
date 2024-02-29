@@ -2,12 +2,13 @@
 
 @section('content')
     <div class="container  w-100 fade-in">
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-4 position-relative">
             <h1>Vestuário</h1>
             <a href="{{ route('course-classes.create') }}" class="btn btn-primary">
                 <i class="fa-solid fa-pen mr-1" style="color: #ffffff;"></i>
                 Criar Turma
             </a>
+            <img src="{{ asset('assets/questionMark.png') }}" onclick="event.stopPropagation(); openFirstTab(); triggerIntroducaoVestuario();" class="questionMarkBtn">
         </div>
 
         @if (session('message'))
@@ -24,10 +25,10 @@
 
         <ul class="nav nav-tabs mb-2" id="myTabs">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#formandos">Formandos</a>
+                <a class="nav-link active clickFormandos" data-toggle="tab" href="#formandos">Formandos</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#outros">Outros</a>
+                <a class="nav-link" data-toggle="tab" href="#funcionarios">Funcionários</a>
             </li>
         </ul>
 
@@ -36,10 +37,10 @@
 
             <div class="tab-pane fade show active" id="formandos">
                 <div class="d-flex justify-content-between mb-3">
-                    <div class="w-40 d-flex justify-content-between align-items-center h-100" style="gap: 1rem">
+                    <div class="w-100 d-flex justify-content-between align-items-center h-100" style="gap: 1rem">
 
 
-                        <div class="search-container ">
+                        <div class="search-container">
                             <form action="{{ route('material-user.index') }}" method="GET">
                                 <div class="input-group pr-2">
                                     <div class="search-container">
@@ -58,7 +59,7 @@
                     </div>
 
 
-                    <form id="courseFilterForm" action="{{ route('material-user.index') }}" method="GET">
+                    <form id="courseFilterForm" action="{{ route('material-user.index') }}" method="GET" class="mobileHidden">
                         <select class="form-control" id="courseFilter" name="courseFilter" onchange="submitForm()">
                             <option value="" {{ request('courseFilter') === '' ? 'selected' : '' }}>Todos
                             </option>
@@ -74,20 +75,26 @@
                 <div id="accordion">
                     <div class="ms-auto">
 
-                        <span>Turma</span>
+                        <span>Turmas</span>
                     </div>
                     @foreach ($courseClasses as $courseClass)
                         <div class="card mb-2 mt-2">
+                            @php
+                                    $allDelivered =
+                                        $courseClass->students->count() > 0 &&
+                                        $courseClass->students->every(function ($student) use ($usersWithMaterialsDelivered) {
+                                            return $usersWithMaterialsDelivered->contains($student->id);
+                                        });
+                            @endphp
 
-                            <div class="card-header ">
+                            <div class="card-header {{ $allDelivered ? 'bg-green' : ' ' }}">
                                 <h2 class="mb-0">
 
-
-                                    <button class="btn btn-link "
-                                            type="button" data-toggle="collapse" data-target="#collapse{{ $courseClass->id }}"
-                                            aria-expanded="false" aria-controls="collapse{{ $courseClass->id }}">
-                                        {{ $courseClass->description }}
-                                    </button>
+                                <button class="btn btn-link tabOpeningBtn"
+                                        type="button" data-toggle="collapse" data-target="#collapse{{ $courseClass->id }}"
+                                        aria-expanded="false" aria-controls="collapse{{ $courseClass->id }}">
+                                    {{ $courseClass->description }}
+                                </button>
                                 </h2>
                             </div>
                             <div id="collapse{{ $courseClass->id }}" class="collapse"
@@ -98,26 +105,25 @@
                                             <thead>
                                             <tr >
                                                 <th>Nome</th>
-                                                <th>Username</th>
-                                                <th>Email</th>
+                                                <th>Número Interno</th>
                                                 <th>Editar</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr class="filler"></tr>
                                             @foreach ($courseClass->students as $student)
-                                                <tr class="customTableStyling {{ $usersWithMaterialsDelivered->contains($student->id) ? 'bg-blue' : '' }}">
+                                                <tr class="customTableStyling {{ $usersWithMaterialsDelivered->contains($student->id) ? 'bg-green' : '' }}">
                                                     @php
-                                                        $allDelivered = $usersWithMaterialsDelivered->contains($student->id) ? 'bg-blue' : '';
+                                                        $allDelivered = $usersWithMaterialsDelivered->contains($student->id) ? 'bg-green' : '';
                                                     @endphp
-                                                    <td class="clickable {{ $allDelivered }}">
+                                                    <td class="clickable {{ $allDelivered }} mobileOverflow">
                                                         <a href="{{ route('material-user.create', $student->id) }}"
-                                                           class="d-flex align-items-center w-auto h-100">{{ $student->name }}</a>
+                                                           class="d-flex align-items-center w-auto h-100 studentName">{{ $student->name }}</a>
                                                     </td>
                                                     <td class="{{ $allDelivered }}">{{ $student->username }}</td>
-                                                    <td class="{{ $allDelivered }}">{{ $student->email }}</td>
+                                                    <td class="{{ $allDelivered }} mobileHidden">{{ $student->email }}</td>
                                                     <td class="editDelete {{ $allDelivered }}">
-                                                        <div style="width: 40%">
+                                                        <div style="width: 40%" class="editBtn">
                                                             <a href="{{ route('material-user.edit', $student->id) }}"
                                                                class="mx-2 ">
                                                                <i class="fa-solid fa-pen-to-square fa-lg" style="color: #116fdc;"></i>
@@ -143,7 +149,7 @@
             </div>
 
 
-            <div class="tab-pane fade" id="outros">
+            <div class="tab-pane fade" id="funcionarios">
                 <div class="w-100 d-flex justify-content-between align-items-center mb-3" style="gap: 1rem">
 
                     <form action="{{ route('material-user.index') }}" method="GET">
@@ -161,7 +167,7 @@
                     </form>
 
 
-                    <form id="roleFilterForm" action="{{ route('material-user.index') }}" method="GET">
+                    <form id="roleFilterForm" action="{{ route('material-user.index') }}" method="GET" class="mobileHidden">
                         <div>
                             <select class="form-control" id="roleFilter" name="roleFilter" onchange="submitFormRoles()">
                                 <option value="">Todos</option>
@@ -180,25 +186,24 @@
                     <tr>
                         <th>Nome</th>
                         <th>Username</th>
-                        <th>Email</th>
                         <th>Editar</th>
                     </tr>
                     </thead>
                     <tbody class="customTableStyling">
                     @foreach ($nonDocents as $nonDocent)
 
-                        <tr class="{{ $usersWithMaterialsDelivered->contains($nonDocent->id) ? 'bg-blue' : '' }}">
+                        <tr class="{{ $usersWithMaterialsDelivered->contains($nonDocent->id) ? 'bg-green' : '' }}">
 
-                            <td class="clickable ">
+                            <td class="clickable mobileOverflow">
                                 <a href="{{ route('material-user.create', $nonDocent->id) }}"
                                    class="d-flex align-items-center w-auto h-100">{{ $nonDocent->name }}</a>
                             </td>
                             @php
-                                $allDelivered = $usersWithMaterialsDelivered->contains($nonDocent->id) ? 'bg-blue' : '';
+                                $allDelivered = $usersWithMaterialsDelivered->contains($nonDocent->id) ? 'bg-green' : '';
                             @endphp
                             <td class="{{ $allDelivered }}">{{ $nonDocent->username }}</td>
-                            <td class="{{ $allDelivered }}">{{ $nonDocent->email }}</td>
-                            <td>
+                            <td class="{{ $allDelivered }} mobileHidden">{{ $nonDocent->email }}</td>
+                            <td class="editBtn">
                                 <a href="{{ route('material-user.edit', $nonDocent->id) }}" class="mx-2">
                                     <i class="fa-solid fa-pen-to-square fa-lg" style="color: #116fdc;"></i>
                                 </a>
@@ -245,21 +250,57 @@
     <script>
         //save tab in localstorage
         $(document).ready(function () {
-            let activeTab = localStorage.getItem('activeTab');
-            if (activeTab) {
-                $('#myTabs a[href="' + activeTab + '"]').tab('show');
+            function determineContext() {
+                return 'pagination';
             }
 
-            $('a[data-toggle="tab"]').on('click', function (e) {
-                localStorage.setItem('activeTab', $(this).attr('href'));
+            function getFragment() {
+                return window.location.hash.substring(1);
+            }
+
+            function setFragment(fragment) {
+                history.pushState(null, null, '#' + fragment);
+            }
+
+            function setActiveTab(tabId) {
+                $(`#myTabs a[href="#${tabId}"]`).tab('show');
+            }
+
+            const pageName = window.location.pathname.split('/').pop();
+            const activeTabInfo = localStorage.getItem(`activeTabInfo_${pageName}`);
+
+            if (activeTabInfo) {
+                const {tabId, context} = JSON.parse(activeTabInfo);
+                setActiveTab(tabId);
+                setFragment(tabId);
+            }
+
+            $('#myTabs a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+                const tabId = $(e.target).attr('href').substring(1);
+                const context = determineContext();
+
+                const activeTabInfo = JSON.stringify({tabId, context});
+                localStorage.setItem(`activeTabInfo_${pageName}`, activeTabInfo);
+
+                setFragment(tabId);
+            });
+
+            window.addEventListener('hashchange', function () {
+                const fragment = getFragment();
+                setActiveTab(fragment);
+            });
+
+            window.addEventListener('beforeunload', function () {
+                history.pushState("", document.title, window.location.pathname + window.location.search);
             });
         });
+
     </script>
 
 
     <style>
-        .bg-blue {
-            background-color: rgba(54, 162, 235, 0.3);
+        .bg-green {
+            background-color: rgba(119, 229, 141, 0.2);
         }
 
         #accordion .card {
@@ -275,3 +316,8 @@
         }
     </style>
 @endsection
+@push('scripts')
+    <script src="{{ asset('js/courses/index.js') }}"></script>
+    <script src="{{ asset('js/userOnboarding/intro.js') }}"></script>
+    <script src="{{ asset('js/userOnboarding/material-user.js') }}"></script>
+@endpush

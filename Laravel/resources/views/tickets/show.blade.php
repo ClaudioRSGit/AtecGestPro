@@ -59,11 +59,11 @@
                             </div>
                         </div>
                         <div class="mb-3">
-                            @if ($ticket->attachment !== 'Sem Anexo')
+                            @if ($ticket->attachment == 'Sem Anexo' || $ticket->attachment == null || $ticket->attachment == '')
+                                <p>Não existe anexo.</p>
+                            @else
                                 <label for="attachment" class="form-label">Anexo:</label>
                                 <a href="{{ asset('storage/' . $ticket->attachment) }}" target="_blank">Abrir anexo</a>
-                            @else
-                                <p>Não existe anexo.</p>
                             @endif
                         </div>
                         <div class="mb-3">

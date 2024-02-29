@@ -69,8 +69,8 @@
 
 
 
-                    <div class="d-flex flex-row">
-                        <div class="flex-column">
+                    <div class="d-flex sizesQuantitiesCourses">
+                        <div class="flex-column sizesQuantities">
                             <div class="mb-3">
                                 <p class="form-label font-weight-bold">Tamanho e stock: </p>
                             </div>
@@ -78,7 +78,7 @@
                                 <div class="d-flex flex-column">
                                     @foreach($sizesAll as $sizeAll)
                                     @if(in_array($sizeAll->id, $material->sizes->pluck('id')->toArray()))
-                                    <div class="d-flex justify-content-between align-items-center mb-2 px-5">
+                                    <div class="d-flex justify-content-between align-items-center mb-2 px-4">
                                         <div class="form-check">
                                             <input disabled onchange="toggleFieldsQuantity()" class="form-check-input size-checkbox" type="checkbox" name="sizes[]"
                                             value="{{ $sizeAll->id }}" checked>
@@ -102,17 +102,28 @@
                             </div>
                             <div class="mb-3 ml-4" id="role">
                                 <div class="d-flex flex-column scrollable-column">
+                                    @php
+                                        $hasCourses = false;
+                                    @endphp
+
                                     @foreach($coursesAll as $courseAll)
                                         @if(in_array($courseAll->id, $material->courses->pluck('id')->toArray()))
+                                            @php
+                                                $hasCourses = true;
+                                            @endphp
                                             <div class="form-check">
                                                 <input disabled class="form-check-input" type="checkbox" name="courses[]"
-                                                       value="{{ $courseAll->id }}" checked>
+                                                    value="{{ $courseAll->id }}" checked>
                                                 <label class="form-check-label" for="course{{ $courseAll->id }}">
                                                     {{ $courseAll->code }}
                                                 </label>
                                             </div>
                                         @endif
                                     @endforeach
+
+                                    @if(!$hasCourses)
+                                        <p>Sem curso</p>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -128,8 +139,8 @@
 
             </div>
         </div>
-        <a href="{{ route('materials.index') }}" class="btn btn-secondary">Voltar</a>
         <a href="{{ route('materials.edit', $material->id) }}" class="btn btn-primary">Editar</a>
+        <a href="{{ route('materials.index') }}" class="btn btn-secondary">Voltar</a>
     </div>
 
     <style>

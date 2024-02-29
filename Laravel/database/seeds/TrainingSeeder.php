@@ -22,7 +22,7 @@ class TrainingSeeder extends Seeder
         DB::table('trainings')->insert([
             'name' => 'Mecânica de Fluidos',
             'description' => 'Mecânica de Fluidos',
-            'category' => 'Mecanica',
+            'category' => 'Mecânica',
         ]);
 
         // Seed 3
@@ -41,9 +41,9 @@ class TrainingSeeder extends Seeder
 
         // Seed 5
         DB::table('trainings')->insert([
-            'name' => 'Higiene e Segurança - Mecanica',
-            'description' => 'Higiene e Segurança - Mecanica',
-            'category' => 'Higiene e Segurança',
+            'name' => 'Pneumática',
+            'description' => 'Sistemas Pneumáticos',
+            'category' => 'Sistemas Pneumáticos',
         ]);
     }
 }

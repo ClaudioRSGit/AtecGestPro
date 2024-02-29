@@ -34,7 +34,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="username" class="form-label">Username:</label>
+                        <label for="username" class="form-label">Número Interno:</label>
                         <input type="text" class="form-control" id="username" name="username"
                             value="{{ $user->username }}">
 
@@ -77,7 +77,7 @@
 
 
                 @if (Auth::user()->hasRole('admin'))
-                    <div class="col-md-6">
+                    <div class="col-md-6 mb-3">
                         <div class="mb-3">
                             <label for="role_id" class="form-label">Função:</label>
                             <select class="form-control" id="role_id" name="role_id" onchange="toggleCourseClassDiv()">
@@ -116,13 +116,13 @@
                             </select>
                         </div>
                     </div>
-                    <div class="buttons d-flex justify-content-start align-items-center">
+                    <div class="d-flex justify-content-start align-items-center mb-3" style="gap: 1rem;">
                         <button type="submit" class="btn btn-primary">Salvar Alterações</button>
                         <a href="{{ route('users.index') }}" class="btn btn-secondary">Cancelar</a>
                         <button type="submit" form="deleteForm" class="btn btn-danger">Excluir</button>
                     </div>
                 @else
-                    <div class="buttons d-flex justify-content-start align-items-center pt-3">
+                    <div class="d-flex justify-content-start align-items-center pt-3 mb-3" style="gap: 1rem;">
                         <button type="submit" class="btn btn-primary">Salvar Alterações</button>
                         <a href="{{ route('users.index') }}" class="btn btn-secondary">Cancelar</a>
                         <button type="submit" form="deleteForm" class="btn btn-danger">Excluir</button>
@@ -136,14 +136,6 @@
         @csrf
         @method('DELETE')
     </form>
-
-
-    <style>
-        .buttons {
-            width: 100%;
-            gap: 1rem;
-        }
-    </style>
 @endsection
 @push('scripts')
     <script src="{{ asset('js/users/edit.js') }}"></script>

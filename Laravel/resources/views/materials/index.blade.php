@@ -2,12 +2,14 @@
 
 @section('content')
     <div class="container  w-100 fade-in">
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="mb-4 position-relative materialsTitle">
             <h1>Lista de Materiais</h1>
+
             <a href="{{ route('materials.create') }}" class="btn btn-primary">
                 <i class="fa-solid fa-pen mr-1" style="color: #ffffff;"></i>
                 Novo Material
             </a>
+            <img src="{{ asset('assets/questionMark.png') }}" onclick="event.stopPropagation(); changeUserTab(); triggerMaterialIntro();" class="questionMarkBtn">
         </div>
 
         @if (session('success'))
@@ -16,23 +18,22 @@
             </div>
         @endif
 
-
         <ul class="nav nav-tabs mb-3" id="userTabs">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#allMaterialsTable">Todos</a>
+                <a class="nav-link active" data-toggle="tab" href="#materiais">Todos</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#recycleMaterialsTable">Reciclagem</a>
+                <a class="nav-link" data-toggle="tab" href="#reciclagem_materiais">Reciclagem</a>
             </li>
         </ul>
 
         <div class="tab-content">
-            <div id="allMaterialsTable" class="tab-pane fade show active">
+            <div id="materiais" class="tab-pane fade show active">
 
-                <div class="d-flex justify-content-between mb-3 w-100">
-                    <div class="d-flex justify-content-between w-40">
+                <div class="d-flex justify-content-between mb-3 w-100 materialsTableFilters">
+                    <div class="d-flex justify-content-between">
 
-                        <form action="{{ route('materials.index') }}" method="GET">
+                        <form action="{{ route('materials.index') }}" method="GET" class="materials-searchBar">
                             <div class="input-group pr-2">
                                 <div class="search-container">
                                     <input type="text" name="search" class="form-control"
@@ -82,7 +83,7 @@
                         <table class="table bg-white rounded-top">
                             <thead>
                                 <tr>
-                                    <th scope="col">
+                                    <th scope="col" class="mobileHidden">
                                         <input type="checkbox" id="select-all">
                                     </th>
                                     <th scope="col">
@@ -99,7 +100,7 @@
                                     <th scope="col">
                                         Quantidade
                                     </th>
-                                    <th scope="col">
+                                    <th scope="col" class="mobileHidden">
                                         <a
                                             href="{{ route('materials.index', ['sortColumn' => 'acquisition_date', 'sortDirection' => $sortColumn === 'acquisition_date' ? ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">
                                             Data de Aquisição
@@ -110,7 +111,7 @@
                                             @endif
                                         </a>
                                     </th>
-                                    <th scope="col">Fornecedor</th>
+                                    <th scope="col" class="mobileHidden">Fornecedor</th>
                                     <th scope="col">Género</th>
                                     <th scope="col">
                                         <div class="centerTd">Ações</div>
@@ -120,12 +121,12 @@
                             <tbody>
                                 <tr class="filler"></tr>
                                 @foreach ($materials as $material)
-                                    <tr class="material-row customTableStyling" data-internal="{{ $material->isInternal }}"
+                                    <tr class="customTableStyling materialTableRow" data-internal="{{ $material->isInternal }}"
                                         data-clothing="{{ $material->isClothing }}">
-                                        <td>
+                                        <td class="mobileHidden">
                                             <input type="checkbox" name="selectedMaterials[]" value="{{ $material->id }}">
                                         </td>
-                                        <td class="clickable">
+                                        <td class="clickable material-name">
                                             <a href="{{ route('materials.show', $material->id) }}"
                                                 class="d-flex align-items-center w-auto h-100">{{ isset($material->name) ? $material->name : 'N.A.' }}</a>
                                         </td>
@@ -183,12 +184,12 @@
                                             @endif
                                         </td>
 
-                                        <td>
+                                        <td class="mobileHidden">
                                             {{ isset($material->acquisition_date) ? \Carbon\Carbon::parse($material->acquisition_date)->format('Y-m-d') : 'N.A.' }}
                                         </td>
 
 
-                                        <td>
+                                        <td class="mobileHidden">
                                             @if ($material->supplier !== '' && $material->supplier !== null)
                                                 {{ $material->supplier }}
                                             @else
@@ -244,9 +245,9 @@
             </div>
 
 
-            <div id="recycleMaterialsTable" class="tab-pane fade">
-                <div class="d-flex justify-content-between mb-3 w-100">
-                    <div class="d-flex justify-content-between w-40">
+            <div id="reciclagem_materiais" class="tab-pane fade">
+                <div class="d-flex justify-content-between mb-3 w-100 materialsTableFilters">
+                    <div class="d-flex justify-content-between">
 
                         <form action="{{ route('materials.index') }}" method="GET">
                             <div class="input-group pr-2">
@@ -304,7 +305,7 @@
                         <table class="table bg-white rounded-top">
                             <thead>
                                 <tr>
-                                    <th scope="col">
+                                    <th scope="col" class="mobileHidden">
                                         <input type="checkbox" id="recycledSelect-all">
                                     </th>
                                     <th scope="col">
@@ -318,10 +319,10 @@
                                             @endif
                                         </a>
                                     </th>
-                                    <th scope="col">
+                                    <th scope="col" class="mobileHidden">
                                         Quantidade
                                     </th>
-                                    <th scope="col">
+                                    <th scope="col" class="mobileHidden">
                                         <a
                                             href="{{ route('materials.index', ['sortColumn' => 'acquisition_date', 'sortDirection' => $sortColumn === 'acquisition_date' ? ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">
                                             Data de Aquisição
@@ -332,7 +333,7 @@
                                             @endif
                                         </a>
                                     </th>
-                                    <th scope="col">Fornecedor</th>
+                                    <th scope="col" class="mobileHidden">Fornecedor</th>
                                     <th scope="col">Género</th>
 
                                     <th scope="col">
@@ -348,16 +349,16 @@
                             <tbody>
                                 <tr class="filler">
                                     @foreach ($recycleMaterials as $material)
-                                <tr class="material-row customTableStyling" data-internal="{{ $material->isInternal }}"
+                                <tr class="customTableStyling materialTableRow" data-internal="{{ $material->isInternal }}"
                                     data-clothing="{{ $material->isClothing }}">
-                                    <td>
+                                    <td class="mobileHidden">
                                         <input type="checkbox" name="selecteRecycledMaterials[]"
                                             value="{{ $material->id }}">
                                     </td>
                                     <td>
                                         <p>{{ isset($material->name) ? $material->name : 'N.A.' }}</p>
                                     </td>
-                                    <td>
+                                    <td class="mobileHidden">
                                         @if ($material->isClothing == 1)
                                             {{ $material->sizes->sum('pivot.stock') }}
                                         @else
@@ -365,10 +366,10 @@
                                         @endif
                                     </td>
 
-                                    <td>
+                                    <td class="mobileHidden">
                                         {{ isset($material->acquisition_date) ? \Carbon\Carbon::parse($material->acquisition_date)->format('Y-m-d') : 'N.A.' }}
                                     </td>
-                                    <td>{{ $material->supplier !== null ? $material->supplier : 'N.A.' }}</td>
+                                    <td class="mobileHidden">{{ $material->supplier !== null ? $material->supplier : 'N.A.' }}</td>
 
                                     <td>
                                         @if ($material->isClothing === 0)
@@ -492,13 +493,11 @@
                     $(`#userTabs a[href="#${tabId}"]`).tab('show');
                 }
 
-                const activeTabInfo = localStorage.getItem('activeTabInfo');
+                const pageName = window.location.pathname.split('/').pop();
+                const activeTabInfo = localStorage.getItem(`activeTabInfo_${pageName}`);
 
                 if (activeTabInfo) {
-                    const {
-                        tabId,
-                        context
-                    } = JSON.parse(activeTabInfo);
+                    const {tabId, context} = JSON.parse(activeTabInfo);
                     setActiveTab(tabId);
                     setFragment(tabId);
                 }
@@ -507,11 +506,8 @@
                     const tabId = $(e.target).attr('href').substring(1);
                     const context = determineContext();
 
-                    const activeTabInfo = JSON.stringify({
-                        tabId,
-                        context
-                    });
-                    localStorage.setItem('activeTabInfo', activeTabInfo);
+                    const activeTabInfo = JSON.stringify({tabId, context});
+                    localStorage.setItem(`activeTabInfo_${pageName}`, activeTabInfo);
 
                     setFragment(tabId);
                 });
@@ -523,10 +519,9 @@
 
                 window.addEventListener('beforeunload', function() {
                     history.pushState("", document.title, window.location.pathname + window.location.search);
-                    localStorage.removeItem('activeTabInfo'); // Add this line
-
                 });
             });
+
         </script>
         <script>
             window.setTimeout(function() {
@@ -727,3 +722,7 @@
             });
         </script>
     @endsection
+    @push('scripts')
+    <script src="{{ asset('js/userOnboarding/intro.js') }}"></script>
+    <script src="{{ asset('js/userOnboarding/materialIntro.js') }}"></script>
+    @endpush

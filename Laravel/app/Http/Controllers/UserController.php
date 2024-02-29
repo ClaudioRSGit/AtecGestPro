@@ -138,44 +138,40 @@ class UserController extends Controller
         try {
             $data = $request->validated();
 
-            if ($user->role_id === 3 && $request->input('role_id') !== 3 && !$request->filled('password')) {
+            if ($user->role_id == 3 && $request->input('role_id') != 3 && !$request->filled('password')) {
                 return redirect()->back()->with('error', 'Password obrigatória ao alterar de Formando para outra função.');
             }
 
-            if ($user->role_id !== 3 && !$request->filled('password')) {
+            if ($user->role_id != 3 && !$request->filled('password')) {
                 unset($data['password']);
             }
 
-            if ($user->role_id !== 3 && $request->input('role_id') === 3) {
+            if ($user->role_id != 3 && $request->input('role_id') == 3) {
                 $data['password'] = null;
             }
 
-            if ($request->input('isStudent') !== 1) {
+            if ($request->input('isStudent') != 1) {
                 $data['course_class_id'] = null;
             }
 
-            if ($request->filled('password') && $request->input('role_id') !== 3) {
+            if ($request->filled('password') && $request->input('role_id') != 3) {
                 $data['password'] = $this->encryptPassword($request->input('password'));
             }
 
             if (auth()->user()->hasRole('admin')) {
-                if ($user->hasRole('admin') && $request->input('role_id') !== 1) {
-                    return redirect()->back()->with('error', 'O administrador não pode alterar a sua própria função!');
+                if ($user->hasRole('admin') && $request->input('role_id') != 1 && $user->id == auth()->user()->id) {
+                    return redirect()->back()->with('error', 'O administrador não pode alterar sua própria função!');
                 }
             }
-            if ($user->id === auth()->user()->id && $request->input('isActive') === 0) {
+
+            if ($user->id == auth()->user()->id && $request->input('isActive') === 0) {
                 return redirect()->back()->with('error', 'Não é possível desativar a sua própria conta!');
             }
 
             $user->update($data);
 
-            if ($user->hasRole('funcionario')) {
-                return redirect()->route('master.main')->with('success', 'Utilizador atualizado com sucesso!');
-            } elseif (auth()->user()->role_id == 1 && $request->input('role_id') == 2) {
-                return redirect()->route('master.main')->with('success', 'Utilizador atualizado com sucesso!');
-            } else {
-                return redirect()->route('users.index')->with('success', 'Utilizador atualizado com sucesso!');
-            }
+            return redirect()->route('users.index')->with('success', 'Utilizador atualizado com sucesso!');
+            
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Erro ao atualizar o utilizador.Por favor tente novamente!');
         }

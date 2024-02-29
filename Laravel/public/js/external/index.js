@@ -3,8 +3,6 @@ $(document).ready(function () {
         return 'pagination';
     }
 
-
-
     function getFragment() {
         return window.location.hash.substring(1);
     }
@@ -17,10 +15,11 @@ $(document).ready(function () {
         $(`#myTabs a[href="#${tabId}"]`).tab('show');
     }
 
-    const activeTabInfo = localStorage.getItem('activeTabInfo');
+    const pageName = window.location.pathname.split('/').pop();
+    const activeTabInfo = localStorage.getItem(`activeTabInfo_${pageName}`);
 
     if (activeTabInfo) {
-        const { tabId, context } = JSON.parse(activeTabInfo);
+        const {tabId, context} = JSON.parse(activeTabInfo);
         setActiveTab(tabId);
         setFragment(tabId);
     }
@@ -29,12 +28,10 @@ $(document).ready(function () {
         const tabId = $(e.target).attr('href').substring(1);
         const context = determineContext();
 
-        const activeTabInfo = JSON.stringify({ tabId, context });
-        localStorage.setItem('activeTabInfo', activeTabInfo);
+        const activeTabInfo = JSON.stringify({tabId, context});
+        localStorage.setItem(`activeTabInfo_${pageName}`, activeTabInfo);
 
         setFragment(tabId);
-
-
     });
 
     window.addEventListener('hashchange', function () {
@@ -44,10 +41,16 @@ $(document).ready(function () {
 
     window.addEventListener('beforeunload', function () {
         history.pushState("", document.title, window.location.pathname + window.location.search);
-        localStorage.removeItem('activeTabInfo'); // Add this line
-
     });
 });
+
+$(document).ready(function() {
+    $('.filteredPtus').on('click', function(e) {
+        e.preventDefault();
+        $('#myTabs a[href="#formacoes_externas"]').tab('show');
+    });
+});
+
 $(document).ready(function() {
 $('.viewPartnersForm').on('submit', function(e) {
     e.preventDefault();
@@ -58,7 +61,6 @@ $('.viewPartnersForm').on('submit', function(e) {
 });
 document.addEventListener('DOMContentLoaded', function () {
     let deleteButtons = document.querySelectorAll('button[class="modalBtn"]');
-    console.log('asd');
     deleteButtons.forEach(button => {
         button.addEventListener('click', function (event) {
             event.preventDefault();

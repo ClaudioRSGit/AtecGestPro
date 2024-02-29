@@ -31,6 +31,7 @@ class TicketEmail extends Mailable
      */
     public function build()
     {
+//        dd($this->ticket->requester->email);
         return $this->subject('Alerta de Ticket criado')
             ->view('emails.ticketEmail');
     }

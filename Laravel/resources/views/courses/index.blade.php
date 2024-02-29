@@ -15,11 +15,12 @@
             </div>
         @endif
 
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1>Lista de Cursos</h1>
-            <a href="{{ route('courses.create') }}" class="btn btn-primary">
+        <div class="d-flex justify-content-between align-items-center mb-4 position-relative">
+            <h1>Cursos</h1>
+            <a href="{{ route('courses.create') }}" class="btn btn-primary newCourse">
                 <i class="fa-solid fa-pen mr-1" style="color: #ffffff;"></i> Novo Curso
             </a>
+            <img src="{{ asset('assets/questionMark.png') }}" onclick="event.stopPropagation(); triggerCoursesIntro();" class="questionMarkBtn">
         </div>
 
         <div class="d-flex justify-content-between mb-3">
@@ -74,7 +75,7 @@
                         <a href="{{ route('courses.show', $course->id) }}"
                            class="d-flex align-items-center w-auto h-100">{{ $course->code }}</a>
                     </td>
-                    <td class="clickable" style="width: 85%">
+                    <td class="clickable mobileOverflow" style="width: 85%">
                         <a href="{{ route('courses.show', $course->id) }}"
                             class="d-flex align-items-center w-auto h-100">{{ $course->description }}</a>
                     </td>
@@ -131,4 +132,6 @@
 @endsection
 @push('scripts')
     <script src="{{ asset('js/courses/index.js') }}"></script>
+    <script src="{{ asset('js/userOnboarding/intro.js') }}"></script>
+    <script src="{{ asset('js/userOnboarding/courses.js') }}"></script>
 @endpush

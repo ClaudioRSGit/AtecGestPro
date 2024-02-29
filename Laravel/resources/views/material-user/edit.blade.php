@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="container w-100 fade-in">
+    <div class="container w-100 fade-in materialUserEditContent">
         <div>
 
             @if (session('message'))
@@ -19,20 +19,19 @@
 
 
             <div class="row">
-                <div class="col-8 d-flex">
+                <div class="col-8 d-flex justify-content-between materialUserCreateTitle">
                     <h3>Editar entregas </h3>
-                    <p class="mt-2 ml-2 font-weight-bold"> - {{ ucfirst($user->role->name) }} : {{ $user->name }} </p>
+                    <p class="mt-2 ml-2 font-weight-bold"> {{ ucfirst($user->role->name) }} : {{ $user->name }} </p>
 
-{{--                    <p class="">- {{$user->name}}</p>--}}
                 </div>
-                <div class="col-4">
+                <div class="col-4 mobileHidden">
                     <h3>Editar notas</h3>
                 </div>
 
 
             </div>
             <hr>
-            <div class="row">
+            <div class="row materialUserEditContent">
 
 
                 <div class="col-7 materials px-3 shadow  " >
@@ -41,10 +40,11 @@
                         <tr>
                             <th scope="col">
                                 <input type="checkbox" id="select-all">
-                            <th scope="col">Materiais entregues</th>
+                            <th scope="col">Material</th>
+                            <th scope="col" class="mobileHidden">Género</th>
                             <th scope="col">Tamanho</th>
                             <th scope="col">Quantidade</th>
-                            <th scope="col">Data de entrega</th>
+                            <th scope="col" class="mobileHidden">Data de entrega</th>
                             <th scope="col">Ações</th>
                         </tr>
                         </thead>
@@ -56,7 +56,7 @@
                             </tr>
                         @else
                             @foreach($materialUsers as $entrega)
-                                <tr>
+                                <tr class="material-edit-row">
                                     <td>
                                         <input type="checkbox" name="selectedMaterials[]" value="{{$entrega->id}}">
                                     </td>
@@ -64,13 +64,18 @@
                                     <td>
                                         {{$entrega->material->name}}
                                     </td>
+                                    <td class="mobileHidden">
+                                        <a>
+                                            {{ isset($entrega->material->gender) ? ($entrega->material->gender == 1 ? 'Masculino' : 'Feminino') : 'N.A.' }}
+                                        </a>
+                                    </td>
                                     <td>
                                         {{$entrega->size->size}}
                                     </td>
                                     <td>
                                         {{$entrega->quantity}}
                                     </td>
-                                    <td>
+                                    <td class="mobileHidden">
                                         {{$entrega->delivery_date}}
                                     </td>
                                     <td class="pl-4">
@@ -80,7 +85,7 @@
                                             <button type="submit"
                                                     data-message="Tem a certeza que deseja excluir a entrega de {{$entrega->material->name}}? O stock não vai ser atualizado!"
                                                     style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
-                                                    <i class="fa-solid fa-trash-can fa-lg" style="color: #116fdc;"></i>
+                                                <i class="fa-solid fa-trash-can fa-lg" style="color: #116fdc;"></i>
                                             </button>
                                         </form>
                                     </td>
@@ -113,64 +118,34 @@
                     </div>
                 </div>
                 <div class="col-1"></div>
-                <div class="col-4 p-3 shadow" style="height: 400px; overflow-y: auto;">
+                <div class="col-4" style="height: 28rem;">
 
+                    <div class="p-3 shadow mb-3 notes" style="height: 28rem; overflow-y: auto;">
 
-
-                    <div class=" p-2 mb-4" >
-                        @if($user->notes)
-                            <p>{!! nl2br(e($user->notes)) !!}</p>
-                        @else
-                            <p class="pb-5">Não existe nenhuma nota</p>
-                        @endif
-                    </div>
-
-
-
-
-                </div>
-            </div>
-
-            <div class="row mt-3">
-                <div class="col-7 pr-0">
-                    <div>
-
-                        <div class="row">
-                            <div class="col-6 ">
-                                <a href="{{ route('material-user.index') }}" class="btn btn-secondary mr-2">Voltar</a>
-                              <button id="delete-selected" class="btn btn-danger" >Excluir selecionados</button>
-                            </div>
-                            <div class="col-6 align-content-end text-right pr-0">
-                                <form id="allDelivered" action="{{ route('material-user.addDeliveredAll') }}" method="POST"
-                                      style="display:inline">
-                                    @csrf
-                                    <input type="hidden" name="user_id" value="{{$user->id}}">
-                                    <button type="submit" form="allDelivered" class="btn btn-primary" data-message="Deseja marcar a entrega de fardamento como entregue na totalidade?">Finalizar entrega</button>
-                                </form>
-                                <form id="partialDelivered" action="{{ route('material-user.addDeliveredPartial') }}" method="POST"
-                                      style="display:inline">
-                                    @csrf
-                                    <input type="hidden" name="user_id" value="{{$user->id}}">
-                                    <button type="submit" form="partialDelivered" class="btn btn-primary " data-message="Deseja marcar a entrega de fardamento como entregue parcialmente?">Entrega parcial</button>
-                                </form>
-                            </div>
+                        <div class=" p-2 mb-4" >
+                            @if($user->notes)
+                                <p>{!! nl2br(e($user->notes)) !!}</p>
+                            @else
+                                <p class="pb-5">Não existe nenhuma nota</p>
+                            @endif
                         </div>
 
 
-
-
                     </div>
+                    <div>
+                        <div class="w-100 d-flex justify-content-between mb-5">
+                            <div class="col-6">
+                                <button type="button" class="btn btn-primary w-100" data-toggle="modal" data-target="#addNoteModal">
+                                    Adicionar nota
+                                </button>
+                            </div>
 
-                </div>
-                <div class="col-1"></div>
-                <div class="col-4">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNoteModal">
-                        Adicionar nota
-                    </button>
-
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editNoteModal">
-                        Editar nota
-                    </button>
+                            <div class="col-6 pr-0">
+                                <button type="button" class="btn btn-primary w-100" data-toggle="modal" data-target="#editNoteModal">
+                                    Editar nota
+                                </button>
+                            </div>
+                        </div>
 
 
                     <div class="modal fade" id="editNoteModal" tabindex="-1" role="dialog"
@@ -191,7 +166,7 @@
                                         <div class="form-group">
                                             <label for="note">Nota</label>
                                             <textarea class="form-control" id="note" name="note"
-                                                      rows="5">{{$user->notes}}</textarea>
+                                            rows="5">{{$user->notes}}</textarea>
                                         </div>
                                     </div>
                                     <div class="modal-footer">
@@ -205,14 +180,15 @@
                     </div>
 
 
+
                     <div class="modal fade" id="addNoteModal" tabindex="-1" role="dialog"
                          aria-labelledby="addNoteModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="addNoteModalLabel">Adicionar nota</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
+                         <div class="modal-dialog" role="document">
+                             <div class="modal-content">
+                                 <div class="modal-header">
+                                     <h5 class="modal-title" id="addNoteModalLabel">Adicionar nota</h5>
+                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                 </div>
                                 <form action="{{ route('material-user.addNote') }}" method="POST">
@@ -235,6 +211,46 @@
                     </div>
 
                 </div>
+
+
+                </div>
+
+
+
+            </div>
+
+            <div class="row mt-3 materialUserSubmit">
+                <div class="col-7 pr-0">
+                    <div>
+
+                        <div class="row">
+                            <div class="col-6 d-flex flex-column">
+                                <a href="{{ route('material-user.index') }}" class="btn btn-secondary w-100 mr-2 mb-3">Voltar</a>
+                                <button id="delete-selected" class="btn btn-danger w-100 mb-3">Excluir selecionados</button>
+                            </div>
+                            <div class="col-6 align-content-end text-right pr-0">
+                                <form id="allDelivered" class="w-50" action="{{ route('material-user.addDeliveredAll') }}" method="POST"
+                                      style="display:inline">
+                                    @csrf
+                                    <input type="hidden" name="user_id" value="{{$user->id}}">
+                                    <button type="submit" form="allDelivered" class="btn btn-primary mb-3 w-100" data-message="Deseja marcar a entrega de fardamento como entregue na totalidade?">Finalizar entrega</button>
+                                </form>
+                                <form id="partialDelivered" class="w-50" action="{{ route('material-user.addDeliveredPartial') }}" method="POST"
+                                      style="display:inline">
+                                    @csrf
+                                    <input type="hidden" name="user_id" value="{{$user->id}}">
+                                    <button type="submit" form="partialDelivered" class="btn btn-primary w-100 mb-3" data-message="Deseja marcar a entrega de fardamento como entregue parcialmente?">Entrega parcial</button>
+                                </form>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+
+                </div>
+                <div class="col-1"></div>
 
 
             </div>
@@ -290,7 +306,7 @@
     <style>
         .materials {
             align-self: start;
-            height: 25rem;
+            height: 28rem;
             overflow: scroll;
         }
 

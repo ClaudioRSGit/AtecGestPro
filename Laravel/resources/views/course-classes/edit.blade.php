@@ -7,7 +7,7 @@
             @csrf
             @method('put')
 
-            <div class="row">
+            <div class="row courseClassEditInfo">
                 <div class="col-6">
                     <div class="form-group">
                         <label for="description">Descrição:</label>
@@ -39,7 +39,7 @@
             </div>
 
 
-            <div class="row my-3 ">
+            <div class="row my-3 courseClassEditStudents">
                 <div class="col-6 ">
                     <div class="form-group card ">
                         <label class="pl-2 pt-2 font-weight-bold" for="students">Remover alunos</label>
@@ -52,7 +52,7 @@
                                     <thead>
                                     <tr>
                                         <th>Nome</th>
-                                        <th>Username</th>
+                                        <th>Número Interno</th>
                                         <th class="center-checkbox">Remover</th>
                                     </tr>
                                     </thead>
@@ -86,7 +86,7 @@
                                     <thead>
                                     <tr>
                                         <th>Nome</th>
-                                        <th>Username</th>
+                                        <th>Número Interno</th>
                                         <th class="center-checkbox">Adicionar</th>
                                     </tr>
                                     </thead>
@@ -109,7 +109,7 @@
                 </div>
             </div>
 
-            <div class="btn">
+            <div class="btns">
                 <button type="submit" class="btn btn-primary">Atualizar Turma</button>
                 <a href="{{ route('course-classes.index') }}" class="btn btn-secondary">Cancelar</a>
             </div>

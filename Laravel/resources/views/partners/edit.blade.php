@@ -23,7 +23,7 @@
             <div class="alert alert-danger contact-alert">{{ $error[0] }}</div>
         @endforeach
 
-        <h1>Editar Parceiro</h1>
+        <h1>Editar Empresa</h1>
         <form method="post" action="{{ route('partners.update', $partner->id) }}">
 
             @csrf
@@ -31,8 +31,8 @@
 
             <div class="row">
                 <div class="col-md-6">
-                    <div class="mb-3">
-                        <label for="name" class="form-label">Parceiro:</label>
+                    <div class="my-3">
+                        <label for="name" class="form-label">Empresa:</label>
                         <input type="text" class="form-control" id="name" name="name"
                             value="{{ $partner->name }}">
 
@@ -61,12 +61,11 @@
                     </div>
                 </div>
 
-                <div class="col-md-6 pl-4">
+                <div class="col-md-6">
                     <div class="mb-3">
-                        <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
                             <label for="contacts" class="form-label">Contactos:</label>
-                            <button type="button" class="btn btn-primary" onclick="addContactFields()">Novo
-                                Contacto</button>
+                            <button type="button" class="btn btn-primary" onclick="addContactFields()">Novo Contacto</button>
                         </div>
                         <div id="contacts-container">
                             @foreach ($partner->contactPartner as $index => $contact)

@@ -48,12 +48,12 @@
 
             <div class="row">
                 <h3 class="my-3">Atribuir alunos à turma</h3>
-                <div class="d-flex justify-content-between w-100">
-                    <div class="form-group mr-3 w-25 search-container">
+                <div class="d-flex justify-content-between w-100 courseClassStudentsBtns">
+                    <div class="form-group mr-3 search-container">
                         <input type="text" id="search" class="form-control w-100" placeholder="Pesquisar Aluno">
                     </div>
-                    <div class="form-group w-25">
-                        <a href="{{ route('users.create') }}" class="btn btn-primary w-100">
+                    <div class="form-group">
+                        <a href="{{ route('users.create') }}" class="btn btn-primary w-100 d-flex justify-content-center align-items-center">
                             <i class="fa-solid fa-pen mr-1" style="color: #ffffff;"></i>
                             Novo Aluno
                         </a>
@@ -65,7 +65,7 @@
                         <tr>
                             <th><input type="checkbox" id="select-all"></th>
                             <th>Nome</th>
-                            <th>Username</th>
+                            <th>Número Interno</th>
                             <th>Email</th>
                         </tr>
                         </thead>
@@ -83,7 +83,7 @@
                 </div>
             </div>
 
-            <div class="row mt-3 ">
+            <div class="row mt-3 courseClassCreateSubmit">
                 <button type="submit" class="btn btn-primary mr-2 modalBtn"
                         data-message="Tem a certeza que pretende criar turma sem alunos?" name="noImport"
                         id="criarTurmaBtn">Criar Turma
@@ -138,6 +138,7 @@
                                 <label for="file" class="btn btn-primary">Selecionar ficheiro</label><br>
                                 <input type="file" name="file" id="file" class="btn" style="display: none;"
                                        accept=".xls,.xlsx"> <input type="hidden">
+                                <p id="fileName"></p>
                                 <p>Selecione um ficheiro Excel para importar alunos</p>
                             </div>
 
@@ -180,6 +181,11 @@
             $('#course_id').on('change', function () {
                 $('input[name="course_id2"]').val($(this).val());
             });
+        });
+
+        document.getElementById('file').addEventListener('change', function() {
+            var fileName = this.files[0].name;
+            document.getElementById('fileName').textContent = "Nome do ficheiro: " + fileName;
         });
 
 

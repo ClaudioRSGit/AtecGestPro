@@ -4,7 +4,7 @@
     <div class="container w-100 fade-in">
         <h1>Editar Training</h1>
 
-        <form method="post" action="{{ route('trainings.update', $training->id) }}" class="w-70">
+        <form method="post" action="{{ route('trainings.update', $training->id) }}" class="w-100 trainingEdit">
             @csrf
             @method('put')
 
@@ -38,7 +38,7 @@
 
             <div class="buttons d-flex justify-content-start align-items-center">
                 <button type="submit" class="btn btn-primary">Salvar Alterações</button>
-                <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancelar</a>
+                <a href="{{ route('trainings.index') }}" class="btn btn-secondary">Cancelar</a>
             </div>
         </form>
 

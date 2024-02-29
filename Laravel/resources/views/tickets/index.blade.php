@@ -7,10 +7,14 @@
                 {{ session('success') }}
             </div>
         @endif
-        <div class="d-flex justify-content-between align-items-center">
+
+        <div class="d-flex justify-content-between align-items-center position-relative">
             <h1>Tickets</h1>
-            <div onclick="showOptions()" class="form-control btn-primary w-20 dropdown newTicket" style="max-width: 10rem;">
-                <div class="d-flex align-items-center w-100 h-100">
+
+            <img src="{{ asset('assets/questionMark.png') }}" onclick="event.stopPropagation(); changeTicketTab(); triggerTicketIntro();" class="questionMarkBtn">
+            <div onclick="showOptions()" class="form-control btn-primary w-20 dropdown newTicket tickets-newTicketBtn" style="max-width: 10rem;">
+                <div class="d-flex justify-content-center align-items-center w-100 h-100">
+
                     <i class="fa-solid fa-pen mr-1" style="color: #ffffff;"></i>
                     <p id="open" class="btn text-white">Novo ticket</p>
                 </div>
@@ -22,17 +26,17 @@
                 </div>
             </div>
         </div>
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <ul class="nav nav-tabs tickets-tabs" id="myTab" role="tablist">
             <li class="nav-item">
-                <a class="nav-link active" id="all-tickets-tab" data-toggle="tab" href="#allTickets" role="tab"
+                <a class="nav-link active" id="all-tickets-tab" data-toggle="tab" href="#tickets" role="tab"
                    aria-controls="allTickets" aria-selected="true">Todos os tickets</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="waiting-queue-tab" data-toggle="tab" href="#waitingQueue" role="tab"
+                <a class="nav-link" id="waiting-queue-tab" data-toggle="tab" href="#fila_de_espera" role="tab"
                    aria-controls="waitingQueue" aria-selected="false">Fila de Espera</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" id="recycling-tab" data-toggle="tab" href="#recycling" role="tab"
+                <a class="nav-link" id="recycling-tab" data-toggle="tab" href="#reciclagem_tickets" role="tab"
                    aria-controls="recycling" aria-selected="false">Reciclagem</a>
             </li>
         </ul>
@@ -40,11 +44,11 @@
             <div class="tab-content" id="myTabContent">
 
 
-                <div class="tab-pane fade show active" id="allTickets" role="tabpanel"
+                <div class="tab-pane fade show active" id="tickets" role="tabpanel"
                      aria-labelledby="all-tickets-tab">
                     <div class="d-flex justify-content-between my-3">
 
-                        <form action="{{ route('tickets.index') }}" method="get" id="ticketSearchForm">
+                        <form action="{{ route('tickets.index') }}" method="get" id="ticketSearchForm" class="tickets-searchBar">
                             <div class="input-group pr-2">
                                 <div class="search-container">
                                     <input type="text" class="form-control" id="ticketSearch" name="ticketSearch"
@@ -58,7 +62,7 @@
                                 </div>
                             </div>
                         </form>
-                        <div class="buttons">
+                        <div class="buttons tickets-filters">
                             <form id="filterCategoryForm" action="{{ route('tickets.index') }}" method="GET">
                                 <select class="form-control w-auto " id="filterCategory" name="filterCategory"
                                         onchange="submitCategoryForm()">
@@ -111,7 +115,7 @@
                             $currentDirection = request('direction', 'asc');
                             $newDirection = $currentDirection == 'asc' ? 'desc' : 'asc';
                         @endphp
-                        <table class="table bg-white rounded-top">
+                        <table class="table bg-white rounded-top ticketsTable">
                             <thead>
                             <tr>
                                 <th scope="col">
@@ -175,7 +179,8 @@
                                             @endif
                                         </div>
                                     </td>
-                                    <td class="clickable">
+
+                                    <td class="clickable mobileOverflow tickets-title">
                                         <div class="d-flex align-items-center">
                                             <span
                                                 class="mr-2 ticket-prio ticket-priority-{{ $ticket->ticketPriority->id }}"></span>
@@ -184,7 +189,7 @@
                                             </a>
                                         </div>
                                     </td>
-                                    <td class="clickable mobileHidden">
+                                    <td class="clickable mobileHidden tickets-requester">
                                         @showIfNotDeleted($ticket)
                                             @if($ticket->requester->name !== 'Utilizador Padrao')
                                                 <a href="{{ route('users.show', $ticket->user_id) }}"
@@ -196,7 +201,7 @@
                                             @endif
                                         @endshowIfNotDeleted
                                     </td>
-                                    <td class="clickable mobileHidden">
+                                    <td class="clickable mobileHidden tickets-tech">
                                         @foreach ($ticket->users as $user)
                                             @if($user->name !== 'Fila de Espera')
                                             <a href="{{ route('users.show', $user->id) }}"
@@ -213,7 +218,7 @@
                                     <td class="mobileHidden">{{ $ticket->created_at ? $ticket->created_at->format('d-m-Y') : 'N.A.' }}</td>
                                     <td class="mobileHidden">{{ $ticket->dueByDate ? \Carbon\Carbon::parse($ticket->dueByDate)->format('d-m-Y') : 'N.A.' }}</td>
                                     <td>
-                                        <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex justify-content-between align-items-center tickets-actions">
                                             <div style="width: 40%">
                                                 <a href="{{ route('tickets.edit', $ticket->id) }}">
                                                     <i class="fa-solid fa-pen-to-square fa-lg" style="color: #116fdc;"></i>
@@ -241,10 +246,10 @@
                     @endif
                     {{ $tickets->appends(['tPage' => $tickets->currentPage()])->links() }}
                 </div>
-                <div class="tab-pane fade" id="waitingQueue" role="tabpanel" aria-labelledby="waiting-queue-tab">
+                <div class="tab-pane fade" id="fila_de_espera" role="tabpanel" aria-labelledby="waiting-queue-tab">
                     <div class="d-flex justify-content-between my-3">
 
-                        <form action="{{ route('tickets.index') }}" method="get" id="filaSearchForm">
+                        <form action="{{ route('tickets.index') }}" method="get" id="filaSearchForm" class="tickets-searchBar">
                             <div class="input-group pr-2">
                                 <div class="search-container">
                                     <input type="text" class="form-control" id="filaSearch" name="filaSearch"
@@ -311,7 +316,15 @@
                             <tr class="filler"></tr>
                             @foreach ($waitingQueueTickets as $ticket)
                                 <tr class="customTableStyling {{ $ticket->ticketPriority->id == 5 ? 'critical' : '' }}">
-                                    <td class="pl-4">#{{ $ticket->id }}</td>
+                                    <td>
+                                        <div class="position-relative">
+                                            <span>#{{ $ticket ? $ticket->id : 'N.A.' }}</span>
+                                            @if($ticket->created_at->diffInDays($now) < 5)
+                                                <span
+                                                    class="badge badge-success position-absolute top-50 translate-middle-y ml-3 mt-1">Novo!</span>
+                                            @endif
+                                        </div>
+                                    </td>
                                     <td class="clickable">
                                         <div class="d-flex align-items-center">
                                             <span
@@ -376,10 +389,10 @@
                     @endif
                     {{ $waitingQueueTickets->appends(['wPage' => $waitingQueueTickets->currentPage()])->links() }}
                 </div>
-                <div class="tab-pane fade" id="recycling" role="tabpanel" aria-labelledby="recycling-tab">
+                <div class="tab-pane fade" id="reciclagem_tickets" role="tabpanel" aria-labelledby="recycling-tab">
                     <div class="d-flex justify-content-between my-3">
 
-                        <form action="{{ route('tickets.index') }}" method="get" id="recyclingSearchForm">
+                        <form action="{{ route('tickets.index') }}" method="get" id="recyclingSearchForm" class="tickets-searchBar">
                             <div class="input-group pr-2">
                                 <div class="search-container">
                                     <input type="text" class="form-control" id="recyclingSearch" name="recyclingSearch"
@@ -561,5 +574,7 @@
 @endsection
 @push('scripts')
 <script src="{{ asset('js/tickets/index.js') }}"></script>
+<script src="{{ asset('js/userOnboarding/intro.js') }}"></script>
+<script src="{{ asset('js/userOnboarding/ticketIntro.js') }}"></script>
 @endpush
 

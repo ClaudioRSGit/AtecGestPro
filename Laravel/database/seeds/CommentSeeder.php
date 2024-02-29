@@ -17,13 +17,14 @@ class CommentSeeder extends Seeder
             'ticket_id' => 1,
             'user_id' => 3,
             'isPublic' => true,
+            'created_at' => '2023-01-30 14:59:00',
         ]);
         DB::table('comments')->insert([
-            'description' => 'teste comment teste comment teste comment',
+            'description' => 'Cadeira reposta.',
             'ticket_id' => 1,
-            'user_id' => 2,
+            'user_id' => 12,
             'isPublic' => true,
-            'created_at' => '2020-05-20 15:00:00',
+            'created_at' => '2023-02-10 15:00:00',
         ]);
 
         // Seed 2
@@ -32,30 +33,34 @@ class CommentSeeder extends Seeder
             'ticket_id' => 2,
             'user_id' => 3,
             'isPublic' => true,
+            'created_at' => '2023-02-26 19:52:10',
         ]);
 
         // Seed 3
         DB::table('comments')->insert([
-            'description' => 'Hardware replacement completed successfully.',
+            'description' => 'Substituição realizada.',
             'ticket_id' => 3,
             'user_id' => 3,
             'isPublic' => true,
+            'created_at' => '2023-03-29 17:40:10',
         ]);
 
         // Seed 4
         DB::table('comments')->insert([
-            'description' => 'Troco dia 19 até às 15h.',
+            'description' => 'Sala pronta',
             'ticket_id' => 4,
             'user_id' => 3,
             'isPublic' => true,
+            'created_at' => '2023-04-13 10:21:10',
         ]);
 
         // Seed 5
         DB::table('comments')->insert([
-            'description' => 'Dia 20 e a lampa ainda não foi trocada.',
-            'ticket_id' => 4,
-            'user_id' => 2,
+            'description' => 'Computador substituido',
+            'ticket_id' => 5,
+            'user_id' => 3,
             'isPublic' => false,
+            'created_at' => '2023-05-12 18:03:10',
         ]);
     }
 }

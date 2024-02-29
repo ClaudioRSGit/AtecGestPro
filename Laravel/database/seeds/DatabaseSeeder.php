@@ -23,15 +23,14 @@ class DatabaseSeeder extends Seeder
         $this->call(TicketStatusSeeder::class);
         $this->call(TicketCategorySeeder::class);
         $this->call(TicketPrioritySeeder::class);
-        // $this->call(NotificationSeeder::class);
+
         $this->call(UserSeeder::class);
-        // $this->call(NotificationUserSeeder::class);
+
         $this->call(ActionSeeder::class);
         $this->call(TicketSeeder::class);
         $this->call(TicketUserSeeder::class);
         $this->call(CommentSeeder::class);
         $this->call(TicketHistorySeeder::class);
-        $this->call(EmailSeeder::class);
         $this->call(MaterialUserSeeder::class);
         $this->call(TrainingSeeder::class);
         $this->call(PartnerTrainingUserSeeder::class);

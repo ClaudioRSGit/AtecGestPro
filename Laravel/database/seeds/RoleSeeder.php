@@ -16,16 +16,19 @@ class RoleSeeder extends Seeder
             'name' => 'admin',
             'description' => 'Administrador',
         ]);
-        // Seed 3
+
+        // Seed 2
         DB::table('roles')->insert([
             'name' => 'funcionario',
             'description' => 'Funcionário',
         ]);
-        // Seed 2
+
+        // Seed 3
         DB::table('roles')->insert([
             'name' => 'formando',
             'description' => 'Formando',
         ]);
+        
         // Seed 4
         DB::table('roles')->insert([
             'name' => 'tecnico',

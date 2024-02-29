@@ -13,37 +13,37 @@ class PartnerSeeder extends Seeder
     {
         DB::table('partners')->insert([
             'name' => 'Amkor Technology Portugal (ATEP)',
-            'description' => 'Description',
+            'description' => 'Technology',
             'address' => 'Avenida 1º De Maio, 801 Mindelo, 4485-629 Porto',
         ]);
 
         DB::table('partners')->insert([
             'name' => 'ENGIE - Douro',
-            'description' => 'Description',
+            'description' => 'Hidroelétricas',
             'address' => 'Barragem do Picote-Sendim, 5225-072 Miranda Do Douro',
         ]);
 
         DB::table('partners')->insert([
             'name' => 'Ordem dos Engenheiros - Região Centro',
-            'description' => 'Description',
+            'description' => 'Engenheiria',
             'address' => 'Rua Antero de Quental, 107, 3000-032 Coimbra',
         ]);
 
         DB::table('partners')->insert([
             'name' => 'Netos Shoes',
-            'description' => 'Description',
+            'description' => 'Calçado',
             'address' => 'R. António Luís da Costa 100, 3700-310 São João da Madeira',
         ]);
 
         DB::table('partners')->insert([
             'name' => 'GRANCRUZ',
-            'description' => 'Description',
+            'description' => 'Vinhos',
             'address' => 'Rua José Mariani 390, 4400-195 VNGaia',
         ]);
 
         DB::table('partners')->insert([
-            'name' => 'Without Contact',
-            'description' => 'No Contact',
+            'name' => 'Sem Contacto',
+            'description' => 'Sem Contacto',
             'address' => 'R. António Luís da Costa 100, 3700-310 São João da Madeira',
         ]);
     }

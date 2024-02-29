@@ -2,12 +2,12 @@
 
 @section('content')
     <div class="container w-100 fade-in">
-        <h1>Detalhes do Parceiro</h1>
+        <h1>Detalhes da Empresa</h1>
 
         <div class="row">
             <div class="col-md-6">
                 <div class="mb-3">
-                    <label for="name" class="form-label">Nome do Parceiro:</label>
+                    <label for="name" class="form-label">Nome da Empresa:</label>
                     <input type="text" class="form-control" id="name" name="name" value="{{ $partner->name }}" disabled>
                 </div>
 
@@ -22,7 +22,7 @@
                 </div>
             </div>
 
-            <div class="col-md-6 pl-4">
+            <div class="col-md-6">
                 <div class="mb-3">
                     <label for="contacts" class="form-label">Contatos:</label>
 

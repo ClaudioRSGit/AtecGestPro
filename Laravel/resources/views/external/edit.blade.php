@@ -14,7 +14,7 @@
 
     </style>
 
-    <div class="container  w-100 fade-in">
+    <div class="container  w-100 fade-in externalEditView">
 
         @error('start_date')
         <div class="alert alert-danger success-alert">{{ $message }}</div>
@@ -45,7 +45,7 @@
                 </div>
 
                 <div class="partner">
-                    <label for="partner_id">Parceiro:</label>
+                    <label for="partner_id">Empresa:</label>
                     <select class="form-control" id="partner_id" name="partner_id" required>
                         @foreach($partners as $partner)
                             <option value="{{ $partner->id }}"
@@ -75,18 +75,6 @@
                     <input type="text" class="form-control" id="address" name="address" disabled>
                 </div>
 
-                <div class="startCalendar">
-                    <label for="start_date">Data de Início:</label>
-                    <input type="datetime-local" class="form-control flatpickr" id="start_date" name="start_date"
-                           value="{{ date('Y-m-d\TH:i:s', strtotime($partner_Training_Users->start_date)) }}" required>
-                </div>
-
-                <div class="endCalendar">
-                    <label for="end_date">Data de Fim:</label>
-                    <input type="text" class="form-control flatpickr" id="end_date" name="end_date"
-                           value="{{ date('Y-m-d\TH:i:s', strtotime($partner_Training_Users->end_date)) }}" required>
-                </div>
-
                 <div class="materials">
                     @if ($materials->isEmpty())
                         <img src="{{ asset('assets/tool.png') }}"
@@ -96,7 +84,7 @@
                             <thead>
                             <tr>
                                 <th>Nome</th>
-                                <th>Descrição</th>
+                                <th class="mobileHidden">Descrição</th>
                                 <th>Quantidade</th>
                                 <th>Selecionar</th>
                             </tr>
@@ -124,7 +112,7 @@
                                 @unless($partner_Training_Users->materials->contains($material))
                                     <tr>
                                         <td>{{ $material->name }}</td>
-                                        <td>{{ $material->description }}</td>
+                                        <td class="mobileHidden">{{ $material->description }}</td>
                                         <td class="pl-4">
                                             <input type="number" name="material_quantities[{{ $material->id }}]"
                                                    value="0" min="0" max="{{ $material->quantity }}"
@@ -142,6 +130,18 @@
                             </tbody>
                         </table>
                     @endif
+                </div>
+
+                <div class="startCalendar">
+                    <label for="start_date">Data de Início:</label>
+                    <input type="datetime-local" class="form-control flatpickr" id="start_date" name="start_date"
+                           value="{{ date('Y-m-d\TH:i:s', strtotime($partner_Training_Users->start_date)) }}" required>
+                </div>
+
+                <div class="endCalendar">
+                    <label for="end_date">Data de Fim:</label>
+                    <input type="text" class="form-control flatpickr" id="end_date" name="end_date"
+                           value="{{ date('Y-m-d\TH:i:s', strtotime($partner_Training_Users->end_date)) }}" required>
                 </div>
 
                 <div class="btns">

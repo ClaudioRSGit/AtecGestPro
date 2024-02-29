@@ -87,21 +87,21 @@
                             </select>
                         </div>
                     </div>
-                    <div id="warningMessage" style="display: none; text-align: center; margin-top: 10px; color: red;">
+                    <div id="warningMessage" class="mb-3" style="display: none; text-align: center; margin-top: 10px; color: red;">
                         Nota: Não é possível adicionar vestuário externo.
                     </div>
 
 
                     <div id="hide">
-                        <div class="d-flex flex-row">
-                            <div class="flex-column">
+                        <div class="d-flex sizesQuantitiesCourses">
+                            <div class="flex-column sizesQuantities">
                                 <div class="mb-3">
                                     <p class="form-label font-weight-bold">Tamanho e stock: </p>
                                 </div>
                                 <div class="mb-3 mr-4 scrollable-column mr-5" id="size">
                                     <div class="d-flex flex-column">
                                         @foreach ($sizes as $size)
-                                            <div class="d-flex justify-content-between align-items-center mb-2 px-5">
+                                            <div class="d-flex justify-content-between align-items-center mb-2 px-4">
                                                 <div class="form-check">
                                                     <input onchange="toggleFieldsQuantity()"
                                                            class="form-check-input size-checkbox" type="checkbox"
@@ -127,7 +127,7 @@
                                 <div class="mb-3">
                                     <p class="form-label font-weight-bold">Cursos:</p>
                                 </div>
-                                <div class="mb-3" id="role">
+                                <div class="mb-3 pl-4" id="role">
                                     <div class="d-flex flex-column scrollable-column">
                                         @foreach ($courses as $course)
                                             <div class="form-check">

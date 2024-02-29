@@ -27,29 +27,32 @@
             </script>
         @endif
 
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="d-flex justify-content-between align-items-center mb-4 position-relative">
             <h1>Utilizadores</h1>
-            <a href="{{ route('users.create') }}" class="btn btn-primary">
+
+            <a href="{{ route('users.create') }}" class="btn btn-primary users-newUserBtn">
                 <i class="fa-solid fa-pen mr-1" style="color: #ffffff;"></i>
                 Novo Utilizador
             </a>
+            <img src="{{ asset('assets/questionMark.png') }}"
+                 onclick="event.stopPropagation(); changeUserTab(); triggerUserIntro();" class="questionMarkBtn">
         </div>
 
         <ul class="nav nav-tabs mb-3" id="userTabs">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#allTable">Todos</a>
+                <a class="nav-link active" data-toggle="tab" href="#utilizadores">Todos</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-toggle="tab" href="#recycleTable">Reciclagem</a>
+                <a class="nav-link" data-toggle="tab" href="#reciclagem_utilizadores">Reciclagem</a>
             </li>
         </ul>
 
         <div class="tab-content">
 
-            <div class="tab-pane fade show active" id="allTable">
+            <div class="tab-pane fade show active" id="utilizadores">
                 <div class="d-flex justify-content-between mb-3">
 
-                    <form action="{{ route('users.index') }}" method="GET">
+                    <form action="{{ route('users.index') }}" method="GET" class="users-searchBar">
                         <div class="input-group pr-2">
                             <div class="search-container">
                                 <input type="text" name="searchName" class="form-control"
@@ -64,7 +67,8 @@
                     </form>
 
                     <div class="buttons">
-                        <button id="importUsersModalBtn" class="btn btn-primary mr-2 " data-toggle="modal" name="importUsersModal"
+                        <button id="importUsersModalBtn" class="btn btn-primary mr-2 " data-toggle="modal"
+                                name="importUsersModal"
                                 data-target="#importUsersModal">Importar utilizadores
                         </button>
 
@@ -89,10 +93,10 @@
                     </div>
                 </div>
 
-                <table class="table" id="userTable">
+                <table class="table usersTable" id="userTable">
                     <thead>
                     <tr>
-                        <th scope="col">
+                        <th scope="col" class="mobileHidden">
                             <input type="checkbox" id="select-all">
                         </th>
                         <th>
@@ -109,7 +113,7 @@
                         <th>
                             <a href="{{ route('users.index', ['sortColumn' => 'username', 'sortDirection' => $sortColumn === 'username' ?
                 ($sortDirection === 'asc' ? 'desc' : 'asc') : 'asc']) }}">
-                                Username
+                                Número Interno
                                 @if ($sortDirection === 'desc' && $sortColumn === 'username')
                                     <i class="fa-solid fa-arrow-up-z-a" style="color: #116fdc;"></i>
                                 @else
@@ -117,9 +121,9 @@
                                 @endif
                             </a>
                         </th>
-                        <th scope="col">Email</th>
+                        <th scope="col" class="mobileHidden">Email</th>
                         <th scope="col">Função</th>
-                        <th scope="col">Ativo</th>
+                        <th scope="col" class="mobileHidden">Ativo</th>
                         <th scope="col">
                             <div class="centerTd">Ações</div>
                         </th>
@@ -130,21 +134,21 @@
                     @foreach ($users as $user)
                         <tr class="user-row customTableStyling" data-position="{{ strtolower($user) }}"
                             data-role="{{ $user->role_id }}">
-                            <td>
+                            <td class="mobileHidden">
                                 <input type="checkbox" name="selectedUsers[]"
                                        value="{{ $user->id }}">
                             </td>
-                            <td class="clickable">
+                            <td class="clickable users-name">
                                 <a href="{{ route('users.show', $user->id) }}"
                                    class="d-flex align-items-center w-auto h-100">{{ $user->name }}</a>
                             </td>
                             <td>{{ $user->username }}</td>
-                            <td>{{ $user->email }}</td>
+                            <td class="mobileHidden">{{ $user->email }}</td>
                             <td>
                                 {{ $user->role->description }}
                             </td>
 
-                            <td>{{ $user->isActive == 1 ? 'Sim' : 'Não' }}</td>
+                            <td class="mobileHidden">{{ $user->isActive == 1 ? 'Sim' : 'Não' }}</td>
                             <td class="editDelete">
                                 <div style="width: 40%">
                                     <a href="{{ route('users.edit', $user->id) }}">
@@ -172,38 +176,21 @@
 
                 {{ $users->appends(['uPage' => $users->currentPage()])->links() }}
 
-{{--                <div class="container">--}}
-{{--                    <form action="{{ route('import-excel.importUsers') }}" method="POST" enctype="multipart/form-data">--}}
-{{--                        @csrf--}}
-{{--                        <div class="form-group mb-3">--}}
-{{--                            <label for="">Excel - Importar Utilizadores</label><br>--}}
-{{--                            <label for="file" class="btn btn-primary">Selecionar ficheiro</label>--}}
-{{--                            <input type="file" name="file" id="file" class="btn" style="display: none;">--}}
-{{--                            @error('attachment')--}}
-{{--                            <div class="alert alert-danger">{{ $message }}</div>--}}
-{{--                            @enderror--}}
-{{--                            <p>Certifique-se que o arquivo tem menos de 20MB</p>--}}
-{{--                        </div>--}}
-{{--                        <button type="submit" class="btn btn-primary">Importar</button>--}}
-{{--                    </form>--}}
-{{--                </div>--}}
 
             </div>
-            <div class="tab-pane fade " id="recycleTable">
+            <div class="tab-pane fade " id="reciclagem_utilizadores">
 
                 @if($deletedUsers->isEmpty())
                     <img src="{{ asset('assets/reciclagem_azul_extra_bold_2_sem fundo.png') }}"
                          alt="Não existem registos" class="bin">
                 @else
-
                     <div class="">
                         <table class="table">
                             <thead>
                             <tr>
-
                                 <th scope="col">Nome</th>
                                 <th scope="col">Username</th>
-                                <th scope="col">Email</th>
+                                <th scope="col" class="mobileHidden">Email</th>
                                 <th scope="col">
                                     <div class="centerTd">Restaurar</div>
                                 </th>
@@ -215,10 +202,10 @@
                             <tbody>
                             <tr class="filler"></tr>
                             @foreach($deletedUsers as $deletedUser)
-                                <tr class="user-row customTableStyling" data-position="" data-role="" onclick="">
+                                <tr class="customTableStyling" data-position="" data-role="" onclick="">
                                     <td>{{ $deletedUser->name }}</td>
                                     <td>{{ $deletedUser->username }}</td>
-                                    <td>{{ $deletedUser->email }}</td>
+                                    <td class="mobileHidden">{{ $deletedUser->email }}</td>
 
 
                                     <td>
@@ -234,7 +221,6 @@
                                             </form>
                                         </div>
                                     </td>
-
                                     <td>
                                         <div class="centerTd">
                                             <form method="post"
@@ -246,12 +232,10 @@
                                                         data-message="Tem a certeza que deseja apagar permanentemente o {{strtolower($deletedUser->role->description)}} {{ $deletedUser->name }}?"
                                                         style="border: none; background: none; padding: 0; margin: 0; cursor: pointer;">
                                                     <img src="{{ asset('assets/permaDelete.svg') }}" alt="Delete">
-
                                                 </button>
                                             </form>
                                         </div>
                                     </td>
-
                                 </tr>
                                 <tr class="filler" style="background-color: #f8fafc"></tr>
                             @endforeach
@@ -260,9 +244,7 @@
                         {{ $deletedUsers->appends(['dPage' => $deletedUsers->currentPage()])->links() }}
                     </div>
                 @endif
-
             </div>
-
         </div>
 
         <!-- The Import Users Modal -->
@@ -277,26 +259,27 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="container">
-                            <form action="{{ route('import-excel.importUsers') }}" method="POST" enctype="multipart/form-data">
+                        <div class="container w-100">
+                            <form action="{{ route('import-excel.importUsers') }}" method="POST"
+                                  enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group mb-3">
                                     <label for="">Excel - Importar Utilizadores</label><br>
                                     <label for="file" class="btn btn-primary">Selecionar ficheiro</label>
-                                    <input type="file" name="file" id="file" class="btn" style="display: none;">
+                                    <input type="file" name="file" id="file" class="btn" style="display: none;"
+                                           accept=".xls,.xlsx"> <input type="hidden">
                                     @error('attachment')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
+                                    <p id="fileName"></p>
                                     <p>Certifique-se que o arquivo tem menos de 20MB</p>
                                 </div>
-                                <button type="submit" class="btn btn-primary">Importar</button>
+                                <button type="submit" class="btn btn-primary w-100">Importar</button>
                             </form>
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </div>
         {{----}}
 
@@ -402,8 +385,15 @@
             }
         });
 
+        document.getElementById('file').addEventListener('change', function () {
+            var fileName = this.files[0].name;
+            document.getElementById('fileName').textContent = "Nome do ficheiro: " + fileName;
+        });
+
     </script>
 @endsection
 @push('scripts')
-    <script src="{{ asset('js/users/index.js') }}"></script>
+    <script src="{{ asset('js/tickets/index.js') }}"></script>
+    <script src="{{ asset('js/userOnboarding/intro.js') }}"></script>
+    <script src="{{ asset('js/userOnboarding/userIntro.js') }}"></script>
 @endpush
