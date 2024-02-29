@@ -129,12 +129,7 @@
                                 <p class="pb-5">Não existe nenhuma nota</p>
                             @endif
                         </div>
-
-
                     </div>
-
-
-
                 </div>
 
 

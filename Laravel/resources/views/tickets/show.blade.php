@@ -76,7 +76,7 @@
                                     <textarea class="form-control" id="new-comment" name="comment" required></textarea>
                                     <div class="d-flex justify-content-between" style="gap: 10px;">
                                         <button type="submit" class="btn btn-primary mt-2 w-70">Enviar Comentário</button>
-                                        <a type="button" href="{{ url()->previous() }}"
+                                        <a type="button" href="{{ route('tickets.index') }}"
                                             class="btn btn-secondary mt-2 w-30">Voltar</a>
                                     </div>
                                 </div>
