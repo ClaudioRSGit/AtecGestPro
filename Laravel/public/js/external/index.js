@@ -44,17 +44,17 @@ $(document).ready(function () {
     });
 });
 
-$(document).ready(function() {
-    $('.filteredPtus').on('click', function(e) {
-        e.preventDefault();
-        $('#myTabs a[href="#formacoes_externas"]').tab('show');
-    });
-});
+// $(document).ready(function() {
+//     $('.filteredPtus').on('click', function(e) {
+//         e.preventDefault();
+//         $('#myTabs a[href="#formacoes_externas"]').tab('show');
+//     });
+// });
 
 $(document).ready(function() {
 $('.viewPartnersForm').on('submit', function(e) {
     e.preventDefault();
-    window.location.hash = 'externalTable';
+    window.location.hash = 'formacoes_externas';
     this.submit();
 
 });

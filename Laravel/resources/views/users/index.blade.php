@@ -393,7 +393,7 @@
     </script>
 @endsection
 @push('scripts')
-    <script src="{{ asset('js/tickets/index.js') }}"></script>
+    <script src="{{ asset('js/users/index.js') }}"></script>
     <script src="{{ asset('js/userOnboarding/intro.js') }}"></script>
     <script src="{{ asset('js/userOnboarding/userIntro.js') }}"></script>
 @endpush

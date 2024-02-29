@@ -394,5 +394,49 @@ class UserSeeder extends Seeder
             'course_class_id' => 1,
             'role_id' => 3,
         ]);
+
+        // Seed 28
+        DB::table('users')->insert([
+            'name' => 'João Novo',
+            'username' => 'T0000117',
+            'email' => 'joao.novo.t0000117@edu.atec.pt',
+            'contact' => '912623623',
+            'password' => null,
+            'notes' => '',
+            'isActive' => true,
+            'isStudent' => true,
+            'course_class_id' => null,
+            'role_id' => 3,
+        ]);
+
+        // Seed 29
+        DB::table('users')->insert([
+            'name' => 'Alexandre Bernardo',
+            'username' => 'T0001117',
+            'email' => 'alexandre.bernardo.t0001117@edu.atec.pt',
+            'contact' => '918623623',
+            'password' => null,
+            'notes' => '',
+            'isActive' => true,
+            'isStudent' => true,
+            'course_class_id' => null,
+            'role_id' => 3,
+        ]);
+
+        // Seed 30
+        DB::table('users')->insert([
+            'name' => 'José Almeida',
+            'username' => 'T0111117',
+            'email' => 'jose.almeida.t0011117@edu.atec.pt',
+            'contact' => '912623663',
+            'password' => null,
+            'notes' => '',
+            'isActive' => true,
+            'isStudent' => true,
+            'course_class_id' => null,
+            'role_id' => 3,
+        ]);
+
+
     }
 }

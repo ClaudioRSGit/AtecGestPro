@@ -129,8 +129,6 @@
                                 <p class="pb-5">Não existe nenhuma nota</p>
                             @endif
                         </div>
-
-
                     </div>
                     <div>
                         <div class="w-100 d-flex justify-content-between mb-5">

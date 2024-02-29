@@ -199,7 +199,8 @@
 
 
                                     <form action="{{ route('external.index') }}" method="GET" class="viewPartnersForm">
-                                        <input type="text" name="ptu" class="form-control" hidden value="{{ $partner->name }}">
+                                        @csrf
+                                        <input type="hidden" name="ptu" value="{{ $partner->name }}">
                                         <div class="input-group-append">
                                             <button type="submit" class="btn btn-info btn-sm filteredPtus">
                                                 Ver
@@ -336,6 +337,7 @@
     </div>
 
 @endsection
+
 @push('scripts')
     <script src="{{ asset('js/external/index.js') }}"></script>
     <script src="{{ asset('js/userOnboarding/intro.js') }}"></script>

@@ -20,7 +20,9 @@ class PartnerTrainingUserController extends Controller
     {
 
 
+//dd($request->all());
         $searchPtu = $request->input('ptu');
+//        dd($searchPtu);
         $searchP = $request->input('p');
         $searchT = $request->input('t');
 

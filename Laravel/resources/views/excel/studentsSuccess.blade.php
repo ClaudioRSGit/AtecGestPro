@@ -11,6 +11,7 @@
                 <tr>
                     <th>Nome</th>
                     <th scope="col">Username</th>
+                    <th scope="col" >Email</th>
                     <th scope="col">Função</th>
                     <th scope="col" class="ml-7" style="text-align: center !important;">Ações</th>
                 </tr>

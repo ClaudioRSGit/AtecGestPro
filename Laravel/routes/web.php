@@ -33,20 +33,19 @@ Route::post('/change-password/{username}', [PasswordChangeController::class, 'up
 
 
 
-//Route::middleware('throttle:5,1')->group(function () {
-//    Route::post('users.create', 'UserController@create')->name('users.create');
-//    Route::post('materials.create', 'MaterialController@create')->name('materials.create');
-//    Route::post('tickets.create', 'TicketController@create')->name('tickets.create');
-//    Route::post('external.create', 'PartnerTrainingUserController@create')->name('external.create');
-//    Route::post('partners.create', 'PartnerController@create')->name('partners.create');
-//    Route::post('courses.create', 'CourseController@create')->name('courses.create');
-//    Route::post('course-classes.create', 'CourseClassController@create')->name('course-classes.create');
-//});
+Route::middleware('throttle:5,1')->group(function () {
+    Route::post('users.create', 'UserController@create')->name('users.create');
+    Route::post('materials.create', 'MaterialController@create')->name('materials.create');
+    Route::post('tickets.create', 'TicketController@create')->name('tickets.create');
+    Route::post('external.create', 'PartnerTrainingUserController@create')->name('external.create');
+    Route::post('partners.create', 'PartnerController@create')->name('partners.create');
+    Route::post('courses.create', 'CourseController@create')->name('courses.create');
+    Route::post('course-classes.create', 'CourseClassController@create')->name('course-classes.create');
+});
 
 //Tecnico & Admin
 Route::middleware(['auth', 'checkRole:admin,tecnico'])->group(function () {
-    //Route::get('/home', 'HomeController@index')->name('home');
-    //Route::resource('students', 'StudentController');
+
 
     Route::resource('users', 'UserController');
     Route::post('users/massDelete', 'UserController@massDelete')->name('users.massDelete');

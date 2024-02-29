@@ -18,8 +18,10 @@ class UserController extends Controller
 
     public function index(Request $request)
     {
+
         $searchName = $request->input('searchName');
         $roleFilter = $request->input('roleFilter');
+//        dd($roleFilter);
         $sortColumn = $request->input('sortColumn', 'name');
         $sortDirection = $request->input('sortDirection', 'asc');
 
@@ -171,7 +173,7 @@ class UserController extends Controller
             $user->update($data);
 
             return redirect()->route('users.index')->with('success', 'Utilizador atualizado com sucesso!');
-            
+
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Erro ao atualizar o utilizador.Por favor tente novamente!');
         }
