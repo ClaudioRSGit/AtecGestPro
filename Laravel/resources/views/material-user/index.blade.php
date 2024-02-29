@@ -8,7 +8,7 @@
                 <i class="fa-solid fa-pen mr-1" style="color: #ffffff;"></i>
                 Criar Turma
             </a>
-            <img src="{{ asset('assets/questionMark.png') }}" onclick="event.stopPropagation(); openTab(); triggerIntroducaoVestuario();" class="questionMarkBtn">
+            <img src="{{ asset('assets/questionMark.png') }}" onclick="event.stopPropagation(); openFirstTab(); triggerIntroducaoVestuario();" class="questionMarkBtn">
         </div>
 
         @if (session('message'))
@@ -25,7 +25,7 @@
 
         <ul class="nav nav-tabs mb-2" id="myTabs">
             <li class="nav-item">
-                <a class="nav-link active" data-toggle="tab" href="#formandos">Formandos</a>
+                <a class="nav-link active clickFormandos" data-toggle="tab" href="#formandos">Formandos</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-toggle="tab" href="#funcionarios">Funcionários</a>
@@ -79,16 +79,22 @@
                     </div>
                     @foreach ($courseClasses as $courseClass)
                         <div class="card mb-2 mt-2">
+                            @php
+                                    $allDelivered =
+                                        $courseClass->students->count() > 0 &&
+                                        $courseClass->students->every(function ($student) use ($usersWithMaterialsDelivered) {
+                                            return $usersWithMaterialsDelivered->contains($student->id);
+                                        });
+                            @endphp
 
-                            <div class="card-header">
+                            <div class="card-header {{ $allDelivered ? 'bg-green' : ' ' }}">
                                 <h2 class="mb-0">
 
-
-                                    <button class="btn btn-link tabOpeningBtn"
-                                            type="button" data-toggle="collapse" data-target="#collapse{{ $courseClass->id }}"
-                                            aria-expanded="false" aria-controls="collapse{{ $courseClass->id }}">
-                                        {{ $courseClass->description }}
-                                    </button>
+                                <button class="btn btn-link tabOpeningBtn"
+                                        type="button" data-toggle="collapse" data-target="#collapse{{ $courseClass->id }}"
+                                        aria-expanded="false" aria-controls="collapse{{ $courseClass->id }}">
+                                    {{ $courseClass->description }}
+                                </button>
                                 </h2>
                             </div>
                             <div id="collapse{{ $courseClass->id }}" class="collapse"
@@ -99,16 +105,16 @@
                                             <thead>
                                             <tr >
                                                 <th>Nome</th>
-                                                <th>Username</th>
+                                                <th>Número Interno</th>
                                                 <th>Editar</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             <tr class="filler"></tr>
                                             @foreach ($courseClass->students as $student)
-                                                <tr class="customTableStyling {{ $usersWithMaterialsDelivered->contains($student->id) ? 'bg-blue' : '' }}">
+                                                <tr class="customTableStyling {{ $usersWithMaterialsDelivered->contains($student->id) ? 'bg-green' : '' }}">
                                                     @php
-                                                        $allDelivered = $usersWithMaterialsDelivered->contains($student->id) ? 'bg-blue' : '';
+                                                        $allDelivered = $usersWithMaterialsDelivered->contains($student->id) ? 'bg-green' : '';
                                                     @endphp
                                                     <td class="clickable {{ $allDelivered }} mobileOverflow">
                                                         <a href="{{ route('material-user.create', $student->id) }}"
@@ -186,18 +192,18 @@
                     <tbody class="customTableStyling">
                     @foreach ($nonDocents as $nonDocent)
 
-                        <tr class="{{ $usersWithMaterialsDelivered->contains($nonDocent->id) ? 'bg-blue' : '' }}">
+                        <tr class="{{ $usersWithMaterialsDelivered->contains($nonDocent->id) ? 'bg-green' : '' }}">
 
                             <td class="clickable mobileOverflow">
                                 <a href="{{ route('material-user.create', $nonDocent->id) }}"
                                    class="d-flex align-items-center w-auto h-100">{{ $nonDocent->name }}</a>
                             </td>
                             @php
-                                $allDelivered = $usersWithMaterialsDelivered->contains($nonDocent->id) ? 'bg-blue' : '';
+                                $allDelivered = $usersWithMaterialsDelivered->contains($nonDocent->id) ? 'bg-green' : '';
                             @endphp
                             <td class="{{ $allDelivered }}">{{ $nonDocent->username }}</td>
                             <td class="{{ $allDelivered }} mobileHidden">{{ $nonDocent->email }}</td>
-                            <td>
+                            <td class="editBtn">
                                 <a href="{{ route('material-user.edit', $nonDocent->id) }}" class="mx-2">
                                     <i class="fa-solid fa-pen-to-square fa-lg" style="color: #116fdc;"></i>
                                 </a>
@@ -293,8 +299,8 @@
 
 
     <style>
-        .bg-blue {
-            background-color: rgba(54, 162, 235, 0.3);
+        .bg-green {
+            background-color: rgba(119, 229, 141, 0.2);
         }
 
         #accordion .card {

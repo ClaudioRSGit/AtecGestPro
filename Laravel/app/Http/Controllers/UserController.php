@@ -159,23 +159,19 @@ class UserController extends Controller
             }
 
             if (auth()->user()->hasRole('admin')) {
-                if ($user->hasRole('admin') && $request->input('role_id') != 1) {
-                    return redirect()->back()->with('error', 'O administrador não pode alterar a sua própria função!');
+                if ($user->hasRole('admin') && $request->input('role_id') != 1 && $user->id == auth()->user()->id) {
+                    return redirect()->back()->with('error', 'O administrador não pode alterar sua própria função!');
                 }
             }
+
             if ($user->id == auth()->user()->id && $request->input('isActive') === 0) {
                 return redirect()->back()->with('error', 'Não é possível desativar a sua própria conta!');
             }
 
             $user->update($data);
 
-            if ($user->hasRole('funcionario')) {
-                return redirect()->route('master.main')->with('success', 'Utilizador atualizado com sucesso!');
-            } elseif (auth()->user()->role_id == 1 && $request->input('role_id') == 2) {
-                return redirect()->route('master.main')->with('success', 'Utilizador atualizado com sucesso!');
-            } else {
-                return redirect()->route('users.index')->with('success', 'Utilizador atualizado com sucesso!');
-            }
+            return redirect()->route('users.index')->with('success', 'Utilizador atualizado com sucesso!');
+            
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Erro ao atualizar o utilizador.Por favor tente novamente!');
         }

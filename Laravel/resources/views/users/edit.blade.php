@@ -34,7 +34,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="username" class="form-label">Username:</label>
+                        <label for="username" class="form-label">Número Interno:</label>
                         <input type="text" class="form-control" id="username" name="username"
                             value="{{ $user->username }}">
 

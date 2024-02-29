@@ -23,7 +23,7 @@
             <div class="alert alert-danger contact-alert">{{ $error[0] }}</div>
         @endforeach
 
-        <h1>Editar Parceiro</h1>
+        <h1>Editar Empresa</h1>
         <form method="post" action="{{ route('partners.update', $partner->id) }}">
 
             @csrf
@@ -32,7 +32,7 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="my-3">
-                        <label for="name" class="form-label">Parceiro:</label>
+                        <label for="name" class="form-label">Empresa:</label>
                         <input type="text" class="form-control" id="name" name="name"
                             value="{{ $partner->name }}">
 

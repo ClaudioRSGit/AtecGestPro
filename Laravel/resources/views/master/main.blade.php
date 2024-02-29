@@ -58,7 +58,9 @@
             @yield('content')
             @if (Request::is('/'))
             <div class="container w-100 h-100 d-flex justify-content-center align-items-center">
-                <img draggable="false" src="{{ asset('assets/atecLogo.png') }}" alt="" style="opacity: 0.6;">
+                <div class="imageContainer">
+                    <img draggable="false" src="{{ asset('assets/atecLogo.png') }}" alt="" style="opacity: 0.6;">
+                </div>
             </div>
             @endif
 
@@ -77,6 +79,8 @@
 
     {{-- SCRIPTS SECTION --}}
     <script src="{!! asset('js/app.js') !!}" type="text/javascript"></script>
+        <script src="{{ asset('js/userOnboarding/intro.js') }}"></script>
+
 
 
     @yield('scripts')
